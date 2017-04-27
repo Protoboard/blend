@@ -79,6 +79,12 @@ describe("ClassBuilder", function () {
                 });
             });
 
+            it("should add to fulfilled requires", function () {
+                expect(builder.requires.fulfilled).toEqual({
+                    ExtendedClass: ExtendedClass
+                });
+            });
+
             it("should register methods", function () {
                 expect(builder.methods).toEqual({
                     bar: [ExtendedClass.__contributes.bar]
@@ -275,6 +281,13 @@ describe("ClassBuilder", function () {
         it("should add builder meta", function () {
             result = builder.build();
             expect(result.__builder).toBe(builder);
+        });
+
+        it("should add class to fulfilled requires", function () {
+            result = builder.build();
+            expect(builder.requires.fulfilled).toEqual({
+                ClassId: result
+            });
         });
 
         it("should add ID meta", function () {

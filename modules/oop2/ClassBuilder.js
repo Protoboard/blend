@@ -199,8 +199,13 @@
                 throw new Error("No class specified to extend.");
             }
 
+            var classId = class_.__id;
+
             // registering extensions
-            this.extensions[class_.__id] = class_;
+            this.extensions[classId] = class_;
+
+            // adding extension to fulfilled requirements
+            this.requires.fulfilled[classId] = class_;
 
             // registering contributed methods
             var properties = class_.__contributes;
@@ -257,6 +262,9 @@
                     throw new Error("Class " + classId + " doesn't implement all interfaces");
                 }
             }
+
+            // adding self to fulfilled requirements
+            this.requires.fulfilled[classId] = result;
 
             // copying meta properties
             // ... builder

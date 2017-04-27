@@ -47,6 +47,13 @@
      * Builder that built the class.
      * @name $oop.Class#__builder
      * @type {$oop.ClassBuilder}
+     * @deprecated Unnecessary
+     */
+
+    /**
+     * Classes extended by current class.
+     * @name $oop.Class#__extends
+     * @type {object}
      */
 
     /**
