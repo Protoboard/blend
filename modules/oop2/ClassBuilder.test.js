@@ -41,57 +41,6 @@ describe("ClassBuilder", function () {
         });
     });
 
-    describe("extending", function () {
-        beforeEach(function () {
-            builder = $oop.ClassBuilder.create('ClassId');
-        });
-
-        describe("when passing no arguments", function () {
-            it("should throw error", function () {
-                expect(function () {
-                    builder.extend();
-                }).toThrow();
-            });
-        });
-
-        describe("otherwise", function () {
-            var BaseClass = {
-                    __contributes: {
-                        foo: "FOO",
-                        bar: function () {
-                        }
-                    }
-                },
-                result;
-
-            beforeEach(function () {
-                result = builder.extend(BaseClass);
-            });
-
-            it("should return self", function () {
-                expect(result).toBe(builder);
-            });
-
-            it("should add meta", function () {
-                expect(builder.base).toBe(BaseClass);
-            });
-
-            it("should register methods", function () {
-                expect(builder.methods).toEqual({
-                    bar: [BaseClass.__contributes.bar]
-                });
-            });
-
-            describe("when already extended", function () {
-                it("should add throw", function () {
-                    expect(function () {
-                        builder.extend(BaseClass);
-                    }).toThrow();
-                });
-            });
-        });
-    });
-
     describe("including", function () {
         beforeEach(function () {
             builder = $oop.ClassBuilder.create('ClassId');
@@ -107,6 +56,7 @@ describe("ClassBuilder", function () {
 
         describe("otherwise", function () {
             var IncludedClass = {
+                    __id: 'IncludedClass',
                     __contributes: {
                         foo: "FOO",
                         bar: function () {
@@ -124,7 +74,9 @@ describe("ClassBuilder", function () {
             });
 
             it("should add to meta", function () {
-                expect(builder.includes).toEqual([IncludedClass]);
+                expect(builder.includes).toEqual({
+                    IncludedClass: IncludedClass
+                });
             });
 
             it("should register methods", function () {
@@ -149,7 +101,9 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var RequiredClass = {},
+            var RequiredClass = {
+                    __id: 'RequiredClass'
+                },
                 result;
 
             beforeEach(function () {
@@ -161,7 +115,9 @@ describe("ClassBuilder", function () {
             });
 
             it("should add to meta", function () {
-                expect(builder.requires).toEqual([RequiredClass]);
+                expect(builder.requires).toEqual({
+                    RequiredClass: RequiredClass
+                });
             });
         });
     });
@@ -180,7 +136,9 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var ImplementedInterface = {},
+            var ImplementedInterface = {
+                    __id: 'ImplementedInterface'
+                },
                 result;
 
             beforeEach(function () {
@@ -192,7 +150,9 @@ describe("ClassBuilder", function () {
             });
 
             it("should add to meta", function () {
-                expect(builder.interfaces).toEqual([ImplementedInterface]);
+                expect(builder.interfaces).toEqual({
+                    ImplementedInterface: ImplementedInterface
+                });
             });
         });
     });
@@ -322,18 +282,6 @@ describe("ClassBuilder", function () {
             expect(result.__id).toBe('ClassId');
         });
 
-        describe("when class has base class", function () {
-            beforeEach(function () {
-                builder.extend(BaseClass);
-            });
-
-            it("should add extends meta", function () {
-                result = builder.build();
-                expect(result.__extends_0).toBe(BaseClass);
-                expect(result.__extends_BaseClass).toBe(BaseClass);
-            });
-        });
-
         it("should add contributions meta", function () {
             result = builder.build();
             expect(result.__contributes).toBe(builder.contributions);
@@ -352,8 +300,7 @@ describe("ClassBuilder", function () {
 
             it("should add require meta", function () {
                 result = builder.build();
-                expect(result.__requires_0).toBe(Require1);
-                expect(result.__requires_Require1).toBe(Require1);
+                expect(result.__requires.Require1).toBe(Require1);
             });
         });
 
@@ -368,17 +315,17 @@ describe("ClassBuilder", function () {
                 builder.include(Include1);
             });
 
-            // describe("with unsatisfied requirements", function () {
-            //     it("should throw", function () {
-            //         expect(function () {
-            //             builder.build();
-            //         }).toThrow();
-            //     });
-            // });
+            describe("with unsatisfied requirements", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        builder.build();
+                    }).toThrow();
+                });
+            });
 
             describe("with satisfied requirements", function () {
                 beforeEach(function () {
-                    builder.extend(BaseClass);
+                    builder.include(BaseClass);
                 });
 
                 it("should not throw", function () {
@@ -392,7 +339,7 @@ describe("ClassBuilder", function () {
         describe("when there are no overrides", function () {
             it("should move method to class", function () {
                 result = builder
-                    .extend(BaseClass)
+                    .include(BaseClass)
                     .build();
 
                 expect(result.foo).toBe(BaseClass.__contributes.foo);
@@ -419,7 +366,7 @@ describe("ClassBuilder", function () {
                 spyOn(contributions, 'foo');
 
                 result = builder
-                    .extend(BaseClass)
+                    .include(BaseClass)
                     .include(Include1)
                     .contribute(contributions)
                     .build();

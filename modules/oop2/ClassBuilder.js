@@ -13,42 +13,6 @@
         builtClasses: {},
 
         /**
-         * Retrieves next index for meta property of the specified type.
-         * @param {string} metaType
-         * @returns {number}
-         * @private
-         */
-        _getNextMetaIndex: function (metaType) {
-            var i = 0;
-            while (this.hasOwnProperty('__' + metaType + '_' + i)) {
-                i++;
-            }
-            return i;
-        },
-
-        /**
-         * Adds one named and one indexed meta property for the specified value.
-         * @param {string} metaType
-         * @param {string} metaName
-         * @param {*} metaValue
-         * @param {object} target
-         * @private
-         */
-        _addMetaProperties: function (metaType, metaName, metaValue, target) {
-            var metaNameByName = '__' + metaType + '_' + metaName,
-                nextMetaIndex, metaNameByIndex;
-
-            if (!target.hasOwnProperty(metaNameByName)) {
-                // avoiding duplicate meta values
-                nextMetaIndex = this._getNextMetaIndex(metaType);
-                metaNameByIndex = '__' + metaType + '_' + nextMetaIndex;
-
-                target[metaNameByName] = metaValue;
-                target[metaNameByIndex] = metaValue;
-            }
-        },
-
-        /**
          * @param {object} properties
          * @private
          */
@@ -73,49 +37,16 @@
          */
         _implementsAllInterfaces: function () {
             var interfaces = this.interfaces,
+                interfaceNames = Object.getOwnPropertyNames(interfaces),
                 methods = this.methods;
 
-            return interfaces ?
-                interfaces.every(function (interface_) {
-                    var propertyNames = Object.getOwnPropertyNames(interface_);
-                    return propertyNames.every(function (propertyName) {
-                        return methods.hasOwnProperty(propertyName);
-                    });
-                }) :
-                true;
-        },
-
-        /**
-         * @returns {Array}
-         * @private
-         */
-        _getTraitRequirements: function () {
-            var includes = this.includes,
-                result = [];
-
-            console.log(includes);
-
-            if (includes) {
-                includes.forEach(function (/**$oop.Class#*/item) {
-                    // adding base class as require
-                    if (item.__extends) {
-                        result.push(item.__extends);
-                    }
-
-                    result = result.concat(item.getMetaProperties('requires'));
+            return interfaceNames.every(function (interfaceName) {
+                var interface_ = interfaces[interfaceName],
+                    propertyNames = Object.getOwnPropertyNames(interface_);
+                return propertyNames.every(function (propertyName) {
+                    return methods.hasOwnProperty(propertyName);
                 });
-            }
-
-            return result;
-        },
-
-        /**
-         * Collects base class(es), traits, and requirements.
-         * @returns {Array}
-         * @private
-         */
-        _getRelatedClasses: function () {
-            return [];
+            });
         },
 
         /**
@@ -186,29 +117,23 @@
             result.classId = classId;
 
             /**
-             * Base class reference
-             * @type {$oop.Class}
-             */
-            result.base = undefined;
-
-            /**
              * Registry of required classes
              * TODO: Add 'allows' instead?
-             * @type {$oop.Class[]}
+             * @type {object}
              */
-            result.requires = [];
+            result.requires = {};
 
             /**
              * Registry of implemented interfaces
-             * @type {$oop.Class[]}
+             * @type {object}
              */
-            result.interfaces = [];
+            result.interfaces = {};
 
             /**
              * Registry of included classes.
-             * @type {$oop.Class[]}
+             * @type {object}
              */
-            result.includes = [];
+            result.includes = {};
 
             /**
              * Method registry.
@@ -227,32 +152,6 @@
         },
 
         /**
-         * Specifies class to be extended.
-         * @param {$oop.Class} class_
-         * @returns {$oop.ClassBuilder}
-         */
-        extend: function (class_) {
-            if (!class_) {
-                throw new Error("No base class specified.");
-            }
-
-            if (this.base) {
-                throw new Error("Base class already specified.");
-            }
-
-            // registering base class
-            this.base = class_;
-
-            // registering contributed methods
-            var baseProperties = class_.__contributes;
-            if (baseProperties) {
-                this._addMethodsToRegistry(baseProperties);
-            }
-
-            return this;
-        },
-
-        /**
          * Specifies a required base, or trait of the host class.
          * Used by traits only.
          * @param {$oop.Class} class_
@@ -264,7 +163,7 @@
             }
 
             // registering required class
-            this.requires.push(class_);
+            this.requires[class_.__id] = class_;
 
             return this;
         },
@@ -280,7 +179,7 @@
             }
 
             // registering interface
-            this.interfaces.push(interface_);
+            this.interfaces[interface_.__id] = interface_;
 
             return this;
         },
@@ -289,21 +188,22 @@
          * Specifies a class to be included in the host class.
          * Optionally filtered by a list of property names.
          * TODO: Add option to filter inclusion by list of property names.
-         * @param include
+         * TODO: Rename to 'extend'.
+         * @param {$oop.Class} class_
          * @returns {$oop.ClassBuilder}
          */
-        include: function (include) {
-            if (!include) {
+        include: function (class_) {
+            if (!class_) {
                 throw new Error("No class specified to include.");
             }
 
             // registering includes
-            this.includes.push(include);
+            this.includes[class_.__id] = class_;
 
             // registering contributed methods
-            var includedProperties = include.__contributes;
-            if (includedProperties) {
-                this._addMethodsToRegistry(includedProperties);
+            var properties = class_.__contributes;
+            if (properties) {
+                this._addMethodsToRegistry(properties);
             }
 
             return this;
@@ -311,26 +211,26 @@
 
         /**
          * Can be called multiple times.
-         * @param {object} contributions
+         * @param {object} properties
          * @returns {$oop.ClassBuilder}
          */
-        contribute: function (contributions) {
-            if (!contributions) {
+        contribute: function (properties) {
+            if (!properties) {
                 throw new Error("No contributions specified.");
             }
 
-            var overallContributions = this.contributions,
-                propertyNames = Object.getOwnPropertyNames(contributions),
+            var contributions = this.contributions,
+                propertyNames = Object.getOwnPropertyNames(properties),
                 i, propertyName;
 
             // copying properties to overall contributions
             for (i = 0; i < propertyNames.length; i++) {
                 propertyName = propertyNames[i];
-                overallContributions[propertyName] = contributions[propertyName];
+                contributions[propertyName] = properties[propertyName];
             }
 
             // registering contributed methods
-            this._addMethodsToRegistry(contributions);
+            this._addMethodsToRegistry(properties);
 
             return this;
         },
@@ -341,13 +241,12 @@
         build: function () {
             var that = this,
                 classId = this.classId,
-                base = this.base,
                 interfaces = this.interfaces,
                 includes = this.includes,
                 requires = this.requires,
                 contributions = this.contributions,
                 methods = this.methods,
-                result = Object.create(base || $oop.Class);
+                result = Object.create($oop.Class);
 
             // checking whether
             // ... methods match interfaces
@@ -367,29 +266,27 @@
             // ... class ID
             result.__id = classId;
 
-            // ... base class
-            if (base) {
-                this._addMetaProperties('extends', base.__id, base, result);
-            }
-
             // ... contributions
             result.__contributes = contributions;
 
-            // ... requires
-            if (requires) {
-                requires.forEach(function (require) {
-                    that._addMetaProperties('requires', require.__id, require, result);
+            // ... own requires
+            var requiredClassNames = Object.getOwnPropertyNames(requires);
+            if (requiredClassNames.length) {
+                result.__requires = {};
+                requiredClassNames.forEach(function (requiredClassName) {
+                    var require = requires[requiredClassName];
+                    result.__requires[require.__id] = require;
                 });
             }
 
             // ... includes
-            if (includes) {
-                // collecting trait requirements (from new traits)
-                // this._getTraitRequirements();
-                // collecting all involved classes
-                // this._getRelatedClasses();
-                // matching expectations against full list
-                // host must either have or also require the same classes
+            var includedClassNames = Object.getOwnPropertyNames(includes);
+            if (includedClassNames.length) {
+                result.__includes = {};
+                includedClassNames.forEach(function (requiredClassName) {
+                    var include = includes[requiredClassName];
+                    result.__includes[include.__id] = include;
+                });
             }
 
             // copying own properties
@@ -411,9 +308,7 @@
                 .forEach(function (methodName) {
                     result[methodName] = wrapperMethods[methodName];
                 });
-
-            // transferring includes
-
+            
             // transferring unmet trait includes, bases, & requires as requires
 
             // adding class to registry

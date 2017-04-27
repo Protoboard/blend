@@ -29,7 +29,7 @@
          * @returns {$oop.Class}
          */
         create: function () {
-            if (this.__requires_0) {
+            if (this.__requires) {
                 throw new Error("Class has unmet requirements, can't instantiate.");
             }
 
@@ -50,21 +50,15 @@
      */
 
     /**
-     * Specifies 1st-degree base class.
-     * @name $oop.Class#__extends
-     * @type {$oop.Class}
-     */
-
-    /**
      * Properties contributed by the class.
      * @name $oop.Class#__contributes
      * @type {object}
      */
 
     /**
-     * First require meta property.
+     * All classes required by current class to be operable.
      * Its presence determines whether class can be instantiated.
-     * @name $oop.Class#__requires_0
-     * @type {$oop.Class}
+     * @name $oop.Class#__requires
+     * @type {object}
      */
 }());
