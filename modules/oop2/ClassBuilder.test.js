@@ -238,7 +238,7 @@ describe("ClassBuilder", function () {
 
     describe("building class", function () {
         var BaseClass = {
-                __classId: 'BaseClass'
+                __id: 'BaseClass'
             },
             result;
 
@@ -295,7 +295,7 @@ describe("ClassBuilder", function () {
 
         it("should add class ID meta", function () {
             result = builder.build();
-            expect(result.__classId).toBe('ClassId');
+            expect(result.__id).toBe('ClassId');
         });
 
         describe("when class has requires", function () {

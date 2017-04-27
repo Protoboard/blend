@@ -21,11 +21,24 @@
             }
 
             return result;
+        },
+
+        /**
+         * Creates new instance of class.
+         * TODO: Work in progress.
+         * @returns {$oop.Class}
+         */
+        create: function () {
+            if (this.__requires_0) {
+                throw new Error("Class has unmet requirements, can't instantiate.");
+            }
+
+            return Object.create(this);
         }
     };
 
     /**
-     * @name $oop.Class#__classId
+     * @name $oop.Class#__id
      * @type {string}
      */
 
@@ -37,6 +50,11 @@
     /**
      * @name $oop.Class#__contributes
      * @type {object}
+     */
+
+    /**
+     * @name $oop.Class#__requires_0
+     * @type {$oop.Class}
      */
 
     /**

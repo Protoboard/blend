@@ -168,11 +168,11 @@
 
         /**
          * Specifies class to be extended.
-         * @param {$oop.Class} baseClass
+         * @param {$oop.Class} class_
          * @returns {$oop.ClassBuilder}
          */
-        extend: function (baseClass) {
-            if (!baseClass) {
+        extend: function (class_) {
+            if (!class_) {
                 throw new Error("No base class specified.");
             }
 
@@ -181,10 +181,10 @@
             }
 
             // registering base class
-            this.base = baseClass;
+            this.base = class_;
 
             // registering contributed overrides
-            var baseProperties = baseClass.__contributes;
+            var baseProperties = class_.__contributes;
             if (baseProperties) {
                 this._addMethodsToRegistry(baseProperties);
             }
@@ -195,32 +195,32 @@
         /**
          * Specifies a required base, or trait of the host class.
          * Used by traits only.
-         * @param {$oop.Class} requiredClass
+         * @param {$oop.Class} class_
          * @returns {$oop.ClassBuilder}
          */
-        require: function (requiredClass) {
-            if (!requiredClass) {
+        require: function (class_) {
+            if (!class_) {
                 throw new Error("No class specified to be required.");
             }
 
             // registering required class
-            this.requires.push(requiredClass);
+            this.requires.push(class_);
 
             return this;
         },
 
         /**
          * Specifies an interface to be implemented by the host class.
-         * @param {$oop.Class} implementedInterface
+         * @param {$oop.Class} interface_
          * @returns {$oop.ClassBuilder}
          */
-        implement: function (implementedInterface) {
-            if (!implementedInterface) {
+        implement: function (interface_) {
+            if (!interface_) {
                 throw new Error("No interface specified.");
             }
 
             // registering interface
-            this.interfaces.push(implementedInterface);
+            this.interfaces.push(interface_);
 
             return this;
         },
@@ -229,19 +229,19 @@
          * Specifies a class to be included in the host class.
          * Optionally filtered by a list of property names.
          * TODO: Add option to filter inclusion by list of property names.
-         * @param includedClass
+         * @param include
          * @returns {$oop.ClassBuilder}
          */
-        include: function (includedClass) {
-            if (!includedClass) {
+        include: function (include) {
+            if (!include) {
                 throw new Error("No class specified to include.");
             }
 
             // registering includes
-            this.includes.push(includedClass);
+            this.includes.push(include);
 
             // registering contributed overrides
-            var includedProperties = includedClass.__contributes;
+            var includedProperties = include.__contributes;
             if (includedProperties) {
                 this._addMethodsToRegistry(includedProperties);
             }
@@ -309,12 +309,12 @@
 
             // copying meta properties
             // ... class ID
-            result.__classId = classId;
+            result.__id = classId;
 
             // ... requires
             if (requires) {
                 requires.forEach(function (require) {
-                    that._addMetaProperties('requires', require.__classId, require, result);
+                    that._addMetaProperties('requires', require.__id, require, result);
                 });
             }
 
@@ -322,6 +322,8 @@
             // ... from defined properties
             // ... from includes
             // ... creating wrapper methods for overrides
+
+            // transferring unmet trait includes, bases, & requires as requires
 
             return result;
         }
