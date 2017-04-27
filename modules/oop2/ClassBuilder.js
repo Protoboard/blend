@@ -119,6 +119,51 @@
         },
 
         /**
+         * Retrieves a list of method names that can be copied over 1:1.
+         * @private
+         */
+        _getSingularMethodNames: function () {
+            var methods = this.methods,
+                methodNames = Object.getOwnPropertyNames(methods);
+
+            return methodNames
+                .filter(function (methodName) {
+                    return methods[methodName].length === 1;
+                });
+        },
+
+        /**
+         * Retrieves a lookup of method names : anonymous functions that wrap
+         * colliding methods coming from different sources. (Contributions, base(s), includes.)
+         * @returns {object}
+         * @private
+         */
+        _getWrapperMethods: function () {
+            var methods = this.methods,
+                methodNames = Object.getOwnPropertyNames(methods),
+                result = {};
+
+            methodNames
+                .filter(function (methodName) {
+                    return methods[methodName].length > 1;
+                })
+                .forEach(function (methodName) {
+                    var functions = methods[methodName],
+                        functionCount = functions.length;
+
+                    result[methodName] = function () {
+                        var i;
+                        for (i = 0; i < functionCount; i++) {
+                            functions[i].apply(this, arguments);
+                        }
+                        // TODO: Return value?
+                    };
+                });
+
+            return result;
+        },
+
+        /**
          * @param {string} classId
          * @returns {$oop.ClassBuilder}
          * @memberOf $oop.ClassBuilder
@@ -301,6 +346,7 @@
                 includes = this.includes,
                 requires = this.requires,
                 contributions = this.contributions,
+                methods = this.methods,
                 result = Object.create(base || $oop.Class);
 
             // checking whether
@@ -339,7 +385,7 @@
             // ... includes
             if (includes) {
                 // collecting trait requirements (from new traits)
-                console.log(this._getTraitRequirements());
+                // this._getTraitRequirements();
                 // collecting all involved classes
                 // this._getRelatedClasses();
                 // matching expectations against full list
@@ -347,9 +393,24 @@
             }
 
             // copying own properties
-            // ... from defined properties
+            // ... from contributions
             // ... from includes
             // ... creating wrapper methods for methods
+
+            // copying singular methods 1:1
+            this._getSingularMethodNames()
+                .forEach(function (methodName) {
+                    result[methodName] = methods[methodName][0];
+                });
+
+            // copying wrapper methods
+            var wrapperMethods = this._getWrapperMethods(),
+                wrapperMethodNames = Object.getOwnPropertyNames(wrapperMethods);
+
+            wrapperMethodNames
+                .forEach(function (methodName) {
+                    result[methodName] = wrapperMethods[methodName];
+                });
 
             // transferring includes
 

@@ -253,9 +253,12 @@ describe("ClassBuilder", function () {
     });
 
     describe("building class", function () {
-        var BaseClass = {
-                __id: 'BaseClass'
-            },
+        var BaseClass = $oop.ClassBuilder.create('BaseClass')
+                .contribute({
+                    foo: function () {
+                    }
+                })
+                .build(),
             result;
 
         beforeEach(function () {
@@ -383,6 +386,50 @@ describe("ClassBuilder", function () {
                         builder.build();
                     }).not.toThrow();
                 });
+            });
+        });
+
+        describe("when there are no overrides", function () {
+            it("should move method to class", function () {
+                result = builder
+                    .extend(BaseClass)
+                    .build();
+
+                expect(result.foo).toBe(BaseClass.__contributes.foo);
+            });
+        });
+
+        describe("when there are overrides", function () {
+            var Include1 = $oop.ClassBuilder.create('Include1')
+                    .contribute({
+                        foo: function () {
+                        }
+                    })
+                    .build(),
+                contributions;
+
+            beforeEach(function () {
+                contributions = {
+                    foo: function () {
+                    }
+                };
+
+                spyOn(BaseClass.__contributes, 'foo');
+                spyOn(Include1.__contributes, 'foo');
+                spyOn(contributions, 'foo');
+
+                result = builder
+                    .extend(BaseClass)
+                    .include(Include1)
+                    .contribute(contributions)
+                    .build();
+            });
+
+            it("should call all overrides", function () {
+                result.foo();
+                expect(BaseClass.__contributes.foo).toHaveBeenCalled();
+                expect(Include1.__contributes.foo).toHaveBeenCalled();
+                expect(contributions.foo).toHaveBeenCalled();
             });
         });
 
