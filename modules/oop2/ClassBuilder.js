@@ -121,7 +121,10 @@
              * TODO: Add 'allows' instead?
              * @type {object}
              */
-            result.requires = {};
+            result.requires = {
+                demanded: {},
+                fulfilled: {}
+            };
 
             /**
              * Registry of implemented interfaces.
@@ -163,7 +166,7 @@
             }
 
             // registering required class
-            this.requires[class_.__id] = class_;
+            this.requires.demanded[class_.__id] = class_;
 
             return this;
         },
@@ -238,8 +241,7 @@
          * @returns {object} The created class.
          */
         build: function () {
-            var that = this,
-                classId = this.classId,
+            var classId = this.classId,
                 interfaces = this.interfaces,
                 extensions = this.extensions,
                 requires = this.requires,
@@ -256,8 +258,6 @@
                 }
             }
 
-            // ... bases & traits match new traits' expectations
-
             // copying meta properties
             // ... builder
             result.__builder = this;
@@ -269,11 +269,12 @@
             result.__contributes = contributions;
 
             // ... own requires
-            var requiredClassNames = Object.getOwnPropertyNames(requires);
+            var requiredClassNames = Object.getOwnPropertyNames(requires.demanded);
             if (requiredClassNames.length) {
                 result.__requires = {};
                 requiredClassNames.forEach(function (requiredClassName) {
-                    var require = requires[requiredClassName];
+                    // TODO: filter by fulfilled requires
+                    var require = requires.demanded[requiredClassName];
                     result.__requires[require.__id] = require;
                 });
             }
@@ -291,7 +292,6 @@
             // copying own properties
             // ... from contributions
             // ... from extensions
-            // ... creating wrapper methods for methods
 
             // copying singular methods 1:1
             this._getSingularMethodNames()
@@ -302,12 +302,11 @@
             // copying wrapper methods
             var wrapperMethods = this._getWrapperMethods(),
                 wrapperMethodNames = Object.getOwnPropertyNames(wrapperMethods);
-
             wrapperMethodNames
                 .forEach(function (methodName) {
                     result[methodName] = wrapperMethods[methodName];
                 });
-            
+
             // transferring unmet trait extensions, bases, & requires as requires
 
             // adding class to registry

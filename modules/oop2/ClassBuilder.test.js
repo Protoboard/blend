@@ -115,7 +115,7 @@ describe("ClassBuilder", function () {
             });
 
             it("should add to meta", function () {
-                expect(builder.requires).toEqual({
+                expect(builder.requires.demanded).toEqual({
                     RequiredClass: RequiredClass
                 });
             });
