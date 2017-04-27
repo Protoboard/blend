@@ -65,7 +65,7 @@
 
         /**
          * Retrieves a lookup of method names : anonymous functions that wrap
-         * colliding methods coming from different sources. (Contributions, base(s), includes.)
+         * colliding methods coming from different sources. (Contributions, base(s), extensions.)
          * @returns {object}
          * @private
          */
@@ -124,16 +124,16 @@
             result.requires = {};
 
             /**
-             * Registry of implemented interfaces
+             * Registry of implemented interfaces.
              * @type {object}
              */
             result.interfaces = {};
 
             /**
-             * Registry of included classes.
+             * Registry of extended classes.
              * @type {object}
              */
-            result.includes = {};
+            result.extensions = {};
 
             /**
              * Method registry.
@@ -185,20 +185,19 @@
         },
 
         /**
-         * Specifies a class to be included in the host class.
+         * Specifies a class to be extended by the host class.
          * Optionally filtered by a list of property names.
-         * TODO: Add option to filter inclusion by list of property names.
-         * TODO: Rename to 'extend'.
+         * TODO: Add option to filter by list of property names.
          * @param {$oop.Class} class_
          * @returns {$oop.ClassBuilder}
          */
-        include: function (class_) {
+        extend: function (class_) {
             if (!class_) {
-                throw new Error("No class specified to include.");
+                throw new Error("No class specified to extend.");
             }
 
-            // registering includes
-            this.includes[class_.__id] = class_;
+            // registering extensions
+            this.extensions[class_.__id] = class_;
 
             // registering contributed methods
             var properties = class_.__contributes;
@@ -242,7 +241,7 @@
             var that = this,
                 classId = this.classId,
                 interfaces = this.interfaces,
-                includes = this.includes,
+                extensions = this.extensions,
                 requires = this.requires,
                 contributions = this.contributions,
                 methods = this.methods,
@@ -279,19 +278,19 @@
                 });
             }
 
-            // ... includes
-            var includedClassNames = Object.getOwnPropertyNames(includes);
-            if (includedClassNames.length) {
-                result.__includes = {};
-                includedClassNames.forEach(function (requiredClassName) {
-                    var include = includes[requiredClassName];
-                    result.__includes[include.__id] = include;
+            // ... extensions
+            var extendedClassNames = Object.getOwnPropertyNames(extensions);
+            if (extendedClassNames.length) {
+                result.__extends = {};
+                extendedClassNames.forEach(function (requiredClassName) {
+                    var extension = extensions[requiredClassName];
+                    result.__extends[extension.__id] = extension;
                 });
             }
 
             // copying own properties
             // ... from contributions
-            // ... from includes
+            // ... from extensions
             // ... creating wrapper methods for methods
 
             // copying singular methods 1:1
@@ -309,7 +308,7 @@
                     result[methodName] = wrapperMethods[methodName];
                 });
             
-            // transferring unmet trait includes, bases, & requires as requires
+            // transferring unmet trait extensions, bases, & requires as requires
 
             // adding class to registry
             this.builtClasses[classId] = result;
