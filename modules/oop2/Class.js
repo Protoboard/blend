@@ -38,28 +38,33 @@
     };
 
     /**
+     * Identifies class.
      * @name $oop.Class#__id
      * @type {string}
      */
 
     /**
+     * Builder that built the class.
+     * @name $oop.Class#__builder
+     * @type {$oop.ClassBuilder}
+     */
+
+    /**
+     * Specifies 1st-degree base class.
      * @name $oop.Class#__extends
      * @type {$oop.Class}
      */
 
     /**
+     * Properties contributed by the class.
      * @name $oop.Class#__contributes
      * @type {object}
      */
 
     /**
+     * First require meta property.
+     * Its presence determines whether class can be instantiated.
      * @name $oop.Class#__requires_0
      * @type {$oop.Class}
-     */
-
-    /**
-     * @name $oop.Class#create
-     * @function
-     * @returns {$oop.Class}
      */
 }());

@@ -301,6 +301,9 @@
             // ... bases & traits match new traits' expectations
 
             // copying meta properties
+            // ... builder
+            result.__builder = this;
+
             // ... class ID
             result.__id = classId;
 

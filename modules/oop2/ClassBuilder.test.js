@@ -293,6 +293,11 @@ describe("ClassBuilder", function () {
             });
         });
 
+        it("should add builder meta", function () {
+            result = builder.build();
+            expect(result.__builder).toBe(builder);
+        });
+
         it("should add ID meta", function () {
             result = builder.build();
             expect(result.__id).toBe('ClassId');
