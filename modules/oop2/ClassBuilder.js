@@ -42,7 +42,7 @@
          * @private
          */
         _addMethodsToRegistry: function (properties) {
-            var overrides = this.overrides = this.overrides || {},
+            var methods = this.methods = this.methods || {},
                 propertyNames = Object.getOwnPropertyNames(properties),
                 i, propertyName, propertyValue, methodOverrides;
 
@@ -50,7 +50,7 @@
                 propertyName = propertyNames[i];
                 propertyValue = properties[propertyName];
                 if (typeof propertyValue === 'function') {
-                    methodOverrides = overrides[propertyName] = overrides[propertyName] || [];
+                    methodOverrides = methods[propertyName] = methods[propertyName] || [];
                     methodOverrides.push(propertyValue);
                 }
             }
@@ -60,15 +60,15 @@
          * @returns {boolean}
          * @private
          */
-        _areAllInterfacesImplemented: function () {
+        _implementsAllInterfaces: function () {
             var interfaces = this.interfaces,
-                contributions = this.contributions;
+                methods = this.methods;
 
             return interfaces ?
-                interfaces.every(function (item) {
-                    var propertyNames = Object.getOwnPropertyNames(item);
+                interfaces.every(function (interface_) {
+                    var propertyNames = Object.getOwnPropertyNames(interface_);
                     return propertyNames.every(function (propertyName) {
-                        return contributions.hasOwnProperty(propertyName);
+                        return methods.hasOwnProperty(propertyName);
                     });
                 }) :
                 true;
@@ -151,11 +151,11 @@
             result.includes = [];
 
             /**
-             * Method override registry.
+             * Method registry.
              * Indexed by method name, then serial.
              * @type {object}
              */
-            result.overrides = {};
+            result.methods = {};
 
             /**
              * Class' own property & method contributions.
@@ -183,7 +183,7 @@
             // registering base class
             this.base = class_;
 
-            // registering contributed overrides
+            // registering contributed methods
             var baseProperties = class_.__contributes;
             if (baseProperties) {
                 this._addMethodsToRegistry(baseProperties);
@@ -240,7 +240,7 @@
             // registering includes
             this.includes.push(include);
 
-            // registering contributed overrides
+            // registering contributed methods
             var includedProperties = include.__contributes;
             if (includedProperties) {
                 this._addMethodsToRegistry(includedProperties);
@@ -270,7 +270,7 @@
                 overallContributions[propertyName] = contributions[propertyName];
             }
 
-            // registering contributed overrides
+            // registering contributed methods
             this._addMethodsToRegistry(contributions);
 
             return this;
@@ -286,18 +286,40 @@
                 interfaces = this.interfaces,
                 includes = this.includes,
                 requires = this.requires,
+                contributions = this.contributions,
                 result = Object.create(base || $oop.Class);
 
             // checking whether
-            // ... own properties match interfaces
+            // ... methods match interfaces
             if (interfaces) {
-                if (!this._areAllInterfacesImplemented()) {
+                if (!this._implementsAllInterfaces()) {
                     // TODO: make message more granular
                     throw new Error("Class " + classId + " doesn't implement all interfaces");
                 }
             }
 
             // ... bases & traits match new traits' expectations
+
+            // copying meta properties
+            // ... class ID
+            result.__id = classId;
+
+            // ... base class
+            if (base) {
+                that._addMetaProperties('extends', base.__id, base, result);
+            }
+
+            // ... contributions
+            result.__contributes = contributions;
+
+            // ... requires
+            if (requires) {
+                requires.forEach(function (require) {
+                    that._addMetaProperties('requires', require.__id, require, result);
+                });
+            }
+
+            // ... includes
             if (includes) {
                 // collecting trait requirements (from new traits)
                 console.log(this._getTraitRequirements());
@@ -307,21 +329,12 @@
                 // host must either have or also require the same classes
             }
 
-            // copying meta properties
-            // ... class ID
-            result.__id = classId;
-
-            // ... requires
-            if (requires) {
-                requires.forEach(function (require) {
-                    that._addMetaProperties('requires', require.__id, require, result);
-                });
-            }
-
             // copying own properties
             // ... from defined properties
             // ... from includes
-            // ... creating wrapper methods for overrides
+            // ... creating wrapper methods for methods
+
+            // transferring includes
 
             // transferring unmet trait includes, bases, & requires as requires
 
