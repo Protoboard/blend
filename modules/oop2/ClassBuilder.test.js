@@ -3,11 +3,27 @@ describe("ClassBuilder", function () {
 
     var builder;
 
+    beforeEach(function () {
+        $oop.ClassBuilder.builtClasses = {};
+    });
+
     describe("instantiation", function () {
         describe("when passing no arguments", function () {
             it("should throw error", function () {
                 expect(function () {
                     $oop.ClassBuilder.create();
+                }).toThrow();
+            });
+        });
+
+        describe("when class already built", function () {
+            beforeEach(function () {
+                $oop.ClassBuilder.builtClasses.ClassId = {};
+            });
+
+            it("should throw", function () {
+                expect(function () {
+                    $oop.ClassBuilder.create('ClassId');
                 }).toThrow();
             });
         });
@@ -367,6 +383,13 @@ describe("ClassBuilder", function () {
                         builder.build();
                     }).not.toThrow();
                 });
+            });
+        });
+
+        it("should add class to registry", function () {
+            result = builder.build();
+            expect($oop.ClassBuilder.builtClasses).toEqual({
+                ClassId: result
             });
         });
     });

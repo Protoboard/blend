@@ -7,6 +7,12 @@
      */
     $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         /**
+         * All built classes indexed by class ID.
+         * @memberOf $oop.ClassBuilder
+         */
+        builtClasses: {},
+
+        /**
          * Retrieves next index for meta property of the specified type.
          * @param {string} metaType
          * @returns {number}
@@ -120,6 +126,10 @@
         create: function (classId) {
             if (!classId) {
                 throw new Error("No class ID was specified.");
+            }
+
+            if (this.builtClasses.hasOwnProperty(classId)) {
+                throw new Error("Class " + classId + " already built.");
             }
 
             var result = Object.create(this);
@@ -256,7 +266,6 @@
 
         /**
          * Can be called multiple times.
-         * TODO: Rename to 'contribute'.
          * @param {object} contributions
          * @returns {$oop.ClassBuilder}
          */
@@ -345,6 +354,9 @@
             // transferring includes
 
             // transferring unmet trait includes, bases, & requires as requires
+
+            // adding class to registry
+            this.builtClasses[classId] = result;
 
             return result;
         }
