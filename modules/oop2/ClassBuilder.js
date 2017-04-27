@@ -30,11 +30,16 @@
          */
         _addMetaProperties: function (metaType, metaName, metaValue, target) {
             var metaNameByName = '__' + metaType + '_' + metaName,
-                nextMetaIndex = this._getNextMetaIndex(metaType),
+                nextMetaIndex, metaNameByIndex;
+
+            if (!target.hasOwnProperty(metaNameByName)) {
+                // avoiding duplicate meta values
+                nextMetaIndex = this._getNextMetaIndex(metaType);
                 metaNameByIndex = '__' + metaType + '_' + nextMetaIndex;
 
-            target[metaNameByName] = metaValue;
-            target[metaNameByIndex] = metaValue;
+                target[metaNameByName] = metaValue;
+                target[metaNameByIndex] = metaValue;
+            }
         },
 
         /**
@@ -293,7 +298,7 @@
             // ... methods match interfaces
             if (interfaces) {
                 if (!this._implementsAllInterfaces()) {
-                    // TODO: make message more granular
+                    // TODO: Include the names of methods / interfaces not implemented.
                     throw new Error("Class " + classId + " doesn't implement all interfaces");
                 }
             }
@@ -309,7 +314,7 @@
 
             // ... base class
             if (base) {
-                that._addMetaProperties('extends', base.__id, base, result);
+                this._addMetaProperties('extends', base.__id, base, result);
             }
 
             // ... contributions
