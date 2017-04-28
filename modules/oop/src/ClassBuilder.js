@@ -327,18 +327,15 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         }
 
         // adding meta properties
+        Object.defineProperties(result, {
+            __id: {value: classId},
 
-        // ... class ID
-        result.__id = classId;
+            __extends: {value: extensions},
 
-        // ... extensions
-        result.__extends = extensions;
+            __requires: {value: this._getUnfulfilledRequires()},
 
-        // ... requires
-        result.__requires = this._getUnfulfilledRequires();
-
-        // ... contributions
-        result.__contributes = contributions;
+            __contributes: {value: contributions}
+        });
 
         // copying non-method properties
         // TODO
