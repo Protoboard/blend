@@ -3,7 +3,6 @@
 
     /**
      * @class
-     * TODO: Change lookup values to `true`?
      * TODO: Handle multiple additions (of same override).
      */
     $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
@@ -119,13 +118,15 @@
 
             /**
              * Registry of required classes
-             * TODO: Add 'allows' instead?
              * @type {object}
              */
             result.requires = {
                 demanded: {},
                 fulfilled: {}
             };
+
+            // adding self as fulfilled require
+            result.requires.fulfilled[classId] = true;
 
             /**
              * Registry of implemented interfaces.
@@ -140,17 +141,17 @@
             result.extensions = {};
 
             /**
+             * Class' own property & method contributions.
+             * @type {object}
+             */
+            result.contributions = {};
+
+            /**
              * Method registry.
              * Indexed by method name, then serial.
              * @type {object}
              */
             result.methods = {};
-
-            /**
-             * Class' own property & method contributions.
-             * @type {object}
-             */
-            result.contributions = {};
 
             return result;
         },
@@ -209,14 +210,14 @@
                 fulfilledRequires = requires.fulfilled,
                 classRequires = class_.__requires,
                 classExtends = class_.__extends,
-                classRequireNames = classRequires && Object.keys(classRequires),
+                classRequireNames,
                 classExtensionNames;
 
             // registering class as extension
-            extensions[classId] = class_;
+            extensions[classId] = true;
 
             // adding extension to fulfilled requirements
-            fulfilledRequires[classId] = class_;
+            fulfilledRequires[classId] = true;
 
             // adding 2nd degree requirements & extensions as requirements
             if (classExtends) {

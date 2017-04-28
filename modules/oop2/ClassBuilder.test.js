@@ -35,8 +35,33 @@ describe("ClassBuilder", function () {
                 result = $oop.ClassBuilder.create('ClassId');
             });
 
-            it("should set initial descriptor", function () {
+            it("should set class ID", function () {
                 expect(result.classId).toEqual('ClassId');
+            });
+
+            it("should initialize requires", function () {
+                expect(result.requires).toEqual({
+                    demanded: {},
+                    fulfilled: {
+                        ClassId: true
+                    }
+                });
+            });
+
+            it("should initialize interface registry", function () {
+                expect(result.interfaces).toEqual({});
+            });
+
+            it("should initialize extension registry", function () {
+                expect(result.extensions).toEqual({});
+            });
+
+            it("should initialize contribution registry", function () {
+                expect(result.contributions).toEqual({});
+            });
+
+            it("should initialize methods registry", function () {
+                expect(result.methods).toEqual({});
             });
         });
     });
@@ -82,13 +107,14 @@ describe("ClassBuilder", function () {
 
             it("should add to meta", function () {
                 expect(builder.extensions).toEqual({
-                    Trait: Trait
+                    Trait: true
                 });
             });
 
             it("should add to fulfilled requires", function () {
                 expect(builder.requires.fulfilled).toEqual({
-                    Trait: Trait
+                    ClassId: true,
+                    Trait: true
                 });
             });
 
