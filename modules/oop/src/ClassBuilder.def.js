@@ -323,11 +323,14 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         // checking whether
         // ... methods match interfaces
         if (unimplementedMethods.length) {
-            throw new Error("Class " + classId + " doesn't implement: " +
+            throw new Error([
+                "Class " + classId + " doesn't implement method(s): " +
                 unimplementedMethods
                     .map(function (methodName) {
                         return "'" + methodName + "'";
-                    }) + ".");
+                    }) + ".",
+                "Can't build."
+            ].join(" "));
         }
 
         // adding meta properties
