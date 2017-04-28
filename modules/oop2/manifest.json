@@ -1,0 +1,9 @@
+{
+  "assets": {
+    "js": [
+      "namespace.js",
+      "Class.js",
+      "ClassBuilder.js"
+    ]
+  }
+}

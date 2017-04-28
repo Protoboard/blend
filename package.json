@@ -20,6 +20,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
     "jasmine": "^2.6.0",
     "karma": "^1.6.0",
     "karma-jasmine": "^1.1.0",
