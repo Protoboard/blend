@@ -318,6 +318,9 @@
             // ... contributions
             result.__contributes = contributions;
 
+            // copying non-method properties
+            // TODO
+
             // copying singular methods 1:1
             this._getSingularMethodNames()
                 .forEach(function (methodName) {

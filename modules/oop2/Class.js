@@ -2,8 +2,7 @@
     "use strict";
 
     /**
-     * TODO: Add surrogates & caching.
-     * TODO: Store reference to builder on class?
+     * TODO: Restore $oop.Base functionality.
      * @class
      */
     $oop.Class = /** @lends $oop.Class# */{
@@ -14,6 +13,7 @@
          */
         create: function () {
             if (this.__requires) {
+                // TODO: Output a list of unmet requires
                 throw new Error("Class has unmet requirements, can't instantiate.");
             }
 
