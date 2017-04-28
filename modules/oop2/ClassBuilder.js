@@ -302,10 +302,7 @@
                 }
             }
 
-            // copying meta properties
-            // ... builder
-            // TODO: Remove
-            result.__builder = this;
+            // adding meta properties
 
             // ... class ID
             result.__id = classId;

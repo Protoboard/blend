@@ -32,8 +32,6 @@ describe("Class", function () {
             it("should not throw", function () {
                 Class = builder.build();
 
-                console.log(Class.__requires);
-
                 expect(function () {
                     Class.create();
                 }).not.toThrow();
