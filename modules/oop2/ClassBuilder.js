@@ -3,6 +3,7 @@
 
     /**
      * @class
+     * TODO: Change lookup values to `true`?
      * TODO: Handle multiple additions (of same override).
      */
     $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
@@ -173,6 +174,8 @@
 
         /**
          * Specifies an interface to be implemented by the host class.
+         * Every specified interface must be fully implemented by the host class,
+         * otherwise build will fail.
          * @param {$oop.Class} interface_
          * @returns {$oop.ClassBuilder}
          */
@@ -199,13 +202,35 @@
                 throw new Error("No class specified to extend.");
             }
 
-            var classId = class_.__id;
+            var classId = class_.__id,
+                extensions = this.extensions,
+                requires = this.requires,
+                demandedRequires = requires.demanded,
+                fulfilledRequires = requires.fulfilled,
+                classRequires = class_.__requires,
+                classExtends = class_.__extends,
+                classRequireNames = classRequires && Object.keys(classRequires),
+                classExtensionNames;
 
-            // registering extensions
-            this.extensions[classId] = class_;
+            // registering class as extension
+            extensions[classId] = class_;
 
             // adding extension to fulfilled requirements
-            this.requires.fulfilled[classId] = class_;
+            fulfilledRequires[classId] = class_;
+
+            // adding 2nd degree requirements & extensions as requirements
+            if (classExtends) {
+                classExtensionNames = classExtends && Object.keys(classExtends);
+                classExtensionNames.forEach(function (extensionId) {
+                    demandedRequires[extensionId] = true;
+                });
+            }
+            if (classRequires) {
+                classRequireNames = classRequires && Object.keys(classRequires);
+                classRequireNames.forEach(function (requireId) {
+                    demandedRequires[requireId] = true;
+                });
+            }
 
             // registering contributed methods
             var properties = class_.__contributes;
