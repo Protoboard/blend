@@ -79,6 +79,31 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * @returns {object}
+     * @private
+     */
+    _getUnfulfilledRequires: function () {
+        var requires = this.requires,
+            demanded = requires.demanded,
+            fulfilled = requires.fulfilled,
+            unfulfilledClassIds = Object.keys(demanded)
+                .filter(function (classId) {
+                    return !fulfilled.hasOwnProperty(classId);
+                }),
+            result;
+
+        if (unfulfilledClassIds.length) {
+            result = {};
+            unfulfilledClassIds
+                .forEach(function (classId) {
+                    result[classId] = true;
+                });
+        }
+
+        return result;
+    },
+
+    /**
      * Retrieves a list of method names that can be copied over 1:1.
      * @private
      */
@@ -288,7 +313,6 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         var classId = this.classId,
             interfaces = this.interfaces,
             extensions = this.extensions,
-            requires = this.requires,
             contributions = this.contributions,
             methods = this.methods,
             result = Object.create($oop.Class);
@@ -311,9 +335,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         result.__extends = extensions;
 
         // ... requires
-        // TODO: Subtract fulfilled requires fro demanded
-        var requireNames = Object.getOwnPropertyNames(requires.demanded);
-        result.__requires = requireNames.length ? requires.demanded : undefined;
+        result.__requires = this._getUnfulfilledRequires();
 
         // ... contributions
         result.__contributes = contributions;

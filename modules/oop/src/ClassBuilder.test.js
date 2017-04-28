@@ -355,51 +355,51 @@ describe("ClassBuilder", function () {
             expect(result.__contributes).toBe(builder.contributions);
         });
 
-        // describe("when class has requires", function () {
-        //     var Require1;
-        //
-        //     beforeEach(function () {
-        //         Require1 = $oop.ClassBuilder
-        //             .create('Require1')
-        //             .build();
-        //
-        //         builder.require(Require1);
-        //     });
-        //
-        //     it("should add require meta", function () {
-        //         result = builder.build();
-        //         expect(result.__requires.Require1).toBe(true);
-        //     });
-        // });
-
         describe("when class has extensions", function () {
             var Extended2;
 
             beforeEach(function () {
                 Extended2 = $oop.ClassBuilder.create('Extended2')
-                    .require(Extended1)
                     .build();
 
-                builder.extend(Extended2);
+                result = builder
+                    .extend(Extended2)
+                    .build();
             });
 
-            // describe("with unsatisfied requirements", function () {
-            //     it("should throw", function () {
-            //         expect(function () {
-            //             builder.build();
-            //         }).toThrow();
-            //     });
-            // });
+            it("should add meta", function () {
+                expect(result.__extends).toBe(builder.extensions);
+            });
+        });
 
-            describe("with satisfied requirements", function () {
+        describe("when class has requires", function () {
+            var Require1;
+
+            beforeEach(function () {
+                Require1 = $oop.ClassBuilder
+                    .create('Require1')
+                    .build();
+
+                builder.require(Require1);
+            });
+
+            describe("fulfilled", function () {
                 beforeEach(function () {
-                    builder.extend(Extended1);
+                    builder.extend(Require1);
                 });
 
-                it("should not throw", function () {
-                    expect(function () {
-                        builder.build();
-                    }).not.toThrow();
+                it("should not popuplate required meta", function () {
+                    result = builder.build();
+                    expect(result.__requires).toBeUndefined();
+                });
+            });
+
+            describe("unfulfilled", function () {
+                it("should add require meta", function () {
+                    result = builder.build();
+                    expect(result.__requires).toEqual({
+                        Require1: true
+                    });
                 });
             });
         });
