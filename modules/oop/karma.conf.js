@@ -11,12 +11,12 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'namespace.js',
-            '*.js'
+            'test/namespace.js',
+            'src/**/*.js'
         ],
 
         // list of files to exclude
-        exclude: ['karma.conf.js'],
+        exclude: [],
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
