@@ -118,7 +118,7 @@ describe("ClassBuilder", function () {
                 });
             });
 
-            it("should add to 2nd degree reqs & exts as requires", function () {
+            it("should extract requires", function () {
                 expect(builder.requires.demanded).toEqual({
                     Base: true,
                     Widget: true,
@@ -148,22 +148,48 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var RequiredClass = {
-                    __id: 'RequiredClass'
-                },
-                result;
+            describe("when require has no requires or extensions", function () {
+                var RequiredClass = {
+                        __id: 'RequiredClass'
+                    },
+                    result;
 
-            beforeEach(function () {
-                result = builder.require(RequiredClass);
+                beforeEach(function () {
+                    result = builder.require(RequiredClass);
+                });
+
+                it("should return self", function () {
+                    expect(result).toBe(builder);
+                });
+
+                it("should add to meta", function () {
+                    expect(builder.requires.demanded).toEqual({
+                        RequiredClass: true
+                    });
+                });
             });
 
-            it("should return self", function () {
-                expect(result).toBe(builder);
-            });
+            describe("when require does have requires or extensions", function () {
+                var RequiredClass = {
+                    __id: 'RequiredClass',
+                    __extends: {
+                        'Base': true
+                    },
+                    __requires: {
+                        'Widget': true,
+                        'OtherTrait': true
+                    }
+                };
 
-            it("should add to meta", function () {
-                expect(builder.requires.demanded).toEqual({
-                    RequiredClass: RequiredClass
+                it("should extract requires", function () {
+                    builder.require(RequiredClass);
+
+                    expect(builder.requires.demanded).toEqual({
+                        RequiredClass: true,
+                        Base: true,
+                        Widget: true,
+                        OtherTrait: true
+                    });
                 });
             });
         });
@@ -324,13 +350,6 @@ describe("ClassBuilder", function () {
             expect(result.__builder).toBe(builder);
         });
 
-        it("should add class to fulfilled requires", function () {
-            result = builder.build();
-            expect(builder.requires.fulfilled).toEqual({
-                ClassId: result
-            });
-        });
-
         it("should add ID meta", function () {
             result = builder.build();
             expect(result.__id).toBe('ClassId');
@@ -341,22 +360,22 @@ describe("ClassBuilder", function () {
             expect(result.__contributes).toBe(builder.contributions);
         });
 
-        describe("when class has requires", function () {
-            var Require1;
-
-            beforeEach(function () {
-                Require1 = $oop.ClassBuilder
-                    .create('Require1')
-                    .build();
-
-                builder.require(Require1);
-            });
-
-            it("should add require meta", function () {
-                result = builder.build();
-                expect(result.__requires.Require1).toBe(Require1);
-            });
-        });
+        // describe("when class has requires", function () {
+        //     var Require1;
+        //
+        //     beforeEach(function () {
+        //         Require1 = $oop.ClassBuilder
+        //             .create('Require1')
+        //             .build();
+        //
+        //         builder.require(Require1);
+        //     });
+        //
+        //     it("should add require meta", function () {
+        //         result = builder.build();
+        //         expect(result.__requires.Require1).toBe(true);
+        //     });
+        // });
 
         describe("when class has extensions", function () {
             var Extended2;

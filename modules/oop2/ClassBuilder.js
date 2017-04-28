@@ -32,6 +32,7 @@
         },
 
         /**
+         * TODO: Change to _getUnimplementedMethods()
          * @returns {boolean}
          * @private
          */
@@ -47,6 +48,34 @@
                     return methods.hasOwnProperty(propertyName);
                 });
             });
+        },
+
+        /**
+         * Extracts extensions and requires from class and transfers them
+         * to the class being built.
+         * @param {$oop.Class} class_
+         * @private
+         */
+        _extractRequires: function (class_) {
+            var requires = this.requires,
+                demandedRequires = requires.demanded,
+                classRequires = class_.__requires,
+                classExtends = class_.__extends,
+                classRequireNames,
+                classExtensionNames;
+
+            if (classExtends) {
+                classExtensionNames = classExtends && Object.keys(classExtends);
+                classExtensionNames.forEach(function (extensionId) {
+                    demandedRequires[extensionId] = true;
+                });
+            }
+            if (classRequires) {
+                classRequireNames = classRequires && Object.keys(classRequires);
+                classRequireNames.forEach(function (requireId) {
+                    demandedRequires[requireId] = true;
+                });
+            }
         },
 
         /**
@@ -168,7 +197,10 @@
             }
 
             // registering required class
-            this.requires.demanded[class_.__id] = class_;
+            this.requires.demanded[class_.__id] = true;
+
+            // transferring extends & requires to class being built
+            this._extractRequires(class_);
 
             return this;
         },
@@ -203,35 +235,16 @@
                 throw new Error("No class specified to extend.");
             }
 
-            var classId = class_.__id,
-                extensions = this.extensions,
-                requires = this.requires,
-                demandedRequires = requires.demanded,
-                fulfilledRequires = requires.fulfilled,
-                classRequires = class_.__requires,
-                classExtends = class_.__extends,
-                classRequireNames,
-                classExtensionNames;
+            var classId = class_.__id;
 
             // registering class as extension
-            extensions[classId] = true;
+            this.extensions[classId] = true;
 
             // adding extension to fulfilled requirements
-            fulfilledRequires[classId] = true;
+            this.requires.fulfilled[classId] = true;
 
-            // adding 2nd degree requirements & extensions as requirements
-            if (classExtends) {
-                classExtensionNames = classExtends && Object.keys(classExtends);
-                classExtensionNames.forEach(function (extensionId) {
-                    demandedRequires[extensionId] = true;
-                });
-            }
-            if (classRequires) {
-                classRequireNames = classRequires && Object.keys(classRequires);
-                classRequireNames.forEach(function (requireId) {
-                    demandedRequires[requireId] = true;
-                });
-            }
+            // transferring extends & requires to class being built
+            this._extractRequires(class_);
 
             // registering contributed methods
             var properties = class_.__contributes;
@@ -289,43 +302,24 @@
                 }
             }
 
-            // adding self to fulfilled requirements
-            this.requires.fulfilled[classId] = result;
-
             // copying meta properties
             // ... builder
+            // TODO: Remove
             result.__builder = this;
 
             // ... class ID
             result.__id = classId;
 
+            // ... extensions
+            result.__extends = extensions;
+
+            // ... requires
+            // TODO: Subtract fulfilled requires fro demanded
+            var requireNames = Object.getOwnPropertyNames(requires.demanded);
+            result.__requires = requireNames.length ? requires.demanded : undefined;
+
             // ... contributions
             result.__contributes = contributions;
-
-            // ... own requires
-            var requiredClassNames = Object.getOwnPropertyNames(requires.demanded);
-            if (requiredClassNames.length) {
-                result.__requires = {};
-                requiredClassNames.forEach(function (requiredClassName) {
-                    // TODO: filter by fulfilled requires
-                    var require = requires.demanded[requiredClassName];
-                    result.__requires[require.__id] = require;
-                });
-            }
-
-            // ... extensions
-            var extendedClassNames = Object.getOwnPropertyNames(extensions);
-            if (extendedClassNames.length) {
-                result.__extends = {};
-                extendedClassNames.forEach(function (requiredClassName) {
-                    var extension = extensions[requiredClassName];
-                    result.__extends[extension.__id] = extension;
-                });
-            }
-
-            // copying own properties
-            // ... from contributions
-            // ... from extensions
 
             // copying singular methods 1:1
             this._getSingularMethodNames()
@@ -340,8 +334,6 @@
                 .forEach(function (methodName) {
                     result[methodName] = wrapperMethods[methodName];
                 });
-
-            // transferring unmet trait extensions, bases, & requires as requires
 
             // adding class to registry
             this.builtClasses[classId] = result;
