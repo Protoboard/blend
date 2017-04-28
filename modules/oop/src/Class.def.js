@@ -3,7 +3,6 @@
 
 /**
  * TODO: Restore $oop.Base functionality.
- * TODO: Add diagnostic methods (extends, implements, requires).
  * @class
  */
 $oop.Class = /** @lends $oop.Class# */{
@@ -27,6 +26,45 @@ $oop.Class = /** @lends $oop.Class# */{
         }
 
         return Object.create(this);
+    },
+
+    /**
+     * Tells whether current class implements the specified interface.
+     * @param {$oop.Class} interface_
+     * @returns {boolean}
+     */
+    implements: function (interface_) {
+        if (!$oop.Class.isPrototypeOf(interface_)) {
+            throw new Error("Class type expected");
+        }
+
+        return !!this.__implements[interface_.__id];
+    },
+
+    /**
+     * Tells whether current class extends the specified class.
+     * @param {$oop.Class} class_
+     * @returns {boolean}
+     */
+    extends: function (class_) {
+        if (!$oop.Class.isPrototypeOf(class_)) {
+            throw new Error("Class type expected");
+        }
+
+        return !!this.__extends[class_.__id];
+    },
+
+    /**
+     * Tells whether current class requires the specified class.
+     * @param {$oop.Class} class_
+     * @returns {boolean}
+     */
+    requires: function (class_) {
+        if (!$oop.Class.isPrototypeOf(class_)) {
+            throw new Error("Class type expected");
+        }
+
+        return !!this.__requires[class_.__id];
     }
 };
 
