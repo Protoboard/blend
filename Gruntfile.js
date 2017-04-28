@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
     "use strict";
 
-    // TODO: Get from directory structure
+    // TODO: Get module names from directory structure
     var moduleNames = ['oop'],
         manifests = moduleNames.map(function (moduleName) {
             return {
@@ -54,7 +54,6 @@ module.exports = function (grunt) {
     }
 
     /**
-     *
      * @param options
      * @returns {object}
      */
@@ -79,11 +78,28 @@ module.exports = function (grunt) {
             separator: ';'
         }),
 
-        karma: buildKarmaConfig()
+        karma: buildKarmaConfig(),
+
+        watch: {
+            files: ['modules/**/*.js'],
+            tasks: ['build']
+        },
+
+        notify: {
+            build: {
+                options: {
+                    title: 'GiantJS',
+                    message: 'Build done'
+                }
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-notify');
 
-    grunt.registerTask('default', ['concat']);
+    grunt.registerTask('build', ['concat', 'notify:build']);
+    grunt.registerTask('default', ['build', 'watch']);
 };
