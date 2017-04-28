@@ -2,7 +2,7 @@ module.exports = function (grunt) {
     "use strict";
 
     // TODO: Get from directory structure
-    var moduleNames = ['oop2'],
+    var moduleNames = ['oop'],
         manifests = moduleNames.map(function (moduleName) {
             return {
                 key: moduleName,
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
 
         return result;
     }
-    
+
     grunt.initConfig({
         concat: buildConfig({
             separator: ';'
