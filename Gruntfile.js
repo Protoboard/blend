@@ -18,6 +18,7 @@ module.exports = function (grunt) {
 
     /**
      * @param options
+     * @returns {object}
      */
     function buildConcatConfig(options) {
         var result = {};
@@ -28,7 +29,7 @@ module.exports = function (grunt) {
             var moduleName = asset.key,
                 namespaceSymbol = '$' + moduleName;
 
-            result[asset.key] = {
+            result[moduleName] = {
                 src: asset.value.js.map(function (relativePath) {
                     return ['modules', moduleName, relativePath].join('/');
                 }),
@@ -52,13 +53,37 @@ module.exports = function (grunt) {
         return result;
     }
 
+    /**
+     *
+     * @param options
+     * @returns {object}
+     */
+    function buildKarmaConfig(options) {
+        var result = {};
+
+        result.options = options;
+
+        assets.forEach(function (asset) {
+            var moduleName = asset.key;
+
+            result[moduleName] = {
+                configFile: ['modules', moduleName, 'karma.conf.js'].join('/')
+            };
+        });
+
+        return result;
+    }
+
     grunt.initConfig({
         concat: buildConcatConfig({
             separator: ';'
-        })
+        }),
+
+        karma: buildKarmaConfig()
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', ['concat']);
 };
