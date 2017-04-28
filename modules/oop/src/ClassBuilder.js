@@ -32,22 +32,27 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
-     * TODO: Change to _getUnimplementedMethods()
-     * @returns {boolean}
+     * Retrieves a list of Interface / method identifiers not implemented by the host class.
+     * @returns {string[]}
      * @private
      */
-    _implementsAllInterfaces: function () {
+    _getUnimplementedMethods: function () {
         var interfaces = this.interfaces,
-            interfaceNames = Object.getOwnPropertyNames(interfaces),
+            interfaceNames = Object.keys(interfaces),
             methods = this.methods;
 
-        return interfaceNames.every(function (interfaceName) {
-            var interface_ = interfaces[interfaceName],
-                propertyNames = Object.getOwnPropertyNames(interface_);
-            return propertyNames.every(function (propertyName) {
-                return methods.hasOwnProperty(propertyName);
-            });
-        });
+        return interfaceNames.reduce(function (unimplemented, interfaceName) {
+            var interface_ = interfaces[interfaceName];
+
+            return unimplemented.concat(Object.getOwnPropertyNames(interface_)
+                .filter(function (propertyName) {
+                    return typeof interface_[propertyName] === 'function' &&
+                        !methods.hasOwnProperty(propertyName);
+                })
+                .map(function (methodName) {
+                    return interfaceName + '#' + methodName;
+                }));
+        }, []);
     },
 
     /**
@@ -311,30 +316,31 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      */
     build: function () {
         var classId = this.classId,
-            interfaces = this.interfaces,
-            extensions = this.extensions,
-            contributions = this.contributions,
+            unimplementedMethods = this._getUnimplementedMethods(),
             methods = this.methods,
             result = Object.create($oop.Class);
 
         // checking whether
         // ... methods match interfaces
-        if (interfaces) {
-            if (!this._implementsAllInterfaces()) {
-                // TODO: Include the names of methods / interfaces not implemented.
-                throw new Error("Class " + classId + " doesn't implement all interfaces");
-            }
+        if (unimplementedMethods.length) {
+            throw new Error("Class " + classId + " doesn't implement: " +
+                unimplementedMethods
+                    .map(function (methodName) {
+                        return "'" + methodName + "'";
+                    }) + ".");
         }
 
         // adding meta properties
         Object.defineProperties(result, {
             __id: {value: classId},
 
-            __extends: {value: extensions},
+            __implements: {value: this.interfaces},
+
+            __extends: {value: this.extensions},
 
             __requires: {value: this._getUnfulfilledRequires()},
 
-            __contributes: {value: contributions}
+            __contributes: {value: this.contributions}
         });
 
         // copying non-method properties

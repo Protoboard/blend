@@ -300,9 +300,9 @@ describe("ClassBuilder", function () {
 
         describe("when class implements interfaces", function () {
             var Interface1 = {
-                foo: true
+                foo: function () {}
             }, Interface2 = {
-                bar: true
+                bar: function () {}
             };
 
             beforeEach(function () {
