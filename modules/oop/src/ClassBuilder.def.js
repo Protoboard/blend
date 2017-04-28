@@ -222,8 +222,8 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      * @returns {$oop.ClassBuilder}
      */
     require: function (class_) {
-        if (!class_) {
-            throw new Error("No class specified to be required.");
+        if (!$oop.Class.isPrototypeOf(class_)) {
+            throw new Error("Require expects type Class");
         }
 
         // registering required class
@@ -243,8 +243,8 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      * @returns {$oop.ClassBuilder}
      */
     implement: function (interface_) {
-        if (!interface_) {
-            throw new Error("No interface specified.");
+        if (!$oop.Class.isPrototypeOf(interface_)) {
+            throw new Error("Implement expects type Class");
         }
 
         // registering interface
@@ -261,8 +261,8 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      * @returns {$oop.ClassBuilder}
      */
     extend: function (class_) {
-        if (!class_) {
-            throw new Error("No class specified to extend.");
+        if (!$oop.Class.isPrototypeOf(class_)) {
+            throw new Error("Extend expects type Class");
         }
 
         var classId = class_.__id;

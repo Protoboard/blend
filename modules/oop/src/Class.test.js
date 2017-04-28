@@ -11,9 +11,8 @@ describe("Class", function () {
 
     describe("instantiation", function () {
         describe("of trait", function () {
-            var Require1 = {
-                __id: 'Require1'
-            };
+            var Require1 = $oop.ClassBuilder.create('Require1')
+                .build();
 
             beforeEach(function () {
                 Class = builder

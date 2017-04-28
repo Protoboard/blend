@@ -80,21 +80,16 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var Trait = {
-                    __id: 'Trait',
-                    __contributes: {
+            var Trait = $oop.ClassBuilder.create('Trait')
+                    .extend($oop.ClassBuilder.create('Base').build())
+                    .require($oop.ClassBuilder.create('Widget').build())
+                    .require($oop.ClassBuilder.create('OtherTrait').build())
+                    .contribute({
                         foo: "FOO",
                         bar: function () {
                         }
-                    },
-                    __extends: {
-                        'Base': true
-                    },
-                    __requires: {
-                        'Widget': true,
-                        'OtherTrait': true
-                    }
-                },
+                    })
+                    .build(),
                 result;
 
             beforeEach(function () {
@@ -149,12 +144,11 @@ describe("ClassBuilder", function () {
 
         describe("otherwise", function () {
             describe("when require has no requires or extensions", function () {
-                var RequiredClass = {
-                        __id: 'RequiredClass'
-                    },
+                var RequiredClass,
                     result;
 
                 beforeEach(function () {
+                    RequiredClass = $oop.ClassBuilder.create('RequiredClass').build();
                     result = builder.require(RequiredClass);
                 });
 
@@ -170,16 +164,15 @@ describe("ClassBuilder", function () {
             });
 
             describe("when require does have requires or extensions", function () {
-                var RequiredClass = {
-                    __id: 'RequiredClass',
-                    __extends: {
-                        'Base': true
-                    },
-                    __requires: {
-                        'Widget': true,
-                        'OtherTrait': true
-                    }
-                };
+                var RequiredClass;
+
+                beforeEach(function () {
+                    RequiredClass = $oop.ClassBuilder.create('RequiredClass')
+                        .extend($oop.ClassBuilder.create('Base').build())
+                        .require($oop.ClassBuilder.create('Widget').build())
+                        .require($oop.ClassBuilder.create('OtherTrait').build())
+                        .build();
+                });
 
                 it("should extract requires", function () {
                     builder.require(RequiredClass);
@@ -209,9 +202,7 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var ImplementedInterface = {
-                    __id: 'ImplementedInterface'
-                },
+            var ImplementedInterface = $oop.ClassBuilder.create('ImplementedInterface').build(),
                 result;
 
             beforeEach(function () {
@@ -299,11 +290,18 @@ describe("ClassBuilder", function () {
         });
 
         describe("when class implements interfaces", function () {
-            var Interface1 = {
-                foo: function () {}
-            }, Interface2 = {
-                bar: function () {}
-            };
+            var Interface1 = $oop.ClassBuilder.create('Interface1')
+                    .contribute({
+                        foo: function () {
+                        }
+                    })
+                    .build(),
+                Interface2 = $oop.ClassBuilder.create('Interface2')
+                    .contribute({
+                        bar: function () {
+                        }
+                    })
+                    .build();
 
             beforeEach(function () {
                 builder
