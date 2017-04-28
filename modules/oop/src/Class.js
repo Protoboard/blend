@@ -14,8 +14,16 @@ $oop.Class = /** @lends $oop.Class# */{
      */
     create: function () {
         if (this.__requires) {
-            // TODO: Output a list of unmet requires
-            throw new Error("Class has unmet requirements, can't instantiate.");
+            // there are unfulfilled requires - can't instantiate
+            throw new Error([
+                "Class '" + this.__id + "' doesn't satisfy require(s): " +
+                Object.keys(this.__requires)
+                    .map(function (classId) {
+                        return "'" + classId + "'";
+                    })
+                    .join(",") + ".",
+                "Can't instantiate."
+            ].join(" "));
         }
 
         return Object.create(this);
