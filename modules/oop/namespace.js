@@ -1,7 +1,3 @@
-var $oop;
+"use strict";
 
-(function () {
-    "use strict";
-
-    $oop = {};
-}());
+var $oop = {};

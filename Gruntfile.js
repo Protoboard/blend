@@ -17,20 +17,35 @@ module.exports = function (grunt) {
         });
 
     /**
-     * TODO: Pass in asset type.
      * @param options
      */
-    function buildConfig(options) {
+    function buildConcatConfig(options) {
         var result = {};
 
         result.options = options;
 
         assets.forEach(function (asset) {
+            var moduleName = asset.key,
+                namespaceSymbol = '$' + moduleName;
+
             result[asset.key] = {
                 src: asset.value.js.map(function (relativePath) {
-                    return ['modules', asset.key, relativePath].join('/');
+                    return ['modules', moduleName, relativePath].join('/');
                 }),
-                dest: ['dist', asset.key + '.js'].join('/')
+                dest: ['dist', moduleName + '.js'].join('/'),
+                options: {
+                    banner: [
+                        '(function () {',
+                        'var ' + namespaceSymbol + ' = {};',
+                        'if (typeof define !== "undefined") define(function () {return ' + namespaceSymbol + ';})',
+                        'else if (typeof window !== "undefined") window["' + namespaceSymbol + '"] = ' + namespaceSymbol,
+                        'else module.exports = ' + namespaceSymbol + ';',
+                        ''
+                    ].join('\n'),
+                    footer: [
+                        '}())'
+                    ].join('\n')
+                }
             };
         });
 
@@ -38,7 +53,7 @@ module.exports = function (grunt) {
     }
 
     grunt.initConfig({
-        concat: buildConfig({
+        concat: buildConcatConfig({
             separator: ';'
         })
     });
