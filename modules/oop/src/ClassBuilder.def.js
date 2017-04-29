@@ -371,23 +371,12 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
         var contributions = this.contributions,
             memberNames = Object.getOwnPropertyNames(members),
-            i, memberName, memberValue;
+            i, memberName;
 
         // copying properties to overall contributions
         for (i = 0; i < memberNames.length; i++) {
             memberName = memberNames[i];
-            memberValue = members[memberName];
-
-            if ($oop.Class.isPrototypeOf(memberValue)) {
-                // classes & their instances are not allowed
-                // to avoid circular references at interpretation-time
-                throw new Error([
-                    "Static property '" + this.classId + "." + memberName + "' is not a primitive.",
-                    "Can't build."
-                ].join(" "));
-            }
-
-            contributions[memberName] = memberValue;
+            contributions[memberName] = members[memberName];
         }
 
         // registering contributed methods
