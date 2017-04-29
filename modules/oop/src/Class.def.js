@@ -2,13 +2,12 @@
 "use strict";
 
 /**
- * TODO: Restore $oop.Base functionality.
+ * @todo Restore $oop.Base functionality.
  * @class
  */
 $oop.Class = /** @lends $oop.Class# */{
     /**
      * Creates new instance of class.
-     * TODO: Work in progress.
      * @returns {$oop.Class}
      */
     create: function () {

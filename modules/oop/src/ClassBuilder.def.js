@@ -307,7 +307,6 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**
      * Specifies a class to be extended by the host class.
      * Optionally filtered by a list of property names.
-     * TODO: Add option to filter by list of property names.
      * @param {$oop.Class} class_
      * @returns {$oop.ClassBuilder}
      */
