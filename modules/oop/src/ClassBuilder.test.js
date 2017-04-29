@@ -267,6 +267,17 @@ describe("ClassBuilder", function () {
                 });
             });
 
+            describe("when adding non-primitives", function () {
+                it("should throw", function () {
+                    var NonPrimitive = $oop.ClassBuilder.create('NonPrimitive').build();
+                    expect(function () {
+                        builder.contribute({
+                            baz: NonPrimitive
+                        });
+                    });
+                });
+            });
+
             describe("when already having own properties", function () {
                 it("should add to meta", function () {
                     builder.contribute({

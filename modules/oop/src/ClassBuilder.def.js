@@ -346,12 +346,23 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
         var contributions = this.contributions,
             propertyNames = Object.getOwnPropertyNames(properties),
-            i, propertyName;
+            i, propertyName, propertyValue;
 
         // copying properties to overall contributions
         for (i = 0; i < propertyNames.length; i++) {
             propertyName = propertyNames[i];
-            contributions[propertyName] = properties[propertyName];
+            propertyValue = properties[propertyName];
+
+            if ($oop.Class.isPrototypeOf(propertyValue)) {
+                // classes & their instances are not allowed
+                // to avoid circular references at interpretation-time
+                throw new Error([
+                    "Static property '" + this.classId + "." + propertyName + "' is not a primitive.",
+                    "Can't build."
+                ].join(" "));
+            }
+
+            contributions[propertyName] = propertyValue;
         }
 
         // registering contributed methods
@@ -375,7 +386,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         // ... methods match interfaces
         if (unimplementedMethods.length) {
             throw new Error([
-                "Class " + classId + " doesn't implement method(s): " +
+                "Class '" + classId + "' doesn't implement method(s): " +
                 unimplementedMethods
                     .map(function (methodName) {
                         return "'" + methodName + "'";
