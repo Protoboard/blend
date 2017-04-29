@@ -82,7 +82,7 @@ module.exports = function (grunt) {
 
         watch: {
             files: ['modules/**/*.js'],
-            tasks: ['build']
+            tasks: ['build-quick']
         },
 
         notify: {
@@ -94,9 +94,14 @@ module.exports = function (grunt) {
                     message: 'Documentation ready'
                 }
             },
-            build: {
+            'build-quick': {
                 options: {
-                    message: 'Build ready'
+                    message: 'Quick build ready'
+                }
+            },
+            'build-full': {
+                options: {
+                    message: 'Full build ready'
                 }
             }
         },
@@ -120,7 +125,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-jsdoc');
 
-    grunt.registerTask('build', ['clean:build', 'concat', 'notify:build']);
     grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
-    grunt.registerTask('default', ['build', 'watch']);
+    grunt.registerTask('build-quick', ['clean:build', 'concat', 'notify:build-quick']);
+    grunt.registerTask('build-full', ['clean', 'karma', 'concat', 'jsdoc', 'notify:build-full']);
+    grunt.registerTask('default', ['build-quick', 'watch']);
 };
