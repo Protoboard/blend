@@ -357,7 +357,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         forwards.push({
             'class': class_,
             'filter': filter,
-            'priority': priority
+            'priority': priority || 0
         });
 
         // sorting forwards by priority (descending)

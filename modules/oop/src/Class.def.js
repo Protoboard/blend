@@ -12,15 +12,29 @@ $oop.Class = /** @lends $oop.Class# */{
      */
     create: function () {
         // forwarding
+        var forwards = this.__forwards,
+            forwardsCount = forwards.length,
+            i, forward,
+            class_ = this;
+
+        // retrieving forward class (if any)
+        for (i = 0; i < forwardsCount; i++) {
+            forward = forwards[i];
+            if (forward.filter.apply(this, arguments)) {
+                // ctr arguments fit forward filter
+                class_ = forward['class'];
+                break;
+            }
+        }
 
         // fetching cached instance
 
         // running checks
-        if (this.__requires) {
+        if (class_.__requires) {
             // there are unfulfilled requires - can't instantiate
             throw new Error([
-                "Class '" + this.__id + "' doesn't satisfy require(s): " +
-                Object.keys(this.__requires)
+                "Class '" + class_.__id + "' doesn't satisfy require(s): " +
+                Object.keys(class_.__requires)
                     .map(function (classId) {
                         return "'" + classId + "'";
                     })
@@ -30,7 +44,7 @@ $oop.Class = /** @lends $oop.Class# */{
         }
 
         // instantiating class
-        var instance = Object.create(this);
+        var instance = Object.create(class_);
 
         // invoking .init
 
@@ -53,7 +67,7 @@ $oop.Class = /** @lends $oop.Class# */{
     },
 
     /**
-     * Tells whether current class extends the specified class.
+     * Tells whether current class is or extends the specified class.
      * @param {$oop.Class} class_
      * @returns {boolean}
      */
@@ -62,7 +76,9 @@ $oop.Class = /** @lends $oop.Class# */{
             throw new Error("Class type expected");
         }
 
-        return !!this.__extends[class_.__id];
+        var classId = class_.__id;
+
+        return this.__id === classId || !!this.__extends[classId];
     },
 
     /**
@@ -112,5 +128,12 @@ $oop.Class = /** @lends $oop.Class# */{
  * Reference to the builder that built the class.
  * @name $oop.Class#__builder
  * @type {$oop.ClassBuilder}
+ * @private
+ */
+
+/**
+ * Registry of forwarding definitions.
+ * @name $oop.Class#__forwards
+ * @type {object}
  * @private
  */

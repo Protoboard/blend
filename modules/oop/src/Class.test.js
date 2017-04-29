@@ -28,13 +28,45 @@ describe("Class", function () {
             });
         });
 
-        describe("of non-trait", function () {
-            it("should not throw", function () {
-                Class = builder.build();
+        describe("when there are forwards", function () {
+            var Forward,
+                result;
 
-                expect(function () {
-                    Class.create();
-                }).not.toThrow();
+            beforeEach(function () {
+                Class = builder
+                    .contribute({
+                        foo: function () {
+                            return 'foo';
+                        }
+                    })
+                    .build();
+
+                Forward = $oop.ClassBuilder.create('Forward')
+                    .extend(Class)
+                    .build();
+
+                Class.__builder
+                    .forward(Forward, function (foo) {
+                        return foo === 1;
+                    });
+            });
+
+            describe("for matching arguments", function () {
+                it("should instantiate forward class", function () {
+                    result = Class.create(1);
+                    console.log(JSON.stringify(result));
+                    expect(result.extends(Class)).toBeTruthy();
+                    expect(result.extends(Forward)).toBeTruthy();
+                });
+            });
+
+            describe("for non-matching arguments", function () {
+                it("should instantiate original class", function () {
+                    result = Class.create(0);
+                    console.log(JSON.stringify(result));
+                    expect(result.extends(Class)).toBeTruthy();
+                    expect(result.extends(Forward)).toBeFalsy();
+                });
             });
         });
     });
@@ -45,7 +77,7 @@ describe("Class", function () {
             instance;
 
         beforeEach(function () {
-            Interface  = $oop.ClassBuilder.create('Interface')
+            Interface = $oop.ClassBuilder.create('Interface')
                 .build();
             Class = builder
                 .implement(Interface)
@@ -94,6 +126,13 @@ describe("Class", function () {
                 expect(function () {
                     instance.extends();
                 }).toThrow();
+            });
+        });
+
+        describe("on self", function () {
+            it("should return true", function () {
+                expect(Class.extends(Class)).toBe(true);
+                expect(instance.extends(Class)).toBe(true);
             });
         });
 
