@@ -16,12 +16,32 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      * @param {object} properties
      * @private
      */
-    _addMethodsToRegistry: function (properties) {
-        var methods = this.methods = this.methods || {},
+    _addProperties: function (properties) {
+        var registry = this.properties,
             propertyNames = Object.getOwnPropertyNames(properties),
+            propertyCount = propertyNames.length,
+            i, propertyName, propertyValue;
+
+        for (i = 0; i < propertyCount; i++) {
+            propertyName = propertyNames[i];
+            propertyValue = properties[propertyName];
+            if (typeof propertyValue !== 'function') {
+                registry[propertyName] = propertyValue;
+            }
+        }
+    },
+
+    /**
+     * @param {object} properties
+     * @private
+     */
+    _addMethods: function (properties) {
+        var methods = this.methods,
+            propertyNames = Object.getOwnPropertyNames(properties),
+            propertyCount = propertyNames.length,
             i, propertyName, propertyValue, methodOverrides;
 
-        for (i = 0; i < propertyNames.length; i++) {
+        for (i = 0; i < propertyCount; i++) {
             propertyName = propertyNames[i];
             propertyValue = properties[propertyName];
             if (typeof propertyValue === 'function') {
@@ -224,6 +244,12 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         result.contributions = {};
 
         /**
+         * Registry of non-function properties indexed by property name.
+         * @type {object}
+         */
+        result.properties = {};
+
+        /**
          * Method registry.
          * Indexed by method name, then serial.
          * @type {object}
@@ -296,9 +322,8 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
         // registering contributed methods
         var properties = class_.__contributes;
-        if (properties) {
-            this._addMethodsToRegistry(properties);
-        }
+        this._addProperties(properties);
+        this._addMethods(properties);
 
         return this;
     },
@@ -324,7 +349,8 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         }
 
         // registering contributed methods
-        this._addMethodsToRegistry(properties);
+        this._addProperties(properties);
+        this._addMethods(properties);
 
         return this;
     },
@@ -335,6 +361,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     build: function () {
         var classId = this.classId,
             unimplementedMethods = this._getUnimplementedMethods(),
+            properties = this.properties,
             methods = this.methods,
             result = Object.create($oop.Class);
 
@@ -354,18 +381,17 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         // adding meta properties
         Object.defineProperties(result, {
             __id: {value: classId},
-
             __implements: {value: this.interfaces},
-
             __extends: {value: this.extensions},
-
             __requires: {value: this._getUnfulfilledRequires()},
-
             __contributes: {value: this.contributions}
         });
 
         // copying non-method properties
-        // TODO
+        Object.getOwnPropertyNames(properties)
+            .forEach(function (propertyName) {
+                result[propertyName] = properties[propertyName];
+            });
 
         // copying singular methods 1:1
         this._getSingularMethodNames()
@@ -374,15 +400,14 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             });
 
         // copying wrapper methods
-        var wrapperMethods = this._getWrapperMethods(),
-            wrapperMethodNames = Object.getOwnPropertyNames(wrapperMethods);
-        wrapperMethodNames
+        var wrapperMethods = this._getWrapperMethods();
+        Object.getOwnPropertyNames(wrapperMethods)
             .forEach(function (methodName) {
                 result[methodName] = wrapperMethods[methodName];
             });
 
         // adding class to registry
-        this.builtClasses[classId] = result;
+        $oop.ClassBuilder.builtClasses[classId] = result;
 
         return result;
     }

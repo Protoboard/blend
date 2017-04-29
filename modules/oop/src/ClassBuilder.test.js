@@ -121,6 +121,12 @@ describe("ClassBuilder", function () {
                 });
             });
 
+            it("should register properties", function () {
+                expect(builder.properties).toEqual({
+                    foo: "FOO"
+                });
+            });
+
             it("should register methods", function () {
                 expect(builder.methods).toEqual({
                     bar: [Trait.__contributes.bar]
@@ -351,6 +357,25 @@ describe("ClassBuilder", function () {
         it("should add contributions meta", function () {
             result = builder.build();
             expect(result.__contributes).toBe(builder.contributions);
+        });
+
+        it("should copy properties", function () {
+            result = builder
+                .extend($oop.ClassBuilder.create('Trait')
+                    .contribute({
+                        foo: "FOO",
+                        bar: "BAR"
+                    })
+                    .build())
+                .contribute({
+                    foo: "BAZ"
+                })
+                .build();
+
+            expect(result).toEqual({
+                foo: "BAZ",
+                bar: "BAR"
+            });
         });
 
         describe("when class has extensions", function () {
