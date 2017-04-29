@@ -302,15 +302,39 @@ describe("ClassBuilder", function () {
         describe("otherwise", function () {
             var SubClass;
 
-            it("should add forward descriptor", function () {
+            beforeEach(function () {
                 SubClass = $oop.ClassBuilder.create('SubClass').build();
                 builder.forward(SubClass, filter, 1);
+            });
 
+            it("should add forward descriptor", function () {
                 expect(builder.forwards).toEqual([{
                     'class': SubClass,
                     'filter': filter,
                     'priority': 1
                 }]);
+            });
+
+            describe("when appending lower priority", function () {
+                var SubClass2,
+                    filter2;
+
+                it("should sort descriptors by priority", function () {
+                    SubClass2 = $oop.ClassBuilder.create('SubClass2').build();
+                    filter2 = function () {
+                    };
+                    builder.forward(SubClass2, filter2, 10);
+
+                    expect(builder.forwards).toEqual([{
+                        'class': SubClass2,
+                        'filter': filter2,
+                        'priority': 10
+                    }, {
+                        'class': SubClass,
+                        'filter': filter,
+                        'priority': 1
+                    }]);
+                });
             });
         });
     });

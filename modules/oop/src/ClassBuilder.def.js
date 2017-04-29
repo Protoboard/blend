@@ -351,11 +351,24 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             throw new Error("Forward expects type Class");
         }
 
-        this.forwards.push({
+        var forwards = this.forwards;
+
+        // adding forward descriptor
+        forwards.push({
             'class': class_,
             'filter': filter,
             'priority': priority
         });
+
+        // sorting forwards by priority (descending)
+        // here we're relying on Array#sort() mutating the array
+        // as the same array is referenced from the final class
+        forwards.sort(function (a, b) {
+            var ap = a.priority,
+                bp = b.priority;
+            return ap > bp ? -1 : bp > ap ? 1 : 0;
+        });
+
         return this;
     },
 
