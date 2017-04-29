@@ -13,40 +13,40 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     builtClasses: {},
 
     /**
-     * @param {object} properties
+     * @param {object} members
      * @private
      */
-    _addProperties: function (properties) {
+    _addProperties: function (members) {
         var registry = this.properties,
-            propertyNames = Object.getOwnPropertyNames(properties),
-            propertyCount = propertyNames.length,
-            i, propertyName, propertyValue;
+            memberNames = Object.getOwnPropertyNames(members),
+            memberCount = memberNames.length,
+            i, memberName, memberValue;
 
-        for (i = 0; i < propertyCount; i++) {
-            propertyName = propertyNames[i];
-            propertyValue = properties[propertyName];
-            if (typeof propertyValue !== 'function') {
-                registry[propertyName] = propertyValue;
+        for (i = 0; i < memberCount; i++) {
+            memberName = memberNames[i];
+            memberValue = members[memberName];
+            if (typeof memberValue !== 'function') {
+                registry[memberName] = memberValue;
             }
         }
     },
 
     /**
-     * @param {object} properties
+     * @param {object} members
      * @private
      */
-    _addMethods: function (properties) {
+    _addMethods: function (members) {
         var methods = this.methods,
-            propertyNames = Object.getOwnPropertyNames(properties),
-            propertyCount = propertyNames.length,
-            i, propertyName, propertyValue, methodOverrides;
+            memberNames = Object.getOwnPropertyNames(members),
+            memberCount = memberNames.length,
+            i, memberName, memberValue, methodOverrides;
 
-        for (i = 0; i < propertyCount; i++) {
-            propertyName = propertyNames[i];
-            propertyValue = properties[propertyName];
-            if (typeof propertyValue === 'function') {
-                methodOverrides = methods[propertyName] = methods[propertyName] || [];
-                methodOverrides.push(propertyValue);
+        for (i = 0; i < memberCount; i++) {
+            memberName = memberNames[i];
+            memberValue = members[memberName];
+            if (typeof memberValue === 'function') {
+                methodOverrides = methods[memberName] = methods[memberName] || [];
+                methodOverrides.push(memberValue);
             }
         }
     },
@@ -65,9 +65,9 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             var interface_ = interfaces[interfaceName];
 
             return unimplemented.concat(Object.getOwnPropertyNames(interface_)
-                .filter(function (propertyName) {
-                    return typeof interface_[propertyName] === 'function' &&
-                        !methods.hasOwnProperty(propertyName);
+                .filter(function (memberName) {
+                    return typeof interface_[memberName] === 'function' &&
+                        !methods.hasOwnProperty(memberName);
                 })
                 .map(function (methodName) {
                     return interfaceName + '#' + methodName;
@@ -306,7 +306,6 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Specifies a class to be extended by the host class.
-     * Optionally filtered by a list of property names.
      * @param {$oop.Class} class_
      * @returns {$oop.ClassBuilder}
      */
@@ -336,38 +335,38 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Can be called multiple times.
-     * @param {object} properties
+     * @param {object} members
      * @returns {$oop.ClassBuilder}
      */
-    contribute: function (properties) {
-        if (!properties) {
+    contribute: function (members) {
+        if (!members) {
             throw new Error("No contributions specified.");
         }
 
         var contributions = this.contributions,
-            propertyNames = Object.getOwnPropertyNames(properties),
-            i, propertyName, propertyValue;
+            memberNames = Object.getOwnPropertyNames(members),
+            i, memberName, memberValue;
 
         // copying properties to overall contributions
-        for (i = 0; i < propertyNames.length; i++) {
-            propertyName = propertyNames[i];
-            propertyValue = properties[propertyName];
+        for (i = 0; i < memberNames.length; i++) {
+            memberName = memberNames[i];
+            memberValue = members[memberName];
 
-            if ($oop.Class.isPrototypeOf(propertyValue)) {
+            if ($oop.Class.isPrototypeOf(memberValue)) {
                 // classes & their instances are not allowed
                 // to avoid circular references at interpretation-time
                 throw new Error([
-                    "Static property '" + this.classId + "." + propertyName + "' is not a primitive.",
+                    "Static property '" + this.classId + "." + memberName + "' is not a primitive.",
                     "Can't build."
                 ].join(" "));
             }
 
-            contributions[propertyName] = propertyValue;
+            contributions[memberName] = memberValue;
         }
 
         // registering contributed methods
-        this._addProperties(properties);
-        this._addMethods(properties);
+        this._addProperties(members);
+        this._addMethods(members);
 
         return this;
     },
