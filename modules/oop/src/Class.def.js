@@ -2,7 +2,7 @@
 "use strict";
 
 /**
- * @todo Restore $oop.Base functionality.
+ * General class functionality: instantiation & reflection.
  * @class
  */
 $oop.Class = /** @lends $oop.Class# */{
@@ -11,6 +11,11 @@ $oop.Class = /** @lends $oop.Class# */{
      * @returns {$oop.Class}
      */
     create: function () {
+        // forwarding
+
+        // fetching cached instance
+
+        // running checks
         if (this.__requires) {
             // there are unfulfilled requires - can't instantiate
             throw new Error([
@@ -24,7 +29,14 @@ $oop.Class = /** @lends $oop.Class# */{
             ].join(" "));
         }
 
-        return Object.create(this);
+        // instantiating class
+        var instance = Object.create(this);
+
+        // invoking .init
+
+        // caching instance (if necessary)
+
+        return instance;
     },
 
     /**
@@ -93,5 +105,12 @@ $oop.Class = /** @lends $oop.Class# */{
  * Properties contributed by the class.
  * @name $oop.Class#__contributes
  * @type {object}
+ * @private
+ */
+
+/**
+ * Reference to the builder that built the class.
+ * @name $oop.Class#__builder
+ * @type {$oop.ClassBuilder}
  * @private
  */

@@ -293,6 +293,39 @@ describe("ClassBuilder", function () {
         });
     });
 
+    describe("forwarding", function () {
+        var filter;
+
+        beforeEach(function () {
+            filter = function () {
+            };
+            builder = $oop.ClassBuilder.create('Class');
+        });
+
+        describe("when passing invalid argument", function () {
+            it("should throw", function () {
+                expect(function () {
+                    builder.forward(null, filter, 1);
+                }).toThrow();
+            });
+        });
+
+        describe("otherwise", function () {
+            var SubClass;
+
+            it("should add forward descriptor", function () {
+                SubClass = $oop.ClassBuilder.create('SubClass').build();
+                builder.forward(SubClass, filter, 1);
+
+                expect(builder.forwards).toEqual([{
+                    'class': SubClass,
+                    'filter': filter,
+                    'priority': 1
+                }]);
+            });
+        });
+    });
+
     describe("building class", function () {
         var Extended1 = $oop.ClassBuilder.create('Extended1')
                 .contribute({
@@ -387,6 +420,16 @@ describe("ClassBuilder", function () {
                 foo: "BAZ",
                 bar: "BAR"
             });
+        });
+
+        it("should add builder reference", function () {
+            result = builder.build();
+            expect(result.__builder).toBe(builder);
+        });
+
+        it("should add forwards meta", function () {
+            result = builder.build();
+            expect(result.__forwards).toBe(builder.forwards);
         });
 
         describe("when class has extensions", function () {

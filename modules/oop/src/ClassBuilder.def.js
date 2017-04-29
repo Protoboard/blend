@@ -249,6 +249,13 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         result.contributions = {};
 
         /**
+         * Registry of surrogate descriptors.
+         * @type {object[]}
+         * @memberOf $oop.ClassBuilder#
+         */
+        result.forwards = [];
+
+        /**
          * Registry of non-function properties indexed by property name.
          * @type {object}
          * @memberOf $oop.ClassBuilder#
@@ -334,6 +341,25 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * @param {$oop.Class} class_
+     * @param {function} filter
+     * @param {number} [priority=0]
+     * @returns {$oop.ClassBuilder}
+     */
+    forward: function (class_, filter, priority) {
+        if (!$oop.Class.isPrototypeOf(class_)) {
+            throw new Error("Forward expects type Class");
+        }
+
+        this.forwards.push({
+            'class': class_,
+            'filter': filter,
+            'priority': priority
+        });
+        return this;
+    },
+
+    /**
      * Can be called multiple times.
      * @param {object} members
      * @returns {$oop.ClassBuilder}
@@ -400,7 +426,9 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             __implements: {value: this.interfaces},
             __extends: {value: this.extensions},
             __requires: {value: this._getUnfulfilledRequires()},
-            __contributes: {value: this.contributions}
+            __contributes: {value: this.contributions},
+            __forwards: {value: this.forwards},
+            __builder: {value: this}
         });
 
         // copying non-method properties
