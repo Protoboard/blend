@@ -37,6 +37,7 @@ module.exports = function (grunt) {
                 options: {
                     banner: [
                         '(function () {',
+                        '/** @exports ' + namespaceSymbol + ' */',
                         'var ' + namespaceSymbol + ' = {};',
                         'if (typeof define !== "undefined") define(function () {return ' + namespaceSymbol + ';})',
                         'else if (typeof window !== "undefined") window["' + namespaceSymbol + '"] = ' + namespaceSymbol,
@@ -108,7 +109,7 @@ module.exports = function (grunt) {
 
         jsdoc: {
             dist: {
-                src: ['modules/*/src/**/*.js', 'README.md'],
+                src: ['dist/*.js', 'README.md'],
                 options: {
                     destination: 'doc',
                     template: "node_modules/ink-docstrap/template",
