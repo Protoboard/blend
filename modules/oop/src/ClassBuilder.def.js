@@ -210,12 +210,14 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         /**
          * Identifies class
          * @type {string}
+         * @memberOf $oop.ClassBuilder#
          */
         result.classId = classId;
 
         /**
          * Registry of required classes
-         * @type {object}
+         * @type {{demanded: {}, fulfilled: {}}}
+         * @memberOf $oop.ClassBuilder#
          */
         result.requires = {
             demanded: {},
@@ -228,24 +230,28 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
         /**
          * Registry of implemented interfaces.
          * @type {object}
+         * @memberOf $oop.ClassBuilder#
          */
         result.interfaces = {};
 
         /**
          * Registry of extended classes.
          * @type {object}
+         * @memberOf $oop.ClassBuilder#
          */
         result.extensions = {};
 
         /**
          * Class' own property & method contributions.
          * @type {object}
+         * @memberOf $oop.ClassBuilder#
          */
         result.contributions = {};
 
         /**
          * Registry of non-function properties indexed by property name.
          * @type {object}
+         * @memberOf $oop.ClassBuilder#
          */
         result.properties = {};
 
@@ -253,6 +259,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
          * Method registry.
          * Indexed by method name, then serial.
          * @type {object}
+         * @memberOf $oop.ClassBuilder#
          */
         result.methods = {};
 

@@ -72,12 +72,14 @@ $oop.Class = /** @lends $oop.Class# */{
  * Identifies class.
  * @name $oop.Class#__id
  * @type {string}
+ * @private
  */
 
 /**
  * Classes extended by current class.
  * @name $oop.Class#__extends
  * @type {object}
+ * @private
  */
 
 /**
@@ -85,10 +87,12 @@ $oop.Class = /** @lends $oop.Class# */{
  * Its presence determines whether class can be instantiated.
  * @name $oop.Class#__requires
  * @type {object}
+ * @private
  */
 
 /**
  * Properties contributed by the class.
  * @name $oop.Class#__contributes
  * @type {object}
+ * @private
  */
