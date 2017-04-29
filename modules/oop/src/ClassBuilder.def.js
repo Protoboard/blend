@@ -130,7 +130,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      */
     _getWrapperMethods: function () {
         var methods = this.methods,
-            methodNames = Object.getOwnPropertyNames(methods),
+            methodNames = Object.keys(methods),
             result = {};
 
         methodNames
@@ -141,12 +141,30 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
                 var functions = methods[methodName],
                     functionCount = functions.length;
 
+                // generating wrapper method
+                // it's very important that this function remains as light as possible
                 result[methodName] = function () {
-                    var i;
+                    var results = new Array(functionCount),
+                        i, result,
+                        same = true;
+
+                    // running functions in order of extension
                     for (i = 0; i < functionCount; i++) {
-                        functions[i].apply(this, arguments);
+                        results[i] = functions[i].apply(this, arguments);
                     }
-                    // TODO: Return value?
+
+                    // evaluating return values
+                    for (i = 1, result = results[0]; i < functionCount; i++) {
+                        if (result !== results[i]) {
+                            same = false;
+                            break;
+                        }
+                    }
+
+                    // returning either uniform result or all results
+                    return same ?
+                        result :
+                        results;
                 };
             });
 

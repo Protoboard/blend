@@ -413,23 +413,26 @@ describe("ClassBuilder", function () {
         });
 
         describe("when there are overrides", function () {
-            var Extended2 = $oop.ClassBuilder.create('Extended2')
+            var Extended2,
+                contributions,
+                spy1, spy2, spy3;
+
+            beforeEach(function () {
+                Extended2 = $oop.ClassBuilder.create('Extended2')
                     .contribute({
                         foo: function () {
                         }
                     })
-                    .build(),
-                contributions;
+                    .build();
 
-            beforeEach(function () {
                 contributions = {
                     foo: function () {
                     }
                 };
 
-                spyOn(Extended1.__contributes, 'foo');
-                spyOn(Extended2.__contributes, 'foo');
-                spyOn(contributions, 'foo');
+                spy1 = spyOn(Extended1.__contributes, 'foo');
+                spy2 = spyOn(Extended2.__contributes, 'foo');
+                spy3 = spyOn(contributions, 'foo');
 
                 result = builder
                     .extend(Extended1)
@@ -439,10 +442,34 @@ describe("ClassBuilder", function () {
             });
 
             it("should call all overrides", function () {
-                result.foo();
-                expect(Extended1.__contributes.foo).toHaveBeenCalled();
-                expect(Extended2.__contributes.foo).toHaveBeenCalled();
-                expect(contributions.foo).toHaveBeenCalled();
+                result.foo(1, 2, 3);
+                expect(Extended1.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
+                expect(Extended2.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
+                expect(contributions.foo).toHaveBeenCalledWith(1, 2, 3);
+            });
+
+            describe("when returning same value", function () {
+                beforeEach(function () {
+                    spy1.and.returnValue(1);
+                    spy2.and.returnValue(1);
+                    spy3.and.returnValue(1);
+                });
+
+                it("should return single value", function () {
+                    expect(result.foo()).toBe(1);
+                });
+            });
+
+            describe("when returning different values", function () {
+                beforeEach(function () {
+                    spy1.and.returnValue(1);
+                    spy2.and.returnValue(2);
+                    spy3.and.returnValue(3);
+                });
+
+                it("should return array", function () {
+                    expect(result.foo()).toEqual([1, 2, 3]);
+                });
             });
         });
 
