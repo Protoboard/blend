@@ -2,8 +2,8 @@
 "use strict";
 
 /**
+ * Builds composable classes.
  * @class
- * TODO: Handle multiple additions (of same override).
  */
 $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**

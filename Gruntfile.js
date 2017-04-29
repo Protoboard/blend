@@ -92,6 +92,17 @@ module.exports = function (grunt) {
                     message: 'Build done'
                 }
             }
+        },
+
+        jsdoc: {
+            dist: {
+                src: ['dist/*.js', 'README.md'],
+                options: {
+                    destination: 'doc',
+                    template: "node_modules/ink-docstrap/template",
+                    configure: "node_modules/ink-docstrap/template/jsdoc.conf.json"
+                }
+            }
         }
     });
 
@@ -99,6 +110,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('build', ['concat', 'notify:build']);
     grunt.registerTask('default', ['build', 'watch']);
