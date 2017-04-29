@@ -4,16 +4,10 @@ module.exports = function (grunt) {
     // TODO: Get module names from directory structure
     var moduleNames = ['oop'],
         manifests = moduleNames.map(function (moduleName) {
-            return {
-                key: moduleName,
-                value: grunt.file.readJSON('modules/' + moduleName + '/manifest.json')
-            };
+            return grunt.file.readJSON('modules/' + moduleName + '/manifest.json');
         }),
-        assets = manifests.map(function (manifest) {
-            return {
-                key: manifest.key,
-                value: manifest.value.assets
-            };
+        packages = moduleNames.map(function (moduleName) {
+            return grunt.file.readJSON('modules/' + moduleName + '/package.json');
         });
 
     /**
@@ -25,17 +19,19 @@ module.exports = function (grunt) {
 
         result.options = options;
 
-        assets.forEach(function (asset) {
-            var moduleName = asset.key,
-                namespaceSymbol = '$' + moduleName;
+        moduleNames.forEach(function (moduleName, i) {
+            var namespaceSymbol = '$' + moduleName,
+                assets = manifests[i].assets,
+                pkg = packages[i];
 
             result[moduleName] = {
-                src: asset.value.js.map(function (relativePath) {
+                src: assets.js.map(function (relativePath) {
                     return ['modules', moduleName, relativePath].join('/');
                 }),
                 dest: ['dist', moduleName + '.js'].join('/'),
                 options: {
                     banner: [
+                        '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
                         '(function () {',
                         '/** @exports ' + namespaceSymbol + ' */',
                         'var ' + namespaceSymbol + ' = {};',
@@ -63,9 +59,7 @@ module.exports = function (grunt) {
 
         result.options = options;
 
-        assets.forEach(function (asset) {
-            var moduleName = asset.key;
-
+        moduleNames.forEach(function (moduleName) {
             result[moduleName] = {
                 configFile: ['modules', moduleName, 'karma.conf.js'].join('/')
             };
