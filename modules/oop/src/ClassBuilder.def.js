@@ -62,11 +62,11 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             methods = this.methods;
 
         return interfaceNames.reduce(function (unimplemented, interfaceName) {
-            var interface_ = interfaces[interfaceName];
+            var contributions = interfaces[interfaceName].__contributes;
 
-            return unimplemented.concat(Object.getOwnPropertyNames(interface_)
+            return unimplemented.concat(Object.getOwnPropertyNames(contributions)
                 .filter(function (memberName) {
-                    return typeof interface_[memberName] === 'function' &&
+                    return typeof contributions[memberName] === 'function' &&
                         !methods.hasOwnProperty(memberName);
                 })
                 .map(function (methodName) {
