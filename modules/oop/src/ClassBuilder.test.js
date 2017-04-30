@@ -28,18 +28,6 @@ describe("ClassBuilder", function () {
              });
         });
 
-        describe("when class already built", function () {
-            beforeEach(function () {
-                $oop.ClassBuilder.classes.ClassId = {};
-            });
-
-            it("should throw", function () {
-                expect(function () {
-                    $oop.ClassBuilder.create('ClassId');
-                }).toThrow();
-            });
-        });
-
         describe("otherwise", function () {
             var result;
 
@@ -395,6 +383,18 @@ describe("ClassBuilder", function () {
 
         beforeEach(function () {
             builder = $oop.ClassBuilder.create('ClassId');
+        });
+
+        describe("when class already built", function () {
+            beforeEach(function () {
+                builder.build();
+            });
+
+            it("should throw", function () {
+                expect(function () {
+                    builder.build();
+                }).toThrow();
+            });
         });
 
         describe("when class implements interfaces", function () {

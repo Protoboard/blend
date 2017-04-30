@@ -207,10 +207,6 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             throw new Error("No class ID was specified.");
         }
 
-        if (this.classes.hasOwnProperty(classId)) {
-            throw new Error("Class " + classId + " already built.");
-        }
-
         var builders = this.builders,
             builder = builders[classId];
 
@@ -433,8 +429,13 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      * @returns {object} The created class.
      */
     build: function () {
-        var classId = this.classId,
-            unimplementedMethods = this._getUnimplementedMethods(),
+        var classId = this.classId;
+
+        if (this.classes.hasOwnProperty(classId)) {
+            throw new Error("Class " + classId + " already built.");
+        }
+
+        var unimplementedMethods = this._getUnimplementedMethods(),
             properties = this.properties,
             methods = this.methods,
             result = Object.create($oop.Class);

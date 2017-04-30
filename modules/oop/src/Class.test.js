@@ -83,7 +83,7 @@ describe("Class", function () {
                     .extend(Class)
                     .build();
 
-                Class.__builder
+                $oop.ClassBuilder.create('Class')
                     .forward(Forward, function (foo) {
                         return foo === 1;
                     });
@@ -116,7 +116,7 @@ describe("Class", function () {
                         .extend(Class)
                         .build();
 
-                    Class.__builder
+                    $oop.ClassBuilder.create('Class')
                         .forward(Forward2, function (foo) {
                             return foo === 2;
                         });
