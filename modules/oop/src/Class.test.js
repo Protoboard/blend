@@ -5,7 +5,8 @@ describe("Class", function () {
         Class;
 
     beforeEach(function () {
-        $oop.ClassBuilder.builtClasses = {};
+        $oop.ClassBuilder.builders = {};
+        $oop.ClassBuilder.classes = {};
         builder = $oop.ClassBuilder.create('Class');
     });
 

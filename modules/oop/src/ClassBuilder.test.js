@@ -4,7 +4,8 @@ describe("ClassBuilder", function () {
     var builder;
 
     beforeEach(function () {
-        $oop.ClassBuilder.builtClasses = {};
+        $oop.ClassBuilder.builders = {};
+        $oop.ClassBuilder.classes = {};
     });
 
     describe("instantiation", function () {
@@ -16,9 +17,20 @@ describe("ClassBuilder", function () {
             });
         });
 
+        describe("when class already being built", function () {
+             beforeEach(function () {
+                builder = $oop.ClassBuilder.create('Class');
+             });
+
+             it("should return same builder", function () {
+                var result =  $oop.ClassBuilder.create('Class');
+                expect(result).toBe(builder);
+             });
+        });
+
         describe("when class already built", function () {
             beforeEach(function () {
-                $oop.ClassBuilder.builtClasses.ClassId = {};
+                $oop.ClassBuilder.classes.ClassId = {};
             });
 
             it("should throw", function () {
@@ -600,7 +612,7 @@ describe("ClassBuilder", function () {
 
         it("should add class to registry", function () {
             result = builder.build();
-            expect($oop.ClassBuilder.builtClasses).toEqual({
+            expect($oop.ClassBuilder.classes).toEqual({
                 ClassId: result
             });
         });

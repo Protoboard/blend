@@ -7,10 +7,16 @@
  */
 $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**
+     * All class builders indexed by class ID.
+     * @memberOf $oop.ClassBuilder
+     */
+    builders: {},
+
+    /**
      * All built classes indexed by class ID.
      * @memberOf $oop.ClassBuilder
      */
-    builtClasses: {},
+    classes: {},
 
     /**
      * @param {object} members
@@ -201,76 +207,85 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             throw new Error("No class ID was specified.");
         }
 
-        if (this.builtClasses.hasOwnProperty(classId)) {
+        if (this.classes.hasOwnProperty(classId)) {
             throw new Error("Class " + classId + " already built.");
         }
 
-        var result = Object.create(this);
+        var builders = this.builders,
+            builder = builders[classId];
 
-        /**
-         * Identifies class
-         * @type {string}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.classId = classId;
+        if (!builder) {
+            // builder is not initialized yet
+            builder = Object.create(this);
 
-        /**
-         * Registry of required classes
-         * @type {{demanded: {}, fulfilled: {}}}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.requires = {
-            demanded: {},
-            fulfilled: {}
-        };
+            /**
+             * Identifies class
+             * @type {string}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.classId = classId;
 
-        // adding self as fulfilled require
-        result.requires.fulfilled[classId] = true;
+            /**
+             * Registry of required classes
+             * @type {{demanded: {}, fulfilled: {}}}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.requires = {
+                demanded: {},
+                fulfilled: {}
+            };
 
-        /**
-         * Registry of implemented interfaces.
-         * @type {object}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.interfaces = {};
+            // adding self as fulfilled require
+            builder.requires.fulfilled[classId] = true;
 
-        /**
-         * Registry of extended classes.
-         * @type {object}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.extensions = {};
+            /**
+             * Registry of implemented interfaces.
+             * @type {object}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.interfaces = {};
 
-        /**
-         * Class' own property & method contributions.
-         * @type {object}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.contributions = {};
+            /**
+             * Registry of extended classes.
+             * @type {object}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.extensions = {};
 
-        /**
-         * Registry of surrogate descriptors.
-         * @type {object[]}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.forwards = [];
+            /**
+             * Class' own property & method contributions.
+             * @type {object}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.contributions = {};
 
-        /**
-         * Registry of non-function properties indexed by property name.
-         * @type {object}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.properties = {};
+            /**
+             * Registry of surrogate descriptors.
+             * @type {object[]}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.forwards = [];
 
-        /**
-         * Method registry.
-         * Indexed by method name, then serial.
-         * @type {object}
-         * @memberOf $oop.ClassBuilder#
-         */
-        result.methods = {};
+            /**
+             * Registry of non-function properties indexed by property name.
+             * @type {object}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.properties = {};
 
-        return result;
+            /**
+             * Method registry.
+             * Indexed by method name, then serial.
+             * @type {object}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.methods = {};
+
+            // adding builder to registry
+            builders[classId] = builder;
+        }
+
+        return builder;
     },
 
     /**
@@ -469,7 +484,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             });
 
         // adding class to registry
-        $oop.ClassBuilder.builtClasses[classId] = result;
+        $oop.ClassBuilder.classes[classId] = result;
 
         return result;
     }
