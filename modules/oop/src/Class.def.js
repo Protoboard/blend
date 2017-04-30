@@ -27,7 +27,7 @@ $oop.Class = /** @lends $oop.Class# */{
         }
 
         // fetching cached instance
-        var mapper = that.__builder.mapper,
+        var mapper = that.__mapper,
             instances,
             instanceId, instance;
         if (mapper) {
@@ -145,16 +145,16 @@ $oop.Class = /** @lends $oop.Class# */{
  */
 
 /**
- * Reference to the builder that built the class.
- * @name $oop.Class#__builder
- * @type {$oop.ClassBuilder}
- * @deprecated Expose the public builder API on Class instead.
+ * Registry of forwarding definitions.
+ * @name $oop.Class#__forwards
+ * @type {object}
  * @private
  */
 
 /**
- * Registry of forwarding definitions.
- * @name $oop.Class#__forwards
+ * Callback function that maps instances
+ * to unique hashes.
+ * @name $oop.Class#__mapper
  * @type {object}
  * @private
  */

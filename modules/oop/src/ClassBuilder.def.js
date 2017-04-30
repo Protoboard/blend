@@ -5,7 +5,7 @@
  * Builds composable classes.
  * @class
  */
-$oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
+$oop.ClassBuilder = /** @lends $oop.ClassBuilder */{
     /**
      * All class builders indexed by class ID.
      * @memberOf $oop.ClassBuilder
@@ -198,6 +198,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * Creates a new ClassBuilder instance.
      * @param {string} classId
      * @returns {$oop.ClassBuilder}
      * @memberOf $oop.ClassBuilder
@@ -352,6 +353,8 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * Forwards the class to the specified class, if
+     * constructor arguments satisfy the supplied filter.
      * @param {$oop.Class} class_
      * @param {function} filter
      * @param {number} [priority=0]
@@ -384,6 +387,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * Specifies a mapper function to be used to build a registry
      * @param {function} mapper
      * @returns {$oop.ClassBuilder}
      */
@@ -425,7 +429,6 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
-     * @todo Add 'built' flag for checking access to __builder.
      * @returns {object} The created class.
      */
     build: function () {
@@ -461,8 +464,8 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             __requires: {value: this._getUnfulfilledRequires()},
             __contributes: {value: this.contributions},
             __forwards: {value: this.forwards},
-            __instances: {value: {}},
-            __builder: {value: this}
+            __mapper: {value: this.mapper},
+            __instances: {value: {}}
         });
 
         // copying non-method properties

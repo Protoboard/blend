@@ -480,11 +480,6 @@ describe("ClassBuilder", function () {
             });
         });
 
-        it("should add builder reference", function () {
-            result = builder.build();
-            expect(result.__builder).toBe(builder);
-        });
-
         it("should add forwards meta", function () {
             result = builder.build();
             expect(result.__forwards).toBe(builder.forwards);
