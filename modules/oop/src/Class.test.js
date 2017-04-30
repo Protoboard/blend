@@ -28,7 +28,44 @@ describe("Class", function () {
             });
         });
 
-        describe("when there are forwards", function () {
+        describe("of cached class", function () {
+            var Class,
+                instance;
+
+            beforeEach(function () {
+                Class = builder
+                    .cache(function (foo) {
+                        return '_' + foo;
+                    })
+                    .build();
+            });
+
+            describe("when instance is not cached yet", function () {
+                it("should store new instance in cache", function () {
+                    expect(Class.__instances).toEqual({});
+                    instance = Class.create('foo');
+                    expect(Class.__instances).toEqual({
+                        '_foo': instance
+                    });
+                });
+            });
+
+            describe("when instance is already cached", function () {
+                var cached;
+
+                beforeEach(function () {
+                    Class.create('foo');
+                    cached = Class.__instances['_foo'];
+                });
+
+                it("should return cached instance", function () {
+                    instance = Class.create('foo');
+                    expect(instance).toBe(cached);
+                });
+            });
+        });
+
+        describe("of forwarded class", function () {
             var Forward,
                 result;
 
@@ -54,7 +91,6 @@ describe("Class", function () {
             describe("for matching arguments", function () {
                 it("should instantiate forward class", function () {
                     result = Class.create(1);
-                    console.log(JSON.stringify(result));
                     expect(result.extends(Class)).toBeTruthy();
                     expect(result.extends(Forward)).toBeTruthy();
                 });
@@ -63,9 +99,31 @@ describe("Class", function () {
             describe("for non-matching arguments", function () {
                 it("should instantiate original class", function () {
                     result = Class.create(0);
-                    console.log(JSON.stringify(result));
                     expect(result.extends(Class)).toBeTruthy();
                     expect(result.extends(Forward)).toBeFalsy();
+                });
+            });
+
+            describe("that is also cached", function () {
+                var Forward2;
+
+                beforeEach(function () {
+                    Forward2 = $oop.ClassBuilder.create('Forward2')
+                        .cache(function (foo) {
+                            return '_' + foo;
+                        })
+                        .extend(Class)
+                        .build();
+
+                    Class.__builder
+                        .forward(Forward2, function (foo) {
+                            return foo === 2;
+                        });
+                });
+
+                it("should return cached forward instance", function () {
+                    result = Class.create(2);
+                    expect(result).toBe(Forward2.__instances._2);
                 });
             });
         });

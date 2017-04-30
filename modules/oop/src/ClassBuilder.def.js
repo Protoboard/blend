@@ -281,7 +281,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      */
     require: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("Require expects type Class");
+            throw new Error("ClassBuilder#require expects type Class");
         }
 
         // registering required class
@@ -302,7 +302,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      */
     implement: function (interface_) {
         if (!$oop.Class.isPrototypeOf(interface_)) {
-            throw new Error("Implement expects type Class");
+            throw new Error("ClassBuilder#implement expects type Class");
         }
 
         // registering interface
@@ -318,7 +318,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      */
     extend: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("Extend expects type Class");
+            throw new Error("ClassBuilder#extend expects type Class");
         }
 
         var classId = class_.__id;
@@ -348,7 +348,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      */
     forward: function (class_, filter, priority) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("Forward expects type Class");
+            throw new Error("ClassBuilder#forward expects type Class");
         }
 
         var forwards = this.forwards;
@@ -368,6 +368,20 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
                 bp = b.priority;
             return ap > bp ? -1 : bp > ap ? 1 : 0;
         });
+
+        return this;
+    },
+
+    /**
+     * @param {function} mapper
+     * @returns {$oop.ClassBuilder}
+     */
+    cache: function (mapper) {
+        if (typeof mapper !== 'function') {
+            throw new Error("ClassBuilder#cache expects function argument");
+        }
+
+        this.mapper = mapper;
 
         return this;
     },
@@ -400,6 +414,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * @todo Add 'built' flag for checking access to __builder.
      * @returns {object} The created class.
      */
     build: function () {
@@ -430,6 +445,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             __requires: {value: this._getUnfulfilledRequires()},
             __contributes: {value: this.contributions},
             __forwards: {value: this.forwards},
+            __instances: {value: {}},
             __builder: {value: this}
         });
 

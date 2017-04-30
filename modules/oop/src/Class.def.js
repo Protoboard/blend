@@ -11,30 +11,42 @@ $oop.Class = /** @lends $oop.Class# */{
      * @returns {$oop.Class}
      */
     create: function () {
-        // forwarding
-        var forwards = this.__forwards,
-            forwardsCount = forwards.length,
-            i, forward,
-            class_ = this;
-
         // retrieving forward class (if any)
+        var that = this,
+            forwards = this.__forwards,
+            forwardsCount = forwards.length,
+            i, forward;
         for (i = 0; i < forwardsCount; i++) {
             forward = forwards[i];
             if (forward.filter.apply(this, arguments)) {
                 // ctr arguments fit forward filter
-                class_ = forward['class'];
+                // forwarding
+                that = forward['class'];
                 break;
             }
         }
 
         // fetching cached instance
+        var mapper = that.__builder.mapper,
+            instances,
+            instanceId, instance;
+        if (mapper) {
+            instances = that.__instances;
+            instanceId = mapper.apply(this, arguments);
+            instance = instances[instanceId];
+            if (instance) {
+                // instance found in cache
+                return instance;
+            }
+        }
 
         // running checks
-        if (class_.__requires) {
+        var requires = that.__requires;
+        if (requires) {
             // there are unfulfilled requires - can't instantiate
             throw new Error([
-                "Class '" + class_.__id + "' doesn't satisfy require(s): " +
-                Object.keys(class_.__requires)
+                "Class '" + that.__id + "' doesn't satisfy require(s): " +
+                Object.keys(requires)
                     .map(function (classId) {
                         return "'" + classId + "'";
                     })
@@ -44,11 +56,19 @@ $oop.Class = /** @lends $oop.Class# */{
         }
 
         // instantiating class
-        var instance = Object.create(class_);
+        instance = Object.create(that);
 
         // invoking .init
+        // initializing instance properties
+        if (typeof that.init === 'function') {
+            // running instance initializer
+            that.init.apply(instance, arguments);
+        }
 
         // caching instance (if necessary)
+        if (mapper) {
+            instances[instanceId] = instance;
+        }
 
         return instance;
     },
@@ -128,12 +148,20 @@ $oop.Class = /** @lends $oop.Class# */{
  * Reference to the builder that built the class.
  * @name $oop.Class#__builder
  * @type {$oop.ClassBuilder}
+ * @deprecated Expose the public builder API on Class instead.
  * @private
  */
 
 /**
  * Registry of forwarding definitions.
  * @name $oop.Class#__forwards
+ * @type {object}
+ * @private
+ */
+
+/**
+ * Registry of cached instances.
+ * @name $oop.Class#__instances
  * @type {object}
  * @private
  */

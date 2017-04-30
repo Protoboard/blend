@@ -227,6 +227,39 @@ describe("ClassBuilder", function () {
         });
     });
 
+    describe("caching", function () {
+        beforeEach(function () {
+            builder = $oop.ClassBuilder.create('ClassId');
+        });
+
+        describe("when passing invalid argument", function () {
+            it("should throw", function () {
+                expect(function () {
+                    builder.cache();
+                }).toThrow();
+            });
+        });
+
+        describe("otherwise", function () {
+            var mapper,
+                result;
+
+            beforeEach(function () {
+                mapper = function () {
+                };
+                result = builder.cache(mapper);
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(builder);
+            });
+
+            it("should set mapper function", function () {
+                expect(builder.mapper).toBe(mapper);
+            });
+        });
+    });
+
     describe("contributing", function () {
         beforeEach(function () {
             builder = $oop.ClassBuilder.create('ClassId');
