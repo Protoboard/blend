@@ -33,7 +33,10 @@ module.exports = function (grunt) {
                     banner: [
                         '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
                         '(function () {',
-                        '/** @exports ' + namespaceSymbol + ' */',
+                        '/**',
+                        ' * @namespace',
+                        ' * @exports ' + pkg.name,
+                        ' */',
                         'var ' + namespaceSymbol + ' = {};',
                         'if (typeof define !== "undefined") define(function () {return ' + namespaceSymbol + ';})',
                         'else if (typeof window !== "undefined") window["' + namespaceSymbol + '"] = ' + namespaceSymbol,

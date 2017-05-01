@@ -3,12 +3,11 @@
 
 /**
  * General class functionality: instantiation & reflection.
- * @class
+ * @class $oop.Class
  */
 $oop.Class = {
     /**
      * Creates new instance of class.
-     * @constructs
      * @memberOf $oop.Class#
      * @returns {$oop.Class}
      */

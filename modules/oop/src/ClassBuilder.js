@@ -3,16 +3,18 @@
 
 /**
  * Builds composable classes.
- * @class
+ * @class $oop.ClassBuilder
  */
 $oop.ClassBuilder = {
     /**
      * All class builders indexed by class ID.
+     * @memberOf $oop.ClassBuilder
      */
     builders: {},
 
     /**
      * All built classes indexed by class ID.
+     * @memberOf $oop.ClassBuilder
      */
     classes: {},
 
@@ -204,7 +206,7 @@ $oop.ClassBuilder = {
 
     /**
      * Creates a new ClassBuilder instance.
-     * @constructs
+     * @memberOf $oop.ClassBuilder
      * @param {string} classId
      * @returns {$oop.ClassBuilder}
      */
@@ -283,7 +285,6 @@ $oop.ClassBuilder = {
 
             /**
              * Class built by builder.
-             * @todo Add tests
              * @member {$oop.Class} $oop.ClassBuilder#class
              */
             builder.class = undefined;
