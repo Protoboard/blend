@@ -141,7 +141,17 @@ describe("ClassBuilder", function () {
         });
 
         describe("when passing no arguments", function () {
-            it("should throw error", function () {
+            it("should throw", function () {
+                expect(function () {
+                    builder.require();
+                }).toThrow();
+            });
+        });
+
+        describe("when class already built", function () {
+            it("should throw", function () {
+                builder.build();
+
                 expect(function () {
                     builder.require();
                 }).toThrow();
@@ -207,6 +217,16 @@ describe("ClassBuilder", function () {
             });
         });
 
+        describe("when class already built", function () {
+            it("should throw", function () {
+                builder.build();
+
+                expect(function () {
+                    builder.implement();
+                }).toThrow();
+            });
+        });
+
         describe("otherwise", function () {
             var ImplementedInterface = $oop.ClassBuilder.create('ImplementedInterface').build(),
                 result;
@@ -240,6 +260,16 @@ describe("ClassBuilder", function () {
             });
         });
 
+        describe("when class already built", function () {
+            it("should throw", function () {
+                builder.build();
+
+                expect(function () {
+                    builder.implement();
+                }).toThrow();
+            });
+        });
+
         describe("otherwise", function () {
             var mapper,
                 result;
@@ -269,6 +299,16 @@ describe("ClassBuilder", function () {
             it("should throw error", function () {
                 expect(function () {
                     builder.contribute();
+                }).toThrow();
+            });
+        });
+
+        describe("when class already built", function () {
+            it("should throw", function () {
+                builder.build();
+
+                expect(function () {
+                    builder.implement();
                 }).toThrow();
             });
         });

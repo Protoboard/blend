@@ -305,7 +305,10 @@ $oop.ClassBuilder = {
      */
     require: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("ClassBuilder#require expects type Class");
+            throw new Error("ClassBuilder#require expects type Class.");
+        }
+        if (this['class']) {
+            throw new Error("ClassBuilder#require may only be called before build.");
         }
 
         // registering required class
@@ -327,7 +330,10 @@ $oop.ClassBuilder = {
      */
     implement: function (interface_) {
         if (!$oop.Class.isPrototypeOf(interface_)) {
-            throw new Error("ClassBuilder#implement expects type Class");
+            throw new Error("ClassBuilder#implement expects type Class.");
+        }
+        if (this['class']) {
+            throw new Error("ClassBuilder#implement may only be called before build.");
         }
 
         // registering interface
@@ -344,7 +350,10 @@ $oop.ClassBuilder = {
      */
     extend: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("ClassBuilder#extend expects type Class");
+            throw new Error("ClassBuilder#extend expects type Class.");
+        }
+        if (this['class']) {
+            throw new Error("ClassBuilder#extend may only be called before build.");
         }
 
         var classId = class_.__id;
@@ -377,7 +386,7 @@ $oop.ClassBuilder = {
      */
     forward: function (class_, filter, priority) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("ClassBuilder#forward expects type Class");
+            throw new Error("ClassBuilder#forward expects type Class.");
         }
 
         var forwards = this.forwards;
@@ -409,7 +418,10 @@ $oop.ClassBuilder = {
      */
     cache: function (mapper) {
         if (typeof mapper !== 'function') {
-            throw new Error("ClassBuilder#cache expects function argument");
+            throw new Error("ClassBuilder#cache expects function argument.");
+        }
+        if (this['class']) {
+            throw new Error("ClassBuilder#cache may only be called before build.");
         }
 
         this.mapper = mapper;
@@ -426,6 +438,10 @@ $oop.ClassBuilder = {
     contribute: function (members) {
         if (!members) {
             throw new Error("No contributions specified.");
+        }
+        // TODO: Contributing after build should be allowed. (Would require re-constructing overrides.)
+        if (this['class']) {
+            throw new Error("ClassBuilder#contribute may only be called before build.");
         }
 
         var contributions = this.contributions,
