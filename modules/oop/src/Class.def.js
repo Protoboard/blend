@@ -132,36 +132,31 @@ $oop.Class = /** @lends $oop.Class# */{
 /**
  * All classes required by current class to be operable.
  * Its presence determines whether class can be instantiated.
- * @name $oop.Class#__requires
- * @type {object}
+ * @member {object} $oop.Class#__requires
  * @private
  */
 
 /**
  * Properties contributed by the class.
- * @name $oop.Class#__contributes
- * @type {object}
+ * @member {object} $oop.Class#__contributes
  * @private
  */
 
 /**
  * Registry of forwarding definitions.
- * @name $oop.Class#__forwards
- * @type {object}
+ * @member {object} $oop.Class#__forwards
  * @private
  */
 
 /**
  * Callback function that maps instances
  * to unique hashes.
- * @name $oop.Class#__mapper
- * @type {object}
+ * @function $oop.Class#__mapper
  * @private
  */
 
 /**
  * Registry of cached instances.
- * @name $oop.Class#__instances
- * @type {object}
+ * @member {object} $oop.Class#__instances
  * @private
  */
