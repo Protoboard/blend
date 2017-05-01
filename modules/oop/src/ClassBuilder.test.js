@@ -605,6 +605,11 @@ describe("ClassBuilder", function () {
             });
         });
 
+        it("should set class on builder", function () {
+            result = builder.build();
+            expect(builder['class']).toBe(result);
+        });
+
         it("should add class to registry", function () {
             result = builder.build();
             expect($oop.ClassBuilder.classes).toEqual({

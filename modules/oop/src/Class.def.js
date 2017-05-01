@@ -5,9 +5,11 @@
  * General class functionality: instantiation & reflection.
  * @class
  */
-$oop.Class = /** @lends $oop.Class# */{
+$oop.Class = {
     /**
      * Creates new instance of class.
+     * @constructs
+     * @memberOf $oop.Class#
      * @returns {$oop.Class}
      */
     create: function () {
@@ -75,6 +77,7 @@ $oop.Class = /** @lends $oop.Class# */{
 
     /**
      * Tells whether current class implements the specified interface.
+     * @memberOf $oop.Class#
      * @param {$oop.Class} interface_
      * @returns {boolean}
      */
@@ -88,6 +91,7 @@ $oop.Class = /** @lends $oop.Class# */{
 
     /**
      * Tells whether current class is or extends the specified class.
+     * @memberOf $oop.Class#
      * @param {$oop.Class} class_
      * @returns {boolean}
      */
@@ -103,6 +107,7 @@ $oop.Class = /** @lends $oop.Class# */{
 
     /**
      * Tells whether current class requires the specified class.
+     * @memberOf $oop.Class#
      * @param {$oop.Class} class_
      * @returns {boolean}
      */

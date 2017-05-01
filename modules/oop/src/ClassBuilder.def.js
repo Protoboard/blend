@@ -5,20 +5,19 @@
  * Builds composable classes.
  * @class
  */
-$oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
+$oop.ClassBuilder = {
     /**
      * All class builders indexed by class ID.
-     * @memberOf $oop.ClassBuilder
      */
     builders: {},
 
     /**
      * All built classes indexed by class ID.
-     * @memberOf $oop.ClassBuilder
      */
     classes: {},
 
     /**
+     * @memberOf $oop.ClassBuilder#
      * @param {object} members
      * @private
      */
@@ -38,6 +37,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * @memberOf $oop.ClassBuilder#
      * @param {object} members
      * @private
      */
@@ -59,6 +59,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Retrieves a list of Interface / method identifiers not implemented by the host class.
+     * @memberOf $oop.ClassBuilder#
      * @returns {string[]}
      * @private
      */
@@ -84,6 +85,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**
      * Extracts extensions and requires from class and transfers them
      * to the class being built.
+     * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @private
      */
@@ -110,6 +112,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * @memberOf $oop.ClassBuilder#
      * @returns {object}
      * @private
      */
@@ -136,6 +139,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Retrieves a list of method names that can be copied over 1:1.
+     * @memberOf $oop.ClassBuilder#
      * @private
      */
     _getSingularMethodNames: function () {
@@ -151,6 +155,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**
      * Retrieves a lookup of method names : anonymous functions that wrap
      * colliding methods coming from different sources. (Contributions, base(s), extensions.)
+     * @memberOf $oop.ClassBuilder#
      * @returns {object}
      * @private
      */
@@ -199,9 +204,9 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Creates a new ClassBuilder instance.
+     * @constructs
      * @param {string} classId
      * @returns {$oop.ClassBuilder}
-     * @memberOf $oop.ClassBuilder
      */
     create: function (classId) {
         if (!classId) {
@@ -217,15 +222,13 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
             /**
              * Identifies class
-             * @type {string}
-             * @memberOf $oop.ClassBuilder#
+             * @member {string} $oop.ClassBuilder#classId
              */
             builder.classId = classId;
 
             /**
              * Registry of required classes
-             * @type {{demanded: {}, fulfilled: {}}}
-             * @memberOf $oop.ClassBuilder#
+             * @member {{demanded: {}, fulfilled: {}}} $oop.ClassBuilder#requires
              */
             builder.requires = {
                 demanded: {},
@@ -237,53 +240,53 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
             /**
              * Registry of implemented interfaces.
-             * @type {object}
-             * @memberOf $oop.ClassBuilder#
+             * @member {object} $oop.ClassBuilder#interfaces
              */
             builder.interfaces = {};
 
             /**
              * Registry of extended classes.
-             * @type {object}
-             * @memberOf $oop.ClassBuilder#
+             * @member {object} $oop.ClassBuilder#extensions
              */
             builder.extensions = {};
 
             /**
              * Class' own property & method contributions.
-             * @type {object}
-             * @memberOf $oop.ClassBuilder#
+             * @member {object} $oop.ClassBuilder#contributions
              */
             builder.contributions = {};
 
             /**
              * Registry of surrogate descriptors.
-             * @type {object[]}
-             * @memberOf $oop.ClassBuilder#
+             * @member {object[]} $oop.ClassBuilder#forwards
              */
             builder.forwards = [];
 
             /**
              * Registry of non-function properties indexed by property name.
-             * @type {object}
-             * @memberOf $oop.ClassBuilder#
+             * @member {object} $oop.ClassBuilder#properties
              */
             builder.properties = {};
 
             /**
              * Method registry.
              * Indexed by method name, then serial.
-             * @type {object}
-             * @memberOf $oop.ClassBuilder#
+             * @member {object} $oop.ClassBuilder#methods
              */
             builder.methods = {};
 
             /**
              * Instance hash function for cached classes.
-             * @type {function}
-             * @memberOf $oop.ClassBuilder#
+             * @member {function} $oop.ClassBuilder#mapper
              */
             builder.mapper = undefined;
+
+            /**
+             * Class built by builder.
+             * @todo Add tests
+             * @member {$oop.Class} $oop.ClassBuilder#class
+             */
+            builder.class = undefined;
 
             // adding builder to registry
             builders[classId] = builder;
@@ -295,6 +298,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**
      * Specifies a required base, or trait of the host class.
      * Used by traits only.
+     * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @returns {$oop.ClassBuilder}
      */
@@ -316,6 +320,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
      * Specifies an interface to be implemented by the host class.
      * Every specified interface must be fully implemented by the host class,
      * otherwise build will fail.
+     * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} interface_
      * @returns {$oop.ClassBuilder}
      */
@@ -332,6 +337,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Specifies a class to be extended by the host class.
+     * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @returns {$oop.ClassBuilder}
      */
@@ -362,6 +368,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**
      * Forwards the class to the specified class, if
      * constructor arguments satisfy the supplied filter.
+     * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @param {function} filter
      * @param {number} [priority=0]
@@ -395,6 +402,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Specifies a mapper function to be used to build a registry
+     * @memberOf $oop.ClassBuilder#
      * @param {function} mapper
      * @returns {$oop.ClassBuilder}
      */
@@ -410,6 +418,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
 
     /**
      * Can be called multiple times.
+     * @memberOf $oop.ClassBuilder#
      * @param {object} members
      * @returns {$oop.ClassBuilder}
      */
@@ -436,12 +445,13 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     },
 
     /**
+     * @memberOf $oop.ClassBuilder#
      * @returns {$oop.Class} The created class.
      */
     build: function () {
         var classId = this.classId;
 
-        if (this.classes.hasOwnProperty(classId)) {
+        if (this['class']) {
             throw new Error("Class " + classId + " already built.");
         }
 
@@ -495,6 +505,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
             });
 
         // adding class to registry
+        this['class'] = result;
         $oop.ClassBuilder.classes[classId] = result;
 
         return result;
