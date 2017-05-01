@@ -5,7 +5,7 @@
  * Builds composable classes.
  * @class
  */
-$oop.ClassBuilder = /** @lends $oop.ClassBuilder */{
+$oop.ClassBuilder = /** @lends $oop.ClassBuilder# */{
     /**
      * All class builders indexed by class ID.
      * @memberOf $oop.ClassBuilder
@@ -278,6 +278,13 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder */{
              */
             builder.methods = {};
 
+            /**
+             * Instance hash function for cached classes.
+             * @type {function}
+             * @memberOf $oop.ClassBuilder#
+             */
+            builder.mapper = undefined;
+
             // adding builder to registry
             builders[classId] = builder;
         }
@@ -429,7 +436,7 @@ $oop.ClassBuilder = /** @lends $oop.ClassBuilder */{
     },
 
     /**
-     * @returns {object} The created class.
+     * @returns {$oop.Class} The created class.
      */
     build: function () {
         var classId = this.classId;
