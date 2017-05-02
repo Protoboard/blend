@@ -81,229 +81,6 @@ describe("ClassBuilder", function () {
         });
     });
 
-    describe("inclusion", function () {
-        beforeEach(function () {
-            builder = $oop.ClassBuilder.create('Class');
-        });
-
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    builder.include();
-                }).toThrow();
-            });
-        });
-
-        describe("when already built", function () {
-            it("should throw", function () {
-                var Include = $oop.ClassBuilder.create('Include').build();
-                builder.build();
-                expect(function () {
-                    builder.include(Include);
-                }).toThrow();
-            });
-        });
-
-        describe("otherwise", function () {
-            var Trait = $oop.ClassBuilder.create('Trait')
-                    .define({
-                        foo: function () {
-                        }
-                    })
-                    .build(),
-                result;
-
-            beforeEach(function () {
-                result = builder.include(Trait);
-            });
-
-            it("should return self", function () {
-                expect(result).toBe(builder);
-            });
-
-            it("should add to list of includes", function () {
-                expect(builder.includes).toEqual([Trait]);
-                expect(builder.includeLookup).toEqual({
-                    Trait: true
-                });
-            });
-
-            it("should add to list of contributions", function () {
-                expect(builder.contributions).toEqual([Trait.__defines]);
-                expect(builder.contributionLookup).toEqual({
-                    Trait: true
-                });
-            });
-
-            describe("on duplication", function () {
-                beforeEach(function () {
-                    result = builder.include(Trait);
-                });
-
-                it("should not add to includes again", function () {
-                    expect(builder.includes).toEqual([Trait]);
-                });
-
-                it("should not add to contributions again", function () {
-                    expect(builder.contributions).toEqual([Trait.__defines]);
-                });
-            });
-        });
-    });
-
-    describe("requiring", function () {
-        beforeEach(function () {
-            builder = $oop.ClassBuilder.create('Class');
-        });
-
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    builder.require();
-                }).toThrow();
-            });
-        });
-
-        describe("when class already built", function () {
-            it("should throw", function () {
-                builder.build();
-
-                expect(function () {
-                    builder.require();
-                }).toThrow();
-            });
-        });
-
-        describe("otherwise", function () {
-            var Require,
-                result;
-
-            beforeEach(function () {
-                Require = $oop.ClassBuilder.create('Require').build();
-                result = builder.require(Require);
-            });
-
-            it("should return self", function () {
-                expect(result).toBe(builder);
-            });
-
-            it("should add list of requires", function () {
-                expect(builder.requires).toEqual([Require]);
-                expect(builder.requireLookup).toEqual({
-                    Require: true
-                });
-            });
-
-            describe("on duplication", function () {
-                beforeEach(function () {
-                    result = builder.require(Require);
-                });
-
-                it("should not add to requires again", function () {
-                    expect(builder.requires).toEqual([Require]);
-                });
-            });
-        });
-    });
-
-    describe("implementing interfaces", function () {
-        beforeEach(function () {
-            builder = $oop.ClassBuilder.create('Class');
-        });
-
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    builder.implement();
-                }).toThrow();
-            });
-        });
-
-        describe("when class already built", function () {
-            it("should throw", function () {
-                builder.build();
-
-                expect(function () {
-                    builder.implement();
-                }).toThrow();
-            });
-        });
-
-        describe("otherwise", function () {
-            var Interface,
-                result;
-
-            beforeEach(function () {
-                Interface = $oop.ClassBuilder.create('Interface').build();
-                result = builder.implement(Interface);
-            });
-
-            it("should return self", function () {
-                expect(result).toBe(builder);
-            });
-
-            it("should add to list of interfaces", function () {
-                expect(builder.interfaces).toEqual([Interface]);
-                expect(builder.interfaceLookup).toEqual({
-                    Interface: true
-                });
-            });
-
-            describe("on duplication", function () {
-                beforeEach(function () {
-                    result = builder.implement(Interface);
-                });
-
-                it("should not add to interfaces again", function () {
-                    expect(builder.interfaces).toEqual([Interface]);
-                });
-            });
-        });
-    });
-
-    describe("caching", function () {
-        beforeEach(function () {
-            builder = $oop.ClassBuilder.create('Class');
-        });
-
-        describe("when passing invalid argument", function () {
-            it("should throw", function () {
-                expect(function () {
-                    builder.cache();
-                }).toThrow();
-            });
-        });
-
-        describe("when class already built", function () {
-            it("should throw", function () {
-                builder.build();
-
-                expect(function () {
-                    builder.cache();
-                }).toThrow();
-            });
-        });
-
-        describe("otherwise", function () {
-            var mapper,
-                result;
-
-            beforeEach(function () {
-                mapper = function () {
-                };
-                result = builder.cache(mapper);
-            });
-
-            it("should return self", function () {
-                expect(result).toBe(builder);
-            });
-
-            it("should set mapper function", function () {
-                expect(builder.mapper).toBe(mapper);
-            });
-        });
-    });
-
     describe("defining members", function () {
         beforeEach(function () {
             builder = $oop.ClassBuilder.create('Class');
@@ -394,6 +171,186 @@ describe("ClassBuilder", function () {
         });
     });
 
+    describe("inclusion", function () {
+        beforeEach(function () {
+            builder = $oop.ClassBuilder.create('Class');
+        });
+
+        describe("when passing no arguments", function () {
+            it("should throw", function () {
+                expect(function () {
+                    builder.include();
+                }).toThrow();
+            });
+        });
+
+        describe("when already built", function () {
+            it("should throw", function () {
+                var Include = $oop.ClassBuilder.create('Include').build();
+                builder.build();
+                expect(function () {
+                    builder.include(Include);
+                }).toThrow();
+            });
+        });
+
+        describe("otherwise", function () {
+            var Trait = $oop.ClassBuilder.create('Trait')
+                    .define({
+                        foo: function () {
+                        }
+                    })
+                    .build(),
+                result;
+
+            beforeEach(function () {
+                result = builder.include(Trait);
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(builder);
+            });
+
+            it("should add to list of includes", function () {
+                expect(builder.includes).toEqual([Trait]);
+                expect(builder.includeLookup).toEqual({
+                    Trait: true
+                });
+            });
+
+            it("should add to list of contributions", function () {
+                expect(builder.contributions).toEqual([Trait.__defines]);
+                expect(builder.contributionLookup).toEqual({
+                    Trait: true
+                });
+            });
+
+            describe("on duplication", function () {
+                beforeEach(function () {
+                    result = builder.include(Trait);
+                });
+
+                it("should not add to includes again", function () {
+                    expect(builder.includes).toEqual([Trait]);
+                });
+
+                it("should not add to contributions again", function () {
+                    expect(builder.contributions).toEqual([Trait.__defines]);
+                });
+            });
+        });
+    });
+
+    describe("implementing interfaces", function () {
+        beforeEach(function () {
+            builder = $oop.ClassBuilder.create('Class');
+        });
+
+        describe("when passing no arguments", function () {
+            it("should throw", function () {
+                expect(function () {
+                    builder.implement();
+                }).toThrow();
+            });
+        });
+
+        describe("when class already built", function () {
+            it("should throw", function () {
+                builder.build();
+
+                expect(function () {
+                    builder.implement();
+                }).toThrow();
+            });
+        });
+
+        describe("otherwise", function () {
+            var Interface,
+                result;
+
+            beforeEach(function () {
+                Interface = $oop.ClassBuilder.create('Interface').build();
+                result = builder.implement(Interface);
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(builder);
+            });
+
+            it("should add to list of interfaces", function () {
+                expect(builder.interfaces).toEqual([Interface]);
+                expect(builder.interfaceLookup).toEqual({
+                    Interface: true
+                });
+            });
+
+            describe("on duplication", function () {
+                beforeEach(function () {
+                    result = builder.implement(Interface);
+                });
+
+                it("should not add to interfaces again", function () {
+                    expect(builder.interfaces).toEqual([Interface]);
+                });
+            });
+        });
+    });
+
+    describe("requiring", function () {
+        beforeEach(function () {
+            builder = $oop.ClassBuilder.create('Class');
+        });
+
+        describe("when passing no arguments", function () {
+            it("should throw", function () {
+                expect(function () {
+                    builder.require();
+                }).toThrow();
+            });
+        });
+
+        describe("when class already built", function () {
+            it("should throw", function () {
+                builder.build();
+
+                expect(function () {
+                    builder.require();
+                }).toThrow();
+            });
+        });
+
+        describe("otherwise", function () {
+            var Require,
+                result;
+
+            beforeEach(function () {
+                Require = $oop.ClassBuilder.create('Require').build();
+                result = builder.require(Require);
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(builder);
+            });
+
+            it("should add list of requires", function () {
+                expect(builder.requires).toEqual([Require]);
+                expect(builder.requireLookup).toEqual({
+                    Require: true
+                });
+            });
+
+            describe("on duplication", function () {
+                beforeEach(function () {
+                    result = builder.require(Require);
+                });
+
+                it("should not add to requires again", function () {
+                    expect(builder.requires).toEqual([Require]);
+                });
+            });
+        });
+    });
+
     describe("forwarding", function () {
         var filter;
 
@@ -451,6 +408,49 @@ describe("ClassBuilder", function () {
         });
     });
 
+    describe("caching", function () {
+        beforeEach(function () {
+            builder = $oop.ClassBuilder.create('Class');
+        });
+
+        describe("when passing invalid argument", function () {
+            it("should throw", function () {
+                expect(function () {
+                    builder.cache();
+                }).toThrow();
+            });
+        });
+
+        describe("when class already built", function () {
+            it("should throw", function () {
+                builder.build();
+
+                expect(function () {
+                    builder.cache();
+                }).toThrow();
+            });
+        });
+
+        describe("otherwise", function () {
+            var mapper,
+                result;
+
+            beforeEach(function () {
+                mapper = function () {
+                };
+                result = builder.cache(mapper);
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(builder);
+            });
+
+            it("should set mapper function", function () {
+                expect(builder.mapper).toBe(mapper);
+            });
+        });
+    });
+
     describe("building class", function () {
         var result;
 
@@ -467,6 +467,47 @@ describe("ClassBuilder", function () {
                 expect(function () {
                     builder.build();
                 }).toThrow();
+            });
+        });
+
+        it("should set ID meta", function () {
+            result = builder.build();
+            expect(result.__id).toBe('Class');
+        });
+
+        it("should copy properties", function () {
+            result = builder
+                .include($oop.ClassBuilder.create('Trait')
+                    .define({
+                        foo: "FOO",
+                        bar: "BAR"
+                    })
+                    .build())
+                .define({
+                    foo: "BAZ"
+                })
+                .build();
+
+            expect(result).toEqual({
+                foo: "BAZ",
+                bar: "BAR"
+            });
+        });
+
+        it("should add forwards meta", function () {
+            result = builder.build();
+            expect(result.__forwards).toBe(builder.forwards);
+        });
+
+        it("should set class on builder", function () {
+            result = builder.build();
+            expect(builder['class']).toBe(result);
+        });
+
+        it("should add class to registry", function () {
+            result = builder.build();
+            expect($oop.ClassBuilder.classes).toEqual({
+                Class: result
             });
         });
 
@@ -527,11 +568,6 @@ describe("ClassBuilder", function () {
             });
         });
 
-        it("should set ID meta", function () {
-            result = builder.build();
-            expect(result.__id).toBe('Class');
-        });
-
         describe("when class defines members", function () {
             beforeEach(function () {
                 builder.define({
@@ -543,30 +579,6 @@ describe("ClassBuilder", function () {
                 result = builder.build();
                 expect(result.__defines).toBe(builder.members);
             });
-        });
-
-        it("should copy properties", function () {
-            result = builder
-                .include($oop.ClassBuilder.create('Trait')
-                    .define({
-                        foo: "FOO",
-                        bar: "BAR"
-                    })
-                    .build())
-                .define({
-                    foo: "BAZ"
-                })
-                .build();
-
-            expect(result).toEqual({
-                foo: "BAZ",
-                bar: "BAR"
-            });
-        });
-
-        it("should add forwards meta", function () {
-            result = builder.build();
-            expect(result.__forwards).toBe(builder.forwards);
         });
 
         describe("when class has includes", function () {
@@ -581,7 +593,7 @@ describe("ClassBuilder", function () {
                     .build();
             });
 
-            it("should add meta", function () {
+            it("should add includes meta", function () {
                 expect(result.__includes).toBe(builder.includeLookup);
             });
         });
@@ -617,6 +629,7 @@ describe("ClassBuilder", function () {
                 });
             });
         });
+
         describe("when class has requires", function () {
             var Require1;
 
@@ -655,7 +668,8 @@ describe("ClassBuilder", function () {
             beforeEach(function () {
                 Include1 = $oop.ClassBuilder.create('Include1')
                     .define({
-                        foo: function () {}
+                        foo: function () {
+                        }
                     })
                     .build();
             });
@@ -735,18 +749,6 @@ describe("ClassBuilder", function () {
                 it("should return array", function () {
                     expect(result.foo()).toEqual([1, 2, 3]);
                 });
-            });
-        });
-
-        it("should set class on builder", function () {
-            result = builder.build();
-            expect(builder['class']).toBe(result);
-        });
-
-        it("should add class to registry", function () {
-            result = builder.build();
-            expect($oop.ClassBuilder.classes).toEqual({
-                Class: result
             });
         });
     });

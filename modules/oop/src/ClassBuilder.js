@@ -45,7 +45,7 @@ $oop.ClassBuilder = {
      * @returns {string[]}
      * @private
      */
-    _getUnimplementedMethods: function () {
+    _getUnimplementedMethodNames: function () {
         var methods = this._getMethodNameLookup();
 
         return this.interfaces
@@ -118,6 +118,7 @@ $oop.ClassBuilder = {
     },
 
     /**
+     * @memberOf $oop.ClassBuilder#
      * @returns {object}
      * @private
      */
@@ -292,13 +293,14 @@ $oop.ClassBuilder = {
 
             /**
              * All sets of contributed members, (as include or as member definition) in order of addition.
-             * @type {object[]}
+             * @todo Store class IDs only?
+             * @member {object[]} $oop.ClassBuilder#contributions
              */
             builder.contributions = [];
 
             /**
              * Lookup of all contributions indexed by class ID.
-             * @member {object} $oop.ClassBuilder#includeLookup
+             * @member {object} $oop.ClassBuilder#contributionLookup
              */
             builder.contributionLookup = {};
 
@@ -329,28 +331,74 @@ $oop.ClassBuilder = {
     },
 
     /**
-     * Specifies a required base, or trait of the host class.
-     * Used by traits only.
+     * Defines a batch of properties and methods contributed by the current class.
+     * Can be called multiple times.
+     * @memberOf $oop.ClassBuilder#
+     * @param {object} batch
+     * @returns {$oop.ClassBuilder}
+     */
+    define: function (batch) {
+        if (!batch) {
+            throw new Error("No members specified.");
+        }
+        // TODO: Defining after build should be allowed. (Would require re-constructing overrides.)
+        if (this['class']) {
+            throw new Error("ClassBuilder#define may only be called before build.");
+        }
+
+        var members = this.members;
+
+        // adding batch to members, overwriting conflicting properties
+        Object.getOwnPropertyNames(batch)
+            .reduce(function (members, memberName) {
+                members[memberName] = batch[memberName];
+                return members;
+            }, members);
+
+        var contributions = this.contributions,
+            contributionsLookup = this.contributionLookup,
+            classId = this.classId;
+
+        // adding members to contributions
+        if (!contributionsLookup.hasOwnProperty(classId)) {
+            contributions.push(members);
+            contributionsLookup[classId] = true;
+        }
+
+        return this;
+    },
+
+    /**
+     * Specifies a class to be included by the host class.
      * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @returns {$oop.ClassBuilder}
      */
-    require: function (class_) {
+    include: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("ClassBuilder#require expects type Class.");
+            throw new Error("ClassBuilder#include expects type Class.");
         }
         if (this['class']) {
-            throw new Error("ClassBuilder#require may only be called before build.");
+            throw new Error("ClassBuilder#include may only be called before build.");
         }
 
-        var requires = this.requires,
-            requireLookup = this.requireLookup,
+        var includes = this.includes,
+            includeLookup = this.includeLookup,
             classId = class_.__id;
 
-        // adding require to list
-        if (!requireLookup.hasOwnProperty(classId)) {
-            requires.push(class_);
-            requireLookup[classId] = true;
+        // adding interface to list
+        if (!includeLookup.hasOwnProperty(classId)) {
+            includes.push(class_);
+            includeLookup[classId] = true;
+        }
+
+        var contributions = this.contributions,
+            contributionsLookup = this.contributionLookup;
+
+        // adding members to contributions
+        if (!contributionsLookup.hasOwnProperty(classId)) {
+            contributions.push(class_.__defines);
+            contributionsLookup[classId] = true;
         }
 
         // transferring includes & requires to class being built
@@ -389,36 +437,28 @@ $oop.ClassBuilder = {
     },
 
     /**
-     * Specifies a class to be included by the host class.
+     * Specifies a required base, or trait of the host class.
+     * Used by traits only.
      * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @returns {$oop.ClassBuilder}
      */
-    include: function (class_) {
+    require: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("ClassBuilder#include expects type Class.");
+            throw new Error("ClassBuilder#require expects type Class.");
         }
         if (this['class']) {
-            throw new Error("ClassBuilder#include may only be called before build.");
+            throw new Error("ClassBuilder#require may only be called before build.");
         }
 
-        var includes = this.includes,
-            includeLookup = this.includeLookup,
+        var requires = this.requires,
+            requireLookup = this.requireLookup,
             classId = class_.__id;
 
-        // adding interface to list
-        if (!includeLookup.hasOwnProperty(classId)) {
-            includes.push(class_);
-            includeLookup[classId] = true;
-        }
-
-        var contributions = this.contributions,
-            contributionsLookup = this.contributionLookup;
-
-        // adding members to contributions
-        if (!contributionsLookup.hasOwnProperty(classId)) {
-            contributions.push(class_.__defines);
-            contributionsLookup[classId] = true;
+        // adding require to list
+        if (!requireLookup.hasOwnProperty(classId)) {
+            requires.push(class_);
+            requireLookup[classId] = true;
         }
 
         // transferring includes & requires to class being built
@@ -482,44 +522,6 @@ $oop.ClassBuilder = {
     },
 
     /**
-     * Defines a batch of properties and methods contributed by the current class.
-     * Can be called multiple times.
-     * @memberOf $oop.ClassBuilder#
-     * @param {object} batch
-     * @returns {$oop.ClassBuilder}
-     */
-    define: function (batch) {
-        if (!batch) {
-            throw new Error("No members specified.");
-        }
-        // TODO: Defining after build should be allowed. (Would require re-constructing overrides.)
-        if (this['class']) {
-            throw new Error("ClassBuilder#define may only be called before build.");
-        }
-
-        var members = this.members;
-
-        // adding batch to members, overwriting conflicting properties
-        Object.getOwnPropertyNames(batch)
-            .reduce(function (members, memberName) {
-                members[memberName] = batch[memberName];
-                return members;
-            }, members);
-
-        var contributions = this.contributions,
-            contributionsLookup = this.contributionLookup,
-            classId = this.classId;
-
-        // adding members to contributions
-        if (!contributionsLookup.hasOwnProperty(classId)) {
-            contributions.push(members);
-            contributionsLookup[classId] = true;
-        }
-
-        return this;
-    },
-
-    /**
      * @memberOf $oop.ClassBuilder#
      * @returns {$oop.Class} The created class.
      */
@@ -531,7 +533,7 @@ $oop.ClassBuilder = {
         }
 
         var result = Object.create($oop.Class),
-            unimplementedMethods = this._getUnimplementedMethods();
+            unimplementedMethods = this._getUnimplementedMethodNames();
 
         // checking whether
         // ... methods match interfaces
