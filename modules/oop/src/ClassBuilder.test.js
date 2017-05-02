@@ -10,7 +10,7 @@ describe("ClassBuilder", function () {
 
     describe("instantiation", function () {
         describe("when passing no arguments", function () {
-            it("should throw error", function () {
+            it("should throw", function () {
                 expect(function () {
                     $oop.ClassBuilder.create();
                 }).toThrow();
@@ -72,7 +72,7 @@ describe("ClassBuilder", function () {
         });
 
         describe("when passing no arguments", function () {
-            it("should throw error", function () {
+            it("should throw", function () {
                 expect(function () {
                     builder.extend();
                 }).toThrow();
@@ -210,7 +210,7 @@ describe("ClassBuilder", function () {
         });
 
         describe("when passing no arguments", function () {
-            it("should throw error", function () {
+            it("should throw", function () {
                 expect(function () {
                     builder.implement();
                 }).toThrow();
@@ -296,7 +296,7 @@ describe("ClassBuilder", function () {
         });
 
         describe("when passing no arguments", function () {
-            it("should throw error", function () {
+            it("should throw", function () {
                 expect(function () {
                     builder.contribute();
                 }).toThrow();
