@@ -56,8 +56,8 @@ describe("ClassBuilder", function () {
                 expect(result.includes).toEqual({});
             });
 
-            it("should initialize contribution registry", function () {
-                expect(result.contributions).toEqual({});
+            it("should initialize member registry", function () {
+                expect(result.members).toEqual({});
             });
 
             it("should initialize methods registry", function () {
@@ -84,7 +84,7 @@ describe("ClassBuilder", function () {
                     .include($oop.ClassBuilder.create('Base').build())
                     .require($oop.ClassBuilder.create('Widget').build())
                     .require($oop.ClassBuilder.create('OtherTrait').build())
-                    .contribute({
+                    .define({
                         foo: "FOO",
                         bar: function () {
                         }
@@ -129,7 +129,7 @@ describe("ClassBuilder", function () {
 
             it("should register methods", function () {
                 expect(builder.methods).toEqual({
-                    bar: [Trait.__contributes.bar]
+                    bar: [Trait.__defines.bar]
                 });
             });
         });
@@ -290,7 +290,7 @@ describe("ClassBuilder", function () {
         });
     });
 
-    describe("contributing", function () {
+    describe("defining members", function () {
         beforeEach(function () {
             builder = $oop.ClassBuilder.create('ClassId');
         });
@@ -298,7 +298,7 @@ describe("ClassBuilder", function () {
         describe("when passing no arguments", function () {
             it("should throw", function () {
                 expect(function () {
-                    builder.contribute();
+                    builder.define();
                 }).toThrow();
             });
         });
@@ -322,7 +322,7 @@ describe("ClassBuilder", function () {
                 result;
 
             beforeEach(function () {
-                result = builder.contribute(properties);
+                result = builder.define(properties);
             });
 
             it("should return self", function () {
@@ -330,8 +330,8 @@ describe("ClassBuilder", function () {
             });
 
             it("should copy meta", function () {
-                expect(builder.contributions).not.toBe(properties);
-                expect(builder.contributions).toEqual(properties);
+                expect(builder.members).not.toBe(properties);
+                expect(builder.members).toEqual(properties);
             });
 
             it("should register methods", function () {
@@ -342,10 +342,10 @@ describe("ClassBuilder", function () {
 
             describe("when already having own properties", function () {
                 it("should add to meta", function () {
-                    builder.contribute({
+                    builder.define({
                         baz: "BAZ"
                     });
-                    expect(builder.contributions).toEqual({
+                    expect(builder.members).toEqual({
                         foo: "FOO",
                         bar: properties.bar,
                         baz: "BAZ"
@@ -414,7 +414,7 @@ describe("ClassBuilder", function () {
 
     describe("building class", function () {
         var Include1 = $oop.ClassBuilder.create('Include1')
-                .contribute({
+                .define({
                     foo: function () {
                     }
                 })
@@ -439,13 +439,13 @@ describe("ClassBuilder", function () {
 
         describe("when class implements interfaces", function () {
             var Interface1 = $oop.ClassBuilder.create('Interface1')
-                    .contribute({
+                    .define({
                         foo: function () {
                         }
                     })
                     .build(),
                 Interface2 = $oop.ClassBuilder.create('Interface2')
-                    .contribute({
+                    .define({
                         bar: function () {
                         }
                     })
@@ -455,7 +455,7 @@ describe("ClassBuilder", function () {
                 builder
                     .implement(Interface1)
                     .implement(Interface2)
-                    .contribute({
+                    .define({
                         foo: function () {
                         }
                     });
@@ -474,7 +474,7 @@ describe("ClassBuilder", function () {
 
                 beforeEach(function () {
                     Include2 = $oop.ClassBuilder.create('Include2')
-                        .contribute({
+                        .define({
                             bar: function () {
                             }
                         })
@@ -496,20 +496,20 @@ describe("ClassBuilder", function () {
             expect(result.__id).toBe('ClassId');
         });
 
-        it("should add contributions meta", function () {
+        it("should add members meta", function () {
             result = builder.build();
-            expect(result.__contributes).toBe(builder.contributions);
+            expect(result.__defines).toBe(builder.members);
         });
 
         it("should copy properties", function () {
             result = builder
                 .include($oop.ClassBuilder.create('Trait')
-                    .contribute({
+                    .define({
                         foo: "FOO",
                         bar: "BAR"
                     })
                     .build())
-                .contribute({
+                .define({
                     foo: "BAZ"
                 })
                 .build();
@@ -580,44 +580,44 @@ describe("ClassBuilder", function () {
                     .include(Include1)
                     .build();
 
-                expect(result.foo).toBe(Include1.__contributes.foo);
+                expect(result.foo).toBe(Include1.__defines.foo);
             });
         });
 
         describe("when there are overrides", function () {
             var Include2,
-                contributions,
+                members,
                 spy1, spy2, spy3;
 
             beforeEach(function () {
                 Include2 = $oop.ClassBuilder.create('Include2')
-                    .contribute({
+                    .define({
                         foo: function () {
                         }
                     })
                     .build();
 
-                contributions = {
+                members = {
                     foo: function () {
                     }
                 };
 
-                spy1 = spyOn(Include1.__contributes, 'foo');
-                spy2 = spyOn(Include2.__contributes, 'foo');
-                spy3 = spyOn(contributions, 'foo');
+                spy1 = spyOn(Include1.__defines, 'foo');
+                spy2 = spyOn(Include2.__defines, 'foo');
+                spy3 = spyOn(members, 'foo');
 
                 result = builder
                     .include(Include1)
                     .include(Include2)
-                    .contribute(contributions)
+                    .define(members)
                     .build();
             });
 
             it("should call all overrides", function () {
                 result.foo(1, 2, 3);
-                expect(Include1.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
-                expect(Include2.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
-                expect(contributions.foo).toHaveBeenCalledWith(1, 2, 3);
+                expect(Include1.__defines.foo).toHaveBeenCalledWith(1, 2, 3);
+                expect(Include2.__defines.foo).toHaveBeenCalledWith(1, 2, 3);
+                expect(members.foo).toHaveBeenCalledWith(1, 2, 3);
             });
 
             describe("when returning same value", function () {

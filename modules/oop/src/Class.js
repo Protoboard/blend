@@ -141,8 +141,8 @@ $oop.Class = {
  */
 
 /**
- * Properties contributed by the class.
- * @member {object} $oop.Class#__contributes
+ * Properties defined by the class.
+ * @member {object} $oop.Class#__defines
  * @private
  */
 

@@ -72,7 +72,7 @@ describe("Class", function () {
 
             beforeEach(function () {
                 Class = builder
-                    .contribute({
+                    .define({
                         foo: function () {
                             return 'foo';
                         }

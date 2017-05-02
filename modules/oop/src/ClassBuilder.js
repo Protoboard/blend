@@ -71,11 +71,11 @@ $oop.ClassBuilder = {
             methods = this.methods;
 
         return interfaceNames.reduce(function (unimplemented, interfaceName) {
-            var contributions = interfaces[interfaceName].__contributes;
+            var members = interfaces[interfaceName].__defines;
 
-            return unimplemented.concat(Object.getOwnPropertyNames(contributions)
+            return unimplemented.concat(Object.getOwnPropertyNames(members)
                 .filter(function (memberName) {
-                    return typeof contributions[memberName] === 'function' &&
+                    return typeof members[memberName] === 'function' &&
                         !methods.hasOwnProperty(memberName);
                 })
                 .map(function (methodName) {
@@ -156,7 +156,7 @@ $oop.ClassBuilder = {
 
     /**
      * Retrieves a lookup of method names : anonymous functions that wrap
-     * colliding methods coming from different sources. (Contributions, base(s), includes.)
+     * colliding methods coming from different sources. (Members, includes.)
      * @memberOf $oop.ClassBuilder#
      * @returns {object}
      * @private
@@ -253,10 +253,10 @@ $oop.ClassBuilder = {
             builder.includes = {};
 
             /**
-             * Class' own property & method contributions.
-             * @member {object} $oop.ClassBuilder#contributions
+             * Class' own property & method members.
+             * @member {object} $oop.ClassBuilder#members
              */
-            builder.contributions = {};
+            builder.members = {};
 
             /**
              * Registry of surrogate descriptors.
@@ -367,8 +367,8 @@ $oop.ClassBuilder = {
         // transferring includes & requires to class being built
         this._extractRequires(class_);
 
-        // registering contributed methods
-        var properties = class_.__contributes;
+        // registering defined members
+        var properties = class_.__defines;
         this._addProperties(properties);
         this._addMethods(properties);
 
@@ -430,33 +430,34 @@ $oop.ClassBuilder = {
     },
 
     /**
+     * Defines a batch of properties and methods contributed by the current class.
      * Can be called multiple times.
      * @memberOf $oop.ClassBuilder#
-     * @param {object} members
+     * @param {object} membersBatch
      * @returns {$oop.ClassBuilder}
      */
-    contribute: function (members) {
-        if (!members) {
-            throw new Error("No contributions specified.");
+    define: function (membersBatch) {
+        if (!membersBatch) {
+            throw new Error("No members specified.");
         }
-        // TODO: Contributing after build should be allowed. (Would require re-constructing overrides.)
+        // TODO: Defining after build should be allowed. (Would require re-constructing overrides.)
         if (this['class']) {
-            throw new Error("ClassBuilder#contribute may only be called before build.");
+            throw new Error("ClassBuilder#define may only be called before build.");
         }
 
-        var contributions = this.contributions,
-            memberNames = Object.getOwnPropertyNames(members),
+        var members = this.members,
+            memberNames = Object.getOwnPropertyNames(membersBatch),
             i, memberName;
 
-        // copying properties to overall contributions
+        // copying properties to overall members
         for (i = 0; i < memberNames.length; i++) {
             memberName = memberNames[i];
-            contributions[memberName] = members[memberName];
+            members[memberName] = membersBatch[memberName];
         }
 
-        // registering contributed methods
-        this._addProperties(members);
-        this._addMethods(members);
+        // registering properties & methods
+        this._addProperties(membersBatch);
+        this._addMethods(membersBatch);
 
         return this;
     },
@@ -492,14 +493,14 @@ $oop.ClassBuilder = {
 
         // adding meta properties
         Object.defineProperties(result, {
-            __id         : {value: classId},
-            __implements : {value: this.interfaces},
-            __includes   : {value: this.includes},
-            __requires   : {value: this._getUnfulfilledRequires()},
-            __contributes: {value: this.contributions},
-            __forwards   : {value: this.forwards},
-            __mapper     : {value: this.mapper},
-            __instances  : {value: {}}
+            __id        : {value: classId},
+            __implements: {value: this.interfaces},
+            __includes  : {value: this.includes},
+            __requires  : {value: this._getUnfulfilledRequires()},
+            __defines   : {value: this.members},
+            __forwards  : {value: this.forwards},
+            __mapper    : {value: this.mapper},
+            __instances : {value: {}}
         });
 
         // copying non-method properties
