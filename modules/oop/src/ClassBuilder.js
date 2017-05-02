@@ -3,6 +3,7 @@
 
 /**
  * Builds composable classes.
+ * @todo Consolidate array - lookup pairs
  * @class $oop.ClassBuilder
  */
 $oop.ClassBuilder = {
@@ -20,43 +21,22 @@ $oop.ClassBuilder = {
 
     /**
      * @memberOf $oop.ClassBuilder#
-     * @param {object} members
+     * @returns {object}
      * @private
      */
-    _addProperties: function (members) {
-        var registry = this.properties,
-            memberNames = Object.getOwnPropertyNames(members),
-            memberCount = memberNames.length,
-            i, memberName, memberValue;
+    _getMethodNameLookup: function () {
+        return this.contributions
+            .reduce(function (methodLookup, members) {
+                Object.getOwnPropertyNames(members)
+                    .filter(function (memberName) {
+                        return typeof members[memberName] === 'function';
+                    })
+                    .forEach(function (methodName) {
+                        methodLookup[methodName] = true;
+                    });
 
-        for (i = 0; i < memberCount; i++) {
-            memberName = memberNames[i];
-            memberValue = members[memberName];
-            if (typeof memberValue !== 'function') {
-                registry[memberName] = memberValue;
-            }
-        }
-    },
-
-    /**
-     * @memberOf $oop.ClassBuilder#
-     * @param {object} members
-     * @private
-     */
-    _addMethods: function (members) {
-        var methods = this.methods,
-            memberNames = Object.getOwnPropertyNames(members),
-            memberCount = memberNames.length,
-            i, memberName, memberValue, methodOverrides;
-
-        for (i = 0; i < memberCount; i++) {
-            memberName = memberNames[i];
-            memberValue = members[memberName];
-            if (typeof memberValue === 'function') {
-                methodOverrides = methods[memberName] = methods[memberName] || [];
-                methodOverrides.push(memberValue);
-            }
-        }
+                return methodLookup;
+            }, {});
     },
 
     /**
@@ -66,22 +46,22 @@ $oop.ClassBuilder = {
      * @private
      */
     _getUnimplementedMethods: function () {
-        var interfaces = this.interfaces,
-            interfaceNames = Object.keys(interfaces),
-            methods = this.methods;
+        var methods = this._getMethodNameLookup();
 
-        return interfaceNames.reduce(function (unimplemented, interfaceName) {
-            var members = interfaces[interfaceName].__defines;
+        return this.interfaces
+            .reduce(function (unimplemented, interface_) {
+                var members = interface_.__defines;
 
-            return unimplemented.concat(Object.getOwnPropertyNames(members)
-                .filter(function (memberName) {
-                    return typeof members[memberName] === 'function' &&
-                        !methods.hasOwnProperty(memberName);
-                })
-                .map(function (methodName) {
-                    return interfaceName + '#' + methodName;
-                }));
-        }, []);
+                // going through all interfaces and matching methods against members
+                return unimplemented.concat(Object.getOwnPropertyNames(members)
+                    .filter(function (memberName) {
+                        return typeof members[memberName] === 'function' &&
+                            !methods.hasOwnProperty(memberName);
+                    })
+                    .map(function (methodName) {
+                        return interface_.__id + '#' + methodName;
+                    }));
+            }, []);
     },
 
     /**
@@ -93,7 +73,6 @@ $oop.ClassBuilder = {
      */
     _extractRequires: function (class_) {
         var requires = this.requires,
-            demandedRequires = requires.demanded,
             classRequires = class_.__requires,
             classIncludes = class_.__includes,
             classRequireNames,
@@ -102,13 +81,14 @@ $oop.ClassBuilder = {
         if (classIncludes) {
             classIncludeNames = classIncludes && Object.keys(classIncludes);
             classIncludeNames.forEach(function (includeId) {
-                demandedRequires[includeId] = true;
+                requires[includeId] = true;
             });
         }
+
         if (classRequires) {
             classRequireNames = classRequires && Object.keys(classRequires);
             classRequireNames.forEach(function (requireId) {
-                demandedRequires[requireId] = true;
+                requires[requireId] = true;
             });
         }
     },
@@ -118,25 +98,64 @@ $oop.ClassBuilder = {
      * @returns {object}
      * @private
      */
-    _getUnfulfilledRequires: function () {
-        var requires = this.requires,
-            demanded = requires.demanded,
-            fulfilled = requires.fulfilled,
-            unfulfilledClassIds = Object.keys(demanded)
-                .filter(function (classId) {
-                    return !fulfilled.hasOwnProperty(classId);
-                }),
-            result;
-
-        if (unfulfilledClassIds.length) {
-            result = {};
-            unfulfilledClassIds
-                .forEach(function (classId) {
-                    result[classId] = true;
+    _getUnfulfilledRequireLookup: function () {
+        var classId = this.classId,
+            requireLookup = this.requireLookup,
+            includeLookup = this.includeLookup,
+            unfulfilledRequireIds = Object.keys(requireLookup)
+                .filter(function (requireId) {
+                    return classId !== requireId &&
+                        !includeLookup.hasOwnProperty(requireId);
                 });
-        }
 
-        return result;
+        return unfulfilledRequireIds.length ?
+            unfulfilledRequireIds
+                .reduce(function (requireLookup, requireId) {
+                    requireLookup[requireId] = true;
+                    return requireLookup;
+                }, {}) :
+            undefined;
+    },
+
+    /**
+     * @returns {object}
+     * @private
+     */
+    _getProperties: function () {
+        return this.contributions
+            .reduce(function (properties, members) {
+                Object.getOwnPropertyNames(members)
+                    .filter(function (memberName) {
+                        return typeof members[memberName] !== 'function';
+                    })
+                    .forEach(function (propertyName) {
+                        properties[propertyName] = members[propertyName];
+                    });
+
+                return properties;
+            }, {});
+    },
+
+    /**
+     * Retrieves a structure with all methods in it.
+     * @memberOf $oop.ClassBuilder#
+     * @private
+     */
+    _getMethods: function () {
+        return this.contributions
+            .reduce(function (singularMethods, members) {
+                Object.getOwnPropertyNames(members)
+                    .filter(function (memberName) {
+                        return typeof members[memberName] === 'function';
+                    })
+                    .forEach(function (methodName) {
+                        if (!singularMethods[methodName]) {
+                            singularMethods[methodName] = [];
+                        }
+                        singularMethods[methodName].push(members[methodName]);
+                    });
+                return singularMethods;
+            }, {});
     },
 
     /**
@@ -144,14 +163,17 @@ $oop.ClassBuilder = {
      * @memberOf $oop.ClassBuilder#
      * @private
      */
-    _getSingularMethodNames: function () {
-        var methods = this.methods,
-            methodNames = Object.getOwnPropertyNames(methods);
+    _getSingularMethods: function () {
+        var methods = this._getMethods();
 
-        return methodNames
+        return Object.getOwnPropertyNames(methods)
             .filter(function (methodName) {
                 return methods[methodName].length === 1;
-            });
+            })
+            .reduce(function (singularMethods, singularMethodName) {
+                singularMethods[singularMethodName] = methods[singularMethodName][0];
+                return singularMethods;
+            }, {});
     },
 
     /**
@@ -162,21 +184,19 @@ $oop.ClassBuilder = {
      * @private
      */
     _getWrapperMethods: function () {
-        var methods = this.methods,
-            methodNames = Object.keys(methods),
-            result = {};
+        var methods = this._getMethods();
 
-        methodNames
+        return Object.getOwnPropertyNames(methods)
             .filter(function (methodName) {
                 return methods[methodName].length > 1;
             })
-            .forEach(function (methodName) {
+            .reduce(function (wrapperMethods, methodName) {
                 var functions = methods[methodName],
                     functionCount = functions.length;
 
                 // generating wrapper method
                 // it's very important that this function remains as light as possible
-                result[methodName] = function () {
+                wrapperMethods[methodName] = function () {
                     var results = new Array(functionCount),
                         i, result,
                         same = true;
@@ -199,9 +219,9 @@ $oop.ClassBuilder = {
                         result :
                         results;
                 };
-            });
 
-        return result;
+                return wrapperMethods;
+            }, {});
     },
 
     /**
@@ -229,53 +249,65 @@ $oop.ClassBuilder = {
             builder.classId = classId;
 
             /**
-             * Registry of required classes
-             * @member {{demanded: {}, fulfilled: {}}} $oop.ClassBuilder#requires
+             * List of required classes
+             * @member {$oop.Class[]} $oop.ClassBuilder#requires
              */
-            builder.requires = {
-                demanded : {},
-                fulfilled: {}
-            };
-
-            // adding self as fulfilled require
-            builder.requires.fulfilled[classId] = true;
+            builder.requires = [];
 
             /**
-             * Registry of implemented interfaces.
-             * @member {object} $oop.ClassBuilder#interfaces
+             * Lookup of required classes indexed by class ID.
+             * @member {object} $oop.ClassBuilder#requireLookup
              */
-            builder.interfaces = {};
+            builder.requireLookup = {};
 
             /**
-             * Registry of included classes.
-             * @member {object} $oop.ClassBuilder#includes
+             * List of implemented interfaces.
+             * @member {$oop.Class[]} $oop.ClassBuilder#interfaces
              */
-            builder.includes = {};
+            builder.interfaces = [];
 
             /**
-             * Class' own property & method members.
+             * Lookup of interfaces indexed by class ID.
+             * @member {object} $oop.ClassBuilder#interfaceLookup
+             */
+            builder.interfaceLookup = {};
+
+            /**
+             * List of included classes.
+             * @member {$oop.Class[]} $oop.ClassBuilder#includes
+             */
+            builder.includes = [];
+
+            /**
+             * Lookup of includes indexed by class ID.
+             * @member {object} $oop.ClassBuilder#includeLookup
+             */
+            builder.includeLookup = {};
+
+            /**
+             * Class' own properties & methods.
              * @member {object} $oop.ClassBuilder#members
              */
             builder.members = {};
 
             /**
-             * Registry of surrogate descriptors.
+             * All sets of contributed members, (as include or as member definition) in order of addition.
+             * @type {object[]}
+             */
+            builder.contributions = [];
+
+            /**
+             * Lookup of all contributions indexed by class ID.
+             * @member {object} $oop.ClassBuilder#includeLookup
+             */
+            builder.contributionLookup = {};
+
+            /**
+             * List of surrogate descriptors.
+             * @todo Do we need a lookup for this too?
              * @member {object[]} $oop.ClassBuilder#forwards
              */
             builder.forwards = [];
-
-            /**
-             * Registry of non-function properties indexed by property name.
-             * @member {object} $oop.ClassBuilder#properties
-             */
-            builder.properties = {};
-
-            /**
-             * Method registry.
-             * Indexed by method name, then serial.
-             * @member {object} $oop.ClassBuilder#methods
-             */
-            builder.methods = {};
 
             /**
              * Instance hash function for cached classes.
@@ -311,8 +343,15 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#require may only be called before build.");
         }
 
-        // registering required class
-        this.requires.demanded[class_.__id] = true;
+        var requires = this.requires,
+            requireLookup = this.requireLookup,
+            classId = class_.__id;
+
+        // adding require to list
+        if (!requireLookup.hasOwnProperty(classId)) {
+            requires.push(class_);
+            requireLookup[classId] = true;
+        }
 
         // transferring includes & requires to class being built
         this._extractRequires(class_);
@@ -336,8 +375,15 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#implement may only be called before build.");
         }
 
-        // registering interface
-        this.interfaces[interface_.__id] = interface_;
+        var interfaces = this.interfaces,
+            interfaceLookup = this.interfaceLookup,
+            classId = interface_.__id;
+
+        // adding interface to list
+        if (!interfaceLookup.hasOwnProperty(classId)) {
+            interfaces.push(interface_);
+            interfaceLookup[classId] = true;
+        }
 
         return this;
     },
@@ -356,21 +402,27 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#include may only be called before build.");
         }
 
-        var classId = class_.__id;
+        var includes = this.includes,
+            includeLookup = this.includeLookup,
+            classId = class_.__id;
 
-        // registering class as include
-        this.includes[classId] = true;
+        // adding interface to list
+        if (!includeLookup.hasOwnProperty(classId)) {
+            includes.push(class_);
+            includeLookup[classId] = true;
+        }
 
-        // adding include to fulfilled requirements
-        this.requires.fulfilled[classId] = true;
+        var contributions = this.contributions,
+            contributionsLookup = this.contributionLookup;
+
+        // adding members to contributions
+        if (!contributionsLookup.hasOwnProperty(classId)) {
+            contributions.push(class_.__defines);
+            contributionsLookup[classId] = true;
+        }
 
         // transferring includes & requires to class being built
         this._extractRequires(class_);
-
-        // registering defined members
-        var properties = class_.__defines;
-        this._addProperties(properties);
-        this._addMethods(properties);
 
         return this;
     },
@@ -433,11 +485,11 @@ $oop.ClassBuilder = {
      * Defines a batch of properties and methods contributed by the current class.
      * Can be called multiple times.
      * @memberOf $oop.ClassBuilder#
-     * @param {object} membersBatch
+     * @param {object} batch
      * @returns {$oop.ClassBuilder}
      */
-    define: function (membersBatch) {
-        if (!membersBatch) {
+    define: function (batch) {
+        if (!batch) {
             throw new Error("No members specified.");
         }
         // TODO: Defining after build should be allowed. (Would require re-constructing overrides.)
@@ -445,19 +497,24 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#define may only be called before build.");
         }
 
-        var members = this.members,
-            memberNames = Object.getOwnPropertyNames(membersBatch),
-            i, memberName;
+        var members = this.members;
 
-        // copying properties to overall members
-        for (i = 0; i < memberNames.length; i++) {
-            memberName = memberNames[i];
-            members[memberName] = membersBatch[memberName];
+        // adding batch to members, overwriting conflicting properties
+        Object.getOwnPropertyNames(batch)
+            .reduce(function (members, memberName) {
+                members[memberName] = batch[memberName];
+                return members;
+            }, members);
+
+        var contributions = this.contributions,
+            contributionsLookup = this.contributionLookup,
+            classId = this.classId;
+
+        // adding members to contributions
+        if (!contributionsLookup.hasOwnProperty(classId)) {
+            contributions.push(members);
+            contributionsLookup[classId] = true;
         }
-
-        // registering properties & methods
-        this._addProperties(membersBatch);
-        this._addMethods(membersBatch);
 
         return this;
     },
@@ -473,10 +530,8 @@ $oop.ClassBuilder = {
             throw new Error("Class " + classId + " already built.");
         }
 
-        var unimplementedMethods = this._getUnimplementedMethods(),
-            properties = this.properties,
-            methods = this.methods,
-            result = Object.create($oop.Class);
+        var result = Object.create($oop.Class),
+            unimplementedMethods = this._getUnimplementedMethods();
 
         // checking whether
         // ... methods match interfaces
@@ -494,29 +549,32 @@ $oop.ClassBuilder = {
         // adding meta properties
         Object.defineProperties(result, {
             __id        : {value: classId},
-            __implements: {value: this.interfaces},
-            __includes  : {value: this.includes},
-            __requires  : {value: this._getUnfulfilledRequires()},
+            __implements: {value: this.interfaceLookup},
+            __includes  : {value: this.includeLookup},
+            __requires  : {value: this._getUnfulfilledRequireLookup()},
             __defines   : {value: this.members},
             __forwards  : {value: this.forwards},
             __mapper    : {value: this.mapper},
             __instances : {value: {}}
         });
 
+        var properties = this._getProperties(),
+            singularMethods = this._getSingularMethods(),
+            wrapperMethods = this._getWrapperMethods();
+
         // copying non-method properties
         Object.getOwnPropertyNames(properties)
-            .forEach(function (propertyName) {
-                result[propertyName] = properties[propertyName];
+            .forEach(function (memberName) {
+                result[memberName] = properties[memberName];
             });
 
         // copying singular methods 1:1
-        this._getSingularMethodNames()
+        Object.getOwnPropertyNames(singularMethods)
             .forEach(function (methodName) {
-                result[methodName] = methods[methodName][0];
+                result[methodName] = singularMethods[methodName];
             });
 
         // copying wrapper methods
-        var wrapperMethods = this._getWrapperMethods();
         Object.getOwnPropertyNames(wrapperMethods)
             .forEach(function (methodName) {
                 result[methodName] = wrapperMethods[methodName];

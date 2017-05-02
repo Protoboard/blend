@@ -18,57 +18,72 @@ describe("ClassBuilder", function () {
         });
 
         describe("when class already being built", function () {
-             beforeEach(function () {
+            beforeEach(function () {
                 builder = $oop.ClassBuilder.create('Class');
-             });
+            });
 
-             it("should return same builder", function () {
-                var result =  $oop.ClassBuilder.create('Class');
+            it("should return same builder", function () {
+                var result = $oop.ClassBuilder.create('Class');
                 expect(result).toBe(builder);
-             });
+            });
         });
 
         describe("otherwise", function () {
             var result;
 
             beforeEach(function () {
-                result = $oop.ClassBuilder.create('ClassId');
+                result = $oop.ClassBuilder.create('Class');
             });
 
             it("should set class ID", function () {
-                expect(result.classId).toEqual('ClassId');
+                expect(result.classId).toEqual('Class');
             });
 
-            it("should initialize requires", function () {
-                expect(result.requires).toEqual({
-                    demanded: {},
-                    fulfilled: {
-                        ClassId: true
-                    }
-                });
+            it("should initialize require list", function () {
+                expect(result.requires).toEqual([]);
             });
 
-            it("should initialize interface registry", function () {
-                expect(result.interfaces).toEqual({});
+            it("should initialize require lookup", function () {
+                expect(result.requireLookup).toEqual({});
             });
 
-            it("should initialize inclusion registry", function () {
-                expect(result.includes).toEqual({});
+            it("should initialize interface list", function () {
+                expect(result.interfaces).toEqual([]);
             });
 
-            it("should initialize member registry", function () {
+            it("should initialize interface lookup", function () {
+                expect(result.interfaceLookup).toEqual({});
+            });
+
+            it("should initialize include list", function () {
+                expect(result.includes).toEqual([]);
+            });
+
+            it("should initialize include lookup", function () {
+                expect(result.includeLookup).toEqual({});
+            });
+
+            it("should initialize members container", function () {
                 expect(result.members).toEqual({});
             });
 
-            it("should initialize methods registry", function () {
-                expect(result.methods).toEqual({});
+            it("should initialize contribution list", function () {
+                expect(result.contributions).toEqual([]);
+            });
+
+            it("should initialize contribution lookup", function () {
+                expect(result.contributionLookup).toEqual({});
+            });
+
+            it("should initialize forwards list", function () {
+                expect(result.forwards).toEqual([]);
             });
         });
     });
 
     describe("inclusion", function () {
         beforeEach(function () {
-            builder = $oop.ClassBuilder.create('ClassId');
+            builder = $oop.ClassBuilder.create('Class');
         });
 
         describe("when passing no arguments", function () {
@@ -79,14 +94,20 @@ describe("ClassBuilder", function () {
             });
         });
 
+        describe("when already built", function () {
+            it("should throw", function () {
+                var Include = $oop.ClassBuilder.create('Include').build();
+                builder.build();
+                expect(function () {
+                    builder.include(Include);
+                }).toThrow();
+            });
+        });
+
         describe("otherwise", function () {
             var Trait = $oop.ClassBuilder.create('Trait')
-                    .include($oop.ClassBuilder.create('Base').build())
-                    .require($oop.ClassBuilder.create('Widget').build())
-                    .require($oop.ClassBuilder.create('OtherTrait').build())
                     .define({
-                        foo: "FOO",
-                        bar: function () {
+                        foo: function () {
                         }
                     })
                     .build(),
@@ -100,36 +121,31 @@ describe("ClassBuilder", function () {
                 expect(result).toBe(builder);
             });
 
-            it("should add to meta", function () {
-                expect(builder.includes).toEqual({
+            it("should add to list of includes", function () {
+                expect(builder.includes).toEqual([Trait]);
+                expect(builder.includeLookup).toEqual({
                     Trait: true
                 });
             });
 
-            it("should add to fulfilled requires", function () {
-                expect(builder.requires.fulfilled).toEqual({
-                    ClassId: true,
+            it("should add to list of contributions", function () {
+                expect(builder.contributions).toEqual([Trait.__defines]);
+                expect(builder.contributionLookup).toEqual({
                     Trait: true
                 });
             });
 
-            it("should extract requires", function () {
-                expect(builder.requires.demanded).toEqual({
-                    Base: true,
-                    Widget: true,
-                    OtherTrait: true
+            describe("on duplication", function () {
+                beforeEach(function () {
+                    result = builder.include(Trait);
                 });
-            });
 
-            it("should register properties", function () {
-                expect(builder.properties).toEqual({
-                    foo: "FOO"
+                it("should not add to includes again", function () {
+                    expect(builder.includes).toEqual([Trait]);
                 });
-            });
 
-            it("should register methods", function () {
-                expect(builder.methods).toEqual({
-                    bar: [Trait.__defines.bar]
+                it("should not add to contributions again", function () {
+                    expect(builder.contributions).toEqual([Trait.__defines]);
                 });
             });
         });
@@ -137,7 +153,7 @@ describe("ClassBuilder", function () {
 
     describe("requiring", function () {
         beforeEach(function () {
-            builder = $oop.ClassBuilder.create('ClassId');
+            builder = $oop.ClassBuilder.create('Class');
         });
 
         describe("when passing no arguments", function () {
@@ -159,46 +175,32 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            describe("when require has no requires or includes", function () {
-                var RequiredClass,
-                    result;
+            var Require,
+                result;
 
-                beforeEach(function () {
-                    RequiredClass = $oop.ClassBuilder.create('RequiredClass').build();
-                    result = builder.require(RequiredClass);
-                });
+            beforeEach(function () {
+                Require = $oop.ClassBuilder.create('Require').build();
+                result = builder.require(Require);
+            });
 
-                it("should return self", function () {
-                    expect(result).toBe(builder);
-                });
+            it("should return self", function () {
+                expect(result).toBe(builder);
+            });
 
-                it("should add to meta", function () {
-                    expect(builder.requires.demanded).toEqual({
-                        RequiredClass: true
-                    });
+            it("should add list of requires", function () {
+                expect(builder.requires).toEqual([Require]);
+                expect(builder.requireLookup).toEqual({
+                    Require: true
                 });
             });
 
-            describe("when require does have requires or includes", function () {
-                var RequiredClass;
-
+            describe("on duplication", function () {
                 beforeEach(function () {
-                    RequiredClass = $oop.ClassBuilder.create('RequiredClass')
-                        .include($oop.ClassBuilder.create('Base').build())
-                        .require($oop.ClassBuilder.create('Widget').build())
-                        .require($oop.ClassBuilder.create('OtherTrait').build())
-                        .build();
+                    result = builder.require(Require);
                 });
 
-                it("should extract requires", function () {
-                    builder.require(RequiredClass);
-
-                    expect(builder.requires.demanded).toEqual({
-                        RequiredClass: true,
-                        Base: true,
-                        Widget: true,
-                        OtherTrait: true
-                    });
+                it("should not add to requires again", function () {
+                    expect(builder.requires).toEqual([Require]);
                 });
             });
         });
@@ -206,7 +208,7 @@ describe("ClassBuilder", function () {
 
     describe("implementing interfaces", function () {
         beforeEach(function () {
-            builder = $oop.ClassBuilder.create('ClassId');
+            builder = $oop.ClassBuilder.create('Class');
         });
 
         describe("when passing no arguments", function () {
@@ -228,20 +230,32 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var ImplementedInterface = $oop.ClassBuilder.create('ImplementedInterface').build(),
+            var Interface,
                 result;
 
             beforeEach(function () {
-                result = builder.implement(ImplementedInterface);
+                Interface = $oop.ClassBuilder.create('Interface').build();
+                result = builder.implement(Interface);
             });
 
             it("should return self", function () {
                 expect(result).toBe(builder);
             });
 
-            it("should add to meta", function () {
-                expect(builder.interfaces).toEqual({
-                    ImplementedInterface: ImplementedInterface
+            it("should add to list of interfaces", function () {
+                expect(builder.interfaces).toEqual([Interface]);
+                expect(builder.interfaceLookup).toEqual({
+                    Interface: true
+                });
+            });
+
+            describe("on duplication", function () {
+                beforeEach(function () {
+                    result = builder.implement(Interface);
+                });
+
+                it("should not add to interfaces again", function () {
+                    expect(builder.interfaces).toEqual([Interface]);
                 });
             });
         });
@@ -249,7 +263,7 @@ describe("ClassBuilder", function () {
 
     describe("caching", function () {
         beforeEach(function () {
-            builder = $oop.ClassBuilder.create('ClassId');
+            builder = $oop.ClassBuilder.create('Class');
         });
 
         describe("when passing invalid argument", function () {
@@ -265,7 +279,7 @@ describe("ClassBuilder", function () {
                 builder.build();
 
                 expect(function () {
-                    builder.implement();
+                    builder.cache();
                 }).toThrow();
             });
         });
@@ -292,7 +306,7 @@ describe("ClassBuilder", function () {
 
     describe("defining members", function () {
         beforeEach(function () {
-            builder = $oop.ClassBuilder.create('ClassId');
+            builder = $oop.ClassBuilder.create('Class');
         });
 
         describe("when passing no arguments", function () {
@@ -308,48 +322,73 @@ describe("ClassBuilder", function () {
                 builder.build();
 
                 expect(function () {
-                    builder.implement();
+                    builder.define();
                 }).toThrow();
             });
         });
 
         describe("otherwise", function () {
-            var properties = {
-                    foo: "FOO",
-                    bar: function () {
-                    }
+            var batch = {
+                    foo: "FOO"
                 },
                 result;
 
             beforeEach(function () {
-                result = builder.define(properties);
+                result = builder.define(batch);
             });
 
             it("should return self", function () {
                 expect(result).toBe(builder);
             });
 
-            it("should copy meta", function () {
-                expect(builder.members).not.toBe(properties);
-                expect(builder.members).toEqual(properties);
-            });
-
-            it("should register methods", function () {
-                expect(builder.methods).toEqual({
-                    bar: [properties.bar]
+            it("should merge batch into members", function () {
+                expect(builder.members).not.toBe(batch);
+                expect(builder.members).toEqual({
+                    foo: "FOO"
                 });
             });
 
-            describe("when already having own properties", function () {
-                it("should add to meta", function () {
-                    builder.define({
-                        baz: "BAZ"
+            it("should add to list of contributions", function () {
+                expect(builder.contributions).toEqual([builder.members]);
+                expect(builder.contributionLookup).toEqual({
+                    Class: true
+                });
+            });
+
+            describe("on subsequent calls", function () {
+                beforeEach(function () {
+                    result = builder.define({
+                        bar: "BAR"
                     });
+                });
+
+                it("should add to member", function () {
                     expect(builder.members).toEqual({
                         foo: "FOO",
-                        bar: properties.bar,
-                        baz: "BAZ"
+                        bar: "BAR"
                     });
+                });
+
+                it("should not add to contributions again", function () {
+                    expect(builder.contributions).toEqual([builder.members]);
+                });
+            });
+
+            describe("on conflict", function () {
+                beforeEach(function () {
+                    result = builder.define({
+                        foo: "BAR"
+                    });
+                });
+
+                it("should overwrite member", function () {
+                    expect(builder.members).toEqual({
+                        foo: "BAR"
+                    });
+                });
+
+                it("should not add to contributions again", function () {
+                    expect(builder.contributions).toEqual([builder.members]);
                 });
             });
         });
@@ -373,38 +412,38 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var SubClass;
+            var Class;
 
             beforeEach(function () {
-                SubClass = $oop.ClassBuilder.create('SubClass').build();
-                builder.forward(SubClass, filter, 1);
+                Class = Object.create($oop.Class);
+                builder.forward(Class, filter, 1);
             });
 
             it("should add forward descriptor", function () {
                 expect(builder.forwards).toEqual([{
-                    'class': SubClass,
-                    'filter': filter,
+                    'class'   : Class,
+                    'filter'  : filter,
                     'priority': 1
                 }]);
             });
 
             describe("when appending lower priority", function () {
-                var SubClass2,
+                var Class2,
                     filter2;
 
                 it("should sort descriptors by priority", function () {
-                    SubClass2 = $oop.ClassBuilder.create('SubClass2').build();
+                    Class2 = Object.create($oop.Class);
                     filter2 = function () {
                     };
-                    builder.forward(SubClass2, filter2, 10);
+                    builder.forward(Class2, filter2, 10);
 
                     expect(builder.forwards).toEqual([{
-                        'class': SubClass2,
-                        'filter': filter2,
+                        'class'   : Class2,
+                        'filter'  : filter2,
                         'priority': 10
                     }, {
-                        'class': SubClass,
-                        'filter': filter,
+                        'class'   : Class,
+                        'filter'  : filter,
                         'priority': 1
                     }]);
                 });
@@ -413,16 +452,10 @@ describe("ClassBuilder", function () {
     });
 
     describe("building class", function () {
-        var Include1 = $oop.ClassBuilder.create('Include1')
-                .define({
-                    foo: function () {
-                    }
-                })
-                .build(),
-            result;
+        var result;
 
         beforeEach(function () {
-            builder = $oop.ClassBuilder.create('ClassId');
+            builder = $oop.ClassBuilder.create('Class');
         });
 
         describe("when class already built", function () {
@@ -481,24 +514,35 @@ describe("ClassBuilder", function () {
                         .build();
 
                     builder.include(Include2);
+
+                    result = builder.build();
                 });
 
-                it("should not throw", function () {
-                    expect(function () {
-                        builder.build();
-                    }).not.toThrow();
+                it("should set implements meta", function () {
+                    expect(result.__implements).toEqual({
+                        Interface1: true,
+                        Interface2: true
+                    });
                 });
             });
         });
 
-        it("should add ID meta", function () {
+        it("should set ID meta", function () {
             result = builder.build();
-            expect(result.__id).toBe('ClassId');
+            expect(result.__id).toBe('Class');
         });
 
-        it("should add members meta", function () {
-            result = builder.build();
-            expect(result.__defines).toBe(builder.members);
+        describe("when class defines members", function () {
+            beforeEach(function () {
+                builder.define({
+                    foo: "FOO"
+                });
+            });
+
+            it("should add defines meta", function () {
+                result = builder.build();
+                expect(result.__defines).toBe(builder.members);
+            });
         });
 
         it("should copy properties", function () {
@@ -538,7 +582,7 @@ describe("ClassBuilder", function () {
             });
 
             it("should add meta", function () {
-                expect(result.__includes).toBe(builder.includes);
+                expect(result.__includes).toBe(builder.includeLookup);
             });
         });
 
@@ -573,8 +617,49 @@ describe("ClassBuilder", function () {
                 });
             });
         });
+        describe("when class has requires", function () {
+            var Require1;
+
+            beforeEach(function () {
+                Require1 = $oop.ClassBuilder
+                    .create('Require1')
+                    .build();
+
+                builder.require(Require1);
+            });
+
+            describe("fulfilled", function () {
+                beforeEach(function () {
+                    builder.include(Require1);
+                });
+
+                it("should not popuplate required meta", function () {
+                    result = builder.build();
+                    expect(result.__requires).toBeUndefined();
+                });
+            });
+
+            describe("unfulfilled", function () {
+                it("should add require meta", function () {
+                    result = builder.build();
+                    expect(result.__requires).toEqual({
+                        Require1: true
+                    });
+                });
+            });
+        });
 
         describe("when there are no overrides", function () {
+            var Include1;
+
+            beforeEach(function () {
+                Include1 = $oop.ClassBuilder.create('Include1')
+                    .define({
+                        foo: function () {}
+                    })
+                    .build();
+            });
+
             it("should move method to class", function () {
                 result = builder
                     .include(Include1)
@@ -585,11 +670,19 @@ describe("ClassBuilder", function () {
         });
 
         describe("when there are overrides", function () {
-            var Include2,
+            var Include1,
+                Include2,
                 members,
                 spy1, spy2, spy3;
 
             beforeEach(function () {
+                Include1 = $oop.ClassBuilder.create('Include1')
+                    .define({
+                        foo: function () {
+                        }
+                    })
+                    .build();
+
                 Include2 = $oop.ClassBuilder.create('Include2')
                     .define({
                         foo: function () {
@@ -653,7 +746,7 @@ describe("ClassBuilder", function () {
         it("should add class to registry", function () {
             result = builder.build();
             expect($oop.ClassBuilder.classes).toEqual({
-                ClassId: result
+                Class: result
             });
         });
     });
