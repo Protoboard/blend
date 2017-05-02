@@ -85,7 +85,7 @@ $oop.ClassBuilder = {
     },
 
     /**
-     * Extracts extensions and requires from class and transfers them
+     * Extracts includes and requires from class and transfers them
      * to the class being built.
      * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
@@ -95,14 +95,14 @@ $oop.ClassBuilder = {
         var requires = this.requires,
             demandedRequires = requires.demanded,
             classRequires = class_.__requires,
-            classExtends = class_.__extends,
+            classIncludes = class_.__includes,
             classRequireNames,
-            classExtensionNames;
+            classIncludeNames;
 
-        if (classExtends) {
-            classExtensionNames = classExtends && Object.keys(classExtends);
-            classExtensionNames.forEach(function (extensionId) {
-                demandedRequires[extensionId] = true;
+        if (classIncludes) {
+            classIncludeNames = classIncludes && Object.keys(classIncludes);
+            classIncludeNames.forEach(function (includeId) {
+                demandedRequires[includeId] = true;
             });
         }
         if (classRequires) {
@@ -156,7 +156,7 @@ $oop.ClassBuilder = {
 
     /**
      * Retrieves a lookup of method names : anonymous functions that wrap
-     * colliding methods coming from different sources. (Contributions, base(s), extensions.)
+     * colliding methods coming from different sources. (Contributions, base(s), includes.)
      * @memberOf $oop.ClassBuilder#
      * @returns {object}
      * @private
@@ -181,7 +181,7 @@ $oop.ClassBuilder = {
                         i, result,
                         same = true;
 
-                    // running functions in order of extension
+                    // running functions in order of includes
                     for (i = 0; i < functionCount; i++) {
                         results[i] = functions[i].apply(this, arguments);
                     }
@@ -233,7 +233,7 @@ $oop.ClassBuilder = {
              * @member {{demanded: {}, fulfilled: {}}} $oop.ClassBuilder#requires
              */
             builder.requires = {
-                demanded: {},
+                demanded : {},
                 fulfilled: {}
             };
 
@@ -247,10 +247,10 @@ $oop.ClassBuilder = {
             builder.interfaces = {};
 
             /**
-             * Registry of extended classes.
-             * @member {object} $oop.ClassBuilder#extensions
+             * Registry of included classes.
+             * @member {object} $oop.ClassBuilder#includes
              */
-            builder.extensions = {};
+            builder.includes = {};
 
             /**
              * Class' own property & method contributions.
@@ -314,7 +314,7 @@ $oop.ClassBuilder = {
         // registering required class
         this.requires.demanded[class_.__id] = true;
 
-        // transferring extends & requires to class being built
+        // transferring includes & requires to class being built
         this._extractRequires(class_);
 
         return this;
@@ -343,28 +343,28 @@ $oop.ClassBuilder = {
     },
 
     /**
-     * Specifies a class to be extended by the host class.
+     * Specifies a class to be included by the host class.
      * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @returns {$oop.ClassBuilder}
      */
-    extend: function (class_) {
+    include: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
-            throw new Error("ClassBuilder#extend expects type Class.");
+            throw new Error("ClassBuilder#include expects type Class.");
         }
         if (this['class']) {
-            throw new Error("ClassBuilder#extend may only be called before build.");
+            throw new Error("ClassBuilder#include may only be called before build.");
         }
 
         var classId = class_.__id;
 
-        // registering class as extension
-        this.extensions[classId] = true;
+        // registering class as include
+        this.includes[classId] = true;
 
-        // adding extension to fulfilled requirements
+        // adding include to fulfilled requirements
         this.requires.fulfilled[classId] = true;
 
-        // transferring extends & requires to class being built
+        // transferring includes & requires to class being built
         this._extractRequires(class_);
 
         // registering contributed methods
@@ -393,8 +393,8 @@ $oop.ClassBuilder = {
 
         // adding forward descriptor
         forwards.push({
-            'class': class_,
-            'filter': filter,
+            'class'   : class_,
+            'filter'  : filter,
             'priority': priority || 0
         });
 
@@ -492,14 +492,14 @@ $oop.ClassBuilder = {
 
         // adding meta properties
         Object.defineProperties(result, {
-            __id: {value: classId},
-            __implements: {value: this.interfaces},
-            __extends: {value: this.extensions},
-            __requires: {value: this._getUnfulfilledRequires()},
+            __id         : {value: classId},
+            __implements : {value: this.interfaces},
+            __includes   : {value: this.includes},
+            __requires   : {value: this._getUnfulfilledRequires()},
             __contributes: {value: this.contributions},
-            __forwards: {value: this.forwards},
-            __mapper: {value: this.mapper},
-            __instances: {value: {}}
+            __forwards   : {value: this.forwards},
+            __mapper     : {value: this.mapper},
+            __instances  : {value: {}}
         });
 
         // copying non-method properties

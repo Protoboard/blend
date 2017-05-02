@@ -80,7 +80,7 @@ describe("Class", function () {
                     .build();
 
                 Forward = $oop.ClassBuilder.create('Forward')
-                    .extend(Class)
+                    .include(Class)
                     .build();
 
                 $oop.ClassBuilder.create('Class')
@@ -92,16 +92,16 @@ describe("Class", function () {
             describe("for matching arguments", function () {
                 it("should instantiate forward class", function () {
                     result = Class.create(1);
-                    expect(result.extends(Class)).toBeTruthy();
-                    expect(result.extends(Forward)).toBeTruthy();
+                    expect(result.includes(Class)).toBeTruthy();
+                    expect(result.includes(Forward)).toBeTruthy();
                 });
             });
 
             describe("for non-matching arguments", function () {
                 it("should instantiate original class", function () {
                     result = Class.create(0);
-                    expect(result.extends(Class)).toBeTruthy();
-                    expect(result.extends(Forward)).toBeFalsy();
+                    expect(result.includes(Class)).toBeTruthy();
+                    expect(result.includes(Forward)).toBeFalsy();
                 });
             });
 
@@ -113,7 +113,7 @@ describe("Class", function () {
                         .cache(function (foo) {
                             return '_' + foo;
                         })
-                        .extend(Class)
+                        .include(Class)
                         .build();
 
                     $oop.ClassBuilder.create('Class')
@@ -166,7 +166,7 @@ describe("Class", function () {
         });
     });
 
-    describe("extension tester", function () {
+    describe("inclusion tester", function () {
         var Trait,
             Class,
             instance;
@@ -175,7 +175,7 @@ describe("Class", function () {
             Trait = $oop.ClassBuilder.create('Trait')
                 .build();
             Class = builder
-                .extend(Trait)
+                .include(Trait)
                 .build();
             instance = Class.create();
         });
@@ -183,28 +183,28 @@ describe("Class", function () {
         describe("on invalid argument", function () {
             it("should throw", function () {
                 expect(function () {
-                    instance.extends();
+                    instance.includes();
                 }).toThrow();
             });
         });
 
         describe("on self", function () {
             it("should return true", function () {
-                expect(Class.extends(Class)).toBe(true);
-                expect(instance.extends(Class)).toBe(true);
+                expect(Class.includes(Class)).toBe(true);
+                expect(instance.includes(Class)).toBe(true);
             });
         });
 
-        describe("on present extension", function () {
+        describe("on present include", function () {
             it("should return true", function () {
-                expect(instance.extends(Trait)).toBe(true);
+                expect(instance.includes(Trait)).toBe(true);
             });
         });
 
-        describe("on absent extension", function () {
+        describe("on absent include", function () {
             it("should return false", function () {
                 var Trait2 = $oop.ClassBuilder.create('Trait2').build();
-                expect(instance.extends(Trait2)).toBe(false);
+                expect(instance.includes(Trait2)).toBe(false);
             });
         });
     });

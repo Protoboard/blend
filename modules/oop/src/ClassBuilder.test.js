@@ -52,8 +52,8 @@ describe("ClassBuilder", function () {
                 expect(result.interfaces).toEqual({});
             });
 
-            it("should initialize extension registry", function () {
-                expect(result.extensions).toEqual({});
+            it("should initialize inclusion registry", function () {
+                expect(result.includes).toEqual({});
             });
 
             it("should initialize contribution registry", function () {
@@ -66,7 +66,7 @@ describe("ClassBuilder", function () {
         });
     });
 
-    describe("extending", function () {
+    describe("inclusion", function () {
         beforeEach(function () {
             builder = $oop.ClassBuilder.create('ClassId');
         });
@@ -74,14 +74,14 @@ describe("ClassBuilder", function () {
         describe("when passing no arguments", function () {
             it("should throw", function () {
                 expect(function () {
-                    builder.extend();
+                    builder.include();
                 }).toThrow();
             });
         });
 
         describe("otherwise", function () {
             var Trait = $oop.ClassBuilder.create('Trait')
-                    .extend($oop.ClassBuilder.create('Base').build())
+                    .include($oop.ClassBuilder.create('Base').build())
                     .require($oop.ClassBuilder.create('Widget').build())
                     .require($oop.ClassBuilder.create('OtherTrait').build())
                     .contribute({
@@ -93,7 +93,7 @@ describe("ClassBuilder", function () {
                 result;
 
             beforeEach(function () {
-                result = builder.extend(Trait);
+                result = builder.include(Trait);
             });
 
             it("should return self", function () {
@@ -101,7 +101,7 @@ describe("ClassBuilder", function () {
             });
 
             it("should add to meta", function () {
-                expect(builder.extensions).toEqual({
+                expect(builder.includes).toEqual({
                     Trait: true
                 });
             });
@@ -159,7 +159,7 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            describe("when require has no requires or extensions", function () {
+            describe("when require has no requires or includes", function () {
                 var RequiredClass,
                     result;
 
@@ -179,12 +179,12 @@ describe("ClassBuilder", function () {
                 });
             });
 
-            describe("when require does have requires or extensions", function () {
+            describe("when require does have requires or includes", function () {
                 var RequiredClass;
 
                 beforeEach(function () {
                     RequiredClass = $oop.ClassBuilder.create('RequiredClass')
-                        .extend($oop.ClassBuilder.create('Base').build())
+                        .include($oop.ClassBuilder.create('Base').build())
                         .require($oop.ClassBuilder.create('Widget').build())
                         .require($oop.ClassBuilder.create('OtherTrait').build())
                         .build();
@@ -413,7 +413,7 @@ describe("ClassBuilder", function () {
     });
 
     describe("building class", function () {
-        var Extended1 = $oop.ClassBuilder.create('Extended1')
+        var Include1 = $oop.ClassBuilder.create('Include1')
                 .contribute({
                     foo: function () {
                     }
@@ -470,17 +470,17 @@ describe("ClassBuilder", function () {
             });
 
             describe("when implements all methods", function () {
-                var Extended2;
+                var Include2;
 
                 beforeEach(function () {
-                    Extended2 = $oop.ClassBuilder.create('Extended2')
+                    Include2 = $oop.ClassBuilder.create('Include2')
                         .contribute({
                             bar: function () {
                             }
                         })
                         .build();
 
-                    builder.extend(Extended2);
+                    builder.include(Include2);
                 });
 
                 it("should not throw", function () {
@@ -503,7 +503,7 @@ describe("ClassBuilder", function () {
 
         it("should copy properties", function () {
             result = builder
-                .extend($oop.ClassBuilder.create('Trait')
+                .include($oop.ClassBuilder.create('Trait')
                     .contribute({
                         foo: "FOO",
                         bar: "BAR"
@@ -525,20 +525,20 @@ describe("ClassBuilder", function () {
             expect(result.__forwards).toBe(builder.forwards);
         });
 
-        describe("when class has extensions", function () {
-            var Extended2;
+        describe("when class has includes", function () {
+            var Include2;
 
             beforeEach(function () {
-                Extended2 = $oop.ClassBuilder.create('Extended2')
+                Include2 = $oop.ClassBuilder.create('Include2')
                     .build();
 
                 result = builder
-                    .extend(Extended2)
+                    .include(Include2)
                     .build();
             });
 
             it("should add meta", function () {
-                expect(result.__extends).toBe(builder.extensions);
+                expect(result.__includes).toBe(builder.includes);
             });
         });
 
@@ -555,7 +555,7 @@ describe("ClassBuilder", function () {
 
             describe("fulfilled", function () {
                 beforeEach(function () {
-                    builder.extend(Require1);
+                    builder.include(Require1);
                 });
 
                 it("should not popuplate required meta", function () {
@@ -577,20 +577,20 @@ describe("ClassBuilder", function () {
         describe("when there are no overrides", function () {
             it("should move method to class", function () {
                 result = builder
-                    .extend(Extended1)
+                    .include(Include1)
                     .build();
 
-                expect(result.foo).toBe(Extended1.__contributes.foo);
+                expect(result.foo).toBe(Include1.__contributes.foo);
             });
         });
 
         describe("when there are overrides", function () {
-            var Extended2,
+            var Include2,
                 contributions,
                 spy1, spy2, spy3;
 
             beforeEach(function () {
-                Extended2 = $oop.ClassBuilder.create('Extended2')
+                Include2 = $oop.ClassBuilder.create('Include2')
                     .contribute({
                         foo: function () {
                         }
@@ -602,21 +602,21 @@ describe("ClassBuilder", function () {
                     }
                 };
 
-                spy1 = spyOn(Extended1.__contributes, 'foo');
-                spy2 = spyOn(Extended2.__contributes, 'foo');
+                spy1 = spyOn(Include1.__contributes, 'foo');
+                spy2 = spyOn(Include2.__contributes, 'foo');
                 spy3 = spyOn(contributions, 'foo');
 
                 result = builder
-                    .extend(Extended1)
-                    .extend(Extended2)
+                    .include(Include1)
+                    .include(Include2)
                     .contribute(contributions)
                     .build();
             });
 
             it("should call all overrides", function () {
                 result.foo(1, 2, 3);
-                expect(Extended1.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
-                expect(Extended2.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
+                expect(Include1.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
+                expect(Include2.__contributes.foo).toHaveBeenCalledWith(1, 2, 3);
                 expect(contributions.foo).toHaveBeenCalledWith(1, 2, 3);
             });
 

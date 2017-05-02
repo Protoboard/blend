@@ -89,19 +89,19 @@ $oop.Class = {
     },
 
     /**
-     * Tells whether current class is or extends the specified class.
+     * Tells whether current class is or includes the specified class.
      * @memberOf $oop.Class#
      * @param {$oop.Class} class_
      * @returns {boolean}
      */
-    extends: function (class_) {
+    includes: function (class_) {
         if (!$oop.Class.isPrototypeOf(class_)) {
             throw new Error("Class type expected");
         }
 
         var classId = class_.__id;
 
-        return this.__id === classId || !!this.__extends[classId];
+        return this.__id === classId || !!this.__includes[classId];
     },
 
     /**
@@ -127,8 +127,8 @@ $oop.Class = {
  */
 
 /**
- * Classes extended by current class.
- * @name $oop.Class#__extends
+ * Classes included by current class.
+ * @name $oop.Class#__includes
  * @type {object}
  * @private
  */
