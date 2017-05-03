@@ -19,6 +19,21 @@ $oop.ClassBuilder = {
     classes: {},
 
     /**
+     * @memberOf $oop.ClassBuilder
+     * @param {object} object
+     * @returns {boolean}
+     * @private
+     */
+    _isEmpty: function (object) {
+        /* jshint forin:false */
+        var key;
+        for (key in object) {
+            return false;
+        }
+        return true;
+    },
+
+    /**
      * @memberOf $oop.ClassBuilder#
      * @returns {object}
      * @private
@@ -95,31 +110,6 @@ $oop.ClassBuilder = {
                 requires[requireId] = true;
             });
         }
-    },
-
-    /**
-     * @todo Make unfulfilled requires a maintained list / lookup.
-     * @memberOf $oop.ClassBuilder#
-     * @returns {object}
-     * @private
-     */
-    _getUnfulfilledRequires: function () {
-        var classId = this.classId,
-            requires = this.requires,
-            includes = this.includes,
-            unfulfilledRequireIds = Object.keys(requires)
-                .filter(function (requireId) {
-                    return classId !== requireId &&
-                        !includes.hasOwnProperty(requireId);
-                });
-
-        return unfulfilledRequireIds.length ?
-            unfulfilledRequireIds
-                .reduce(function (requires, requireId) {
-                    requires[requireId] = true;
-                    return requires;
-                }, {}) :
-            undefined;
     },
 
     /**
@@ -375,12 +365,18 @@ $oop.ClassBuilder = {
         this.includes[classId] = true;
 
         var contributions = this.contributions,
-            contributionsLookup = this.contributionLookup;
+            contributionsLookup = this.contributionLookup,
+            requires = this.requires;
 
         // adding members to contributions
         if (!contributionsLookup.hasOwnProperty(classId)) {
             contributions.push(class_.__defines);
             contributionsLookup[classId] = true;
+        }
+
+        // removing fulfilled requires
+        if (requires.hasOwnProperty(classId)) {
+            delete requires[classId];
         }
 
         // transferring includes & requires to class being built
@@ -426,8 +422,17 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#require may only be called before build.");
         }
 
-        // adding to requires
-        this.requires[class_.__id] = true;
+        var classId = class_.__id,
+            includes = this.includes,
+            requires = this.requires;
+
+        if (this.classId !== classId &&
+            !includes.hasOwnProperty(classId)
+        ) {
+            // require is not included yet
+            // adding to requires
+            requires[classId] = true;
+        }
 
         // transferring includes & requires to class being built
         this._extractRequires(class_);
@@ -521,7 +526,8 @@ $oop.ClassBuilder = {
             __id        : {value: classId},
             __implements: {value: this.interfaces},
             __includes  : {value: this.includes},
-            __requires  : {value: this._getUnfulfilledRequires()},
+            __requires  : {value: this.requires},
+            __requireIds: {value: Object.keys(this.requires)},
             __defines   : {value: this.members},
             __forwards  : {value: this.forwards},
             __mapper    : {value: this.mapper},

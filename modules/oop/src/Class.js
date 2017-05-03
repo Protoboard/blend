@@ -42,12 +42,12 @@ $oop.Class = {
         }
 
         // running checks
-        var requires = that.__requires;
-        if (requires) {
+        var requireIds = that.__requireIds;
+        if (requireIds.length) {
             // there are unfulfilled requires - can't instantiate
             throw new Error([
                 "Class '" + that.__id + "' doesn't satisfy require(s): " +
-                Object.keys(requires)
+                requireIds
                     .map(function (classId) {
                         return "'" + classId + "'";
                     })

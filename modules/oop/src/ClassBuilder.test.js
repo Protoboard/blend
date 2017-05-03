@@ -183,15 +183,17 @@ describe("ClassBuilder", function () {
         });
 
         describe("otherwise", function () {
-            var Trait = $oop.ClassBuilder.create('Trait')
+            var Trait,
+                result;
+
+            beforeEach(function () {
+                Trait = $oop.ClassBuilder.create('Trait')
                     .define({
                         foo: function () {
                         }
                     })
-                    .build(),
-                result;
+                    .build();
 
-            beforeEach(function () {
                 result = builder.include(Trait);
             });
 
@@ -214,11 +216,32 @@ describe("ClassBuilder", function () {
 
             describe("on duplication", function () {
                 beforeEach(function () {
-                    result = builder.include(Trait);
+                    builder.include(Trait);
                 });
 
                 it("should not add to contributions again", function () {
                     expect(builder.contributions).toEqual([Trait.__defines]);
+                });
+            });
+
+            describe("when already required", function () {
+                var Trait2;
+
+                beforeEach(function () {
+                    Trait2 = $oop.ClassBuilder.create('Trait2')
+                        .define({
+                            foo: function () {
+                            }
+                        })
+                        .build();
+
+                    builder
+                        .require(Trait2)
+                        .include(Trait2);
+                });
+
+                it("should remove include from requires", function () {
+                    expect(builder.requires).toEqual({});
                 });
             });
         });
@@ -307,6 +330,24 @@ describe("ClassBuilder", function () {
             it("should add requires", function () {
                 expect(builder.requires).toEqual({
                     Require: true
+                });
+            });
+
+            describe("when already included", function () {
+                var Require2;
+
+                beforeEach(function () {
+                    Require2 = $oop.ClassBuilder.create('Require2').build();
+
+                    builder
+                        .include(Require2)
+                        .require(Require);
+                });
+
+                it("should not add require to requires", function () {
+                    expect(builder.requires).toEqual({
+                        Require: true
+                    });
                 });
             });
         });
@@ -576,56 +617,12 @@ describe("ClassBuilder", function () {
                 builder.require(Require1);
             });
 
-            describe("fulfilled", function () {
-                beforeEach(function () {
-                    builder.include(Require1);
+            it("should set require meta", function () {
+                result = builder.build();
+                expect(result.__requires).toEqual({
+                    Require1: true
                 });
-
-                it("should not popuplate required meta", function () {
-                    result = builder.build();
-                    expect(result.__requires).toBeUndefined();
-                });
-            });
-
-            describe("unfulfilled", function () {
-                it("should add require meta", function () {
-                    result = builder.build();
-                    expect(result.__requires).toEqual({
-                        Require1: true
-                    });
-                });
-            });
-        });
-
-        describe("when class has requires", function () {
-            var Require1;
-
-            beforeEach(function () {
-                Require1 = $oop.ClassBuilder
-                    .create('Require1')
-                    .build();
-
-                builder.require(Require1);
-            });
-
-            describe("fulfilled", function () {
-                beforeEach(function () {
-                    builder.include(Require1);
-                });
-
-                it("should not popuplate required meta", function () {
-                    result = builder.build();
-                    expect(result.__requires).toBeUndefined();
-                });
-            });
-
-            describe("unfulfilled", function () {
-                it("should add require meta", function () {
-                    result = builder.build();
-                    expect(result.__requires).toEqual({
-                        Require1: true
-                    });
-                });
+                expect(result.__requireIds).toEqual(['Require1']);
             });
         });
 
