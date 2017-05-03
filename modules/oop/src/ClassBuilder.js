@@ -23,7 +23,7 @@ $oop.ClassBuilder = {
      * @returns {object}
      * @private
      */
-    _getMethodNameLookup: function () {
+    _getMethodNames: function () {
         return this.contributions
             .reduce(function (methodLookup, members) {
                 Object.getOwnPropertyNames(members)
@@ -45,8 +45,8 @@ $oop.ClassBuilder = {
      * @private
      */
     _getUnimplementedMethodNames: function () {
-        var methods = this._getMethodNameLookup(),
-            interfaceIds = Object.keys(this.interfaceLookup);
+        var methods = this._getMethodNames(),
+            interfaceIds = Object.keys(this.interfaces);
 
         // order does not matter
         return interfaceIds
@@ -76,7 +76,7 @@ $oop.ClassBuilder = {
      * @private
      */
     _extractRequires: function (class_) {
-        var requireLookup = this.requireLookup,
+        var requires = this.requires,
             classRequires = class_.__requires,
             classIncludes = class_.__includes,
             classRequireNames,
@@ -85,38 +85,39 @@ $oop.ClassBuilder = {
         if (classIncludes) {
             classIncludeNames = classIncludes && Object.keys(classIncludes);
             classIncludeNames.forEach(function (includeId) {
-                requireLookup[includeId] = true;
+                requires[includeId] = true;
             });
         }
 
         if (classRequires) {
             classRequireNames = classRequires && Object.keys(classRequires);
             classRequireNames.forEach(function (requireId) {
-                requireLookup[requireId] = true;
+                requires[requireId] = true;
             });
         }
     },
 
     /**
+     * @todo Make unfulfilled requires a maintained list / lookup.
      * @memberOf $oop.ClassBuilder#
      * @returns {object}
      * @private
      */
-    _getUnfulfilledRequireLookup: function () {
+    _getUnfulfilledRequires: function () {
         var classId = this.classId,
-            requireLookup = this.requireLookup,
-            includeLookup = this.includeLookup,
-            unfulfilledRequireIds = Object.keys(requireLookup)
+            requires = this.requires,
+            includes = this.includes,
+            unfulfilledRequireIds = Object.keys(requires)
                 .filter(function (requireId) {
                     return classId !== requireId &&
-                        !includeLookup.hasOwnProperty(requireId);
+                        !includes.hasOwnProperty(requireId);
                 });
 
         return unfulfilledRequireIds.length ?
             unfulfilledRequireIds
-                .reduce(function (requireLookup, requireId) {
-                    requireLookup[requireId] = true;
-                    return requireLookup;
+                .reduce(function (requires, requireId) {
+                    requires[requireId] = true;
+                    return requires;
                 }, {}) :
             undefined;
     },
@@ -164,7 +165,7 @@ $oop.ClassBuilder = {
     },
 
     /**
-     * Retrieves a list of method names that can be copied over 1:1.
+     * Retrieves a lookup of method names that can be copied over 1:1.
      * @memberOf $oop.ClassBuilder#
      * @private
      */
@@ -254,22 +255,22 @@ $oop.ClassBuilder = {
             builder.classId = classId;
 
             /**
-             * Lookup of required classes indexed by class ID.
-             * @member {object} $oop.ClassBuilder#requireLookup
+             * Lookup of require class IDs.
+             * @member {object} $oop.ClassBuilder#requires
              */
-            builder.requireLookup = {};
+            builder.requires = {};
 
             /**
-             * Lookup of interfaces indexed by class ID.
-             * @member {object} $oop.ClassBuilder#interfaceLookup
+             * Lookup of interface class IDs.
+             * @member {object} $oop.ClassBuilder#interfaces
              */
-            builder.interfaceLookup = {};
+            builder.interfaces = {};
 
             /**
-             * Lookup of includes indexed by class ID.
-             * @member {object} $oop.ClassBuilder#includeLookup
+             * Lookup of include class IDs.
+             * @member {object} $oop.ClassBuilder#includes
              */
-            builder.includeLookup = {};
+            builder.includes = {};
 
             /**
              * Class' own properties & methods.
@@ -285,7 +286,7 @@ $oop.ClassBuilder = {
             builder.contributions = [];
 
             /**
-             * Lookup of all contributions indexed by class ID.
+             * Lookup of all contributor class IDs.
              * @member {object} $oop.ClassBuilder#contributionLookup
              */
             builder.contributionLookup = {};
@@ -368,13 +369,10 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#include may only be called before build.");
         }
 
-        var includeLookup = this.includeLookup,
-            classId = class_.__id;
+        var classId = class_.__id;
 
-        // adding interface to list
-        if (!includeLookup.hasOwnProperty(classId)) {
-            includeLookup[classId] = true;
-        }
+        // adding to includes
+        this.includes[classId] = true;
 
         var contributions = this.contributions,
             contributionsLookup = this.contributionLookup;
@@ -407,13 +405,8 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#implement may only be called before build.");
         }
 
-        var interfaceLookup = this.interfaceLookup,
-            classId = interface_.__id;
-
-        // adding interface to list
-        if (!interfaceLookup.hasOwnProperty(classId)) {
-            interfaceLookup[classId] = true;
-        }
+        // adding to interfaces
+        this.interfaces[interface_.__id] = true;
 
         return this;
     },
@@ -433,13 +426,8 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#require may only be called before build.");
         }
 
-        var requireLookup = this.requireLookup,
-            classId = class_.__id;
-
-        // adding require to list
-        if (!requireLookup.hasOwnProperty(classId)) {
-            requireLookup[classId] = true;
-        }
+        // adding to requires
+        this.requires[class_.__id] = true;
 
         // transferring includes & requires to class being built
         this._extractRequires(class_);
@@ -531,9 +519,9 @@ $oop.ClassBuilder = {
         // adding meta properties
         Object.defineProperties(result, {
             __id        : {value: classId},
-            __implements: {value: this.interfaceLookup},
-            __includes  : {value: this.includeLookup},
-            __requires  : {value: this._getUnfulfilledRequireLookup()},
+            __implements: {value: this.interfaces},
+            __includes  : {value: this.includes},
+            __requires  : {value: this._getUnfulfilledRequires()},
             __defines   : {value: this.members},
             __forwards  : {value: this.forwards},
             __mapper    : {value: this.mapper},

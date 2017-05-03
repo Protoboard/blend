@@ -39,16 +39,16 @@ describe("ClassBuilder", function () {
                 expect(result.classId).toEqual('Class');
             });
 
-            it("should initialize require lookup", function () {
-                expect(result.requireLookup).toEqual({});
+            it("should initialize requires", function () {
+                expect(result.requires).toEqual({});
             });
 
-            it("should initialize interface lookup", function () {
-                expect(result.interfaceLookup).toEqual({});
+            it("should initialize interfaces", function () {
+                expect(result.interfaces).toEqual({});
             });
 
-            it("should initialize include lookup", function () {
-                expect(result.includeLookup).toEqual({});
+            it("should initialize includes", function () {
+                expect(result.includes).toEqual({});
             });
 
             it("should initialize members container", function () {
@@ -199,8 +199,8 @@ describe("ClassBuilder", function () {
                 expect(result).toBe(builder);
             });
 
-            it("should add to list of includes", function () {
-                expect(builder.includeLookup).toEqual({
+            it("should add to includes", function () {
+                expect(builder.includes).toEqual({
                     Trait: true
                 });
             });
@@ -260,8 +260,8 @@ describe("ClassBuilder", function () {
                 expect(result).toBe(builder);
             });
 
-            it("should add to list of interfaces", function () {
-                expect(builder.interfaceLookup).toEqual({
+            it("should add to interfaces", function () {
+                expect(builder.interfaces).toEqual({
                     Interface: true
                 });
             });
@@ -304,8 +304,8 @@ describe("ClassBuilder", function () {
                 expect(result).toBe(builder);
             });
 
-            it("should add list of requires", function () {
-                expect(builder.requireLookup).toEqual({
+            it("should add requires", function () {
+                expect(builder.requires).toEqual({
                     Require: true
                 });
             });
@@ -561,7 +561,7 @@ describe("ClassBuilder", function () {
             });
 
             it("should add includes meta", function () {
-                expect(result.__includes).toBe(builder.includeLookup);
+                expect(result.__includes).toBe(builder.includes);
             });
         });
 
