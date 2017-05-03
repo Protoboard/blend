@@ -39,24 +39,12 @@ describe("ClassBuilder", function () {
                 expect(result.classId).toEqual('Class');
             });
 
-            it("should initialize require list", function () {
-                expect(result.requires).toEqual([]);
-            });
-
             it("should initialize require lookup", function () {
                 expect(result.requireLookup).toEqual({});
             });
 
-            it("should initialize interface list", function () {
-                expect(result.interfaces).toEqual([]);
-            });
-
             it("should initialize interface lookup", function () {
                 expect(result.interfaceLookup).toEqual({});
-            });
-
-            it("should initialize include list", function () {
-                expect(result.includes).toEqual([]);
             });
 
             it("should initialize include lookup", function () {
@@ -212,7 +200,6 @@ describe("ClassBuilder", function () {
             });
 
             it("should add to list of includes", function () {
-                expect(builder.includes).toEqual([Trait]);
                 expect(builder.includeLookup).toEqual({
                     Trait: true
                 });
@@ -228,10 +215,6 @@ describe("ClassBuilder", function () {
             describe("on duplication", function () {
                 beforeEach(function () {
                     result = builder.include(Trait);
-                });
-
-                it("should not add to includes again", function () {
-                    expect(builder.includes).toEqual([Trait]);
                 });
 
                 it("should not add to contributions again", function () {
@@ -278,19 +261,8 @@ describe("ClassBuilder", function () {
             });
 
             it("should add to list of interfaces", function () {
-                expect(builder.interfaces).toEqual([Interface]);
                 expect(builder.interfaceLookup).toEqual({
                     Interface: true
-                });
-            });
-
-            describe("on duplication", function () {
-                beforeEach(function () {
-                    result = builder.implement(Interface);
-                });
-
-                it("should not add to interfaces again", function () {
-                    expect(builder.interfaces).toEqual([Interface]);
                 });
             });
         });
@@ -333,19 +305,8 @@ describe("ClassBuilder", function () {
             });
 
             it("should add list of requires", function () {
-                expect(builder.requires).toEqual([Require]);
                 expect(builder.requireLookup).toEqual({
                     Require: true
-                });
-            });
-
-            describe("on duplication", function () {
-                beforeEach(function () {
-                    result = builder.require(Require);
-                });
-
-                it("should not add to requires again", function () {
-                    expect(builder.requires).toEqual([Require]);
                 });
             });
         });
@@ -512,12 +473,17 @@ describe("ClassBuilder", function () {
         });
 
         describe("when class implements interfaces", function () {
-            var Interface1 = $oop.ClassBuilder.create('Interface1')
+            var Interface1,
+                Interface2;
+
+            beforeEach(function () {
+                Interface1 = $oop.ClassBuilder.create('Interface1')
                     .define({
                         foo: function () {
                         }
                     })
-                    .build(),
+                    .build();
+
                 Interface2 = $oop.ClassBuilder.create('Interface2')
                     .define({
                         bar: function () {
@@ -525,7 +491,6 @@ describe("ClassBuilder", function () {
                     })
                     .build();
 
-            beforeEach(function () {
                 builder
                     .implement(Interface1)
                     .implement(Interface2)
@@ -554,9 +519,11 @@ describe("ClassBuilder", function () {
                         })
                         .build();
 
-                    builder.include(Include2);
+                    console.log($oop.ClassBuilder.classes)
 
-                    result = builder.build();
+                    result = builder
+                        .include(Include2)
+                        .build();
                 });
 
                 it("should set implements meta", function () {

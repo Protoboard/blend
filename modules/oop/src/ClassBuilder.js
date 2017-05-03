@@ -3,7 +3,6 @@
 
 /**
  * Builds composable classes.
- * @todo Consolidate array - lookup pairs
  * @class $oop.ClassBuilder
  */
 $oop.ClassBuilder = {
@@ -46,9 +45,14 @@ $oop.ClassBuilder = {
      * @private
      */
     _getUnimplementedMethodNames: function () {
-        var methods = this._getMethodNameLookup();
+        var methods = this._getMethodNameLookup(),
+            interfaceIds = Object.keys(this.interfaceLookup);
 
-        return this.interfaces
+        // order does not matter
+        return interfaceIds
+            .map(function (interfaceId) {
+                return $oop.ClassBuilder.classes[interfaceId];
+            })
             .reduce(function (unimplemented, interface_) {
                 var members = interface_.__defines;
 
@@ -66,13 +70,13 @@ $oop.ClassBuilder = {
 
     /**
      * Extracts includes and requires from class and transfers them
-     * to the class being built.
+     * to the class being built as requires.
      * @memberOf $oop.ClassBuilder#
      * @param {$oop.Class} class_
      * @private
      */
     _extractRequires: function (class_) {
-        var requires = this.requires,
+        var requireLookup = this.requireLookup,
             classRequires = class_.__requires,
             classIncludes = class_.__includes,
             classRequireNames,
@@ -81,14 +85,14 @@ $oop.ClassBuilder = {
         if (classIncludes) {
             classIncludeNames = classIncludes && Object.keys(classIncludes);
             classIncludeNames.forEach(function (includeId) {
-                requires[includeId] = true;
+                requireLookup[includeId] = true;
             });
         }
 
         if (classRequires) {
             classRequireNames = classRequires && Object.keys(classRequires);
             classRequireNames.forEach(function (requireId) {
-                requires[requireId] = true;
+                requireLookup[requireId] = true;
             });
         }
     },
@@ -250,34 +254,16 @@ $oop.ClassBuilder = {
             builder.classId = classId;
 
             /**
-             * List of required classes
-             * @member {$oop.Class[]} $oop.ClassBuilder#requires
-             */
-            builder.requires = [];
-
-            /**
              * Lookup of required classes indexed by class ID.
              * @member {object} $oop.ClassBuilder#requireLookup
              */
             builder.requireLookup = {};
 
             /**
-             * List of implemented interfaces.
-             * @member {$oop.Class[]} $oop.ClassBuilder#interfaces
-             */
-            builder.interfaces = [];
-
-            /**
              * Lookup of interfaces indexed by class ID.
              * @member {object} $oop.ClassBuilder#interfaceLookup
              */
             builder.interfaceLookup = {};
-
-            /**
-             * List of included classes.
-             * @member {$oop.Class[]} $oop.ClassBuilder#includes
-             */
-            builder.includes = [];
 
             /**
              * Lookup of includes indexed by class ID.
@@ -382,13 +368,11 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#include may only be called before build.");
         }
 
-        var includes = this.includes,
-            includeLookup = this.includeLookup,
+        var includeLookup = this.includeLookup,
             classId = class_.__id;
 
         // adding interface to list
         if (!includeLookup.hasOwnProperty(classId)) {
-            includes.push(class_);
             includeLookup[classId] = true;
         }
 
@@ -423,13 +407,11 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#implement may only be called before build.");
         }
 
-        var interfaces = this.interfaces,
-            interfaceLookup = this.interfaceLookup,
+        var interfaceLookup = this.interfaceLookup,
             classId = interface_.__id;
 
         // adding interface to list
         if (!interfaceLookup.hasOwnProperty(classId)) {
-            interfaces.push(interface_);
             interfaceLookup[classId] = true;
         }
 
@@ -451,13 +433,11 @@ $oop.ClassBuilder = {
             throw new Error("ClassBuilder#require may only be called before build.");
         }
 
-        var requires = this.requires,
-            requireLookup = this.requireLookup,
+        var requireLookup = this.requireLookup,
             classId = class_.__id;
 
         // adding require to list
         if (!requireLookup.hasOwnProperty(classId)) {
-            requires.push(class_);
             requireLookup[classId] = true;
         }
 
