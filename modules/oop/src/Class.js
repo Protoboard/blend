@@ -134,8 +134,14 @@ $oop.Class = {
  */
 
 /**
+ * List of class IDs for all unfulfilled requires.
+ * Its contents determines whether class can be instantiated.
+ * @member {string[]} $oop.Class#__requireIds
+ * @private
+ */
+
+/**
  * All classes required by current class to be operable.
- * Its presence determines whether class can be instantiated.
  * @member {object} $oop.Class#__requires
  * @private
  */

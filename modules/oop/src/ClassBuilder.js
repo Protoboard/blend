@@ -75,28 +75,19 @@ $oop.ClassBuilder = {
      * @param {$oop.Class} class_
      * @private
      */
-    _extractRequires: function (class_) {
-        var requireLookup = this.requireLookup,
+    _transferRequires: function (class_) {
+        var that = this,
             classRequires = class_.__requires,
-            classIncludes = class_.__includes,
-            classRequireNames,
-            classIncludeNames;
+            classIncludes = class_.__includes;
 
-        if (classIncludes) {
-            classIncludeNames = classIncludes && Object.keys(classIncludes);
-            classIncludeNames.forEach(function (includeId) {
-                // TODO: Use .require() instead.
-                requireLookup[includeId] = true;
+        Object.keys(classRequires)
+            .concat(Object.keys(classIncludes))
+            .map(function (classId) {
+                return $oop.ClassBuilder.classes[classId];
+            })
+            .forEach(function (class_) {
+                that.require(class_);
             });
-        }
-
-        if (classRequires) {
-            classRequireNames = classRequires && Object.keys(classRequires);
-            classRequireNames.forEach(function (requireId) {
-                // TODO: Use .require() instead.
-                requireLookup[requireId] = true;
-            });
-        }
     },
 
     /**
@@ -232,6 +223,12 @@ $oop.ClassBuilder = {
             builder.classId = classId;
 
             /**
+             * List of require class IDs.
+             * @member {string[]} $oop.ClassBuilder#requires
+             */
+            builder.requires = [];
+
+            /**
              * Lookup of require class IDs.
              * @member {object} $oop.ClassBuilder#requireLookup
              */
@@ -245,6 +242,7 @@ $oop.ClassBuilder = {
 
             /**
              * Lookup of include class IDs.
+             * TODO: Restore array version.
              * @member {object} $oop.ClassBuilder#includeLookup
              */
             builder.includeLookup = {};
@@ -257,7 +255,7 @@ $oop.ClassBuilder = {
 
             /**
              * All sets of contributed members, (as include or as member definition) in order of addition.
-             * @todo Store class IDs only?
+             * @todo Store class IDs only.
              * @member {object[]} $oop.ClassBuilder#contributions
              */
             builder.contributions = [];
@@ -284,6 +282,7 @@ $oop.ClassBuilder = {
             /**
              * Class built by builder.
              * @member {$oop.Class} $oop.ClassBuilder#class
+             * @deprecated ClassBuilder will be merged into Class
              */
             builder.class = undefined;
 
@@ -353,6 +352,7 @@ $oop.ClassBuilder = {
 
         var contributions = this.contributions,
             contributionsLookup = this.contributionLookup,
+            requires = this.requires,
             requireLookup = this.requireLookup;
 
         // adding members to contributions
@@ -363,11 +363,12 @@ $oop.ClassBuilder = {
 
         // removing fulfilled requires
         if (requireLookup.hasOwnProperty(classId)) {
+            requires.splice(requires.indexOf(classId), 1);
             delete requireLookup[classId];
         }
 
         // transferring includes & requires to class being built
-        this._extractRequires(class_);
+        this._transferRequires(class_);
 
         return this;
     },
@@ -411,18 +412,21 @@ $oop.ClassBuilder = {
 
         var classId = class_.__id,
             includeLookup = this.includeLookup,
+            requires = this.requires,
             requireLookup = this.requireLookup;
 
         if (this.classId !== classId &&
-            !includeLookup.hasOwnProperty(classId)
+            !includeLookup.hasOwnProperty(classId) &&
+            !requireLookup.hasOwnProperty(classId)
         ) {
-            // require is not included yet
+            // require is not included (which would cancel each other out)
             // adding to requires
+            requires.push(classId);
             requireLookup[classId] = true;
         }
 
         // transferring includes & requires to class being built
-        this._extractRequires(class_);
+        this._transferRequires(class_);
 
         return this;
     },
@@ -513,8 +517,8 @@ $oop.ClassBuilder = {
             __id        : {value: classId},
             __implements: {value: this.interfaceLookup},
             __includes  : {value: this.includeLookup},
+            __requireIds: {value: this.requires},
             __requires  : {value: this.requireLookup},
-            __requireIds: {value: Object.keys(this.requireLookup)},
             __defines   : {value: this.members},
             __forwards  : {value: this.forwards},
             __mapper    : {value: this.mapper},

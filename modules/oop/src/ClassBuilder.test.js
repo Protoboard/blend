@@ -241,7 +241,28 @@ describe("ClassBuilder", function () {
                 });
 
                 it("should remove include from requires", function () {
+                    expect(builder.requires).toEqual([]);
                     expect(builder.requireLookup).toEqual({});
+                });
+            });
+
+            describe("when require has requires or includes", function () {
+                var Trait2;
+
+                beforeEach(function () {
+                    Trait2 = $oop.ClassBuilder.create('Trait2')
+                        .include($oop.ClassBuilder.create('Include').build())
+                        .require($oop.ClassBuilder.create('Require').build())
+                        .build();
+
+                    builder.include(Trait2);
+                });
+
+                it("should transfer requires", function () {
+                    expect(builder.requireLookup).toEqual({
+                        Include: true,
+                        Require: true
+                    });
                 });
             });
         });
@@ -345,8 +366,31 @@ describe("ClassBuilder", function () {
                 });
 
                 it("should not add require to requires", function () {
+                    expect(builder.requires).toEqual(['Require']);
                     expect(builder.requireLookup).toEqual({
                         Require: true
+                    });
+                });
+            });
+
+            describe("when require has requires or includes", function () {
+                var Require2;
+
+                beforeEach(function () {
+                    Require2 = $oop.ClassBuilder.create('Require2')
+                        .include($oop.ClassBuilder.create('Include1').build())
+                        .require($oop.ClassBuilder.create('Require3').build())
+                        .build();
+
+                    builder.require(Require2);
+                });
+
+                it("should transfer requires", function () {
+                    expect(builder.requireLookup).toEqual({
+                        Require : true,
+                        Require2: true,
+                        Include1: true,
+                        Require3: true
                     });
                 });
             });
@@ -559,8 +603,6 @@ describe("ClassBuilder", function () {
                             }
                         })
                         .build();
-
-                    console.log($oop.ClassBuilder.classes)
 
                     result = builder
                         .include(Include2)
