@@ -1,8 +1,7 @@
 {
   "assets": {
     "js": [
-      "src/Class.js",
-      "src/ClassBuilder.js"
+      "src/Class.js"
     ]
   }
 }
