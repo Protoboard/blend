@@ -781,5 +781,21 @@ describe("Class", function () {
                 });
             });
         });
+
+        describe("of unimplemented class", function () {
+            beforeEach(function () {
+                Class.implement($oop.Class.create('Interface')
+                    .define({
+                        foo: function () {
+                        }
+                    }));
+            });
+
+            it("should throw", function () {
+                expect(function () {
+                    Class.create();
+                }).toThrow();
+            });
+        });
     });
 });

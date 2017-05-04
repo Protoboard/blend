@@ -328,20 +328,21 @@ $oop.Class = {
             }
         }
 
-//         // checking whether
-//         // ... methods match interfaces
-//         if (unimplementedMethods.length) {
-//             throw new Error([
-//                 "Class '" + __classId + "' doesn't implement method(s): " +
-//                 unimplementedMethods
-//                     .map(function (methodName) {
-//                         return "'" + methodName + "'";
-//                     }) + ".",
-//                 "Can't instantiate."
-//             ].join(" "));
-//         }
+        // checking whether
+        // ... methods match interfaces
+        var unimplementedMethodNames = this.__unimplementedMethodNames;
+        if (unimplementedMethodNames.length) {
+            throw new Error([
+                "Class '" + that.__classId + "' doesn't implement method(s): " +
+                unimplementedMethodNames
+                    .map(function (methodName) {
+                        return "'" + methodName + "'";
+                    }) + ".",
+                "Can't instantiate."
+            ].join(" "));
+        }
 
-        // running checks
+        // ... all requires are included
         var requires = that.__requires;
         if (requires.length) {
             // there are unfulfilled requires - can't instantiate
