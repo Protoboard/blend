@@ -35,9 +35,9 @@ $oop.Class = {
      * @param {$oop.Class} class_
      * @private
      */
-    _addClassToContributions: function (class_) {
-        var contributions = this.__contributions,
-            contributionLookup = this.__contributionLookup,
+    _addToContributors: function (class_) {
+        var contributions = this.__contributors,
+            contributionLookup = this.__contributorLookup,
             classId = class_.__classId;
 
         if (!contributionLookup.hasOwnProperty(classId)) {
@@ -188,7 +188,7 @@ $oop.Class = {
      * @private
      */
     _addUnimplementedMethods: function (members) {
-        var contributions = this.__contributions,
+        var contributions = this.__contributors,
             interfaces = this.__interfaces,
             unimplementedMethodNames = this.__unimplementedMethodNames,
             unimplementedMethodNameLookup = this.__unimplementedMethodNameLookup;
@@ -342,14 +342,14 @@ $oop.Class = {
 //         }
 
         // running checks
-        var requireIds = that.__requires;
-        if (requireIds.length) {
+        var requires = that.__requires;
+        if (requires.length) {
             // there are unfulfilled requires - can't instantiate
             throw new Error([
                 "Class '" + that.__classId + "' doesn't satisfy require(s): " +
-                requireIds
-                    .map(function (classId) {
-                        return "'" + classId + "'";
+                requires
+                    .map(function (class_) {
+                        return "'" + class_.__classId + "'";
                     })
                     .join(",") + ".",
                 "Can't instantiate."
@@ -414,13 +414,13 @@ $oop.Class = {
                  * @type {object[]}
                  * @private
                  */
-                __contributions: {value: []},
+                __contributors: {value: []},
 
                 /**
                  * @type {object}
                  * @private
                  */
-                __contributionLookup: {value: {}},
+                __contributorLookup: {value: {}},
 
                 /**
                  * @type {$oop.Class[]}
@@ -529,10 +529,10 @@ $oop.Class = {
         this._addToMembers(batch);
 
         // adding members to contributions
-        this._addClassToContributions(this);
+        this._addToContributors(this);
 
         // adding methods to lookup at specified index
-        this._addMethodsToMatrix(batch, this.__contributionLookup[this.__classId]);
+        this._addMethodsToMatrix(batch, this.__contributorLookup[this.__classId]);
 
         // adding / overwriting properties
         this._addPropertiesToClass(batch);
@@ -564,12 +564,15 @@ $oop.Class = {
         this._addToIncludes(class_);
 
         // adding included class to contributions
-        this._addClassToContributions(class_);
+        this._addToContributors(class_);
 
         // removing fulfilled require
         this._removeFromRequires(class_);
 
         var members = class_.__members;
+
+        // adding methods to lookup at specified index
+        this._addMethodsToMatrix(members, this.__contributorLookup[class_.__classId]);
 
         // adding / overwriting properties
         this._addPropertiesToClass(members);

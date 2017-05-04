@@ -42,8 +42,8 @@ describe("Class", function () {
         });
 
         it("should initialize contributions", function () {
-            expect(result.__contributions).toEqual([]);
-            expect(result.__contributionLookup).toEqual({});
+            expect(result.__contributors).toEqual([]);
+            expect(result.__contributorLookup).toEqual({});
         });
 
         it("should initialize interfaces", function () {
@@ -127,8 +127,8 @@ describe("Class", function () {
         });
 
         it("should add class to contributions", function () {
-            expect(Class.__contributions).toEqual([Class]);
-            expect(Class.__contributionLookup).toEqual({
+            expect(Class.__contributors).toEqual([Class]);
+            expect(Class.__contributorLookup).toEqual({
                 Class: 0
             });
         });
@@ -141,8 +141,8 @@ describe("Class", function () {
             });
 
             it("should not add again", function () {
-                expect(Class.__contributions).toEqual([Class]);
-                expect(Class.__contributionLookup).toEqual({
+                expect(Class.__contributors).toEqual([Class]);
+                expect(Class.__contributorLookup).toEqual({
                     Class: 0
                 });
             });
@@ -218,8 +218,7 @@ describe("Class", function () {
     });
 
     describe("implementing interface", function () {
-        var Interface,
-            result;
+        var Interface;
 
         beforeEach(function () {
             Interface = $oop.Class.create('Interface')
@@ -355,8 +354,8 @@ describe("Class", function () {
         });
 
         it("should add to list of contributions", function () {
-            expect(Class.__contributions).toEqual([Trait]);
-            expect(Class.__contributionLookup).toEqual({
+            expect(Class.__contributors).toEqual([Trait]);
+            expect(Class.__contributorLookup).toEqual({
                 Trait: 0
             });
         });
@@ -367,10 +366,16 @@ describe("Class", function () {
             });
 
             it("should not add to contributions again", function () {
-                expect(Class.__contributions).toEqual([Trait]);
-                expect(Class.__contributionLookup).toEqual({
+                expect(Class.__contributors).toEqual([Trait]);
+                expect(Class.__contributorLookup).toEqual({
                     Trait: 0
                 });
+            });
+        });
+
+        it("should add methods to method matrix", function () {
+            expect(Class.__methodMatrix).toEqual({
+                bar: [Trait.__members.bar]
             });
         });
 
