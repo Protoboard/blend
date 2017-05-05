@@ -14,7 +14,6 @@ module.exports = function (config) {
             'namespace.js',
             // order matters here
             'class/ProtoclassBuilder.js',
-            'class/ClassBuilder.js',
             'class/Class.js',
             'class/**/*.test.js'
         ],

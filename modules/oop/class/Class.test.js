@@ -6,8 +6,77 @@ describe("Class", function () {
         result;
 
     beforeEach(function () {
-        $oop.ClassBuilder.classes = {};
-        Class = $oop.ClassBuilder.build('Class');
+        $oop.Class.classes = {};
+        Class = $oop.Class.fetch('Class');
+    });
+
+    describe("fetching", function () {
+        describe("when passing no arguments", function () {
+            it("should throw", function () {
+                expect(function () {
+                    $oop.Class.fetch();
+                }).toThrow();
+            });
+        });
+
+        describe("when class already created", function () {
+            beforeEach(function () {
+                result = $oop.Class.fetch('Class');
+            });
+
+            it("should return same class", function () {
+                expect(result).toBe(Class);
+            });
+        });
+
+        it("should set class ID", function () {
+            expect(result.__classId).toEqual('Class');
+        });
+
+        it("should initialize method matrix", function () {
+            expect(result.__methodMatrix).toEqual({});
+        });
+
+        it("should initialize member container", function () {
+            expect(result.__members).toEqual({});
+        });
+
+        it("should initialize contributors", function () {
+            expect(result.__contributors).toEqual([]);
+            expect(result.__contributorIndexLookup).toEqual({});
+        });
+
+        it("should initialize interfaces", function () {
+            expect(result.__interfaces).toEqual([]);
+            expect(result.__interfaceLookup).toEqual({});
+        });
+
+        it("should initialize missing method names", function () {
+            expect(result.__missingMethodNames).toEqual([]);
+            expect(result.__missingMethodLookup).toEqual({});
+        });
+
+        it("should initialize includes", function () {
+            expect(result.__includes).toEqual([]);
+            expect(result.__includeLookup).toEqual({});
+        });
+
+        it("should initialize requires", function () {
+            expect(result.__requires).toEqual([]);
+            expect(result.__requireLookup).toEqual({});
+        });
+
+        it("should initialize forwards", function () {
+            expect(result.__forwards).toEqual([]);
+        });
+
+        it("should initialize hash function", function () {
+            expect(result.__mapper).toBeUndefined();
+        });
+
+        it("should initialize instance lookup", function () {
+            expect(result.__instanceLookup).toEqual({});
+        });
     });
 
     describe("defining members", function () {
@@ -26,7 +95,7 @@ describe("Class", function () {
         describe("when passing no arguments", function () {
             it("should throw", function () {
                 expect(function () {
-                    $oop.ClassBuilder.build('Class2').define();
+                    $oop.Class.fetch('Class2').define();
                 }).toThrow();
             });
         });
@@ -112,7 +181,7 @@ describe("Class", function () {
             it("should throw", function () {
                 expect(function () {
                     Class.define({
-                         baz: $oop.ClassBuilder.build('Test').create()
+                         baz: $oop.Class.fetch('Test').create()
                     });
                 }).toThrow();
             });
@@ -122,7 +191,7 @@ describe("Class", function () {
             it("should not throw", function () {
                 expect(function () {
                     Class.define({
-                         baz: $oop.ClassBuilder.build('Test')
+                         baz: $oop.Class.fetch('Test')
                     });
                 }).not.toThrow();
             });
@@ -148,7 +217,7 @@ describe("Class", function () {
 
         describe("then implementing relevant interface", function () {
             beforeEach(function () {
-                Class.implement($oop.ClassBuilder.build('Interface')
+                Class.implement($oop.Class.fetch('Interface')
                     .define({
                         bar: function () {
                         },
@@ -172,7 +241,7 @@ describe("Class", function () {
         var Interface;
 
         beforeEach(function () {
-            Interface = $oop.ClassBuilder.build('Interface')
+            Interface = $oop.Class.fetch('Interface')
                 .define({
                     foo: "FOO",
                     bar: function () {
@@ -221,7 +290,7 @@ describe("Class", function () {
 
         describe("then defining relevant methods", function () {
             beforeEach(function () {
-                Class.implement($oop.ClassBuilder.build('Interface2')
+                Class.implement($oop.Class.fetch('Interface2')
                     .define({
                         baz: function () {
                         }
@@ -246,12 +315,12 @@ describe("Class", function () {
         describe("then including same class", function () {
             beforeEach(function () {
                 Class
-                    .implement($oop.ClassBuilder.build('Interface2')
+                    .implement($oop.Class.fetch('Interface2')
                         .define({
                             baz: function () {
                             }
                         }))
-                    .include($oop.ClassBuilder.build('Include')
+                    .include($oop.Class.fetch('Include')
                         .define({
                             bar : function () {
                             },
@@ -275,7 +344,7 @@ describe("Class", function () {
         var Trait;
 
         beforeEach(function () {
-            Trait = $oop.ClassBuilder.build('Trait')
+            Trait = $oop.Class.fetch('Trait')
                 .define({
                     foo: "FOO",
                     bar: function () {
@@ -341,7 +410,7 @@ describe("Class", function () {
 
         describe("then implementing relevant interface", function () {
             beforeEach(function () {
-                Class.implement($oop.ClassBuilder.build('Interface')
+                Class.implement($oop.Class.fetch('Interface')
                     .define({
                         bar: function () {
                         },
@@ -375,9 +444,9 @@ describe("Class", function () {
             var Require2, Require3, Include;
 
             beforeEach(function () {
-                Class.require(Require2 = $oop.ClassBuilder.build('Require2')
-                    .include(Include = $oop.ClassBuilder.build('Include'))
-                    .require(Require3 = $oop.ClassBuilder.build('Require3')));
+                Class.require(Require2 = $oop.Class.fetch('Require2')
+                    .include(Include = $oop.Class.fetch('Include'))
+                    .require(Require3 = $oop.Class.fetch('Require3')));
             });
 
             it("should transfer requires", function () {
@@ -397,7 +466,7 @@ describe("Class", function () {
         var Require;
 
         beforeEach(function () {
-            Require = $oop.ClassBuilder.build('Require');
+            Require = $oop.Class.fetch('Require');
             result = Class.require(Require);
         });
 
@@ -435,9 +504,9 @@ describe("Class", function () {
             var Require2, Require3, Include;
 
             beforeEach(function () {
-                Class.require(Require2 = $oop.ClassBuilder.build('Require2')
-                    .include(Include = $oop.ClassBuilder.build('Include'))
-                    .require(Require3 = $oop.ClassBuilder.build('Require3')));
+                Class.require(Require2 = $oop.Class.fetch('Require2')
+                    .include(Include = $oop.Class.fetch('Include'))
+                    .require(Require3 = $oop.Class.fetch('Require3')));
             });
 
             it("should transfer requires", function () {
@@ -460,7 +529,7 @@ describe("Class", function () {
         beforeEach(function () {
             filter = function () {
             };
-            Class.forward(Class1 = $oop.ClassBuilder.build('Class1'), filter, 1);
+            Class.forward(Class1 = $oop.Class.fetch('Class1'), filter, 1);
         });
 
         describe("when passing invalid argument", function () {
@@ -486,7 +555,7 @@ describe("Class", function () {
             beforeEach(function () {
                 filter2 = function () {
                 };
-                Class.forward(Class2 = $oop.ClassBuilder.build('Class2'), filter2, 10);
+                Class.forward(Class2 = $oop.Class.fetch('Class2'), filter2, 10);
             });
 
             it("should sort descriptors by priority", function () {
@@ -533,7 +602,7 @@ describe("Class", function () {
         var Interface;
 
         beforeEach(function () {
-            Interface = $oop.ClassBuilder.build('Interface');
+            Interface = $oop.Class.fetch('Interface');
             Class.implement(Interface);
         });
 
@@ -553,7 +622,7 @@ describe("Class", function () {
 
         describe("on absent interface", function () {
             it("should return false", function () {
-                var Interface2 = $oop.ClassBuilder.build('Interface2');
+                var Interface2 = $oop.Class.fetch('Interface2');
                 expect(Class.implements(Interface2)).toBe(false);
             });
         });
@@ -563,7 +632,7 @@ describe("Class", function () {
         var Trait;
 
         beforeEach(function () {
-            Trait = $oop.ClassBuilder.build('Trait');
+            Trait = $oop.Class.fetch('Trait');
             Class.include(Trait);
         });
 
@@ -589,7 +658,7 @@ describe("Class", function () {
 
         describe("on absent include", function () {
             it("should return false", function () {
-                var Trait2 = $oop.ClassBuilder.build('Trait2');
+                var Trait2 = $oop.Class.fetch('Trait2');
                 expect(Class.includes(Trait2)).toBe(false);
             });
         });
@@ -599,7 +668,7 @@ describe("Class", function () {
         var Host;
 
         beforeEach(function () {
-            Host = $oop.ClassBuilder.build('Host');
+            Host = $oop.Class.fetch('Host');
             Class.require(Host);
         });
 
@@ -619,7 +688,7 @@ describe("Class", function () {
 
         describe("on absent require", function () {
             it("should return false", function () {
-                var Host2 = $oop.ClassBuilder.build('Host2');
+                var Host2 = $oop.Class.fetch('Host2');
                 expect(Class.requires(Host2)).toBe(false);
             });
         });
@@ -632,7 +701,7 @@ describe("Class", function () {
             var Host;
 
             beforeEach(function () {
-                Host = $oop.ClassBuilder.build('Host');
+                Host = $oop.Class.fetch('Host');
                 Class.require(Host);
             });
 
@@ -684,10 +753,10 @@ describe("Class", function () {
                     }
                 });
 
-                Forward = $oop.ClassBuilder.build('Forward')
+                Forward = $oop.Class.fetch('Forward')
                     .include(Class);
 
-                $oop.ClassBuilder.build('Class')
+                $oop.Class.fetch('Class')
                     .forward(Forward, function (foo) {
                         return foo === 1;
                     });
@@ -713,13 +782,13 @@ describe("Class", function () {
                 var Forward2;
 
                 beforeEach(function () {
-                    Forward2 = $oop.ClassBuilder.build('Forward2')
+                    Forward2 = $oop.Class.fetch('Forward2')
                         .cache(function (foo) {
                             return '_' + foo;
                         })
                         .include(Class);
 
-                    $oop.ClassBuilder.build('Class')
+                    $oop.Class.fetch('Class')
                         .forward(Forward2, function (foo) {
                             return foo === 2;
                         });
@@ -734,7 +803,7 @@ describe("Class", function () {
 
         describe("of unimplemented class", function () {
             beforeEach(function () {
-                Class.implement($oop.ClassBuilder.build('Interface')
+                Class.implement($oop.Class.fetch('Interface')
                     .define({
                         foo: function () {
                         }
