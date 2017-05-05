@@ -31,17 +31,17 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
         /**
          * Adds class to contributions
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @private
          */
-        _addToContributors: function (class_) {
+        _addToContributors: function (Class) {
             var contributions = this.__contributors,
                 contributionLookup = this.__contributorLookup,
-                classId = class_.__classId;
+                classId = Class.__classId;
 
             if (!contributionLookup.hasOwnProperty(classId)) {
                 contributionLookup[classId] = contributions.length;
-                contributions.push(class_);
+                contributions.push(Class);
             }
         },
 
@@ -136,16 +136,16 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
         },
 
         /**
-         * @param {$oop.Class} interface_
+         * @param {$oop.Class} Interface
          * @private
          */
-        _addToInterfaces: function (interface_) {
+        _addToInterfaces: function (Interface) {
             var interfaces = this.__interfaces,
                 interfaceLookup = this.__interfaceLookup,
-                interfaceId = interface_.__classId;
+                interfaceId = Interface.__classId;
 
             if (!interfaceLookup.hasOwnProperty(interfaceId)) {
-                interfaces.push(interface_);
+                interfaces.push(Interface);
                 interfaceLookup[interfaceId] = true;
             }
         },
@@ -192,15 +192,15 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
                 })
                 // leaving out any methods already found in contributions
                 .filter(function (methodName) {
-                    return !contributions.some(function (class_) {
-                        var method = class_.__members[methodName];
+                    return !contributions.some(function (Class) {
+                        var method = Class.__members[methodName];
                         return typeof method === 'function';
                     });
                 })
                 // leaving out methods not found in any interfaces
                 .filter(function (methodName) {
-                    return interfaces.some(function (interface_) {
-                        var method = interface_.__members[methodName];
+                    return interfaces.some(function (Interface) {
+                        var method = Interface.__members[methodName];
                         return typeof method === 'function';
                     });
                 })
@@ -216,27 +216,27 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
         },
 
         /**
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @private
          */
-        _addToIncludes: function (class_) {
+        _addToIncludes: function (Class) {
             var includes = this.__includes,
                 includeLookup = this.__includeLookup,
-                classId = class_.__classId;
+                classId = Class.__classId;
 
             if (!includeLookup.hasOwnProperty(classId)) {
-                includes.push(class_);
+                includes.push(Class);
                 includeLookup[classId] = true;
             }
         },
 
         /**
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @private
          */
-        _addToRequires: function (class_) {
+        _addToRequires: function (Class) {
             var classId = this.__classId,
-                requireId = class_.__classId,
+                requireId = Class.__classId,
                 includeLookup = this.__includeLookup,
                 requires = this.__requires,
                 requireLookup = this.__requireLookup;
@@ -247,17 +247,17 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
             ) {
                 // require is not included (which would cancel each other out)
                 // adding to requires
-                requires.push(class_);
+                requires.push(Class);
                 requireLookup[requireId] = true;
             }
         },
 
         /**
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @private
          */
-        _removeFromRequires: function (class_) {
-            var classId = class_.__classId,
+        _removeFromRequires: function (Class) {
+            var classId = Class.__classId,
                 requires = this.__requires,
                 requireLookup = this.__requireLookup;
 
@@ -270,16 +270,16 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
         /**
          * Extracts includes and requires from class and transfers them
          * to the current class as first-degree requires.
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @private
          */
-        _transferRequires: function (class_) {
+        _transferRequires: function (Class) {
             var that = this;
 
-            class_.__requires
-                .concat(class_.__includes)
-                .forEach(function (class_) {
-                    that.require(class_);
+            Class.__requires
+                .concat(Class.__includes)
+                .forEach(function (Class) {
+                    that.require(Class);
                 });
         },
 
@@ -295,11 +295,11 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
             }
 
             var classes = this.classes,
-                class_ = classes[classId];
+                Class = classes[classId];
 
-            if (!class_) {
+            if (!Class) {
                 // class is not initialized yet
-                class_ = Object.create($oop.InstantiableClass, /** @lends $oop.InstantiableClass# */{
+                Class = Object.create($oop.InstantiableClass, /** @lends $oop.Class# */{
                     /**
                      * Identifies class.
                      * @type {string}
@@ -407,10 +407,10 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
                 });
 
                 // adding class to registry
-                classes[classId] = class_;
+                classes[classId] = Class;
             }
 
-            return class_;
+            return Class;
         },
 
         /**
@@ -450,27 +450,27 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
         /**
          * Specifies a class to be included by the host class.
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @returns {$oop.Class}
          */
-        include: function (class_) {
-            if (!$oop.Class.isPrototypeOf(class_)) {
+        include: function (Class) {
+            if (!$oop.Class.isPrototypeOf(Class)) {
                 throw new Error("Class#include expects type Class.");
             }
 
             // adding to includes
-            this._addToIncludes(class_);
+            this._addToIncludes(Class);
 
             // adding included class to contributions
-            this._addToContributors(class_);
+            this._addToContributors(Class);
 
             // removing fulfilled require
-            this._removeFromRequires(class_);
+            this._removeFromRequires(Class);
 
-            var members = class_.__members;
+            var members = Class.__members;
 
             // adding methods to lookup at specified index
-            this._addMethodsToMatrix(members, this.__contributorLookup[class_.__classId]);
+            this._addMethodsToMatrix(members, this.__contributorLookup[Class.__classId]);
 
             // adding / overwriting properties
             this._addPropertiesToClass(members);
@@ -482,26 +482,26 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
             this._removeUnimplementedMethods(members);
 
             // transferring includes & requires from include
-            this._transferRequires(class_);
+            this._transferRequires(Class);
 
             return this;
         },
 
         /**
          * Specifies an interface to be implemented by the host class.
-         * @param {$oop.Class} interface_
+         * @param {$oop.Class} Interface
          * @returns {$oop.Class}
          */
-        implement: function (interface_) {
-            if (!$oop.Class.isPrototypeOf(interface_)) {
+        implement: function (Interface) {
+            if (!$oop.Class.isPrototypeOf(Interface)) {
                 throw new Error("Class#implement expects type Class.");
             }
 
             // adding to interfaces
-            this._addToInterfaces(interface_);
+            this._addToInterfaces(Interface);
 
             // updating unimplemented methods lookup
-            this._addUnimplementedMethods(interface_.__members);
+            this._addUnimplementedMethods(Interface.__members);
 
             return this;
         },
@@ -509,19 +509,19 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
         /**
          * Specifies a required base, or trait of the host class.
          * Used by traits only.
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @returns {$oop.Class}
          */
-        require: function (class_) {
-            if (!$oop.Class.isPrototypeOf(class_)) {
+        require: function (Class) {
+            if (!$oop.Class.isPrototypeOf(Class)) {
                 throw new Error("Class#require expects type Class.");
             }
 
             // adding require to registry
-            this._addToRequires(class_);
+            this._addToRequires(Class);
 
             // transferring includes & requires from require
-            this._transferRequires(class_);
+            this._transferRequires(Class);
 
             return this;
         },
@@ -529,13 +529,13 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
         /**
          * Forwards the class to the specified class, if
          * constructor arguments satisfy the supplied filter.
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @param {function} filter
          * @param {number} [priority=0]
          * @returns {$oop.Class}
          */
-        forward: function (class_, filter, priority) {
-            if (!$oop.Class.isPrototypeOf(class_)) {
+        forward: function (Class, filter, priority) {
+            if (!$oop.Class.isPrototypeOf(Class)) {
                 throw new Error("Class#forward expects type Class.");
             }
 
@@ -543,7 +543,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
             // adding forward descriptor
             forwards.push({
-                'class'   : class_,
+                'class'   : Class,
                 'filter'  : filter,
                 'priority': priority || 0
             });
@@ -578,43 +578,43 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
         /**
          * Tells whether current class implements the specified interface.
-         * @param {$oop.Class} interface_
+         * @param {$oop.Class} Interface
          * @returns {boolean}
          */
-        implements: function (interface_) {
-            if (!$oop.Class.isPrototypeOf(interface_)) {
+        implements: function (Interface) {
+            if (!$oop.Class.isPrototypeOf(Interface)) {
                 throw new Error("Class type expected");
             }
 
-            return !!this.__interfaceLookup[interface_.__classId];
+            return !!this.__interfaceLookup[Interface.__classId];
         },
 
         /**
          * Tells whether current class is or includes the specified class.
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @returns {boolean}
          */
-        includes: function (class_) {
-            if (!$oop.Class.isPrototypeOf(class_)) {
+        includes: function (Class) {
+            if (!$oop.Class.isPrototypeOf(Class)) {
                 throw new Error("Class type expected");
             }
 
-            var classId = class_.__classId;
+            var classId = Class.__classId;
 
             return this.__classId === classId || !!this.__includeLookup[classId];
         },
 
         /**
          * Tells whether current class requires the specified class.
-         * @param {$oop.Class} class_
+         * @param {$oop.Class} Class
          * @returns {boolean}
          */
-        requires: function (class_) {
-            if (!$oop.Class.isPrototypeOf(class_)) {
+        requires: function (Class) {
+            if (!$oop.Class.isPrototypeOf(Class)) {
                 throw new Error("Class type expected");
             }
 
-            return !!this.__requireLookup[class_.__classId];
+            return !!this.__requireLookup[Class.__classId];
         }
     })
     .build();

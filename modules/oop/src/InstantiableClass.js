@@ -65,8 +65,8 @@ $oop.InstantiableClass = $oop.ProtoclassBuilder.reset()
                 throw new Error([
                     "Class '" + that.__classId + "' doesn't satisfy require(s): " +
                     requires
-                        .map(function (class_) {
-                            return "'" + class_.__classId + "'";
+                        .map(function (Class) {
+                            return "'" + Class.__classId + "'";
                         })
                         .join(",") + ".",
                     "Can't instantiate."
