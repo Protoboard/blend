@@ -108,6 +108,16 @@ describe("Class", function () {
             expect(Class.foo).toBe("FOO");
         });
 
+        describe("when includes instances", function () {
+            it("should throw", function () {
+                expect(function () {
+                    Class.define({
+                         baz: $oop.Class.build('Test').create()
+                    });
+                });
+            });
+        });
+
         describe("when already added", function () {
             beforeEach(function () {
                 Class.define({
@@ -540,8 +550,7 @@ describe("Class", function () {
     });
 
     describe("inclusion tester", function () {
-        var Trait,
-            instance;
+        var Trait;
 
         beforeEach(function () {
             Trait = $oop.ClassBuilder.build('Trait');

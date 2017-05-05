@@ -74,7 +74,16 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
                     return typeof members[memberName] !== 'function';
                 })
                 .forEach(function (propertyName) {
-                    that[propertyName] = members[propertyName];
+                    var propertyValue = members[propertyName];
+
+                    if ($oop.Class.isPrototypeOf(propertyValue)) {
+                        throw new Error([
+                            "Instance not allowed as static property value for '" + that.__classId + "." + propertyName + "'.",
+                            "Can't build."
+                        ].join(" "));
+                    }
+
+                    that[propertyName] = propertyValue;
                 });
         },
 
