@@ -13,11 +13,11 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
         classes: {},
         
         /**
-         * Creates a new Class instance.
+         * Builds a new class or continues to build an existing class.
          * @param {string} classId
          * @returns {$oop.Class}
          */
-        create: function (classId) {
+        build: function (classId) {
             if (!classId) {
                 throw new Error("No class ID was specified.");
             }

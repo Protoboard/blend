@@ -11,20 +11,20 @@ describe("ClassBuilder", function () {
 
     describe("creation", function () {
         beforeEach(function () {
-            Class = $oop.ClassBuilder.create('Class');
+            Class = $oop.ClassBuilder.build('Class');
         });
 
         describe("when passing no arguments", function () {
             it("should throw", function () {
                 expect(function () {
-                    $oop.ClassBuilder.create();
+                    $oop.ClassBuilder.build();
                 }).toThrow();
             });
         });
 
         describe("when class already created", function () {
             beforeEach(function () {
-                result = $oop.ClassBuilder.create('Class');
+                result = $oop.ClassBuilder.build('Class');
             });
 
             it("should return same class", function () {
