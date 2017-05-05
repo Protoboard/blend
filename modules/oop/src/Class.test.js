@@ -108,13 +108,23 @@ describe("Class", function () {
             expect(Class.foo).toBe("FOO");
         });
 
-        describe("when includes instances", function () {
+        describe("some of which are instances", function () {
             it("should throw", function () {
                 expect(function () {
                     Class.define({
-                         baz: $oop.Class.build('Test').create()
+                         baz: $oop.ClassBuilder.build('Test').create()
                     });
-                });
+                }).toThrow();
+            });
+        });
+
+        describe("some of which are classes", function () {
+            it("should not throw", function () {
+                expect(function () {
+                    Class.define({
+                         baz: $oop.ClassBuilder.build('Test')
+                    });
+                }).not.toThrow();
             });
         });
 

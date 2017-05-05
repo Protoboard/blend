@@ -66,7 +66,8 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
          * @private
          */
         _addPropertiesToClass: function (members) {
-            var that = this;
+            var Class = $oop.Class,
+                that = this;
 
             Object.getOwnPropertyNames(members)
                 .filter(function (memberName) {
@@ -75,7 +76,9 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
                 .forEach(function (propertyName) {
                     var propertyValue = members[propertyName];
 
-                    if ($oop.Class.isPrototypeOf(propertyValue)) {
+                    if (Class.isPrototypeOf(propertyValue) &&
+                        Object.getPrototypeOf(propertyValue) !== Class
+                    ) {
                         throw new Error([
                             "Instance not allowed as static property value for '" + that.__classId + "." + propertyName + "'.",
                             "Can't build."
