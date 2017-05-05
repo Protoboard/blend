@@ -35,7 +35,7 @@ module.exports = function (grunt) {
                         '(function () {',
                         '/**',
                         ' * @namespace',
-                        ' * @exports ' + pkg.name,
+                        ' * @exports ' + namespaceSymbol,
                         ' */',
                         'var ' + namespaceSymbol + ' = {};',
                         'if (typeof define !== "undefined") define(function () {return ' + namespaceSymbol + ';})',

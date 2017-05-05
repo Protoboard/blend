@@ -1,7 +1,9 @@
 {
   "assets": {
     "js": [
-      "src/Class.js"
+      "src/ProtoclassBuilder.js",
+      "src/Class.js",
+      "src/InstantiableClass.js"
     ]
   }
 }
