@@ -13,10 +13,10 @@ module.exports = function (config) {
         files: [
             'namespace.js',
             // order matters here
-            'src/ProtoclassBuilder.js',
-            'src/ClassBuilder.js',
-            'src/Class.js',
-            'src/**/*.test.js'
+            'class/ProtoclassBuilder.js',
+            'class/ClassBuilder.js',
+            'class/Class.js',
+            'class/**/*.test.js'
         ],
 
         // list of files to exclude

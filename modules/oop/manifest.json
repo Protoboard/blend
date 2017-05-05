@@ -2,9 +2,9 @@
   "assets": {
     "js": [
       "namespace.js",
-      "src/ProtoclassBuilder.js",
-      "src/ClassBuilder.js",
-      "src/Class.js"
+      "class/ProtoclassBuilder.js",
+      "class/ClassBuilder.js",
+      "class/Class.js"
     ]
   }
 }

@@ -2,6 +2,6 @@
 
 /**
  * @namespace
- * @exports co-op
+ * @exports giant-oop
  */
 var $oop = {};
