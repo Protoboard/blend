@@ -29,7 +29,7 @@ module.exports = function (grunt) {
                 src: assets.js.map(function (relativePath) {
                     return ['modules', moduleName, relativePath].join('/');
                 }),
-                dest: ['dist', moduleName + '.js'].join('/'),
+                dest: ['dist', pkg.name + '.js'].join('/'),
                 options: {
                     banner: [
                         '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',

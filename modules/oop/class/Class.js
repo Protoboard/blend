@@ -340,7 +340,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     /**
      * Creates a new instance.
      * @returns {$oop.Class}
-     * @private
      */
     create: function () {
         // retrieving forward class (if any)
