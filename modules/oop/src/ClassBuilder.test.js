@@ -46,7 +46,7 @@ describe("ClassBuilder", function () {
 
         it("should initialize contributions", function () {
             expect(result.__contributors).toEqual([]);
-            expect(result.__contributorLookup).toEqual({});
+            expect(result.__contributorIndexLookup).toEqual({});
         });
 
         it("should initialize interfaces", function () {

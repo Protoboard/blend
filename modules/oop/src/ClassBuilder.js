@@ -57,7 +57,7 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
                      * @type {object}
                      * @private
                      */
-                    __contributorLookup: {value: {}},
+                    __contributorIndexLookup: {value: {}},
 
                     /**
                      * @type {$oop.Class[]}

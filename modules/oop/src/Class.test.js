@@ -59,7 +59,7 @@ describe("Class", function () {
 
         it("should add class to contributions", function () {
             expect(Class.__contributors).toEqual([Class]);
-            expect(Class.__contributorLookup).toEqual({
+            expect(Class.__contributorIndexLookup).toEqual({
                 Class: 0
             });
         });
@@ -73,7 +73,7 @@ describe("Class", function () {
 
             it("should not add again", function () {
                 expect(Class.__contributors).toEqual([Class]);
-                expect(Class.__contributorLookup).toEqual({
+                expect(Class.__contributorIndexLookup).toEqual({
                     Class: 0
                 });
             });
@@ -196,7 +196,7 @@ describe("Class", function () {
         it("should add to interfaces", function () {
             expect(Class.__interfaces).toEqual([Interface]);
             expect(Class.__interfaceLookup).toEqual({
-                Interface: true
+                Interface: Interface
             });
         });
 
@@ -205,7 +205,7 @@ describe("Class", function () {
                 Class.implement(Interface);
                 expect(Class.__interfaces).toEqual([Interface]);
                 expect(Class.__interfaceLookup).toEqual({
-                    Interface: true
+                    Interface: Interface
                 });
             });
         });
@@ -306,7 +306,7 @@ describe("Class", function () {
 
         it("should add to list of contributions", function () {
             expect(Class.__contributors).toEqual([Trait]);
-            expect(Class.__contributorLookup).toEqual({
+            expect(Class.__contributorIndexLookup).toEqual({
                 Trait: 0
             });
         });
@@ -318,7 +318,7 @@ describe("Class", function () {
 
             it("should not add to contributions again", function () {
                 expect(Class.__contributors).toEqual([Trait]);
-                expect(Class.__contributorLookup).toEqual({
+                expect(Class.__contributorIndexLookup).toEqual({
                     Trait: 0
                 });
             });

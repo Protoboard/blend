@@ -29,7 +29,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
          */
         _addToContributors: function (Class) {
             var contributions = this.__contributors,
-                contributionLookup = this.__contributorLookup,
+                contributionLookup = this.__contributorIndexLookup,
                 classId = Class.__classId;
 
             if (!contributionLookup.hasOwnProperty(classId)) {
@@ -151,7 +151,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
             if (!interfaceLookup.hasOwnProperty(interfaceId)) {
                 interfaces.push(Interface);
-                interfaceLookup[interfaceId] = true;
+                interfaceLookup[interfaceId] = Interface;
             }
         },
 
@@ -388,7 +388,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
             this._addToContributors(this);
 
             // adding methods to lookup at specified index
-            this._addMethodsToMatrix(batch, this.__contributorLookup[this.__classId]);
+            this._addMethodsToMatrix(batch, this.__contributorIndexLookup[this.__classId]);
 
             // adding / overwriting properties
             this._addPropertiesToClass(batch);
@@ -427,7 +427,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
             var members = Class.__members;
 
             // adding methods to lookup at specified index
-            this._addMethodsToMatrix(members, this.__contributorLookup[Class.__classId]);
+            this._addMethodsToMatrix(members, this.__contributorIndexLookup[Class.__classId]);
 
             // adding / overwriting properties
             this._addPropertiesToClass(members);
