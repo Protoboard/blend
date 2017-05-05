@@ -2,6 +2,7 @@
 "use strict";
 
 /**
+ * @function $oop.createObject
  * @param {object} base
  * @param {object} members
  * @returns {Object}
@@ -17,6 +18,7 @@ $oop.createObject = function (base, members) {
 };
 
 /**
+ * @function $oop.getClass
  * @param {string} classId
  * @returns {$oop.Class}
  */

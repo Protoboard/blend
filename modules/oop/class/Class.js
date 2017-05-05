@@ -209,8 +209,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @private
      */
     _removeFromMissingMethods: function (members) {
-        var unimplementedMethodNames = this.__missingMethodNames,
-            unimplementedMethodsLookup = this.__missingMethodLookup;
+        var missingMethodNames = this.__missingMethodNames,
+            missingMethodLookup = this.__missingMethodLookup;
 
         // removing methods from registry
         Object.getOwnPropertyNames(members)
@@ -219,17 +219,17 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
             })
             // leaving only those already registered
             .filter(function (methodName) {
-                return unimplementedMethodsLookup.hasOwnProperty(methodName);
+                return missingMethodLookup.hasOwnProperty(methodName);
             })
             // unregistering method names
             .forEach(function (implementedMethodName) {
-                unimplementedMethodNames.splice(unimplementedMethodNames.indexOf(implementedMethodName), 1);
-                delete unimplementedMethodsLookup[implementedMethodName];
+                missingMethodNames.splice(missingMethodNames.indexOf(implementedMethodName), 1);
+                delete missingMethodLookup[implementedMethodName];
             });
     },
 
     /**
-     * Adds functions in members to registry of unimplemented methods,
+     * Adds functions in members to registry of missing methods names,
      * unless they're already implemented by the class, or any of the includes.
      * @param {object} members
      * @private
@@ -237,8 +237,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     _addToMissingMethods: function (members) {
         var contributions = this.__contributors,
             interfaces = this.__interfaces,
-            unimplementedMethodNames = this.__missingMethodNames,
-            unimplementedMethodNameLookup = this.__missingMethodLookup;
+            missingMethodNames = this.__missingMethodNames,
+            missingMethodLookup = this.__missingMethodLookup;
 
         Object.getOwnPropertyNames(members)
             .filter(function (memberName) {
@@ -259,13 +259,13 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
                 });
             })
             // leaving only those not yet registered
-            .filter(function (unimplementedMethodName) {
-                return !unimplementedMethodNameLookup.hasOwnProperty(unimplementedMethodName);
+            .filter(function (missingMethodName) {
+                return !missingMethodLookup.hasOwnProperty(missingMethodName);
             })
-            // registering method names as unimplemented
-            .forEach(function (unimplementedMethodName) {
-                unimplementedMethodNames.push(unimplementedMethodName);
-                unimplementedMethodNameLookup[unimplementedMethodName] = true;
+            // registering method names as missing
+            .forEach(function (missingMethodName) {
+                missingMethodNames.push(missingMethodName);
+                missingMethodLookup[missingMethodName] = true;
             });
     },
 
@@ -373,11 +373,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
         // checking whether
         // ... methods match interfaces
-        var unimplementedMethodNames = this.__missingMethodNames;
-        if (unimplementedMethodNames.length) {
+        var missingMethodNames = this.__missingMethodNames;
+        if (missingMethodNames.length) {
             throw new Error([
                 "Class '" + that.__classId + "' doesn't implement method(s): " +
-                unimplementedMethodNames
+                missingMethodNames
                     .map(function (methodName) {
                         return "'" + methodName + "'";
                     }) + ".",
@@ -444,7 +444,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         // adding wrapper method when necessary
         this._addWrapperMethodsToClass(batch);
 
-        // updating unimplemented methods lookup
+        // updating missing methods names
         this._removeFromMissingMethods(batch);
 
         // delegating batch to includers
@@ -483,7 +483,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         // adding wrapper method when necessary
         this._addWrapperMethodsToClass(members);
 
-        // updating unimplemented methods lookup
+        // updating missing method names
         this._removeFromMissingMethods(members);
 
         // transferring includes & requires from include
@@ -505,7 +505,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         // adding to interfaces
         this._addToInterfaces(Interface);
 
-        // updating unimplemented methods lookup
+        // updating missing method names
         this._addToMissingMethods(Interface.__members);
 
         return this;
