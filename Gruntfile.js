@@ -1,6 +1,6 @@
-module.exports = function (grunt) {
-    "use strict";
+"use strict";
 
+module.exports = function (grunt) {
     // TODO: Get module names from directory structure
     var moduleNames = ['oop'],
         manifests = moduleNames.map(function (moduleName) {
@@ -20,6 +20,7 @@ module.exports = function (grunt) {
         result.options = options;
 
         moduleNames.forEach(function (moduleName, i) {
+            // TODO: Camel-case conversion
             var namespaceSymbol = '$' + moduleName,
                 assets = manifests[i].assets,
                 pkg = packages[i];
