@@ -3,6 +3,8 @@
 
 /**
  * Builds protoclasses.
+ * Protoclasses are very simple classes based on prototypal inheriatance,
+ * used as basis for anything that precedes $oop.Class.
  * Not part of public API.
  * @class
  * @ignore
@@ -11,7 +13,7 @@ $oop.ProtoclassBuilder = {
     /**
      * @returns {$oop.ProtoclassBuilder}
      */
-    start: function () {
+    reset: function () {
         this._extends = undefined;
         this._members = undefined;
         return this;

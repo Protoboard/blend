@@ -4,8 +4,9 @@
 /**
  * @class $oop.InstantiableClass
  * @extends $oop.Class
+ * @ignore
  */
-$oop.InstantiableClass = $oop.ProtoclassBuilder.start()
+$oop.InstantiableClass = $oop.ProtoclassBuilder.reset()
     .extend($oop.Class)
     .define(/** @lends $oop.InstantiableClass# */{
         /**

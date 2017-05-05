@@ -5,7 +5,7 @@
  * Composable class.
  * @class $oop.Class
  */
-$oop.Class = $oop.ProtoclassBuilder.start()
+$oop.Class = $oop.ProtoclassBuilder.reset()
     .define(/** @lends $oop.Class# */{
         /**
          * All classes indexed by class ID.
