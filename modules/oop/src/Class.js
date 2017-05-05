@@ -573,5 +573,92 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
             return !!this.__requireLookup[Class.__classId];
         }
+
+        /**
+         * Identifies class.
+         * @member {string} $oop.Class#__classId
+         * @private
+         */
+
+        /**
+         * @member {object} $oop.Class#__members
+         * @private
+         */
+
+        /**
+         * @member {object} $oop.Class#__methodMatrix
+         * @private
+         */
+
+        /**
+         * @member {object[]} $oop.Class#__contributors
+         * @private
+         */
+
+        /**
+         * @member {object} $oop.Class#__contributorIndexLookup
+         * @private
+         */
+
+        /**
+         * @member {$oop.Class[]} $oop.Class#__interfaces
+         * @private
+         */
+
+        /**
+         * @member {object} $oop.Class#__interfaceLookup
+         * @private
+         */
+
+        /**
+         * @member {string[]} $oop.Class#__unimplementedMethodNames
+         * @private
+         */
+
+        /**
+         * @member {object} $oop.Class#__unimplementedMethodNameLookup
+         * @private
+         */
+
+        /**
+         * @member {$oop.Class[]} $oop.Class#__includes
+         * @private
+         */
+
+        /**
+         * @member {object} $oop.Class#__includeLookup
+         * @private
+         */
+
+        /**
+         * @member {string[]} $oop.Class#__requires
+         * @private
+         */
+
+        /**
+         * @member {object} $oop.Class#__requireLookup
+         * @private
+         */
+
+        /**
+         * List of surrogate descriptors.
+         * @todo Do we need a lookup for this too?
+         * @member {object[]} $oop.Class#__forwards
+         * @private
+         */
+
+        /**
+         * Instance hash function for cached classes.
+         * @todo Rename
+         * @function $oop.Class#__mapper
+         * @returns {string}
+         * @private
+         */
+
+        /**
+         * Registry of instances indexed by hash.
+         * @member {object} $oop.Class#__instanceLookup
+         * @private
+         */
     })
     .build();

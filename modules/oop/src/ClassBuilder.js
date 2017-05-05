@@ -27,110 +27,25 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
 
             if (!Class) {
                 // class is not initialized yet
-                Class = Object.create($oop.Class, /** @lends $oop.Class# */{
-                    /**
-                     * Identifies class.
-                     * @type {string}
-                     * @private
-                     */
+                Class = Object.create($oop.Class, {
                     __classId: {value: classId},
-
-                    /**
-                     * @type {object}
-                     * @private
-                     */
                     __members: {value: {}},
-
-                    /**
-                     * @type {object}
-                     * @private
-                     */
                     __methodMatrix: {value: {}},
-
-                    /**
-                     * @type {object[]}
-                     * @private
-                     */
                     __contributors: {value: []},
-
-                    /**
-                     * @type {object}
-                     * @private
-                     */
                     __contributorIndexLookup: {value: {}},
-
-                    /**
-                     * @type {$oop.Class[]}
-                     * @private
-                     */
                     __interfaces: {value: []},
-
-                    /**
-                     * @type {object}
-                     * @private
-                     */
                     __interfaceLookup: {value: {}},
-
-                    /**
-                     * @type {string[]}
-                     * @private
-                     */
                     __unimplementedMethodNames: {value: []},
-
-                    /**
-                     * @type {object}
-                     * @private
-                     */
                     __unimplementedMethodNameLookup: {value: {}},
-
-                    /**
-                     * @type {$oop.Class[]}
-                     * @private
-                     */
                     __includes: {value: []},
-
-                    /**
-                     * @type {object}
-                     * @private
-                     */
                     __includeLookup: {value: {}},
-
-                    /**
-                     * @type {string[]}
-                     * @private
-                     */
                     __requires: {value: []},
-
-                    /**
-                     * @type {object}
-                     * @private
-                     */
                     __requireLookup: {value: {}},
-
-                    /**
-                     * List of surrogate descriptors.
-                     * @todo Do we need a lookup for this too?
-                     * @type {object[]}
-                     * @private
-                     */
                     __forwards: {value: []},
-
-                    /**
-                     * Instance hash function for cached classes.
-                     * @todo Rename
-                     * @type {function}
-                     * @private
-                     */
                     __mapper: {
                         value   : undefined,
                         writable: true
                     },
-
-                    /**
-                     * Registry of instances indexed by hash.
-                     * @type {object}
-                     * @private
-                     */
                     __instanceLookup: {value: {}}
                 });
 
