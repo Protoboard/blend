@@ -9,7 +9,6 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
     .define(/** @lends $oop.Class# */{
         /**
          * Copies batch of members to class members container.
-         * @todo Throw on conflict.
          * @param {object} batch
          * @private
          */

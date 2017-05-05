@@ -31,7 +31,7 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
                     /**
                      * Identifies class.
                      * @type {string}
-                     * @protected
+                     * @private
                      */
                     __classId: {value: classId},
 
@@ -67,13 +67,13 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
 
                     /**
                      * @type {object}
-                     * @protected
+                     * @private
                      */
                     __interfaceLookup: {value: {}},
 
                     /**
                      * @type {string[]}
-                     * @protected
+                     * @private
                      */
                     __unimplementedMethodNames: {value: []},
 
@@ -91,19 +91,19 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
 
                     /**
                      * @type {object}
-                     * @protected
+                     * @private
                      */
                     __includeLookup: {value: {}},
 
                     /**
                      * @type {string[]}
-                     * @protected
+                     * @private
                      */
                     __requires: {value: []},
 
                     /**
                      * @type {object}
-                     * @protected
+                     * @private
                      */
                     __requireLookup: {value: {}},
 
@@ -111,7 +111,7 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
                      * List of surrogate descriptors.
                      * @todo Do we need a lookup for this too?
                      * @type {object[]}
-                     * @protected
+                     * @private
                      */
                     __forwards: {value: []},
 
@@ -119,7 +119,7 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
                      * Instance hash function for cached classes.
                      * @todo Rename
                      * @type {function}
-                     * @protected
+                     * @private
                      */
                     __mapper: {
                         value   : undefined,
@@ -129,7 +129,7 @@ $oop.ClassBuilder = $oop.ProtoclassBuilder.reset()
                     /**
                      * Registry of instances indexed by hash.
                      * @type {object}
-                     * @protected
+                     * @private
                      */
                     __instanceLookup: {value: {}}
                 });
