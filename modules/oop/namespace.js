@@ -2,6 +2,6 @@
 
 /**
  * @namespace
- * @exports giant-oop
+ * @global
  */
 var $oop = {};
