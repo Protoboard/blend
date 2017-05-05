@@ -36,15 +36,15 @@ describe("ClassBuilder", function () {
             expect(result.__classId).toEqual('Class');
         });
 
-        it("should initialize method lookup", function () {
+        it("should initialize method matrix", function () {
             expect(result.__methodMatrix).toEqual({});
         });
 
-        it("should initialize members container", function () {
+        it("should initialize member container", function () {
             expect(result.__members).toEqual({});
         });
 
-        it("should initialize contributions", function () {
+        it("should initialize contributors", function () {
             expect(result.__contributors).toEqual([]);
             expect(result.__contributorIndexLookup).toEqual({});
         });
@@ -54,9 +54,9 @@ describe("ClassBuilder", function () {
             expect(result.__interfaceLookup).toEqual({});
         });
 
-        it("should initialize unimplemented method list", function () {
-            expect(result.__unimplementedMethodNames).toEqual([]);
-            expect(result.__unimplementedMethodNameLookup).toEqual({});
+        it("should initialize missing method names", function () {
+            expect(result.__missingMethodNames).toEqual([]);
+            expect(result.__missingMethodLookup).toEqual({});
         });
 
         it("should initialize includes", function () {
@@ -69,7 +69,7 @@ describe("ClassBuilder", function () {
             expect(result.__requireLookup).toEqual({});
         });
 
-        it("should initialize forwards list", function () {
+        it("should initialize forwards", function () {
             expect(result.__forwards).toEqual([]);
         });
 

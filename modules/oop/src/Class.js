@@ -160,8 +160,8 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
          * @private
          */
         _removeUnimplementedMethods: function (members) {
-            var unimplementedMethodNames = this.__unimplementedMethodNames,
-                unimplementedMethodsLookup = this.__unimplementedMethodNameLookup;
+            var unimplementedMethodNames = this.__missingMethodNames,
+                unimplementedMethodsLookup = this.__missingMethodLookup;
 
             // removing methods from registry
             Object.getOwnPropertyNames(members)
@@ -188,8 +188,8 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
         _addUnimplementedMethods: function (members) {
             var contributions = this.__contributors,
                 interfaces = this.__interfaces,
-                unimplementedMethodNames = this.__unimplementedMethodNames,
-                unimplementedMethodNameLookup = this.__unimplementedMethodNameLookup;
+                unimplementedMethodNames = this.__missingMethodNames,
+                unimplementedMethodNameLookup = this.__missingMethodLookup;
 
             Object.getOwnPropertyNames(members)
                 .filter(function (memberName) {
@@ -231,7 +231,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
             if (!includeLookup.hasOwnProperty(classId)) {
                 includes.push(Class);
-                includeLookup[classId] = true;
+                includeLookup[classId] = Class;
             }
         },
 
@@ -253,7 +253,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
                 // require is not included (which would cancel each other out)
                 // adding to requires
                 requires.push(Class);
-                requireLookup[requireId] = true;
+                requireLookup[requireId] = Class;
             }
         },
 
@@ -325,7 +325,7 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
 
             // checking whether
             // ... methods match interfaces
-            var unimplementedMethodNames = this.__unimplementedMethodNames;
+            var unimplementedMethodNames = this.__missingMethodNames;
             if (unimplementedMethodNames.length) {
                 throw new Error([
                     "Class '" + that.__classId + "' doesn't implement method(s): " +
@@ -611,12 +611,12 @@ $oop.Class = $oop.ProtoclassBuilder.reset()
          */
 
         /**
-         * @member {string[]} $oop.Class#__unimplementedMethodNames
+         * @member {string[]} $oop.Class#__missingMethodNames
          * @private
          */
 
         /**
-         * @member {object} $oop.Class#__unimplementedMethodNameLookup
+         * @member {object} $oop.Class#__missingMethodLookup
          * @private
          */
 

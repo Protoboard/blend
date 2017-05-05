@@ -158,10 +158,10 @@ describe("Class", function () {
             });
 
             it("should not register implemented methods", function () {
-                expect(Class.__unimplementedMethodNames).toEqual([
+                expect(Class.__missingMethodNames).toEqual([
                     'baz'
                 ]);
-                expect(Class.__unimplementedMethodNameLookup).toEqual({
+                expect(Class.__missingMethodLookup).toEqual({
                     baz: true
                 });
             });
@@ -211,10 +211,10 @@ describe("Class", function () {
         });
 
         it("should register unimplemented methods", function () {
-            expect(Class.__unimplementedMethodNames).toEqual([
+            expect(Class.__missingMethodNames).toEqual([
                 'bar'
             ]);
-            expect(Class.__unimplementedMethodNameLookup).toEqual({
+            expect(Class.__missingMethodLookup).toEqual({
                 bar: true
             });
         });
@@ -234,10 +234,10 @@ describe("Class", function () {
             });
 
             it("should cancel out unimplemented methods", function () {
-                expect(Class.__unimplementedMethodNames).toEqual([
+                expect(Class.__missingMethodNames).toEqual([
                     'baz'
                 ]);
-                expect(Class.__unimplementedMethodNameLookup).toEqual({
+                expect(Class.__missingMethodLookup).toEqual({
                     baz: true
                 });
             });
@@ -261,10 +261,10 @@ describe("Class", function () {
             });
 
             it("should cancel out unimplemented methods", function () {
-                expect(Class.__unimplementedMethodNames).toEqual([
+                expect(Class.__missingMethodNames).toEqual([
                     'baz'
                 ]);
-                expect(Class.__unimplementedMethodNameLookup).toEqual({
+                expect(Class.__missingMethodLookup).toEqual({
                     baz: true
                 });
             });
@@ -300,7 +300,7 @@ describe("Class", function () {
         it("should add to includes", function () {
             expect(Class.__includes).toEqual([Trait]);
             expect(Class.__includeLookup).toEqual({
-                Trait: true
+                Trait: Trait
             });
         });
 
@@ -351,10 +351,10 @@ describe("Class", function () {
             });
 
             it("should not register implemented methods", function () {
-                expect(Class.__unimplementedMethodNames).toEqual([
+                expect(Class.__missingMethodNames).toEqual([
                     'baz'
                 ]);
-                expect(Class.__unimplementedMethodNameLookup).toEqual({
+                expect(Class.__missingMethodLookup).toEqual({
                     baz: true
                 });
             });
@@ -385,9 +385,9 @@ describe("Class", function () {
                     Require2, Require3, Include
                 ]);
                 expect(Class.__requireLookup).toEqual({
-                    Include : true,
-                    Require2: true,
-                    Require3: true
+                    Include : Include,
+                    Require2: Require2,
+                    Require3: Require3
                 });
             });
         });
@@ -416,7 +416,7 @@ describe("Class", function () {
         it("should add requires", function () {
             expect(Class.__requires).toEqual([Require]);
             expect(Class.__requireLookup).toEqual({
-                Require: true
+                Require: Require
             });
         });
 
@@ -445,10 +445,10 @@ describe("Class", function () {
                     Require, Require2, Require3, Include
                 ]);
                 expect(Class.__requireLookup).toEqual({
-                    Include : true,
-                    Require : true,
-                    Require2: true,
-                    Require3: true
+                    Include : Include,
+                    Require : Require,
+                    Require2: Require2,
+                    Require3: Require3
                 });
             });
         });
