@@ -11,7 +11,7 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'test/namespace.js',
+            'namespace.js',
             // order matters here
             'src/ProtoclassBuilder.js',
             'src/ClassBuilder.js',

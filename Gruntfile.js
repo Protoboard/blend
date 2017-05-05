@@ -33,17 +33,12 @@ module.exports = function (grunt) {
                     banner: [
                         '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
                         '(function () {',
-                        '/**',
-                        ' * @namespace',
-                        ' * @exports ' + namespaceSymbol,
-                        ' */',
-                        'var ' + namespaceSymbol + ' = {};',
-                        'if (typeof define !== "undefined") define(function () {return ' + namespaceSymbol + ';})',
-                        'else if (typeof window !== "undefined") window["' + namespaceSymbol + '"] = ' + namespaceSymbol,
-                        'else module.exports = ' + namespaceSymbol + ';',
                         ''
                     ].join('\n'),
                     footer: [
+                        'if (typeof define !== "undefined") define(function () {return ' + namespaceSymbol + ';})',
+                        'else if (typeof window !== "undefined") window["' + namespaceSymbol + '"] = ' + namespaceSymbol,
+                        'else module.exports = ' + namespaceSymbol + ';',
                         '}())'
                     ].join('\n')
                 }

@@ -1,6 +1,7 @@
 {
   "assets": {
     "js": [
+      "namespace.js",
       "src/ProtoclassBuilder.js",
       "src/ClassBuilder.js",
       "src/Class.js"
