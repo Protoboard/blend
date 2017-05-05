@@ -2,6 +2,7 @@
   "assets": {
     "js": [
       "namespace.js",
+      "class/utils.js",
       "class/ProtoclassBuilder.js",
       "class/Class.js"
     ]

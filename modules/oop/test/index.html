@@ -5,20 +5,20 @@
     <title>OOP Tester</title>
     <script src="../../../dist/oop.js"></script>
     <script>
-        IFoo = $oop.Class.fetch('IFoo')
+        IFoo = $oop.getClass('IFoo')
             .define({
                 foo: function () {
                 }
             });
 
-        IQuux = $oop.Class.fetch('IQuux')
+        IQuux = $oop.getClass('IQuux')
             .define({
                 quux: function () {
                 }
             });
 
         setTimeout(function () {
-            Foo = $oop.Class.fetch('Foo')
+            Foo = $oop.getClass('Foo')
                 .implement(IFoo)
                 .define({
                     foo: function () {
@@ -29,14 +29,14 @@
         });
 
         setTimeout(function () {
-            Bar = $oop.Class.fetch('Bar')
+            Bar = $oop.getClass('Bar')
                 .define({
                     foo: Foo.create()
                 });
         });
 
         setTimeout(function () {
-            Bar = $oop.Class.fetch('Bar')
+            Bar = $oop.getClass('Bar')
                 .require(Foo)
                 .define({
                     foo: function () {
@@ -47,7 +47,7 @@
         });
 
         setTimeout(function () {
-            Baz = $oop.Class.fetch('Baz')
+            Baz = $oop.getClass('Baz')
                 .include(Foo)
                 .include(Bar)
                 .define({
@@ -59,7 +59,7 @@
         });
 
         setTimeout(function () {
-            Quux = $oop.Class.fetch('Quux')
+            Quux = $oop.getClass('Quux')
                 .implement(IQuux);
         });
 

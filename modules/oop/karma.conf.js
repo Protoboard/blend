@@ -12,10 +12,9 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             'namespace.js',
-            // order matters here
-            'class/ProtoclassBuilder.js',
-            'class/Class.js',
-            'class/**/*.test.js'
+            'class/utils.js',
+            '**/*!(.test).js',
+            '**/*.test.js'
         ],
 
         // list of files to exclude
