@@ -84,7 +84,7 @@ module.exports = function (grunt) {
         karma: buildKarmaConfig(),
 
         watch: {
-            files: ['modules/**/*.js'],
+            files: ['Gruntfile.js', 'modules/**/*.+(js|css|less)', 'modules/*/+(package|manifest).json'],
             tasks: ['build-quick']
         },
 
