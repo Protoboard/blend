@@ -1,14 +1,27 @@
 "use strict";
 
 module.exports = function (grunt) {
-    // TODO: Get module names from directory structure
-    var moduleNames = ['oop', 'utils'],
+    var moduleNames = grunt.file.expand({cwd: 'modules/'}, '*'),
         manifests = moduleNames.map(function (moduleName) {
             return grunt.file.readJSON('modules/' + moduleName + '/manifest.json');
         }),
         packages = moduleNames.map(function (moduleName) {
             return grunt.file.readJSON('modules/' + moduleName + '/package.json');
         });
+
+    /**
+     * Converts dashed string to camelcase
+     * @param dashedString
+     * @returns {Array}
+     */
+    function dashToCamel(dashedString) {
+        return dashedString.split('-')
+            .map(function (token, i) {
+                return i > 0 ?
+                    token[0].toUpperCase() + token.slice(1).toLowerCase() :
+                    token;
+            });
+    }
 
     /**
      * @param options
@@ -20,8 +33,7 @@ module.exports = function (grunt) {
         result.options = options;
 
         moduleNames.forEach(function (moduleName, i) {
-            // TODO: Camel-case conversion
-            var namespaceSymbol = '$' + moduleName,
+            var namespaceSymbol = '$' + dashToCamel(moduleName),
                 assets = manifests[i].assets,
                 pkg = packages[i];
 
