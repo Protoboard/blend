@@ -1,0 +1,9 @@
+{
+  "assets": {
+    "js": [
+      "namespace.js",
+      "utils/Stringifiable.js",
+      "utils/utils.js"
+    ]
+  }
+}

@@ -2,7 +2,7 @@
 
 module.exports = function (grunt) {
     // TODO: Get module names from directory structure
-    var moduleNames = ['oop'],
+    var moduleNames = ['oop', 'utils'],
         manifests = moduleNames.map(function (moduleName) {
             return grunt.file.readJSON('modules/' + moduleName + '/manifest.json');
         }),
