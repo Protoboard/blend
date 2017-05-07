@@ -1,0 +1,9 @@
+{
+  "assets": {
+    "js": [
+      "namespace.js",
+      "assert.js",
+      "common.js"
+    ]
+  }
+}
