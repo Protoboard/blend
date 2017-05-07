@@ -116,12 +116,12 @@ describe("Common assertions", function () {
     });
 
     describe("optional boolean checker", function () {
-        describe("when passing undefined", function () {
-            it("should pass message to assert", function () {
-                $assert.isBooleanOptional(false, "bar");
-                expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-            });
+        it("should pass message to assert", function () {
+            $assert.isBooleanOptional(false, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
 
+        describe("when passing undefined", function () {
             it("should not throw", function () {
                 expect(function () {
                     $assert.isBooleanOptional(undefined);
@@ -163,12 +163,12 @@ describe("Common assertions", function () {
     });
 
     describe("optional number checker", function () {
-        describe("when passing undefined", function () {
-            it("should pass message to assert", function () {
-                $assert.isNumberOptional(1, "bar");
-                expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-            });
+        it("should pass message to assert", function () {
+            $assert.isNumberOptional(1, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
 
+        describe("when passing undefined", function () {
             it("should not throw", function () {
                 expect(function () {
                     $assert.isNumberOptional(undefined);
@@ -213,12 +213,12 @@ describe("Common assertions", function () {
     });
 
     describe("optional function checker", function () {
-        describe("when passing undefined", function () {
-            it("should pass message to assert", function () {
-                $assert.isFunctionOptional(function() {}, "bar");
-                expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-            });
+        it("should pass message to assert", function () {
+            $assert.isFunctionOptional(function () {}, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
 
+        describe("when passing undefined", function () {
             it("should not throw", function () {
                 expect(function () {
                     $assert.isFunctionOptional(undefined);
@@ -263,12 +263,12 @@ describe("Common assertions", function () {
     });
 
     describe("optional object checker", function () {
-        describe("when passing undefined", function () {
-            it("should pass message to assert", function () {
-                $assert.isObjectOptional({}, "bar");
-                expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-            });
+        it("should pass message to assert", function () {
+            $assert.isObjectOptional({}, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
 
+        describe("when passing undefined", function () {
             it("should not throw", function () {
                 expect(function () {
                     $assert.isObjectOptional(undefined);
@@ -316,12 +316,12 @@ describe("Common assertions", function () {
     });
 
     describe("optional array checker", function () {
-        describe("when passing undefined", function () {
-            it("should pass message to assert", function () {
-                $assert.isArrayOptional([], "bar");
-                expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-            });
+        it("should pass message to assert", function () {
+            $assert.isArrayOptional([], "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
 
+        describe("when passing undefined", function () {
             it("should not throw", function () {
                 expect(function () {
                     $assert.isArrayOptional(undefined);
@@ -369,12 +369,12 @@ describe("Common assertions", function () {
     });
 
     describe("optional regexp checker", function () {
-        describe("when passing undefined", function () {
-            it("should pass message to assert", function () {
-                $assert.isRegExpOptional(/a/, "bar");
-                expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-            });
+        it("should pass message to assert", function () {
+            $assert.isRegExpOptional(/a/, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
 
+        describe("when passing undefined", function () {
             it("should not throw", function () {
                 expect(function () {
                     $assert.isRegExpOptional(undefined);
@@ -422,12 +422,12 @@ describe("Common assertions", function () {
     });
 
     describe("optional date checker", function () {
-        describe("when passing undefined", function () {
-            it("should pass message to assert", function () {
-                $assert.isDateOptional(new Date(), "bar");
-                expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-            });
+        it("should pass message to assert", function () {
+            $assert.isDateOptional(new Date(), "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
 
+        describe("when passing undefined", function () {
             it("should not throw", function () {
                 expect(function () {
                     $assert.isDateOptional(undefined);

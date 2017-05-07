@@ -1,7 +1,8 @@
 /* global $oop */
 "use strict";
 
-var $oop = window['giant-oop'];
+var $assert = window['giant-assert'],
+    $oop = window['giant-oop'];
 
 describe("$oop.Class", function () {
     var Class,
@@ -816,6 +817,67 @@ describe("$oop.Class", function () {
                 expect(function () {
                     Class.create();
                 }).toThrow();
+            });
+        });
+    });
+
+    describe("class checker", function () {
+        beforeEach(function () {
+            spyOn($assert, 'assert').and.callThrough();
+        });
+
+        it("should pass message to assert", function () {
+            $assert.isClass(Class, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
+
+        describe("when passing regexp", function () {
+            it("should not throw", function () {
+                expect(function () {
+                    $assert.isClass(Class);
+                }).not.toThrow();
+            });
+        });
+
+        describe("when passing non-regexp", function () {
+            it("should throw", function () {
+                expect(function () {
+                    $assert.isClass(undefined);
+                }).toThrow();
+                expect(function () {
+                    $assert.isClass(null);
+                }).toThrow();
+                expect(function () {
+                    $assert.isClass("hello");
+                }).toThrow();
+                expect(function () {
+                    $assert.isClass(true);
+                }).toThrow();
+                expect(function () {
+                    $assert.isClass(1);
+                }).toThrow();
+                expect(function () {
+                    $assert.isClass({});
+                }).toThrow();
+            });
+        });
+    });
+
+    describe("optional class checker", function () {
+        beforeEach(function () {
+            spyOn($assert, 'assert').and.callThrough();
+        });
+
+        it("should pass message to assert", function () {
+            $assert.isClassOptional(Class, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
+
+        describe("when passing undefined", function () {
+            it("should not throw", function () {
+                expect(function () {
+                    $assert.isClassOptional(undefined);
+                }).not.toThrow();
             });
         });
     });

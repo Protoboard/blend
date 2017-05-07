@@ -1,4 +1,4 @@
-/* global $oop */
+/* global $assert */
 "use strict";
 
 /**
@@ -21,9 +21,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {$oop.Class}
      */
     getClass: function (classId) {
-        if (!classId) {
-            throw new Error("No class ID was specified.");
-        }
+        $assert.isString(classId, "No class ID was specified.");
 
         var classes = this.classLookup,
             Class = classes[classId];
@@ -31,22 +29,22 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         if (!Class) {
             // class is not initialized yet
             Class = exports.createObject(exports.Class, {
-                __classId               : classId,
-                __members               : {},
-                __methodMatrix          : {},
-                __contributors          : [],
+                __classId: classId,
+                __members: {},
+                __methodMatrix: {},
+                __contributors: [],
                 __contributorIndexLookup: {},
-                __interfaces            : [],
-                __interfaceLookup       : {},
-                __missingMethodNames    : [],
-                __missingMethodLookup   : {},
-                __includes              : [],
-                __includeLookup         : {},
-                __requires              : [],
-                __requireLookup         : {},
-                __forwards              : [],
-                __mapper                : undefined,
-                __instanceLookup        : {}
+                __interfaces: [],
+                __interfaceLookup: {},
+                __missingMethodNames: [],
+                __missingMethodLookup: {},
+                __includes: [],
+                __includeLookup: {},
+                __requires: [],
+                __requireLookup: {},
+                __forwards: [],
+                __mapper: undefined,
+                __instanceLookup: {}
             });
 
             // adding class to registry
@@ -128,7 +126,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 if (Class.isPrototypeOf(propertyValue) &&
                     Object.getPrototypeOf(propertyValue) !== Class
                 ) {
-                    throw new Error([
+                    $assert.assert(false, [
                         "Instance not allowed as static property value for '" + that.__classId + "." + propertyName + "'.",
                         "Can't build."
                     ].join(" "));
@@ -375,7 +373,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // ... methods match interfaces
         var missingMethodNames = this.__missingMethodNames;
         if (missingMethodNames.length) {
-            throw new Error([
+            $assert.assert(false, [
                 "Class '" + that.__classId + "' doesn't implement method(s): " +
                 missingMethodNames
                     .map(function (methodName) {
@@ -389,7 +387,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         var requires = that.__requires;
         if (requires.length) {
             // there are unfulfilled requires - can't instantiate
-            throw new Error([
+            $assert.assert(false, [
                 "Class '" + that.__classId + "' doesn't satisfy require(s): " +
                 requires
                     .map(function (Class) {
@@ -425,9 +423,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {$oop.Class}
      */
     define: function (batch) {
-        if (!batch) {
-            throw new Error("No members specified.");
-        }
+        $assert.isObject(batch, "No members specified.");
 
         // adding batch to members, overwriting conflicting properties
         this._addToMembers(batch);
@@ -459,9 +455,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {$oop.Class}
      */
     include: function (Class) {
-        if (!exports.Class.isPrototypeOf(Class)) {
-            throw new Error("Class#include expects type Class.");
-        }
+        $assert.isClass(Class, "Class#include expects type Class.");
 
         // adding to includes
         this._addToIncludes(Class);
@@ -498,9 +492,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {$oop.Class}
      */
     implement: function (Interface) {
-        if (!exports.Class.isPrototypeOf(Interface)) {
-            throw new Error("Class#implement expects type Class.");
-        }
+        $assert.isClass(Interface, "Class#implement expects type Class.");
 
         // adding to interfaces
         this._addToInterfaces(Interface);
@@ -518,9 +510,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {$oop.Class}
      */
     require: function (Class) {
-        if (!exports.Class.isPrototypeOf(Class)) {
-            throw new Error("Class#require expects type Class.");
-        }
+        $assert.isClass(Class, "Class#require expects type Class.");
 
         // adding require to registry
         this._addToRequires(Class);
@@ -540,16 +530,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {$oop.Class}
      */
     forward: function (Class, filter, priority) {
-        if (!exports.Class.isPrototypeOf(Class)) {
-            throw new Error("Class#forward expects type Class.");
-        }
+        $assert.isClass(Class, "Class#forward expects type Class.");
 
         var forwards = this.__forwards;
 
         // adding forward descriptor
         forwards.push({
-            'class'   : Class,
-            'filter'  : filter,
+            'class': Class,
+            'filter': filter,
             'priority': priority || 0
         });
 
@@ -572,9 +560,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {$oop.Class}
      */
     cache: function (mapper) {
-        if (typeof mapper !== 'function') {
-            throw new Error("Class#cache expects function argument.");
-        }
+        $assert.isFunction(mapper, "Class#cache expects function argument.");
 
         this.__mapper = mapper;
 
@@ -587,9 +573,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {boolean}
      */
     implements: function (Interface) {
-        if (!exports.Class.isPrototypeOf(Interface)) {
-            throw new Error("Class type expected");
-        }
+        $assert.isClass(Interface, "Class type expected");
 
         return !!this.__interfaceLookup[Interface.__classId];
     },
@@ -600,9 +584,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {boolean}
      */
     includes: function (Class) {
-        if (!exports.Class.isPrototypeOf(Class)) {
-            throw new Error("Class type expected");
-        }
+        $assert.isClass(Class, "Class type expected");
 
         var classId = Class.__classId;
 
@@ -615,9 +597,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {boolean}
      */
     requires: function (Class) {
-        if (!exports.Class.isPrototypeOf(Class)) {
-            throw new Error("Class type expected");
-        }
+        $assert.isClass(Class, "Class type expected");
 
         return !!this.__requireLookup[Class.__classId];
     }
@@ -709,3 +689,24 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
 });
+
+/**
+ * @param {$oop.Class} expr
+ * @param {string} [message]
+ * @returns {$assert}
+ */
+$assert.isClass = function (expr, message) {
+    return $assert.assert(
+        exports.Class.isPrototypeOf(expr), message);
+};
+
+/**
+ * @param {$oop.Class} [expr]
+ * @param {string} [message]
+ * @returns {$assert}
+ */
+$assert.isClassOptional = function (expr, message) {
+    return $assert.assert(
+        typeof expr === 'undefined' ||
+        exports.Class.isPrototypeOf(expr), message);
+};
