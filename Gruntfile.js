@@ -10,20 +10,6 @@ module.exports = function (grunt) {
         });
 
     /**
-     * Converts dashed string to camelcase
-     * @param dashedString
-     * @returns {Array}
-     */
-    function dashToCamel(dashedString) {
-        return dashedString.split('-')
-            .map(function (token, i) {
-                return i > 0 ?
-                    token[0].toUpperCase() + token.slice(1).toLowerCase() :
-                    token;
-            });
-    }
-
-    /**
      * @param options
      * @returns {object}
      */
