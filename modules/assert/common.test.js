@@ -1,5 +1,6 @@
-/* global $assert */
 "use strict";
+
+var $assert = window['giant-assert'];
 
 describe("Common assertions", function () {
     beforeEach(function () {

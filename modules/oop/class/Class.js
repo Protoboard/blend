@@ -5,7 +5,7 @@
  * Composable class.
  * @class $oop.Class
  */
-$oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
+exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */{
     /**
      * All classes indexed by class ID.
      * @memberOf $oop.Class
@@ -30,7 +30,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
         if (!Class) {
             // class is not initialized yet
-            Class = $oop.createObject($oop.Class, {
+            Class = exports.createObject(exports.Class, {
                 __classId               : classId,
                 __members               : {},
                 __methodMatrix          : {},
@@ -115,7 +115,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @private
      */
     _addPropertiesToClass: function (members) {
-        var Class = $oop.Class,
+        var Class = exports.Class,
             that = this;
 
         Object.getOwnPropertyNames(members)
@@ -459,7 +459,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @returns {$oop.Class}
      */
     include: function (Class) {
-        if (!$oop.Class.isPrototypeOf(Class)) {
+        if (!exports.Class.isPrototypeOf(Class)) {
             throw new Error("Class#include expects type Class.");
         }
 
@@ -498,7 +498,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @returns {$oop.Class}
      */
     implement: function (Interface) {
-        if (!$oop.Class.isPrototypeOf(Interface)) {
+        if (!exports.Class.isPrototypeOf(Interface)) {
             throw new Error("Class#implement expects type Class.");
         }
 
@@ -518,7 +518,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @returns {$oop.Class}
      */
     require: function (Class) {
-        if (!$oop.Class.isPrototypeOf(Class)) {
+        if (!exports.Class.isPrototypeOf(Class)) {
             throw new Error("Class#require expects type Class.");
         }
 
@@ -540,7 +540,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @returns {$oop.Class}
      */
     forward: function (Class, filter, priority) {
-        if (!$oop.Class.isPrototypeOf(Class)) {
+        if (!exports.Class.isPrototypeOf(Class)) {
             throw new Error("Class#forward expects type Class.");
         }
 
@@ -587,7 +587,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @returns {boolean}
      */
     implements: function (Interface) {
-        if (!$oop.Class.isPrototypeOf(Interface)) {
+        if (!exports.Class.isPrototypeOf(Interface)) {
             throw new Error("Class type expected");
         }
 
@@ -600,7 +600,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @returns {boolean}
      */
     includes: function (Class) {
-        if (!$oop.Class.isPrototypeOf(Class)) {
+        if (!exports.Class.isPrototypeOf(Class)) {
             throw new Error("Class type expected");
         }
 
@@ -615,7 +615,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * @returns {boolean}
      */
     requires: function (Class) {
-        if (!$oop.Class.isPrototypeOf(Class)) {
+        if (!exports.Class.isPrototypeOf(Class)) {
             throw new Error("Class type expected");
         }
 

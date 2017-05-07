@@ -1,6 +1,8 @@
 /* global $oop */
 "use strict";
 
+var $oop = window['giant-oop'];
+
 describe("$oop.createObject", function () {
     var base, members,
         result;

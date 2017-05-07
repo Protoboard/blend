@@ -33,8 +33,7 @@ module.exports = function (grunt) {
         result.options = options;
 
         moduleNames.forEach(function (moduleName, i) {
-            var namespaceSymbol = '$' + dashToCamel(moduleName),
-                assets = manifests[i].assets,
+            var assets = manifests[i].assets,
                 pkg = packages[i];
 
             result[moduleName] = {
@@ -46,12 +45,13 @@ module.exports = function (grunt) {
                     banner: [
                         '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
                         '(function () {',
+                        'var exports = {}, require = require || function (module) {return window[module]};',
                         ''
                     ].join('\n'),
                     footer: [
-                        'if (typeof define !== "undefined") define(function () {return ' + namespaceSymbol + ';})',
-                        'else if (typeof window !== "undefined") window["' + namespaceSymbol + '"] = ' + namespaceSymbol,
-                        'else module.exports = ' + namespaceSymbol + ';',
+                        'if (typeof define !== "undefined") define(function () {return exports;})',
+                        'else if (typeof window !== "undefined") window["' + pkg.name + '"] = exports',
+                        'else module.exports = exports;',
                         '}())'
                     ].join('\n')
                 }

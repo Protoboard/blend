@@ -8,7 +8,7 @@
  * @returns {Object}
  * @ignore
  */
-$oop.createObject = function (base, members) {
+exports.createObject = function (base, members) {
     var result = Object.create(base || Object.prototype);
     Object.getOwnPropertyNames(members)
         .forEach(function (memberName) {
@@ -22,6 +22,6 @@ $oop.createObject = function (base, members) {
  * @param {string} classId
  * @returns {$oop.Class}
  */
-$oop.getClass = function (classId) {
-    return $oop.Class.getClass(classId);
+exports.getClass = function (classId) {
+    return exports.Class.getClass(classId);
 };

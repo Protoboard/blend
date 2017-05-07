@@ -1,6 +1,8 @@
 /* global $oop, $utils */
 "use strict";
 
+var $utils = window['giant-utils'];
+
 describe("Serialization", function () {
     describe("of string literal", function () {
         it("should return string literal", function () {

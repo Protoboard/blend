@@ -4,4 +4,10 @@
  * @namespace
  * @global
  */
-var $oop = {};
+var $assert = require('giant-assert');
+
+/**
+ * @name $assert
+ * @namespace
+ * @global
+ */

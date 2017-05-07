@@ -8,7 +8,7 @@
  * @param {*} [stringifiable]
  * @returns {string}
  */
-$utils.stringify = function (stringifiable) {
+exports.stringify = function (stringifiable) {
     switch (typeof stringifiable) {
     case 'string':
         return stringifiable;

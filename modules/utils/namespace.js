@@ -4,4 +4,10 @@
  * @namespace
  * @global
  */
-var $utils = {};
+var $oop = require('giant-oop');
+
+/**
+ * @name $utils
+ * @namespace
+ * @global
+ */

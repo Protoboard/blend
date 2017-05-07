@@ -1,7 +1,7 @@
 "use strict";
 
 /**
+ * @name $assert
  * @namespace
  * @global
  */
-var $assert = {};
