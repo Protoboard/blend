@@ -64,6 +64,11 @@ describe("$oop.Class", function () {
             expect(result.__includeLookup).toEqual({});
         });
 
+        it("should initialize includers", function () {
+            expect(result.__includers).toEqual([]);
+            expect(result.__includerLookup).toEqual({});
+        });
+
         it("should initialize requires", function () {
             expect(result.__requires).toEqual([]);
             expect(result.__requireLookup).toEqual({});
@@ -184,7 +189,7 @@ describe("$oop.Class", function () {
             it("should throw", function () {
                 expect(function () {
                     Class.define({
-                         baz: $oop.Class.getClass('Test').create()
+                        baz: $oop.Class.getClass('Test').create()
                     });
                 }).toThrow();
             });
@@ -194,7 +199,7 @@ describe("$oop.Class", function () {
             it("should not throw", function () {
                 expect(function () {
                     Class.define({
-                         baz: $oop.Class.getClass('Test')
+                        baz: $oop.Class.getClass('Test')
                     });
                 }).not.toThrow();
             });
@@ -325,10 +330,8 @@ describe("$oop.Class", function () {
                         }))
                     .include($oop.Class.getClass('Include')
                         .define({
-                            bar : function () {
-                            },
-                            quux: function () {
-                            }
+                            bar: function () {},
+                            quux: function () {}
                         }));
             });
 
@@ -338,6 +341,20 @@ describe("$oop.Class", function () {
                 ]);
                 expect(Class.__missingMethodLookup).toEqual({
                     baz: true
+                });
+            });
+
+            describe("then defining members on include", function () {
+                beforeEach(function () {
+                    $oop.Class.getClass('Include')
+                        .define({
+                            baz: function () {}
+                        });
+                });
+
+                it("should cancel out missing methods", function () {
+                    expect(Class.__missingMethodNames).toEqual([]);
+                    expect(Class.__missingMethodLookup).toEqual({});
                 });
             });
         });
@@ -350,8 +367,7 @@ describe("$oop.Class", function () {
             Trait = $oop.Class.getClass('Trait')
                 .define({
                     foo: "FOO",
-                    bar: function () {
-                    }
+                    bar: function () {}
                 });
 
             result = Class.include(Trait);
@@ -373,6 +389,13 @@ describe("$oop.Class", function () {
             expect(Class.__includes).toEqual([Trait]);
             expect(Class.__includeLookup).toEqual({
                 Trait: Trait
+            });
+        });
+
+        it("should add to includers on remote class", function () {
+            expect(Trait.__includers).toEqual([Class]);
+            expect(Trait.__includerLookup).toEqual({
+                Class: Class
             });
         });
 
@@ -457,10 +480,35 @@ describe("$oop.Class", function () {
                     Require2, Require3, Include
                 ]);
                 expect(Class.__requireLookup).toEqual({
-                    Include : Include,
+                    Include: Include,
                     Require2: Require2,
                     Require3: Require3
                 });
+            });
+        });
+
+        describe("then defining members on include", function () {
+            beforeEach(function () {
+                Trait.define({
+                    baz: function () {},
+                    quux: "QUUX"
+                });
+            });
+
+            it("should add new methods to method matrix", function () {
+                expect(Class.__methodMatrix).toEqual({
+                    bar: [Trait.__members.bar],
+                    baz: [Trait.__members.baz]
+                });
+            });
+
+            it("should add new properties to class", function () {
+                expect(Class.quux).toBe("QUUX");
+            });
+
+            it("should add new wrapper methods", function () {
+                expect(typeof Class.baz === 'function').toBeTruthy();
+                expect(Class.baz).not.toBe(Trait.__members.baz);
             });
         });
     });
@@ -517,8 +565,8 @@ describe("$oop.Class", function () {
                     Require, Require2, Require3, Include
                 ]);
                 expect(Class.__requireLookup).toEqual({
-                    Include : Include,
-                    Require : Require,
+                    Include: Include,
+                    Require: Require,
                     Require2: Require2,
                     Require3: Require3
                 });
@@ -545,8 +593,8 @@ describe("$oop.Class", function () {
 
         it("should add forward descriptor", function () {
             expect(Class.__forwards).toEqual([{
-                'class'   : Class1,
-                'filter'  : filter,
+                'class': Class1,
+                'filter': filter,
                 'priority': 1
             }]);
         });
@@ -563,12 +611,12 @@ describe("$oop.Class", function () {
 
             it("should sort descriptors by priority", function () {
                 expect(Class.__forwards).toEqual([{
-                    'class'   : Class2,
-                    'filter'  : filter2,
+                    'class': Class2,
+                    'filter': filter2,
                     'priority': 10
                 }, {
-                    'class'   : Class1,
-                    'filter'  : filter,
+                    'class': Class1,
+                    'filter': filter,
                     'priority': 1
                 }]);
             });

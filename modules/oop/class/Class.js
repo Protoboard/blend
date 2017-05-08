@@ -40,6 +40,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 __missingMethodLookup: {},
                 __includes: [],
                 __includeLookup: {},
+                __includers: [],
+                __includerLookup: {},
                 __requires: [],
                 __requireLookup: {},
                 __forwards: [],
@@ -88,11 +90,12 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     /**
      * Adds methods to method lookup, indexed by method name, then order.
      * @param {object} members
-     * @param {number} index
+     * @param {string} classId
      * @private
      */
-    _addMethodsToMatrix: function (members, index) {
-        var methodMatrix = this.__methodMatrix;
+    _addMethodsToMatrix: function (members, classId) {
+        var methodMatrix = this.__methodMatrix,
+            classIndex = this.__contributorIndexLookup[classId];
 
         Object.getOwnPropertyNames(members)
             .filter(function (memberName) {
@@ -103,7 +106,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 if (!methods) {
                     methods = methodMatrix[methodName] = [];
                 }
-                methods[index] = members[methodName];
+                methods[classIndex] = members[methodName];
             });
     },
 
@@ -286,6 +289,21 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @param {$oop.Class} Class
      * @private
      */
+    _addToIncluders: function (Class) {
+        var includers = this.__includers,
+            includerLookup = this.__includerLookup,
+            classId = Class.__classId;
+
+        if (!includerLookup.hasOwnProperty(classId)) {
+            includers.push(Class);
+            includerLookup[classId] = Class;
+        }
+    },
+
+    /**
+     * @param {$oop.Class} Class
+     * @private
+     */
     _addToRequires: function (Class) {
         var classId = this.__classId,
             requireId = Class.__classId,
@@ -332,6 +350,30 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             .concat(Class.__includes)
             .forEach(function (Class) {
                 that.require(Class);
+            });
+    },
+
+    /**
+     * Delegates a batch of methods to includers.
+     * @param {object} members
+     * @private
+     */
+    _delegateToIncluders: function (members) {
+        var classId = this.__classId;
+
+        this.__includers
+            .forEach(function (Class) {
+                // adding methods to lookup at specified index
+                Class._addMethodsToMatrix(members, classId);
+
+                // adding / overwriting properties
+                Class._addPropertiesToClass(members);
+
+                // adding wrapper method when necessary
+                Class._addWrapperMethodsToClass(members);
+
+                // updating missing method names
+                Class._removeFromMissingMethods(members);
             });
     },
 
@@ -428,11 +470,11 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // adding batch to members, overwriting conflicting properties
         this._addToMembers(batch);
 
-        // adding members to contributions
+        // marking self as contributor
         this._addToContributors(this);
 
         // adding methods to lookup at specified index
-        this._addMethodsToMatrix(batch, this.__contributorIndexLookup[this.__classId]);
+        this._addMethodsToMatrix(batch, this.__classId);
 
         // adding / overwriting properties
         this._addPropertiesToClass(batch);
@@ -444,7 +486,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         this._removeFromMissingMethods(batch);
 
         // delegating batch to includers
-        // TODO Implement
+        this._delegateToIncluders(batch);
 
         return this;
     },
@@ -460,16 +502,22 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // adding to includes
         this._addToIncludes(Class);
 
+        // adding to reverse includes
+        Class._addToIncluders(this);
+
         // adding included class to contributions
         this._addToContributors(Class);
 
         // removing fulfilled require
         this._removeFromRequires(Class);
 
+        // transferring includes & requires from include
+        this._transferRequires(Class);
+
         var members = Class.__members;
 
         // adding methods to lookup at specified index
-        this._addMethodsToMatrix(members, this.__contributorIndexLookup[Class.__classId]);
+        this._addMethodsToMatrix(members, Class.__classId);
 
         // adding / overwriting properties
         this._addPropertiesToClass(members);
@@ -479,9 +527,6 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // updating missing method names
         this._removeFromMissingMethods(members);
-
-        // transferring includes & requires from include
-        this._transferRequires(Class);
 
         return this;
     },
@@ -685,6 +730,16 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
     /**
      * @member {object} $oop.Class#__includeLookup
+     * @private
+     */
+
+    /**
+     * @member {$oop.Class[]} $oop.Class#__includers
+     * @private
+     */
+
+    /**
+     * @member {object} $oop.Class#__includerLookup
      * @private
      */
 
