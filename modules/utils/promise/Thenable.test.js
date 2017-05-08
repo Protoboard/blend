@@ -5,7 +5,7 @@ var $assert = window['giant-assert'],
     $utils = window['giant-utils'];
 
 describe("Thenable", function () {
-    describe("type checker", function () {
+    describe("type assertion", function () {
         var thenable = {then: function () {}};
 
         beforeEach(function () {
@@ -28,7 +28,7 @@ describe("Thenable", function () {
         });
     });
 
-    describe("optional type checker", function () {
+    describe("optional type assertion", function () {
         var thenable;
 
         beforeEach(function () {

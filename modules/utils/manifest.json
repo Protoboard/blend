@@ -2,9 +2,11 @@
   "assets": {
     "js": [
       "namespace.js",
+      "promise/Deferred.js",
+      "promise/Promise.js",
+      "promise/Thenable.js",
       "utils/Stringifiable.js",
-      "utils/utils.js",
-      "promise/Thenable.js"
+      "utils/utils.js"
     ]
   }
 }
