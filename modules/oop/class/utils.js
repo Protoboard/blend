@@ -9,8 +9,6 @@
  * @param {object} members
  */
 exports.copyProperties = function (target, members) {
-    var memberNames;
-
     switch (target) {
     case Array.prototype:
     case Date.prototype:
@@ -18,25 +16,20 @@ exports.copyProperties = function (target, members) {
     case Object.prototype:
     case RegExp.prototype:
     case String.prototype:
-        memberNames = Object.getOwnPropertyNames(members);
+        $assert.hasOnlyConverters(members, "Attempting to add non-conversion methods to built-in prototype.");
 
-        if (memberNames.filter(function (memberName) {
-                return memberName.slice(0, 2) !== 'to';
-            }).length
-        ) {
-            $assert.assert(false, "Attempting to add non-conversion methods to built-in object prototype.");
-        }
-
-        Object.defineProperties(target, memberNames
-            .reduce(function (definitions, memberName) {
-                definitions[memberName] = {
-                    configurable: true,
-                    enumerable: false,
-                    value: members[memberName],
-                    writable: true
-                };
-                return definitions;
-            }, {}));
+        Object.defineProperties(
+            target,
+            Object.getOwnPropertyNames(members)
+                .reduce(function (definitions, memberName) {
+                    definitions[memberName] = {
+                        configurable: true,
+                        enumerable: false,
+                        value: members[memberName],
+                        writable: true
+                    };
+                    return definitions;
+                }, {}));
         break;
 
     default:
