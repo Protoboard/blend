@@ -579,6 +579,16 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
+     * Tells whether the specified class implements the current Interface.
+     * @param {$oop.Class} Class
+     * @returns {boolean}
+     */
+    isImplementedBy: function (Class) {
+        return exports.Class.isPrototypeOf(Class) &&
+            Class.implements(this);
+    },
+
+    /**
      * Tells whether current class is or includes the specified class.
      * @param {$oop.Class} Class
      * @returns {boolean}
@@ -592,6 +602,16 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
+     * Tells whether the specified class includes the current class.
+     * @param {$oop.Class} Class
+     * @returns {boolean}
+     */
+    isIncludedBy: function (Class) {
+        return exports.Class.isPrototypeOf(Class) &&
+            Class.includes(this);
+    },
+
+    /**
      * Tells whether current class requires the specified class.
      * @param {$oop.Class} Class
      * @returns {boolean}
@@ -600,6 +620,16 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         $assert.isClass(Class, "Class type expected");
 
         return !!this.__requireLookup[Class.__classId];
+    },
+
+    /**
+     * Tells whether specified class requires the current class.
+     * @param {$oop.Class} Class
+     * @returns {boolean}
+     */
+    isRequiredBy: function (Class) {
+        return exports.Class.isPrototypeOf(Class) &&
+            Class.requires(this);
     }
 
     /**

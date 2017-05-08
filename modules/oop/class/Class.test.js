@@ -631,6 +631,34 @@ describe("$oop.Class", function () {
         });
     });
 
+    describe("reverse implementation tester", function () {
+        var Interface;
+
+        beforeEach(function () {
+            Interface = $oop.Class.getClass('Interface');
+            Class.implement(Interface);
+        });
+
+        describe("when passing non-class", function () {
+            it("should return false", function () {
+                expect(Interface.isImplementedBy(undefined)).toBe(false);
+            });
+        });
+
+        describe("on implementing class", function () {
+            it("should return true", function () {
+                expect(Interface.isImplementedBy(Class)).toBe(true);
+            });
+        });
+
+        describe("on non-implementing class", function () {
+            it("should return false", function () {
+                var Class2 = $oop.Class.getClass('Class2');
+                expect(Interface.isImplementedBy(Class2)).toBe(false);
+            });
+        });
+    });
+
     describe("inclusion tester", function () {
         var Trait;
 
@@ -667,6 +695,34 @@ describe("$oop.Class", function () {
         });
     });
 
+    describe("reverse inclusion tester", function () {
+        var Trait;
+
+        beforeEach(function () {
+            Trait = $oop.Class.getClass('Interface');
+            Class.include(Trait);
+        });
+
+        describe("when passing non-class", function () {
+            it("should return false", function () {
+                expect(Trait.isIncludedBy(undefined)).toBe(false);
+            });
+        });
+
+        describe("on including class", function () {
+            it("should return true", function () {
+                expect(Trait.isIncludedBy(Class)).toBe(true);
+            });
+        });
+
+        describe("on non-including class", function () {
+            it("should return false", function () {
+                var Class2 = $oop.Class.getClass('Class2');
+                expect(Trait.isIncludedBy(Class2)).toBe(false);
+            });
+        });
+    });
+
     describe("require tester", function () {
         var Host;
 
@@ -693,6 +749,34 @@ describe("$oop.Class", function () {
             it("should return false", function () {
                 var Host2 = $oop.Class.getClass('Host2');
                 expect(Class.requires(Host2)).toBe(false);
+            });
+        });
+    });
+
+    describe("reverse require tester", function () {
+        var Host;
+
+        beforeEach(function () {
+            Host = $oop.Class.getClass('Interface');
+            Class.require(Host);
+        });
+
+        describe("when passing non-class", function () {
+            it("should return false", function () {
+                expect(Host.isRequiredBy(undefined)).toBe(false);
+            });
+        });
+
+        describe("on requiring class", function () {
+            it("should return true", function () {
+                expect(Host.isRequiredBy(Class)).toBe(true);
+            });
+        });
+
+        describe("on non-requiring class", function () {
+            it("should return false", function () {
+                var Class2 = $oop.Class.getClass('Class2');
+                expect(Host.isRequiredBy(Class2)).toBe(false);
             });
         });
     });
