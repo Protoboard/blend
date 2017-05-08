@@ -3,6 +3,59 @@
 
 var $oop = window['giant-oop'];
 
+describe("$oop.copyProperties", function () {
+    var target, members;
+
+    beforeEach(function () {
+        target = {};
+        members = {
+            foo: "FOO",
+            bar: function () {}
+        };
+        $oop.copyProperties(target, members);
+    });
+
+    describe("when adding to built-in prototype", function () {
+        beforeEach(function () {
+            members = {
+                toFoo: function () {},
+                toBar: function () {}
+            };
+            $oop.copyProperties(String.prototype, members);
+        });
+
+        afterEach(function () {
+            delete String.prototype.toFoo;
+            delete String.prototype.toBar;
+        });
+
+        describe("non-conversion methods", function () {
+            it("should throw", function () {
+                expect(function () {
+                    $oop.copyProperties(String.prototype, {
+                        foo: "FOO"
+                    });
+                }).toThrow();
+            });
+        });
+
+        it("should copy members", function () {
+            expect(String.prototype.toFoo).toBe(members.toFoo);
+            expect(String.prototype.toBar).toBe(members.toBar);
+        });
+
+        it("should make members non-enumerable", function () {
+            expect(Object.getOwnPropertyDescriptor(String.prototype, 'toFoo').enumerable).toBeFalsy();
+            expect(Object.getOwnPropertyDescriptor(String.prototype, 'toBar').enumerable).toBeFalsy();
+        });
+    });
+
+    it("should copy members", function () {
+        expect(target.foo).toBe("FOO");
+        expect(target.bar).toBe(members.bar);
+    });
+});
+
 describe("$oop.createObject", function () {
     var base, members,
         result;
