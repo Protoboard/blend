@@ -2,6 +2,11 @@
   "assets": {
     "js": [
       "namespace.js",
+      "async/async-utils.js",
+      "async/Interval.js",
+      "async/Scheduler.js",
+      "async/Timeout.js",
+      "async/Timer.js",
       "promise/Deferred.js",
       "promise/Promise.js",
       "promise/Thenable.js",
