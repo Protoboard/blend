@@ -1,10 +1,7 @@
 "use strict";
 
-/**
- * @namespace
- * @global
- */
-var $oop = require('giant-oop');
+var $assert = require('giant-assert'),
+    $oop = require('giant-oop');
 
 /**
  * @name $utils

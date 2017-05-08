@@ -3,7 +3,8 @@
     "js": [
       "namespace.js",
       "utils/Stringifiable.js",
-      "utils/utils.js"
+      "utils/utils.js",
+      "promise/Thenable.js"
     ]
   }
 }
