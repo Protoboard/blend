@@ -5,7 +5,5 @@ var $assert = require('giant-assert'),
     slice = Array.prototype.slice;
 
 /**
- * @name $utils
- * @namespace
- * @global
+ * @namespace $utils
  */

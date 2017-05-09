@@ -1,7 +1,7 @@
 {
   "assets": {
     "js": [
-      "namespace.js",
+      "globals.js",
       "async/async-utils.js",
       "async/Interval.js",
       "async/Scheduler.js",

@@ -3,7 +3,5 @@
 var $assert = require('giant-assert');
 
 /**
- * @name $oop
- * @namespace
- * @global
+ * @namespace $oop
  */
