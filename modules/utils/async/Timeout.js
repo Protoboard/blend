@@ -17,18 +17,11 @@ exports.Timeout = $oop.getClass('$utils.Timeout')
     .include($oop.getClass('$utils.Timer'))
     .define(/** @lends $utils.Timeout# */{
         /**
-         * Clears the timeout ID, and rejects the promise.
-         * Clearing an already cleared timeout will have no effect.
+         * @inheritDoc
          * @returns {$utils.Timeout}
          */
         clearTimer: function () {
-            var timerDeferred = this.timerDeferred;
-
-            if (this.timerPromise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
-                clearTimeout(this.timerId);
-                timerDeferred.reject.apply(timerDeferred, arguments);
-            }
-
+            clearTimeout(this.timerId);
             return this;
         }
     });

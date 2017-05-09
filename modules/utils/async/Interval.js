@@ -17,18 +17,11 @@ exports.Interval = $oop.getClass('')
     .include($oop.getClass('$utils.Timer'))
     .define(/** @lends $utils.Interval# */{
         /**
-         * Clears the interval ID, and rejects the promise.
-         * Clearing an already cleared interval timer will have no effect.
+         * @inheritDoc
          * @returns {$utils.Interval}
          */
         clearTimer: function () {
-            var timerDeferred = this.timerDeferred;
-
-            if (this.timerPromise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
-                clearInterval(this.timerId);
-                timerDeferred.reject.apply(timerDeferred, arguments);
-            }
-
+            clearInterval(this.timerId);
             return this;
         }
     });

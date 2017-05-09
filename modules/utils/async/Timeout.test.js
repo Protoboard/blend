@@ -28,7 +28,6 @@ describe("Timeout", function () {
 
         beforeEach(function () {
             spyOn(window, 'clearTimeout');
-            spyOn(timeout.timerDeferred, 'reject').and.callThrough();
             result = timeout.clearTimer("foo", "bar");
         });
 
@@ -38,24 +37,6 @@ describe("Timeout", function () {
 
         it("should call clearTimeout with timer ID", function () {
             expect(window.clearTimeout).toHaveBeenCalledWith(timeout.timerId);
-        });
-
-        it("should reject timer promise", function () {
-            expect(timeout.timerDeferred.reject).toHaveBeenCalledWith("foo", "bar");
-        });
-
-        describe("when clearing again", function () {
-            beforeEach(function () {
-                timeout.clearTimer("baz");
-            });
-
-            it("should not call clearTimeout again", function () {
-                expect(window.clearTimeout).toHaveBeenCalledTimes(1);
-            });
-
-            it("should not reject promise again", function () {
-                expect(timeout.timerDeferred.reject).toHaveBeenCalledTimes(1);
-            });
         });
     });
 });

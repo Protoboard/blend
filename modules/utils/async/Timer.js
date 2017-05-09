@@ -25,7 +25,8 @@ exports.Timer = $oop.getClass('$utils.Timer')
              */
             this.timerId = timerId;
 
-            var timerDeferred = exports.Deferred.create();
+            var timerDeferred = exports.Deferred.create(),
+                timerPromise = timerDeferred.promise;
 
             /**
              * @type {$utils.Deferred}
@@ -35,12 +36,32 @@ exports.Timer = $oop.getClass('$utils.Timer')
             /**
              * @type {$utils.Promise}
              */
-            this.timerPromise = timerDeferred.promise;
-        }
+            this.timerPromise = timerPromise;
+
+            // TODO: Use elevateMethods
+            timerPromise.then(
+                this.onTimerPromiseResolve.bind(this),
+                this.onTimerPromiseReject.bind(this));
+        },
 
         /**
-         * @function $utils.Timer#clearTimer
+         * Stops the timer.
+         * Clearing an already cleared interval timer will have no effect.
          * @returns {$utils.Timer}
-         * @abstract
          */
+        clearTimer: function () {
+            var timerDeferred = this.timerDeferred;
+            timerDeferred.reject.apply(timerDeferred, arguments);
+            return this;
+        },
+
+        /** @ignore */
+        onTimerPromiseResolve: function () {
+            this.clearTimer();
+        },
+
+        /** @ignore */
+        onTimerPromiseReject: function () {
+            this.clearTimer();
+        }
     });
