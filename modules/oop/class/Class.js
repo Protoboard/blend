@@ -678,7 +678,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
-     * Elevates methods to the instance.
+     * Binds and stores the specified methods on the instance,
+     * so they're reusable as callbacks.
      * @param {...string} methodName
      * @returns {$oop.Class}
      */
