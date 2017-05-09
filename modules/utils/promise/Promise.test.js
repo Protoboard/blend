@@ -43,8 +43,8 @@ describe("Promise", function () {
     });
 
     describe("instantiation", function () {
-        it("should initialize status property", function () {
-            expect(promise.status).toBe($utils.PROMISE_STATE_UNFULFILLED);
+        it("should initialize state property", function () {
+            expect(promise.promiseState).toBe($utils.PROMISE_STATE_UNFULFILLED);
         });
 
         it("should initialize deferredArguments property", function () {
@@ -120,7 +120,7 @@ describe("Promise", function () {
 
         describe("when promise is already fulfilled", function () {
             beforeEach(function () {
-                promise.status = $utils.PROMISE_STATE_FULFILLED;
+                promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
                 promise.deferredArguments = ["foo", "bar"];
                 handlers = {
                     successHandler: function () {},
@@ -147,7 +147,7 @@ describe("Promise", function () {
 
         describe("when promise has already failed", function () {
             beforeEach(function () {
-                promise.status = $utils.PROMISE_STATE_FAILED;
+                promise.promiseState = $utils.PROMISE_STATE_FAILED;
                 promise.deferredArguments = ["foo", "bar"];
                 handlers = {
                     successHandler: function () {},

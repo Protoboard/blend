@@ -22,7 +22,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
             /**
              * @type {string}
              */
-            this.status = exports.PROMISE_STATE_UNFULFILLED;
+            this.promiseState = exports.PROMISE_STATE_UNFULFILLED;
 
             /**
              * @type {Array}
@@ -58,7 +58,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
          */
         then: function (successHandler, failureHandler, progressHandler) {
             if (successHandler) {
-                switch (this.status) {
+                switch (this.promiseState) {
                 case exports.PROMISE_STATE_FULFILLED:
                     successHandler.apply(this, this.deferredArguments);
                     break;
@@ -69,7 +69,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
             }
 
             if (failureHandler) {
-                switch (this.status) {
+                switch (this.promiseState) {
                 case exports.PROMISE_STATE_FAILED:
                     failureHandler.apply(this, this.deferredArguments);
                     break;
@@ -80,7 +80,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
             }
 
             if (progressHandler) {
-                if (this.status === exports.PROMISE_STATE_UNFULFILLED) {
+                if (this.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
                     // adding progress handler to list of handlers
                     this.progressHandlers.push(progressHandler);
 
