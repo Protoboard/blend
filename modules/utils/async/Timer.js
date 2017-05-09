@@ -19,6 +19,10 @@ exports.Timer = $oop.getClass('$utils.Timer')
         init: function (timerId) {
             $assert.isNumber(timerId, "Invalid timer ID");
 
+            this.elevateMethods(
+                'onTimerPromiseResolve',
+                'onTimerPromiseReject');
+
             /**
              * ID associated with timer.
              * @type {number}
@@ -38,10 +42,9 @@ exports.Timer = $oop.getClass('$utils.Timer')
              */
             this.timerPromise = timerPromise;
 
-            // TODO: Use elevateMethods
             timerPromise.then(
-                this.onTimerPromiseResolve.bind(this),
-                this.onTimerPromiseReject.bind(this));
+                this.onTimerPromiseResolve,
+                this.onTimerPromiseReject);
         },
 
         /**
