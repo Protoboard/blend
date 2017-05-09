@@ -953,6 +953,48 @@ describe("$oop.Class", function () {
         });
     });
 
+    describe("method elevation", function () {
+        var instance;
+
+        beforeEach(function () {
+            Class.define({
+                foo: function () {},
+                bar: function () {}
+            });
+
+            instance = Class.create();
+        });
+
+        describe("when not present", function () {
+            it("should throw", function () {
+                expect(function () {
+                    instance.elevateMethods('baz');
+                }).toThrow();
+            });
+        });
+
+        describe("when method name is taken", function () {
+            beforeEach(function () {
+                instance.foo = "FOO";
+            });
+
+            it("should throw", function () {
+                expect(function () {
+                    instance.elevateMethods('foo');
+                }).toThrow();
+            });
+        });
+
+        it("should add elevated method", function () {
+            instance.elevateMethods('foo', 'bar');
+
+            expect(instance.hasOwnProperty('foo')).toBeTruthy();
+            expect(instance.hasOwnProperty('bar')).toBeTruthy();
+            expect(typeof instance.foo).toBe('function');
+            expect(instance.foo).not.toBe(Class.foo);
+        });
+    });
+
     describe("class checker", function () {
         beforeEach(function () {
             spyOn($assert, 'assert').and.callThrough();

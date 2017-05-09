@@ -675,6 +675,35 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     isRequiredBy: function (Class) {
         return exports.Class.isPrototypeOf(Class) &&
             Class.requires(this);
+    },
+
+    /**
+     * Elevates methods to the instance.
+     * @param {...string} methodName
+     * @returns {$oop.Class}
+     */
+    elevateMethods: function (methodName) {
+        var argumentCount = arguments.length,
+            i, method;
+
+        for (i = 0; i < argumentCount; i++) {
+            methodName = arguments[i];
+            if (this.hasOwnProperty(methodName)) {
+                $assert.assert(false, "Method '" + this.__classId + "#" + methodName + "' already elevated.");
+            } else {
+                method = this[methodName];
+                if (typeof method !== 'function') {
+                    $assert.assert(false, [
+                        "Method '" + this.__classId + '#' + methodName + "' not a function.",
+                        "Can't elevate."
+                    ].join(" "));
+                } else {
+                    this[methodName] = this[methodName].bind(this);
+                }
+            }
+        }
+
+        return this;
     }
 
     /**
