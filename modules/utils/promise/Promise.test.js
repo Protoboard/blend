@@ -190,24 +190,6 @@ describe("Promise", function () {
             expect($utils.Promise.isIncludedBy(promise)).toBeTruthy();
         });
 
-        describe("when notifying individual promise", function () {
-            beforeEach(function () {
-                handlers = {
-                    progressHandler: function () {}
-                };
-
-                spyOn(handlers, 'progressHandler');
-
-                promise.then(null, null, handlers.progressHandler);
-
-                deferred2.notify("foo", "bar");
-            });
-
-            it("should notify aggregate promise", function () {
-                expect(handlers.progressHandler).toHaveBeenCalledWith("foo", "bar");
-            });
-        });
-
         describe("when all promises are fulfilled", function () {
             beforeEach(function () {
                 handlers = {
@@ -232,7 +214,17 @@ describe("Promise", function () {
             });
 
             it("should resolve aggregate promise", function () {
-                expect(handlers.successHandler).toHaveBeenCalledWith("baz", "quux");
+                // first argument of the first call to successHandler
+                // ... is an array of Arguments
+                expect(handlers.successHandler.calls.argsFor(0)[0]
+                    .map(function (arg) {
+                        return [].slice.call(arg);
+                    }))
+                    .toEqual([
+                        ["foo"],
+                        ["foo", "bar"],
+                        ["baz", "quux"]
+                    ]);
             });
         });
 

@@ -10,7 +10,7 @@
 
 /**
  * Non-interactive synchronous implementation of Promises/A.
- * @link http://wiki.commonjs.org/wiki/Promises/A
+ * @see http://wiki.commonjs.org/wiki/Promises/A
  * @class $utils.Promise
  * @implements $utils.Thenable
  */
@@ -108,24 +108,29 @@ exports.Promise = $oop.getClass('$utils.Promise')
         when: function (promise) {
             var deferred = exports.Deferred.create(),
                 promises = Array.prototype.slice.call(arguments),
-                promiseCount = promises.length;
+                promiseCount = promises.length,
+                deferredArguments = [];
 
             function tryResolving() {
+                deferredArguments.push(arguments);
+
                 if (--promiseCount === 0) {
-                    deferred.resolve.apply(deferred, arguments);
+                    // resolving last promise with aggregate
+                    deferred.resolve(deferredArguments);
                 } else {
-                    // TODO: Diff bw. this and regular notify?
+                    // notifying aggregate promise of fulfilment
                     deferred.notify.apply(deferred, arguments);
                 }
             }
 
             promises.forEach(function (promise) {
                 if (exports.Promise.isIncludedBy(promise)) {
+                    // latching on to next promise in array
                     promise.then(
                         tryResolving,
-                        deferred.reject.bind(deferred),
-                        deferred.notify.bind(deferred));
+                        deferred.reject.bind(deferred));
                 } else {
+                    // passing non-promise to resolution
                     tryResolving(promise);
                 }
             });
