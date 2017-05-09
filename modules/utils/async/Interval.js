@@ -22,11 +22,11 @@ exports.Interval = $oop.getClass('')
          * @returns {$utils.Interval}
          */
         clearTimer: function () {
-            var deferred = this.timerDeferred;
+            var timerDeferred = this.timerDeferred;
 
-            if (deferred.promise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
+            if (this.timerPromise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
                 clearInterval(this.timerId);
-                deferred.reject.apply(deferred, arguments);
+                timerDeferred.reject.apply(timerDeferred, arguments);
             }
 
             return this;

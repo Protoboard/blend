@@ -18,8 +18,16 @@ describe("Timer", function () {
             });
         });
 
-        it("whould set timer ID", function () {
+        it("should set timerId property", function () {
             expect(timer.timerId).toBe(1);
+        });
+
+        it("should initialize timerDeferred property", function () {
+            expect($utils.Deferred.isIncludedBy(timer.timerDeferred)).toBeTruthy();
+        });
+
+        it("should initialize timerPromise property", function () {
+            expect($utils.Promise.isIncludedBy(timer.timerPromise)).toBeTruthy();
         });
     });
 });

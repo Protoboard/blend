@@ -22,11 +22,11 @@ exports.Timeout = $oop.getClass('$utils.Timeout')
          * @returns {$utils.Timeout}
          */
         clearTimer: function () {
-            var deferred = this.timerDeferred;
+            var timerDeferred = this.timerDeferred;
 
-            if (deferred.promise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
+            if (this.timerPromise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
                 clearTimeout(this.timerId);
-                deferred.reject.apply(deferred, arguments);
+                timerDeferred.reject.apply(timerDeferred, arguments);
             }
 
             return this;
