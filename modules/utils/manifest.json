@@ -10,8 +10,8 @@
       "promise/Deferred.js",
       "promise/Promise.js",
       "promise/Thenable.js",
-      "utils/Stringifiable.js",
-      "utils/utils.js"
+      "string/string-utils.js",
+      "string/Stringifiable.js"
     ]
   }
 }

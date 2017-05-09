@@ -3,7 +3,7 @@
     "js": [
       "globals.js",
       "class/assertions.js",
-      "class/utils.js",
+      "class/class-utils.js",
       "class/ProtoclassBuilder.js",
       "class/Class.js"
     ]
