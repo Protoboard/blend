@@ -4,7 +4,7 @@
 /**
  * @function $utils.Debouncer.create
  * @param {function} callback Function to debounce
- * @param {number} delay Minimum delay between dispatched calls.
+ * @param {number} [delay] Minimum delay between dispatched calls.
  * @returns {$utils.Debouncer}
  */
 
@@ -42,8 +42,8 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
         },
 
         /**
-         * @param {function} callback Function to debounce
-         * @param {number} delay Minimum delay between dispatched calls.
+         * @param {function} callback
+         * @param {number} [delay]
          * @ignore
          */
         init: function (callback, delay) {
@@ -139,7 +139,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
 
 $oop.copyProperties(Function.prototype, /** @lends Function# */{
     /**
-     * Converts `Function` to `Debouncer` instance.
+     * Creates a Debouncer based on the function.
      * @param {number} [delay]
      * @returns {$utils.Debouncer}
      */
