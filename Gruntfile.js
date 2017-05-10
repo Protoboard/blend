@@ -31,17 +31,16 @@ module.exports = function (grunt) {
                     banner: [
                         '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
                         '(function(){',
-                        'function m(require,exports,module){',
+                        'function rn(p){try{return require(p)}catch(e){return require("./"+p)}}',
+                        'function rw(p){return window[p]}',
+                        'function d(require,exports,module){',
                         ''
                     ].join('\n'),
                     footer: [
                         '}',
-                        // Node.js
-                        'if(typeof module!=="undefined")m.call(null,require,exports,module)',
-                        // AMD
-                        'else if(typeof define!=="undefined")define(m)',
-                        // plain browser
-                        'else m.call(null,function(m){return window[m]},window["' + pkg.name + '"]={},{exports:window["' + pkg.name + '"]})',
+                        'if(typeof module!=="undefined")d(rn,exports,module)',
+                        'else if(typeof define!=="undefined")define(d)',
+                        'else d.call(null,rw,window["' + pkg.name + '"]={},{exports:window["' + pkg.name + '"]})',
                         '}());'
                     ].join('\n')
                 }
