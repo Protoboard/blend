@@ -150,7 +150,7 @@ $oop.copyProperties(exports, /** @lends $utils */{
     PROMISE_STATE_FAILED: 'failed'
 });
 
-$oop.copyProperties($assert, /** @lends $assert */{
+$oop.copyProperties($assert, /** @lends $assert# */{
     /**
      * @param {$utils.Promise} expr
      * @param {string} [message]

@@ -2,7 +2,7 @@
 
 /**
  * Asserts if expression is false.
- * @function $assert.assert
+ * @function $assert#assert
  * @param {*} expr Expression to be evaluated.
  * @param {string} [message]
  * @returns {$assert}

@@ -18,7 +18,7 @@ exports.Thenable = $oop.getClass('$utils.Thenable')
         }
     });
 
-$oop.copyProperties($assert, /** @lends $assert */{
+$oop.copyProperties($assert, /** @lends $assert# */{
     /**
      * @param {object} expr
      * @param {string} [message]

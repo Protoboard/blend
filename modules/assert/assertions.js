@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * @function $assert.hasValue
+ * @function $assert#hasValue
  * @param {*} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -11,7 +11,7 @@ exports.hasValue = function (expr, message) {
 };
 
 /**
- * @function $assert.isString
+ * @function $assert#isString
  * @param {string} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -22,7 +22,7 @@ exports.isString = function (expr, message) {
 };
 
 /**
- * @function $assert.isStringOptional
+ * @function $assert#isStringOptional
  * @param {string} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -34,7 +34,7 @@ exports.isStringOptional = function (expr, message) {
 };
 
 /**
- * @function $assert.isBoolean
+ * @function $assert#isBoolean
  * @param {boolean} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -45,7 +45,7 @@ exports.isBoolean = function (expr, message) {
 };
 
 /**
- * @function $assert.isBooleanOptional
+ * @function $assert#isBooleanOptional
  * @param {boolean} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -57,7 +57,7 @@ exports.isBooleanOptional = function (expr, message) {
 };
 
 /**
- * @function $assert.isNumber
+ * @function $assert#isNumber
  * @param {number} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -68,7 +68,7 @@ exports.isNumber = function (expr, message) {
 };
 
 /**
- * @function $assert.isNumberOptional
+ * @function $assert#isNumberOptional
  * @param {number} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -80,7 +80,7 @@ exports.isNumberOptional = function (expr, message) {
 };
 
 /**
- * @function $assert.isFunction
+ * @function $assert#isFunction
  * @param {function} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -90,7 +90,7 @@ exports.isFunction = function (expr, message) {
 };
 
 /**
- * @function $assert.isFunctionOptional
+ * @function $assert#isFunctionOptional
  * @param {function} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -101,7 +101,7 @@ exports.isFunctionOptional = function (expr, message) {
 };
 
 /**
- * @function $assert.isObject
+ * @function $assert#isObject
  * @param {object} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -111,7 +111,7 @@ exports.isObject = function (expr, message) {
 };
 
 /**
- * @function $assert.isObjectOptional
+ * @function $assert#isObjectOptional
  * @param {object} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -122,7 +122,7 @@ exports.isObjectOptional = function (expr, message) {
 };
 
 /**
- * @function $assert.isArray
+ * @function $assert#isArray
  * @param {Array} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -132,7 +132,7 @@ exports.isArray = function (expr, message) {
 };
 
 /**
- * @function $assert.isArrayOptional
+ * @function $assert#isArrayOptional
  * @param {Array} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -143,7 +143,7 @@ exports.isArrayOptional = function (expr, message) {
 };
 
 /**
- * @function $assert.isRegExp
+ * @function $assert#isRegExp
  * @param {RegExp} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -153,7 +153,7 @@ exports.isRegExp = function (expr, message) {
 };
 
 /**
- * @function $assert.isRegExpOptional
+ * @function $assert#isRegExpOptional
  * @param {RegExp} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -164,7 +164,7 @@ exports.isRegExpOptional = function (expr, message) {
 };
 
 /**
- * @function $assert.isDate
+ * @function $assert#isDate
  * @param {Date} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -174,7 +174,7 @@ exports.isDate = function (expr, message) {
 };
 
 /**
- * @function $assert.isDateOptional
+ * @function $assert#isDateOptional
  * @param {Date} [expr]
  * @param {string} [message]
  * @returns {$assert}
