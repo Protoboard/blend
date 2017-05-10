@@ -37,8 +37,8 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
         schedulerDeferred: {},
 
         /**
-         * @param {...*} args
+         * @param {...*} arg
          * @returns {$utils.Promise}
          */
-        schedule: function (args) {}
+        schedule: function (arg) {}
     });
