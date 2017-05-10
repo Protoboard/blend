@@ -42,6 +42,20 @@ describe("Debouncer", function () {
                 }).toThrow();
             });
         });
+
+        describe("by conversion from function", function () {
+            var result;
+
+            beforeEach(function () {
+                spyOn($utils.Debouncer, 'create').and.returnValue(debouncer);
+                result = callback.toDebouncer(50);
+            });
+
+            it("should create Debouncer", function () {
+                expect($utils.Debouncer.create).toHaveBeenCalledWith(callback, 50);
+                expect(result).toBe(debouncer);
+            });
+        });
     });
 
     describe("scheduling", function () {
