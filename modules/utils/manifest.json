@@ -3,6 +3,7 @@
     "js": [
       "globals.js",
       "async/async-utils.js",
+      "async/Debouncer.js",
       "async/Interval.js",
       "async/Scheduler.js",
       "async/Timeout.js",
