@@ -124,7 +124,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
-    grunt.registerTask('build-quick', ['clean', 'concat', 'jsdoc', 'notify:build-quick']);
+    grunt.registerTask('build-quick', ['clean:build', 'concat', 'notify:build-quick']);
     grunt.registerTask('build-full', ['clean', 'karma', 'concat', 'jsdoc', 'notify:build-full']);
     grunt.registerTask('default', ['build-quick', 'watch']);
 };
