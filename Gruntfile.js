@@ -31,11 +31,12 @@ module.exports = function (grunt) {
                     banner: [
                         '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
                         '(function () {',
-                        'var exports = {}, require = require || function (module) {return window[module]};',
+                        'var exports = {};',
+                        'require = require || function (module) {return window[module]}',
                         ''
                     ].join('\n'),
                     footer: [
-                        'if (typeof define !== "undefined") define(function () {return exports;})',
+                        'if (typeof define !== "undefined") define(function () {return exports})',
                         'else if (typeof window !== "undefined") window["' + pkg.name + '"] = exports',
                         'else module.exports = exports;',
                         '}())'
