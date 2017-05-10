@@ -8,10 +8,14 @@ describe("Debouncer", function () {
 
     beforeEach(function () {
         callback = function () {};
-        debouncer = $utils.Debouncer.create(callback);
+        debouncer = $utils.Debouncer.create(callback, 50);
     });
 
     describe("instantiation", function () {
+        it("should set scheduleDelay", function () {
+            expect(debouncer.scheduleDelay).toBe(50);
+        });
+
         it("should set scheduledCallback", function () {
             expect(debouncer.scheduledCallback).toBe(callback);
         });
@@ -20,18 +24,21 @@ describe("Debouncer", function () {
             expect(debouncer.scheduledCallbackArguments).toEqual([]);
         });
 
-        it("should initialize schedulerTimers", function () {
-            expect(debouncer.schedulerTimers).toEqual([]);
+        it("should initialize scheduleTimers", function () {
+            expect(debouncer.scheduleTimers).toEqual([]);
         });
 
         it("should initialize schedulerDeferred", function () {
             expect($utils.Deferred.isIncludedBy(debouncer.schedulerDeferred)).toBeTruthy();
         });
 
-        describe("when passing invalid argument", function () {
+        describe("when passing invalid arguments", function () {
             it("should throw", function () {
                 expect(function () {
                     $utils.Debouncer.create("foo");
+                }).toThrow();
+                expect(function () {
+                    $utils.Debouncer.create(function () {}, "foo");
                 }).toThrow();
             });
         });
@@ -43,7 +50,7 @@ describe("Debouncer", function () {
         beforeEach(function () {
             jasmine.clock().install();
             spyOn($utils, 'setTimeout').and.callThrough();
-            result = debouncer.schedule(50, "foo", "bar");
+            result = debouncer.schedule("foo", "bar");
         });
 
         afterEach(function () {
@@ -59,7 +66,7 @@ describe("Debouncer", function () {
         });
 
         it("should add timer to list", function () {
-            expect($utils.Timeout.isIncludedBy(debouncer.schedulerTimers[0])).toBeTruthy();
+            expect($utils.Timeout.isIncludedBy(debouncer.scheduleTimers[0])).toBeTruthy();
         });
 
         it("should start timer", function () {
@@ -68,7 +75,7 @@ describe("Debouncer", function () {
 
         describe("when scheduling again with same arguments", function () {
             beforeEach(function () {
-                debouncer.schedule(30, "foo", "bar");
+                debouncer.schedule("foo", "bar");
             });
 
             it("should not add to argument list", function () {
@@ -76,11 +83,11 @@ describe("Debouncer", function () {
             });
 
             it("should not add timer to list", function () {
-                expect(debouncer.schedulerTimers[1]).toBeUndefined();
+                expect(debouncer.scheduleTimers[1]).toBeUndefined();
             });
 
             it("should restart timer", function () {
-                expect($utils.setTimeout).toHaveBeenCalledWith(30, "foo", "bar");
+                expect($utils.setTimeout).toHaveBeenCalledWith(50, "foo", "bar");
             });
         });
 
@@ -94,7 +101,7 @@ describe("Debouncer", function () {
             });
 
             it("should remove affected timer from registry", function () {
-                expect(debouncer.schedulerTimers).toEqual([]);
+                expect(debouncer.scheduleTimers).toEqual([]);
             });
 
             it("should remove affected arguments from registry", function () {
@@ -108,11 +115,11 @@ describe("Debouncer", function () {
 
         describe("when timer gets canceled by user", function () {
             beforeEach(function () {
-                debouncer.schedulerTimers[0].clearTimer();
+                debouncer.scheduleTimers[0].clearTimer();
             });
 
             it("should remove affected timer in registry", function () {
-                expect(debouncer.schedulerTimers).toEqual([undefined]);
+                expect(debouncer.scheduleTimers).toEqual([undefined]);
             });
         });
     });

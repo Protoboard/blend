@@ -4,6 +4,7 @@
 /**
  * @function $utils.Debouncer.create
  * @param {function} callback Function to debounce
+ * @param {number} delay Minimum delay between dispatched calls.
  * @returns {$utils.Debouncer}
  */
 
@@ -15,7 +16,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
     .implement($oop.getClass('$utils.Scheduler'))
     .define(/** @lends $utils.Debouncer# */{
         /**
-         * @param {Array} args
+         * @param {Array|Arguments} args
          * @private
          */
         _getIndexByArguments: function (args) {
@@ -42,14 +43,22 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
 
         /**
          * @param {function} callback Function to debounce
+         * @param {number} delay Minimum delay between dispatched calls.
          * @ignore
          */
-        init: function (callback) {
-            $assert.isFunction(callback, "Invalid debouncer callback");
+        init: function (callback, delay) {
+            $assert
+                .isFunction(callback, "Invalid debouncer callback")
+                .isNumberOptional(delay, "Invalid debounce delay");
 
             this.elevateMethods(
                 'onTimerEnd',
                 'onTimerCancel');
+
+            /**
+             * @type {number}
+             */
+            this.scheduleDelay = delay || 0;
 
             /**
              * @type {function}
@@ -64,7 +73,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
             /**
              * @type {$utils.Timeout[]}
              */
-            this.schedulerTimers = [];
+            this.scheduleTimers = [];
 
             /**
              * @type {$utils.Deferred}
@@ -73,32 +82,32 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
         },
 
         /**
-         * @param {number} delay
          * @param {...*} arg
          * @returns {$utils.Promise}
          */
-        schedule: function (delay, arg) {
+        schedule: function (arg) {
             // looking up arguments in list
-            var callbackArguments = slice.call(arguments, 1),
+            var callbackArguments = slice.call(arguments),
+                timeoutArguments = [this.scheduleDelay].concat(callbackArguments),
                 timerIndex = this._getIndexByArguments(callbackArguments),
                 timer;
 
             if (typeof timerIndex === 'undefined') {
                 // adding arg list & timer
                 this.scheduledCallbackArguments.push(callbackArguments);
-                timer = exports.setTimeout.apply(exports, arguments);
+                timer = exports.setTimeout.apply(exports, timeoutArguments);
                 timer.timerPromise.then(
                     this.onTimerEnd,
                     this.onTimerCancel);
-                this.schedulerTimers.push(timer);
+                this.scheduleTimers.push(timer);
             } else {
                 // re-starting timer
-                this.schedulerTimers[timerIndex].clearTimer();
-                timer = exports.setTimeout.apply(exports, arguments);
+                this.scheduleTimers[timerIndex].clearTimer();
+                timer = exports.setTimeout.apply(exports, timeoutArguments);
                 timer.timerPromise.then(
                     this.onTimerEnd,
                     this.onTimerCancel);
-                this.schedulerTimers[timerIndex] = timer;
+                this.scheduleTimers[timerIndex] = timer;
             }
 
             return this.schedulerDeferred.promise;
@@ -110,7 +119,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
 
             // removing affected timer & arguments
             var affectedTimerIndex = this._getIndexByArguments(slice.call(arguments));
-            this.schedulerTimers.splice(affectedTimerIndex, 1);
+            this.scheduleTimers.splice(affectedTimerIndex, 1);
             this.scheduledCallbackArguments.splice(affectedTimerIndex, 1);
 
             // notifying promise
@@ -124,16 +133,17 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
 
             // removing affected timer
             var affectedTimerIndex = this._getIndexByArguments(slice.call(arguments));
-            this.schedulerTimers[affectedTimerIndex] = undefined;
+            this.scheduleTimers[affectedTimerIndex] = undefined;
         }
     });
 
 $oop.copyProperties(Function.prototype, /** @lends Function# */{
     /**
      * Converts `Function` to `Debouncer` instance.
+     * @param {number} [delay]
      * @returns {$utils.Debouncer}
      */
-    toDebouncer: function () {
-        return exports.Debouncer.create(this.valueOf());
+    toDebouncer: function (delay) {
+        return exports.Debouncer.create(this.valueOf(), delay);
     }
 });

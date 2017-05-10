@@ -13,6 +13,9 @@
  */
 exports.Scheduler = $oop.getClass('$utils.Scheduler')
     .define(/** @lends $utils.Scheduler# */{
+        /** @type {number} */
+        scheduleDelay: 0,
+
         /**
          * @type {function}
          */
@@ -26,7 +29,7 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
         /**
          * @type {$utils.Timer[]}
          */
-        schedulerTimers: [],
+        scheduleTimers: [],
 
         /**
          * @type {$utils.Deferred}
@@ -34,9 +37,8 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
         schedulerDeferred: {},
 
         /**
-         * @param {number} delay
          * @param {...*} args
          * @returns {$utils.Promise}
          */
-        schedule: function (delay, args) {}
+        schedule: function (args) {}
     });
