@@ -9,6 +9,7 @@
       "async/Throttler.js",
       "async/Timeout.js",
       "async/Timer.js",
+      "class/Destroyable.js",
       "promise/Deferred.js",
       "promise/Promise.js",
       "promise/Thenable.js",
