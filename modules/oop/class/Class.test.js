@@ -36,52 +36,41 @@ describe("$oop.Class", function () {
             expect(result.__classId).toEqual('Class');
         });
 
-        it("should initialize method matrix", function () {
-            expect(result.__methodMatrix).toEqual({});
-        });
-
         it("should initialize member container", function () {
             expect(result.__members).toEqual({});
         });
 
-        it("should initialize contributors", function () {
-            expect(result.__contributors).toEqual([]);
-            expect(result.__contributorIndexLookup).toEqual({});
-        });
-
         it("should initialize interfaces", function () {
-            expect(result.__interfaces).toEqual([]);
-            expect(result.__interfaceLookup).toEqual({});
-        });
-
-        it("should initialize implementers", function () {
-            expect(result.__implementers).toEqual([]);
-            expect(result.__implementerLookup).toEqual({});
-        });
-
-        it("should initialize missing method names", function () {
-            expect(result.__missingMethodNames).toEqual([]);
-            expect(result.__missingMethodLookup).toEqual({});
+            expect(result.__interfaces).toEqual({
+                forward: {list: [], lookup: {}},
+                reverse: {list: [], lookup: {}}
+            });
         });
 
         it("should initialize includes", function () {
-            expect(result.__includes).toEqual([]);
-            expect(result.__includeLookup).toEqual({});
-        });
-
-        it("should initialize includers", function () {
-            expect(result.__includers).toEqual([]);
-            expect(result.__includerLookup).toEqual({});
+            expect(result.__includes).toEqual({
+                forward: {list: [], lookup: {}},
+                reverse: {list: [], lookup: {}}
+            });
         });
 
         it("should initialize requires", function () {
-            expect(result.__requires).toEqual([]);
-            expect(result.__requireLookup).toEqual({});
+            expect(result.__requires).toEqual({
+                forward: {list: [], lookup: {}},
+                reverse: {list: [], lookup: {}}
+            });
         });
 
-        it("should initialize requirers", function () {
-            expect(result.__requirers).toEqual([]);
-            expect(result.__requirerLookup).toEqual({});
+        it("should initialize contributors", function () {
+            expect(result.__contributors).toEqual({list: [], lookup: {}});
+        });
+
+        it("should initialize method matrix", function () {
+            expect(result.__methodMatrix).toEqual({});
+        });
+
+        it("should initialize missing method names", function () {
+            expect(result.__missingMethodNames).toEqual({list: [], lookup: {}});
         });
 
         it("should initialize forwards", function () {
@@ -145,9 +134,11 @@ describe("$oop.Class", function () {
         });
 
         it("should add class to contributions", function () {
-            expect(Class.__contributors).toEqual([Class]);
-            expect(Class.__contributorIndexLookup).toEqual({
-                Class: 0
+            expect(Class.__contributors).toEqual({
+                list: [Class],
+                lookup: {
+                    Class: 0
+                }
             });
         });
 
@@ -159,9 +150,11 @@ describe("$oop.Class", function () {
             });
 
             it("should not add again", function () {
-                expect(Class.__contributors).toEqual([Class]);
-                expect(Class.__contributorIndexLookup).toEqual({
-                    Class: 0
+                expect(Class.__contributors).toEqual({
+                    list: [Class],
+                    lookup: {
+                        Class: 0
+                    }
                 });
             });
         });
@@ -245,11 +238,9 @@ describe("$oop.Class", function () {
             });
 
             it("should not register implemented methods", function () {
-                expect(Class.__missingMethodNames).toEqual([
-                    'baz'
-                ]);
-                expect(Class.__missingMethodLookup).toEqual({
-                    baz: true
+                expect(Class.__missingMethodNames).toEqual({
+                    list: ['baz'],
+                    lookup: {baz: true}
                 });
             });
         });
@@ -281,35 +272,39 @@ describe("$oop.Class", function () {
         });
 
         it("should add to interfaces", function () {
-            expect(Class.__interfaces).toEqual([Interface]);
-            expect(Class.__interfaceLookup).toEqual({
-                Interface: Interface
+            expect(Class.__interfaces.forward).toEqual({
+                list: [Interface],
+                lookup: {
+                    Interface: Interface
+                }
             });
         });
 
         it("should add self to implementers on interface", function () {
-            expect(Interface.__implementers).toEqual([Class]);
-            expect(Interface.__implementerLookup).toEqual({
-                Class: Class
+            expect(Interface.__interfaces.reverse).toEqual({
+                list: [Class],
+                lookup: {
+                    Class: Class
+                }
             });
         });
 
         describe("when already added", function () {
             it("should not add again", function () {
                 Class.implement(Interface);
-                expect(Class.__interfaces).toEqual([Interface]);
-                expect(Class.__interfaceLookup).toEqual({
-                    Interface: Interface
+                expect(Class.__interfaces.forward).toEqual({
+                    list: [Interface],
+                    lookup: {
+                        Interface: Interface
+                    }
                 });
             });
         });
 
         it("should register missing methods", function () {
-            expect(Class.__missingMethodNames).toEqual([
-                'bar'
-            ]);
-            expect(Class.__missingMethodLookup).toEqual({
-                bar: true
+            expect(Class.__missingMethodNames).toEqual({
+                list: ['bar'],
+                lookup: {bar: true}
             });
         });
 
@@ -328,11 +323,9 @@ describe("$oop.Class", function () {
             });
 
             it("should cancel out missing methods", function () {
-                expect(Class.__missingMethodNames).toEqual([
-                    'baz'
-                ]);
-                expect(Class.__missingMethodLookup).toEqual({
-                    baz: true
+                expect(Class.__missingMethodNames).toEqual({
+                    list: ['baz'],
+                    lookup: {baz: true}
                 });
             });
         });
@@ -353,11 +346,9 @@ describe("$oop.Class", function () {
             });
 
             it("should cancel out missing methods", function () {
-                expect(Class.__missingMethodNames).toEqual([
-                    'baz'
-                ]);
-                expect(Class.__missingMethodLookup).toEqual({
-                    baz: true
+                expect(Class.__missingMethodNames).toEqual({
+                    list: ['baz'],
+                    lookup: {baz: true}
                 });
             });
 
@@ -370,8 +361,10 @@ describe("$oop.Class", function () {
                 });
 
                 it("should cancel out missing methods", function () {
-                    expect(Class.__missingMethodNames).toEqual([]);
-                    expect(Class.__missingMethodLookup).toEqual({});
+                    expect(Class.__missingMethodNames).toEqual({
+                        list: [],
+                        lookup: {}
+                    });
                 });
             });
         });
@@ -384,12 +377,12 @@ describe("$oop.Class", function () {
             });
 
             it("should propagate missing methods", function () {
-                expect(Class.__missingMethodNames).toEqual([
-                    'bar', 'baz'
-                ]);
-                expect(Class.__missingMethodLookup).toEqual({
-                    bar: true,
-                    baz: true
+                expect(Class.__missingMethodNames).toEqual({
+                    list: ['bar', 'baz'],
+                    lookup: {
+                        bar: true,
+                        baz: true
+                    }
                 });
             });
         });
@@ -421,23 +414,29 @@ describe("$oop.Class", function () {
         });
 
         it("should add to includes", function () {
-            expect(Class.__includes).toEqual([Trait]);
-            expect(Class.__includeLookup).toEqual({
-                Trait: Trait
+            expect(Class.__includes.forward).toEqual({
+                list: [Trait],
+                lookup: {
+                    Trait: Trait
+                }
             });
         });
 
         it("should add self to includers on remote class", function () {
-            expect(Trait.__includers).toEqual([Class]);
-            expect(Trait.__includerLookup).toEqual({
-                Class: Class
+            expect(Trait.__includes.reverse).toEqual({
+                list: [Class],
+                lookup: {
+                    Class: Class
+                }
             });
         });
 
         it("should add to list of contributions", function () {
-            expect(Class.__contributors).toEqual([Trait]);
-            expect(Class.__contributorIndexLookup).toEqual({
-                Trait: 0
+            expect(Class.__contributors).toEqual({
+                list: [Trait],
+                lookup: {
+                    Trait: 0
+                }
             });
         });
 
@@ -447,9 +446,11 @@ describe("$oop.Class", function () {
             });
 
             it("should not add to contributions again", function () {
-                expect(Class.__contributors).toEqual([Trait]);
-                expect(Class.__contributorIndexLookup).toEqual({
-                    Trait: 0
+                expect(Class.__contributors).toEqual({
+                    list: [Trait],
+                    lookup: {
+                        Trait: 0
+                    }
                 });
             });
         });
@@ -481,11 +482,9 @@ describe("$oop.Class", function () {
             });
 
             it("should not register implemented methods", function () {
-                expect(Class.__missingMethodNames).toEqual([
-                    'baz'
-                ]);
-                expect(Class.__missingMethodLookup).toEqual({
-                    baz: true
+                expect(Class.__missingMethodNames).toEqual({
+                    list: ['baz'],
+                    lookup: {baz: true}
                 });
             });
         });
@@ -496,8 +495,10 @@ describe("$oop.Class", function () {
             });
 
             it("should not add class to requires", function () {
-                expect(Class.__requires).toEqual([]);
-                expect(Class.__requireLookup).toEqual({});
+                expect(Class.__requires.forward).toEqual({
+                    list: [],
+                    lookup: {}
+                });
             });
         });
 
@@ -512,13 +513,13 @@ describe("$oop.Class", function () {
             });
 
             it("should transfer requires", function () {
-                expect(Class.__requires).toEqual([
-                    Require2, Include, Require3
-                ]);
-                expect(Class.__requireLookup).toEqual({
-                    Include: Include,
-                    Require2: Require2,
-                    Require3: Require3
+                expect(Class.__requires.forward).toEqual({
+                    list: [Require2, Include, Require3],
+                    lookup: {
+                        Include: Include,
+                        Require2: Require2,
+                        Require3: Require3
+                    }
                 });
             });
         });
@@ -570,16 +571,20 @@ describe("$oop.Class", function () {
         });
 
         it("should add requires", function () {
-            expect(Class.__requires).toEqual([Require]);
-            expect(Class.__requireLookup).toEqual({
-                Require: Require
+            expect(Class.__requires.forward).toEqual({
+                list: [Require],
+                lookup: {
+                    Require: Require
+                }
             });
         });
 
         it("should add self to requirers on remote class", function () {
-            expect(Require.__requirers).toEqual([Class]);
-            expect(Require.__requirerLookup).toEqual({
-                Class: Class
+            expect(Require.__requires.reverse).toEqual({
+                list: [Class],
+                lookup: {
+                    Class: Class
+                }
             });
         });
 
@@ -589,8 +594,10 @@ describe("$oop.Class", function () {
             });
 
             it("should remove class from requires", function () {
-                expect(Class.__requires).toEqual([]);
-                expect(Class.__requireLookup).toEqual({});
+                expect(Class.__requires.forward).toEqual({
+                    list: [],
+                    lookup: {}
+                });
             });
         });
 
@@ -605,14 +612,14 @@ describe("$oop.Class", function () {
             });
 
             it("should transfer requires", function () {
-                expect(Class.__requires).toEqual([
-                    Require, Require2, Require3, Include
-                ]);
-                expect(Class.__requireLookup).toEqual({
-                    Include: Include,
-                    Require: Require,
-                    Require2: Require2,
-                    Require3: Require3
+                expect(Class.__requires.forward).toEqual({
+                    list: [Require, Require2, Require3, Include],
+                    lookup: {
+                        Include: Include,
+                        Require: Require,
+                        Require2: Require2,
+                        Require3: Require3
+                    }
                 });
             });
         });

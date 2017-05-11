@@ -31,23 +31,21 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             Class = exports.createObject(exports.Class, {
                 __classId: classId,
                 __members: {},
+                __interfaces: {
+                    forward: {list: [], lookup: {}},
+                    reverse: {list: [], lookup: {}}
+                },
+                __includes: {
+                    forward: {list: [], lookup: {}},
+                    reverse: {list: [], lookup: {}}
+                },
+                __requires: {
+                    forward: {list: [], lookup: {}},
+                    reverse: {list: [], lookup: {}}
+                },
+                __missingMethodNames: {list: [], lookup: {}},
+                __contributors: {list: [], lookup: {}},
                 __methodMatrix: {},
-                __contributors: [],
-                __contributorIndexLookup: {},
-                __interfaces: [],
-                __interfaceLookup: {},
-                __implementers: [],
-                __implementerLookup: {},
-                __missingMethodNames: [],
-                __missingMethodLookup: {},
-                __includes: [],
-                __includeLookup: {},
-                __includers: [],
-                __includerLookup: {},
-                __requires: [],
-                __requireLookup: {},
-                __requirers: [],
-                __requirerLookup: {},
                 __forwards: [],
                 __mapper: undefined,
                 __instanceLookup: {}
@@ -81,13 +79,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToContributors: function (Class) {
-        var contributions = this.__contributors,
-            contributionLookup = this.__contributorIndexLookup,
+        var contributors = this.__contributors,
+            contributorList = contributors.list,
+            contributorLookup = contributors.lookup,
             classId = Class.__classId;
 
-        if (!contributionLookup.hasOwnProperty(classId)) {
-            contributionLookup[classId] = contributions.length;
-            contributions.push(Class);
+        if (!contributorLookup.hasOwnProperty(classId)) {
+            contributorLookup[classId] = contributorList.length;
+            contributorList.push(Class);
         }
     },
 
@@ -99,7 +98,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      */
     _addMethodsToMatrix: function (members, classId) {
         var methodMatrix = this.__methodMatrix,
-            classIndex = this.__contributorIndexLookup[classId];
+            classIndex = this.__contributors.lookup[classId];
 
         Object.getOwnPropertyNames(members)
             .filter(function (memberName) {
@@ -199,12 +198,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToInterfaces: function (Interface) {
-        var interfaces = this.__interfaces,
-            interfaceLookup = this.__interfaceLookup,
+        var interfaces = this.__interfaces.forward,
+            interfaceList = interfaces.list,
+            interfaceLookup = interfaces.lookup,
             interfaceId = Interface.__classId;
 
         if (!interfaceLookup.hasOwnProperty(interfaceId)) {
-            interfaces.push(Interface);
+            interfaceList.push(Interface);
             interfaceLookup[interfaceId] = Interface;
         }
     },
@@ -214,12 +214,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToImplementers: function (Class) {
-        var implementers = this.__implementers,
-            implementerLookup = this.__implementerLookup,
+        var implementers = this.__interfaces.reverse,
+            implementerList = implementers.list,
+            implementerLookup = implementers.lookup,
             classId = Class.__classId;
 
         if (!implementerLookup.hasOwnProperty(classId)) {
-            implementers.push(Class);
+            implementerList.push(Class);
             implementerLookup[classId] = Class;
         }
     },
@@ -229,8 +230,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _removeFromMissingMethods: function (members) {
-        var missingMethodNames = this.__missingMethodNames,
-            missingMethodLookup = this.__missingMethodLookup;
+        var missingMethodNames = this.__missingMethodNames.list,
+            missingMethodLookup = this.__missingMethodNames.lookup;
 
         // removing methods from registry
         Object.getOwnPropertyNames(members)
@@ -255,10 +256,10 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToMissingMethods: function (members) {
-        var contributions = this.__contributors,
-            interfaces = this.__interfaces,
-            missingMethodNames = this.__missingMethodNames,
-            missingMethodLookup = this.__missingMethodLookup;
+        var contributions = this.__contributors.list,
+            interfaces = this.__interfaces.forward.list,
+            missingMethodNames = this.__missingMethodNames.list,
+            missingMethodLookup = this.__missingMethodNames.lookup;
 
         Object.getOwnPropertyNames(members)
             .filter(function (memberName) {
@@ -294,12 +295,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToIncludes: function (Class) {
-        var includes = this.__includes,
-            includeLookup = this.__includeLookup,
+        var includes = this.__includes.forward,
+            includeList = includes.list,
+            includeLookup = includes.lookup,
             classId = Class.__classId;
 
         if (!includeLookup.hasOwnProperty(classId)) {
-            includes.push(Class);
+            includeList.push(Class);
             includeLookup[classId] = Class;
         }
     },
@@ -309,13 +311,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToIncluders: function (Class) {
-        var includers = this.__includers,
-            includerLookup = this.__includerLookup,
+        var hosts = this.__includes.reverse,
+            hostList = hosts.list,
+            hostLookup = hosts.lookup,
             classId = Class.__classId;
 
-        if (!includerLookup.hasOwnProperty(classId)) {
-            includers.push(Class);
-            includerLookup[classId] = Class;
+        if (!hostLookup.hasOwnProperty(classId)) {
+            hostList.push(Class);
+            hostLookup[classId] = Class;
         }
     },
 
@@ -326,9 +329,10 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     _addToRequires: function (Class) {
         var classId = this.__classId,
             requireId = Class.__classId,
-            includeLookup = this.__includeLookup,
-            requires = this.__requires,
-            requireLookup = this.__requireLookup;
+            includeLookup = this.__includes.forward.lookup,
+            requires = this.__requires.forward,
+            requireList = requires.list,
+            requireLookup = requires.lookup;
 
         if (classId !== requireId &&
             !includeLookup.hasOwnProperty(requireId) &&
@@ -336,7 +340,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         ) {
             // require is not included (which would cancel each other out)
             // adding to requires
-            requires.push(Class);
+            requireList.push(Class);
             requireLookup[requireId] = Class;
         }
     },
@@ -346,13 +350,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToRequirers: function (Class) {
-        var requirers = this.__requirers,
-            requirerLookup = this.__requirerLookup,
+        var hosts = this.__requires.reverse,
+            hostList = hosts.list,
+            hostLookup = hosts.lookup,
             classId = Class.__classId;
 
-        if (!requirerLookup.hasOwnProperty(classId)) {
-            requirers.push(Class);
-            requirerLookup[classId] = Class;
+        if (!hostLookup.hasOwnProperty(classId)) {
+            hostList.push(Class);
+            hostLookup[classId] = Class;
         }
     },
 
@@ -362,11 +367,12 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      */
     _removeFromRequires: function (Class) {
         var classId = Class.__classId,
-            requires = this.__requires,
-            requireLookup = this.__requireLookup;
+            requires = this.__requires.forward,
+            requireList = requires.list,
+            requireLookup = requires.lookup;
 
         if (requireLookup.hasOwnProperty(classId)) {
-            requires.splice(requires.indexOf(classId), 1);
+            requireList.splice(requireList.indexOf(classId), 1);
             delete requireLookup[classId];
         }
     },
@@ -381,13 +387,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         var that = this;
 
         // transferring requires & includes of class to current class as requires
-        Class.__requires.concat(Class.__includes)
+        Class.__requires.forward.list.concat(Class.__includes.forward.list)
             .forEach(function (Class) {
                 that.require(Class);
             });
 
         // transferring class AS require to includers and requirers of current class
-        this.__includers.concat(this.__requirers)
+        this.__includes.reverse.list.concat(this.__requires.reverse.list)
             .forEach(function (Host) {
                 Host.require(Class);
             });
@@ -401,7 +407,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     _delegateToIncluders: function (members) {
         var classId = this.__classId;
 
-        this.__includers
+        this.__includes.reverse.list
             .forEach(function (Class) {
                 // adding methods to lookup at specified index
                 Class._addMethodsToMatrix(members, classId);
@@ -424,7 +430,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _delegateToImplementers: function (members) {
-        this.__implementers
+        this.__interfaces.reverse.list
             .forEach(function (Class) {
                 // updating missing method names
                 Class._addToMissingMethods(members);
@@ -467,7 +473,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // checking whether
         // ... methods match interfaces
-        var missingMethodNames = this.__missingMethodNames;
+        var missingMethodNames = this.__missingMethodNames.list;
         if (missingMethodNames.length) {
             $assert.assert(false, [
                 "Class '" + that.__classId + "' doesn't implement method(s): " +
@@ -480,7 +486,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         }
 
         // ... all requires are included
-        var requires = that.__requires;
+        var requires = that.__requires.forward.list;
         if (requires.length) {
             // there are unfulfilled requires - can't instantiate
             $assert.assert(false, [
@@ -683,7 +689,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     implements: function (Interface) {
         $assert.isClass(Interface, "Class type expected");
 
-        return !!this.__interfaceLookup[Interface.__classId];
+        return !!this.__interfaces.forward.lookup[Interface.__classId];
     },
 
     /**
@@ -706,7 +712,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         var classId = Class.__classId;
 
-        return this.__classId === classId || !!this.__includeLookup[classId];
+        return this.__classId === classId || !!this.__includes.forward.lookup[classId];
     },
 
     /**
@@ -727,7 +733,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     requires: function (Class) {
         $assert.isClass(Class, "Class type expected");
 
-        return !!this.__requireLookup[Class.__classId];
+        return !!this.__requires.forward.lookup[Class.__classId];
     },
 
     /**
@@ -782,87 +788,32 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      */
 
     /**
+     * @member {object} $oop.Class#__interfaces
+     * @private
+     */
+
+    /**
+     * @member {object} $oop.Class#__includes
+     * @private
+     */
+
+    /**
+     * @member {object} $oop.Class#__requires
+     * @private
+     */
+
+    /**
      * @member {object} $oop.Class#__methodMatrix
      * @private
      */
 
     /**
-     * @member {object[]} $oop.Class#__contributors
+     * @member {object} $oop.Class#__contributors
      * @private
      */
 
     /**
-     * @member {object} $oop.Class#__contributorIndexLookup
-     * @private
-     */
-
-    /**
-     * @member {$oop.Class[]} $oop.Class#__interfaces
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__interfaceLookup
-     * @private
-     */
-
-    /**
-     * @member {$oop.Class[]} $oop.Class#__implementers
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__implementerLookup
-     * @private
-     */
-
-    /**
-     * @member {string[]} $oop.Class#__missingMethodNames
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__missingMethodLookup
-     * @private
-     */
-
-    /**
-     * @member {$oop.Class[]} $oop.Class#__includes
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__includeLookup
-     * @private
-     */
-
-    /**
-     * @member {$oop.Class[]} $oop.Class#__includers
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__includerLookup
-     * @private
-     */
-
-    /**
-     * @member {string[]} $oop.Class#__requires
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__requireLookup
-     * @private
-     */
-
-    /**
-     * @member {string[]} $oop.Class#__requirers
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__requirerLookup
+     * @member {object} $oop.Class#__missingMethodNames
      * @private
      */
 
