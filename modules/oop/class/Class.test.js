@@ -54,6 +54,11 @@ describe("$oop.Class", function () {
             expect(result.__interfaceLookup).toEqual({});
         });
 
+        it("should initialize implementers", function () {
+            expect(result.__implementers).toEqual([]);
+            expect(result.__implementerLookup).toEqual({});
+        });
+
         it("should initialize missing method names", function () {
             expect(result.__missingMethodNames).toEqual([]);
             expect(result.__missingMethodLookup).toEqual({});
@@ -277,6 +282,13 @@ describe("$oop.Class", function () {
             });
         });
 
+        it("should add self to implementers on interface", function () {
+            expect(Interface.__implementers).toEqual([Class]);
+            expect(Interface.__implementerLookup).toEqual({
+                Class: Class
+            });
+        });
+
         describe("when already added", function () {
             it("should not add again", function () {
                 Class.implement(Interface);
@@ -358,6 +370,24 @@ describe("$oop.Class", function () {
                 });
             });
         });
+
+        describe("then defining methods on interface", function () {
+            beforeEach(function () {
+                Interface.define({
+                    baz: function () {}
+                });
+            });
+
+            it("should propagate missing methods", function () {
+                expect(Class.__missingMethodNames).toEqual([
+                    'bar', 'baz'
+                ]);
+                expect(Class.__missingMethodLookup).toEqual({
+                    bar: true,
+                    baz: true
+                });
+            });
+        });
     });
 
     describe("including class", function () {
@@ -392,7 +422,7 @@ describe("$oop.Class", function () {
             });
         });
 
-        it("should add to includers on remote class", function () {
+        it("should add self to includers on remote class", function () {
             expect(Trait.__includers).toEqual([Class]);
             expect(Trait.__includerLookup).toEqual({
                 Class: Class

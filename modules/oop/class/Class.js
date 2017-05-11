@@ -36,6 +36,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 __contributorIndexLookup: {},
                 __interfaces: [],
                 __interfaceLookup: {},
+                __implementers: [],
+                __implementerLookup: {},
                 __missingMethodNames: [],
                 __missingMethodLookup: {},
                 __includes: [],
@@ -202,6 +204,21 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         if (!interfaceLookup.hasOwnProperty(interfaceId)) {
             interfaces.push(Interface);
             interfaceLookup[interfaceId] = Interface;
+        }
+    },
+
+    /**
+     * @param {$oop.Class} Class
+     * @private
+     */
+    _addToImplementers: function (Class) {
+        var implementers = this.__implementers,
+            implementerLookup = this.__implementerLookup,
+            classId = Class.__classId;
+
+        if (!implementerLookup.hasOwnProperty(classId)) {
+            implementers.push(Class);
+            implementerLookup[classId] = Class;
         }
     },
 
@@ -378,6 +395,20 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
+     * Delegates a batch of methods to imeplementers.
+     * (As possibly missing methods.)
+     * @param {object} members
+     * @private
+     */
+    _delegateToImplementers: function (members) {
+        this.__implementers
+            .forEach(function (Class) {
+                // updating missing method names
+                Class._addToMissingMethods(members);
+            });
+    },
+
+    /**
      * Creates a new instance.
      * @returns {$oop.Class}
      */
@@ -488,6 +519,9 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // delegating batch to includers
         this._delegateToIncluders(batch);
 
+        // updating implementers
+        this._delegateToImplementers(batch);
+
         return this;
     },
 
@@ -528,6 +562,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // updating missing method names
         this._removeFromMissingMethods(members);
 
+        // TODO: updating includers
+
         return this;
     },
 
@@ -541,6 +577,9 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // adding to interfaces
         this._addToInterfaces(Interface);
+
+        // adding to implementers on Interface
+        Interface._addToImplementers(this);
 
         // updating missing method names
         this._addToMissingMethods(Interface.__members);
@@ -562,6 +601,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // transferring includes & requires from require
         this._transferRequires(Class);
+
+        // TODO: updating includers
 
         return this;
     },
@@ -740,6 +781,16 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
     /**
      * @member {object} $oop.Class#__interfaceLookup
+     * @private
+     */
+
+    /**
+     * @member {$oop.Class[]} $oop.Class#__implementers
+     * @private
+     */
+
+    /**
+     * @member {object} $oop.Class#__implementerLookup
      * @private
      */
 
