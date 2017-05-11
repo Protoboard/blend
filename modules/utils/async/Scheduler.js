@@ -1,44 +1,78 @@
-/* global $oop */
+/* global $assert, $oop */
 "use strict";
 
 /**
- * @function $utils.Scheduler.create
- * @returns {$utils.Scheduler}
- */
-
-/**
- * Describes classes that schedule function calls.
- * @todo Investigate turning this into a class.
- * @interface $utils.Scheduler
+ * Abstract base class for function call schedulers.
+ * @class $utils.Scheduler
  */
 exports.Scheduler = $oop.getClass('$utils.Scheduler')
     .define(/** @lends $utils.Scheduler# */{
-        /** @type {number} */
-        scheduleDelay: 0,
-
         /**
-         * @type {function}
+         * @param {function} callback
+         * @param {number} [delay]
+         * @ignore
          */
-        scheduledCallback: {},
+        init: function (callback, delay) {
+            $assert
+                .isFunction(callback, "Invalid scheduler callback")
+                .isNumberOptional(delay, "Invalid schedule delay");
+
+            /**
+             * @type {number}
+             */
+            this.scheduleDelay = delay || 0;
+
+            /**
+             * @type {function}
+             */
+            this.scheduledCallback = callback;
+
+            /**
+             * @type {Array}
+             */
+            this.scheduledCallbackArguments = [];
+
+            /**
+             * @type {$utils.Timer[]}
+             */
+            this.scheduleTimers = [];
+
+            /**
+             * @type {$utils.Deferred}
+             */
+            this.schedulerDeferred = exports.Deferred.create();
+        },
 
         /**
-         * @type {Array}
+         * @param {Array|Arguments} args
+         * @protected
          */
-        scheduledCallbackArguments: [],
+        getTimerIndexByArguments: function (args) {
+            var scheduledCallbackArguments = this.scheduledCallbackArguments,
+                scheduledCallbackArgumentsCount = scheduledCallbackArguments.length,
+                argCount = args.length,
+                i, matchesArguments,
+                j;
+
+            for (i = 0; i < scheduledCallbackArgumentsCount; i++) {
+                matchesArguments = true;
+                for (j = 0; j < argCount; j++) {
+                    if (scheduledCallbackArguments[i][j] !== args[j]) {
+                        matchesArguments = false;
+                        break;
+                    }
+                }
+
+                if (matchesArguments) {
+                    return i;
+                }
+            }
+        }
 
         /**
-         * @type {$utils.Timer[]}
-         */
-        scheduleTimers: [],
-
-        /**
-         * @type {$utils.Deferred}
-         */
-        schedulerDeferred: {},
-
-        /**
+         * @function $utils.Scheduler#schedule
          * @param {...*} arg
          * @returns {$utils.Promise}
+         * @abstract
          */
-        schedule: function (arg) {}
     });

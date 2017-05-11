@@ -6,6 +6,7 @@
       "async/Debouncer.js",
       "async/Interval.js",
       "async/Scheduler.js",
+      "async/Throttler.js",
       "async/Timeout.js",
       "async/Timer.js",
       "promise/Deferred.js",

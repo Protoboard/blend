@@ -12,37 +12,6 @@ describe("Debouncer", function () {
     });
 
     describe("instantiation", function () {
-        it("should set scheduleDelay", function () {
-            expect(debouncer.scheduleDelay).toBe(50);
-        });
-
-        it("should set scheduledCallback", function () {
-            expect(debouncer.scheduledCallback).toBe(callback);
-        });
-
-        it("should initialize scheduledCallbackArguments", function () {
-            expect(debouncer.scheduledCallbackArguments).toEqual([]);
-        });
-
-        it("should initialize scheduleTimers", function () {
-            expect(debouncer.scheduleTimers).toEqual([]);
-        });
-
-        it("should initialize schedulerDeferred", function () {
-            expect($utils.Deferred.isIncludedBy(debouncer.schedulerDeferred)).toBeTruthy();
-        });
-
-        describe("when passing invalid arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    $utils.Debouncer.create("foo");
-                }).toThrow();
-                expect(function () {
-                    $utils.Debouncer.create(function () {}, "foo");
-                }).toThrow();
-            });
-        });
-
         describe("by conversion from function", function () {
             var result;
 
