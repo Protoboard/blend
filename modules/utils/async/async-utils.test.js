@@ -69,7 +69,7 @@ describe("Async utils", function () {
                 jasmine.clock().tick(11);
             });
 
-            it("shoguld notify promise", function () {
+            it("should notify promise", function () {
                 expect(progressHandler).toHaveBeenCalledWith("foo");
             });
         });
