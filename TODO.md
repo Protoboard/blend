@@ -23,12 +23,15 @@ Utils
 OOP
 ---
 
-- _What if includes have conflicting hash functions?_
-    - ATM not taken into account!
-- Full overrides
 - **Extension that brings all includes of the 'base' with it.**
     - Traversing & collecting all includes
     - Additional method Class#extend
+- Propagation of inclusions & requires to includers & requirers.
+    - Maintaining lookup of requirers
+- Propagation of missing methods to implementers
+- _What if includes have conflicting hash functions?_
+    - ATM not taken into account!
+- Full overrides
 - Checks
     - ~~Do not allow instances as static properties in Class#define~~
     - Whether forward includes class being instantiated. ON instantiation
@@ -44,7 +47,9 @@ OOP
     - Modify `$oop.copyProperties()` to use a common descriptor.
 - Low pri: Make `$oop.Base` a Class for compatibility, but make sure overrides are in place
 - Low pri: Swap back contribution vs. delegate terminology
-- Low pri: Propagation of missing methods to implementers
+- Terminology
+    - include vs. integrate / mix
+    - "host": isHostedBy
 
 Assert
 ------
