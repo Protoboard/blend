@@ -49,6 +49,10 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 __forwards: [],
                 __mapper: undefined,
                 __instanceLookup: {}
+            }, {
+                writable: true,
+                enumerable: false,
+                configurable: true
             });
 
             // adding class to registry

@@ -7,8 +7,9 @@
  * @function $oop.copyProperties
  * @param {object} target
  * @param {object} members
+ * @param {object} [propertyDescriptor]
  */
-exports.copyProperties = function (target, members) {
+exports.copyProperties = function (target, members, propertyDescriptor) {
     switch (target) {
     case Array.prototype:
     case Date.prototype:
@@ -23,20 +24,35 @@ exports.copyProperties = function (target, members) {
             Object.getOwnPropertyNames(members)
                 .reduce(function (definitions, memberName) {
                     definitions[memberName] = {
-                        configurable: true,
-                        enumerable: false,
                         value: members[memberName],
-                        writable: true
+                        writable: true,
+                        enumerable: false,
+                        configurable: true
                     };
                     return definitions;
                 }, {}));
         break;
 
     default:
-        Object.getOwnPropertyNames(members)
-            .forEach(function (memberName) {
-                target[memberName] = members[memberName];
-            });
+        if (propertyDescriptor) {
+            Object.defineProperties(
+                target,
+                Object.getOwnPropertyNames(members)
+                    .reduce(function (definitions, memberName) {
+                        definitions[memberName] = {
+                            value: members[memberName],
+                            writable: propertyDescriptor.writable,
+                            enumerable: propertyDescriptor.enumerable,
+                            configurable: propertyDescriptor.configurable
+                        };
+                        return definitions;
+                    }, {}));
+        } else {
+            Object.getOwnPropertyNames(members)
+                .forEach(function (memberName) {
+                    target[memberName] = members[memberName];
+                });
+        }
         break;
     }
 };
@@ -45,12 +61,13 @@ exports.copyProperties = function (target, members) {
  * @function $oop.createObject
  * @param {object} base
  * @param {object} members
+ * @param {object} [propertyDescriptor]
  * @returns {Object}
  * @ignore
  */
-exports.createObject = function (base, members) {
+exports.createObject = function (base, members, propertyDescriptor) {
     var result = Object.create(base || Object.prototype);
-    exports.copyProperties(result, members);
+    exports.copyProperties(result, members, propertyDescriptor);
     return result;
 };
 

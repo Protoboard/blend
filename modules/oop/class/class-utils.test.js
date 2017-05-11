@@ -15,6 +15,11 @@ describe("$oop.copyProperties", function () {
         $oop.copyProperties(target, members);
     });
 
+    it("should copy members", function () {
+        expect(target.foo).toBe("FOO");
+        expect(target.bar).toBe(members.bar);
+    });
+
     describe("when adding to built-in prototype", function () {
         beforeEach(function () {
             members = {
@@ -50,14 +55,35 @@ describe("$oop.copyProperties", function () {
         });
     });
 
-    it("should copy members", function () {
-        expect(target.foo).toBe("FOO");
-        expect(target.bar).toBe(members.bar);
+    describe("when specifying common property descriptor", function () {
+        beforeEach(function () {
+            target = {};
+            members = {
+                foo: "FOO",
+                bar: function () {}
+            };
+            $oop.copyProperties(target, members, {});
+        });
+
+        it("should apply descriptor to properties", function () {
+            expect(Object.getOwnPropertyDescriptor(target, 'foo')).toEqual({
+                value: "FOO",
+                writable: false,
+                enumerable: false,
+                configurable: false
+            });
+            expect(Object.getOwnPropertyDescriptor(target, 'bar')).toEqual({
+                value: members.bar,
+                writable: false,
+                enumerable: false,
+                configurable: false
+            });
+        });
     });
 });
 
 describe("$oop.createObject", function () {
-    var base, members,
+    var base, members, propertyDescriptor,
         result;
 
     beforeEach(function () {
@@ -66,7 +92,9 @@ describe("$oop.createObject", function () {
             foo: "FOO",
             bar: function () {}
         };
-        result = $oop.createObject(base, members);
+        propertyDescriptor = {};
+        spyOn($oop, 'copyProperties').and.callThrough();
+        result = $oop.createObject(base, members, propertyDescriptor);
     });
 
     it("should extend base", function () {
@@ -74,8 +102,10 @@ describe("$oop.createObject", function () {
     });
 
     it("should copy members", function () {
-        expect(result.foo).toBe("FOO");
-        expect(result.bar).toBe(members.bar);
+        expect($oop.copyProperties).toHaveBeenCalledWith(
+            result,
+            members,
+            propertyDescriptor);
     });
 });
 
