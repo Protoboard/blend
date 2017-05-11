@@ -7,18 +7,8 @@
  */
 exports.Scheduler = $oop.getClass('$utils.Scheduler')
     .define(/** @lends $utils.Scheduler# */{
-        /**
-         * @param {number} [delay]
-         * @ignore
-         */
-        init: function (delay) {
-            $assert.isNumberOptional(delay, "Invalid schedule delay");
-
-            /**
-             * @type {number}
-             */
-            this.scheduleDelay = delay || 0;
-
+        /** @ignore */
+        init: function () {
             /**
              * @type {Array}
              */
@@ -69,12 +59,14 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
         _clearTimerAtIndex: function (timerIndex) {
             // TODO: Investigate a good middle ground bw. cpu vs. memory footprint.
             this.scheduleTimers[timerIndex] = undefined;
-        }
+        },
 
         /**
-         * @function $utils.Scheduler#schedule
          * @param {...*} arg
          * @returns {$utils.Promise}
          * @abstract
          */
+        schedule: function (arg) {
+            return this.schedulerDeferred.promise;
+        }
     });

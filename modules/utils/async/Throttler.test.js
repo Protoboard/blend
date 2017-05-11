@@ -10,6 +10,10 @@ describe("Throttler", function () {
     });
 
     describe("instantiation", function () {
+        it("should set throttleInterval", function () {
+            expect(throttler.throttleInterval).toBe(50);
+        });
+
         it("should initialize throttledCallCounts", function () {
             expect(throttler.throttledCallCounts).toEqual([]);
         });

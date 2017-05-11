@@ -15,10 +15,17 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
     .include($oop.getClass('$utils.Scheduler'))
     .define(/** @lends $utils.Debouncer# */{
         /** @ignore */
-        init: function () {
+        init: function (delay) {
+            $assert.isNumberOptional(delay, "Invalid debounce delay");
+
             this.elevateMethods(
                 'onTimerEnd',
                 'onTimerCancel');
+
+            /**
+             * @type {number}
+             */
+            this.debounceDelay = delay || 0;
         },
 
         /**
@@ -28,7 +35,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
         schedule: function (arg) {
             // looking up arguments in list
             var callbackArguments = slice.call(arguments),
-                timeoutArguments = [this.scheduleDelay].concat(callbackArguments),
+                timeoutArguments = [this.debounceDelay].concat(callbackArguments),
                 timerIndex = this._getTimerIndexByArguments(callbackArguments),
                 timer;
 

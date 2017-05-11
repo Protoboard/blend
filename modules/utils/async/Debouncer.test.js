@@ -9,6 +9,12 @@ describe("Debouncer", function () {
         debouncer = $utils.Debouncer.create(50);
     });
 
+    describe("instantiation", function () {
+        it("should set scheduleDelay", function () {
+            expect(debouncer.debounceDelay).toBe(50);
+        });
+    });
+
     describe("scheduling", function () {
         var result;
 

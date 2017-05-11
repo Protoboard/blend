@@ -3,35 +3,23 @@
 var $utils = window['giant-utils'];
 
 describe("Scheduler", function () {
-    var debouncer;
+    var scheduler;
 
     beforeEach(function () {
-        debouncer = $utils.Scheduler.create(50);
+        scheduler = $utils.Scheduler.create();
     });
 
     describe("instantiation", function () {
-        it("should set scheduleDelay", function () {
-            expect(debouncer.scheduleDelay).toBe(50);
-        });
-
         it("should initialize scheduledArguments", function () {
-            expect(debouncer.scheduledArguments).toEqual([]);
+            expect(scheduler.scheduledArguments).toEqual([]);
         });
 
         it("should initialize scheduleTimers", function () {
-            expect(debouncer.scheduleTimers).toEqual([]);
+            expect(scheduler.scheduleTimers).toEqual([]);
         });
 
         it("should initialize schedulerDeferred", function () {
-            expect($utils.Deferred.isIncludedBy(debouncer.schedulerDeferred)).toBeTruthy();
-        });
-
-        describe("when passing invalid arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    $utils.Scheduler.create("foo");
-                }).toThrow();
-            });
+            expect($utils.Deferred.isIncludedBy(scheduler.schedulerDeferred)).toBeTruthy();
         });
     });
 });

@@ -3,7 +3,7 @@
 
 /**
  * @function $utils.Throttler.create
- * @param {number} [delay] Delay between dispatched calls.
+ * @param {number} [interval] Time interval between dispatched calls.
  * @returns {$utils.Throttler}
  */
 
@@ -17,10 +17,17 @@ exports.Throttler = $oop.getClass('$utils.Throttler')
     .include($oop.getClass('$utils.Scheduler'))
     .define(/** @lends $utils.Throttler# */{
         /** @ignore */
-        init: function () {
+        init: function (interval) {
+            $assert.isNumberOptional(interval, "Invalid throttle interval");
+
             this.elevateMethods(
                 'onTimerTick',
                 'onTimerCancel');
+
+            /**
+             * @type {number}
+             */
+            this.throttleInterval = interval || 0;
 
             /**
              * @type {number[]}
@@ -44,7 +51,7 @@ exports.Throttler = $oop.getClass('$utils.Throttler')
             if (typeof timerIndex === 'undefined') {
                 scheduleTimers = this.scheduleTimers;
                 timerIndex = scheduleTimers.length;
-                timeoutArguments = [this.scheduleDelay].concat(callbackArguments);
+                timeoutArguments = [this.throttleInterval].concat(callbackArguments);
 
                 // starting timer
                 timer = exports.setInterval.apply(exports, timeoutArguments);
