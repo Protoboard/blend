@@ -79,6 +79,11 @@ describe("$oop.Class", function () {
             expect(result.__requireLookup).toEqual({});
         });
 
+        it("should initialize requirers", function () {
+            expect(result.__requirers).toEqual([]);
+            expect(result.__requirerLookup).toEqual({});
+        });
+
         it("should initialize forwards", function () {
             expect(result.__forwards).toEqual([]);
         });
@@ -501,13 +506,14 @@ describe("$oop.Class", function () {
 
             beforeEach(function () {
                 Class.require(Require2 = $oop.Class.getClass('Require2')
-                    .include(Include = $oop.Class.getClass('Include'))
-                    .require(Require3 = $oop.Class.getClass('Require3')));
+                    .include(Include = $oop.Class.getClass('Include')));
+
+                Include.require(Require3 = $oop.getClass('Require3'));
             });
 
             it("should transfer requires", function () {
                 expect(Class.__requires).toEqual([
-                    Require2, Require3, Include
+                    Require2, Include, Require3
                 ]);
                 expect(Class.__requireLookup).toEqual({
                     Include: Include,
@@ -570,6 +576,13 @@ describe("$oop.Class", function () {
             });
         });
 
+        it("should add self to requirers on remote class", function () {
+            expect(Require.__requirers).toEqual([Class]);
+            expect(Require.__requirerLookup).toEqual({
+                Class: Class
+            });
+        });
+
         describe("then including same class", function () {
             beforeEach(function () {
                 Class.include(Require);
@@ -582,12 +595,13 @@ describe("$oop.Class", function () {
         });
 
         describe("when require has requires or includes", function () {
-            var Require2, Require3, Include;
+            var Require2, Require3, Include, Include2;
 
             beforeEach(function () {
                 Class.require(Require2 = $oop.Class.getClass('Require2')
-                    .include(Include = $oop.Class.getClass('Include'))
                     .require(Require3 = $oop.Class.getClass('Require3')));
+
+                Require2.include(Include = $oop.Class.getClass('Include'));
             });
 
             it("should transfer requires", function () {

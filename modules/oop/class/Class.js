@@ -46,6 +46,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 __includerLookup: {},
                 __requires: [],
                 __requireLookup: {},
+                __requirers: [],
+                __requirerLookup: {},
                 __forwards: [],
                 __mapper: undefined,
                 __instanceLookup: {}
@@ -343,6 +345,21 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @param {$oop.Class} Class
      * @private
      */
+    _addToRequirers: function (Class) {
+        var requirers = this.__requirers,
+            requirerLookup = this.__requirerLookup,
+            classId = Class.__classId;
+
+        if (!requirerLookup.hasOwnProperty(classId)) {
+            requirers.push(Class);
+            requirerLookup[classId] = Class;
+        }
+    },
+
+    /**
+     * @param {$oop.Class} Class
+     * @private
+     */
     _removeFromRequires: function (Class) {
         var classId = Class.__classId,
             requires = this.__requires,
@@ -360,13 +377,19 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @param {$oop.Class} Class
      * @private
      */
-    _transferRequires: function (Class) {
+    _transferRequiresFrom: function (Class) {
         var that = this;
 
-        Class.__requires
-            .concat(Class.__includes)
+        // transferring requires & includes of class to current class as requires
+        Class.__requires.concat(Class.__includes)
             .forEach(function (Class) {
                 that.require(Class);
+            });
+
+        // transferring class AS require to includers and requirers of current class
+        this.__includers.concat(this.__requirers)
+            .forEach(function (Host) {
+                Host.require(Class);
             });
     },
 
@@ -546,7 +569,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         this._removeFromRequires(Class);
 
         // transferring includes & requires from include
-        this._transferRequires(Class);
+        this._transferRequiresFrom(Class);
 
         var members = Class.__members;
 
@@ -561,8 +584,6 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // updating missing method names
         this._removeFromMissingMethods(members);
-
-        // TODO: updating includers
 
         return this;
     },
@@ -599,10 +620,11 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // adding require to registry
         this._addToRequires(Class);
 
-        // transferring includes & requires from require
-        this._transferRequires(Class);
+        // adding to requirers on require
+        Class._addToRequirers(this);
 
-        // TODO: updating includers
+        // transferring includes & requires from require
+        this._transferRequiresFrom(Class);
 
         return this;
     },
@@ -831,6 +853,16 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
     /**
      * @member {object} $oop.Class#__requireLookup
+     * @private
+     */
+
+    /**
+     * @member {string[]} $oop.Class#__requirers
+     * @private
+     */
+
+    /**
+     * @member {object} $oop.Class#__requirerLookup
      * @private
      */
 
