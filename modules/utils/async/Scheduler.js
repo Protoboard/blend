@@ -8,14 +8,11 @@
 exports.Scheduler = $oop.getClass('$utils.Scheduler')
     .define(/** @lends $utils.Scheduler# */{
         /**
-         * @param {function} callback
          * @param {number} [delay]
          * @ignore
          */
-        init: function (callback, delay) {
-            $assert
-                .isFunction(callback, "Invalid scheduler callback")
-                .isNumberOptional(delay, "Invalid schedule delay");
+        init: function (delay) {
+            $assert.isNumberOptional(delay, "Invalid schedule delay");
 
             /**
              * @type {number}
@@ -23,14 +20,9 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
             this.scheduleDelay = delay || 0;
 
             /**
-             * @type {function}
-             */
-            this.scheduledCallback = callback;
-
-            /**
              * @type {Array}
              */
-            this.scheduledCallbackArguments = [];
+            this.scheduledArguments = [];
 
             /**
              * @type {$utils.Timer[]}
@@ -48,7 +40,7 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
          * @protected
          */
         _getTimerIndexByArguments: function (args) {
-            var scheduledCallbackArguments = this.scheduledCallbackArguments,
+            var scheduledCallbackArguments = this.scheduledArguments,
                 scheduledCallbackArgumentsCount = scheduledCallbackArguments.length,
                 argCount = args.length,
                 i, matchesArguments,
@@ -70,13 +62,12 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
         },
 
         /**
-         * @param {Array|Arguments} args
+         * @param {number} timerIndex
          * @returns {$utils.Scheduler}
          * @protected
          */
-        _clearTimerForArguments: function (args) {
+        _clearTimerAtIndex: function (timerIndex) {
             // TODO: Investigate a good middle ground bw. cpu vs. memory footprint.
-            var timerIndex = this._getTimerIndexByArguments(args);
             this.scheduleTimers[timerIndex] = undefined;
         }
 

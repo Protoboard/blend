@@ -3,28 +3,10 @@
 var $utils = window['giant-utils'];
 
 describe("Debouncer", function () {
-    var callback,
-        debouncer;
+    var debouncer;
 
     beforeEach(function () {
-        callback = function () {};
-        debouncer = $utils.Debouncer.create(callback, 50);
-    });
-
-    describe("instantiation", function () {
-        describe("by conversion from function", function () {
-            var result;
-
-            beforeEach(function () {
-                spyOn($utils.Debouncer, 'create').and.returnValue(debouncer);
-                result = callback.toDebouncer(50);
-            });
-
-            it("should create Debouncer", function () {
-                expect($utils.Debouncer.create).toHaveBeenCalledWith(callback, 50);
-                expect(result).toBe(debouncer);
-            });
-        });
+        debouncer = $utils.Debouncer.create(50);
     });
 
     describe("scheduling", function () {
@@ -45,7 +27,7 @@ describe("Debouncer", function () {
         });
 
         it("should add arguments to list", function () {
-            expect(debouncer.scheduledCallbackArguments).toEqual([["foo", "bar"]]);
+            expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
         });
 
         it("should add timer to list", function () {
@@ -62,7 +44,7 @@ describe("Debouncer", function () {
             });
 
             it("should not add to argument list", function () {
-                expect(debouncer.scheduledCallbackArguments).toEqual([["foo", "bar"]]);
+                expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
             });
 
             it("should not add timer to list", function () {

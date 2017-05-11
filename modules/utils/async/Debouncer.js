@@ -3,7 +3,6 @@
 
 /**
  * @function $utils.Debouncer.create
- * @param {function} callback Function to debounce
  * @param {number} [delay] Minimum delay between dispatched calls.
  * @returns {$utils.Debouncer}
  */
@@ -41,7 +40,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
                     this.onTimerCancel);
 
                 // adding arg list & timer
-                this.scheduledCallbackArguments.push(callbackArguments);
+                this.scheduledArguments.push(callbackArguments);
                 this.scheduleTimers.push(timer);
             } else {
                 // re-starting timer
@@ -63,7 +62,8 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
             // timer expired
 
             // resetting affected timer
-            this._clearTimerForArguments(arguments);
+            var timerIndex = this._getTimerIndexByArguments(arguments);
+            this._clearTimerAtIndex(timerIndex);
 
             // notifying promise
             var schedulerDeferred = this.schedulerDeferred;
@@ -72,20 +72,10 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
 
         /** @ignore */
         onTimerCancel: function () {
-            // timer was canceled either by user or by subsequent scheduling
+            // timer was canceled by user
 
             // resetting affected timer
-            this._clearTimerForArguments(arguments);
+            var timerIndex = this._getTimerIndexByArguments(arguments);
+            this._clearTimerAtIndex(timerIndex);
         }
     });
-
-$oop.copyProperties(Function.prototype, /** @lends Function# */{
-    /**
-     * Creates a Debouncer based on the function.
-     * @param {number} [delay]
-     * @returns {$utils.Debouncer}
-     */
-    toDebouncer: function (delay) {
-        return exports.Debouncer.create(this.valueOf(), delay);
-    }
-});
