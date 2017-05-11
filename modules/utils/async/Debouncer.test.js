@@ -83,12 +83,8 @@ describe("Debouncer", function () {
                 result.then(null, null, progressHandler);
             });
 
-            it("should remove affected timer from registry", function () {
-                expect(debouncer.scheduleTimers).toEqual([]);
-            });
-
-            it("should remove affected arguments from registry", function () {
-                expect(debouncer.scheduledCallbackArguments).toEqual([]);
+            it("should reset affected timer in registry", function () {
+                expect(debouncer.scheduleTimers).toEqual([undefined]);
             });
 
             it("should notify promise with corresponding arguments", function () {
@@ -101,7 +97,7 @@ describe("Debouncer", function () {
                 debouncer.scheduleTimers[0].clearTimer();
             });
 
-            it("should remove affected timer in registry", function () {
+            it("should reset affected timer in registry", function () {
                 expect(debouncer.scheduleTimers).toEqual([undefined]);
             });
         });

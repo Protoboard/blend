@@ -1,4 +1,4 @@
-/* global $assert, $oop */
+/* global $assert, $oop, slice */
 "use strict";
 
 /**
@@ -47,7 +47,7 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
          * @param {Array|Arguments} args
          * @protected
          */
-        getTimerIndexByArguments: function (args) {
+        _getTimerIndexByArguments: function (args) {
             var scheduledCallbackArguments = this.scheduledCallbackArguments,
                 scheduledCallbackArgumentsCount = scheduledCallbackArguments.length,
                 argCount = args.length,
@@ -67,6 +67,17 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
                     return i;
                 }
             }
+        },
+
+        /**
+         * @param {Array|Arguments} args
+         * @returns {$utils.Scheduler}
+         * @protected
+         */
+        _clearTimerForArguments: function (args) {
+            // TODO: Investigate a good middle ground bw. cpu vs. memory footprint.
+            var timerIndex = this._getTimerIndexByArguments(args);
+            this.scheduleTimers[timerIndex] = undefined;
         }
 
         /**
