@@ -16,10 +16,6 @@ Routing
 Utils
 -----
 
-- Take apart Managed? Destroyable interface + Identifiable + Registered?
-- Scheduler
-    - Drop delay from Scheduler ctr args? (requestAnimationFrame) It's already optional.
-
 OOP
 ---
 
@@ -33,15 +29,11 @@ OOP
     - ~~Do not allow instances as static properties in Class#define~~
     - Whether forward includes class being instantiated. ON instantiation
     - Property vs. method collisions
-- Refactoring
-    - Consolidating meta containers
-- Investigate runtime class / instance composition.
+- Low pri: Investigate runtime class / instance composition.
     - Costly is OK.
     - GUID as Class ID for ad-hoc classes?
         - How would we clean it up?
         - Not caching builder / class?
-- Low pri: Make class meta properties non-enumerable
-    - Modify `$oop.copyProperties()` to use a common descriptor.
 - Low pri: Make `$oop.Base` a Class for compatibility, but make sure overrides are in place
 - Low pri: Swap back contribution vs. delegate terminology
 - Terminology
