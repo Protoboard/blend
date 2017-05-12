@@ -13,7 +13,7 @@
  * @class $utils.Interval
  * @extends $utils.Timer
  */
-exports.Interval = $oop.getClass('')
+exports.Interval = $oop.getClass('$utils.Interval')
     .include($oop.getClass('$utils.Timer'))
     .define(/** @lends $utils.Interval# */{
         /**
