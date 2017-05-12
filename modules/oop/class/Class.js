@@ -393,13 +393,21 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // transferring requires & includes of class to current class as requires
         Class.__requires.forward.list.concat(Class.__includes.forward.list)
             .forEach(function (Class) {
-                that.require(Class);
+                // adding require to registry
+                that._addToRequires(Class);
+
+                // adding to requirers on require
+                Class._addToRequirers(that);
             });
 
         // transferring class AS require to includers and requirers of current class
         this.__includes.reverse.list.concat(this.__requires.reverse.list)
             .forEach(function (Host) {
-                Host.require(Class);
+                // adding require to registry
+                Host._addToRequires(Class);
+
+                // adding to requirers on require
+                Class._addToRequirers(Host);
             });
     },
 
