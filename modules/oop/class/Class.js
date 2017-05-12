@@ -353,7 +353,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @param {$oop.Class} Class
      * @private
      */
-    _addToRequirers: function (Class) {
+    _addToHosts: function (Class) {
         var hosts = this.__requires.reverse,
             hostList = hosts.list,
             hostLookup = hosts.lookup,
@@ -396,18 +396,18 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 // adding require to registry
                 that._addToRequires(Class);
 
-                // adding to requirers on require
-                Class._addToRequirers(that);
+                // adding to hosts on require
+                Class._addToHosts(that);
             });
 
-        // transferring class AS require to includers and requirers of current class
+        // transferring class AS require to includers and hosts of current class
         this.__includes.reverse.list.concat(this.__requires.reverse.list)
             .forEach(function (Host) {
                 // adding require to registry
                 Host._addToRequires(Class);
 
-                // adding to requirers on require
-                Class._addToRequirers(Host);
+                // adding to hosts on require
+                Class._addToHosts(Host);
             });
     },
 
@@ -638,8 +638,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // adding require to registry
         this._addToRequires(Class);
 
-        // adding to requirers on require
-        Class._addToRequirers(this);
+        // adding to hosts on require
+        Class._addToHosts(this);
 
         // transferring includes & requires from require
         this._transferRequiresFrom(Class);

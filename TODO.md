@@ -26,9 +26,6 @@ OOP
 - **Extension that brings all includes of the 'base' with it.**
     - Traversing & collecting all includes
     - Additional method Class#extend
-- Propagation of inclusions & requires to includers & requirers.
-    - Maintaining lookup of requirers
-- Propagation of missing methods to implementers
 - _What if includes have conflicting hash functions?_
     - ATM not taken into account!
 - Full overrides

@@ -579,7 +579,7 @@ describe("$oop.Class", function () {
             });
         });
 
-        it("should add self to requirers on remote class", function () {
+        it("should add self to hosts on remote class", function () {
             expect(Require.__requires.reverse).toEqual({
                 list: [Class],
                 lookup: {
