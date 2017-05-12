@@ -2,7 +2,8 @@
 "use strict";
 
 /**
- * Do not create Promise instances directly. Promises are only to be used in connection with Deferred instances.
+ * Not to be used by other than $utils.Deferred
+ * @memberOf $utils~
  * @function $utils.Promise.create
  * @returns {$utils.Promise}
  * @ignore
@@ -11,6 +12,7 @@
 /**
  * Non-interactive synchronous implementation of Promises/A.
  * @see http://wiki.commonjs.org/wiki/Promises/A
+ * @see $utils.Deferred
  * @class $utils.Promise
  * @implements $utils.Thenable
  */

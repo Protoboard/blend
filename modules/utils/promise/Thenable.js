@@ -2,8 +2,8 @@
 "use strict";
 
 /**
- * For "thenables" outside of Giant, it's used in documentation only.
- * (Ie. for promises of external libraries, eg. Q, jQuery, ES6, etc.)
+ * Basis for promises. Allows baseline documentation-level compatibility
+ * with promises from external libraries. (Eg. Q, jQuery, ES6, etc.)
  * @interface $utils.Thenable
  */
 exports.Thenable = $oop.getClass('$utils.Thenable')

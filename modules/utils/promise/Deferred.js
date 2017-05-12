@@ -7,6 +7,8 @@
  */
 
 /**
+ * Q-style deferred controlling the corresponding Promises/A implementation.
+ * @see $utils.Promise
  * @class $utils.Deferred
  */
 exports.Deferred = $oop.getClass('$utils.Deferred')
