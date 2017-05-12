@@ -450,6 +450,39 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
+     * Collects all contributors of specified class, traversing its entire dependency tree.
+     * @param {$oop.Class} Class
+     * @returns {$oop.Class[]}
+     * @private
+     */
+    _gatherAllContributorsFrom: function (Class) {
+        var contributors = [],
+            contributorLookup = {};
+
+        (function getContributors(Class) {
+            var classId = Class.__classId,
+                contributorList = Class.__contributors.list,
+                contributorCount = contributorList.length,
+                i;
+
+            if (!contributorLookup[classId]) {
+                contributors.push(Class);
+                contributorLookup[classId] = Class;
+            }
+
+            if (contributorCount > 2 ||
+                contributorCount === 1 && contributorList[0] !== Class
+            ) {
+                for (i = 0; i < contributorCount; i++) {
+                    getContributors(contributorList[i]);
+                }
+            }
+        }(Class));
+
+        return contributors;
+    },
+
+    /**
      * Creates a new instance.
      * @returns {$oop.Class}
      */
@@ -574,6 +607,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     include: function (Class) {
         $assert.isClass(Class, "Class#include expects type Class.");
 
+        // TODO: Detect & throw on circular include
+
         // adding to includes
         this._addToIncludes(Class);
 
@@ -602,6 +637,24 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // updating missing method names
         this._removeFromMissingMethods(members);
+
+        return this;
+    },
+
+    /**
+     * Includes specified class and all its includes, direct or indirect.
+     * @param {$oop.Class} Class
+     * @returns {$oop.Class}
+     */
+    extend: function (Class) {
+        // gathering all dependencies (including Class)
+        var that = this,
+            contributors = this._gatherAllContributorsFrom(Class);
+
+        // including all dependencies
+        contributors.forEach(function (Class) {
+            that.include(Class);
+        });
 
         return this;
     },

@@ -11,9 +11,7 @@ describe("Retrievable", function () {
         $utils.Identifiable.lastInstanceId = -1;
         $utils.Retrievable.instanceRegistry = {};
         Retrievable = $oop.getClass("Retrievable")
-        // TODO: Replace w/ .extend when ready
-            .include($utils.Identifiable)
-            .include($utils.Retrievable);
+            .extend($utils.Retrievable);
     });
 
     describe("instantiation", function () {

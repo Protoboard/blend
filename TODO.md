@@ -13,22 +13,30 @@ Routing
 - When module gets loaded, look at current route & activate if necessary.
     - Depends on module management.
 
+Event
+-----
+
+- Eliminate "next payload" - makes things untraceable
+- Diagnostic add-on
+    - Collecting processing history (ClassID + function)
+- Evented.triggers(eventName):Promise
+
 Utils
 -----
 
 OOP
 ---
 
-- **Extension that brings all includes of the 'base' with it.**
-    - Traversing & collecting all includes
-    - Additional method Class#extend
-- _What if includes have conflicting hash functions?_
-    - ATM not taken into account!
 - Full overrides
 - Checks
     - ~~Do not allow instances as static properties in Class#define~~
     - Whether forward includes class being instantiated. ON instantiation
     - Property vs. method collisions
+    - Circular include
+- _What if includes have conflicting hash functions?_
+    - ATM not taken into account!
+    - Includes' hash shouldn't matter?
+- Low pri: Performance benchmarks
 - Low pri: Investigate runtime class / instance composition.
     - Costly is OK.
     - GUID as Class ID for ad-hoc classes?

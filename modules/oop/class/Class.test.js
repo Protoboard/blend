@@ -551,6 +551,39 @@ describe("$oop.Class", function () {
     });
 
     describe("requiring class", function () {
+        var Include1,
+            Include2,
+            Include3;
+
+        beforeEach(function () {
+            Include1 = $oop.getClass("Include1")
+                .define({
+                    bar: function() {}
+                });
+            Include2 = $oop.getClass("Include2")
+                .include(Include1)
+                .define({
+                    baz: function () {}
+                });
+            Include3 = $oop.getClass("Include3")
+                .include(Include1);
+
+            Class
+                .extend(Include3)
+                .extend(Include2)
+                .define({
+                    foo: function () {}
+                });
+        });
+
+        it("should add all dependencies", function () {
+            expect(Class.__contributors.list).toEqual([
+                Include3, Include1, Include2, Class
+            ]);
+        });
+    });
+
+    describe("requiring class", function () {
         var Require;
 
         beforeEach(function () {
