@@ -32,12 +32,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 /**
                  * Identifies class.
                  * @type {string}
+                 * @private
                  */
                 __classId: classId,
 
                 /**
                  * Properties and methods contributed by the current class.
                  * @type {object}
+                 * @private
                  */
                 __members: {},
 
@@ -45,6 +47,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                  * Registry of interfaces implemented by the current class,
                  * and classes implementing the current class as an interface.
                  * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 * @private
                  */
                 __interfaces: {
                     forward: {list: [], lookup: {}},
@@ -55,6 +58,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                  * Registry of classes included by the current class,
                  * and classes that include the current class.
                  * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 * @private
                  */
                 __includes: {
                     forward: {list: [], lookup: {}},
@@ -65,6 +69,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                  * Registry of classes required by the current class,
                  * and classes requiring the current class.
                  * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 * @private
                  */
                 __requires: {
                     forward: {list: [], lookup: {}},
@@ -74,12 +79,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 /**
                  * Registry of methods not implemented by current class.
                  * @type {{list: Array, lookup: object}}
+                 * @private
                  */
                 __missingMethodNames: {list: [], lookup: {}},
 
                 /**
                  * Registry of all classes contributing members to the current class.
                  * @type {{list: Array, lookup: object}}
+                 * @private
                  */
                 __contributors: {list: [], lookup: {}},
 
@@ -87,12 +94,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                  * Two dimensional lookup of methods contributed to the class.
                  * Indexed by method name, then contributor index. (Index of contributor in __contributors.list.)
                  * @type {object}
+                 * @private
                  */
                 __methodMatrix: {},
 
                 /**
                  * List of forwards (surrogate) descriptors.
                  * @type {Array.<{class: $oop.Class, filter: function, priority: number}>}
+                 * @private
                  */
                 __forwards: [],
 
@@ -100,12 +109,14 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                  * Hash function for caching instances.
                  * TODO: Rename
                  * @type {function}
+                 * @private
                  */
                 __mapper: undefined,
 
                 /**
                  * Lookup of cached instances indexed by hash.
                  * @type {object}
+                 * @private
                  */
                 __instanceLookup: {}
             }, {

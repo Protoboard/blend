@@ -5,7 +5,7 @@
  * Keeps a registry of all living instances, and makes them accessible
  * by their unique IDs.
  * @mixin $utils.Retrievable
- * @mixes $utils.Identifiable
+ * @extends $utils.Identifiable
  * @implements $utils.Destroyable
  */
 exports.Retrievable = $oop.getClass('$utils.Retrievable')
