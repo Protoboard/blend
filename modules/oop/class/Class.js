@@ -240,6 +240,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             .forEach(function (methodName) {
                 var methodMatrix = that.__methodMatrix;
 
+                // TODO: Test
                 that[methodName] = function () {
                     var methods = methodMatrix[methodName],
                         methodCount = methods.length,
@@ -249,6 +250,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                     for (i = 0; i < methodCount; i++) {
                         method = methods[i];
                         if (method) {
+                            method.returned = result;
                             result = method.apply(this, arguments);
                         }
                     }
