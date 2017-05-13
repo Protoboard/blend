@@ -3,12 +3,12 @@
 
 var $oop = window['giant-oop'];
 
-describe("Assertions", function () {
+describe("$assert", function () {
     beforeEach(function () {
         spyOn($assert, 'assert').and.callThrough();
     });
 
-    describe("conversion methods checker", function () {
+    describe("hasOnlyConverters()", function () {
         it("should pass message to assert", function () {
             $assert.hasOnlyConverters({}, "bar");
             expect($assert.assert).toHaveBeenCalledWith(true, "bar");

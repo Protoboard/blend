@@ -4,152 +4,137 @@
 var $assert = window['giant-assert'],
     $oop = window['giant-oop'];
 
-describe("$oop.Class", function () {
-    var Class,
-        result;
-
-    beforeEach(function () {
-        $oop.Class.classLookup = {};
-        Class = $oop.Class.getClass('Class');
-    });
-
-    describe("fetching", function () {
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    $oop.Class.getClass();
-                }).toThrow();
-            });
-        });
-
-        describe("when class already created", function () {
-            beforeEach(function () {
-                result = $oop.Class.getClass('Class');
-            });
-
-            it("should return same class", function () {
-                expect(result).toBe(Class);
-            });
-        });
-
-        it("should set class ID", function () {
-            expect(result.__classId).toEqual('Class');
-        });
-
-        it("should initialize member container", function () {
-            expect(result.__members).toEqual({});
-        });
-
-        it("should initialize interfaces", function () {
-            expect(result.__interfaces).toEqual({
-                forward: {list: [], lookup: {}},
-                reverse: {list: [], lookup: {}}
-            });
-        });
-
-        it("should initialize includes", function () {
-            expect(result.__includes).toEqual({
-                forward: {list: [], lookup: {}},
-                reverse: {list: [], lookup: {}}
-            });
-        });
-
-        it("should initialize requires", function () {
-            expect(result.__requires).toEqual({
-                forward: {list: [], lookup: {}},
-                reverse: {list: [], lookup: {}}
-            });
-        });
-
-        it("should initialize contributors", function () {
-            expect(result.__contributors).toEqual({list: [], lookup: {}});
-        });
-
-        it("should initialize method matrix", function () {
-            expect(result.__methodMatrix).toEqual({});
-        });
-
-        it("should initialize missing method names", function () {
-            expect(result.__missingMethodNames).toEqual({list: [], lookup: {}});
-        });
-
-        it("should initialize forwards", function () {
-            expect(result.__forwards).toEqual([]);
-        });
-
-        it("should initialize hash function", function () {
-            expect(result.__mapper).toBeUndefined();
-        });
-
-        it("should initialize instance lookup", function () {
-            expect(result.__instanceLookup).toEqual({});
-        });
-    });
-
-    describe("defining members", function () {
-        var batch,
+describe("$oop", function () {
+    describe("Class", function () {
+        var Class,
             result;
 
         beforeEach(function () {
-            batch = {
-                foo: "FOO",
-                bar: function () {
-                }
-            };
-            result = Class.define(batch);
+            $oop.Class.classLookup = {};
+            Class = $oop.Class.getClass('Class');
         });
 
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    $oop.Class.getClass('Class2').define();
-                }).toThrow();
-            });
-        });
-
-        it("should return self", function () {
-            expect(result).toBe(Class);
-        });
-
-        it("should add members", function () {
-            expect(Class.__members).toEqual({
-                foo: "FOO",
-                bar: batch.bar
-            });
-        });
-
-        describe("when member already exists", function () {
-            beforeEach(function () {
-                Class.define({
-                    foo: "BAR"
+        describe("getClass()", function () {
+            describe("when passing no arguments", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        $oop.Class.getClass();
+                    }).toThrow();
                 });
             });
 
-            it("should overwrite members", function () {
+            describe("when class already created", function () {
+                beforeEach(function () {
+                    result = $oop.Class.getClass('Class');
+                });
+
+                it("should return same class", function () {
+                    expect(result).toBe(Class);
+                });
+            });
+
+            it("should set class ID", function () {
+                expect(result.__classId).toEqual('Class');
+            });
+
+            it("should initialize member container", function () {
+                expect(result.__members).toEqual({});
+            });
+
+            it("should initialize interfaces", function () {
+                expect(result.__interfaces).toEqual({
+                    forward: {list: [], lookup: {}},
+                    reverse: {list: [], lookup: {}}
+                });
+            });
+
+            it("should initialize includes", function () {
+                expect(result.__includes).toEqual({
+                    forward: {list: [], lookup: {}},
+                    reverse: {list: [], lookup: {}}
+                });
+            });
+
+            it("should initialize requires", function () {
+                expect(result.__requires).toEqual({
+                    forward: {list: [], lookup: {}},
+                    reverse: {list: [], lookup: {}}
+                });
+            });
+
+            it("should initialize contributors", function () {
+                expect(result.__contributors).toEqual({list: [], lookup: {}});
+            });
+
+            it("should initialize method matrix", function () {
+                expect(result.__methodMatrix).toEqual({});
+            });
+
+            it("should initialize missing method names", function () {
+                expect(result.__missingMethodNames).toEqual({list: [], lookup: {}});
+            });
+
+            it("should initialize forwards", function () {
+                expect(result.__forwards).toEqual([]);
+            });
+
+            it("should initialize hash function", function () {
+                expect(result.__mapper).toBeUndefined();
+            });
+
+            it("should initialize instance lookup", function () {
+                expect(result.__instanceLookup).toEqual({});
+            });
+        });
+
+        describe("define()", function () {
+            var batch,
+                result;
+
+            beforeEach(function () {
+                batch = {
+                    foo: "FOO",
+                    bar: function () {
+                    }
+                };
+                result = Class.define(batch);
+            });
+
+            describe("when passing no arguments", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        $oop.Class.getClass('Class2').define();
+                    }).toThrow();
+                });
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(Class);
+            });
+
+            it("should add members", function () {
                 expect(Class.__members).toEqual({
-                    foo: "BAR",
+                    foo: "FOO",
                     bar: batch.bar
                 });
             });
-        });
 
-        it("should add class to contributions", function () {
-            expect(Class.__contributors).toEqual({
-                list: [Class],
-                lookup: {
-                    Class: 0
-                }
-            });
-        });
+            describe("when member already exists", function () {
+                beforeEach(function () {
+                    Class.define({
+                        foo: "BAR"
+                    });
+                });
 
-        describe("when already in contributions", function () {
-            beforeEach(function () {
-                Class.define({
-                    foo: "BAR"
+                it("should overwrite members", function () {
+                    expect(Class.__members).toEqual({
+                        foo: "BAR",
+                        bar: batch.bar
+                    });
                 });
             });
 
-            it("should not add again", function () {
+            it("should add class to contributions", function () {
                 expect(Class.__contributors).toEqual({
                     list: [Class],
                     lookup: {
@@ -157,141 +142,137 @@ describe("$oop.Class", function () {
                     }
                 });
             });
-        });
 
-        it("should add methods to method matrix", function () {
-            expect(Class.__methodMatrix).toEqual({
-                bar: [batch.bar]
+            describe("when already in contributions", function () {
+                beforeEach(function () {
+                    Class.define({
+                        foo: "BAR"
+                    });
+                });
+
+                it("should not add again", function () {
+                    expect(Class.__contributors).toEqual({
+                        list: [Class],
+                        lookup: {
+                            Class: 0
+                        }
+                    });
+                });
             });
-        });
 
-        describe("on subsequent calls", function () {
-            var batch2;
-
-            beforeEach(function () {
-                batch2 = {
-                    baz: function () {
-                    }
-                };
-                Class.define(batch2);
-            });
-
-            it("should add to the same matrix column", function () {
+            it("should add methods to method matrix", function () {
                 expect(Class.__methodMatrix).toEqual({
-                    bar: [batch.bar],
-                    baz: [batch2.baz]
-                });
-            });
-        });
-
-        it("should copy properties to class", function () {
-            expect(Class.foo).toBe("FOO");
-        });
-
-        describe("some of which are instances", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.define({
-                        baz: $oop.Class.getClass('Test').create()
-                    });
-                }).toThrow();
-            });
-        });
-
-        describe("some of which are classes", function () {
-            it("should not throw", function () {
-                expect(function () {
-                    Class.define({
-                        baz: $oop.Class.getClass('Test')
-                    });
-                }).not.toThrow();
-            });
-        });
-
-        describe("when already added", function () {
-            beforeEach(function () {
-                Class.define({
-                    foo: "BAR"
+                    bar: [batch.bar]
                 });
             });
 
-            it("should overwrite properties in class", function () {
-                expect(Class.foo).toBe("BAR");
-            });
-        });
+            describe("on subsequent calls", function () {
+                var batch2;
 
-        // TODO: Test if wrappers actually work
-        it("should add wrapper methods", function () {
-            expect(typeof Class.bar === 'function').toBeTruthy();
-            expect(Class.bar).not.toBe(batch.bar);
-        });
-
-        describe("then implementing relevant interface", function () {
-            beforeEach(function () {
-                Class.implement($oop.Class.getClass('Interface')
-                    .define({
-                        bar: function () {
-                        },
+                beforeEach(function () {
+                    batch2 = {
                         baz: function () {
                         }
-                    }));
+                    };
+                    Class.define(batch2);
+                });
+
+                it("should add to the same matrix column", function () {
+                    expect(Class.__methodMatrix).toEqual({
+                        bar: [batch.bar],
+                        baz: [batch2.baz]
+                    });
+                });
             });
 
-            it("should not register implemented methods", function () {
-                expect(Class.__missingMethodNames).toEqual({
-                    list: ['baz'],
-                    lookup: {baz: true}
+            it("should copy properties to class", function () {
+                expect(Class.foo).toBe("FOO");
+            });
+
+            describe("some of which are instances", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.define({
+                            baz: $oop.Class.getClass('Test').create()
+                        });
+                    }).toThrow();
+                });
+            });
+
+            describe("some of which are classes", function () {
+                it("should not throw", function () {
+                    expect(function () {
+                        Class.define({
+                            baz: $oop.Class.getClass('Test')
+                        });
+                    }).not.toThrow();
+                });
+            });
+
+            describe("when already added", function () {
+                beforeEach(function () {
+                    Class.define({
+                        foo: "BAR"
+                    });
+                });
+
+                it("should overwrite properties in class", function () {
+                    expect(Class.foo).toBe("BAR");
+                });
+            });
+
+            // TODO: Test if wrappers actually work
+            it("should add wrapper methods", function () {
+                expect(typeof Class.bar === 'function').toBeTruthy();
+                expect(Class.bar).not.toBe(batch.bar);
+            });
+
+            describe("then implementing relevant interface", function () {
+                beforeEach(function () {
+                    Class.implement($oop.Class.getClass('Interface')
+                        .define({
+                            bar: function () {
+                            },
+                            baz: function () {
+                            }
+                        }));
+                });
+
+                it("should not register implemented methods", function () {
+                    expect(Class.__missingMethodNames).toEqual({
+                        list: ['baz'],
+                        lookup: {baz: true}
+                    });
                 });
             });
         });
-    });
 
-    describe("implementing interface", function () {
-        var Interface;
+        describe("implement()", function () {
+            var Interface;
 
-        beforeEach(function () {
-            Interface = $oop.Class.getClass('Interface')
-                .define({
-                    foo: "FOO",
-                    bar: function () {
-                    }
+            beforeEach(function () {
+                Interface = $oop.Class.getClass('Interface')
+                    .define({
+                        foo: "FOO",
+                        bar: function () {
+                        }
+                    });
+                result = Class.implement(Interface);
+            });
+
+            describe("when passing no arguments", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.implement();
+                    }).toThrow();
                 });
-            result = Class.implement(Interface);
-        });
-
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.implement();
-                }).toThrow();
             });
-        });
 
-        it("should return self", function () {
-            expect(result).toBe(Class);
-        });
-
-        it("should add to interfaces", function () {
-            expect(Class.__interfaces.forward).toEqual({
-                list: [Interface],
-                lookup: {
-                    Interface: Interface
-                }
+            it("should return self", function () {
+                expect(result).toBe(Class);
             });
-        });
 
-        it("should add self to implementers on interface", function () {
-            expect(Interface.__interfaces.reverse).toEqual({
-                list: [Class],
-                lookup: {
-                    Class: Class
-                }
-            });
-        });
-
-        describe("when already added", function () {
-            it("should not add again", function () {
-                Class.implement(Interface);
+            it("should add to interfaces", function () {
                 expect(Class.__interfaces.forward).toEqual({
                     list: [Interface],
                     lookup: {
@@ -299,153 +280,159 @@ describe("$oop.Class", function () {
                     }
                 });
             });
-        });
 
-        it("should register missing methods", function () {
-            expect(Class.__missingMethodNames).toEqual({
-                list: ['bar'],
-                lookup: {bar: true}
-            });
-        });
-
-        describe("then defining relevant methods", function () {
-            beforeEach(function () {
-                Class.implement($oop.Class.getClass('Interface2')
-                    .define({
-                        baz: function () {
-                        }
-                    }));
-
-                Class.define({
-                    bar: function () {
+            it("should add self to implementers on interface", function () {
+                expect(Interface.__interfaces.reverse).toEqual({
+                    list: [Class],
+                    lookup: {
+                        Class: Class
                     }
                 });
             });
 
-            it("should cancel out missing methods", function () {
-                expect(Class.__missingMethodNames).toEqual({
-                    list: ['baz'],
-                    lookup: {baz: true}
+            describe("when already added", function () {
+                it("should not add again", function () {
+                    Class.implement(Interface);
+                    expect(Class.__interfaces.forward).toEqual({
+                        list: [Interface],
+                        lookup: {
+                            Interface: Interface
+                        }
+                    });
                 });
             });
-        });
 
-        describe("then including same class", function () {
-            beforeEach(function () {
-                Class
-                    .implement($oop.Class.getClass('Interface2')
+            it("should register missing methods", function () {
+                expect(Class.__missingMethodNames).toEqual({
+                    list: ['bar'],
+                    lookup: {bar: true}
+                });
+            });
+
+            describe("then defining relevant methods", function () {
+                beforeEach(function () {
+                    Class.implement($oop.Class.getClass('Interface2')
                         .define({
                             baz: function () {
                             }
-                        }))
-                    .include($oop.Class.getClass('Include')
-                        .define({
-                            bar: function () {},
-                            quux: function () {}
                         }));
-            });
 
-            it("should cancel out missing methods", function () {
-                expect(Class.__missingMethodNames).toEqual({
-                    list: ['baz'],
-                    lookup: {baz: true}
-                });
-            });
-
-            describe("then defining members on include", function () {
-                beforeEach(function () {
-                    $oop.Class.getClass('Include')
-                        .define({
-                            baz: function () {}
-                        });
+                    Class.define({
+                        bar: function () {
+                        }
+                    });
                 });
 
                 it("should cancel out missing methods", function () {
                     expect(Class.__missingMethodNames).toEqual({
-                        list: [],
-                        lookup: {}
+                        list: ['baz'],
+                        lookup: {baz: true}
+                    });
+                });
+            });
+
+            describe("then including same class", function () {
+                beforeEach(function () {
+                    Class
+                        .implement($oop.Class.getClass('Interface2')
+                            .define({
+                                baz: function () {
+                                }
+                            }))
+                        .include($oop.Class.getClass('Include')
+                            .define({
+                                bar: function () {},
+                                quux: function () {}
+                            }));
+                });
+
+                it("should cancel out missing methods", function () {
+                    expect(Class.__missingMethodNames).toEqual({
+                        list: ['baz'],
+                        lookup: {baz: true}
+                    });
+                });
+
+                describe("then defining members on include", function () {
+                    beforeEach(function () {
+                        $oop.Class.getClass('Include')
+                            .define({
+                                baz: function () {}
+                            });
+                    });
+
+                    it("should cancel out missing methods", function () {
+                        expect(Class.__missingMethodNames).toEqual({
+                            list: [],
+                            lookup: {}
+                        });
+                    });
+                });
+            });
+
+            describe("then defining methods on interface", function () {
+                beforeEach(function () {
+                    Interface.define({
+                        baz: function () {}
+                    });
+                });
+
+                it("should propagate missing methods", function () {
+                    expect(Class.__missingMethodNames).toEqual({
+                        list: ['bar', 'baz'],
+                        lookup: {
+                            bar: true,
+                            baz: true
+                        }
                     });
                 });
             });
         });
 
-        describe("then defining methods on interface", function () {
+        describe("include()", function () {
+            var Trait;
+
             beforeEach(function () {
-                Interface.define({
-                    baz: function () {}
+                Trait = $oop.Class.getClass('Trait')
+                    .define({
+                        foo: "FOO",
+                        bar: function () {}
+                    });
+
+                result = Class.include(Trait);
+            });
+
+            describe("when passing no arguments", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.include();
+                    }).toThrow();
                 });
             });
 
-            it("should propagate missing methods", function () {
-                expect(Class.__missingMethodNames).toEqual({
-                    list: ['bar', 'baz'],
+            it("should return self", function () {
+                expect(result).toBe(Class);
+            });
+
+            it("should add to includes", function () {
+                expect(Class.__includes.forward).toEqual({
+                    list: [Trait],
                     lookup: {
-                        bar: true,
-                        baz: true
+                        Trait: Trait
                     }
                 });
             });
-        });
-    });
 
-    describe("including class", function () {
-        var Trait;
-
-        beforeEach(function () {
-            Trait = $oop.Class.getClass('Trait')
-                .define({
-                    foo: "FOO",
-                    bar: function () {}
+            it("should add self to includers on remote class", function () {
+                expect(Trait.__includes.reverse).toEqual({
+                    list: [Class],
+                    lookup: {
+                        Class: Class
+                    }
                 });
-
-            result = Class.include(Trait);
-        });
-
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.include();
-                }).toThrow();
-            });
-        });
-
-        it("should return self", function () {
-            expect(result).toBe(Class);
-        });
-
-        it("should add to includes", function () {
-            expect(Class.__includes.forward).toEqual({
-                list: [Trait],
-                lookup: {
-                    Trait: Trait
-                }
-            });
-        });
-
-        it("should add self to includers on remote class", function () {
-            expect(Trait.__includes.reverse).toEqual({
-                list: [Class],
-                lookup: {
-                    Class: Class
-                }
-            });
-        });
-
-        it("should add to list of contributions", function () {
-            expect(Class.__contributors).toEqual({
-                list: [Trait],
-                lookup: {
-                    Trait: 0
-                }
-            });
-        });
-
-        describe("on duplication", function () {
-            beforeEach(function () {
-                Class.include(Trait);
             });
 
-            it("should not add to contributions again", function () {
+            it("should add to list of contributions", function () {
                 expect(Class.__contributors).toEqual({
                     list: [Trait],
                     lookup: {
@@ -453,470 +440,423 @@ describe("$oop.Class", function () {
                     }
                 });
             });
-        });
 
-        it("should add methods to method matrix", function () {
-            expect(Class.__methodMatrix).toEqual({
-                bar: [Trait.__members.bar]
-            });
-        });
+            describe("on duplication", function () {
+                beforeEach(function () {
+                    Class.include(Trait);
+                });
 
-        it("should copy properties to class", function () {
-            expect(Class.foo).toBe("FOO");
-        });
-
-        it("should add wrapper methods", function () {
-            expect(typeof Class.bar === 'function').toBeTruthy();
-            expect(Class.bar).not.toBe(Trait.__members.bar);
-        });
-
-        describe("then implementing relevant interface", function () {
-            beforeEach(function () {
-                Class.implement($oop.Class.getClass('Interface')
-                    .define({
-                        bar: function () {
-                        },
-                        baz: function () {
+                it("should not add to contributions again", function () {
+                    expect(Class.__contributors).toEqual({
+                        list: [Trait],
+                        lookup: {
+                            Trait: 0
                         }
-                    }));
-            });
-
-            it("should not register implemented methods", function () {
-                expect(Class.__missingMethodNames).toEqual({
-                    list: ['baz'],
-                    lookup: {baz: true}
-                });
-            });
-        });
-
-        describe("then requiring same class", function () {
-            beforeEach(function () {
-                Class.require(Trait);
-            });
-
-            it("should not add class to requires", function () {
-                expect(Class.__requires.forward).toEqual({
-                    list: [],
-                    lookup: {}
-                });
-            });
-        });
-
-        describe("when include has requires or includes", function () {
-            var Require2, Require3, Include;
-
-            beforeEach(function () {
-                Class.require(Require2 = $oop.Class.getClass('Require2')
-                    .include(Include = $oop.Class.getClass('Include')));
-
-                Include.require(Require3 = $oop.getClass('Require3'));
-            });
-
-            it("should transfer requires", function () {
-                expect(Class.__requires.forward).toEqual({
-                    list: [Require2, Include, Require3],
-                    lookup: {
-                        Include: Include,
-                        Require2: Require2,
-                        Require3: Require3
-                    }
-                });
-            });
-        });
-
-        describe("then defining members on include", function () {
-            beforeEach(function () {
-                Trait.define({
-                    baz: function () {},
-                    quux: "QUUX"
+                    });
                 });
             });
 
-            it("should add new methods to method matrix", function () {
+            it("should add methods to method matrix", function () {
                 expect(Class.__methodMatrix).toEqual({
-                    bar: [Trait.__members.bar],
-                    baz: [Trait.__members.baz]
+                    bar: [Trait.__members.bar]
                 });
             });
 
-            it("should add new properties to class", function () {
-                expect(Class.quux).toBe("QUUX");
+            it("should copy properties to class", function () {
+                expect(Class.foo).toBe("FOO");
             });
 
-            it("should add new wrapper methods", function () {
-                expect(typeof Class.baz === 'function').toBeTruthy();
-                expect(Class.baz).not.toBe(Trait.__members.baz);
+            it("should add wrapper methods", function () {
+                expect(typeof Class.bar === 'function').toBeTruthy();
+                expect(Class.bar).not.toBe(Trait.__members.bar);
             });
-        });
-    });
 
-    describe("extending class", function () {
-        var Include1,
-            Include2,
-            Include3;
-
-        beforeEach(function () {
-            Include1 = $oop.getClass("Include1")
-                .define({
-                    bar: function() {}
+            describe("then implementing relevant interface", function () {
+                beforeEach(function () {
+                    Class.implement($oop.Class.getClass('Interface')
+                        .define({
+                            bar: function () {
+                            },
+                            baz: function () {
+                            }
+                        }));
                 });
-            Include2 = $oop.getClass("Include2")
-                .include(Include1)
-                .define({
-                    baz: function () {}
+
+                it("should not register implemented methods", function () {
+                    expect(Class.__missingMethodNames).toEqual({
+                        list: ['baz'],
+                        lookup: {baz: true}
+                    });
                 });
-            Include3 = $oop.getClass("Include3")
-                .include(Include1);
+            });
 
-            Class
-                .extend(Include3)
-                .extend(Include2)
-                .define({
-                    foo: function () {}
+            describe("then requiring same class", function () {
+                beforeEach(function () {
+                    Class.require(Trait);
                 });
-        });
 
-        it("should add all dependencies", function () {
-            expect(Class.__contributors.list).toEqual([
-                Include1, Include3, Include2, Class
-            ]);
-        });
-    });
-
-    describe("requiring class", function () {
-        var Require;
-
-        beforeEach(function () {
-            Require = $oop.Class.getClass('Require');
-            result = Class.require(Require);
-        });
-
-        describe("when passing no arguments", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.require();
-                }).toThrow();
-            });
-        });
-
-        it("should return self", function () {
-            expect(result).toBe(Class);
-        });
-
-        it("should add requires", function () {
-            expect(Class.__requires.forward).toEqual({
-                list: [Require],
-                lookup: {
-                    Require: Require
-                }
-            });
-        });
-
-        it("should add self to hosts on remote class", function () {
-            expect(Require.__requires.reverse).toEqual({
-                list: [Class],
-                lookup: {
-                    Class: Class
-                }
-            });
-        });
-
-        describe("then including same class", function () {
-            beforeEach(function () {
-                Class.include(Require);
+                it("should not add class to requires", function () {
+                    expect(Class.__requires.forward).toEqual({
+                        list: [],
+                        lookup: {}
+                    });
+                });
             });
 
-            it("should remove class from requires", function () {
-                expect(Class.__requires.forward).toEqual({
-                    list: [],
-                    lookup: {}
+            describe("when include has requires or includes", function () {
+                var Require2, Require3, Include;
+
+                beforeEach(function () {
+                    Class.require(Require2 = $oop.Class.getClass('Require2')
+                        .include(Include = $oop.Class.getClass('Include')));
+
+                    Include.require(Require3 = $oop.getClass('Require3'));
+                });
+
+                it("should transfer requires", function () {
+                    expect(Class.__requires.forward).toEqual({
+                        list: [Require2, Include, Require3],
+                        lookup: {
+                            Include: Include,
+                            Require2: Require2,
+                            Require3: Require3
+                        }
+                    });
+                });
+            });
+
+            describe("then defining members on include", function () {
+                beforeEach(function () {
+                    Trait.define({
+                        baz: function () {},
+                        quux: "QUUX"
+                    });
+                });
+
+                it("should add new methods to method matrix", function () {
+                    expect(Class.__methodMatrix).toEqual({
+                        bar: [Trait.__members.bar],
+                        baz: [Trait.__members.baz]
+                    });
+                });
+
+                it("should add new properties to class", function () {
+                    expect(Class.quux).toBe("QUUX");
+                });
+
+                it("should add new wrapper methods", function () {
+                    expect(typeof Class.baz === 'function').toBeTruthy();
+                    expect(Class.baz).not.toBe(Trait.__members.baz);
                 });
             });
         });
 
-        describe("when require has requires or includes", function () {
-            var Require2, Require3, Include, Include2;
+        describe("extend()", function () {
+            var Include1,
+                Include2,
+                Include3;
 
             beforeEach(function () {
-                Class.require(Require2 = $oop.Class.getClass('Require2')
-                    .require(Require3 = $oop.Class.getClass('Require3')));
+                Include1 = $oop.getClass("Include1")
+                    .define({
+                        bar: function () {}
+                    });
+                Include2 = $oop.getClass("Include2")
+                    .include(Include1)
+                    .define({
+                        baz: function () {}
+                    });
+                Include3 = $oop.getClass("Include3")
+                    .include(Include1);
 
-                Require2.include(Include = $oop.Class.getClass('Include'));
+                Class
+                    .extend(Include3)
+                    .extend(Include2)
+                    .define({
+                        foo: function () {}
+                    });
             });
 
-            it("should transfer requires", function () {
+            it("should add all dependencies", function () {
+                expect(Class.__contributors.list).toEqual([
+                    Include1, Include3, Include2, Class
+                ]);
+            });
+        });
+
+        describe("require()", function () {
+            var Require;
+
+            beforeEach(function () {
+                Require = $oop.Class.getClass('Require');
+                result = Class.require(Require);
+            });
+
+            describe("when passing no arguments", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.require();
+                    }).toThrow();
+                });
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(Class);
+            });
+
+            it("should add requires", function () {
                 expect(Class.__requires.forward).toEqual({
-                    list: [Require, Require2, Require3, Include],
+                    list: [Require],
                     lookup: {
-                        Include: Include,
-                        Require: Require,
-                        Require2: Require2,
-                        Require3: Require3
+                        Require: Require
                     }
                 });
             });
-        });
-    });
 
-    describe("forwarding", function () {
-        var filter, Class1;
+            it("should add self to hosts on remote class", function () {
+                expect(Require.__requires.reverse).toEqual({
+                    list: [Class],
+                    lookup: {
+                        Class: Class
+                    }
+                });
+            });
 
-        beforeEach(function () {
-            filter = function () {
-            };
-            Class.forward(Class1 = $oop.Class.getClass('Class1'), filter, 1);
-        });
+            describe("then including same class", function () {
+                beforeEach(function () {
+                    Class.include(Require);
+                });
 
-        describe("when passing invalid argument", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.forward(null, filter, 1);
-                }).toThrow();
+                it("should remove class from requires", function () {
+                    expect(Class.__requires.forward).toEqual({
+                        list: [],
+                        lookup: {}
+                    });
+                });
+            });
+
+            describe("when require has requires or includes", function () {
+                var Require2, Require3, Include, Include2;
+
+                beforeEach(function () {
+                    Class.require(Require2 = $oop.Class.getClass('Require2')
+                        .require(Require3 = $oop.Class.getClass('Require3')));
+
+                    Require2.include(Include = $oop.Class.getClass('Include'));
+                });
+
+                it("should transfer requires", function () {
+                    expect(Class.__requires.forward).toEqual({
+                        list: [Require, Require2, Require3, Include],
+                        lookup: {
+                            Include: Include,
+                            Require: Require,
+                            Require2: Require2,
+                            Require3: Require3
+                        }
+                    });
+                });
             });
         });
 
-        it("should add forward descriptor", function () {
-            expect(Class.__forwards).toEqual([{
-                'class': Class1,
-                'filter': filter,
-                'priority': 1
-            }]);
-        });
-
-        describe("when appending lower priority", function () {
-            var Class2,
-                filter2;
+        describe("forward()", function () {
+            var filter, Class1;
 
             beforeEach(function () {
-                filter2 = function () {
+                filter = function () {
                 };
-                Class.forward(Class2 = $oop.Class.getClass('Class2'), filter2, 10);
+                Class.forward(Class1 = $oop.Class.getClass('Class1'), filter, 1);
             });
 
-            it("should sort descriptors by priority", function () {
+            describe("when passing invalid argument", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.forward(null, filter, 1);
+                    }).toThrow();
+                });
+            });
+
+            it("should add forward descriptor", function () {
                 expect(Class.__forwards).toEqual([{
-                    'class': Class2,
-                    'filter': filter2,
-                    'priority': 10
-                }, {
                     'class': Class1,
                     'filter': filter,
                     'priority': 1
                 }]);
             });
-        });
-    });
 
-    describe("caching", function () {
-        var mapper;
+            describe("when appending lower priority", function () {
+                var Class2,
+                    filter2;
 
-        beforeEach(function () {
-            mapper = function () {
-            };
-            result = Class.cache(mapper);
-        });
+                beforeEach(function () {
+                    filter2 = function () {
+                    };
+                    Class.forward(Class2 = $oop.Class.getClass('Class2'), filter2, 10);
+                });
 
-        describe("when passing invalid argument", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.cache();
-                }).toThrow();
+                it("should sort descriptors by priority", function () {
+                    expect(Class.__forwards).toEqual([{
+                        'class': Class2,
+                        'filter': filter2,
+                        'priority': 10
+                    }, {
+                        'class': Class1,
+                        'filter': filter,
+                        'priority': 1
+                    }]);
+                });
             });
         });
 
-        it("should return self", function () {
-            expect(result).toBe(Class);
-        });
+        describe("cache()", function () {
+            var mapper;
 
-        it("should set hash function", function () {
-            expect(Class.__mapper).toBe(mapper);
-        });
-    });
+            beforeEach(function () {
+                mapper = function () {
+                };
+                result = Class.cache(mapper);
+            });
 
-    describe("implementation tester", function () {
-        var Interface;
+            describe("when passing invalid argument", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.cache();
+                    }).toThrow();
+                });
+            });
 
-        beforeEach(function () {
-            Interface = $oop.Class.getClass('Interface');
-            Class.implement(Interface);
-        });
+            it("should return self", function () {
+                expect(result).toBe(Class);
+            });
 
-        describe("on invalid argument", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.implements();
-                }).toThrow();
+            it("should set hash function", function () {
+                expect(Class.__mapper).toBe(mapper);
             });
         });
 
-        describe("on present interface", function () {
-            it("should return true", function () {
-                expect(Class.implements(Interface)).toBe(true);
+        describe("implements()", function () {
+            var Interface;
+
+            beforeEach(function () {
+                Interface = $oop.Class.getClass('Interface');
+                Class.implement(Interface);
+            });
+
+            describe("on invalid argument", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.implements();
+                    }).toThrow();
+                });
+            });
+
+            describe("on present interface", function () {
+                it("should return true", function () {
+                    expect(Class.implements(Interface)).toBe(true);
+                });
+            });
+
+            describe("on absent interface", function () {
+                it("should return false", function () {
+                    var Interface2 = $oop.Class.getClass('Interface2');
+                    expect(Class.implements(Interface2)).toBe(false);
+                });
             });
         });
 
-        describe("on absent interface", function () {
-            it("should return false", function () {
-                var Interface2 = $oop.Class.getClass('Interface2');
-                expect(Class.implements(Interface2)).toBe(false);
+        describe("isImplementedBy()", function () {
+            var Interface;
+
+            beforeEach(function () {
+                Interface = $oop.Class.getClass('Interface');
+                Class.implement(Interface);
             });
-        });
-    });
 
-    describe("reverse implementation tester", function () {
-        var Interface;
-
-        beforeEach(function () {
-            Interface = $oop.Class.getClass('Interface');
-            Class.implement(Interface);
-        });
-
-        describe("when passing non-class", function () {
-            it("should return false", function () {
-                expect(Interface.isImplementedBy(undefined)).toBe(false);
+            describe("when passing non-class", function () {
+                it("should return false", function () {
+                    expect(Interface.isImplementedBy(undefined)).toBe(false);
+                });
             });
-        });
 
-        describe("on implementing class", function () {
-            it("should return true", function () {
-                expect(Interface.isImplementedBy(Class)).toBe(true);
+            describe("on implementing class", function () {
+                it("should return true", function () {
+                    expect(Interface.isImplementedBy(Class)).toBe(true);
+                });
             });
-        });
 
-        describe("on non-implementing class", function () {
-            it("should return false", function () {
-                var Class2 = $oop.Class.getClass('Class2');
-                expect(Interface.isImplementedBy(Class2)).toBe(false);
-            });
-        });
-    });
-
-    describe("inclusion tester", function () {
-        var Trait;
-
-        beforeEach(function () {
-            Trait = $oop.Class.getClass('Trait');
-            Class.include(Trait);
-        });
-
-        describe("on invalid argument", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.includes();
-                }).toThrow();
+            describe("on non-implementing class", function () {
+                it("should return false", function () {
+                    var Class2 = $oop.Class.getClass('Class2');
+                    expect(Interface.isImplementedBy(Class2)).toBe(false);
+                });
             });
         });
 
-        describe("on self", function () {
-            it("should return true", function () {
-                expect(Class.includes(Class)).toBe(true);
+        describe("includes()", function () {
+            var Trait;
+
+            beforeEach(function () {
+                Trait = $oop.Class.getClass('Trait');
+                Class.include(Trait);
+            });
+
+            describe("on invalid argument", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.includes();
+                    }).toThrow();
+                });
+            });
+
+            describe("on self", function () {
+                it("should return true", function () {
+                    expect(Class.includes(Class)).toBe(true);
+                });
+            });
+
+            describe("on present include", function () {
+                it("should return true", function () {
+                    expect(Class.includes(Trait)).toBe(true);
+                });
+            });
+
+            describe("on absent include", function () {
+                it("should return false", function () {
+                    var Trait2 = $oop.Class.getClass('Trait2');
+                    expect(Class.includes(Trait2)).toBe(false);
+                });
             });
         });
 
-        describe("on present include", function () {
-            it("should return true", function () {
-                expect(Class.includes(Trait)).toBe(true);
+        describe("isIncludedBy()", function () {
+            var Trait;
+
+            beforeEach(function () {
+                Trait = $oop.Class.getClass('Interface');
+                Class.include(Trait);
+            });
+
+            describe("when passing non-class", function () {
+                it("should return false", function () {
+                    expect(Trait.isIncludedBy(undefined)).toBe(false);
+                });
+            });
+
+            describe("on including class", function () {
+                it("should return true", function () {
+                    expect(Trait.isIncludedBy(Class)).toBe(true);
+                });
+            });
+
+            describe("on non-including class", function () {
+                it("should return false", function () {
+                    var Class2 = $oop.Class.getClass('Class2');
+                    expect(Trait.isIncludedBy(Class2)).toBe(false);
+                });
             });
         });
 
-        describe("on absent include", function () {
-            it("should return false", function () {
-                var Trait2 = $oop.Class.getClass('Trait2');
-                expect(Class.includes(Trait2)).toBe(false);
-            });
-        });
-    });
-
-    describe("reverse inclusion tester", function () {
-        var Trait;
-
-        beforeEach(function () {
-            Trait = $oop.Class.getClass('Interface');
-            Class.include(Trait);
-        });
-
-        describe("when passing non-class", function () {
-            it("should return false", function () {
-                expect(Trait.isIncludedBy(undefined)).toBe(false);
-            });
-        });
-
-        describe("on including class", function () {
-            it("should return true", function () {
-                expect(Trait.isIncludedBy(Class)).toBe(true);
-            });
-        });
-
-        describe("on non-including class", function () {
-            it("should return false", function () {
-                var Class2 = $oop.Class.getClass('Class2');
-                expect(Trait.isIncludedBy(Class2)).toBe(false);
-            });
-        });
-    });
-
-    describe("require tester", function () {
-        var Host;
-
-        beforeEach(function () {
-            Host = $oop.Class.getClass('Host');
-            Class.require(Host);
-        });
-
-        describe("on invalid argument", function () {
-            it("should throw", function () {
-                expect(function () {
-                    Class.requires();
-                }).toThrow();
-            });
-        });
-
-        describe("on present require", function () {
-            it("should return true", function () {
-                expect(Class.requires(Host)).toBe(true);
-            });
-        });
-
-        describe("on absent require", function () {
-            it("should return false", function () {
-                var Host2 = $oop.Class.getClass('Host2');
-                expect(Class.requires(Host2)).toBe(false);
-            });
-        });
-    });
-
-    describe("reverse require tester", function () {
-        var Host;
-
-        beforeEach(function () {
-            Host = $oop.Class.getClass('Interface');
-            Class.require(Host);
-        });
-
-        describe("when passing non-class", function () {
-            it("should return false", function () {
-                expect(Host.isRequiredBy(undefined)).toBe(false);
-            });
-        });
-
-        describe("on requiring class", function () {
-            it("should return true", function () {
-                expect(Host.isRequiredBy(Class)).toBe(true);
-            });
-        });
-
-        describe("on non-requiring class", function () {
-            it("should return false", function () {
-                var Class2 = $oop.Class.getClass('Class2');
-                expect(Host.isRequiredBy(Class2)).toBe(false);
-            });
-        });
-    });
-
-    describe("instantiation", function () {
-        var instance;
-
-        describe("of trait", function () {
+        describe("requires()", function () {
             var Host;
 
             beforeEach(function () {
@@ -924,162 +864,233 @@ describe("$oop.Class", function () {
                 Class.require(Host);
             });
 
-            it("should throw", function () {
-                expect(function () {
-                    Class.create();
-                }).toThrow();
-            });
-        });
-
-        describe("of cached class", function () {
-            beforeEach(function () {
-                Class.cache(function (foo) {
-                    return '_' + foo;
+            describe("on invalid argument", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        Class.requires();
+                    }).toThrow();
                 });
             });
 
-            describe("when instance is not cached yet", function () {
-                it("should store new instance in cache", function () {
-                    instance = Class.create('foo');
-                    expect(Class.__instanceLookup).toEqual({
-                        '_foo': instance
-                    });
+            describe("on present require", function () {
+                it("should return true", function () {
+                    expect(Class.requires(Host)).toBe(true);
                 });
             });
 
-            describe("when instance is already cached", function () {
-                var cached;
-
-                beforeEach(function () {
-                    Class.create('foo');
-                    cached = Class.__instanceLookup._foo;
-                });
-
-                it("should return cached instance", function () {
-                    instance = Class.create('foo');
-                    expect(instance).toBe(cached);
+            describe("on absent require", function () {
+                it("should return false", function () {
+                    var Host2 = $oop.Class.getClass('Host2');
+                    expect(Class.requires(Host2)).toBe(false);
                 });
             });
         });
 
-        describe("of forwarded class", function () {
-            var Forward;
+        describe("isRequiredBy()", function () {
+            var Host;
 
             beforeEach(function () {
-                Class.define({
-                    foo: function () {
-                        return 'foo';
-                    }
-                });
-
-                Forward = $oop.Class.getClass('Forward')
-                    .include(Class);
-
-                $oop.Class.getClass('Class')
-                    .forward(Forward, function (foo) {
-                        return foo === 1;
-                    });
+                Host = $oop.Class.getClass('Interface');
+                Class.require(Host);
             });
 
-            describe("for matching arguments", function () {
-                it("should instantiate forward class", function () {
-                    result = Class.create(1);
-                    expect(result.includes(Class)).toBeTruthy();
-                    expect(result.includes(Forward)).toBeTruthy();
+            describe("when passing non-class", function () {
+                it("should return false", function () {
+                    expect(Host.isRequiredBy(undefined)).toBe(false);
                 });
             });
 
-            describe("for non-matching arguments", function () {
-                it("should instantiate original class", function () {
-                    result = Class.create(0);
-                    expect(result.includes(Class)).toBeTruthy();
-                    expect(result.includes(Forward)).toBeFalsy();
+            describe("on requiring class", function () {
+                it("should return true", function () {
+                    expect(Host.isRequiredBy(Class)).toBe(true);
                 });
             });
 
-            describe("that is also cached", function () {
-                var Forward2;
+            describe("on non-requiring class", function () {
+                it("should return false", function () {
+                    var Class2 = $oop.Class.getClass('Class2');
+                    expect(Host.isRequiredBy(Class2)).toBe(false);
+                });
+            });
+        });
+
+        describe("create()", function () {
+            var instance;
+
+            describe("of trait", function () {
+                var Host;
 
                 beforeEach(function () {
-                    Forward2 = $oop.Class.getClass('Forward2')
-                        .cache(function (foo) {
-                            return '_' + foo;
-                        })
+                    Host = $oop.Class.getClass('Host');
+                    Class.require(Host);
+                });
+
+                it("should throw", function () {
+                    expect(function () {
+                        Class.create();
+                    }).toThrow();
+                });
+            });
+
+            describe("of cached class", function () {
+                beforeEach(function () {
+                    Class.cache(function (foo) {
+                        return '_' + foo;
+                    });
+                });
+
+                describe("when instance is not cached yet", function () {
+                    it("should store new instance in cache", function () {
+                        instance = Class.create('foo');
+                        expect(Class.__instanceLookup).toEqual({
+                            '_foo': instance
+                        });
+                    });
+                });
+
+                describe("when instance is already cached", function () {
+                    var cached;
+
+                    beforeEach(function () {
+                        Class.create('foo');
+                        cached = Class.__instanceLookup._foo;
+                    });
+
+                    it("should return cached instance", function () {
+                        instance = Class.create('foo');
+                        expect(instance).toBe(cached);
+                    });
+                });
+            });
+
+            describe("of forwarded class", function () {
+                var Forward;
+
+                beforeEach(function () {
+                    Class.define({
+                        foo: function () {
+                            return 'foo';
+                        }
+                    });
+
+                    Forward = $oop.Class.getClass('Forward')
                         .include(Class);
 
                     $oop.Class.getClass('Class')
-                        .forward(Forward2, function (foo) {
-                            return foo === 2;
+                        .forward(Forward, function (foo) {
+                            return foo === 1;
                         });
                 });
 
-                it("should return cached forward instance", function () {
-                    result = Class.create(2);
-                    expect(result).toBe(Forward2.__instanceLookup._2);
+                describe("for matching arguments", function () {
+                    it("should instantiate forward class", function () {
+                        result = Class.create(1);
+                        expect(result.includes(Class)).toBeTruthy();
+                        expect(result.includes(Forward)).toBeTruthy();
+                    });
+                });
+
+                describe("for non-matching arguments", function () {
+                    it("should instantiate original class", function () {
+                        result = Class.create(0);
+                        expect(result.includes(Class)).toBeTruthy();
+                        expect(result.includes(Forward)).toBeFalsy();
+                    });
+                });
+
+                describe("that is also cached", function () {
+                    var Forward2;
+
+                    beforeEach(function () {
+                        Forward2 = $oop.Class.getClass('Forward2')
+                            .cache(function (foo) {
+                                return '_' + foo;
+                            })
+                            .include(Class);
+
+                        $oop.Class.getClass('Class')
+                            .forward(Forward2, function (foo) {
+                                return foo === 2;
+                            });
+                    });
+
+                    it("should return cached forward instance", function () {
+                        result = Class.create(2);
+                        expect(result).toBe(Forward2.__instanceLookup._2);
+                    });
+                });
+            });
+
+            describe("of unimplemented class", function () {
+                beforeEach(function () {
+                    Class.implement($oop.Class.getClass('Interface')
+                        .define({
+                            foo: function () {
+                            }
+                        }));
+                });
+
+                it("should throw", function () {
+                    expect(function () {
+                        Class.create();
+                    }).toThrow();
                 });
             });
         });
 
-        describe("of unimplemented class", function () {
+        describe("elevateMethods()", function () {
+            var instance;
+
             beforeEach(function () {
-                Class.implement($oop.Class.getClass('Interface')
-                    .define({
-                        foo: function () {
-                        }
-                    }));
+                Class.define({
+                    foo: function () {},
+                    bar: function () {}
+                });
+
+                instance = Class.create();
             });
 
-            it("should throw", function () {
-                expect(function () {
-                    Class.create();
-                }).toThrow();
+            describe("when not present", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        instance.elevateMethods('baz');
+                    }).toThrow();
+                });
+            });
+
+            describe("when method name is taken", function () {
+                beforeEach(function () {
+                    instance.foo = "FOO";
+                });
+
+                it("should throw", function () {
+                    expect(function () {
+                        instance.elevateMethods('foo');
+                    }).toThrow();
+                });
+            });
+
+            it("should add elevated method", function () {
+                instance.elevateMethods('foo', 'bar');
+
+                expect(instance.hasOwnProperty('foo')).toBeTruthy();
+                expect(instance.hasOwnProperty('bar')).toBeTruthy();
+                expect(typeof instance.foo).toBe('function');
+                expect(instance.foo).not.toBe(Class.foo);
             });
         });
     });
+});
 
-    describe("method elevation", function () {
-        var instance;
+describe("$assert", function () {
+    var Class;
 
-        beforeEach(function () {
-            Class.define({
-                foo: function () {},
-                bar: function () {}
-            });
-
-            instance = Class.create();
-        });
-
-        describe("when not present", function () {
-            it("should throw", function () {
-                expect(function () {
-                    instance.elevateMethods('baz');
-                }).toThrow();
-            });
-        });
-
-        describe("when method name is taken", function () {
-            beforeEach(function () {
-                instance.foo = "FOO";
-            });
-
-            it("should throw", function () {
-                expect(function () {
-                    instance.elevateMethods('foo');
-                }).toThrow();
-            });
-        });
-
-        it("should add elevated method", function () {
-            instance.elevateMethods('foo', 'bar');
-
-            expect(instance.hasOwnProperty('foo')).toBeTruthy();
-            expect(instance.hasOwnProperty('bar')).toBeTruthy();
-            expect(typeof instance.foo).toBe('function');
-            expect(instance.foo).not.toBe(Class.foo);
-        });
+    beforeEach(function () {
+        $oop.Class.classLookup = {};
+        Class = $oop.Class.getClass('Class');
     });
 
-    describe("class checker", function () {
+    describe("isClass()", function () {
         beforeEach(function () {
             spyOn($assert, 'assert').and.callThrough();
         });
@@ -1121,7 +1132,7 @@ describe("$oop.Class", function () {
         });
     });
 
-    describe("optional class checker", function () {
+    describe("isClassOptional()", function () {
         beforeEach(function () {
             spyOn($assert, 'assert').and.callThrough();
         });
