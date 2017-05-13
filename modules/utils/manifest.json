@@ -9,6 +9,7 @@
       "async/Throttler.js",
       "async/Timeout.js",
       "async/Timer.js",
+      "class/Cloneable.js",
       "class/Destroyable.js",
       "class/Identifiable.js",
       "class/Retrievable.js",
