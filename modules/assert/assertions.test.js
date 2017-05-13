@@ -29,6 +29,31 @@ describe("Common assertions", function () {
         });
     });
 
+    describe("undefined checker", function () {
+        describe("when passing non-undefined", function () {
+            it("should throw", function () {
+                expect(function () {
+                    $assert.isUndefined(1);
+                }).toThrow();
+                expect(function () {
+                    $assert.isUndefined("foo");
+                }).toThrow();
+                expect(function () {
+                    $assert.isUndefined(null);
+                }).toThrow();
+            });
+        });
+
+        it("should return self", function () {
+            expect($assert.isUndefined(undefined, "bar")).toBe($assert);
+        });
+
+        it("should pass message to assert", function () {
+            $assert.isUndefined(undefined, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
+    });
+
     describe("string checker", function () {
         describe("when passing non-string", function () {
             it("should throw", function () {

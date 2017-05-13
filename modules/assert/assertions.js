@@ -11,6 +11,16 @@ exports.hasValue = function (expr, message) {
 };
 
 /**
+ * @function $assert#isUndefined
+ * @param {*} expr
+ * @param {string} [message]
+ * @returns {$assert}
+ */
+exports.isUndefined = function (expr, message) {
+    return exports.assert(typeof expr === 'undefined', message);
+};
+
+/**
  * @function $assert#isString
  * @param {string} expr
  * @param {string} [message]
