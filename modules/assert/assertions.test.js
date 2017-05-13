@@ -2,12 +2,12 @@
 
 var $assert = window['giant-assert'];
 
-describe("Common assertions", function () {
+describe("$assert", function () {
     beforeEach(function () {
         spyOn($assert, 'assert').and.callThrough();
     });
 
-    describe("value checker", function () {
+    describe("hasValue()", function () {
         describe("when passing null or undefined", function () {
             it("should not throw", function () {
                 expect(function () {
@@ -29,7 +29,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("undefined checker", function () {
+    describe("isUndefined()", function () {
         describe("when passing non-undefined", function () {
             it("should throw", function () {
                 expect(function () {
@@ -54,7 +54,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("string checker", function () {
+    describe("isString()", function () {
         describe("when passing non-string", function () {
             it("should throw", function () {
                 expect(function () {
@@ -79,7 +79,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional string checker", function () {
+    describe("isStringOptional()", function () {
         describe("when passing undefined", function () {
             it("should return self", function () {
                 expect($assert.isStringOptional()).toBe($assert);
@@ -92,7 +92,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("boolean checker", function () {
+    describe("isBoolean()", function () {
         describe("when passing non-boolean", function () {
             it("should throw", function () {
                 expect(function () {
@@ -120,7 +120,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional boolean checker", function () {
+    describe("isBooleanOptional()", function () {
         describe("when passing undefined", function () {
             it("should return self", function () {
                 expect($assert.isBooleanOptional()).toBe($assert);
@@ -133,7 +133,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("number checker", function () {
+    describe("isNumber()", function () {
         describe("when passing non-number", function () {
             it("should throw", function () {
                 expect(function () {
@@ -161,7 +161,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional number checker", function () {
+    describe("isNumberOptional()", function () {
         describe("when passing undefined", function () {
             it("should return self", function () {
                 expect($assert.isNumberOptional()).toBe($assert);
@@ -174,7 +174,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("function checker", function () {
+    describe("isFunction()", function () {
         describe("when passing non-function", function () {
             it("should throw", function () {
                 expect(function () {
@@ -205,7 +205,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional function checker", function () {
+    describe("isFunctionOptional()", function () {
         describe("when passing undefined", function () {
             it("should return self", function () {
                 expect($assert.isFunctionOptional()).toBe($assert);
@@ -218,7 +218,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("object checker", function () {
+    describe("isObject()", function () {
 
         describe("when passing non-object", function () {
             it("should throw", function () {
@@ -250,7 +250,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional object checker", function () {
+    describe("iObjectOptional()", function () {
         describe("when passing undefined", function () {
             it("should return self", function () {
                 expect($assert.isObjectOptional()).toBe($assert);
@@ -263,7 +263,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("array checker", function () {
+    describe("isArray()", function () {
         describe("when passing non-array", function () {
             it("should throw", function () {
                 expect(function () {
@@ -297,7 +297,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional array checker", function () {
+    describe("isArrayOptional()", function () {
         describe("when passing undefined", function () {
             it("should return self", function () {
                 expect($assert.isArrayOptional()).toBe($assert);
@@ -310,7 +310,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("regexp checker", function () {
+    describe("isRegExp()", function () {
         describe("when passing non-regexp", function () {
             it("should throw", function () {
                 expect(function () {
@@ -344,7 +344,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional regexp checker", function () {
+    describe("isRegExpOptional()", function () {
         describe("when passing undefined", function () {
             it("should pass message to assert", function () {
                 $assert.isRegExpOptional(/a/, "bar");
@@ -357,7 +357,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("date checker", function () {
+    describe("isDate()", function () {
         describe("when passing non-date", function () {
             it("should throw", function () {
                 expect(function () {
@@ -391,7 +391,7 @@ describe("Common assertions", function () {
         });
     });
 
-    describe("optional date checker", function () {
+    describe("isDateOptional()", function () {
         describe("when passing undefined", function () {
             it("should return self", function () {
                 expect($assert.isDateOptional()).toBe($assert);
