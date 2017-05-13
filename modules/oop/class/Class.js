@@ -28,26 +28,85 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         if (!Class) {
             // class is not initialized yet
-            Class = exports.createObject(exports.Class, {
+            Class = exports.createObject(exports.Class, /** @lends $oop.Class# */{
+                /**
+                 * Identifies class.
+                 * @type {string}
+                 */
                 __classId: classId,
+
+                /**
+                 * Properties and methods contributed by the current class.
+                 * @type {object}
+                 */
                 __members: {},
+
+                /**
+                 * Registry of interfaces implemented by the current class,
+                 * and classes implementing the current class as an interface.
+                 * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 */
                 __interfaces: {
                     forward: {list: [], lookup: {}},
                     reverse: {list: [], lookup: {}}
                 },
+
+                /**
+                 * Registry of classes included by the current class,
+                 * and classes that include the current class.
+                 * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 */
                 __includes: {
                     forward: {list: [], lookup: {}},
                     reverse: {list: [], lookup: {}}
                 },
+
+                /**
+                 * Registry of classes required by the current class,
+                 * and classes requiring the current class.
+                 * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 */
                 __requires: {
                     forward: {list: [], lookup: {}},
                     reverse: {list: [], lookup: {}}
                 },
+
+                /**
+                 * Registry of methods not implemented by current class.
+                 * @type {{list: Array, lookup: object}}
+                 */
                 __missingMethodNames: {list: [], lookup: {}},
+
+                /**
+                 * Registry of all classes contributing members to the current class.
+                 * @type {{list: Array, lookup: object}}
+                 */
                 __contributors: {list: [], lookup: {}},
+
+                /**
+                 * Two dimensional lookup of methods contributed to the class.
+                 * Indexed by method name, then contributor index. (Index of contributor in __contributors.list.)
+                 * @type {object}
+                 */
                 __methodMatrix: {},
+
+                /**
+                 * List of forwards (surrogate) descriptors.
+                 * @type {Array.<{class: $oop.Class, filter: function, priority: number}>}
+                 */
                 __forwards: [],
+
+                /**
+                 * Hash function for caching instances.
+                 * TODO: Rename
+                 * @type {function}
+                 */
                 __mapper: undefined,
+
+                /**
+                 * Lookup of cached instances indexed by hash.
+                 * @type {object}
+                 */
                 __instanceLookup: {}
             }, {
                 writable: true,
@@ -463,19 +522,22 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             var classId = Class.__classId,
                 contributorList = Class.__contributors.list,
                 contributorCount = contributorList.length,
-                i;
+                i, contributor;
 
+            // adding deeper inclusions' contributions first
+            // to maintain order of method calls
+            for (i = 0; i < contributorCount; i++) {
+                contributor = contributorList[i];
+                if (contributor !== Class) {
+                    getContributors(contributor);
+                }
+            }
+
+            // all dependents' contributions have been added,
+            // adding current class
             if (!contributorLookup[classId]) {
                 contributors.push(Class);
                 contributorLookup[classId] = Class;
-            }
-
-            if (contributorCount > 2 ||
-                contributorCount === 1 && contributorList[0] !== Class
-            ) {
-                for (i = 0; i < contributorCount; i++) {
-                    getContributors(contributorList[i]);
-                }
             }
         }(Class));
 
@@ -840,68 +902,6 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         return this;
     }
-
-    /**
-     * Identifies class.
-     * @member {string} $oop.Class#__classId
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__members
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__interfaces
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__includes
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__requires
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__methodMatrix
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__contributors
-     * @private
-     */
-
-    /**
-     * @member {object} $oop.Class#__missingMethodNames
-     * @private
-     */
-
-    /**
-     * List of surrogate descriptors.
-     * @todo Do we need a lookup for this too?
-     * @member {object[]} $oop.Class#__forwards
-     * @private
-     */
-
-    /**
-     * Instance hash function for cached classes.
-     * @todo Rename
-     * @function $oop.Class#__mapper
-     * @returns {string}
-     * @private
-     */
-
-    /**
-     * Registry of instances indexed by hash.
-     * @member {object} $oop.Class#__instanceLookup
-     * @private
-     */
 });
 
 /**

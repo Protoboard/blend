@@ -550,7 +550,7 @@ describe("$oop.Class", function () {
         });
     });
 
-    describe("requiring class", function () {
+    describe("extending class", function () {
         var Include1,
             Include2,
             Include3;
@@ -578,7 +578,7 @@ describe("$oop.Class", function () {
 
         it("should add all dependencies", function () {
             expect(Class.__contributors.list).toEqual([
-                Include3, Include1, Include2, Class
+                Include1, Include3, Include2, Class
             ]);
         });
     });
