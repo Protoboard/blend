@@ -1,7 +1,8 @@
 {
   "assets": {
     "js": [
-      "globals.js"
+      "globals.js",
+      "utils/data-utils.js"
     ]
   }
 }
