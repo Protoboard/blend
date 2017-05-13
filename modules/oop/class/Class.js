@@ -206,7 +206,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
-     * Adds wrapper methods for functions included in `members`.
+     * Adds wrapper methods for functions contributed to the class.
+     * Wrapper methods cycle through versions of the same method,
+     * and call them in the order of contributions.
+     * For performance reasons, wrapper methods return the result of the last call.
+     * It's the responsibility of each contributed method to ensure access
+     * to its individual return value, if needed.
+     * TODO: Add original method when there's only 1 contribution.
      * @param {object} members
      * @private
      */
@@ -226,32 +232,17 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 that[methodName] = function () {
                     var methods = methodMatrix[methodName],
                         methodCount = methods.length,
-                        results = [],
-                        i, method, result,
-                        resultCount,
-                        same = true;
+                        i, method, result;
 
-                    // running functions in order of includes
+                    // calling function in order of contributions
                     for (i = 0; i < methodCount; i++) {
                         method = methods[i];
                         if (method) {
-                            results.push(method.apply(this, arguments));
+                            result = method.apply(this, arguments);
                         }
                     }
 
-                    // evaluating return values
-                    resultCount = results.length;
-                    for (i = 1, result = results[0]; i < resultCount; i++) {
-                        if (result !== results[i]) {
-                            same = false;
-                            break;
-                        }
-                    }
-
-                    // returning either uniform result or all results
-                    return same ?
-                        result :
-                        results;
+                    return result;
                 };
             });
     },
