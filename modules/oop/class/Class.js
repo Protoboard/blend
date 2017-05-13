@@ -1,4 +1,4 @@
-/* global $assert */
+/* global $assert, hOP */
 "use strict";
 
 /**
@@ -147,7 +147,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             contributorLookup = contributors.lookup,
             classId = Class.__classId;
 
-        if (!contributorLookup.hasOwnProperty(classId)) {
+        if (!hOP.call(contributorLookup, classId)) {
             contributorLookup[classId] = contributorList.length;
             contributorList.push(Class);
         }
@@ -218,7 +218,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 return typeof members[memberName] === 'function';
             })
             .filter(function (methodName) {
-                return !that.hasOwnProperty(methodName);
+                return !hOP.call(that, methodName);
             })
             .forEach(function (methodName) {
                 var methodMatrix = that.__methodMatrix;
@@ -266,7 +266,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             interfaceLookup = interfaces.lookup,
             interfaceId = Interface.__classId;
 
-        if (!interfaceLookup.hasOwnProperty(interfaceId)) {
+        if (!hOP.call(interfaceLookup, interfaceId)) {
             interfaceList.push(Interface);
             interfaceLookup[interfaceId] = Interface;
         }
@@ -282,7 +282,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             implementerLookup = implementers.lookup,
             classId = Class.__classId;
 
-        if (!implementerLookup.hasOwnProperty(classId)) {
+        if (!hOP.call(implementerLookup, classId)) {
             implementerList.push(Class);
             implementerLookup[classId] = Class;
         }
@@ -303,7 +303,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             })
             // leaving only those already registered
             .filter(function (methodName) {
-                return missingMethodLookup.hasOwnProperty(methodName);
+                return hOP.call(missingMethodLookup, methodName);
             })
             // unregistering method names
             .forEach(function (implementedMethodName) {
@@ -344,7 +344,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             })
             // leaving only those not yet registered
             .filter(function (missingMethodName) {
-                return !missingMethodLookup.hasOwnProperty(missingMethodName);
+                return !hOP.call(missingMethodLookup, missingMethodName);
             })
             // registering method names as missing
             .forEach(function (missingMethodName) {
@@ -363,7 +363,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             includeLookup = includes.lookup,
             classId = Class.__classId;
 
-        if (!includeLookup.hasOwnProperty(classId)) {
+        if (!hOP.call(includeLookup, classId)) {
             includeList.push(Class);
             includeLookup[classId] = Class;
         }
@@ -379,7 +379,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             hostLookup = hosts.lookup,
             classId = Class.__classId;
 
-        if (!hostLookup.hasOwnProperty(classId)) {
+        if (!hOP.call(hostLookup, classId)) {
             hostList.push(Class);
             hostLookup[classId] = Class;
         }
@@ -398,8 +398,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             requireLookup = requires.lookup;
 
         if (classId !== requireId &&
-            !includeLookup.hasOwnProperty(requireId) &&
-            !requireLookup.hasOwnProperty(requireId)
+            !hOP.call(includeLookup, requireId) &&
+            !hOP.call(requireLookup, requireId)
         ) {
             // require is not included (which would cancel each other out)
             // adding to requires
@@ -418,7 +418,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             hostLookup = hosts.lookup,
             classId = Class.__classId;
 
-        if (!hostLookup.hasOwnProperty(classId)) {
+        if (!hOP.call(hostLookup, classId)) {
             hostList.push(Class);
             hostLookup[classId] = Class;
         }
@@ -434,7 +434,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             requireList = requires.list,
             requireLookup = requires.lookup;
 
-        if (requireLookup.hasOwnProperty(classId)) {
+        if (hOP.call(requireLookup, classId)) {
             requireList.splice(requireList.indexOf(classId), 1);
             delete requireLookup[classId];
         }
@@ -885,7 +885,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         for (i = 0; i < argumentCount; i++) {
             methodName = arguments[i];
-            if (this.hasOwnProperty(methodName)) {
+            if (hOP.call(this, methodName)) {
                 $assert.assert(false, "Method '" + this.__classId + "#" + methodName + "' already elevated.");
             } else {
                 method = this[methodName];
