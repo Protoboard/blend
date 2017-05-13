@@ -17,10 +17,7 @@
     "npm": "^3.0.0"
   },
   "dependencies": {
+    "giant-assert": "~0.5.0",
     "giant-oop": "~0.5.0"
-  },
-  "files": [
-    "lib"
-  ],
-  "main": "lib/giant-utils.js"
+  }
 }

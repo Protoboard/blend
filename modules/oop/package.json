@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "OOP module for Giant",
   "keywords": [
+    "assert"
   ],
   "author": "Dan Stocker <dan@kwaia.com>",
   "copyright": "Copyright (c) 2011-2017 Dan Stocker",
@@ -14,5 +15,7 @@
   "engines": {
     "npm": "^3.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "giant-assert": "~0.5.0"
+  }
 }
