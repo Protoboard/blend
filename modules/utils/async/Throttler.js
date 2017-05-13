@@ -14,7 +14,7 @@
  * @extends $utils.Scheduler
  */
 exports.Throttler = $oop.getClass('$utils.Throttler')
-    .include($oop.getClass('$utils.Scheduler'))
+    .extend($oop.getClass('$utils.Scheduler'))
     .define(/** @lends $utils.Throttler# */{
         /** @ignore */
         init: function (interval) {

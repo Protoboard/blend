@@ -9,7 +9,7 @@ describe("Identifiable", function () {
     beforeEach(function () {
         $utils.Identifiable.lastInstanceId = -1;
         Identifiable = $oop.getClass('Identifiable')
-            .include($utils.Identifiable);
+            .extend($utils.Identifiable);
     });
 
     describe("instantiation", function () {

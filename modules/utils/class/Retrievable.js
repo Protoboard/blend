@@ -10,7 +10,7 @@
  */
 exports.Retrievable = $oop.getClass('$utils.Retrievable')
     .implement($oop.getClass('$utils.Destroyable'))
-    .include($oop.getClass('$utils.Identifiable'))
+    .extend($oop.getClass('$utils.Identifiable'))
     .define(/** @lends $utils.Retrievable# */{
         /**
          * Global registry for instances having the Retrievable trait.
