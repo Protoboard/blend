@@ -2,24 +2,26 @@
 
 var $utils = window['giant-utils'];
 
-describe("Scheduler", function () {
-    var scheduler;
+describe("$utils", function () {
+    describe("Scheduler", function () {
+        var scheduler;
 
-    beforeEach(function () {
-        scheduler = $utils.Scheduler.create();
-    });
-
-    describe("instantiation", function () {
-        it("should initialize scheduledArguments", function () {
-            expect(scheduler.scheduledArguments).toEqual([]);
+        beforeEach(function () {
+            scheduler = $utils.Scheduler.create();
         });
 
-        it("should initialize scheduleTimers", function () {
-            expect(scheduler.scheduleTimers).toEqual([]);
-        });
+        describe("create()", function () {
+            it("should initialize scheduledArguments", function () {
+                expect(scheduler.scheduledArguments).toEqual([]);
+            });
 
-        it("should initialize schedulerDeferred", function () {
-            expect($utils.Deferred.isIncludedBy(scheduler.schedulerDeferred)).toBeTruthy();
+            it("should initialize scheduleTimers", function () {
+                expect(scheduler.scheduleTimers).toEqual([]);
+            });
+
+            it("should initialize schedulerDeferred", function () {
+                expect($utils.Deferred.isIncludedBy(scheduler.schedulerDeferred)).toBeTruthy();
+            });
         });
     });
 });

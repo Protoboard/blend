@@ -2,91 +2,93 @@
 
 var $utils = window['giant-utils'];
 
-describe("Debouncer", function () {
-    var debouncer;
-
-    beforeEach(function () {
-        debouncer = $utils.Debouncer.create(50);
-    });
-
-    describe("instantiation", function () {
-        it("should set scheduleDelay", function () {
-            expect(debouncer.debounceDelay).toBe(50);
-        });
-    });
-
-    describe("scheduling", function () {
-        var result;
+describe("$utils", function () {
+    describe("Debouncer", function () {
+        var debouncer;
 
         beforeEach(function () {
-            jasmine.clock().install();
-            spyOn($utils, 'setTimeout').and.callThrough();
-            result = debouncer.schedule("foo", "bar");
+            debouncer = $utils.Debouncer.create(50);
         });
 
-        afterEach(function () {
-            jasmine.clock().uninstall();
+        describe("create()", function () {
+            it("should set scheduleDelay", function () {
+                expect(debouncer.debounceDelay).toBe(50);
+            });
         });
 
-        it("should return promise", function () {
-            expect(result).toBe(debouncer.schedulerDeferred.promise);
-        });
+        describe("schedule()", function () {
+            var result;
 
-        it("should add arguments to list", function () {
-            expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
-        });
-
-        it("should add timer to list", function () {
-            expect($utils.Timeout.isIncludedBy(debouncer.scheduleTimers[0])).toBeTruthy();
-        });
-
-        it("should start timer", function () {
-            expect($utils.setTimeout).toHaveBeenCalledWith(50, "foo", "bar");
-        });
-
-        describe("when scheduling again with same arguments", function () {
             beforeEach(function () {
-                debouncer.schedule("foo", "bar");
+                jasmine.clock().install();
+                spyOn($utils, 'setTimeout').and.callThrough();
+                result = debouncer.schedule("foo", "bar");
             });
 
-            it("should not add to argument list", function () {
+            afterEach(function () {
+                jasmine.clock().uninstall();
+            });
+
+            it("should return promise", function () {
+                expect(result).toBe(debouncer.schedulerDeferred.promise);
+            });
+
+            it("should add arguments to list", function () {
                 expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
             });
 
-            it("should not add timer to list", function () {
-                expect(debouncer.scheduleTimers[1]).toBeUndefined();
+            it("should add timer to list", function () {
+                expect($utils.Timeout.isIncludedBy(debouncer.scheduleTimers[0])).toBeTruthy();
             });
 
-            it("should restart timer", function () {
+            it("should start timer", function () {
                 expect($utils.setTimeout).toHaveBeenCalledWith(50, "foo", "bar");
             });
-        });
 
-        describe("when timer completes", function () {
-            var progressHandler;
+            describe("when scheduling again with same arguments", function () {
+                beforeEach(function () {
+                    debouncer.schedule("foo", "bar");
+                });
 
-            beforeEach(function () {
-                jasmine.clock().tick(51);
-                progressHandler = jasmine.createSpy();
-                result.then(null, null, progressHandler);
+                it("should not add to argument list", function () {
+                    expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
+                });
+
+                it("should not add timer to list", function () {
+                    expect(debouncer.scheduleTimers[1]).toBeUndefined();
+                });
+
+                it("should restart timer", function () {
+                    expect($utils.setTimeout).toHaveBeenCalledWith(50, "foo", "bar");
+                });
             });
 
-            it("should reset affected timer in registry", function () {
-                expect(debouncer.scheduleTimers).toEqual([undefined]);
+            describe("when timer completes", function () {
+                var progressHandler;
+
+                beforeEach(function () {
+                    jasmine.clock().tick(51);
+                    progressHandler = jasmine.createSpy();
+                    result.then(null, null, progressHandler);
+                });
+
+                it("should reset affected timer in registry", function () {
+                    expect(debouncer.scheduleTimers).toEqual([undefined]);
+                });
+
+                it("should notify promise with corresponding arguments", function () {
+                    expect(progressHandler).toHaveBeenCalledWith("foo", "bar");
+                });
             });
 
-            it("should notify promise with corresponding arguments", function () {
-                expect(progressHandler).toHaveBeenCalledWith("foo", "bar");
-            });
-        });
+            describe("when timer gets canceled by user", function () {
+                beforeEach(function () {
+                    debouncer.scheduleTimers[0].clearTimer();
+                });
 
-        describe("when timer gets canceled by user", function () {
-            beforeEach(function () {
-                debouncer.scheduleTimers[0].clearTimer();
-            });
-
-            it("should reset affected timer in registry", function () {
-                expect(debouncer.scheduleTimers).toEqual([undefined]);
+                it("should reset affected timer in registry", function () {
+                    expect(debouncer.scheduleTimers).toEqual([undefined]);
+                });
             });
         });
     });

@@ -3,61 +3,63 @@
 var $oop = window['giant-oop'],
     $utils = window['giant-utils'];
 
-describe("Retrievable", function () {
-    var Retrievable,
-        instance;
+describe("$utils", function () {
+    describe("Retrievable", function () {
+        var Retrievable,
+            instance;
 
-    beforeEach(function () {
-        $utils.Identifiable.lastInstanceId = -1;
-        $utils.Retrievable.instanceRegistry = {};
-        Retrievable = $oop.getClass("Retrievable")
-            .extend($utils.Retrievable);
-    });
-
-    describe("instantiation", function () {
         beforeEach(function () {
-            instance = Retrievable.create();
+            $utils.Identifiable.lastInstanceId = -1;
+            $utils.Retrievable.instanceRegistry = {};
+            Retrievable = $oop.getClass("Retrievable")
+                .extend($utils.Retrievable);
         });
 
-        it("should add instance to registry", function () {
-            expect($utils.Retrievable.instanceRegistry).toEqual({
-                0: instance
+        describe("create()", function () {
+            beforeEach(function () {
+                instance = Retrievable.create();
             });
-        });
-    });
 
-    describe("instance fetcher", function () {
-        beforeEach(function () {
-            instance = Retrievable.create();
-        });
-
-        describe("for absent ID", function () {
-            it("should return undefined", function () {
-                expect($utils.Retrievable.getInstanceById(100)).toBeUndefined();
+            it("should add instance to registry", function () {
+                expect($utils.Retrievable.instanceRegistry).toEqual({
+                    0: instance
+                });
             });
         });
 
-        it("should return instance matching ID", function () {
-            expect($utils.Retrievable.getInstanceById(0)).toBe(instance);
-            expect(Retrievable.getInstanceById(0)).toBe(instance);
-        });
-    });
+        describe("getInstanceById()", function () {
+            beforeEach(function () {
+                instance = Retrievable.create();
+            });
 
-    describe("destroy", function () {
-        var result;
+            describe("for absent ID", function () {
+                it("should return undefined", function () {
+                    expect($utils.Retrievable.getInstanceById(100)).toBeUndefined();
+                });
+            });
 
-        beforeEach(function () {
-            spyOn(Retrievable, '_removeFromInstanceRegistry');
-            instance = Retrievable.create();
-            result = instance.destroy();
-        });
-
-        it("should return self", function () {
-            expect(result).toBe(instance);
+            it("should return instance matching ID", function () {
+                expect($utils.Retrievable.getInstanceById(0)).toBe(instance);
+                expect(Retrievable.getInstanceById(0)).toBe(instance);
+            });
         });
 
-        it("should remove instance from registry", function () {
-            expect(Retrievable._removeFromInstanceRegistry).toHaveBeenCalled();
+        describe("destroy()", function () {
+            var result;
+
+            beforeEach(function () {
+                spyOn(Retrievable, '_removeFromInstanceRegistry');
+                instance = Retrievable.create();
+                result = instance.destroy();
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(instance);
+            });
+
+            it("should remove instance from registry", function () {
+                expect(Retrievable._removeFromInstanceRegistry).toHaveBeenCalled();
+            });
         });
     });
 });

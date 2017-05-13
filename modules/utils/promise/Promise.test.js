@@ -4,7 +4,7 @@ var $assert = window['giant-assert'],
     $oop = window['giant-oop'],
     $utils = window['giant-utils'];
 
-describe("Promise", function () {
+describe("$assert", function () {
     var promise;
 
     beforeEach(function () {
@@ -12,7 +12,7 @@ describe("Promise", function () {
         spyOn($assert, 'assert').and.callThrough();
     });
 
-    describe("type assertion", function () {
+    describe("isPromise()", function () {
         it("should pass message to assert", function () {
             $assert.isPromise(promise, "bar");
             expect($assert.assert).toHaveBeenCalledWith(true, "bar");
@@ -27,7 +27,7 @@ describe("Promise", function () {
         });
     });
 
-    describe("optional type assertion", function () {
+    describe("isPromiseOptional()", function () {
         it("should pass message to assert", function () {
             $assert.isPromiseOptional(promise, "bar");
             expect($assert.assert).toHaveBeenCalledWith(true, "bar");
@@ -41,208 +41,218 @@ describe("Promise", function () {
             });
         });
     });
+});
 
-    describe("instantiation", function () {
-        it("should initialize state property", function () {
-            expect(promise.promiseState).toBe($utils.PROMISE_STATE_UNFULFILLED);
-        });
-
-        it("should initialize deferredArguments property", function () {
-            expect(promise.hasOwnProperty('deferredArguments')).toBeTruthy();
-        });
-
-        it("should initialize notificationArguments property", function () {
-            expect(promise.notificationArguments).toEqual([]);
-        });
-
-        it("should initialize successHandlers property", function () {
-            expect(promise.successHandlers).toEqual([]);
-        });
-
-        it("should initialize failureHandlers property", function () {
-            expect(promise.failureHandlers).toEqual([]);
-        });
-
-        it("should initialize progressHandlers property", function () {
-            expect(promise.progressHandlers).toEqual([]);
-        });
-    });
-
-    describe("chaining", function () {
-        var result,
-            handlers;
+describe("$utils", function () {
+    describe("Promise", function () {
+        var promise;
 
         beforeEach(function () {
-            result = promise.then();
+            promise = $utils.Promise.create();
         });
 
-        it("should return self", function () {
-            expect(result).toBe(promise);
+        describe("instantiation", function () {
+            it("should initialize state property", function () {
+                expect(promise.promiseState).toBe($utils.PROMISE_STATE_UNFULFILLED);
+            });
+
+            it("should initialize deferredArguments property", function () {
+                expect(promise.hasOwnProperty('deferredArguments')).toBeTruthy();
+            });
+
+            it("should initialize notificationArguments property", function () {
+                expect(promise.notificationArguments).toEqual([]);
+            });
+
+            it("should initialize successHandlers property", function () {
+                expect(promise.successHandlers).toEqual([]);
+            });
+
+            it("should initialize failureHandlers property", function () {
+                expect(promise.failureHandlers).toEqual([]);
+            });
+
+            it("should initialize progressHandlers property", function () {
+                expect(promise.progressHandlers).toEqual([]);
+            });
         });
 
-        describe("when promise is unfulfilled", function () {
+        describe("chaining", function () {
+            var result,
+                handlers;
+
             beforeEach(function () {
-                handlers = {
-                    successHandler: function () {},
-                    failureHandler: function () {},
-                    progressHandler: function () {}
-                };
-                promise.then(
-                    handlers.successHandler,
-                    handlers.failureHandler,
-                    handlers.progressHandler);
+                result = promise.then();
             });
 
-            it("should add handlers", function () {
-                expect(promise.successHandlers).toEqual([handlers.successHandler]);
-                expect(promise.failureHandlers).toEqual([handlers.failureHandler]);
-                expect(promise.progressHandlers).toEqual([handlers.progressHandler]);
+            it("should return self", function () {
+                expect(result).toBe(promise);
             });
 
-            describe("when promise was notified in the past", function () {
+            describe("when promise is unfulfilled", function () {
                 beforeEach(function () {
-                    promise.notificationArguments = [
-                        ["foo", "bar"],
-                        ["baz", "quux"]
-                    ];
-                    spyOn(handlers, 'progressHandler');
+                    handlers = {
+                        successHandler: function () {},
+                        failureHandler: function () {},
+                        progressHandler: function () {}
+                    };
                     promise.then(
                         handlers.successHandler,
                         handlers.failureHandler,
                         handlers.progressHandler);
                 });
 
-                it("should call handler with recorded arguments", function () {
-                    expect(handlers.progressHandler.calls.allArgs()).toEqual(promise.notificationArguments);
+                it("should add handlers", function () {
+                    expect(promise.successHandlers).toEqual([handlers.successHandler]);
+                    expect(promise.failureHandlers).toEqual([handlers.failureHandler]);
+                    expect(promise.progressHandlers).toEqual([handlers.progressHandler]);
+                });
+
+                describe("when promise was notified in the past", function () {
+                    beforeEach(function () {
+                        promise.notificationArguments = [
+                            ["foo", "bar"],
+                            ["baz", "quux"]
+                        ];
+                        spyOn(handlers, 'progressHandler');
+                        promise.then(
+                            handlers.successHandler,
+                            handlers.failureHandler,
+                            handlers.progressHandler);
+                    });
+
+                    it("should call handler with recorded arguments", function () {
+                        expect(handlers.progressHandler.calls.allArgs()).toEqual(promise.notificationArguments);
+                    });
+                });
+            });
+
+            describe("when promise is already fulfilled", function () {
+                beforeEach(function () {
+                    promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
+                    promise.deferredArguments = ["foo", "bar"];
+                    handlers = {
+                        successHandler: function () {},
+                        failureHandler: function () {},
+                        progressHandler: function () {}
+                    };
+                    spyOn(handlers, 'successHandler');
+                    promise.then(
+                        handlers.successHandler,
+                        handlers.failureHandler,
+                        handlers.progressHandler);
+                });
+
+                it("should call success handler", function () {
+                    expect(handlers.successHandler).toHaveBeenCalledWith("foo", "bar");
+                });
+
+                it("should not add handlers", function () {
+                    expect(promise.successHandlers).toEqual([]);
+                    expect(promise.failureHandlers).toEqual([]);
+                    expect(promise.progressHandlers).toEqual([]);
+                });
+            });
+
+            describe("when promise has already failed", function () {
+                beforeEach(function () {
+                    promise.promiseState = $utils.PROMISE_STATE_FAILED;
+                    promise.deferredArguments = ["foo", "bar"];
+                    handlers = {
+                        successHandler: function () {},
+                        failureHandler: function () {},
+                        progressHandler: function () {}
+                    };
+                    spyOn(handlers, 'failureHandler');
+                    promise.then(
+                        handlers.successHandler,
+                        handlers.failureHandler,
+                        handlers.progressHandler);
+                });
+
+                it("should call failure handler", function () {
+                    expect(handlers.failureHandler).toHaveBeenCalledWith("foo", "bar");
+                });
+
+                it("should not add handlers", function () {
+                    expect(promise.successHandlers).toEqual([]);
+                    expect(promise.failureHandlers).toEqual([]);
+                    expect(promise.progressHandlers).toEqual([]);
                 });
             });
         });
 
-        describe("when promise is already fulfilled", function () {
+        describe("aggregation", function () {
+            var deferred1, deferred2,
+                handlers;
+
             beforeEach(function () {
-                promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
-                promise.deferredArguments = ["foo", "bar"];
-                handlers = {
-                    successHandler: function () {},
-                    failureHandler: function () {},
-                    progressHandler: function () {}
-                };
-                spyOn(handlers, 'successHandler');
-                promise.then(
-                    handlers.successHandler,
-                    handlers.failureHandler,
-                    handlers.progressHandler);
+                deferred1 = $utils.Deferred.create();
+                deferred2 = $utils.Deferred.create();
+                promise = $utils.Promise.when(
+                    deferred1.promise,
+                    "foo",
+                    deferred2.promise);
             });
 
-            it("should call success handler", function () {
-                expect(handlers.successHandler).toHaveBeenCalledWith("foo", "bar");
+            it("should return a promise", function () {
+                expect($utils.Promise.isIncludedBy(promise)).toBeTruthy();
             });
 
-            it("should not add handlers", function () {
-                expect(promise.successHandlers).toEqual([]);
-                expect(promise.failureHandlers).toEqual([]);
-                expect(promise.progressHandlers).toEqual([]);
-            });
-        });
+            describe("when all promises are fulfilled", function () {
+                beforeEach(function () {
+                    handlers = {
+                        successHandler: function () {},
+                        progressHandler: function () {}
+                    };
 
-        describe("when promise has already failed", function () {
-            beforeEach(function () {
-                promise.promiseState = $utils.PROMISE_STATE_FAILED;
-                promise.deferredArguments = ["foo", "bar"];
-                handlers = {
-                    successHandler: function () {},
-                    failureHandler: function () {},
-                    progressHandler: function () {}
-                };
-                spyOn(handlers, 'failureHandler');
-                promise.then(
-                    handlers.successHandler,
-                    handlers.failureHandler,
-                    handlers.progressHandler);
-            });
+                    spyOn(handlers, 'successHandler');
+                    spyOn(handlers, 'progressHandler');
 
-            it("should call failure handler", function () {
-                expect(handlers.failureHandler).toHaveBeenCalledWith("foo", "bar");
-            });
+                    promise.then(
+                        handlers.successHandler,
+                        null,
+                        handlers.progressHandler);
 
-            it("should not add handlers", function () {
-                expect(promise.successHandlers).toEqual([]);
-                expect(promise.failureHandlers).toEqual([]);
-                expect(promise.progressHandlers).toEqual([]);
-            });
-        });
-    });
+                    deferred2.resolve("foo", "bar");
+                    deferred1.resolve("baz", "quux");
+                });
 
-    describe("aggregation", function () {
-        var deferred1, deferred2,
-            handlers;
+                it("should notify aggregate promise", function () {
+                    expect(handlers.progressHandler).toHaveBeenCalledWith("foo", "bar");
+                });
 
-        beforeEach(function () {
-            deferred1 = $utils.Deferred.create();
-            deferred2 = $utils.Deferred.create();
-            promise = $utils.Promise.when(
-                deferred1.promise,
-                "foo",
-                deferred2.promise);
-        });
-
-        it("should return a promise", function () {
-            expect($utils.Promise.isIncludedBy(promise)).toBeTruthy();
-        });
-
-        describe("when all promises are fulfilled", function () {
-            beforeEach(function () {
-                handlers = {
-                    successHandler: function () {},
-                    progressHandler: function () {}
-                };
-
-                spyOn(handlers, 'successHandler');
-                spyOn(handlers, 'progressHandler');
-
-                promise.then(
-                    handlers.successHandler,
-                    null,
-                    handlers.progressHandler);
-
-                deferred2.resolve("foo", "bar");
-                deferred1.resolve("baz", "quux");
+                it("should resolve aggregate promise", function () {
+                    // first argument of the first call to successHandler
+                    // ... is an array of Arguments
+                    expect(handlers.successHandler.calls.argsFor(0)[0]
+                        .map(function (arg) {
+                            return [].slice.call(arg);
+                        }))
+                        .toEqual([
+                            ["foo"],
+                            ["foo", "bar"],
+                            ["baz", "quux"]
+                        ]);
+                });
             });
 
-            it("should notify aggregate promise", function () {
-                expect(handlers.progressHandler).toHaveBeenCalledWith("foo", "bar");
-            });
+            describe("when at least one promise fails", function () {
+                beforeEach(function () {
+                    handlers = {
+                        failureHandler: function () {}
+                    };
 
-            it("should resolve aggregate promise", function () {
-                // first argument of the first call to successHandler
-                // ... is an array of Arguments
-                expect(handlers.successHandler.calls.argsFor(0)[0]
-                    .map(function (arg) {
-                        return [].slice.call(arg);
-                    }))
-                    .toEqual([
-                        ["foo"],
-                        ["foo", "bar"],
-                        ["baz", "quux"]
-                    ]);
-            });
-        });
+                    spyOn(handlers, 'failureHandler');
 
-        describe("when at least one promise fails", function () {
-            beforeEach(function () {
-                handlers = {
-                    failureHandler: function () {}
-                };
+                    promise.then(null, handlers.failureHandler);
 
-                spyOn(handlers, 'failureHandler');
+                    deferred2.reject("foo", "bar");
+                });
 
-                promise.then(null, handlers.failureHandler);
-
-                deferred2.reject("foo", "bar");
-            });
-
-            it("should reject the aggregate promise", function () {
-                expect(handlers.failureHandler).toHaveBeenCalledWith("foo", "bar");
+                it("should reject the aggregate promise", function () {
+                    expect(handlers.failureHandler).toHaveBeenCalledWith("foo", "bar");
+                });
             });
         });
     });

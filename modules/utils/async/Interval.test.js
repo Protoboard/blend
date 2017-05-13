@@ -2,14 +2,10 @@
 
 var $utils = window['giant-utils'];
 
-describe("Interval", function () {
-    var interval;
+describe("Number", function () {
+    describe("toInterval()", function () {
+        var interval;
 
-    beforeEach(function () {
-        interval = $utils.Interval.create(1);
-    });
-
-    describe("conversion from number", function () {
         beforeEach(function () {
             interval = (12345).toInterval();
         });
@@ -23,20 +19,31 @@ describe("Interval", function () {
         });
     });
 
-    describe("clearing interval", function () {
-        var result;
+});
+
+describe("$utils", function () {
+    describe("Interval", function () {
+        var interval;
 
         beforeEach(function () {
-            spyOn(window, 'clearInterval');
-            result = interval.clearTimer("foo", "bar");
+            interval = $utils.Interval.create(1);
         });
 
-        it("should return self", function () {
-            expect(result).toBe(interval);
-        });
+        describe("clearTimer()", function () {
+            var result;
 
-        it("should call clearInterval with timer ID", function () {
-            expect(window.clearInterval).toHaveBeenCalledWith(interval.timerId);
+            beforeEach(function () {
+                spyOn(window, 'clearInterval');
+                result = interval.clearTimer("foo", "bar");
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(interval);
+            });
+
+            it("should call clearInterval with timer ID", function () {
+                expect(window.clearInterval).toHaveBeenCalledWith(interval.timerId);
+            });
         });
     });
 });

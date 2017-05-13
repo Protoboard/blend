@@ -2,14 +2,10 @@
 
 var $utils = window['giant-utils'];
 
-describe("Timeout", function () {
-    var timeout;
+describe("Number", function () {
+    describe("toTimeout()", function () {
+        var timeout;
 
-    beforeEach(function () {
-        timeout = $utils.Timeout.create(1);
-    });
-
-    describe("conversion from number", function () {
         beforeEach(function () {
             timeout = (12345).toTimeout();
         });
@@ -23,20 +19,31 @@ describe("Timeout", function () {
         });
     });
 
-    describe("clearing timeout", function () {
-        var result;
+});
+
+describe("$utils", function () {
+    describe("Timeout", function () {
+        var timeout;
 
         beforeEach(function () {
-            spyOn(window, 'clearTimeout');
-            result = timeout.clearTimer("foo", "bar");
+            timeout = $utils.Timeout.create(1);
         });
 
-        it("should return self", function () {
-            expect(result).toBe(timeout);
-        });
+        describe("clearTimer()", function () {
+            var result;
 
-        it("should call clearTimeout with timer ID", function () {
-            expect(window.clearTimeout).toHaveBeenCalledWith(timeout.timerId);
+            beforeEach(function () {
+                spyOn(window, 'clearTimeout');
+                result = timeout.clearTimer("foo", "bar");
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(timeout);
+            });
+
+            it("should call clearTimeout with timer ID", function () {
+                expect(window.clearTimeout).toHaveBeenCalledWith(timeout.timerId);
+            });
         });
     });
 });

@@ -4,8 +4,8 @@
 var $assert = window['giant-assert'],
     $utils = window['giant-utils'];
 
-describe("Thenable", function () {
-    describe("type assertion", function () {
+describe("$assert", function () {
+    describe("isThenable()", function () {
         var thenable = {then: function () {}};
 
         beforeEach(function () {
@@ -28,7 +28,7 @@ describe("Thenable", function () {
         });
     });
 
-    describe("optional type assertion", function () {
+    describe("isThenableOptional()", function () {
         var thenable;
 
         beforeEach(function () {

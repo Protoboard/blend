@@ -2,7 +2,7 @@
 
 var $utils = window['giant-utils'];
 
-describe("Async utils", function () {
+describe("$utils", function () {
     beforeEach(function () {
         jasmine.clock().install();
     });
@@ -11,7 +11,7 @@ describe("Async utils", function () {
         jasmine.clock().uninstall();
     });
 
-    describe("setTimeout", function () {
+    describe("setTimeout()", function () {
         var successHandler,
             failureHandler,
             result;
@@ -48,7 +48,7 @@ describe("Async utils", function () {
         });
     });
 
-    describe("setInterval", function () {
+    describe("setInterval()", function () {
         var progressHandler,
             failureHandler,
             result;
