@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../node_modules/requirejs/require.js"></script>
+    <script>
+        require.config({
+            baseUrl: "../dist"
+        });
+        require([
+            'giant-assert',
+            'giant-oop',
+            'giant-utils',
+            'giant-data'
+        ], function (assert, oop, utils, data) {
+            $assert = assert;
+            $oop = oop;
+            $utils = utils;
+            $data = data;
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
