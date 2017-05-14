@@ -21,7 +21,7 @@ exports.Timeout = $oop.getClass('$utils.Timeout')
          * @returns {$utils.Timeout}
          */
         clearTimer: function () {
-            clearTimeout(this.timerId);
+            clearTimeout(this._timerId);
             return this;
         }
     });

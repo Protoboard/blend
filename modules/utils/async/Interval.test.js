@@ -14,8 +14,8 @@ describe("Number", function () {
             expect($utils.Interval.isIncludedBy(interval)).toBeTruthy();
         });
 
-        it("should set timerId property", function () {
-            expect(interval.timerId).toBe(12345);
+        it("should set _timerId property", function () {
+            expect(interval._timerId).toBe(12345);
         });
     });
 
@@ -42,7 +42,7 @@ describe("$utils", function () {
             });
 
             it("should call clearInterval with timer ID", function () {
-                expect(window.clearInterval).toHaveBeenCalledWith(interval.timerId);
+                expect(window.clearInterval).toHaveBeenCalledWith(interval._timerId);
             });
         });
     });

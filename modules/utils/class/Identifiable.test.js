@@ -8,7 +8,7 @@ describe("$utils", function () {
         var Identifiable;
 
         beforeEach(function () {
-            $utils.Identifiable.lastInstanceId = -1;
+            $utils.Identifiable._lastInstanceId = -1;
             Identifiable = $oop.getClass('Identifiable')
                 .extend($utils.Identifiable);
         });
@@ -24,8 +24,8 @@ describe("$utils", function () {
                 expect(instance.instanceId).toBe(0);
             });
 
-            it("should increment lastInstanceId", function () {
-                expect($utils.Identifiable.lastInstanceId).toBe(0);
+            it("should increment _lastInstanceId", function () {
+                expect($utils.Identifiable._lastInstanceId).toBe(0);
             });
         });
     });

@@ -10,15 +10,16 @@ exports.Identifiable = $oop.getClass('$utils.Identifiable')
         /**
          * @memberOf $utils.Identifiable
          * @type {number}
+         * @private
          */
-        lastInstanceId: -1,
+        _lastInstanceId: -1,
 
         /** @ignore */
         init: function () {
             /**
              * Identifies instance globally.
-             * @type {number}
+             * @member {number} $utils.Identifiable#instanceId
              */
-            this.instanceId = ++exports.Identifiable.lastInstanceId;
+            this.instanceId = ++exports.Identifiable._lastInstanceId;
         }
     });

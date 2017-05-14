@@ -16,7 +16,7 @@ exports.Deferred = $oop.getClass('$utils.Deferred')
         /** @ignore */
         init: function () {
             /**
-             * @type {$utils.Promise}
+             * @member {$utils.Promise} $utils.Deferred#promise
              */
             this.promise = exports.Promise.create();
         },

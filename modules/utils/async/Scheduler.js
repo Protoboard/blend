@@ -10,17 +10,21 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
         /** @ignore */
         init: function () {
             /**
-             * @type {Array}
+             * @member {Array} $utils.Scheduler#_scheduledArguments
+             * @private
              */
-            this.scheduledArguments = [];
+            this._scheduledArguments = [];
 
             /**
-             * @type {$utils.Timer[]}
+             * @member {$utils.Timer[]} $utils.Scheduler#_scheduleTimers
+             * @private
              */
-            this.scheduleTimers = [];
+            this._scheduleTimers = [];
 
             /**
-             * @type {$utils.Deferred}
+             * Provides external control over completing or stopping
+             * the scheduled calls.
+             * @member {$utils.Deferred} $utils.Scheduler#schedulerDeferred
              */
             this.schedulerDeferred = exports.Deferred.create();
         },
@@ -30,7 +34,7 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
          * @protected
          */
         _getTimerIndexByArguments: function (args) {
-            var scheduledCallbackArguments = this.scheduledArguments,
+            var scheduledCallbackArguments = this._scheduledArguments,
                 scheduledCallbackArgumentsCount = scheduledCallbackArguments.length,
                 argCount = args.length,
                 i, matchesArguments,
@@ -52,21 +56,47 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
         },
 
         /**
+         * @returns {Number}
+         * @protected
+         */
+        _getTimerCount: function () {
+            return this._scheduleTimers.length;
+        },
+
+        /**
+         * @param {$utils.Timer} timer
+         * @param {Array|Arguments} args
+         * @protected
+         */
+        _addTimerForArguments: function (timer, args) {
+            this._scheduledArguments.push(args);
+            this._scheduleTimers.push(timer);
+        },
+
+        /**
+         * @param {$utils.Timer} timer
+         * @param {number} timerIndex
+         * @protected
+         */
+        _setTimerAtIndex: function (timer, timerIndex) {
+            this._scheduleTimers[timerIndex] = timer;
+        },
+
+        /**
          * @param {number} timerIndex
          * @returns {$utils.Scheduler}
          * @protected
          */
         _clearTimerAtIndex: function (timerIndex) {
             // TODO: Investigate a good middle ground bw. cpu vs. memory footprint.
-            this.scheduleTimers[timerIndex] = undefined;
-        },
+            this._scheduleTimers[timerIndex] = undefined;
+        }
 
         /**
+         * Schedules a call passing the specified arguments.
+         * @method $utils.Scheduler#schedule
          * @param {...*} arg
          * @returns {$utils.Promise}
          * @abstract
          */
-        schedule: function (arg) {
-            return this.schedulerDeferred.promise;
-        }
     });

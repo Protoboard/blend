@@ -12,7 +12,7 @@ describe("$utils", function () {
 
         describe("create()", function () {
             it("should set scheduleDelay", function () {
-                expect(debouncer.debounceDelay).toBe(50);
+                expect(debouncer._debounceDelay).toBe(50);
             });
         });
 
@@ -34,11 +34,11 @@ describe("$utils", function () {
             });
 
             it("should add arguments to list", function () {
-                expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
+                expect(debouncer._scheduledArguments).toEqual([["foo", "bar"]]);
             });
 
             it("should add timer to list", function () {
-                expect($utils.Timeout.isIncludedBy(debouncer.scheduleTimers[0])).toBeTruthy();
+                expect($utils.Timeout.isIncludedBy(debouncer._scheduleTimers[0])).toBeTruthy();
             });
 
             it("should start timer", function () {
@@ -51,11 +51,11 @@ describe("$utils", function () {
                 });
 
                 it("should not add to argument list", function () {
-                    expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
+                    expect(debouncer._scheduledArguments).toEqual([["foo", "bar"]]);
                 });
 
                 it("should not add timer to list", function () {
-                    expect(debouncer.scheduleTimers[1]).toBeUndefined();
+                    expect(debouncer._scheduleTimers[1]).toBeUndefined();
                 });
 
                 it("should restart timer", function () {
@@ -73,7 +73,7 @@ describe("$utils", function () {
                 });
 
                 it("should reset affected timer in registry", function () {
-                    expect(debouncer.scheduleTimers).toEqual([undefined]);
+                    expect(debouncer._scheduleTimers).toEqual([undefined]);
                 });
 
                 it("should notify promise with corresponding arguments", function () {
@@ -83,11 +83,11 @@ describe("$utils", function () {
 
             describe("when timer gets canceled by user", function () {
                 beforeEach(function () {
-                    debouncer.scheduleTimers[0].clearTimer();
+                    debouncer._scheduleTimers[0].clearTimer();
                 });
 
                 it("should reset affected timer in registry", function () {
-                    expect(debouncer.scheduleTimers).toEqual([undefined]);
+                    expect(debouncer._scheduleTimers).toEqual([undefined]);
                 });
             });
         });

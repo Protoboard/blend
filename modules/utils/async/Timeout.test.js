@@ -14,8 +14,8 @@ describe("Number", function () {
             expect($utils.Timeout.isIncludedBy(timeout)).toBeTruthy();
         });
 
-        it("should set timerId property", function () {
-            expect(timeout.timerId).toBe(12345);
+        it("should set _timerId property", function () {
+            expect(timeout._timerId).toBe(12345);
         });
     });
 
@@ -42,7 +42,7 @@ describe("$utils", function () {
             });
 
             it("should call clearTimeout with timer ID", function () {
-                expect(window.clearTimeout).toHaveBeenCalledWith(timeout.timerId);
+                expect(window.clearTimeout).toHaveBeenCalledWith(timeout._timerId);
             });
         });
     });

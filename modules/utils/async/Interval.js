@@ -21,7 +21,7 @@ exports.Interval = $oop.getClass('$utils.Interval')
          * @returns {$utils.Interval}
          */
         clearTimer: function () {
-            clearInterval(this.timerId);
+            clearInterval(this._timerId);
             return this;
         }
     });

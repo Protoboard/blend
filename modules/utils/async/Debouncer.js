@@ -23,9 +23,10 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
                 'onTimerCancel');
 
             /**
-             * @type {number}
+             * @member {number} $utils.Debouncer#_debounceDelay
+             * @private
              */
-            this.debounceDelay = delay || 0;
+            this._debounceDelay = delay || 0;
         },
 
         /**
@@ -35,30 +36,23 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
         schedule: function (arg) {
             // looking up arguments in list
             var callbackArguments = slice.call(arguments),
-                timeoutArguments = [this.debounceDelay].concat(callbackArguments),
+                timeoutArguments = [this._debounceDelay].concat(callbackArguments),
                 timerIndex = this._getTimerIndexByArguments(callbackArguments),
                 timer;
 
+            // (re-)starting timer
+            timer = exports.setTimeout.apply(exports, timeoutArguments);
+            timer.timerPromise.then(
+                this.onTimerEnd,
+                this.onTimerCancel);
+
             if (typeof timerIndex === 'undefined') {
-                // starting timer
-                timer = exports.setTimeout.apply(exports, timeoutArguments);
-                timer.timerPromise.then(
-                    this.onTimerEnd,
-                    this.onTimerCancel);
-
                 // adding arg list & timer
-                this.scheduledArguments.push(callbackArguments);
-                this.scheduleTimers.push(timer);
+                this._addTimerForArguments(timer, callbackArguments);
             } else {
-                // re-starting timer
-                this.scheduleTimers[timerIndex].clearTimer();
-                timer = exports.setTimeout.apply(exports, timeoutArguments);
-                timer.timerPromise.then(
-                    this.onTimerEnd,
-                    this.onTimerCancel);
-
                 // replacing timer in registry
-                this.scheduleTimers[timerIndex] = timer;
+                this._clearTimerAtIndex(timerIndex);
+                this._setTimerAtIndex(timerIndex, timer);
             }
 
             return this.schedulerDeferred.promise;

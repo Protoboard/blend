@@ -16,8 +16,9 @@ exports.Retrievable = $oop.getClass('$utils.Retrievable')
          * Global registry for instances having the Retrievable trait.
          * @memberOf $utils.Retrievable
          * @type {object}
+         * @private
          */
-        instanceRegistry: {},
+        _instanceRegistry: {},
 
         /** @ignore */
         init: function () {
@@ -30,7 +31,7 @@ exports.Retrievable = $oop.getClass('$utils.Retrievable')
          * @private
          */
         _addToInstanceRegistry: function () {
-            exports.Retrievable.instanceRegistry[this.instanceId] = this;
+            exports.Retrievable._instanceRegistry[this.instanceId] = this;
             return this;
         },
 
@@ -40,7 +41,7 @@ exports.Retrievable = $oop.getClass('$utils.Retrievable')
          * @private
          */
         _removeFromInstanceRegistry: function () {
-            delete exports.Retrievable.instanceRegistry[this.instanceId];
+            delete exports.Retrievable._instanceRegistry[this.instanceId];
             return this;
         },
 
@@ -59,6 +60,6 @@ exports.Retrievable = $oop.getClass('$utils.Retrievable')
          * @memberOf $utils.Retrievable
          */
         getInstanceById: function (instanceId) {
-            return exports.Retrievable.instanceRegistry[instanceId];
+            return exports.Retrievable._instanceRegistry[instanceId];
         }
     });

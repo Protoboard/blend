@@ -22,32 +22,32 @@ exports.Promise = $oop.getClass('$utils.Promise')
         /** @ignore */
         init: function () {
             /**
-             * @type {string}
+             * @member {string} $utils.Promise#promiseState
              */
             this.promiseState = exports.PROMISE_STATE_UNFULFILLED;
 
             /**
-             * @type {Array}
+             * @member {Array} $utils.Promise#deferredArguments
              */
             this.deferredArguments = undefined;
 
             /**
-             * @type {Arguments[]}
+             * @member {Arguments[]} $utils.Promise#notificationArguments
              */
             this.notificationArguments = [];
 
             /**
-             * @type {function[]}
+             * @member {function[]} $utils.Promise#successHandlers
              */
             this.successHandlers = [];
 
             /**
-             * @type {function[]}
+             * @member {function[]} $utils.Promise#failureHandlers
              */
             this.failureHandlers = [];
 
             /**
-             * @type {function[]}
+             * @member {function[]} $utils.Promise#progressHandlers
              */
             this.progressHandlers = [];
         },

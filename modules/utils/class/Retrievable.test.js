@@ -9,8 +9,8 @@ describe("$utils", function () {
             instance;
 
         beforeEach(function () {
-            $utils.Identifiable.lastInstanceId = -1;
-            $utils.Retrievable.instanceRegistry = {};
+            $utils.Identifiable._lastInstanceId = -1;
+            $utils.Retrievable._instanceRegistry = {};
             Retrievable = $oop.getClass("Retrievable")
                 .extend($utils.Retrievable);
         });
@@ -21,7 +21,7 @@ describe("$utils", function () {
             });
 
             it("should add instance to registry", function () {
-                expect($utils.Retrievable.instanceRegistry).toEqual({
+                expect($utils.Retrievable._instanceRegistry).toEqual({
                     0: instance
                 });
             });
