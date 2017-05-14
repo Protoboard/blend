@@ -925,6 +925,6 @@ $assert.isClass = function (expr, message) {
  */
 $assert.isClassOptional = function (expr, message) {
     return $assert.assert(
-        typeof expr === 'undefined' ||
+        expr === undefined ||
         exports.Class.isPrototypeOf(expr), message);
 };

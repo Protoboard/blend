@@ -46,7 +46,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
                 this.onTimerEnd,
                 this.onTimerCancel);
 
-            if (typeof timerIndex === 'undefined') {
+            if (timerIndex === undefined) {
                 // adding arg list & timer
                 this._addTimerForArguments(timer, callbackArguments);
             } else {

@@ -37,7 +37,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
      */
     isThenableOptional: function (expr, message) {
         return $assert.assert(
-            typeof expr === 'undefined' ||
+            expr === undefined ||
             expr instanceof Object && typeof expr.then === 'function',
             message);
     }

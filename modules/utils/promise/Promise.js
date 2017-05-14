@@ -170,7 +170,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
      */
     isPromiseOptional: function (expr, message) {
         return $assert.assert(
-            typeof expr === 'undefined' ||
+            expr === undefined ||
             exports.Promise.isIncludedBy(expr), message);
     }
 });

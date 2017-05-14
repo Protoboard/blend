@@ -57,7 +57,7 @@ exports.Throttler = $oop.getClass('$utils.Throttler')
                 timerIndex = this._getTimerIndexByArguments(callbackArguments),
                 timer;
 
-            if (typeof timerIndex === 'undefined') {
+            if (timerIndex === undefined) {
                 timerIndex = this._getTimerCount();
                 timeoutArguments = [this._throttleInterval].concat(callbackArguments);
 
