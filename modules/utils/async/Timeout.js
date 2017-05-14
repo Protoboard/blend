@@ -26,7 +26,8 @@ exports.Timeout = $oop.getClass('$utils.Timeout')
         }
     });
 
-$oop.copyProperties(Number.prototype, /** @lends Number# */{
+/** @external Number */
+$oop.copyProperties(Number.prototype, /** @lends external:Number# */{
     /**
      * Converts `Number` to `Timeout` instance.
      * @returns {$utils.Timeout}

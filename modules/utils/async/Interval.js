@@ -26,7 +26,8 @@ exports.Interval = $oop.getClass('$utils.Interval')
         }
     });
 
-$oop.copyProperties(Number.prototype, /** @lends Number# */{
+/** @external Number */
+$oop.copyProperties(Number.prototype, /** @lends external:Number# */{
     /**
      * Converts `Number` to `Interval` instance.
      * @returns {$utils.Interval}

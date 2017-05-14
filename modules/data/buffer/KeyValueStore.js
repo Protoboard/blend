@@ -194,7 +194,8 @@ $oop.getClass('$data.Buffer')
         }
     });
 
-$oop.copyProperties(Array.prototype, /** @lends Array# */{
+/** @external Array */
+$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
     /**
      * @returns {$data.KeyValueStore}
      */
