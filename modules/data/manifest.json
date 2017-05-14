@@ -2,6 +2,9 @@
   "assets": {
     "js": [
       "globals.js",
+      "buffer/Buffer.js",
+      "buffer/KeyValueStore.js",
+      "utils/Clearable.js",
       "utils/data-utils.js"
     ]
   }
