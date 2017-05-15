@@ -582,6 +582,27 @@ describe("$oop", function () {
                     Include1, Include3, Include2, Class
                 ]);
             });
+
+            it("should add to extenders on includes", function () {
+                expect(Include1.__extenders.list).toEqual([Class]);
+                expect(Include2.__extenders.list).toEqual([Class]);
+                expect(Include3.__extenders.list).toEqual([Class]);
+            });
+
+            describe("then including a class", function () {
+                var Include4;
+
+                beforeEach(function () {
+                    Include4 = $oop.getClass("Include4");
+                    Include1.include(Include4);
+                });
+
+                it("should propagate to extenders", function () {
+                    expect(Class.__includes.forward.list).toEqual([
+                        Include1, Include3, Include2, Include4
+                    ]);
+                });
+            });
         });
 
         describe("require()", function () {

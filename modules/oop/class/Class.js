@@ -77,6 +77,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 },
 
                 /**
+                 * Registry of classes that extend the current class.
+                 * @type {{list: Array, lookup: object}}
+                 * @private
+                 */
+                __extenders: {list: [], lookup: {}},
+
+                /**
                  * Registry of methods not implemented by current class.
                  * @type {{list: Array, lookup: object}}
                  * @private
@@ -393,6 +400,22 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @param {$oop.Class} Class
      * @private
      */
+    _addToExtenders: function (Class) {
+        var extenders = this.__extenders,
+            extenderList = extenders.list,
+            extenderLookup = extenders.lookup,
+            classId = Class.__classId;
+
+        if (!hOP.call(extenderLookup, classId)) {
+            extenderList.push(Class);
+            extenderLookup[classId] = Class;
+        }
+    },
+
+    /**
+     * @param {$oop.Class} Class
+     * @private
+     */
     _addToRequires: function (Class) {
         var classId = this.__classId,
             requireId = Class.__classId,
@@ -472,6 +495,17 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 // adding to hosts on require
                 Class._addToHosts(Host);
             });
+    },
+
+    /**
+     * Transfers specified class as include to all extenders of the current class.
+     * @param {$oop.Class} Class
+     * @private
+     */
+    _transferIncludeToExtenders: function (Class) {
+        this.__extenders.list.forEach(function (Extender) {
+            Extender.include(Class);
+        });
     },
 
     /**
@@ -690,6 +724,9 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // transferring includes & requires from include
         this._transferRequiresFrom(Class);
 
+        // transferring as include to extenders
+        this._transferIncludeToExtenders(Class);
+
         var members = Class.__members;
 
         // adding methods to lookup at specified index
@@ -719,6 +756,9 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // including all dependencies
         contributors.forEach(function (Class) {
+            // adding current class to include as extender
+            Class._addToExtenders(that);
+
             that.include(Class);
         });
 
