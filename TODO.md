@@ -21,13 +21,22 @@ Event
     - Collecting processing history (ClassID + function)
 - Evented.triggers(eventName):Promise
 
+Data
+----
+
+- Specified collections? Keep 'em?
+- mapKeys() on Dictionary only
+- KVPCollection
+
 Utils
 -----
+
+- Classes to be made `Destroyable`?
 
 OOP
 ---
 
-- Full overrides
+- **Full overrides**
 - Checks
     - ~~Do not allow instances as static properties in Class#define~~
     - Whether forward includes class being instantiated. ON instantiation
@@ -36,17 +45,21 @@ OOP
 - _What if includes have conflicting hash functions?_
     - ATM not taken into account!
     - Includes' hash shouldn't matter?
-- Low pri: Performance benchmarks
-- Low pri: Investigate runtime class / instance composition.
+- Terminology
+    - include vs. integrate / mix
+    - "host": isHostedBy
+
+### Low Pri
+ 
+- Single meta property?
+- Performance benchmarks
+- Investigate runtime class / instance composition.
     - Costly is OK.
     - GUID as Class ID for ad-hoc classes?
         - How would we clean it up?
         - Not caching builder / class?
-- Low pri: Make `$oop.Base` a Class for compatibility, but make sure overrides are in place
-- Low pri: Swap back contribution vs. delegate terminology
-- Terminology
-    - include vs. integrate / mix
-    - "host": isHostedBy
+- Make `$oop.Base` a Class for compatibility, but make sure overrides are in place
+- Swap back contribution vs. delegate terminology
 
 Assert
 ------
