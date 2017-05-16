@@ -3,7 +3,7 @@
 
 /**
  * @function $data.Buffer.create
- * @param {object|Array} data
+ * @param {object|Array} [data]
  * @returns {$data.Buffer}
  */
 
@@ -20,7 +20,7 @@ exports.Buffer = $oop.getClass('$data.Buffer')
     .include($oop.getClass('$utils.Cloneable'))
     .define(/** @lends $data.Buffer# */{
         /**
-         * @param {object|Array} data
+         * @param {object|Array} [data]
          * @ignore
          */
         init: function (data) {
