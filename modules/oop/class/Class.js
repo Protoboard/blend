@@ -92,6 +92,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
                 /**
                  * Registry of all classes contributing members to the current class.
+                 * **Order is important.**
                  * @type {{list: Array, lookup: object}}
                  * @private
                  */
@@ -99,7 +100,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
                 /**
                  * Two dimensional lookup of methods contributed to the class.
-                 * Indexed by method name, then contributor index. (Index of contributor in __contributors.list.)
+                 * Indexed by method name, then contributor index. (Index of contributor in `__contributors.list`.)
+                 * **Order is important.**
                  * @type {object}
                  * @private
                  */
@@ -155,39 +157,72 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
-     * Adds class to contributions
-     * @param {$oop.Class} Class
+     * Adds class to list of contributors.
+     * @param {$oop.Class} Class Contributing class
+     * @param {$oop.Class} [Next] Class before which the contributing class should be placed.
      * @private
      */
-    _addToContributors: function (Class) {
+    _addToContributors: function (Class, Next) {
         var contributors = this.__contributors,
             contributorList = contributors.list,
             contributorLookup = contributors.lookup,
             classId = Class.__classId;
 
         if (!hOP.call(contributorLookup, classId)) {
-            contributorLookup[classId] = contributorList.length;
-            contributorList.push(Class);
+            if (Next) {
+                // placing include before Next class, and reconstructing lookup
+                contributorList.splice(contributorList.indexOf(Next), 0, Class);
+                contributors.lookup = contributorList.reduce(function (lookup, Class, i) {
+                    lookup[Class.__classId] = i;
+                    return lookup;
+                }, {});
+            } else {
+                // adding include
+                contributorLookup[classId] = contributorList.length;
+                contributorList.push(Class);
+            }
         }
     },
 
     /**
      * Adds methods to method lookup, indexed by method name, then order.
-     * @param {object} members
-     * @param {string} classId
+     * @param {object} members Contributed members (may contain properties)
+     * @param {string} classId ID of contributing class
+     * @param {string} [nextId] ID of class the contributor is inserted before
      * @private
      */
-    _addMethodsToMatrix: function (members, classId) {
+    _addMethodsToMatrix: function (members, classId, nextId) {
         var methodMatrix = this.__methodMatrix,
-            classIndex = this.__contributors.lookup[classId];
+            contributorLookup = this.__contributors.lookup,
+            classIndex = contributorLookup[classId],
+            nextIndex = contributorLookup[nextId];
 
+        if (nextId !== undefined) {
+            // through class is defined
+            // making room for incoming methods
+            Object.getOwnPropertyNames(methodMatrix)
+                // we don't need to splice where there are no methods beyond nextIndex
+                .filter(function (methodName) {
+                    var methods = methodMatrix[methodName];
+                    return methods && methods.length >= nextIndex;
+                })
+                // making room for contributor
+                .forEach(function (methodName) {
+                    var methods = methodMatrix[methodName];
+                    methods.splice(nextIndex - 1, 0, undefined);
+                });
+        }
+
+        // just setting members in method matrix
         Object.getOwnPropertyNames(members)
             .filter(function (memberName) {
                 return typeof members[memberName] === 'function';
             })
             .forEach(function (methodName) {
-                var methods = methodMatrix[methodName];
-                if (!methods) {
+                var methods;
+                if (hOP.call(methodMatrix, methodName)) {
+                    methods = methodMatrix[methodName];
+                } else {
                     methods = methodMatrix[methodName] = [];
                 }
                 methods[classIndex] = members[methodName];
@@ -503,8 +538,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _transferIncludeToExtenders: function (Class) {
+        var that = this;
         this.__extenders.list.forEach(function (Extender) {
-            Extender.include(Class);
+            // adding extender to include
+            Class._addToExtenders(Extender);
+
+            // including class in extender
+            Extender.include(Class, that);
         });
     },
 
@@ -702,9 +742,10 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     /**
      * Specifies a class to be included by the host class.
      * @param {$oop.Class} Class
+     * @param {$oop.Class} [Through]
      * @returns {$oop.Class}
      */
-    include: function (Class) {
+    include: function (Class, Through) {
         $assert.isClass(Class, "Class#include expects type Class.");
 
         // TODO: Detect & throw on circular include
@@ -716,7 +757,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         Class._addToIncluders(this);
 
         // adding included class to contributions
-        this._addToContributors(Class);
+        this._addToContributors(Class, Through);
 
         // removing fulfilled require
         this._removeFromRequires(Class);
@@ -730,7 +771,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         var members = Class.__members;
 
         // adding methods to lookup at specified index
-        this._addMethodsToMatrix(members, Class.__classId);
+        this._addMethodsToMatrix(members, Class.__classId, Through && Through.__classId);
 
         // adding / overwriting properties
         this._addPropertiesToClass(members);

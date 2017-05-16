@@ -553,8 +553,7 @@ describe("$oop", function () {
 
         describe("extend()", function () {
             var Include1,
-                Include2,
-                Include3;
+                Include2;
 
             beforeEach(function () {
                 Include1 = $oop.getClass("Include1")
@@ -566,11 +565,8 @@ describe("$oop", function () {
                     .define({
                         baz: function () {}
                     });
-                Include3 = $oop.getClass("Include3")
-                    .include(Include1);
 
                 Class
-                    .extend(Include3)
                     .extend(Include2)
                     .define({
                         foo: function () {}
@@ -579,28 +575,70 @@ describe("$oop", function () {
 
             it("should add all dependencies", function () {
                 expect(Class.__contributors.list).toEqual([
-                    Include1, Include3, Include2, Class
+                    Include1, Include2, Class
                 ]);
             });
 
             it("should add to extenders on includes", function () {
                 expect(Include1.__extenders.list).toEqual([Class]);
                 expect(Include2.__extenders.list).toEqual([Class]);
-                expect(Include3.__extenders.list).toEqual([Class]);
             });
 
             describe("then including a class", function () {
-                var Include4;
+                var Include3,
+                    Include4;
 
                 beforeEach(function () {
-                    Include4 = $oop.getClass("Include4");
-                    Include1.include(Include4);
+                    Include3 = $oop.getClass("Include3")
+                        .define({
+                            quux: function () {}
+                        });
+                    Include4 = $oop.getClass("Include4")
+                        .define({
+                            foo: function () {}
+                        });
+                    Include1
+                        .include(Include3)
+                        .include(Include4);
                 });
 
                 it("should propagate to extenders", function () {
                     expect(Class.__includes.forward.list).toEqual([
-                        Include1, Include3, Include2, Include4
+                        Include1, Include2, Include3, Include4
                     ]);
+                    expect(Class.__contributors).toEqual({
+                        list: [Include3, Include4, Include1, Include2, Class],
+                        lookup: {
+                            Include3: 0,
+                            Include4: 1,
+                            Include1: 2,
+                            Include2: 3,
+                            Class: 4
+                        }
+                    });
+                    expect(Class.__methodMatrix).toEqual({
+                        foo: [
+                            undefined,
+                            Include4.__members.foo,
+                            undefined,
+                            undefined,
+                            Class.__members.foo
+                        ],
+                        bar: [
+                            undefined,
+                            undefined,
+                            Include1.__members.bar
+                        ],
+                        baz: [
+                            undefined,
+                            undefined,
+                            undefined,
+                            Include2.__members.baz
+                        ],
+                        quux: [
+                            Include3.__members.quux
+                        ]
+                    });
                 });
             });
         });
