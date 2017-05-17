@@ -201,7 +201,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             // through class is defined
             // making room for incoming methods
             Object.getOwnPropertyNames(methodMatrix)
-                // we don't need to splice where there are no methods beyond nextIndex
+            // we don't need to splice where there are no methods beyond nextIndex
                 .filter(function (methodName) {
                     var methods = methodMatrix[methodName];
                     return methods && methods.length >= nextIndex;
@@ -410,8 +410,9 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             classId = Class.__classId;
 
         if (!hOP.call(includeLookup, classId)) {
+            // adding include and initial distance
             includeList.push(Class);
-            includeLookup[classId] = Class;
+            includeLookup[classId] = 1;
         }
     },
 
@@ -426,9 +427,51 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             classId = Class.__classId;
 
         if (!hOP.call(hostLookup, classId)) {
+            // adding host and initial distance
             hostList.push(Class);
-            hostLookup[classId] = Class;
+            hostLookup[classId] = 1;
         }
+    },
+
+    /**
+     * @private
+     */
+    _updateIncludeDistances: function (Class) {
+        var classId = this.__classId,
+            includeId = Class.__classId,
+            includesForwardLookup = this.__includes.forward.lookup,
+            includes2Forward = Class.__includes.forward,
+            includes2ForwardList = includes2Forward.list,
+            includes2ForwardLookup = includes2Forward.lookup,
+            includes2Reverse = Class.__includes.reverse,
+            includes2ReverseList = includes2Reverse.list,
+            includes2ReverseLookup = includes2Reverse.lookup;
+
+        // updating distance of this & Class based on what's inside
+        includes2ReverseList
+            .filter(function (IncludeHost) {
+                return hOP.call(includesForwardLookup, IncludeHost.__classId);
+            })
+            .forEach(function (IncludeHost) {
+                includes2ReverseLookup[classId] = includesForwardLookup[includeId] =
+                    Math.max(includesForwardLookup[includeId],
+                        includesForwardLookup[IncludeHost.__classId] +
+                        IncludeHost.__includes.forward.lookup[includeId]);
+            });
+
+        // updating distance of includes containing this - Class
+        includes2ForwardList
+            .filter(function (Include2) {
+                return hOP.call(includesForwardLookup, Include2.__classId);
+            })
+            .forEach(function (Include2) {
+                var include2Id = Include2.__classId,
+                    includes3ReverseLookup = Include2.__includes.reverse.lookup;
+                includes3ReverseLookup[classId] = includesForwardLookup[include2Id] =
+                    Math.max(includesForwardLookup[include2Id],
+                        includesForwardLookup[includeId] +
+                        includes2ForwardLookup[include2Id]);
+            });
     },
 
     /**
@@ -755,6 +798,11 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // adding to reverse includes
         Class._addToIncluders(this);
+
+        // determining how include affects distances
+        this._updateIncludeDistances(Class);
+
+        // TODO: rebuild forwards
 
         // adding included class to contributions
         this._addToContributors(Class, Through);

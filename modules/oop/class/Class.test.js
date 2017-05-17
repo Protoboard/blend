@@ -418,7 +418,7 @@ describe("$oop", function () {
                 expect(Class.__includes.forward).toEqual({
                     list: [Trait],
                     lookup: {
-                        Trait: Trait
+                        Trait: 1
                     }
                 });
             });
@@ -427,7 +427,7 @@ describe("$oop", function () {
                 expect(Trait.__includes.reverse).toEqual({
                     list: [Class],
                     lookup: {
-                        Class: Class
+                        Class: 1
                     }
                 });
             });
@@ -549,6 +549,8 @@ describe("$oop", function () {
                     expect(Class.baz).not.toBe(Trait.__members.baz);
                 });
             });
+
+            // TODO: Test distances after multiple inclusions
         });
 
         describe("extend()", function () {
