@@ -43,22 +43,22 @@ describe("$oop", function () {
 
             it("should initialize interfaces", function () {
                 expect(result.__interfaces).toEqual({
-                    forward: {list: [], lookup: {}},
-                    reverse: {list: [], lookup: {}}
+                    downstream: {list: [], lookup: {}},
+                    upstream: {list: [], lookup: {}}
                 });
             });
 
             it("should initialize includes", function () {
                 expect(result.__includes).toEqual({
-                    forward: {list: [], lookup: {}},
-                    reverse: {list: [], lookup: {}}
+                    downstream: {list: [], lookup: {}},
+                    upstream: {list: [], lookup: {}}
                 });
             });
 
             it("should initialize requires", function () {
                 expect(result.__requires).toEqual({
-                    forward: {list: [], lookup: {}},
-                    reverse: {list: [], lookup: {}}
+                    downstream: {list: [], lookup: {}},
+                    upstream: {list: [], lookup: {}}
                 });
             });
 
@@ -273,7 +273,7 @@ describe("$oop", function () {
             });
 
             it("should add to interfaces", function () {
-                expect(Class.__interfaces.forward).toEqual({
+                expect(Class.__interfaces.downstream).toEqual({
                     list: [Interface],
                     lookup: {
                         Interface: Interface
@@ -282,7 +282,7 @@ describe("$oop", function () {
             });
 
             it("should add self to implementers on interface", function () {
-                expect(Interface.__interfaces.reverse).toEqual({
+                expect(Interface.__interfaces.upstream).toEqual({
                     list: [Class],
                     lookup: {
                         Class: Class
@@ -293,7 +293,7 @@ describe("$oop", function () {
             describe("when already added", function () {
                 it("should not add again", function () {
                     Class.implement(Interface);
-                    expect(Class.__interfaces.forward).toEqual({
+                    expect(Class.__interfaces.downstream).toEqual({
                         list: [Interface],
                         lookup: {
                             Interface: Interface
@@ -415,7 +415,7 @@ describe("$oop", function () {
             });
 
             it("should add to includes", function () {
-                expect(Class.__includes.forward).toEqual({
+                expect(Class.__includes.downstream).toEqual({
                     list: [Trait],
                     lookup: {
                         Trait: 1
@@ -424,7 +424,7 @@ describe("$oop", function () {
             });
 
             it("should add self to includers on remote class", function () {
-                expect(Trait.__includes.reverse).toEqual({
+                expect(Trait.__includes.upstream).toEqual({
                     list: [Class],
                     lookup: {
                         Class: 1
@@ -496,7 +496,7 @@ describe("$oop", function () {
                 });
 
                 it("should not add class to requires", function () {
-                    expect(Class.__requires.forward).toEqual({
+                    expect(Class.__requires.downstream).toEqual({
                         list: [],
                         lookup: {}
                     });
@@ -514,7 +514,7 @@ describe("$oop", function () {
                 });
 
                 it("should transfer requires", function () {
-                    expect(Class.__requires.forward).toEqual({
+                    expect(Class.__requires.downstream).toEqual({
                         list: [Require2, Include, Require3],
                         lookup: {
                             Include: Include,
@@ -568,12 +568,12 @@ describe("$oop", function () {
                         B.include(D);
                         A.include(C);
                         A.include(D);
-                        expect(A.__includes.forward.lookup).toEqual({
+                        expect(A.__includes.downstream.lookup).toEqual({
                             B: 1,
                             C: 2,
                             D: 3
                         });
-                        expect(D.__includes.reverse.lookup).toEqual({
+                        expect(D.__includes.upstream.lookup).toEqual({
                             C: 1,
                             B: 2,
                             A: 3
@@ -589,12 +589,12 @@ describe("$oop", function () {
                         A.include(C);
                         B.include(C);
                         A.include(B);
-                        expect(A.__includes.forward.lookup).toEqual({
+                        expect(A.__includes.downstream.lookup).toEqual({
                             B: 1,
                             C: 2,
                             D: 3
                         });
-                        expect(D.__includes.reverse.lookup).toEqual({
+                        expect(D.__includes.upstream.lookup).toEqual({
                             C: 1,
                             B: 2,
                             A: 3
@@ -610,12 +610,12 @@ describe("$oop", function () {
                         B.include(D);
                         B.include(C);
                         C.include(D);
-                        expect(A.__includes.forward.lookup).toEqual({
+                        expect(A.__includes.downstream.lookup).toEqual({
                             B: 1,
                             C: 2,
                             D: 3
                         });
-                        expect(D.__includes.reverse.lookup).toEqual({
+                        expect(D.__includes.upstream.lookup).toEqual({
                             C: 1,
                             B: 2,
                             A: 3
@@ -631,12 +631,12 @@ describe("$oop", function () {
                         A.include(C);
                         B.include(C);
                         C.include(D);
-                        expect(A.__includes.forward.lookup).toEqual({
+                        expect(A.__includes.downstream.lookup).toEqual({
                             B: 1,
                             C: 2,
                             D: 3
                         });
-                        expect(D.__includes.reverse.lookup).toEqual({
+                        expect(D.__includes.upstream.lookup).toEqual({
                             C: 1,
                             B: 2,
                             A: 3
@@ -698,7 +698,7 @@ describe("$oop", function () {
                 });
 
                 it("should propagate to extenders", function () {
-                    expect(Class.__includes.forward.list).toEqual([
+                    expect(Class.__includes.downstream.list).toEqual([
                         Include1, Include2, Include3, Include4
                     ]);
                     expect(Class.__contributors).toEqual({
@@ -759,7 +759,7 @@ describe("$oop", function () {
             });
 
             it("should add requires", function () {
-                expect(Class.__requires.forward).toEqual({
+                expect(Class.__requires.downstream).toEqual({
                     list: [Require],
                     lookup: {
                         Require: Require
@@ -768,7 +768,7 @@ describe("$oop", function () {
             });
 
             it("should add self to hosts on remote class", function () {
-                expect(Require.__requires.reverse).toEqual({
+                expect(Require.__requires.upstream).toEqual({
                     list: [Class],
                     lookup: {
                         Class: Class
@@ -782,7 +782,7 @@ describe("$oop", function () {
                 });
 
                 it("should remove class from requires", function () {
-                    expect(Class.__requires.forward).toEqual({
+                    expect(Class.__requires.downstream).toEqual({
                         list: [],
                         lookup: {}
                     });
@@ -800,7 +800,7 @@ describe("$oop", function () {
                 });
 
                 it("should transfer requires", function () {
-                    expect(Class.__requires.forward).toEqual({
+                    expect(Class.__requires.downstream).toEqual({
                         list: [Require, Require2, Require3, Include],
                         lookup: {
                             Include: Include,

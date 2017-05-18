@@ -46,34 +46,34 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 /**
                  * Registry of interfaces implemented by the current class,
                  * and classes implementing the current class as an interface.
-                 * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 * @type {{downstream: {list: Array, lookup: object}, upstream: {list: Array, lookup: object}}}
                  * @private
                  */
                 __interfaces: {
-                    forward: {list: [], lookup: {}},
-                    reverse: {list: [], lookup: {}}
+                    downstream: {list: [], lookup: {}},
+                    upstream: {list: [], lookup: {}}
                 },
 
                 /**
                  * Registry of classes included by the current class,
                  * and classes that include the current class.
-                 * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 * @type {{downstream: {list: Array, lookup: object}, upstream: {list: Array, lookup: object}}}
                  * @private
                  */
                 __includes: {
-                    forward: {list: [], lookup: {}},
-                    reverse: {list: [], lookup: {}}
+                    downstream: {list: [], lookup: {}},
+                    upstream: {list: [], lookup: {}}
                 },
 
                 /**
                  * Registry of classes required by the current class,
                  * and classes requiring the current class.
-                 * @type {{forward: {list: Array, lookup: object}, reverse: {list: Array, lookup: object}}}
+                 * @type {{downstream: {list: Array, lookup: object}, upstream: {list: Array, lookup: object}}}
                  * @private
                  */
                 __requires: {
-                    forward: {list: [], lookup: {}},
-                    reverse: {list: [], lookup: {}}
+                    downstream: {list: [], lookup: {}},
+                    upstream: {list: [], lookup: {}}
                 },
 
                 /**
@@ -307,7 +307,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToInterfaces: function (Interface) {
-        var interfaces = this.__interfaces.forward,
+        var interfaces = this.__interfaces.downstream,
             interfaceList = interfaces.list,
             interfaceLookup = interfaces.lookup,
             interfaceId = Interface.__classId;
@@ -323,7 +323,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToImplementers: function (Class) {
-        var implementers = this.__interfaces.reverse,
+        var implementers = this.__interfaces.upstream,
             implementerList = implementers.list,
             implementerLookup = implementers.lookup,
             classId = Class.__classId;
@@ -366,7 +366,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      */
     _addToMissingMethods: function (members) {
         var contributions = this.__contributors.list,
-            interfaces = this.__interfaces.forward.list,
+            interfaces = this.__interfaces.downstream.list,
             missingMethodNames = this.__missingMethodNames.list,
             missingMethodLookup = this.__missingMethodNames.lookup;
 
@@ -404,7 +404,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToIncludes: function (Class) {
-        var includes = this.__includes.forward,
+        var includes = this.__includes.downstream,
             includeList = includes.list,
             includeLookup = includes.lookup,
             classId = Class.__classId;
@@ -421,7 +421,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToIncluders: function (Class) {
-        var hosts = this.__includes.reverse,
+        var hosts = this.__includes.upstream,
             hostList = hosts.list,
             hostLookup = hosts.lookup,
             classId = Class.__classId;
@@ -443,11 +443,11 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         var classId = this.__classId,
             includeId = Class.__classId,
             includes = this.__includes,
-            includesForwardLookup = includes.forward.lookup,
+            includesForwardLookup = includes.downstream.lookup,
             includes2 = Class.__includes;
 
         // updating distance of parent paths
-        var includes2Reverse = includes2.reverse;
+        var includes2Reverse = includes2.upstream;
         includes2Reverse.lookup[classId] = includesForwardLookup[includeId] =
             includes2Reverse.list
                 .filter(function (IncludeHost) {
@@ -456,11 +456,11 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 .reduce(function (distance, IncludeHost) {
                     return Math.max(distance,
                         includesForwardLookup[IncludeHost.__classId] +
-                        IncludeHost.__includes.forward.lookup[includeId]);
+                        IncludeHost.__includes.downstream.lookup[includeId]);
                 }, includesForwardLookup[includeId]);
 
         // updating distances of child paths with lead
-        var includes2Forward = includes2.forward,
+        var includes2Forward = includes2.downstream,
             includes2ForwardLookup = includes2Forward.lookup;
         includes2Forward.list
             .filter(function (Include2) {
@@ -468,7 +468,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             })
             .forEach(function (Include2) {
                 var include2Id = Include2.__classId,
-                    includes3ReverseLookup = Include2.__includes.reverse.lookup;
+                    includes3ReverseLookup = Include2.__includes.upstream.lookup;
                 includes3ReverseLookup[classId] = includesForwardLookup[include2Id] =
                     Math.max(includesForwardLookup[include2Id],
                         includesForwardLookup[includeId] +
@@ -477,13 +477,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // updating distances of child paths with trail
         var includes2ReverseLookup = includes2Reverse.lookup;
-        includes.reverse.list
+        includes.upstream.list
             .filter(function (Host) {
-                return hOP.call(Host.__includes.forward.lookup, includeId);
+                return hOP.call(Host.__includes.downstream.lookup, includeId);
             })
             .forEach(function (Host) {
                 var hostId = Host.__classId,
-                    hostForwardLookup = Host.__includes.forward.lookup;
+                    hostForwardLookup = Host.__includes.downstream.lookup;
                 includes2ReverseLookup[hostId] = hostForwardLookup[includeId] =
                     Math.max(hostForwardLookup[includeId],
                         includesForwardLookup[includeId] +
@@ -514,8 +514,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     _addToRequires: function (Class) {
         var classId = this.__classId,
             requireId = Class.__classId,
-            includeLookup = this.__includes.forward.lookup,
-            requires = this.__requires.forward,
+            includeLookup = this.__includes.downstream.lookup,
+            requires = this.__requires.downstream,
             requireList = requires.list,
             requireLookup = requires.lookup;
 
@@ -535,7 +535,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addToHosts: function (Class) {
-        var hosts = this.__requires.reverse,
+        var hosts = this.__requires.upstream,
             hostList = hosts.list,
             hostLookup = hosts.lookup,
             classId = Class.__classId;
@@ -552,7 +552,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      */
     _removeFromRequires: function (Class) {
         var classId = Class.__classId,
-            requires = this.__requires.forward,
+            requires = this.__requires.downstream,
             requireList = requires.list,
             requireLookup = requires.lookup;
 
@@ -572,7 +572,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         var that = this;
 
         // transferring requires & includes of class to current class as requires
-        Class.__requires.forward.list.concat(Class.__includes.forward.list)
+        Class.__requires.downstream.list.concat(Class.__includes.downstream.list)
             .forEach(function (Class) {
                 // adding require to registry
                 that._addToRequires(Class);
@@ -582,7 +582,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
             });
 
         // transferring class AS require to includers and hosts of current class
-        this.__includes.reverse.list.concat(this.__requires.reverse.list)
+        this.__includes.upstream.list.concat(this.__requires.upstream.list)
             .forEach(function (Host) {
                 // adding require to registry
                 Host._addToRequires(Class);
@@ -616,7 +616,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     _delegateToIncluders: function (members) {
         var classId = this.__classId;
 
-        this.__includes.reverse.list
+        this.__includes.upstream.list
             .forEach(function (Class) {
                 // adding methods to lookup at specified index
                 Class._addMethodsToMatrix(members, classId);
@@ -639,7 +639,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _delegateToImplementers: function (members) {
-        this.__interfaces.reverse.list
+        this.__interfaces.upstream.list
             .forEach(function (Class) {
                 // updating missing method names
                 Class._addToMissingMethods(members);
@@ -731,7 +731,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         }
 
         // ... all requires are included
-        var requires = that.__requires.forward.list;
+        var requires = that.__requires.downstream.list;
         if (requires.length) {
             // there are unfulfilled requires - can't instantiate
             $assert.assert(false, [
@@ -810,10 +810,10 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // TODO: Detect & throw on circular include
 
-        // adding to includes
+        // adding to downstream includes
         this._addToIncludes(Class);
 
-        // adding to reverse includes
+        // adding to upstream includes
         Class._addToIncluders(this);
 
         // determining how include affects distances
@@ -966,7 +966,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     implements: function (Interface) {
         $assert.isClass(Interface, "Class type expected");
 
-        return !!this.__interfaces.forward.lookup[Interface.__classId];
+        return !!this.__interfaces.downstream.lookup[Interface.__classId];
     },
 
     /**
@@ -989,7 +989,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         var classId = Class.__classId;
 
-        return this.__classId === classId || !!this.__includes.forward.lookup[classId];
+        return this.__classId === classId ||
+            !!this.__includes.downstream.lookup[classId];
     },
 
     /**
@@ -1010,7 +1011,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     requires: function (Class) {
         $assert.isClass(Class, "Class type expected");
 
-        return !!this.__requires.forward.lookup[Class.__classId];
+        return !!this.__requires.downstream.lookup[Class.__classId];
     },
 
     /**
