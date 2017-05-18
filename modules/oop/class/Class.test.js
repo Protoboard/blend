@@ -550,7 +550,100 @@ describe("$oop", function () {
                 });
             });
 
-            // TODO: Test distances after multiple inclusions
+            describe("including multiple classes", function () {
+                var A, B, C, D;
+
+                beforeEach(function () {
+                    A = $oop.getClass('A');
+                    B = $oop.getClass('B');
+                    C = $oop.getClass('C');
+                    D = $oop.getClass('D');
+                });
+
+                describe("short paths first", function () {
+                    it("should set include distances", function () {
+                        A.include(B);
+                        B.include(C);
+                        C.include(D);
+                        B.include(D);
+                        A.include(C);
+                        A.include(D);
+                        expect(A.__includes.forward.lookup).toEqual({
+                            B: 1,
+                            C: 2,
+                            D: 3
+                        });
+                        expect(D.__includes.reverse.lookup).toEqual({
+                            C: 1,
+                            B: 2,
+                            A: 3
+                        });
+                    });
+                });
+
+                describe("long leading paths first", function () {
+                    it("should set include distances", function () {
+                        A.include(D);
+                        B.include(D);
+                        C.include(D);
+                        A.include(C);
+                        B.include(C);
+                        A.include(B);
+                        expect(A.__includes.forward.lookup).toEqual({
+                            B: 1,
+                            C: 2,
+                            D: 3
+                        });
+                        expect(D.__includes.reverse.lookup).toEqual({
+                            C: 1,
+                            B: 2,
+                            A: 3
+                        });
+                    });
+                });
+
+                describe("long trailing paths first", function () {
+                    it("should set include distances", function () {
+                        A.include(D);
+                        A.include(C);
+                        A.include(B);
+                        B.include(D);
+                        B.include(C);
+                        C.include(D);
+                        expect(A.__includes.forward.lookup).toEqual({
+                            B: 1,
+                            C: 2,
+                            D: 3
+                        });
+                        expect(D.__includes.reverse.lookup).toEqual({
+                            C: 1,
+                            B: 2,
+                            A: 3
+                        });
+                    });
+                });
+
+                describe("randomly", function () {
+                    it("should set include distances", function () {
+                        A.include(B);
+                        A.include(D);
+                        B.include(D);
+                        A.include(C);
+                        B.include(C);
+                        C.include(D);
+                        expect(A.__includes.forward.lookup).toEqual({
+                            B: 1,
+                            C: 2,
+                            D: 3
+                        });
+                        expect(D.__includes.reverse.lookup).toEqual({
+                            C: 1,
+                            B: 2,
+                            A: 3
+                        });
+                    });
+                });
+            });
         });
 
         describe("extend()", function () {
