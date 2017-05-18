@@ -434,60 +434,60 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
-     * Updates inclusion distances based on the inclusion of teh specified class.
+     * Updates class distances based on the inclusion of the specified class.
      * Inclusion distance determines forwards priority.
-     * TODO: Rename variables to something more meaningful.
      * @private
      */
-    _updateIncludeDistances: function (Class) {
+    _updateClassDistances: function (Include) {
         var classId = this.__classId,
-            includeId = Class.__classId,
-            includes = this.__includes,
-            includesForwardLookup = includes.downstream.lookup,
-            includes2 = Class.__includes;
+            includeId = Include.__classId,
+            includeLookup = this.__includes.downstream.lookup;
 
         // updating distance of parent paths
-        var includes2Reverse = includes2.upstream;
-        includes2Reverse.lookup[classId] = includesForwardLookup[includeId] =
-            includes2Reverse.list
+        // hosts of 2nd degree includes
+        var includeHosts2deg = Include.__includes.upstream,
+            includeHosts2degLookup = includeHosts2deg.lookup;
+        includeHosts2deg.lookup[classId] = includeLookup[includeId] =
+            includeHosts2deg.list
                 .filter(function (IncludeHost) {
-                    return hOP.call(includesForwardLookup, IncludeHost.__classId);
+                    return hOP.call(includeLookup, IncludeHost.__classId);
                 })
                 .reduce(function (distance, IncludeHost) {
                     return Math.max(distance,
-                        includesForwardLookup[IncludeHost.__classId] +
+                        includeLookup[IncludeHost.__classId] +
                         IncludeHost.__includes.downstream.lookup[includeId]);
-                }, includesForwardLookup[includeId]);
+                }, includeLookup[includeId]);
 
         // updating distances of child paths with lead
-        var includes2Forward = includes2.downstream,
-            includes2ForwardLookup = includes2Forward.lookup;
-        includes2Forward.list
-            .filter(function (Include2) {
-                return hOP.call(includesForwardLookup, Include2.__classId);
+        // 2nd degree includes & lookup
+        var includes2deg = Include.__includes.downstream,
+            includes2degLookup = includes2deg.lookup;
+        includes2deg.list
+            .filter(function (Include2deg) {
+                return hOP.call(includeLookup, Include2deg.__classId);
             })
-            .forEach(function (Include2) {
-                var include2Id = Include2.__classId,
-                    includes3ReverseLookup = Include2.__includes.upstream.lookup;
-                includes3ReverseLookup[classId] = includesForwardLookup[include2Id] =
-                    Math.max(includesForwardLookup[include2Id],
-                        includesForwardLookup[includeId] +
-                        includes2ForwardLookup[include2Id]);
+            .forEach(function (Include2deg) {
+                var include2degId = Include2deg.__classId,
+                    includeHost3degLookup = Include2deg.__includes.upstream.lookup;
+                includeHost3degLookup[classId] = includeLookup[include2degId] =
+                    Math.max(includeLookup[include2degId],
+                        includeLookup[includeId] +
+                        includes2degLookup[include2degId]);
             });
 
         // updating distances of child paths with trail
-        var includes2ReverseLookup = includes2Reverse.lookup;
-        includes.upstream.list
+        var hosts = this.__includes.upstream;
+        hosts.list
             .filter(function (Host) {
                 return hOP.call(Host.__includes.downstream.lookup, includeId);
             })
             .forEach(function (Host) {
                 var hostId = Host.__classId,
-                    hostForwardLookup = Host.__includes.downstream.lookup;
-                includes2ReverseLookup[hostId] = hostForwardLookup[includeId] =
-                    Math.max(hostForwardLookup[includeId],
-                        includesForwardLookup[includeId] +
-                        hostForwardLookup[classId]);
+                    hostIncludeLookup = Host.__includes.downstream.lookup;
+                includeHosts2degLookup[hostId] = hostIncludeLookup[includeId] =
+                    Math.max(hostIncludeLookup[includeId],
+                        includeLookup[includeId] +
+                        hostIncludeLookup[classId]);
             });
     },
 
@@ -817,7 +817,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         Class._addToIncluders(this);
 
         // determining how include affects distances
-        this._updateIncludeDistances(Class);
+        this._updateClassDistances(Class);
 
         // TODO: rebuild forwards
 
