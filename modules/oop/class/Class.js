@@ -109,7 +109,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
                 /**
                  * List of forwards (surrogate) descriptors.
-                 * @type {Array.<{class: $oop.Class, filter: function, priority: number}>}
+                 * @type {$oop.ForwardDescriptor[]}
                  * @private
                  */
                 __forwards: [],
@@ -683,6 +683,26 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     },
 
     /**
+     * Rebuilds forwards array based on class distances and forwards contents.
+     * @private
+     */
+    _updateForwards: function () {
+        var forwards = this.__forwards,
+            hostDistances = this.__includes.upstream.lookup;
+
+        // sorting forwards by priority (descending)
+        // here we're relying on Array#sort() mutating the array
+        // as the same array is referenced from the final class
+        forwards.sort(function (/**$oop.ForwardDescriptor*/a, /**$oop.ForwardDescriptor*/b) {
+            var aId = a.class.__classId,
+                bId = b.class.__classId,
+                ap = hostDistances[aId] || 0,
+                bp = hostDistances[bId] || 0;
+            return ap > bp ? -1 : bp > ap ? 1 : 0;
+        });
+    },
+
+    /**
      * Creates a new instance.
      * @returns {$oop.Class}
      */
@@ -819,7 +839,8 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // determining how include affects distances
         this._updateClassDistances(Class);
 
-        // TODO: rebuild forwards
+        // rebuilding forwards information
+        this._updateForwards();
 
         // adding included class to contributions
         this._addToContributors(Class, Through);
@@ -917,10 +938,9 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * constructor arguments satisfy the supplied filter.
      * @param {$oop.Class} Class
      * @param {function} filter
-     * @param {number} [priority=0]
      * @returns {$oop.Class}
      */
-    forward: function (Class, filter, priority) {
+    forward: function (Class, filter) {
         $assert.isClass(Class, "Class#forward expects type Class.");
 
         var forwards = this.__forwards;
@@ -928,18 +948,11 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
         // adding forward descriptor
         forwards.push({
             'class': Class,
-            'filter': filter,
-            'priority': priority || 0
+            'filter': filter
         });
 
-        // sorting forwards by priority (descending)
-        // here we're relying on Array#sort() mutating the array
-        // as the same array is referenced from the final class
-        forwards.sort(function (a, b) {
-            var ap = a.priority,
-                bp = b.priority;
-            return ap > bp ? -1 : bp > ap ? 1 : 0;
-        });
+        // re-building forwards order
+        this._updateForwards();
 
         return this;
     },

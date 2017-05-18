@@ -558,89 +558,96 @@ describe("$oop", function () {
                     B = $oop.getClass('B');
                     C = $oop.getClass('C');
                     D = $oop.getClass('D');
+                    D.forward(A, function () {});
+                    D.forward(B, function () {});
+                    D.forward(C, function () {});
                 });
 
                 describe("short paths first", function () {
-                    it("should set include distances", function () {
+                    beforeEach(function () {
                         A.include(B);
                         B.include(C);
                         C.include(D);
                         B.include(D);
                         A.include(C);
                         A.include(D);
-                        expect(A.__includes.downstream.lookup).toEqual({
-                            B: 1,
-                            C: 2,
-                            D: 3
-                        });
-                        expect(D.__includes.upstream.lookup).toEqual({
-                            C: 1,
-                            B: 2,
-                            A: 3
-                        });
+                    });
+
+                    it("should set include distances", function () {
+                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                    });
+
+                    it("should update forwards", function () {
+                        expect(D.__forwards.map(function (forwardDescriptor) {
+                            return forwardDescriptor.class;
+                        })).toEqual([D, C, B]);
                     });
                 });
 
                 describe("long leading paths first", function () {
-                    it("should set include distances", function () {
+                    beforeEach(function () {
                         A.include(D);
                         B.include(D);
                         C.include(D);
                         A.include(C);
                         B.include(C);
                         A.include(B);
-                        expect(A.__includes.downstream.lookup).toEqual({
-                            B: 1,
-                            C: 2,
-                            D: 3
-                        });
-                        expect(D.__includes.upstream.lookup).toEqual({
-                            C: 1,
-                            B: 2,
-                            A: 3
-                        });
+                    });
+
+                    it("should set include distances", function () {
+                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                    });
+
+                    it("should update forwards", function () {
+                        expect(D.__forwards.map(function (forwardDescriptor) {
+                            return forwardDescriptor.class;
+                        })).toEqual([D, C, B]);
                     });
                 });
 
                 describe("long trailing paths first", function () {
-                    it("should set include distances", function () {
+                    beforeEach(function () {
                         A.include(D);
                         A.include(C);
                         A.include(B);
                         B.include(D);
                         B.include(C);
                         C.include(D);
-                        expect(A.__includes.downstream.lookup).toEqual({
-                            B: 1,
-                            C: 2,
-                            D: 3
-                        });
-                        expect(D.__includes.upstream.lookup).toEqual({
-                            C: 1,
-                            B: 2,
-                            A: 3
-                        });
+                    });
+
+                    it("should set include distances", function () {
+                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                    });
+
+                    it("should update forwards", function () {
+                        expect(D.__forwards.map(function (forwardDescriptor) {
+                            return forwardDescriptor.class;
+                        })).toEqual([D, C, B]);
                     });
                 });
 
                 describe("randomly", function () {
-                    it("should set include distances", function () {
+                    beforeEach(function () {
                         A.include(B);
                         A.include(D);
                         B.include(D);
                         A.include(C);
                         B.include(C);
                         C.include(D);
-                        expect(A.__includes.downstream.lookup).toEqual({
-                            B: 1,
-                            C: 2,
-                            D: 3
-                        });
-                        expect(D.__includes.upstream.lookup).toEqual({
-                            C: 1,
-                            B: 2,
-                            A: 3
-                        });
+                    });
+
+                    it("should set include distances", function () {
+                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                    });
+
+                    it("should update forwards", function () {
+                        expect(D.__forwards.map(function (forwardDescriptor) {
+                            return forwardDescriptor.class;
+                        })).toEqual([D, C, B]);
                     });
                 });
             });
@@ -819,7 +826,7 @@ describe("$oop", function () {
             beforeEach(function () {
                 filter = function () {
                 };
-                Class.forward(Class1 = $oop.Class.getClass('Class1'), filter, 1);
+                Class.forward(Class1 = $oop.Class.getClass('Class1'), filter);
             });
 
             describe("when passing invalid argument", function () {
@@ -833,30 +840,38 @@ describe("$oop", function () {
             it("should add forward descriptor", function () {
                 expect(Class.__forwards).toEqual([{
                     'class': Class1,
-                    'filter': filter,
-                    'priority': 1
+                    'filter': filter
                 }]);
             });
 
-            describe("when appending lower priority", function () {
-                var Class2,
-                    filter2;
+            describe("when adding more specific class to forwards", function () {
+                var Class2, Class3,
+                    filter2, filter3;
 
                 beforeEach(function () {
+                    Class2 = $oop.Class.getClass('Class2')
+                        .include(Class);
                     filter2 = function () {
                     };
-                    Class.forward(Class2 = $oop.Class.getClass('Class2'), filter2, 10);
+                    Class3 = $oop.Class.getClass('Class3')
+                        .include(Class2)
+                        .include(Class);
+                    filter3 = function () {
+                    };
+                    Class.forward(Class3, filter3);
+                    Class.forward(Class2, filter2);
                 });
 
-                it("should sort descriptors by priority", function () {
+                it("should sort descriptors by class distance", function () {
                     expect(Class.__forwards).toEqual([{
+                        'class': Class3,
+                        'filter': filter3
+                    }, {
                         'class': Class2,
-                        'filter': filter2,
-                        'priority': 10
+                        'filter': filter2
                     }, {
                         'class': Class1,
-                        'filter': filter,
-                        'priority': 1
+                        'filter': filter
                     }]);
                 });
             });

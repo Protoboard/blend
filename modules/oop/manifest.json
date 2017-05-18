@@ -4,6 +4,7 @@
       "globals.js",
       "class/assertions.js",
       "class/class-utils.js",
+      "class/ForwardDescriptor.js",
       "class/ProtoclassBuilder.js",
       "class/Class.js"
     ]
