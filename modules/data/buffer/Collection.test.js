@@ -501,6 +501,29 @@ describe("$data", function () {
             });
         });
 
+        describe("reduce()", function () {
+            var callback;
+
+            beforeEach(function () {
+                callback = jasmine.createSpy().and.callFake(
+                    function (reduced, value) {
+                        return reduced + value;
+                    });
+                result = collection.reduce(callback, '');
+            });
+
+            it("should pass item values & keys to callback", function () {
+                expect(callback.calls.allArgs()).toEqual([
+                    ['', 'FOO', 'foo', collection],
+                    ['FOO', 'BAR', 'bar', collection]
+                ]);
+            });
+
+            it("should return reduced value", function () {
+                expect(result).toBe("FOOBAR");
+            });
+        });
+
         describe("passEachItemTo()", function () {
             var callback;
 

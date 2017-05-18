@@ -264,6 +264,27 @@ exports.Collection = $oop.getClass('$data.Collection')
 
         /**
          * @param {function} callback
+         * @param {*} [initialValue]
+         * @param {object} [context]
+         * @returns {*}
+         */
+        reduce: function (callback, initialValue, context) {
+            var data = this._data,
+                keys = this.getKeys(),
+                keyCount = keys.length,
+                i, key,
+                result = initialValue;
+
+            for (i = 0; i < keyCount; i++) {
+                key = keys[i];
+                result = callback.call(context, result, data[key], key, this);
+            }
+
+            return result;
+        },
+
+        /**
+         * @param {function} callback
          * @param {object} [context]
          * @param {number} [argIndex=0]
          * @param {...*} [arg]
