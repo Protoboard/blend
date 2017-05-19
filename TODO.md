@@ -1,5 +1,5 @@
-GIANT TO DO
-===========
+GIANT ToDo
+==========
 
 Widget
 ------
@@ -13,20 +13,32 @@ Routing
 - When module gets loaded, look at current route & activate if necessary.
     - Depends on module management.
 
+Entity
+------
+
+- PaginatedCollection / BigCollection
+    - To have page ID in event path
+    - Maintains page ID array
+- Entity#whenAvailable -> Promise
+
 Event
 -----
 
 - Eliminate "next payload" - makes things untraceable
 - Diagnostic add-on
     - Collecting processing history (ClassID + function)
-- Evented.triggers(eventName):Promise
+- Evented#whenTriggers(eventName):Promise
+- Mandatory #originalEvent on giant events
 
 Data
 ----
 
-- Specified collections? Keep 'em?
+- Document @callback's
+- **Collection.of()**
 - mapKeys() on Dictionary only
 - KVPCollection
+    - Collection#inflate()
+    - Collection#deflate()
 
 Utils
 -----
@@ -36,7 +48,13 @@ Utils
 OOP
 ---
 
-- **Full overrides**
+- Typedefs
+    - $oop.Registry
+    - $oop.BidirectionalRegistry
+- Full overrides
+- Break down Class.js
+- **Auto-priority for forwards**
+    - Updating forwards array on include & forward addition
 - Checks
     - ~~Do not allow instances as static properties in Class#define~~
     - Whether forward includes class being instantiated. ON instantiation
@@ -46,7 +64,7 @@ OOP
     - ATM not taken into account!
     - Includes' hash shouldn't matter?
 - Terminology
-    - include vs. integrate / mix
+    - replace "include" with "mixin"
     - "host": isHostedBy
 
 ### Low Pri
