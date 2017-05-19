@@ -329,7 +329,7 @@ exports.Collection = $oop.getClass('$data.Collection')
          * Item value will be spliced in at given index.
          * @returns {$data.Collection} Mapped collection
          */
-        passEachItemTo: function (callback, context, argIndex, arg) {
+        passEachValueTo: function (callback, context, argIndex, arg) {
             var data = this._data,
                 keys = this.getKeys(),
                 keyCount = keys.length,
@@ -403,7 +403,7 @@ exports.Collection = $oop.getClass('$data.Collection')
          * Item value will be spliced in at given index.
          * @returns {$data.Collection} Mapped collection
          */
-        createWithEachItem: function (Class, argIndex, arg) {
+        createWithEachValue: function (Class, argIndex, arg) {
             var data = this._data,
                 keys = this.getKeys(),
                 keyCount = keys.length,

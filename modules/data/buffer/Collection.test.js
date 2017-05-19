@@ -524,14 +524,14 @@ describe("$data", function () {
             });
         });
 
-        describe("passEachItemTo()", function () {
+        describe("passEachValueTo()", function () {
             var callback;
 
             beforeEach(function () {
                 callback = jasmine.createSpy().and.callFake(function (foo, value) {
                     return value.toLowerCase();
                 });
-                result = collection.passEachItemTo(callback, null, 1, 'baz');
+                result = collection.passEachValueTo(callback, null, 1, 'baz');
             });
 
             it("should return Collection instance", function () {
@@ -557,7 +557,7 @@ describe("$data", function () {
                     callback = jasmine.createSpy().and.callFake(function (value) {
                         return value.toLowerCase();
                     });
-                    result = collection.passEachItemTo(callback);
+                    result = collection.passEachValueTo(callback);
                 });
 
                 it("should pass values to callback", function () {
@@ -580,7 +580,7 @@ describe("$data", function () {
                     collection = $data.Collection.create([
                         'foo', 'bar', 'baz', 'quux'
                     ]);
-                    result = collection.passEachItemTo(function (value) {
+                    result = collection.passEachValueTo(function (value) {
                         return value.toLowerCase();
                     });
                 });
@@ -629,7 +629,7 @@ describe("$data", function () {
             });
         });
 
-        describe("createWithEachItem()", function () {
+        describe("createWithEachValue()", function () {
             var Class;
 
             beforeEach(function () {
@@ -641,7 +641,7 @@ describe("$data", function () {
                         }
                     });
                 spyOn(Class, 'create').and.callThrough();
-                result = collection.createWithEachItem(Class, 1, 'baz');
+                result = collection.createWithEachValue(Class, 1, 'baz');
             });
 
             it("should return Collection instance", function () {
@@ -673,7 +673,7 @@ describe("$data", function () {
                             }
                         });
                     spyOn(Class2, 'create').and.callThrough();
-                    result = collection.createWithEachItem(Class2);
+                    result = collection.createWithEachValue(Class2);
                 });
 
                 it("should pass values to callback", function () {
@@ -696,7 +696,7 @@ describe("$data", function () {
                     collection = $data.Collection.create([
                         'foo', 'bar', 'baz', 'quux'
                     ]);
-                    result = collection.createWithEachItem(Class);
+                    result = collection.createWithEachValue(Class);
                 });
 
                 it("should return array buffer", function () {
