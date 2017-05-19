@@ -10,3 +10,7 @@ var $assert = require('giant-assert'),
 /**
  * @namespace $data
  */
+
+/**
+ * @external Array
+ */
