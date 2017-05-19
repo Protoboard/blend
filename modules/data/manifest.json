@@ -5,6 +5,7 @@
       "buffer/Buffer.js",
       "buffer/Collection.js",
       "buffer/KeyValueStore.js",
+      "buffer/Set.js",
       "utils/Clearable.js",
       "utils/data-utils.js"
     ]
