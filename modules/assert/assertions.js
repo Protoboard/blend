@@ -1,12 +1,12 @@
 "use strict";
 
 /**
- * @function $assert#hasValue
+ * @function $assert#isDefined
  * @param {*} expr
  * @param {string} [message]
  * @returns {$assert}
  */
-exports.hasValue = function (expr, message) {
+exports.isDefined = function (expr, message) {
     return exports.assert(expr !== undefined, message);
 };
 

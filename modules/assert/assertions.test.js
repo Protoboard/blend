@@ -7,24 +7,24 @@ describe("$assert", function () {
         spyOn($assert, 'assert').and.callThrough();
     });
 
-    describe("hasValue()", function () {
+    describe("isDefined()", function () {
         describe("when passing null or undefined", function () {
             it("should not throw", function () {
                 expect(function () {
-                    $assert.hasValue(null);
+                    $assert.isDefined(null);
                 }).not.toThrow();
                 expect(function () {
-                    $assert.hasValue(undefined);
+                    $assert.isDefined(undefined);
                 }).toThrow();
             });
         });
 
         it("should return self", function () {
-            expect($assert.hasValue("foo", "bar")).toBe($assert);
+            expect($assert.isDefined("foo", "bar")).toBe($assert);
         });
 
         it("should pass message to assert", function () {
-            $assert.hasValue("foo", "bar");
+            $assert.isDefined("foo", "bar");
             expect($assert.assert).toHaveBeenCalledWith(true, "bar");
         });
     });
