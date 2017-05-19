@@ -8,6 +8,7 @@
  */
 
 /**
+ * Manipulates key-value stores.
  * @class $data.Collection
  * @extends $data.KeyValueStore
  */
@@ -15,8 +16,11 @@ exports.Collection = $oop.getClass('$data.Collection')
     .extend($oop.getClass('$data.KeyValueStore'))
     .define(/** @lends $data.Collection# */{
         /**
-         * @param {$data.Collection} collection
-         * @returns {$data.Collection}
+         * Merges current collection with specified collection and returns
+         * result as a new collection. The specified collection's items
+         * take precedence on collision.
+         * @param {$data.Collection} collection Collection to merge with
+         * @returns {$data.Collection} The merged collection
          */
         mergeWith: function (collection) {
             return this.clone()
@@ -24,8 +28,12 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {$data.Collection} collection
-         * @returns {$data.Collection}
+         * Merges specified collection into current collection.
+         * The specified collection's items take precedence on collision.
+         * Mutates current collection!
+         * @param {$data.Collection} collection Collection to merge into
+         * current one
+         * @returns {$data.Collection} Current instance
          */
         mergeIn: function (collection) {
             this.setValues(collection._data);
@@ -33,8 +41,10 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {string[]|number[]} keys
-         * @returns {$data.Collection}
+         * Extracts items matching the specified keys and returns result
+         * as a new collection.
+         * @param {string[]|number[]} keys Key strings to be matched
+         * @returns {$data.Collection} Filtered collection
          */
         filterByKeys: function (keys) {
             var data = this._data,
@@ -53,8 +63,10 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {string} prefix
-         * @returns {$data.Collection}
+         * Extracts items matching the specified key prefix and
+         * returns result as a new collection.
+         * @param {string} prefix Key prefix to be matched
+         * @returns {$data.Collection} Filtered collection
          */
         filterByKeyPrefix: function (prefix) {
             var data = this._data,
@@ -75,8 +87,11 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {string} prefix
-         * @returns {$data.Collection}
+         * Extracts items matching the specified value prefix and
+         * returns result as a new collection.
+         * TODO: Move to StringCollection.
+         * @param {string} prefix Value prefix to be matched
+         * @returns {$data.Collection} Filtered collection
          */
         filterByPrefix: function (prefix) {
             var data = this._data,
@@ -98,8 +113,10 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {RegExp} regExp
-         * @returns {$data.Collection}
+         * Extracts items matching the specified key regular expression and
+         * returns result as a new collection.
+         * @param {RegExp} regExp Regular expression to be matched by keys
+         * @returns {$data.Collection} Filtered collection
          */
         filterByKeyRegExp: function (regExp) {
             var data = this._data,
@@ -119,8 +136,11 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {RegExp} regExp
-         * @returns {$data.Collection}
+         * Extracts items matching the specified value regexp and
+         * returns result as a new collection.
+         * TODO: Move to StringCollection.
+         * @param {RegExp} regExp Regular expression to be matched by values
+         * @returns {$data.Collection} Filtered collection
          */
         filterByRegExp: function (regExp) {
             var data = this._data,
@@ -141,9 +161,14 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
+         * Extracts items matching the specified value type and
+         * returns result as a new collection.
          * TODO: Allow repeating arguments.
-         * @param {string|function|Object|$oop.Class} type
-         * @returns {$data.Collection}
+         * @param {string|function|Object|$oop.Class} type Describes type
+         * to be matched by item values. When string, `filterByType` will
+         * check using `typeof` operator, when function, `instanceof`,
+         * when object, `.isPrototypeOf()`, when a class, `.isIncludedBy()`.
+         * @returns {$data.Collection} Filtered collection
          */
         filterByType: function (type) {
             var data = this._data,
@@ -198,9 +223,11 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {function} callback
-         * @param {object} [context]
-         * @returns {$data.Collection}
+         * Extracts items matching the condition in the specified
+         * callback function and returns the result as a new collection.
+         * @param {function} callback Filter function returning a boolean
+         * @param {object} [context] Context for callback
+         * @returns {$data.Collection} Filtered collection
          */
         filterBy: function (callback, context) {
             var data = this._data,
@@ -221,9 +248,12 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {function} callback
-         * @param {object} [context]
-         * @returns {$data.Collection}
+         * Iterates over collection and calls specified callback on
+         * each item. Item order is not deterministic. Returns self.
+         * Returning false from callback breaks iteration.
+         * @param {function} callback Function to be called for each item
+         * @param {object} [context] Context for callback
+         * @returns {$data.Collection} Current instance
          */
         forEachItem: function (callback, context) {
             var data = this._data,
@@ -242,9 +272,11 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {function} callback
-         * @param {object} [context]
-         * @returns {$data.Collection}
+         * Maps collection values using the specified callback and
+         * returns mapped key-value pairs as a new collection.
+         * @param {function} callback Returns new value based on current item
+         * @param {object} [context] Context for callback
+         * @returns {$data.Collection} Mapped collection
          */
         mapValues: function (callback, context) {
             var data = this._data,
@@ -263,10 +295,13 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {function} callback
-         * @param {*} [initialValue]
-         * @param {object} [context]
-         * @returns {*}
+         * Accumulates a value based on the contribution of each item,
+         * as defined by the specified callback.
+         * @param {function} callback Contributes to accumulated value
+         * based on current item
+         * @param {*} [initialValue] Initial value for accumulated result
+         * @param {object} [context] Context for callback
+         * @returns {*} Accummulated value
          */
         reduce: function (callback, initialValue, context) {
             var data = this._data,
@@ -284,11 +319,15 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {function} callback
-         * @param {object} [context]
-         * @param {number} [argIndex=0]
-         * @param {...*} [arg]
-         * @returns {$data.Collection}
+         * Passes each item value to the specified callback as one of
+         * its arguments, and returns mapped key-value pairs as a
+         * new collection.
+         * @param {function} callback Returns new value based on arguments
+         * @param {object} [context] Context for callback
+         * @param {number} [argIndex=0] Index of item value among arguments
+         * @param {...*} [arg] Rest of arguments to be passed to callback.
+         * Item value will be spliced in at given index.
+         * @returns {$data.Collection} Mapped collection
          */
         passEachItemTo: function (callback, context, argIndex, arg) {
             var data = this._data,
@@ -321,9 +360,13 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {string} methodName
-         * @param {...*} [arg]
-         * @returns {result}
+         * Calls the specified method on all item values, and returns
+         * mapped key-value pairs as a new collection.
+         * TODO: Move to ObjectCollection?
+         * @param {string} methodName Identifies method on item values
+         * @param {...*} [arg] Rest of arguments to be passed to callback.
+         * Item value will be spliced in at given index.
+         * @returns {$data.Collection} Mapped collection
          */
         callOnEachItem: function (methodName, arg) {
             var data = this._data,
@@ -352,10 +395,13 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {$oop.Class} Class
-         * @param {number} [argIndex]
-         * @param {...*} [arg]
-         * @returns {$data.Collection}
+         * Creates a new instance of the specified class, passing each item
+         * value as one of the constructor arguments.
+         * @param {$oop.Class} Class Class to create new instances of
+         * @param {number} [argIndex] Index of item value among ctr arguments
+         * @param {...*} [arg] Rest of arguments to be passed to callback.
+         * Item value will be spliced in at given index.
+         * @returns {$data.Collection} Mapped collection
          */
         createWithEachItem: function (Class, argIndex, arg) {
             var data = this._data,
@@ -398,7 +444,6 @@ $oop.getClass('$data.Buffer')
         }
     });
 
-/** @external Array */
 $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
     /**
      * @returns {$data.Collection}
