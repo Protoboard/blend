@@ -21,6 +21,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
         init: function (data) {
             /**
              * Keeps track of number of keys in store.
+             * @type {number}
              * @protected
              */
             this._keyCount = data ? undefined : 0;
