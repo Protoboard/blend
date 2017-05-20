@@ -4,8 +4,11 @@
       "globals.js",
       "buffer/Buffer.js",
       "buffer/Collection.js",
+      "buffer/Filterable.js",
+      "buffer/Iterable.js",
       "buffer/KeyValueStore.js",
       "buffer/Set.js",
+      "buffer/StringFilterable.js",
       "utils/Clearable.js",
       "utils/data-utils.js"
     ]

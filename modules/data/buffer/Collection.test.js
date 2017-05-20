@@ -591,10 +591,10 @@ describe("$data", function () {
             });
         });
 
-        describe("callOnEachItem()", function () {
+        describe("callOnEachValue()", function () {
             beforeEach(function () {
                 spyOn(String.prototype, 'split').and.callThrough();
-                result = collection.callOnEachItem('split', '');
+                result = collection.callOnEachValue('split', '');
             });
 
             it("should return Collection instance", function () {
@@ -617,7 +617,7 @@ describe("$data", function () {
 
             describe("on no extra arguments", function () {
                 beforeEach(function () {
-                    result = collection.callOnEachItem('toLowerCase');
+                    result = collection.callOnEachValue('toLowerCase');
                 });
 
                 it("should return mapped collection", function () {

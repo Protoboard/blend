@@ -10,9 +10,13 @@
 /**
  * Manipulates key-value stores.
  * @class $data.Collection
+ * @implements $data.Iterable
+ * @implements $data.Filterable
  * @extends $data.KeyValueStore
  */
 exports.Collection = $oop.getClass('$data.Collection')
+    .implement($oop.getClass('$data.Iterable'))
+    .implement($oop.getClass('$data.Filterable'))
     .extend($oop.getClass('$data.KeyValueStore'))
     .define(/** @lends $data.Collection# */{
         /**
@@ -368,7 +372,7 @@ exports.Collection = $oop.getClass('$data.Collection')
          * Item value will be spliced in at given index.
          * @returns {$data.Collection} Mapped collection
          */
-        callOnEachItem: function (methodName, arg) {
+        callOnEachValue: function (methodName, arg) {
             var data = this._data,
                 keys = this.getKeys(),
                 keyCount = keys.length,
