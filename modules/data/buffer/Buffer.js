@@ -8,7 +8,7 @@
  */
 
 /**
- * Bass for any data class that maintains a data buffer.
+ * Base for any data class that maintains a data buffer.
  * @class $data.Buffer
  * @implements $utils.Destroyable
  * @implements $data.Clearable
