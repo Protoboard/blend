@@ -74,6 +74,59 @@ describe("$data", function () {
             it("should set _keyCount", function () {
                 expect(store._keyCount).toBe(2);
             });
+
+            describe("then setValue()", function () {
+                beforeEach(function () {
+                    result = store.setValue('baz', "BAZ");
+                });
+
+                it("should increase _keyCount", function () {
+                    expect(store._keyCount).toBe(3);
+                });
+
+                describe("when setting existing key", function () {
+                    beforeEach(function () {
+                        store.setValue('baz', "BAZ");
+                    });
+
+                    it("should not increase key count", function () {
+                        expect(store._keyCount).toBe(3);
+                    });
+                });
+            });
+
+            describe("then setValues()", function () {
+                beforeEach(function () {
+                    result = store.setValues({
+                        bar: "bar",
+                        baz: "baz"
+                    });
+                });
+
+                it("should increase _keyCount", function () {
+                    expect(store._keyCount).toBe(3);
+                });
+            });
+
+            describe("then deleteKey()", function () {
+                beforeEach(function () {
+                    result = store.deleteKey('foo');
+                });
+
+                it("should update _keyCount", function () {
+                    expect(store._keyCount).toBe(1);
+                });
+
+                describe("when deleting absent key", function () {
+                    beforeEach(function () {
+                        result = store.deleteKey('foo');
+                    });
+
+                    it("should not change _keyCount", function () {
+                        expect(store._keyCount).toBe(1);
+                    });
+                });
+            });
         });
 
         describe("setValue()", function () {
@@ -89,20 +142,6 @@ describe("$data", function () {
 
             it("should set value in store", function () {
                 expect(store._data.baz).toBe(value);
-            });
-
-            it("should increase _keyCount", function () {
-                expect(store._keyCount).toBe(3);
-            });
-
-            describe("when setting existing key", function () {
-                beforeEach(function () {
-                    store.setValue('baz', "BAZ");
-                });
-
-                it("should not increase key count", function () {
-                    expect(store._keyCount).toBe(3);
-                });
             });
         });
 
@@ -127,10 +166,6 @@ describe("$data", function () {
                     baz: "baz"
                 });
             });
-
-            it("should update _keyCount", function () {
-                expect(store._keyCount).toBe(3);
-            });
         });
 
         describe("getValue()", function () {
@@ -150,20 +185,6 @@ describe("$data", function () {
 
             it("should remove key", function () {
                 expect(store._data.hasOwnProperty('foo')).toBeFalsy();
-            });
-
-            it("should update _keyCount", function () {
-                expect(store._keyCount).toBe(1);
-            });
-
-            describe("when deleting absent key", function () {
-                beforeEach(function () {
-                    result = store.deleteKey('foo');
-                });
-
-                it("should not change _keyCount", function () {
-                    expect(store._keyCount).toBe(1);
-                });
             });
         });
 

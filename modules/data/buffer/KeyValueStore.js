@@ -63,16 +63,12 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
          */
         setValue: function (key, value) {
             var data = this._data,
-                hasKey = hOP.call(data, key),
-                keyCount;
+                hasKey = hOP.call(data, key);
 
             data[key] = value;
 
-            if (!hasKey) {
-                keyCount = this._keyCount;
-                this._keyCount = keyCount === undefined ?
-                    this.getKeyCount() :
-                    keyCount + 1;
+            if (!hasKey && this._keyCount !== undefined) {
+                this._keyCount++;
             }
 
             return this;
@@ -109,16 +105,14 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
          */
         deleteKey: function (key) {
             var data = this._data,
-                hasKey = hOP.call(data, key),
-                keyCount;
+                hasKey = hOP.call(data, key);
 
             if (hasKey) {
                 delete data[key];
 
-                keyCount = this._keyCount;
-                this._keyCount = keyCount === undefined ?
-                    this.getKeyCount() :
-                    keyCount - 1;
+                if (this._keyCount !== undefined) {
+                    this._keyCount--;
+                }
             }
 
             return this;
