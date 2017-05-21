@@ -12,12 +12,12 @@
  * @class $data.Collection
  * @implements $data.Iterable
  * @implements $data.Filterable
- * @extends $data.KeyValueStore
+ * @extends $data.Lookup
  */
 exports.Collection = $oop.getClass('$data.Collection')
     .implement($oop.getClass('$data.Iterable'))
     .implement($oop.getClass('$data.Filterable'))
-    .extend($oop.getClass('$data.KeyValueStore'))
+    .extend($oop.getClass('$data.Lookup'))
     .define(/** @lends $data.Collection# */{
         /**
          * Merges current collection with specified collection and returns

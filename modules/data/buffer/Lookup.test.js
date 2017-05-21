@@ -8,13 +8,13 @@ describe("$data", function () {
         store,
         result;
 
-    describe("KeyValueStore", function () {
+    describe("Lookup", function () {
         beforeEach(function () {
             data = {
                 foo: "FOO",
                 bar: "BAR"
             };
-            store = $data.KeyValueStore.create(data);
+            store = $data.Lookup.create(data);
         });
 
         describe("create()", function () {
@@ -25,7 +25,7 @@ describe("$data", function () {
 
             describe("on missing arguments", function () {
                 it("should set _keyCount property to 0", function () {
-                    store = $data.KeyValueStore.create();
+                    store = $data.Lookup.create();
                     expect(store._keyCount).toBe(0);
                 });
             });
@@ -264,15 +264,15 @@ describe("$data", function () {
     });
 
     describe("Buffer", function () {
-        describe("toKeyValueStore()", function () {
+        describe("toLookup()", function () {
             var buffer = $data.Buffer.create([1, 2, 3]);
 
             beforeEach(function () {
-                result = buffer.toKeyValueStore();
+                result = buffer.toLookup();
             });
 
-            it("should return a KeyValueStore instance", function () {
-                expect($data.KeyValueStore.isIncludedBy(result)).toBeTruthy();
+            it("should return a Lookup instance", function () {
+                expect($data.Lookup.isIncludedBy(result)).toBeTruthy();
             });
 
             it("should set data buffer", function () {
@@ -285,15 +285,15 @@ describe("$data", function () {
 describe("Array", function () {
     var result;
 
-    describe("toKeyValueStore()", function () {
+    describe("toLookup()", function () {
         var array = [1, 2, 3];
 
         beforeEach(function () {
-            result = array.toKeyValueStore();
+            result = array.toLookup();
         });
 
-        it("should return a KeyValueStore instance", function () {
-            expect($data.KeyValueStore.isIncludedBy(result)).toBeTruthy();
+        it("should return a Lookup instance", function () {
+            expect($data.Lookup.isIncludedBy(result)).toBeTruthy();
         });
 
         it("should set data buffer", function () {

@@ -10,10 +10,10 @@
 /**
  *
  * @class $data.Set
- * @extends $data.KeyValueStore
+ * @extends $data.Lookup
  */
 exports.Set = $oop.getClass('$data.Set')
-    .extend($oop.getClass('$data.KeyValueStore'))
+    .extend($oop.getClass('$data.Lookup'))
     .define(/** @lends $data.Set# */{
         /**
          * Intersects current set with specified set and returns the result

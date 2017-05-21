@@ -2,22 +2,21 @@
 "use strict";
 
 /**
- * @function $data.KeyValueStore.create
+ * @function $data.Lookup.create
  * @param {object|Array} [data]
- * @returns {$data.KeyValueStore}
+ * @returns {$data.Lookup}
  */
 
 /**
- * TODO: Rename to Lookup?
  * TODO: Merge into Collection?
- * @class $data.KeyValueStore
+ * @class $data.Lookup
  * @extends $data.Buffer
  * @implements $data.KeyValueContainer
  */
-exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
+exports.Lookup = $oop.getClass('$data.Lookup')
     .extend($oop.getClass('$data.Buffer'))
     .implement($oop.getClass('$data.KeyValueContainer'))
-    .define(/** @lends $data.KeyValueStore# */{
+    .define(/** @lends $data.Lookup# */{
         /**
          * @param {object|Array} [data]
          * @ignore
@@ -33,7 +32,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
 
         /**
          * @inheritDoc
-         * @returns {$data.KeyValueStore}
+         * @returns {$data.Lookup}
          */
         clone: function clone() {
             var cloned = clone.returned;
@@ -43,7 +42,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
 
         /**
          * @inheritDoc
-         * @returns {$data.KeyValueStore}
+         * @returns {$data.Lookup}
          */
         clear: function () {
             this._keyCount = 0;
@@ -53,7 +52,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
         /**
          * @param {string} key
          * @param {*} value
-         * @returns {$data.KeyValueStore}
+         * @returns {$data.Lookup}
          */
         setItem: function (key, value) {
             var data = this._data,
@@ -70,7 +69,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
 
         /**
          * @param {object} items
-         * @returns {$data.KeyValueStore}
+         * @returns {$data.Lookup}
          */
         setItems: function (items) {
             var keys = Object.keys(items),
@@ -88,7 +87,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
         /**
          * @param {string} key
          * @param {*} [value]
-         * @returns {$data.KeyValueStore}
+         * @returns {$data.Lookup}
          */
         deleteItem: function (key, value) {
             var data = this._data,
@@ -109,7 +108,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
 
         /**
          * @param {object} items
-         * @returns {$data.KeyValueStore}
+         * @returns {$data.Lookup}
          */
         deleteItems: function (items) {
             var keys = Object.keys(items),
@@ -205,18 +204,18 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
 $oop.getClass('$data.Buffer')
     .define(/** @lends $data.Buffer# */{
         /**
-         * @returns {$data.KeyValueStore}
+         * @returns {$data.Lookup}
          */
-        toKeyValueStore: function () {
-            return exports.KeyValueStore.create(this._data);
+        toLookup: function () {
+            return exports.Lookup.create(this._data);
         }
     });
 
 $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
     /**
-     * @returns {$data.KeyValueStore}
+     * @returns {$data.Lookup}
      */
-    toKeyValueStore: function () {
-        return exports.KeyValueStore.create(this);
+    toLookup: function () {
+        return exports.Lookup.create(this);
     }
 });
