@@ -4,6 +4,7 @@
       "globals.js",
       "buffer/Buffer.js",
       "buffer/Collection.js",
+      "buffer/Dictionary.js",
       "buffer/Filterable.js",
       "buffer/Iterable.js",
       "buffer/KeyValueStore.js",

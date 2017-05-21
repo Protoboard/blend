@@ -2,6 +2,7 @@
 "use strict";
 
 /**
+ * TODO: Rename to something like KeyValueContainer
  * @interface $data.Manipulable
  */
 exports.Manipulable = $oop.getClass('$data.Manipulable')
