@@ -12,13 +12,13 @@
  * TODO: Add .inflate()
  * @class $data.Dictionary
  * @extends $data.Buffer
- * @implements $data.Manipulable
+ * @implements $data.KeyValueContainer
  * @implements $data.Iterable
  * @implements $data.Filterable
  */
 exports.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.Buffer'))
-    .implement($oop.getClass('$data.Manipuable'))
+    .implement($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.Dictionary# */{
         /**
          * @param {object|Array} [data]
@@ -39,7 +39,7 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
          */
         _countItems: function () {
             var data = this._data,
-                keys = Object.keys(data),
+                keys = this.getKeys(),
                 keyCount = keys.length,
                 result = 0,
                 i, values;
@@ -235,13 +235,86 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         },
 
         /**
+         * @param {string} key
+         * @returns {*}
+         */
+        getValue: function (key) {
+            return this._data[key];
+        },
+
+        /**
+         * @returns {string[]}
+         */
+        getKeys: function () {
+            return Object.keys(this._data);
+        },
+
+        /**
+         * @returns {Array}
+         */
+        getValues: function () {
+            var data = this._data,
+                keys = this.getKeys(),
+                keyCount = keys.length,
+                i, key, values, valueCount,
+                j,
+                result = [];
+
+            for (i = 0; i < keyCount; i++) {
+                key = keys[i];
+                values = data[key];
+                valueCount = values.length;
+                if (values instanceof Array) {
+                    for (j = 0; j < valueCount; j++) {
+                        result.push(values[j]);
+                    }
+                } else {
+                    result.push(values);
+                }
+            }
+
+            this._itemCount = result.length;
+
+            return result;
+        },
+
+        /**
+         * @returns {string}
+         */
+        getFirstKey: function () {
+            var data = this._data,
+                key;
+            for (key in data) {
+                if (hOP.call(data, key)) {
+                    return key;
+                }
+            }
+        },
+
+        /**
+         * @returns {*}
+         */
+        getFirstValue: function () {
+            var data = this._data,
+                key, values;
+            for (key in data) {
+                if (hOP.call(data, key)) {
+                    values = data[key];
+                    return values instanceof Array ?
+                        values[0] :
+                        values;
+                }
+            }
+        },
+
+        /**
          * @param {function} callback
          * @param {object} [context]
          * @returns {$data.Dictionary}
          */
         forEachItem: function (callback, context) {
             var data = this._data,
-                keys = Object.keys(data),
+                keys = this.getKeys(),
                 keyCount = keys.length,
                 i, key, values, valueCount,
                 j;

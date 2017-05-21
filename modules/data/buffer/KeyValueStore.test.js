@@ -101,12 +101,6 @@ describe("$data", function () {
             });
         });
 
-        describe("getValue()", function () {
-            it("should return corresponding value", function () {
-                expect(store.getValue('foo')).toBe("FOO");
-            });
-        });
-
         describe("deleteItem()", function () {
             beforeEach(function () {
                 result = store.deleteItem('foo');
@@ -147,9 +141,9 @@ describe("$data", function () {
             });
         });
 
-        describe("getKeyCount()", function () {
+        describe("getItemCount()", function () {
             beforeEach(function () {
-                result = store.getKeyCount();
+                result = store.getItemCount();
             });
 
             it("should return key count", function () {
@@ -214,6 +208,12 @@ describe("$data", function () {
             });
         });
 
+        describe("getValue()", function () {
+            it("should return corresponding value", function () {
+                expect(store.getValue('foo')).toBe("FOO");
+            });
+        });
+
         describe("getKeys()", function () {
             beforeEach(function () {
                 result = store.getKeys();
@@ -257,7 +257,7 @@ describe("$data", function () {
                 result = store.getFirstValue();
             });
 
-            it("should return one of the keys", function () {
+            it("should return one of the values", function () {
                 expect(result === "FOO" || result === "BAR").toBeTruthy();
             });
         });

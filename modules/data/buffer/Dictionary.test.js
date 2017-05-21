@@ -214,6 +214,59 @@ describe("$data", function () {
             });
         });
 
+        describe("getValue()", function () {
+            it("should return corresponding value(s)", function () {
+                expect(dictionary.getValue('foo')).toBe("FOO");
+                expect(dictionary.getValue('bar')).toEqual(["BAR", "bar"]);
+            });
+        });
+
+        describe("getKeys()", function () {
+            beforeEach(function () {
+                result = dictionary.getKeys();
+            });
+
+            it("should return array with keys", function () {
+                expect(result.sort()).toEqual(['foo', 'bar'].sort());
+            });
+        });
+
+        describe("getValues()", function () {
+            beforeEach(function () {
+                result = dictionary.getValues();
+            });
+
+            it("should retrieve array of values", function () {
+                expect(result.sort()).toEqual(["FOO", "BAR", "bar"].sort());
+            });
+
+            it("should update _itemCount", function () {
+                expect(dictionary._itemCount).toBe(3);
+            });
+        });
+
+        describe("getFirstKey()", function () {
+            beforeEach(function () {
+                result = dictionary.getFirstKey();
+            });
+
+            it("should return one of the keys", function () {
+                expect(result === "foo" || result === "bar").toBeTruthy();
+            });
+        });
+
+        describe("getFirstValue()", function () {
+            beforeEach(function () {
+                result = dictionary.getFirstValue();
+            });
+
+            it("should return one of the values", function () {
+                expect(result === "FOO" ||
+                    result === "BAR" ||
+                    result === "bar").toBeTruthy();
+            });
+        });
+
         describe("forEachItem", function () {
             var callback;
 

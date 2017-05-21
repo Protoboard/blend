@@ -8,13 +8,15 @@
  */
 
 /**
+ * TODO: Rename to Lookup?
+ * TODO: Merge into Collection?
  * @class $data.KeyValueStore
  * @extends $data.Buffer
- * @implements $data.Manipulable
+ * @implements $data.KeyValueContainer
  */
 exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
     .extend($oop.getClass('$data.Buffer'))
-    .implement($oop.getClass('$data.Manipulable'))
+    .implement($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.KeyValueStore# */{
         /**
          * @param {object|Array} [data]
@@ -125,7 +127,7 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
         /**
          * @returns {Number}
          */
-        getKeyCount: function () {
+        getItemCount: function () {
             var keyCount = this._keyCount;
             if (keyCount === undefined) {
                 keyCount = this._keyCount = Object.keys(this._data).length;
@@ -197,7 +199,6 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
                     return data[key];
                 }
             }
-            return undefined;
         }
     });
 
