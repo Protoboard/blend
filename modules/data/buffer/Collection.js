@@ -28,7 +28,7 @@ exports.Collection = $oop.getClass('$data.Collection')
          */
         mergeWith: function (collection) {
             return this.clone()
-                .setValues(collection._data);
+                .setItems(collection._data);
         },
 
         /**
@@ -40,7 +40,7 @@ exports.Collection = $oop.getClass('$data.Collection')
          * @returns {$data.Collection} Current instance
          */
         mergeIn: function (collection) {
-            this.setValues(collection._data);
+            this.setItems(collection._data);
             return this;
         },
 

@@ -62,78 +62,11 @@ describe("$data", function () {
             });
         });
 
-        describe("getKeyCount()", function () {
-            beforeEach(function () {
-                result = store.getKeyCount();
-            });
-
-            it("should return key count", function () {
-                expect(result).toBe(2);
-            });
-
-            it("should set _keyCount", function () {
-                expect(store._keyCount).toBe(2);
-            });
-
-            describe("then setValue()", function () {
-                beforeEach(function () {
-                    result = store.setValue('baz', "BAZ");
-                });
-
-                it("should increase _keyCount", function () {
-                    expect(store._keyCount).toBe(3);
-                });
-
-                describe("when setting existing key", function () {
-                    beforeEach(function () {
-                        store.setValue('baz', "BAZ");
-                    });
-
-                    it("should not increase key count", function () {
-                        expect(store._keyCount).toBe(3);
-                    });
-                });
-            });
-
-            describe("then setValues()", function () {
-                beforeEach(function () {
-                    result = store.setValues({
-                        bar: "bar",
-                        baz: "baz"
-                    });
-                });
-
-                it("should increase _keyCount", function () {
-                    expect(store._keyCount).toBe(3);
-                });
-            });
-
-            describe("then deleteKey()", function () {
-                beforeEach(function () {
-                    result = store.deleteKey('foo');
-                });
-
-                it("should update _keyCount", function () {
-                    expect(store._keyCount).toBe(1);
-                });
-
-                describe("when deleting absent key", function () {
-                    beforeEach(function () {
-                        result = store.deleteKey('foo');
-                    });
-
-                    it("should not change _keyCount", function () {
-                        expect(store._keyCount).toBe(1);
-                    });
-                });
-            });
-        });
-
-        describe("setValue()", function () {
+        describe("setItem()", function () {
             var value = {};
 
             beforeEach(function () {
-                result = store.setValue('baz', value);
+                result = store.setItem('baz', value);
             });
 
             it("should return self", function () {
@@ -145,14 +78,14 @@ describe("$data", function () {
             });
         });
 
-        describe("setValues()", function () {
+        describe("setItems()", function () {
             var values = {
                 bar: "bar",
                 baz: "baz"
             };
 
             beforeEach(function () {
-                result = store.setValues(values);
+                result = store.setItems(values);
             });
 
             it("should return self", function () {
@@ -174,9 +107,9 @@ describe("$data", function () {
             });
         });
 
-        describe("deleteKey()", function () {
+        describe("deleteItem()", function () {
             beforeEach(function () {
-                result = store.deleteKey('foo');
+                result = store.deleteItem('foo');
             });
 
             it("should return self", function () {
@@ -185,6 +118,99 @@ describe("$data", function () {
 
             it("should remove key", function () {
                 expect(store._data.hasOwnProperty('foo')).toBeFalsy();
+            });
+
+            describe("when specifying value", function () {
+                describe("when value doesn't match", function () {
+                    it("should not remove key", function () {
+                        store.deleteItem('bar', 'bar');
+                        expect(store._data).toEqual({
+                            bar: "BAR"
+                        });
+                    });
+                });
+            });
+        });
+
+        describe("deleteItems()", function () {
+            beforeEach(function () {
+                result = store.deleteItems({
+                    foo: 'bar',
+                    bar: 'BAR'
+                });
+            });
+
+            it("should remove matching items", function () {
+                expect(store._data).toEqual({
+                    foo: "FOO"
+                });
+            });
+        });
+
+        describe("getKeyCount()", function () {
+            beforeEach(function () {
+                result = store.getKeyCount();
+            });
+
+            it("should return key count", function () {
+                expect(result).toBe(2);
+            });
+
+            it("should set _keyCount", function () {
+                expect(store._keyCount).toBe(2);
+            });
+
+            describe("then setItem()", function () {
+                beforeEach(function () {
+                    result = store.setItem('baz', "BAZ");
+                });
+
+                it("should increase _keyCount", function () {
+                    expect(store._keyCount).toBe(3);
+                });
+
+                describe("when setting existing key", function () {
+                    beforeEach(function () {
+                        store.setItem('baz', "BAZ");
+                    });
+
+                    it("should not increase key count", function () {
+                        expect(store._keyCount).toBe(3);
+                    });
+                });
+            });
+
+            describe("then setItems()", function () {
+                beforeEach(function () {
+                    result = store.setItems({
+                        bar: "bar",
+                        baz: "baz"
+                    });
+                });
+
+                it("should increase _keyCount", function () {
+                    expect(store._keyCount).toBe(3);
+                });
+            });
+
+            describe("then deleteItem()", function () {
+                beforeEach(function () {
+                    result = store.deleteItem('foo');
+                });
+
+                it("should update _keyCount", function () {
+                    expect(store._keyCount).toBe(1);
+                });
+
+                describe("when deleting absent key", function () {
+                    beforeEach(function () {
+                        result = store.deleteItem('foo');
+                    });
+
+                    it("should not change _keyCount", function () {
+                        expect(store._keyCount).toBe(1);
+                    });
+                });
             });
         });
 

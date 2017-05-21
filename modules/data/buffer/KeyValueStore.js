@@ -10,9 +10,11 @@
 /**
  * @class $data.KeyValueStore
  * @extends $data.Buffer
+ * @implements $data.Manipulable
  */
 exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
     .extend($oop.getClass('$data.Buffer'))
+    .implement($oop.getClass('$data.Manipulable'))
     .define(/** @lends $data.KeyValueStore# */{
         /**
          * @param {object|Array} [data]
@@ -47,22 +49,11 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
         },
 
         /**
-         * @returns {Number}
-         */
-        getKeyCount: function () {
-            var keyCount = this._keyCount;
-            if (keyCount === undefined) {
-                keyCount = this._keyCount = Object.keys(this._data).length;
-            }
-            return keyCount;
-        },
-
-        /**
          * @param {string} key
          * @param {*} value
          * @returns {$data.KeyValueStore}
          */
-        setValue: function (key, value) {
+        setItem: function (key, value) {
             var data = this._data,
                 hasKey = hOP.call(data, key);
 
@@ -76,17 +67,17 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
         },
 
         /**
-         * @param {object} keyValuePairs
+         * @param {object} items
          * @returns {$data.KeyValueStore}
          */
-        setValues: function (keyValuePairs) {
-            var keys = Object.keys(keyValuePairs),
+        setItems: function (items) {
+            var keys = Object.keys(items),
                 keyCount = keys.length,
                 i, key;
 
             for (i = 0; i < keyCount; i++) {
                 key = keys[i];
-                this.setValue(key, keyValuePairs[key]);
+                this.setItem(key, items[key]);
             }
 
             return this;
@@ -94,21 +85,16 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
 
         /**
          * @param {string} key
-         * @returns {*}
-         */
-        getValue: function (key) {
-            return this._data[key];
-        },
-
-        /**
-         * @param {string} key
+         * @param {*} [value]
          * @returns {$data.KeyValueStore}
          */
-        deleteKey: function (key) {
+        deleteItem: function (key, value) {
             var data = this._data,
-                hasKey = hOP.call(data, key);
+                hasValue = value === undefined ?
+                    hOP.call(data, key) :
+                    data[key] === value;
 
-            if (hasKey) {
+            if (hasValue) {
                 delete data[key];
 
                 if (this._keyCount !== undefined) {
@@ -117,6 +103,42 @@ exports.KeyValueStore = $oop.getClass('$data.KeyValueStore')
             }
 
             return this;
+        },
+
+        /**
+         * @param {object} items
+         * @returns {$data.KeyValueStore}
+         */
+        deleteItems: function (items) {
+            var keys = Object.keys(items),
+                keyCount = keys.length,
+                i, key;
+
+            for (i = 0; i < keyCount; i++) {
+                key = keys[i];
+                this.deleteItem(key, items[key]);
+            }
+
+            return this;
+        },
+
+        /**
+         * @returns {Number}
+         */
+        getKeyCount: function () {
+            var keyCount = this._keyCount;
+            if (keyCount === undefined) {
+                keyCount = this._keyCount = Object.keys(this._data).length;
+            }
+            return keyCount;
+        },
+
+        /**
+         * @param {string} key
+         * @returns {*}
+         */
+        getValue: function (key) {
+            return this._data[key];
         },
 
         /**

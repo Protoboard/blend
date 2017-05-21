@@ -105,7 +105,7 @@ describe("$data", function () {
         describe("filterByKeyPrefix()", function () {
             beforeEach(function () {
                 collection
-                    .setValues({
+                    .setItems({
                         baz: "BAZ",
                         quux: "QUUX"
                     });
@@ -143,7 +143,7 @@ describe("$data", function () {
         describe("filterByPrefix()", function () {
             beforeEach(function () {
                 collection
-                    .setValues({
+                    .setItems({
                         baz: "BAZ",
                         quux: "QUUX"
                     });
@@ -179,7 +179,7 @@ describe("$data", function () {
         describe("filterByKeyRegExp()", function () {
             beforeEach(function () {
                 collection
-                    .setValues({
+                    .setItems({
                         baz: "BAZ",
                         quux: "QUUX"
                     });
@@ -217,7 +217,7 @@ describe("$data", function () {
         describe("filterByRegExp()", function () {
             beforeEach(function () {
                 collection
-                    .setValues({
+                    .setItems({
                         baz: "BAZ",
                         quux: "QUUX"
                     });
@@ -254,7 +254,7 @@ describe("$data", function () {
         describe("filterByRegExp()", function () {
             beforeEach(function () {
                 collection
-                    .setValues({
+                    .setItems({
                         baz: "BAZ",
                         quux: "QUUX"
                     });
@@ -294,7 +294,7 @@ describe("$data", function () {
 
             beforeEach(function () {
                 collection
-                    .setValues({
+                    .setItems({
                         baz: object,
                         quux: buffer
                     });
@@ -380,7 +380,7 @@ describe("$data", function () {
                     return value !== key.toUpperCase();
                 });
                 collection
-                    .setValues({
+                    .setItems({
                         baz: "BAZ",
                         quux: "Hello World!"
                     });
