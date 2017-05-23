@@ -71,7 +71,8 @@ describe("$oop", function () {
             });
 
             it("should initialize missing method names", function () {
-                expect(result.__missingMethodNames).toEqual({list: [], lookup: {}});
+                expect(result.__missingMethodNames)
+                    .toEqual({list: [], lookup: {}});
             });
 
             it("should initialize forwards", function () {
@@ -88,8 +89,7 @@ describe("$oop", function () {
         });
 
         describe("define()", function () {
-            var batch,
-                result;
+            var batch;
 
             beforeEach(function () {
                 batch = {
@@ -243,6 +243,52 @@ describe("$oop", function () {
                         list: ['baz'],
                         lookup: {baz: true}
                     });
+                });
+            });
+
+            describe("then delegate()", function () {
+                beforeEach(function () {
+                    batch = {baz: "baz"};
+                    spyOn(Class, 'define').and.callThrough();
+                    Class.delegate(batch);
+                });
+
+                it("should define delegates", function () {
+                    expect(Class.define).toHaveBeenCalledWith(batch);
+                });
+            });
+        });
+
+        describe("delegate()", function () {
+            var batch;
+
+            beforeEach(function () {
+                batch = {
+                    foo: "FOO",
+                    bar: function () {
+                    }
+                };
+                result = Class.delegate(batch);
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(Class);
+            });
+
+            it("should add delegates", function () {
+                expect(Class.__delegates).not.toBe(batch);
+                expect(Class.__delegates).toEqual(batch);
+            });
+
+            describe("then define()", function () {
+                beforeEach(function () {
+                    spyOn(Class, 'define').and.callThrough();
+                    Class.define({});
+                });
+
+                it("should define delegates", function () {
+                    expect(Class.define.calls.mostRecent().args)
+                        .toEqual([Class.__delegates]);
                 });
             });
         });
@@ -574,8 +620,10 @@ describe("$oop", function () {
                     });
 
                     it("should set include distances", function () {
-                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
-                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                        expect(A.__includes.downstream.lookup)
+                            .toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup)
+                            .toEqual({C: 1, B: 2, A: 3});
                     });
 
                     it("should update forwards", function () {
@@ -596,8 +644,10 @@ describe("$oop", function () {
                     });
 
                     it("should set include distances", function () {
-                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
-                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                        expect(A.__includes.downstream.lookup)
+                            .toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup)
+                            .toEqual({C: 1, B: 2, A: 3});
                     });
 
                     it("should update forwards", function () {
@@ -618,8 +668,10 @@ describe("$oop", function () {
                     });
 
                     it("should set include distances", function () {
-                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
-                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                        expect(A.__includes.downstream.lookup)
+                            .toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup)
+                            .toEqual({C: 1, B: 2, A: 3});
                     });
 
                     it("should update forwards", function () {
@@ -640,8 +692,10 @@ describe("$oop", function () {
                     });
 
                     it("should set include distances", function () {
-                        expect(A.__includes.downstream.lookup).toEqual({B: 1, C: 2, D: 3});
-                        expect(D.__includes.upstream.lookup).toEqual({C: 1, B: 2, A: 3});
+                        expect(A.__includes.downstream.lookup)
+                            .toEqual({B: 1, C: 2, D: 3});
+                        expect(D.__includes.upstream.lookup)
+                            .toEqual({C: 1, B: 2, A: 3});
                     });
 
                     it("should update forwards", function () {

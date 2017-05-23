@@ -44,6 +44,13 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
                 __members: {},
 
                 /**
+                 * Properties and methods delegated to the current class.
+                 * @type {object}
+                 * @private
+                 */
+                __delegates: {},
+
+                /**
                  * Registry of interfaces implemented by the current class,
                  * and classes implementing the current class as an interface.
                  * @type {{downstream: {list: Array, lookup: object}, upstream: {list: Array, lookup: object}}}
@@ -151,8 +158,24 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         Object.getOwnPropertyNames(batch)
             .forEach(function (memberName) {
+                // TODO: Throw on conflict
                 members[memberName] = batch[memberName];
                 return members;
+            });
+    },
+
+    /**
+     * Copies batch of members to class members container.
+     * @param {object} batch
+     * @private
+     */
+    _addToDelegates: function (batch) {
+        var delegates = this.__delegates;
+
+        Object.getOwnPropertyNames(batch)
+            .forEach(function (memberName) {
+                delegates[memberName] = batch[memberName];
+                return delegates;
             });
     },
 
@@ -792,11 +815,17 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
     define: function (batch) {
         $assert.isObject(batch, "No members specified.");
 
+        if (this.__contributors.lookup[this.__classId] === undefined) {
+            // this is the first call to `define`
+            // marking self as contributor
+            this._addToContributors(this);
+
+            // applying any members delegated so far
+            this.define(this.__delegates);
+        }
+
         // adding batch to members, overwriting conflicting properties
         this._addToMembers(batch);
-
-        // marking self as contributor
-        this._addToContributors(this);
 
         // adding methods to lookup at specified index
         this._addMethodsToMatrix(batch, this.__classId);
@@ -815,6 +844,30 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         // updating implementers
         this._delegateToImplementers(batch);
+
+        return this;
+    },
+
+    /**
+     * Delegates a batch of properties and methods to the current class.
+     * Delegated members are like defined members, except they don't get
+     * applied until the first batch of defines. When the class already
+     * has members defined, `delegate` acts like exactly like `define`.
+     * Can be called multiple times.
+     * @param {object} batch
+     * @returns {$oop.Class}
+     */
+    delegate: function (batch) {
+        $assert.isObject(batch, "No members specified.");
+
+        // adding batch of delegates, overwriting conflicting properties
+        this._addToDelegates(batch);
+
+        if (this.__contributors.lookup[this.__classId] !== undefined) {
+            // when class already contributed
+            // adding batch to members
+            this.define(batch);
+        }
 
         return this;
     },

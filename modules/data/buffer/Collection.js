@@ -439,7 +439,7 @@ exports.Collection = $oop.getClass('$data.Collection')
     });
 
 $oop.getClass('$data.Buffer')
-    .define(/** @lends $data.Buffer# */{
+    .delegate(/** @lends $data.Buffer# */{
         /**
          * @returns {$data.Collection}
          */

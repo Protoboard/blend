@@ -8,6 +8,7 @@
  */
 
 /**
+ * 1 to 1 key-value store.
  * TODO: Merge into Collection?
  * @class $data.Lookup
  * @extends $data.Buffer
@@ -202,7 +203,7 @@ exports.Lookup = $oop.getClass('$data.Lookup')
     });
 
 $oop.getClass('$data.Buffer')
-    .define(/** @lends $data.Buffer# */{
+    .delegate(/** @lends $data.Buffer# */{
         /**
          * @returns {$data.Lookup}
          */

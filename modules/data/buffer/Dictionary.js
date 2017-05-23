@@ -8,6 +8,8 @@
  */
 
 /**
+ * Many to many key-value store, with string keys.
+ * Fast key lookups and joins.
  * TODO: Implement rest of Iterable & Filterable
  * TODO: Add .inflate()
  * @class $data.Dictionary
@@ -341,7 +343,7 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
     });
 
 $oop.getClass('$data.Buffer')
-    .define(/** @lends $data.Buffer# */{
+    .delegate(/** @lends $data.Buffer# */{
         /**
          * @returns {$data.Dictionary}
          */
