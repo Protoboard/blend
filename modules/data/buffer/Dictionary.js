@@ -13,68 +13,15 @@
  * TODO: Implement rest of Iterable & Filterable
  * TODO: Add .inflate()
  * @class $data.Dictionary
- * @extends $data.Buffer
+ * @extends $data.Container
  * @implements $data.KeyValueContainer
  * @implements $data.Iterable
  * @implements $data.Filterable
  */
 exports.Dictionary = $oop.getClass('$data.Dictionary')
-    .extend($oop.getClass('$data.Buffer'))
+    .extend($oop.getClass('$data.Container'))
     .implement($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.Dictionary# */{
-        /**
-         * @param {object|Array} [data]
-         * @ignore
-         */
-        init: function (data) {
-            /**
-             * Tracks number of key-value pairs in the dictionary.
-             * @type {number}
-             * @protected
-             */
-            this._itemCount = data ? undefined : 0;
-        },
-
-        /**
-         * @returns {number}
-         * @private
-         */
-        _countItems: function () {
-            var data = this._data,
-                keys = this.getKeys(),
-                keyCount = keys.length,
-                result = 0,
-                i, values;
-
-            for (i = 0; i < keyCount; i++) {
-                values = data[keys[i]];
-                result += values instanceof Array ?
-                    values.length :
-                    1;
-            }
-
-            return result;
-        },
-
-        /**
-         * @inheritDoc
-         * @returns {$data.Dictionary}
-         */
-        clone: function clone() {
-            var cloned = clone.returned;
-            cloned._itemCount = this._itemCount;
-            return cloned;
-        },
-
-        /**
-         * @inheritDoc
-         * @returns {$data.Dictionary}
-         */
-        clear: function () {
-            this._itemCount = 0;
-            return this;
-        },
-
         /**
          * @param {string} key
          * @param {*} value
@@ -128,33 +75,6 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         },
 
         /**
-         * @param {object} items
-         * @returns {$data.Dictionary}
-         */
-        setItems: function (items) {
-            var keys = Object.keys(items),
-                keyCount = keys.length,
-                i, key, values, valueCount,
-                j;
-
-            for (i = 0; i < keyCount; i++) {
-                key = keys[i];
-                values = items[key];
-
-                if (values instanceof Array) {
-                    valueCount = values.length;
-                    for (j = 0; j < valueCount; j++) {
-                        this.setItem(key, values[j]);
-                    }
-                } else {
-                    this.setItem(key, values);
-                }
-            }
-
-            return this;
-        },
-
-        /**
          * @param {string} key
          * @param {*} value
          * @returns {$data.Dictionary}
@@ -199,44 +119,6 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         },
 
         /**
-         * @param {object} items
-         * @returns {$data.Dictionary}
-         */
-        deleteItems: function (items) {
-            var keys = Object.keys(items),
-                keyCount = keys.length,
-                i, key, values, valueCount,
-                j;
-
-            for (i = 0; i < keyCount; i++) {
-                key = keys[i];
-                values = items[key];
-
-                if (values instanceof Array) {
-                    valueCount = values.length;
-                    for (j = 0; j < valueCount; j++) {
-                        this.deleteItem(key, values[j]);
-                    }
-                } else {
-                    this.deleteItem(key, values);
-                }
-            }
-
-            return this;
-        },
-
-        /**
-         * @returns {number}
-         */
-        getItemCount: function () {
-            var itemCount = this._itemCount;
-            if (itemCount === undefined) {
-                itemCount = this._itemCount = this._countItems();
-            }
-            return itemCount;
-        },
-
-        /**
          * @param {string} key
          * @returns {*}
          */
@@ -245,42 +127,7 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         },
 
         /**
-         * @returns {string[]}
-         */
-        getKeys: function () {
-            return Object.keys(this._data);
-        },
-
-        /**
-         * @returns {Array}
-         */
-        getValues: function () {
-            var data = this._data,
-                keys = this.getKeys(),
-                keyCount = keys.length,
-                i, key, values, valueCount,
-                j,
-                result = [];
-
-            for (i = 0; i < keyCount; i++) {
-                key = keys[i];
-                values = data[key];
-                valueCount = values.length;
-                if (values instanceof Array) {
-                    for (j = 0; j < valueCount; j++) {
-                        result.push(values[j]);
-                    }
-                } else {
-                    result.push(values);
-                }
-            }
-
-            this._itemCount = result.length;
-
-            return result;
-        },
-
-        /**
+         * TODO: Move to Iterable
          * @returns {string}
          */
         getFirstKey: function () {
@@ -294,6 +141,7 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         },
 
         /**
+         * TODO: Move to Iterable
          * @returns {*}
          */
         getFirstValue: function () {
@@ -342,8 +190,8 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         }
     });
 
-$oop.getClass('$data.Buffer')
-    .delegate(/** @lends $data.Buffer# */{
+$oop.getClass('$data.Container')
+    .delegate(/** @lends $data.Container# */{
         /**
          * @returns {$data.Dictionary}
          */

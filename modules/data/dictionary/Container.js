@@ -1,24 +1,24 @@
-/* globals $assert, $oop, $utils */
+/* globals $assert, $oop, $utils, slice */
 "use strict";
 
 /**
- * @function $data.Buffer.create
+ * @function $data.Container.create
  * @param {object|Array} [data]
- * @returns {$data.Buffer}
+ * @returns {$data.Container}
  */
 
 /**
  * Base for any data class that maintains a data buffer.
- * @class $data.Buffer
+ * @class $data.Container
  * @implements $utils.Destroyable
  * @implements $data.Clearable
  * @mixes $utils.Cloneable
  */
-exports.Buffer = $oop.getClass('$data.Buffer')
+exports.Container = $oop.getClass('$data.Container')
     .implement($oop.getClass('$utils.Destroyable'))
     .implement($oop.getClass('$data.Clearable'))
     .include($oop.getClass('$utils.Cloneable'))
-    .define(/** @lends $data.Buffer# */{
+    .define(/** @lends $data.Container# */{
         /**
          * @param {object|Array} [data]
          * @ignore
@@ -35,7 +35,7 @@ exports.Buffer = $oop.getClass('$data.Buffer')
 
         /**
          * @inheritDoc
-         * @returns {$data.Buffer}
+         * @returns {$data.Container}
          */
         destroy: function () {
             this.clear();
@@ -44,7 +44,7 @@ exports.Buffer = $oop.getClass('$data.Buffer')
 
         /**
          * @inheritDoc
-         * @returns {$data.Buffer}
+         * @returns {$data.Container}
          */
         clone: function clone() {
             var cloned = clone.returned;
@@ -54,7 +54,7 @@ exports.Buffer = $oop.getClass('$data.Buffer')
 
         /**
          * Clears buffer data.
-         * @returns {$data.Buffer}
+         * @returns {$data.Container}
          */
         clear: function () {
             if (this._data instanceof Array) {
@@ -67,17 +67,37 @@ exports.Buffer = $oop.getClass('$data.Buffer')
 
         /**
          * @param {function} callback
+         * @param {function} [context]
+         * @param {number} [argIndex=0]
+         * @param {...*} arg
          * @returns {*}
          */
-        passDataTo: function (callback) {
-            return callback(this._data);
+        passDataTo: function (callback, context, argIndex, arg) {
+            var args;
+            if (arguments.length > 2) {
+                args = slice.call(arguments, 2);
+                args.splice(argIndex, 0, this._data);
+                return callback.apply(context, args);
+            } else {
+                return callback.call(context, this._data);
+            }
         },
 
         /**
          * @param {function} callback
+         * @param {function} [context]
+         * @param {number} [argIndex=0]
+         * @param {...*} arg
          * @returns {*}
          */
-        passSelfTo: function (callback) {
-            return callback(this);
+        passSelfTo: function (callback, context, argIndex, arg) {
+            var args;
+            if (arguments.length > 2) {
+                args = slice.call(arguments, 2);
+                args.splice(argIndex, 0, this);
+                return callback.apply(context, args);
+            } else {
+                return callback.call(context, this);
+            }
         }
     });

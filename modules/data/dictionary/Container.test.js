@@ -4,35 +4,35 @@ var $assert = window['giant-assert'],
     $data = window['giant-data'];
 
 describe("$data", function () {
-    describe("Buffer", function () {
+    describe("Container", function () {
         var data,
-            buffer,
+            container,
             result;
 
         beforeEach(function () {
             data = {};
-            buffer = $data.Buffer.create(data);
+            container = $data.Container.create(data);
         });
 
         describe("create()", function () {
             it("should set _data property", function () {
-                expect(buffer._data).toBe(data);
+                expect(container._data).toBe(data);
             });
 
             describe("on missing arguments", function () {
                 beforeEach(function () {
-                    buffer = $data.Buffer.create();
+                    container = $data.Container.create();
                 });
 
                 it("should set _data property", function () {
-                    expect(buffer._data).toEqual({});
+                    expect(container._data).toEqual({});
                 });
             });
 
             describe("on invalid arguments", function () {
                 it("should throw", function () {
                     expect(function () {
-                        $data.Buffer.create("foo");
+                        $data.Container.create("foo");
                     }).toThrow();
                 });
             });
@@ -40,62 +40,62 @@ describe("$data", function () {
 
         describe("clone()", function () {
             var clonedData,
-                clonedBuffer;
+                clonedContainer;
 
             beforeEach(function () {
                 clonedData = {foo: "FOO", bar: "BAR"};
                 spyOn($data, 'shallowCopy').and.returnValue(clonedData);
-                clonedBuffer = buffer.clone();
+                clonedContainer = container.clone();
             });
 
             it("should return cloned instance", function () {
-                expect(clonedBuffer).not.toBe(buffer);
+                expect(clonedContainer).not.toBe(container);
             });
 
             it("should set _data", function () {
-                expect($data.shallowCopy).toHaveBeenCalledWith(buffer._data);
-                expect(clonedBuffer._data).toBe(clonedData);
+                expect($data.shallowCopy).toHaveBeenCalledWith(container._data);
+                expect(clonedContainer._data).toBe(clonedData);
             });
         });
 
         describe("destroy()", function () {
             beforeEach(function () {
-                spyOn(buffer, 'clear');
-                result = buffer.destroy();
+                spyOn(container, 'clear');
+                result = container.destroy();
             });
 
             it("should return self", function () {
-                expect(result).toBe(buffer);
+                expect(result).toBe(container);
             });
 
             it("should clear data", function () {
-                expect(buffer.clear).toHaveBeenCalled();
+                expect(container.clear).toHaveBeenCalled();
             });
         });
 
         describe("clear()", function () {
             beforeEach(function () {
-                result = buffer.clear();
+                result = container.clear();
             });
 
             it("should return self", function () {
-                expect(result).toBe(buffer);
+                expect(result).toBe(container);
             });
 
             describe("of array data", function () {
                 beforeEach(function () {
-                    buffer = $data.Buffer.create([1, 2, 3]);
-                    buffer.clear();
+                    container = $data.Container.create([1, 2, 3]);
+                    container.clear();
                 });
 
                 it("should replace data with empty array", function () {
-                    expect(buffer._data).toEqual([]);
+                    expect(container._data).toEqual([]);
                 });
             });
 
             describe("of object data", function () {
                 it("should replace data with empty object", function () {
-                    expect(buffer._data).toEqual({});
+                    expect(container._data).toEqual({});
                 });
             });
         });
@@ -107,11 +107,11 @@ describe("$data", function () {
             beforeEach(function () {
                 returnValue = {};
                 callback = jasmine.createSpy().and.returnValue(returnValue);
-                result = buffer.passDataTo(callback);
+                result = container.passDataTo(callback);
             });
 
             it("should pass data to callback", function () {
-                expect(callback).toHaveBeenCalledWith(buffer._data);
+                expect(callback).toHaveBeenCalledWith(container._data);
             });
 
             it("should return return value of callback", function () {
@@ -126,11 +126,11 @@ describe("$data", function () {
             beforeEach(function () {
                 returnValue = {};
                 callback = jasmine.createSpy().and.returnValue(returnValue);
-                result = buffer.passSelfTo(callback);
+                result = container.passSelfTo(callback);
             });
 
             it("should pass data to callback", function () {
-                expect(callback).toHaveBeenCalledWith(buffer);
+                expect(callback).toHaveBeenCalledWith(container);
             });
 
             it("should return return value of callback", function () {

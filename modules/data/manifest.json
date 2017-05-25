@@ -2,15 +2,11 @@
   "assets": {
     "js": [
       "globals.js",
-      "buffer/Buffer.js",
-      "buffer/Collection.js",
-      "buffer/Dictionary.js",
-      "buffer/Filterable.js",
-      "buffer/Iterable.js",
-      "buffer/KeyValueContainer.js",
-      "buffer/Lookup.js",
-      "buffer/Set.js",
-      "buffer/StringFilterable.js",
+      "buffer/Container.js",
+      "dictionary/Container.js",
+      "dictionary/dictionary-utils.js",
+      "dictionary/Iterable.js",
+      "dictionary/KeyValueContainer.js",
       "utils/Clearable.js",
       "utils/data-utils.js"
     ]

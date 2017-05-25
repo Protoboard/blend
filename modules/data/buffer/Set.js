@@ -150,8 +150,8 @@ exports.Set = $oop.getClass('$data.Set')
         }
     });
 
-$oop.getClass('$data.Buffer')
-    .delegate(/** @lends $data.Buffer# */{
+$oop.getClass('$data.Container')
+    .delegate(/** @lends $data.Container# */{
         /**
          * @returns {$data.Set}
          */
