@@ -8,11 +8,13 @@
  */
 exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .define(/** @lends $data.KeyValueContainer# */{
-        /** @type {string} */
-        keyType: undefined,
+        /**
+         * @member {string} $data.KeyValueContainer.keyType
+         */
 
-        /** @type {string} */
-        valueType: undefined,
+        /**
+         * @member {string} $data.KeyValueContainer.valueType
+         */
 
         /**
          * Sets a key-value pair in the container.

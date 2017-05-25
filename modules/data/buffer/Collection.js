@@ -11,7 +11,6 @@
  * Manipulates key-value stores.
  * @class $data.Collection
  * @mixes $data.Iterable
- * @implements $data.Filterable
  * @extends $data.Lookup
  */
 exports.Collection = $oop.getClass('$data.Collection')

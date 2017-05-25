@@ -10,13 +10,10 @@
 /**
  * Many to many key-value store, with string keys.
  * Fast key lookups and joins.
- * TODO: Implement rest of Iterable & Filterable
- * TODO: Add .inflate()
  * @class $data.Dictionary
  * @extends $data.Container
  * @implements $data.KeyValueContainer
- * @implements $data.Iterable
- * @implements $data.Filterable
+ * @mixes $data.Iterable
  */
 exports.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.Container'))
