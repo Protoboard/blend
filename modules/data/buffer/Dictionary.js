@@ -12,12 +12,12 @@
  * Fast key lookups and joins.
  * @class $data.Dictionary
  * @extends $data.Container
- * @implements $data.KeyValueContainer
+ * @implements $data.ItemContainer
  * @mixes $data.Iterable
  */
 exports.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.Container'))
-    .implement($oop.getClass('$data.KeyValueContainer'))
+    .implement($oop.getClass('$data.ItemContainer'))
     .define(/** @lends $data.Dictionary# */{
         /**
          * @param {string} key

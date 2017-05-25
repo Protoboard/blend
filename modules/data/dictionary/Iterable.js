@@ -41,14 +41,6 @@ exports.Iterable = $oop.getClass('$data.Iterable')
         },
 
         /**
-         * @method $data.Iterable#forEachItem
-         * @param {function} callback
-         * @param {object} [context]
-         * @returns {$data.Iterable}
-         * @abstract
-         */
-
-        /**
          * Retrieves the number of key-value pairs in the container.
          * @returns {Number}
          */
@@ -128,15 +120,14 @@ exports.Iterable = $oop.getClass('$data.Iterable')
             return result;
         },
 
-
         /**
          * Converts current Container to the specified class.
-         * @param {$data.KeyValueContainer} KeyValueContainer
-         * @returns {$data.KeyValueContainer}
+         * @param {$data.ItemContainer} ItemContainer
+         * @returns {$data.ItemContainer}
          */
-        toType: function (KeyValueContainer) {
+        toType: function (ItemContainer) {
             var itemCount = 0,
-                result = KeyValueContainer.create();
+                result = ItemContainer.create();
 
             this.forEachItem(function (value, key) {
                 result.setItem(key, value);
@@ -331,7 +322,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
         /**
          * Extracts items matching the specified keys and returns result
          * as a new collection.
-         * TODO: Blocked by KeyValueContainer#getValues and/or #joinTo
+         * TODO: Blocked by ItemContainer#getValues and/or #joinTo
          * TODO: Necessary? Use joining to a symmetric collection instead.
          * @param {string[]|number[]} keys Key strings to be matched
          * @returns {$data.Iterable}

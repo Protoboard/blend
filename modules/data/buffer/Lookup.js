@@ -12,11 +12,11 @@
  * TODO: Merge into Collection?
  * @class $data.Lookup
  * @extends $data.Container
- * @implements $data.KeyValueContainer
+ * @implements $data.ItemContainer
  */
 exports.Lookup = $oop.getClass('$data.Lookup')
     .extend($oop.getClass('$data.Container'))
-    .implement($oop.getClass('$data.KeyValueContainer'))
+    .implement($oop.getClass('$data.ItemContainer'))
     .define(/** @lends $data.Lookup# */{
         /**
          * @param {string} key

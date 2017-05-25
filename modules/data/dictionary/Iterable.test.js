@@ -156,10 +156,10 @@ describe("$data", function () {
         });
 
         describe("toType()", function () {
-            var KeyValueContainer;
+            var ItemContainer;
 
             beforeEach(function () {
-                KeyValueContainer = $oop.getClass('KeyValueContainer')
+                ItemContainer = $oop.getClass('ItemContainer')
                     .extend($data.Container)
                     .define({
                         init: function (data) {
@@ -171,11 +171,11 @@ describe("$data", function () {
                         }
                     });
 
-                result = iterable.toType(KeyValueContainer);
+                result = iterable.toType(ItemContainer);
             });
 
             it("should return instance of specified class", function () {
-                expect(KeyValueContainer.isIncludedBy(result)).toBeTruthy();
+                expect(ItemContainer.isIncludedBy(result)).toBeTruthy();
             });
 
             it("should set contents", function () {

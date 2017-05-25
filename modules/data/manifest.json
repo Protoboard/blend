@@ -4,7 +4,7 @@
       "globals.js",
       "buffer/Container.js",
       "container/Container.js",
-      "container/KeyValueContainer.js",
+      "container/ItemContainer.js",
       "dictionary/dictionary-utils.js",
       "dictionary/Iterable.js",
       "utils/Clearable.js",
