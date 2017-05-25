@@ -64,32 +64,6 @@ exports.Lookup = $oop.getClass('$data.Lookup')
          */
         getValue: function (key) {
             return this._data[key];
-        },
-
-        /**
-         * @returns {string}
-         */
-        getFirstKey: function () {
-            var data = this._data,
-                key;
-            for (key in data) {
-                if (hOP.call(data, key)) {
-                    return key;
-                }
-            }
-        },
-
-        /**
-         * @returns {*}
-         */
-        getFirstValue: function () {
-            var data = this._data,
-                key;
-            for (key in data) {
-                if (hOP.call(data, key)) {
-                    return data[key];
-                }
-            }
         }
     });
 

@@ -3,6 +3,7 @@
 
 /**
  * TODO: Rename to IterableContainerPartial
+ * TODO: Break out forEachItem to new Iterable interface
  * @mixin $data.Iterable
  * @augments $data.Container
  */
@@ -102,6 +103,31 @@ exports.Iterable = $oop.getClass('$data.Iterable')
 
             return result;
         },
+
+        /**
+         * @returns {*}
+         */
+        getFirstKey: function () {
+            var result;
+            this.forEachItem(function (value, key) {
+                result = key;
+                return false;
+            });
+            return result;
+        },
+
+        /**
+         * @returns {*}
+         */
+        getFirstValue: function () {
+            var result;
+            this.forEachItem(function (value) {
+                result = value;
+                return false;
+            });
+            return result;
+        },
+
 
         /**
          * Converts current Container to the specified class.

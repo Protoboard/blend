@@ -121,28 +121,6 @@
 //            });
 //        });
 //
-//        describe("getFirstKey()", function () {
-//            beforeEach(function () {
-//                result = dictionary.getFirstKey();
-//            });
-//
-//            it("should return one of the keys", function () {
-//                expect(result === "foo" || result === "bar").toBeTruthy();
-//            });
-//        });
-//
-//        describe("getFirstValue()", function () {
-//            beforeEach(function () {
-//                result = dictionary.getFirstValue();
-//            });
-//
-//            it("should return one of the values", function () {
-//                expect(result === "FOO" ||
-//                    result === "BAR" ||
-//                    result === "bar").toBeTruthy();
-//            });
-//        });
-//
 //        describe("forEachItem", function () {
 //            var callback;
 //

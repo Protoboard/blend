@@ -63,26 +63,6 @@
 //                expect(store.getValue('foo')).toBe("FOO");
 //            });
 //        });
-//
-//        describe("getFirstKey()", function () {
-//            beforeEach(function () {
-//                result = store.getFirstKey();
-//            });
-//
-//            it("should return one of the keys", function () {
-//                expect(result === "foo" || result === "bar").toBeTruthy();
-//            });
-//        });
-//
-//        describe("getFirstValue()", function () {
-//            beforeEach(function () {
-//                result = store.getFirstValue();
-//            });
-//
-//            it("should return one of the values", function () {
-//                expect(result === "FOO" || result === "BAR").toBeTruthy();
-//            });
-//        });
 //    });
 //
 //    describe("Container", function () {

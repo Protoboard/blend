@@ -127,37 +127,6 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         },
 
         /**
-         * TODO: Move to Iterable
-         * @returns {string}
-         */
-        getFirstKey: function () {
-            var data = this._data,
-                key;
-            for (key in data) {
-                if (hOP.call(data, key)) {
-                    return key;
-                }
-            }
-        },
-
-        /**
-         * TODO: Move to Iterable
-         * @returns {*}
-         */
-        getFirstValue: function () {
-            var data = this._data,
-                key, values;
-            for (key in data) {
-                if (hOP.call(data, key)) {
-                    values = data[key];
-                    return values instanceof Array ?
-                        values[0] :
-                        values;
-                }
-            }
-        },
-
-        /**
          * @param {function} callback
          * @param {object} [context]
          * @returns {$data.Dictionary}

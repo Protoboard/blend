@@ -8,6 +8,12 @@
  */
 exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .define(/** @lends $data.KeyValueContainer# */{
+        /** @type {string} */
+        keyType: undefined,
+
+        /** @type {string} */
+        valueType: undefined,
+
         /**
          * Sets a key-value pair in the container.
          * @param {string} key
@@ -29,17 +35,5 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @param {string} key
          * @returns {*}
          */
-        getValue: function (key) {},
-
-        /**
-         * Returns a key from the container.
-         * @returns {string}
-         */
-        getFirstKey: function () {},
-
-        /**
-         * Returns a value from the container.
-         * @returns {*}
-         */
-        getFirstValue: function () {}
+        getValue: function (key) {}
     });
