@@ -77,6 +77,9 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
 
         /**
+         * Iterates over collection and calls specified callback on
+         * each item. Item order is not deterministic. Returns self.
+         * Returning false from callback breaks iteration.
          * @method $data.KeyValueContainer#forEachItem
          * @param {function} callback
          * @param {object} [context]

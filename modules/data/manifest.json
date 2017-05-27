@@ -5,6 +5,7 @@
       "container/DataContainer.js",
       "container/KeyValueContainer-utils.js",
       "container/KeyValueContainer.js",
+      "key-value/Collection.js",
       "utils/Clearable.js",
       "utils/data-utils.js"
     ]
