@@ -9,12 +9,14 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .require($oop.getClass('$data.DataContainer'))
     .define(/** @lends $data.KeyValueContainer# */{
         /**
+         * @memberOf $data.KeyValueContainer
          * @type {string}
          * @constant
          */
         keyType: undefined,
 
         /**
+         * @memberOf $data.KeyValueContainer
          * @type {string}
          * @constant
          */
@@ -65,14 +67,6 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @param {string} key
          * @param {*} [value]
          * @returns {$data.KeyValueContainer}
-         * @abstract
-         */
-
-        /**
-         * Retrieves value(s) for the specified key.
-         * @method $data.KeyValueContainer#getValue
-         * @param {string} key
-         * @returns {*}
          * @abstract
          */
 

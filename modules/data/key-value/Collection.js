@@ -8,8 +8,8 @@
  */
 
 /**
- * Many-to-one key-value container with unique (string) keys and any type
- * values.
+ * Key-value container with string keys and any-type values.
+ * Pairs are unique.
  * @class $data.Collection
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
@@ -19,12 +19,14 @@ exports.Collection = $oop.getClass('$data.Collection')
     .include($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.Collection# */{
         /**
+         * @memberOf $data.Collection
          * @type {string}
          * @constant
          */
         keyType: exports.KEY_TYPE_STRING,
 
         /**
+         * @memberOf $data.Collection
          * @type {string}
          * @constant
          */
@@ -71,14 +73,6 @@ exports.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @param {string} key
-         * @returns {*}
-         */
-        getValue: function (key) {
-            return this._data[key];
-        },
-
-        /**
          * @inheritDoc
          * @param {function} callback Function to be called for each item
          * @param {object} [context] Context for callback
@@ -98,6 +92,14 @@ exports.Collection = $oop.getClass('$data.Collection')
             }
 
             return this;
+        },
+
+        /**
+         * @param {string} key
+         * @returns {*}
+         */
+        getValue: function (key) {
+            return this._data[key];
         }
     });
 

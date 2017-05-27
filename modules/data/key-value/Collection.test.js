@@ -63,12 +63,6 @@ describe("$data", function () {
             });
         });
 
-        describe("getValue()", function () {
-            it("should return corresponding value", function () {
-                expect(collection.getValue('foo')).toBe("FOO");
-            });
-        });
-
         describe("forEachItem()", function () {
             var callback;
 
@@ -99,6 +93,12 @@ describe("$data", function () {
                         ['FOO', 'foo', collection]
                     ]);
                 });
+            });
+        });
+
+        describe("getValue()", function () {
+            it("should return corresponding value", function () {
+                expect(collection.getValue('foo')).toBe("FOO");
             });
         });
     });
