@@ -2,17 +2,22 @@
 "use strict";
 
 /**
- * TODO: Rename to IterableContainerPartial
- * TODO: Break out forEachItem to new KeyValueContainer interface
  * @mixin $data.KeyValueContainer
  * @augments $data.DataContainer
  */
 exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .require($oop.getClass('$data.DataContainer'))
-    .implement($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.KeyValueContainer# */{
+        /**
+         * @type {string}
+         * @constant
+         */
         keyType: undefined,
 
+        /**
+         * @type {string}
+         * @constant
+         */
         valueType: undefined,
 
         /**
@@ -102,16 +107,10 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {Array}
          */
         getKeys: function () {
-            var itemCount = 0,
-                result = [];
-
+            var result = [];
             this.forEachItem(function (value, key) {
                 result.push(key);
-                itemCount++;
             });
-
-            this._itemCount = itemCount;
-
             return result;
         },
 
@@ -122,16 +121,10 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {Array}
          */
         getValues: function () {
-            var itemCount = 0,
-                result = [];
-
+            var result = [];
             this.forEachItem(function (value) {
                 result.push(value);
-                itemCount++;
             });
-
-            this._itemCount = itemCount;
-
             return result;
         },
 
@@ -165,16 +158,10 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.KeyValueContainer}
          */
         toType: function (KeyValueContainer) {
-            var itemCount = 0,
-                result = KeyValueContainer.create();
-
+            var result = KeyValueContainer.create();
             this.forEachItem(function (value, key) {
                 result.setItem(key, value);
-                itemCount++;
             });
-
-            this._itemCount = itemCount;
-
             return result;
         },
 
@@ -187,18 +174,14 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.Collection} Mapped collection
          */
         mapValues: function (callback, context) {
-            var itemCount = 0,
-                data = this._data instanceof Array ? [] : {},
+            var data = this._data instanceof Array ? [] : {},
                 ResultClass = exports.getMapResultClass(this, 'VALUE', 'ANY'),
                 result = ResultClass.create(data);
 
             this.forEachItem(function (value, key, iterable) {
                 value = callback.call(this, value, key, iterable);
                 result.setItem(key, value);
-                itemCount++;
             }, context);
-
-            this._itemCount = itemCount;
 
             return result;
         },
@@ -212,17 +195,13 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.Collection} Mapped collection
          */
         mapKeys: function (callback, context) {
-            var itemCount = 0,
-                ResultClass = exports.getMapResultClass(this, 'KEY', 'ANY'),
+            var ResultClass = exports.getMapResultClass(this, 'KEY', 'ANY'),
                 result = ResultClass.create();
 
             this.forEachItem(function (value, key, iterable) {
                 key = callback.call(this, value, key, iterable);
                 result.setItem(value, key);
-                itemCount++;
             }, context);
-
-            this._itemCount = itemCount;
 
             return result;
         },
@@ -237,15 +216,11 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {*} Accummulated value
          */
         reduce: function (callback, initialValue, context) {
-            var itemCount = 0,
-                result = initialValue;
+            var result = initialValue;
 
             this.forEachItem(function (value, key, iterable) {
                 result = callback.call(context, result, value, key, iterable);
-                itemCount++;
             }, context);
-
-            this._itemCount = itemCount;
 
             return result;
         },
@@ -341,8 +316,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.KeyValueContainer} Filtered collection
          */
         filterBy: function (callback, context) {
-            var itemCount = 0,
-                data = this._data instanceof Array ? [] : {},
+            var data = this._data instanceof Array ? [] : {},
                 ResultClass = exports.getMapResultClass(this, 'VALUE', 'ANY'),
                 result = ResultClass.create(data);
 
@@ -350,10 +324,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
                 if (callback.call(this, value, key, iterable)) {
                     result.setItem(key, value);
                 }
-                itemCount++;
             }, context);
-
-            this._itemCount = itemCount;
 
             return result;
         },
@@ -450,3 +421,17 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
             }
         }
     });
+
+$oop.copyProperties(exports, /** @lends $data */{
+    /** @constant */
+    KEY_TYPE_STRING: 'KEY_TYPE_STRING',
+
+    /** @constant */
+    KEY_TYPE_ANY: 'KEY_TYPE_ANY',
+
+    /** @constant */
+    VALUE_TYPE_STRING: 'VALUE_TYPE_STRING',
+
+    /** @constant */
+    VALUE_TYPE_ANY: 'VALUE_TYPE_ANY'
+});

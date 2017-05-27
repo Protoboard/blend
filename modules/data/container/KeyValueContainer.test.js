@@ -115,10 +115,6 @@ describe("$data", function () {
             it("should return array with keys", function () {
                 expect(result.sort()).toEqual(['foo', 'bar'].sort());
             });
-
-            it("should set _itemCount", function () {
-                expect(iterable._itemCount).toBe(2);
-            });
         });
 
         describe("getValues()", function () {
@@ -128,10 +124,6 @@ describe("$data", function () {
 
             it("should retrieve array of values", function () {
                 expect(result.sort()).toEqual(["FOO", "BAR"].sort());
-            });
-
-            it("should update _itemCount", function () {
-                expect(iterable._itemCount).toBe(2);
             });
         });
 
@@ -204,10 +196,6 @@ describe("$data", function () {
                 expect(Settable.isIncludedBy(result)).toBeTruthy();
             });
 
-            it("should update _itemCount", function () {
-                expect(iterable._itemCount).toBe(2);
-            });
-
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
                     ['FOO', 'foo', iterable],
@@ -257,10 +245,6 @@ describe("$data", function () {
                 expect(Settable.isIncludedBy(result)).toBeTruthy();
             });
 
-            it("should update _itemCount", function () {
-                expect(iterable._itemCount).toBe(2);
-            });
-
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
                     ['FOO', 'foo', iterable],
@@ -286,10 +270,6 @@ describe("$data", function () {
                         return reduced + value;
                     });
                 result = iterable.reduce(callback, '');
-            });
-
-            it("should update _itemCount", function () {
-                expect(iterable._itemCount).toBe(2);
             });
 
             it("should pass item values & keys to callback", function () {
@@ -474,10 +454,6 @@ describe("$data", function () {
 
             it("should return instance of correct class", function () {
                 expect(Settable.isIncludedBy(result)).toBeTruthy();
-            });
-
-            it("should update _itemCount", function () {
-                expect(iterable._itemCount).toBe(2);
             });
 
             it("should pass item values & keys to callback", function () {
