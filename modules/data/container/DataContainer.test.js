@@ -4,14 +4,14 @@ var $assert = window['giant-assert'],
     $data = window['giant-data'];
 
 describe("$data", function () {
-    describe("Container", function () {
+    describe("DataContainer", function () {
         var data,
             container,
             result;
 
         beforeEach(function () {
             data = {};
-            container = $data.Container.create(data);
+            container = $data.DataContainer.create(data);
         });
 
         describe("create()", function () {
@@ -21,7 +21,7 @@ describe("$data", function () {
 
             describe("on missing arguments", function () {
                 beforeEach(function () {
-                    container = $data.Container.create();
+                    container = $data.DataContainer.create();
                 });
 
                 it("should set _data property", function () {
@@ -32,7 +32,7 @@ describe("$data", function () {
             describe("on invalid arguments", function () {
                 it("should throw", function () {
                     expect(function () {
-                        $data.Container.create("foo");
+                        $data.DataContainer.create("foo");
                     }).toThrow();
                 });
             });
@@ -84,7 +84,7 @@ describe("$data", function () {
 
             describe("of array data", function () {
                 beforeEach(function () {
-                    container = $data.Container.create([1, 2, 3]);
+                    container = $data.DataContainer.create([1, 2, 3]);
                     container.clear();
                 });
 

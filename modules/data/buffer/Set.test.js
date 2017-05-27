@@ -120,9 +120,9 @@
 //        });
 //    });
 //
-//    describe("Container", function () {
+//    describe("DataContainer", function () {
 //        describe("toSet()", function () {
-//            var buffer = $data.Container.create([1, 2, 3]);
+//            var buffer = $data.DataContainer.create([1, 2, 3]);
 //
 //            beforeEach(function () {
 //                result = buffer.toSet();

@@ -10,11 +10,11 @@
 /**
  * Manipulates key-value stores.
  * @class $data.Collection
- * @mixes $data.Iterable
+ * @mixes $data.KeyValueContainer
  * @extends $data.Lookup
  */
 exports.Collection = $oop.getClass('$data.Collection')
-    .include($oop.getClass('$data.Iterable'))
+    .include($oop.getClass('$data.KeyValueContainer'))
     .extend($oop.getClass('$data.Lookup'))
     .define(/** @lends $data.Collection# */{
         /**
@@ -89,8 +89,8 @@ exports.Collection = $oop.getClass('$data.Collection')
         }
     });
 
-$oop.getClass('$data.Container')
-    .delegate(/** @lends $data.Container# */{
+$oop.getClass('$data.DataContainer')
+    .delegate(/** @lends $data.DataContainer# */{
         /**
          * @returns {$data.Collection}
          */

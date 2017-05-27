@@ -11,13 +11,12 @@
  * Many to many key-value store, with string keys.
  * Fast key lookups and joins.
  * @class $data.Dictionary
- * @extends $data.Container
- * @implements $data.ItemContainer
- * @mixes $data.Iterable
+ * @extends $data.DataContainer
+ * @mixes $data.KeyValueContainer
  */
 exports.Dictionary = $oop.getClass('$data.Dictionary')
-    .extend($oop.getClass('$data.Container'))
-    .implement($oop.getClass('$data.ItemContainer'))
+    .extend($oop.getClass('$data.DataContainer'))
+    .implement($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.Dictionary# */{
         /**
          * @param {string} key
@@ -156,8 +155,8 @@ exports.Dictionary = $oop.getClass('$data.Dictionary')
         }
     });
 
-$oop.getClass('$data.Container')
-    .delegate(/** @lends $data.Container# */{
+$oop.getClass('$data.DataContainer')
+    .delegate(/** @lends $data.DataContainer# */{
         /**
          * @returns {$data.Dictionary}
          */

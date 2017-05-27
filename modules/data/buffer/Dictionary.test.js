@@ -156,7 +156,7 @@
 //        });
 //    });
 //
-//    describe("Container", function () {
+//    describe("DataContainer", function () {
 //        describe("toDictionary()", function () {
 //            var dictionary = $data.Dictionary.create([1, 2, 3]);
 //

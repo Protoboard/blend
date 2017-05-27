@@ -3,13 +3,18 @@
 
 /**
  * TODO: Rename to IterableContainerPartial
- * TODO: Break out forEachItem to new Iterable interface
- * @mixin $data.Iterable
- * @augments $data.Container
+ * TODO: Break out forEachItem to new KeyValueContainer interface
+ * @mixin $data.KeyValueContainer
+ * @augments $data.DataContainer
  */
-exports.Iterable = $oop.getClass('$data.Iterable')
-    .require($oop.getClass('$data.Container'))
-    .define(/** @lends $data.Iterable# */{
+exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
+    .require($oop.getClass('$data.DataContainer'))
+    .implement($oop.getClass('$data.KeyValueContainer'))
+    .define(/** @lends $data.KeyValueContainer# */{
+        keyType: undefined,
+
+        valueType: undefined,
+
         /**
          * @param {object|Array} data
          * @ignore
@@ -23,7 +28,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
 
         /**
          * Clones current instance.
-         * @returns {$data.Iterable}
+         * @returns {$data.KeyValueContainer}
          */
         clone: function clone() {
             var cloned = clone.returned;
@@ -33,12 +38,46 @@ exports.Iterable = $oop.getClass('$data.Iterable')
 
         /**
          * Resets state of current instance.
-         * @returns {$data.Iterable}
+         * @returns {$data.KeyValueContainer}
          */
         clear: function () {
             this._itemCount = 0;
             return this;
         },
+
+        /**
+         * Sets a key-value pair in the container.
+         * @method $data.KeyValueContainer#setItem
+         * @param {string} key
+         * @param {*} value
+         * @returns {$data.KeyValueContainer}
+         * @abstract
+         */
+
+        /**
+         * Deletes key-value pair from container.
+         * @method $data.KeyValueContainer#deleteItem
+         * @param {string} key
+         * @param {*} [value]
+         * @returns {$data.KeyValueContainer}
+         * @abstract
+         */
+
+        /**
+         * Retrieves value(s) for the specified key.
+         * @method $data.KeyValueContainer#getValue
+         * @param {string} key
+         * @returns {*}
+         * @abstract
+         */
+
+        /**
+         * @method $data.KeyValueContainer#forEachItem
+         * @param {function} callback
+         * @param {object} [context]
+         * @returns {$data.KeyValueContainer}
+         * @abstract
+         */
 
         /**
          * Retrieves the number of key-value pairs in the container.
@@ -59,7 +98,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
         /**
          * Retrieves a list of all keys in the container.
          * Result might contain duplicates, depending on host class.
-         * TODO: Should return Container based on key type
+         * TODO: Should return DataContainer based on key type
          * @returns {Array}
          */
         getKeys: function () {
@@ -79,7 +118,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
         /**
          * Retrieves a list of all values in the container.
          * Result might contain duplicates, depending on host class.
-         * TODO: Should return Container based on value type
+         * TODO: Should return DataContainer based on value type
          * @returns {Array}
          */
         getValues: function () {
@@ -121,13 +160,13 @@ exports.Iterable = $oop.getClass('$data.Iterable')
         },
 
         /**
-         * Converts current Container to the specified class.
-         * @param {$data.ItemContainer} ItemContainer
-         * @returns {$data.ItemContainer}
+         * Converts current DataContainer to the specified class.
+         * @param {$data.KeyValueContainer} KeyValueContainer
+         * @returns {$data.KeyValueContainer}
          */
-        toType: function (ItemContainer) {
+        toType: function (KeyValueContainer) {
             var itemCount = 0,
-                result = ItemContainer.create();
+                result = KeyValueContainer.create();
 
             this.forEachItem(function (value, key) {
                 result.setItem(key, value);
@@ -220,7 +259,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
          * @param {number} [argIndex=0] Index of item value among arguments
          * @param {...*} [arg] Rest of arguments to be passed to callback.
          * Item value will be spliced in at given index.
-         * @returns {$data.Iterable} Mapped collection
+         * @returns {$data.KeyValueContainer} Mapped collection
          */
         passEachValueTo: function (callback, context, argIndex, arg) {
             var args;
@@ -248,7 +287,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
          * @param {string} methodName Identifies method on item values
          * @param {...*} [arg] Rest of arguments to be passed to callback.
          * Item value will be spliced in at given index.
-         * @returns {$data.Iterable} Mapped collection
+         * @returns {$data.KeyValueContainer} Mapped collection
          */
         callOnEachValue: function (methodName, arg) {
             var args;
@@ -272,7 +311,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
          * @param {number} [argIndex] Index of item value among ctr arguments
          * @param {...*} [arg] Rest of arguments to be passed to callback.
          * Item value will be spliced in at given index.
-         * @returns {$data.Iterable} Mapped collection
+         * @returns {$data.KeyValueContainer} Mapped collection
          */
         createWithEachValue: function (Class, argIndex, arg) {
             var args;
@@ -299,7 +338,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
          * callback function and returns the result as a new collection.
          * @param {function} callback Filter function returning a boolean
          * @param {object} [context] Context for callback
-         * @returns {$data.Iterable} Filtered collection
+         * @returns {$data.KeyValueContainer} Filtered collection
          */
         filterBy: function (callback, context) {
             var itemCount = 0,
@@ -322,10 +361,10 @@ exports.Iterable = $oop.getClass('$data.Iterable')
         /**
          * Extracts items matching the specified keys and returns result
          * as a new collection.
-         * TODO: Blocked by ItemContainer#getValues and/or #joinTo
+         * TODO: Blocked by KeyValueContainer#getValues and/or #joinTo
          * TODO: Necessary? Use joining to a symmetric collection instead.
          * @param {string[]|number[]} keys Key strings to be matched
-         * @returns {$data.Iterable}
+         * @returns {$data.KeyValueContainer}
          */
         filterByKeys: function (keys) {
 
@@ -335,7 +374,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
          * Extracts items matching the specified key prefix and
          * returns result as a new collection.
          * @param {string} prefix Key prefix to be matched
-         * @returns {$data.Iterable} Filtered collection
+         * @returns {$data.KeyValueContainer} Filtered collection
          */
         filterByKeyPrefix: function (prefix) {
             var prefixLength = prefix.length;
@@ -346,7 +385,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
 
         /**
          * @param {string} prefix
-         * @returns {$data.Iterable}
+         * @returns {$data.KeyValueContainer}
          */
         filterByPrefix: function (prefix) {
             var prefixLength = prefix.length;
@@ -359,7 +398,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
          * Extracts items matching the specified key regular expression and
          * returns result as a new collection.
          * @param {RegExp} regExp Regular expression to be matched by keys
-         * @returns {$data.Iterable} Filtered collection
+         * @returns {$data.KeyValueContainer} Filtered collection
          */
         filterByKeyRegExp: function (regExp) {
             return this.filterBy(function (value, key) {
@@ -369,7 +408,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
 
         /**
          * @param {RegExp} regExp
-         * @returns {$data.Iterable}
+         * @returns {$data.KeyValueContainer}
          */
         filterByRegExp: function (regExp) {
             return this.filterBy(function (value) {
@@ -385,7 +424,7 @@ exports.Iterable = $oop.getClass('$data.Iterable')
          * to be matched by item values. When string, `filterByType` will
          * check using `typeof` operator, when function, `instanceof`,
          * when object, `.isPrototypeOf()`, when a class, `.isIncludedBy()`.
-         * @returns {$data.Iterable} Filtered collection
+         * @returns {$data.KeyValueContainer} Filtered collection
          */
         filterByType: function (type) {
             switch (true) {

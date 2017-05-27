@@ -2,23 +2,24 @@
 "use strict";
 
 /**
- * @function $data.Container.create
+ * @function $data.DataContainer.create
  * @param {object|Array} [data]
- * @returns {$data.Container}
+ * @returns {$data.DataContainer}
  */
 
 /**
- * Base for any data class that maintains a data buffer.
- * @class $data.Container
+ * Maintains data and provides access to it. Supports life cycle, clearing
+ * and cloning.
+ * @class $data.DataContainer
  * @implements $utils.Destroyable
  * @implements $data.Clearable
  * @mixes $utils.Cloneable
  */
-exports.Container = $oop.getClass('$data.Container')
+exports.DataContainer = $oop.getClass('$data.DataContainer')
     .implement($oop.getClass('$utils.Destroyable'))
     .implement($oop.getClass('$data.Clearable'))
     .include($oop.getClass('$utils.Cloneable'))
-    .define(/** @lends $data.Container# */{
+    .define(/** @lends $data.DataContainer# */{
         /**
          * @param {object|Array} [data]
          * @ignore
@@ -35,7 +36,7 @@ exports.Container = $oop.getClass('$data.Container')
 
         /**
          * @inheritDoc
-         * @returns {$data.Container}
+         * @returns {$data.DataContainer}
          */
         destroy: function () {
             this.clear();
@@ -44,7 +45,7 @@ exports.Container = $oop.getClass('$data.Container')
 
         /**
          * @inheritDoc
-         * @returns {$data.Container}
+         * @returns {$data.DataContainer}
          */
         clone: function clone() {
             var cloned = clone.returned;
@@ -54,7 +55,7 @@ exports.Container = $oop.getClass('$data.Container')
 
         /**
          * Clears buffer data.
-         * @returns {$data.Container}
+         * @returns {$data.DataContainer}
          */
         clear: function () {
             if (this._data instanceof Array) {
@@ -84,6 +85,7 @@ exports.Container = $oop.getClass('$data.Container')
         },
 
         /**
+         * TODO: Move to Passable?
          * @param {function} callback
          * @param {function} [context]
          * @param {number} [argIndex=0]

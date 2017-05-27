@@ -11,12 +11,12 @@
  * 1 to 1 key-value store.
  * TODO: Merge into Collection?
  * @class $data.Lookup
- * @extends $data.Container
- * @implements $data.ItemContainer
+ * @extends $data.DataContainer
+ * @mixes $data.KeyValueContainer
  */
 exports.Lookup = $oop.getClass('$data.Lookup')
-    .extend($oop.getClass('$data.Container'))
-    .implement($oop.getClass('$data.ItemContainer'))
+    .extend($oop.getClass('$data.DataContainer'))
+    .implement($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.Lookup# */{
         /**
          * @param {string} key
@@ -67,8 +67,8 @@ exports.Lookup = $oop.getClass('$data.Lookup')
         }
     });
 
-$oop.getClass('$data.Container')
-    .delegate(/** @lends $data.Container# */{
+$oop.getClass('$data.DataContainer')
+    .delegate(/** @lends $data.DataContainer# */{
         /**
          * @returns {$data.Lookup}
          */

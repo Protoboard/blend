@@ -9,9 +9,9 @@ describe("$data", function () {
         $oop.Class.classLookup = {};
     });
 
-    describe("Iterable", function () {
+    describe("KeyValueContainer", function () {
         var data,
-            Iterable,
+            KeyValueContainer,
             iterable,
             Settable,
             result;
@@ -22,9 +22,9 @@ describe("$data", function () {
                 bar: "BAR"
             };
 
-            Iterable = $oop.getClass('Iterable')
-                .extend($data.Container)
-                .include($data.Iterable)
+            KeyValueContainer = $oop.getClass('KeyValueContainer')
+                .extend($data.DataContainer)
+                .include($data.KeyValueContainer)
                 .define({
                     forEachItem: function (callback) {
                         var data = this._data,
@@ -38,14 +38,14 @@ describe("$data", function () {
                 });
 
             Settable = $oop.getClass('Settable')
-                .extend($data.Container)
+                .extend($data.DataContainer)
                 .define({
                     setItem: function (key, value) {
                         this._data[key] = value;
                     }
                 });
 
-            iterable = Iterable.create(data);
+            iterable = KeyValueContainer.create(data);
         });
 
         describe("create()", function () {
@@ -56,7 +56,7 @@ describe("$data", function () {
 
             describe("on missing arguments", function () {
                 it("should set _itemCount property to 0", function () {
-                    iterable = Iterable.create();
+                    iterable = KeyValueContainer.create();
                     expect(iterable._itemCount).toBe(0);
                 });
             });
@@ -156,11 +156,11 @@ describe("$data", function () {
         });
 
         describe("toType()", function () {
-            var ItemContainer;
+            var KeyValueContainer;
 
             beforeEach(function () {
-                ItemContainer = $oop.getClass('ItemContainer')
-                    .extend($data.Container)
+                KeyValueContainer = $oop.getClass('KeyValueContainer')
+                    .extend($data.DataContainer)
                     .define({
                         init: function (data) {
                             this._data = data || [];
@@ -171,11 +171,11 @@ describe("$data", function () {
                         }
                     });
 
-                result = iterable.toType(ItemContainer);
+                result = iterable.toType(KeyValueContainer);
             });
 
             it("should return instance of specified class", function () {
-                expect(ItemContainer.isIncludedBy(result)).toBeTruthy();
+                expect(KeyValueContainer.isIncludedBy(result)).toBeTruthy();
             });
 
             it("should set contents", function () {
@@ -225,7 +225,7 @@ describe("$data", function () {
 
             describe("for array buffer", function () {
                 beforeEach(function () {
-                    iterable = Iterable.create([
+                    iterable = KeyValueContainer.create([
                         'foo', 'bar', 'baz', 'quux'
                     ]);
                     result = iterable.mapValues(function (value) {
@@ -496,7 +496,7 @@ describe("$data", function () {
 
             describe("for array buffer", function () {
                 beforeEach(function () {
-                    iterable = Iterable.create([
+                    iterable = KeyValueContainer.create([
                         'foo', 'bar', 'baz', 'quux'
                     ]);
                     result = iterable.filterBy(function (value) {
@@ -568,11 +568,11 @@ describe("$data", function () {
 
         describe("filterByType()", function () {
             var object = {},
-                container = $data.Container.create();
+                container = $data.DataContainer.create();
 
             beforeEach(function () {
                 spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                iterable = Iterable.create({
+                iterable = KeyValueContainer.create({
                     foo: "FOO",
                     baz: object,
                     quux: container
