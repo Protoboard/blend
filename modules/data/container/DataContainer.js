@@ -25,7 +25,7 @@ exports.DataContainer = $oop.getClass('$data.DataContainer')
          * @ignore
          */
         init: function (data) {
-            $assert.isObjectOptional(data, "Invalid buffer data");
+            $assert.isObjectOptional(data, "Invalid data buffer");
 
             /**
              * @type {Object|Array}

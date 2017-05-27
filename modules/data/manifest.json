@@ -7,6 +7,8 @@
       "container/KeyValueContainer.js",
       "key-value/Collection.js",
       "key-value/Dictionary.js",
+      "key-value/StringCollection.js",
+      "key-value/StringDictionary.js",
       "utils/Clearable.js",
       "utils/data-utils.js"
     ]

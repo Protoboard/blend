@@ -8,13 +8,13 @@ describe("$data", function () {
         dictionary,
         result;
 
-    describe("Dictionary", function () {
+    describe("StringDictionary", function () {
         beforeEach(function () {
             data = {
-                foo: ["FOO"],
-                bar: ["BAR", "bar"]
+                foo: {"FOO": 1},
+                bar: {"BAR": 1, "bar": 1}
             };
-            dictionary = $data.Dictionary.create(data);
+            dictionary = $data.StringDictionary.create(data);
             dictionary._itemCount = 3;
         });
 
@@ -29,9 +29,9 @@ describe("$data", function () {
 
             it("should add item", function () {
                 expect(dictionary._data).toEqual({
-                    foo: ["FOO"],
-                    bar: ["BAR", "bar"],
-                    baz: ["BAZ"]
+                    foo: {FOO: 1},
+                    bar: {BAR: 1, bar: 1},
+                    baz: {BAZ: 1}
                 });
             });
 
@@ -46,9 +46,9 @@ describe("$data", function () {
 
                 it("should add to array", function () {
                     expect(dictionary._data).toEqual({
-                        foo: ["FOO", "foo"],
-                        bar: ["BAR", "bar"],
-                        baz: ["BAZ"]
+                        foo: {FOO: 1, foo: 1},
+                        bar: {BAR: 1, bar: 1},
+                        baz: {BAZ: 1}
                     });
                 });
 
@@ -69,8 +69,8 @@ describe("$data", function () {
 
             it("should remove item", function () {
                 expect(dictionary._data).toEqual({
-                    foo: ["FOO"],
-                    bar: ["BAR"]
+                    foo: {"FOO": 1},
+                    bar: {"BAR": 1}
                 });
             });
 
@@ -85,7 +85,7 @@ describe("$data", function () {
 
                 it("should remove item", function () {
                     expect(dictionary._data).toEqual({
-                        bar: ["BAR"]
+                        bar: {"BAR": 1}
                     });
                 });
             });
@@ -98,8 +98,8 @@ describe("$data", function () {
 
                 it("should not change data", function () {
                     expect(dictionary._data).toEqual({
-                        foo: ["FOO"],
-                        bar: ["BAR"]
+                        foo: {"FOO": 1},
+                        bar: {"BAR": 1}
                     });
                 });
             });
@@ -139,15 +139,16 @@ describe("$data", function () {
     });
 
     describe("DataContainer", function () {
-        describe("toDictionary()", function () {
+        describe("toStringDictionary()", function () {
             var container = $data.DataContainer.create([1, 2, 3]);
 
             beforeEach(function () {
-                result = container.toDictionary();
+                result = container.toStringDictionary();
             });
 
-            it("should return a Dictionary instance", function () {
-                expect($data.Dictionary.isIncludedBy(result)).toBeTruthy();
+            it("should return a StringDictionary instance", function () {
+                expect($data.StringDictionary.isIncludedBy(result))
+                    .toBeTruthy();
             });
 
             it("should set data buffer", function () {
@@ -160,15 +161,15 @@ describe("$data", function () {
 describe("Array", function () {
     var result;
 
-    describe("toDictionary()", function () {
-        var array = [1, 2, 3];
+    describe("toStringDictionary()", function () {
+        var array = ['a', 'b', 'c'];
 
         beforeEach(function () {
-            result = array.toDictionary();
+            result = array.toStringDictionary();
         });
 
-        it("should return a Dictionary instance", function () {
-            expect($data.Dictionary.isIncludedBy(result)).toBeTruthy();
+        it("should return a StringDictionary instance", function () {
+            expect($data.StringDictionary.isIncludedBy(result)).toBeTruthy();
         });
 
         it("should set data buffer", function () {
