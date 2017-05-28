@@ -4,33 +4,32 @@ var $oop = window['giant-oop'],
     $data = window['giant-data'];
 
 describe("$data", function () {
-    var result;
+    var Collection,
+        StringCollection,
+        Dictionary,
+        StringDictionary,
+        PairList,
+        StringPairList,
+        result;
+
+    beforeEach(function () {
+        $oop.Class.classLookup = {};
+
+        Collection = $oop.getClass('Collection')
+            .extend($data.Collection);
+        StringCollection = $oop.getClass('StringCollection')
+            .extend($data.StringCollection);
+        Dictionary = $oop.getClass('Dictionary')
+            .extend($data.Dictionary);
+        StringDictionary = $oop.getClass('StringDictionary')
+            .extend($data.StringDictionary);
+        PairList = $oop.getClass('PairList')
+            .extend($data.PairList);
+        StringPairList = $oop.getClass('StringPairList')
+            .extend($data.StringPairList);
+    });
 
     describe("getMapResultClass()", function () {
-        var Collection,
-            StringCollection,
-            Dictionary,
-            StringDictionary,
-            PairList,
-            StringPairList;
-
-        beforeEach(function () {
-            $oop.Class.classLookup = {};
-
-            Collection = $oop.getClass('Collection')
-                .extend($data.Collection);
-            StringCollection = $oop.getClass('StringCollection')
-                .extend($data.StringCollection);
-            Dictionary = $oop.getClass('Dictionary')
-                .extend($data.Dictionary);
-            StringDictionary = $oop.getClass('StringDictionary')
-                .extend($data.StringDictionary);
-            PairList = $oop.getClass('PairList')
-                .extend($data.PairList);
-            StringPairList = $oop.getClass('StringPairList')
-                .extend($data.StringPairList);
-        });
-
         describe("for values", function () {
             describe("to string", function () {
                 it("should return STRING value variant", function () {
@@ -129,10 +128,50 @@ describe("$data", function () {
     });
 
     describe("getSwapResultClass()", function () {
-        it("should return swap result class");
+        it("should return swap result class", function () {
+            expect($data.getSwapResultClass(Collection))
+                .toBe($data.StringPairList);
+            expect($data.getSwapResultClass(StringCollection))
+                .toBe($data.StringDictionary);
+            expect($data.getSwapResultClass(Dictionary))
+                .toBe($data.StringPairList);
+            expect($data.getSwapResultClass(StringDictionary))
+                .toBe($data.StringDictionary);
+            expect($data.getSwapResultClass(PairList))
+                .toBe($data.PairList);
+            expect($data.getSwapResultClass(StringPairList))
+                .toBe($data.Dictionary);
+        });
     });
 
     describe("getJoinResultClass()", function () {
-        it("should return join result class");
+        it("should return join result class", function () {
+            expect($data.getJoinResultClass(StringCollection, Collection))
+                .toBe($data.Collection);
+            expect($data.getJoinResultClass(StringCollection, StringCollection))
+                .toBe($data.StringCollection);
+            expect($data.getJoinResultClass(StringCollection, Dictionary))
+                .toBe($data.Dictionary);
+            expect($data.getJoinResultClass(StringCollection, StringDictionary))
+                .toBe($data.StringDictionary);
+
+            expect($data.getJoinResultClass(StringDictionary, Collection))
+                .toBe($data.Dictionary);
+            expect($data.getJoinResultClass(StringDictionary, StringCollection))
+                .toBe($data.StringDictionary);
+            expect($data.getJoinResultClass(StringDictionary, Dictionary))
+                .toBe($data.Dictionary);
+            expect($data.getJoinResultClass(StringDictionary, StringDictionary))
+                .toBe($data.StringDictionary);
+
+            expect($data.getJoinResultClass(StringPairList, Collection))
+                .toBe($data.PairList);
+            expect($data.getJoinResultClass(StringPairList, StringCollection))
+                .toBe($data.StringPairList);
+            expect($data.getJoinResultClass(StringPairList, Dictionary))
+                .toBe($data.PairList);
+            expect($data.getJoinResultClass(StringPairList, StringDictionary))
+                .toBe($data.StringPairList);
+        });
     });
 });

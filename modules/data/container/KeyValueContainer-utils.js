@@ -2,89 +2,88 @@
 "use strict";
 
 $oop.copyProperties(exports, /** @lends $data */{
-    /** @constant */
+    /**
+     * Maps all `KeyValueContainer`-based classes based on their distinctive
+     * properties: *key type*, *value type*, and *key multiplicity*.
+     * @constant
+     */
     CLASS_BY_TYPE: {
-        string: {
-            string: {
+        string: { // $data.KEY_TYPE_STRING
+            string: { // $data.VALUE_TYPE_STRING
                 unique: $oop.getClass('$data.StringCollection'),
                 undefined: $oop.getClass('$data.StringDictionary')
             },
-            undefined: {
+            undefined: { // $data.VALUE_TYPE_ANY
                 unique: $oop.getClass('$data.Collection'),
                 undefined: $oop.getClass('$data.Dictionary')
             }
         },
-        undefined: {
-            string: {
+        undefined: { // $data.KEY_TYPE_ANY
+            string: { // $data.VALUE_TYPE_STRING
                 unique: $oop.getClass('$data.StringPairList'),
                 undefined: $oop.getClass('$data.StringPairList')
             },
-            undefined: {
+            undefined: { // $data.VALUE_TYPE_ANY
                 unique: $oop.getClass('$data.PairList'),
                 undefined: $oop.getClass('$data.PairList')
             }
         }
     },
 
-    /** @constant */
-    SWAP_RESULT_CLASS: {
-        '$data.Collection': $oop.getClass('$data.StringPairList'),
-        '$data.StringCollection': $oop.getClass('$data.StringDictionary'),
-        '$data.Dictionary': $oop.getClass('$data.StringPairList'),
-        '$data.StringDictionary': $oop.getClass('$data.StringDictionary'),
-        '$data.PairList': $oop.getClass('$data.PairList'),
-        '$data.StringPairList': $oop.getClass('$data.StringDictionary')
-    },
-
-    /** @constant */
-    JOIN_RESULT_CLASS: {
-        '$data.StringCollection': {
-            '$data.Collection': $oop.getClass('$data.Collection'),
-            '$data.StringCollection': $oop.getClass('$data.StringCollection'),
-            '$data.Dictionary': $oop.getClass('$data.Dictionary'),
-            '$data.StringDictionary': $oop.getClass('$data.StringDictionary')
-        },
-        '$data.StringDictionary': {
-            '$data.Collection': $oop.getClass('$data.Dictionary'),
-            '$data.StringCollection': $oop.getClass('$data.StringDictionary'),
-            '$data.Dictionary': $oop.getClass('$data.Dictionary'),
-            '$data.StringDictionary': $oop.getClass('$data.StringDictionary')
-        },
-        '$data.StringPairList': {
-            '$data.Collection': $oop.getClass('$data.PairList'),
-            '$data.StringCollection': $oop.getClass('$data.StringPairList'),
-            '$data.Dictionary': $oop.getClass('$data.PairList'),
-            '$data.StringDictionary': $oop.getClass('$data.StringPairList')
-        }
-    },
-
     /**
-     * @param {$data.KeyValueContainer} SourceClass
-     * @param {string} [keyType]
-     * @param {string} [valueType]
+     * Determines what `KeyValueContainer` class will be the result of
+     * mapping the specified container class using the specified types.
+     * @param {$data.KeyValueContainer} SourceClass KeyValueContainer class
+     * to be mapped.
+     * @param {string} [keyType] Key type of result. Defaults to the
+     * source's key type.
+     * @param {string} [valueType] Value type of result. Default to the
+     * source's value type.
      * @returns {$data.KeyValueContainer}
      */
     getMapResultClass: function (SourceClass, keyType, valueType) {
-        keyType = keyType || SourceClass.keyType;
-        valueType = valueType || SourceClass.valueType;
-
-        return exports.CLASS_BY_TYPE[keyType][valueType][SourceClass.keyMultiplicity];
+        return exports.CLASS_BY_TYPE
+            [keyType || SourceClass.keyType]
+            [valueType || SourceClass.valueType]
+            [SourceClass.keyMultiplicity];
     },
 
     /**
-     * @param {$oop.Class} SourceClass
-     * @returns {$oop.Class}
+     * Determines what `KeyValueContainer` class will be the result of
+     * swapping the specified `KeyValueContainer` class.
+     * @param {$data.KeyValueContainer} SourceClass KeyValueContainer class
+     * the keys & values of which to be swapped.
+     * @returns {$data.KeyValueContainer}
      */
     getSwapResultClass: function (SourceClass) {
-        return exports.SWAP_RESULT_CLASS[SourceClass.__classId];
+        return exports.CLASS_BY_TYPE
+            [SourceClass.valueType] // value type will be the new key type
+            [SourceClass.keyType]   // key type will be the new value type
+            [exports.KEY_MUL_ANY];  // we can't know if keys remain unique
     },
 
     /**
-     * @param {$oop.Class} LeftClass
-     * @param {$oop.Class} RightClass
-     * @returns {$oop.Class}
+     * Determines what `KeyValueContainer` class will be the result of joining
+     * `LeftClass` & `RightClass`.
+     * @param {$data.KeyValueContainer} LeftClass Class of left operand in join
+     * @param {$data.KeyValueContainer} RightClass Class of right operand in
+     * join
+     * @returns {$data.KeyValueContainer}
      */
     getJoinResultClass: function (LeftClass, RightClass) {
-        return exports.SWAP_RESULT_CLASS[LeftClass.__classId][RightClass.__classId];
+        var keyMultiplicity;
+
+        if (LeftClass.valueType === exports.VALUE_TYPE_STRING &&
+            RightClass.keyType === exports.KEY_TYPE_STRING
+        ) {
+            keyMultiplicity = LeftClass.keyMultiplicity === RightClass.keyMultiplicity ?
+                LeftClass.keyMultiplicity :
+                exports.KEY_MUL_ANY;
+
+            return exports.CLASS_BY_TYPE
+                [LeftClass.keyType]
+                [RightClass.valueType]
+                [keyMultiplicity];
+        }
     }
 });
