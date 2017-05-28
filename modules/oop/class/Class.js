@@ -1,11 +1,11 @@
-/* global $assert, hOP */
+/* global $assert, $oop, hOP */
 "use strict";
 
 /**
  * Composable class.
  * @class $oop.Class
  */
-exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */{
+$oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     /**
      * All classes indexed by class ID.
      * @memberOf $oop.Class
@@ -28,7 +28,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
 
         if (!Class) {
             // class is not initialized yet
-            Class = exports.createObject(exports.Class, /** @lends $oop.Class# */{
+            Class = $oop.createObject($oop.Class, /** @lends $oop.Class# */{
                 /**
                  * Identifies class.
                  * @type {string}
@@ -258,7 +258,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @private
      */
     _addPropertiesToClass: function (members) {
-        var Class = exports.Class,
+        var Class = $oop.Class,
             that = this;
 
         Object.getOwnPropertyNames(members)
@@ -1041,7 +1041,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {boolean}
      */
     isImplementedBy: function (Class) {
-        return exports.Class.isPrototypeOf(Class) &&
+        return $oop.Class.isPrototypeOf(Class) &&
             Class.implements(this);
     },
 
@@ -1065,7 +1065,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {boolean}
      */
     isIncludedBy: function (Class) {
-        return exports.Class.isPrototypeOf(Class) &&
+        return $oop.Class.isPrototypeOf(Class) &&
             Class.includes(this);
     },
 
@@ -1086,7 +1086,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
      * @returns {boolean}
      */
     isRequiredBy: function (Class) {
-        return exports.Class.isPrototypeOf(Class) &&
+        return $oop.Class.isPrototypeOf(Class) &&
             Class.requires(this);
     },
 
@@ -1128,7 +1128,7 @@ exports.Class = exports.createObject(Object.prototype, /** @lends $oop.Class# */
  */
 $assert.isClass = function (expr, message) {
     return $assert.assert(
-        exports.Class.isPrototypeOf(expr), message);
+        $oop.Class.isPrototypeOf(expr), message);
 };
 
 /**
@@ -1139,5 +1139,5 @@ $assert.isClass = function (expr, message) {
 $assert.isClassOptional = function (expr, message) {
     return $assert.assert(
         expr === undefined ||
-        exports.Class.isPrototypeOf(expr), message);
+        $oop.Class.isPrototypeOf(expr), message);
 };

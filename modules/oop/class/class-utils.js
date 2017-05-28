@@ -1,4 +1,4 @@
-/* global $assert */
+/* global $assert, $oop */
 "use strict";
 
 /**
@@ -9,7 +9,7 @@
  * @param {object} members
  * @param {object} [propertyDescriptor]
  */
-exports.copyProperties = function (target, members, propertyDescriptor) {
+$oop.copyProperties = function (target, members, propertyDescriptor) {
     switch (target) {
     case Array.prototype:
     case Date.prototype:
@@ -65,9 +65,9 @@ exports.copyProperties = function (target, members, propertyDescriptor) {
  * @returns {Object}
  * @ignore
  */
-exports.createObject = function (base, members, propertyDescriptor) {
+$oop.createObject = function (base, members, propertyDescriptor) {
     var result = Object.create(base || Object.prototype);
-    exports.copyProperties(result, members, propertyDescriptor);
+    $oop.copyProperties(result, members, propertyDescriptor);
     return result;
 };
 
@@ -76,6 +76,6 @@ exports.createObject = function (base, members, propertyDescriptor) {
  * @param {string} classId
  * @returns {$oop.Class}
  */
-exports.getClass = function (classId) {
-    return exports.Class.getClass(classId);
+$oop.getClass = function (classId) {
+    return $oop.Class.getClass(classId);
 };
