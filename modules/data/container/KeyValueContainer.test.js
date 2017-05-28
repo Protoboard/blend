@@ -12,7 +12,7 @@ describe("$data", function () {
     describe("KeyValueContainer", function () {
         var data,
             KeyValueContainer,
-            iterable,
+            keyValueContainer,
             Settable,
             result;
 
@@ -26,6 +26,9 @@ describe("$data", function () {
                 .extend($data.DataContainer)
                 .include($data.KeyValueContainer)
                 .define({
+                    setItem: function (key, value) {
+                        this._data[key] = value;
+                    },
                     forEachItem: function (callback) {
                         var data = this._data,
                             keys = Object.keys(this._data),
@@ -45,19 +48,20 @@ describe("$data", function () {
                     }
                 });
 
-            iterable = KeyValueContainer.create(data);
+            keyValueContainer = KeyValueContainer.create(data);
         });
 
         describe("create()", function () {
             it("should initialize _itemCount property", function () {
-                expect(iterable.hasOwnProperty('_itemCount')).toBeTruthy();
-                expect(iterable._itemCount).toBeUndefined();
+                expect(keyValueContainer.hasOwnProperty('_itemCount'))
+                    .toBeTruthy();
+                expect(keyValueContainer._itemCount).toBeUndefined();
             });
 
             describe("on missing arguments", function () {
                 it("should set _itemCount property to 0", function () {
-                    iterable = KeyValueContainer.create();
-                    expect(iterable._itemCount).toBe(0);
+                    keyValueContainer = KeyValueContainer.create();
+                    expect(keyValueContainer._itemCount).toBe(0);
                 });
             });
         });
@@ -66,12 +70,12 @@ describe("$data", function () {
             var clonedIterable;
 
             beforeEach(function () {
-                iterable._itemCount = 2;
-                clonedIterable = iterable.clone();
+                keyValueContainer._itemCount = 2;
+                clonedIterable = keyValueContainer.clone();
             });
 
             it("should return cloned instance", function () {
-                expect(clonedIterable).not.toBe(iterable);
+                expect(clonedIterable).not.toBe(keyValueContainer);
             });
 
             it("should set _itemCount", function () {
@@ -81,21 +85,21 @@ describe("$data", function () {
 
         describe("clear()", function () {
             beforeEach(function () {
-                result = iterable.clear();
+                result = keyValueContainer.clear();
             });
 
             it("should return self", function () {
-                expect(result).toBe(iterable);
+                expect(result).toBe(keyValueContainer);
             });
 
             it("should reset _itemCount", function () {
-                expect(iterable._itemCount).toBe(0);
+                expect(keyValueContainer._itemCount).toBe(0);
             });
         });
 
         describe("getItemCount()", function () {
             beforeEach(function () {
-                result = iterable.getItemCount();
+                result = keyValueContainer.getItemCount();
             });
 
             it("should return key count", function () {
@@ -103,13 +107,13 @@ describe("$data", function () {
             });
 
             it("should set _itemCount", function () {
-                expect(iterable._itemCount).toBe(2);
+                expect(keyValueContainer._itemCount).toBe(2);
             });
         });
 
         describe("getKeys()", function () {
             beforeEach(function () {
-                result = iterable.getKeys();
+                result = keyValueContainer.getKeys();
             });
 
             it("should return array with keys", function () {
@@ -119,7 +123,7 @@ describe("$data", function () {
 
         describe("getValues()", function () {
             beforeEach(function () {
-                result = iterable.getValues();
+                result = keyValueContainer.getValues();
             });
 
             it("should retrieve array of values", function () {
@@ -129,7 +133,7 @@ describe("$data", function () {
 
         describe("getFirstKey()", function () {
             beforeEach(function () {
-                result = iterable.getFirstKey();
+                result = keyValueContainer.getFirstKey();
             });
 
             it("should return one of the keys", function () {
@@ -139,7 +143,7 @@ describe("$data", function () {
 
         describe("getFirstValue()", function () {
             beforeEach(function () {
-                result = iterable.getFirstValue();
+                result = keyValueContainer.getFirstValue();
             });
 
             it("should return one of the values", function () {
@@ -163,7 +167,7 @@ describe("$data", function () {
                         }
                     });
 
-                result = iterable.toType(KeyValueContainer);
+                result = keyValueContainer.toType(KeyValueContainer);
             });
 
             it("should return instance of specified class", function () {
@@ -189,7 +193,7 @@ describe("$data", function () {
 
                 spyOn($data, 'getMapResultClass').and.returnValue(Settable);
 
-                result = iterable.mapValues(callback);
+                result = keyValueContainer.mapValues(callback);
             });
 
             it("should return instance of correct class", function () {
@@ -198,13 +202,13 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['FOO', 'foo', iterable],
-                    ['BAR', 'bar', iterable]
+                    ['FOO', 'foo', keyValueContainer],
+                    ['BAR', 'bar', keyValueContainer]
                 ]);
             });
 
             it("should return mapped collection", function () {
-                expect(result).not.toBe(iterable);
+                expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: "_FOO",
                     bar: "_BAR"
@@ -213,10 +217,10 @@ describe("$data", function () {
 
             describe("for array buffer", function () {
                 beforeEach(function () {
-                    iterable = KeyValueContainer.create([
+                    keyValueContainer = KeyValueContainer.create([
                         'foo', 'bar', 'baz', 'quux'
                     ]);
-                    result = iterable.mapValues(function (value) {
+                    result = keyValueContainer.mapValues(function (value) {
                         return value.toLowerCase();
                     });
                 });
@@ -238,7 +242,7 @@ describe("$data", function () {
 
                 spyOn($data, 'getMapResultClass').and.returnValue(Settable);
 
-                result = iterable.mapKeys(callback);
+                result = keyValueContainer.mapKeys(callback);
             });
 
             it("should return instance of correct class", function () {
@@ -247,13 +251,13 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['FOO', 'foo', iterable],
-                    ['BAR', 'bar', iterable]
+                    ['FOO', 'foo', keyValueContainer],
+                    ['BAR', 'bar', keyValueContainer]
                 ]);
             });
 
             it("should return mapped collection", function () {
-                expect(result).not.toBe(iterable);
+                expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     FOO: "FOO",
                     BAR: "BAR"
@@ -269,13 +273,13 @@ describe("$data", function () {
                     function (reduced, value) {
                         return reduced + value;
                     });
-                result = iterable.reduce(callback, '');
+                result = keyValueContainer.reduce(callback, '');
             });
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['', 'FOO', 'foo', iterable],
-                    ['FOO', 'BAR', 'bar', iterable]
+                    ['', 'FOO', 'foo', keyValueContainer],
+                    ['FOO', 'BAR', 'bar', keyValueContainer]
                 ]);
             });
 
@@ -295,7 +299,7 @@ describe("$data", function () {
 
                 spyOn($data, 'getMapResultClass').and.returnValue(Settable);
 
-                result = iterable.passEachValueTo(callback, null, 1, 'baz');
+                result = keyValueContainer.passEachValueTo(callback, null, 1, 'baz');
             });
 
             it("should pass arguments to callback", function () {
@@ -318,7 +322,7 @@ describe("$data", function () {
                         .callFake(function (value) {
                             return value.toLowerCase();
                         });
-                    result = iterable.passEachValueTo(callback);
+                    result = keyValueContainer.passEachValueTo(callback);
                 });
 
                 it("should pass values to callback", function () {
@@ -341,7 +345,7 @@ describe("$data", function () {
             beforeEach(function () {
                 spyOn(String.prototype, 'split').and.callThrough();
                 spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                result = iterable.callOnEachValue('split', '');
+                result = keyValueContainer.callOnEachValue('split', '');
             });
 
             it("should pass arguments to method", function () {
@@ -361,14 +365,15 @@ describe("$data", function () {
             describe("on no extra arguments", function () {
                 beforeEach(function () {
                     spyOn(String.prototype, 'toLowerCase').and.callThrough();
-                    result = iterable.callOnEachValue('toLowerCase');
+                    result = keyValueContainer.callOnEachValue('toLowerCase');
                 });
 
                 it("should pass arguments to method", function () {
-                    expect(String.prototype.toLowerCase.calls.allArgs()).toEqual([
-                        [],
-                        []
-                    ]);
+                    expect(String.prototype.toLowerCase.calls.allArgs())
+                        .toEqual([
+                            [],
+                            []
+                        ]);
                 });
 
                 it("should return mapped collection", function () {
@@ -393,7 +398,7 @@ describe("$data", function () {
                     });
                 spyOn(Class, 'create').and.callThrough();
                 spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                result = iterable.createWithEachValue(Class, 1, 'baz');
+                result = keyValueContainer.createWithEachValue(Class, 1, 'baz');
             });
 
             it("should pass values to constructor", function () {
@@ -421,7 +426,7 @@ describe("$data", function () {
                             }
                         });
                     spyOn(Class2, 'create').and.callThrough();
-                    result = iterable.createWithEachValue(Class2);
+                    result = keyValueContainer.createWithEachValue(Class2);
                 });
 
                 it("should pass values to constructor", function () {
@@ -445,26 +450,25 @@ describe("$data", function () {
 
             beforeEach(function () {
                 callback = jasmine.createSpy().and
-                    .callFake(function (value, key) {
+                    .callFake(function (value) {
                         return value[0] === 'F';
                     });
-                spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                result = iterable.filterBy(callback);
+                result = keyValueContainer.filterBy(callback);
             });
 
             it("should return instance of correct class", function () {
-                expect(Settable.isIncludedBy(result)).toBeTruthy();
+                expect(KeyValueContainer.isIncludedBy(result)).toBeTruthy();
             });
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ["FOO", 'foo', iterable],
-                    ["BAR", 'bar', iterable]
+                    ["FOO", 'foo', keyValueContainer],
+                    ["BAR", 'bar', keyValueContainer]
                 ]);
             });
 
             it("should return filtered collection", function () {
-                expect(result).not.toBe(iterable);
+                expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: "FOO"
                 });
@@ -472,10 +476,10 @@ describe("$data", function () {
 
             describe("for array buffer", function () {
                 beforeEach(function () {
-                    iterable = KeyValueContainer.create([
+                    keyValueContainer = KeyValueContainer.create([
                         'foo', 'bar', 'baz', 'quux'
                     ]);
-                    result = iterable.filterBy(function (value) {
+                    result = keyValueContainer.filterBy(function (value) {
                         return value.length > 3;
                     });
                 });
@@ -488,12 +492,11 @@ describe("$data", function () {
 
         describe("filterByKeyPrefix()", function () {
             beforeEach(function () {
-                spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                result = iterable.filterByKeyPrefix('f');
+                result = keyValueContainer.filterByKeyPrefix('f');
             });
 
             it("should return filtered iterable", function () {
-                expect(result).not.toBe(iterable);
+                expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: 'FOO'
                 });
@@ -502,12 +505,11 @@ describe("$data", function () {
 
         describe("filterByPrefix()", function () {
             beforeEach(function () {
-                spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                result = iterable.filterByPrefix('F');
+                result = keyValueContainer.filterByPrefix('F');
             });
 
             it("should return filtered iterable", function () {
-                expect(result).not.toBe(iterable);
+                expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: 'FOO'
                 });
@@ -516,12 +518,11 @@ describe("$data", function () {
 
         describe("filterByKeyRegExp()", function () {
             beforeEach(function () {
-                spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                result = iterable.filterByKeyRegExp(/o$/);
+                result = keyValueContainer.filterByKeyRegExp(/o$/);
             });
 
             it("should return filtered iterable", function () {
-                expect(result).not.toBe(iterable);
+                expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: 'FOO'
                 });
@@ -530,12 +531,11 @@ describe("$data", function () {
 
         describe("filterByRegExp()", function () {
             beforeEach(function () {
-                spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                result = iterable.filterByRegExp(/^B/);
+                result = keyValueContainer.filterByRegExp(/^B/);
             });
 
             it("should return filtered iterable", function () {
-                expect(result).not.toBe(iterable);
+                expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     bar: 'BAR'
                 });
@@ -547,8 +547,7 @@ describe("$data", function () {
                 container = $data.DataContainer.create();
 
             beforeEach(function () {
-                spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-                iterable = KeyValueContainer.create({
+                keyValueContainer = KeyValueContainer.create({
                     foo: "FOO",
                     baz: object,
                     quux: container
@@ -557,7 +556,7 @@ describe("$data", function () {
 
             describe("for string argument", function () {
                 beforeEach(function () {
-                    result = iterable.filterByType('string');
+                    result = keyValueContainer.filterByType('string');
                 });
 
                 it("should retrieve typeof matches", function () {
@@ -569,7 +568,7 @@ describe("$data", function () {
 
             describe("for function argument", function () {
                 beforeEach(function () {
-                    result = iterable.filterByType(Object);
+                    result = keyValueContainer.filterByType(Object);
                 });
 
                 it("should retrieve instanceof matches", function () {
@@ -582,7 +581,7 @@ describe("$data", function () {
 
             describe("for object argument", function () {
                 beforeEach(function () {
-                    result = iterable.filterByType(Object.prototype);
+                    result = keyValueContainer.filterByType(Object.prototype);
                 });
 
                 it("should retrieve prototype matches", function () {
@@ -595,7 +594,7 @@ describe("$data", function () {
 
             describe("for Class argument", function () {
                 beforeEach(function () {
-                    result = iterable.filterByType($utils.Cloneable);
+                    result = keyValueContainer.filterByType($utils.Cloneable);
                 });
 
                 it("should retrieve Class inclusion matches", function () {

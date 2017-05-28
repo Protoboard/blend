@@ -354,7 +354,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         filterBy: function (callback, context) {
             var data = this._data instanceof Array ? [] : {},
-                ResultClass = exports.getMapResultClass(this, exports.VALUE_TYPES.VALUE_TYPE_ANY),
+                ResultClass = $oop.getClass(this.__classId),
                 result = ResultClass.create(data);
 
             this.forEachItem(function (value, key, iterable) {
