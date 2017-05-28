@@ -29,13 +29,13 @@ describe("$data", function () {
                     setItem: function (key, value) {
                         this._data[key] = value;
                     },
-                    forEachItem: function (callback) {
+                    forEachItem: function (callback, context) {
                         var data = this._data,
                             keys = Object.keys(this._data),
                             i, key;
                         for (i = 0; i < keys.length; i++) {
                             key = keys[i];
-                            callback(data[key], key, this);
+                            callback.call(context, data[key], key, this);
                         }
                     }
                 });
@@ -601,6 +601,24 @@ describe("$data", function () {
                     expect(result._data).toEqual({
                         quux: container
                     });
+                });
+            });
+        });
+
+        describe("swapKeysAndValues()", function () {
+            beforeEach(function () {
+                spyOn($data, 'getSwapResultClass').and.returnValue(Settable);
+                result = keyValueContainer.swapKeysAndValues();
+            });
+
+            it("should return instance of correct class", function () {
+                expect(Settable.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should swap keys and values", function () {
+                expect(result._data).toEqual({
+                    FOO: "foo",
+                    BAR: "bar"
                 });
             });
         });

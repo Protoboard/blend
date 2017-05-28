@@ -176,7 +176,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         mapValues: function (callback, context) {
             var data = this._data instanceof Array ? [] : {},
-                ResultClass = $data.getMapResultClass(this, $data.VALUE_TYPE_ANY),
+                ResultClass = $data.getMapResultClass(this, null, $data.VALUE_TYPE_ANY),
                 result = ResultClass.create(data);
 
             this.forEachItem(function (value, key, iterable) {
@@ -196,7 +196,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.Collection} Mapped collection
          */
         mapKeys: function (callback, context) {
-            var ResultClass = $data.getMapResultClass(this, $data.KEY_TYPE_ANY),
+            var ResultClass = $data.getMapResultClass(this, $data.KEY_TYPE_ANY, null),
                 result = ResultClass.create();
 
             this.forEachItem(function (value, key, iterable) {
@@ -408,5 +408,14 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
                     return type.isPrototypeOf(value);
                 });
             }
+        },
+
+        /**
+         * @returns {$data.KeyValueContainer}
+         */
+        swapKeysAndValues: function () {
+            var result = $data.getSwapResultClass(this).create();
+            this.forEachItem(result.setItem, result);
+            return result;
         }
     });
