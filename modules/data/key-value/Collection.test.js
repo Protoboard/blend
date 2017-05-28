@@ -96,6 +96,26 @@ describe("$data", function () {
             });
         });
 
+        describe("getValuesForKey()", function () {
+            beforeEach(function () {
+                result = collection.getValuesForKey('foo');
+            });
+
+            it("should return corresponding values", function () {
+                expect(result).toEqual(["FOO"]);
+            });
+
+            describe("on absent key", function () {
+                beforeEach(function () {
+                    result = collection.getValuesForKey('baz');
+                });
+
+                it("should return empty array", function () {
+                    expect(result).toEqual([]);
+                });
+            });
+        });
+
         describe("getValue()", function () {
             it("should return corresponding value", function () {
                 expect(collection.getValue('foo')).toBe("FOO");

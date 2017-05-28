@@ -13,6 +13,7 @@
  * @class $data.Collection
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
+ * @mixes $data.StringKeyHost
  */
 $data.Collection = $oop.getClass('$data.Collection')
     .extend($oop.getClass('$data.DataContainer'))
@@ -85,6 +86,17 @@ $data.Collection = $oop.getClass('$data.Collection')
             }
 
             return this;
+        },
+
+        /**
+         * @param {string} key
+         * @returns {Array}
+         */
+        getValuesForKey: function (key) {
+            var data = this._data;
+            return hOP.call(data, key) ?
+                [data[key]] :
+                [];
         },
 
         /**

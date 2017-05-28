@@ -13,6 +13,7 @@
  * @class $data.Dictionary
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
+ * @mixes $data.StringKeyHost
  */
 $data.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.DataContainer'))
@@ -110,6 +111,14 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
                 }
 
             return this;
+        },
+
+        /**
+         * @param {string} key
+         * @returns {Array}
+         */
+        getValuesForKey: function (key) {
+            return this._data[key] || [];
         }
     });
 

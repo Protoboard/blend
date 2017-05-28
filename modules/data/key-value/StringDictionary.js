@@ -13,6 +13,8 @@
  * @class $data.StringDictionary
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
+ * @mixes $data.StringKeyHost
+ * @mixes $data.StringValueHost
  */
 $data.StringDictionary = $oop.getClass('$data.StringDictionary')
     .extend($oop.getClass('$data.DataContainer'))
@@ -107,6 +109,17 @@ $data.StringDictionary = $oop.getClass('$data.StringDictionary')
                 }
 
             return this;
+        },
+
+        /**
+         * @param {string} key
+         * @returns {Array}
+         */
+        getValuesForKey: function (key) {
+            var data = this._data;
+            return hOP.call(data, key) ?
+                Object.keys(data[key]) :
+                [];
         }
     });
 
