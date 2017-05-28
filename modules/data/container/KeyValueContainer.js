@@ -327,18 +327,6 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         },
 
         /**
-         * Extracts items matching the specified keys and returns result
-         * as a new collection.
-         * TODO: Blocked by KeyValueContainer#getValues and/or #joinTo
-         * TODO: Necessary? Use joining to a symmetric collection instead.
-         * @param {string[]|number[]} keys Key strings to be matched
-         * @returns {$data.KeyValueContainer}
-         */
-        filterByKeys: function (keys) {
-
-        },
-
-        /**
          * Extracts items matching the specified key prefix and
          * returns result as a new collection.
          * @param {string} prefix Key prefix to be matched
