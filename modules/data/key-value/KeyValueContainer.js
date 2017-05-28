@@ -1,44 +1,6 @@
 /* globals $assert, $oop, $utils, slice */
 "use strict";
 
-$oop.copyProperties(exports, /** @lends $data */{
-    /**
-     * Marks key-value container as having strings for keys.
-     * @constant
-     */
-    KEY_TYPE_STRING: 'string',
-
-    /**
-     * Marks key-value container as having any type for keys.
-     * @constant
-     */
-    KEY_TYPE_ANY: 'undefined',
-
-    /**
-     * Marks key-value container as having strings for values.
-     * @constant
-     */
-    VALUE_TYPE_STRING: 'string',
-
-    /**
-     * Marks key-value container as having any type for values.
-     * @constant
-     */
-    VALUE_TYPE_ANY: 'undefined',
-
-    /**
-     * Marks key-value container as having unique keys.
-     * @constant
-     */
-    KEY_MUL_UNIQUE: 'unique',
-
-    /**
-     * Marks key-value container as having non-unique keys.
-     * @constant
-     */
-    KEY_MUL_ANY: 'undefined'
-});
-
 /**
  * @mixin $data.KeyValueContainer
  * @augments $data.DataContainer
