@@ -1,4 +1,4 @@
-/* global $assert, $oop */
+/* global $assert, $oop, $utils */
 "use strict";
 
 /**
@@ -10,7 +10,7 @@
 /**
  * @class $utils.Timer
  */
-exports.Timer = $oop.getClass('$utils.Timer')
+$utils.Timer = $oop.getClass('$utils.Timer')
     .define(/** @lends $utils.Timer# */{
         /**
          * @param {number} timerId
@@ -30,7 +30,7 @@ exports.Timer = $oop.getClass('$utils.Timer')
              */
             this._timerId = timerId;
 
-            var timerDeferred = exports.Deferred.create(),
+            var timerDeferred = $utils.Deferred.create(),
                 timerPromise = timerDeferred.promise;
 
             /**

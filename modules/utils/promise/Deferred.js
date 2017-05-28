@@ -1,4 +1,4 @@
-/* global $assert, $oop */
+/* global $assert, $oop, $utils */
 "use strict";
 
 /**
@@ -11,14 +11,14 @@
  * @see $utils.Promise
  * @class $utils.Deferred
  */
-exports.Deferred = $oop.getClass('$utils.Deferred')
+$utils.Deferred = $oop.getClass('$utils.Deferred')
     .define(/** @lends $utils.Deferred# */{
         /** @ignore */
         init: function () {
             /**
              * @member {$utils.Promise} $utils.Deferred#promise
              */
-            this.promise = exports.Promise.create();
+            this.promise = $utils.Promise.create();
         },
 
         /**
@@ -28,9 +28,9 @@ exports.Deferred = $oop.getClass('$utils.Deferred')
             var deferredArguments = arguments,
                 promise = this.promise;
 
-            if (promise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
+            if (promise.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
                 // setting state
-                promise.promiseState = exports.PROMISE_STATE_FULFILLED;
+                promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
 
                 // storing arguments
                 promise.deferredArguments = deferredArguments;
@@ -51,9 +51,9 @@ exports.Deferred = $oop.getClass('$utils.Deferred')
             var deferredArguments = arguments,
                 promise = this.promise;
 
-            if (promise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
+            if (promise.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
                 // setting state
-                promise.promiseState = exports.PROMISE_STATE_FAILED;
+                promise.promiseState = $utils.PROMISE_STATE_FAILED;
 
                 // storing arguments
                 promise.deferredArguments = deferredArguments;
@@ -74,7 +74,7 @@ exports.Deferred = $oop.getClass('$utils.Deferred')
             var args = arguments,
                 promise = this.promise;
 
-            if (promise.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
+            if (promise.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
                 // storing arguments
                 promise.notificationArguments.push(args);
 

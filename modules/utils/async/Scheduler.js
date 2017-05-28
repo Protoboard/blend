@@ -1,11 +1,11 @@
-/* global $assert, $oop, slice */
+/* global $assert, $oop, $utils, slice */
 "use strict";
 
 /**
  * Abstract base class for function call schedulers.
  * @class $utils.Scheduler
  */
-exports.Scheduler = $oop.getClass('$utils.Scheduler')
+$utils.Scheduler = $oop.getClass('$utils.Scheduler')
     .define(/** @lends $utils.Scheduler# */{
         /** @ignore */
         init: function () {
@@ -26,7 +26,7 @@ exports.Scheduler = $oop.getClass('$utils.Scheduler')
              * the scheduled calls.
              * @member {$utils.Deferred} $utils.Scheduler#schedulerDeferred
              */
-            this.schedulerDeferred = exports.Deferred.create();
+            this.schedulerDeferred = $utils.Deferred.create();
         },
 
         /**

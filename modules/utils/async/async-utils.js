@@ -1,7 +1,7 @@
-/* global $oop, slice */
+/* global $oop, $utils, slice */
 "use strict";
 
-$oop.copyProperties(exports, /** @lends $utils */{
+$oop.copyProperties($utils, /** @lends $utils */{
     /**
      * Sets up a timeout timer with the specified delay.
      * Similar to window.setTimeout, except that instead of taking a callback

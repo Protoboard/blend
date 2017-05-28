@@ -1,4 +1,4 @@
-/* global $assert, $oop */
+/* global $assert, $oop, $utils */
 "use strict";
 
 /**
@@ -13,7 +13,7 @@
  * @class $utils.Interval
  * @extends $utils.Timer
  */
-exports.Interval = $oop.getClass('$utils.Interval')
+$utils.Interval = $oop.getClass('$utils.Interval')
     .extend($oop.getClass('$utils.Timer'))
     .define(/** @lends $utils.Interval# */{
         /**
@@ -33,6 +33,6 @@ $oop.copyProperties(Number.prototype, /** @lends external:Number# */{
      * @returns {$utils.Interval}
      */
     toInterval: function () {
-        return exports.Interval.create(this.valueOf());
+        return $utils.Interval.create(this.valueOf());
     }
 });

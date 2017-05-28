@@ -1,4 +1,4 @@
-/* global $assert, $oop */
+/* global $assert, $oop, $utils */
 "use strict";
 
 /**
@@ -13,7 +13,7 @@
  * @class $utils.Timeout
  * @extends $utils.Timer
  */
-exports.Timeout = $oop.getClass('$utils.Timeout')
+$utils.Timeout = $oop.getClass('$utils.Timeout')
     .extend($oop.getClass('$utils.Timer'))
     .define(/** @lends $utils.Timeout# */{
         /**
@@ -33,6 +33,6 @@ $oop.copyProperties(Number.prototype, /** @lends external:Number# */{
      * @returns {$utils.Timeout}
      */
     toTimeout: function () {
-        return exports.Timeout.create(this.valueOf());
+        return $utils.Timeout.create(this.valueOf());
     }
 });

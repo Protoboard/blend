@@ -1,4 +1,4 @@
-/* global $assert, $oop, slice */
+/* global $assert, $oop, $utils, slice */
 "use strict";
 
 /**
@@ -11,7 +11,7 @@
  * @class $utils.Debouncer
  * @extends $utils.Scheduler
  */
-exports.Debouncer = $oop.getClass('$utils.Debouncer')
+$utils.Debouncer = $oop.getClass('$utils.Debouncer')
     .extend($oop.getClass('$utils.Scheduler'))
     .define(/** @lends $utils.Debouncer# */{
         /** @ignore */
@@ -41,7 +41,7 @@ exports.Debouncer = $oop.getClass('$utils.Debouncer')
                 timer;
 
             // (re-)starting timer
-            timer = exports.setTimeout.apply(exports, timeoutArguments);
+            timer = $utils.setTimeout.apply($utils, timeoutArguments);
             timer.timerPromise.then(
                 this.onTimerEnd,
                 this.onTimerCancel);

@@ -1,4 +1,4 @@
-/* global $assert, $oop */
+/* global $assert, $oop, $utils */
 "use strict";
 
 /**
@@ -6,7 +6,7 @@
  * with promises from external libraries. (Eg. Q, jQuery, ES6, etc.)
  * @interface $utils.Thenable
  */
-exports.Thenable = $oop.getClass('$utils.Thenable')
+$utils.Thenable = $oop.getClass('$utils.Thenable')
     .define(/** @lends $utils.Thenable# */{
         /**
          * @param {function} successHandler

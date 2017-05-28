@@ -1,4 +1,4 @@
-/* global $assert, $oop, slice */
+/* global $assert, $oop, $utils, slice */
 "use strict";
 
 /**
@@ -13,7 +13,7 @@
  * @class $utils.Throttler
  * @extends $utils.Scheduler
  */
-exports.Throttler = $oop.getClass('$utils.Throttler')
+$utils.Throttler = $oop.getClass('$utils.Throttler')
     .extend($oop.getClass('$utils.Scheduler'))
     .define(/** @lends $utils.Throttler# */{
         /** @ignore */
@@ -62,7 +62,7 @@ exports.Throttler = $oop.getClass('$utils.Throttler')
                 timeoutArguments = [this._throttleInterval].concat(callbackArguments);
 
                 // starting timer
-                timer = exports.setInterval.apply(exports, timeoutArguments);
+                timer = $utils.setInterval.apply($utils, timeoutArguments);
                 timer.timerPromise.then(
                     null,
                     this.onTimerCancel,

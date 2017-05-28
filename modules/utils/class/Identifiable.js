@@ -5,7 +5,7 @@
  * Endows instances of the host class with a unique identifier.
  * @mixin $utils.Identifiable
  */
-exports.Identifiable = $oop.getClass('$utils.Identifiable')
+$utils.Identifiable = $oop.getClass('$utils.Identifiable')
     .define(/** @lends $utils.Identifiable# */{
         /**
          * @memberOf $utils.Identifiable
@@ -20,6 +20,6 @@ exports.Identifiable = $oop.getClass('$utils.Identifiable')
              * Identifies instance globally.
              * @member {number} $utils.Identifiable#instanceId
              */
-            this.instanceId = ++exports.Identifiable._lastInstanceId;
+            this.instanceId = ++$utils.Identifiable._lastInstanceId;
         }
     });

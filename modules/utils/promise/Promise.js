@@ -1,4 +1,4 @@
-/* global $assert, $oop */
+/* global $assert, $oop, $utils */
 "use strict";
 
 /**
@@ -16,7 +16,7 @@
  * @class $utils.Promise
  * @implements $utils.Thenable
  */
-exports.Promise = $oop.getClass('$utils.Promise')
+$utils.Promise = $oop.getClass('$utils.Promise')
     .implement($oop.getClass('$utils.Thenable'))
     .define(/** @lends $utils.Promise# */{
         /** @ignore */
@@ -24,7 +24,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
             /**
              * @member {string} $utils.Promise#promiseState
              */
-            this.promiseState = exports.PROMISE_STATE_UNFULFILLED;
+            this.promiseState = $utils.PROMISE_STATE_UNFULFILLED;
 
             /**
              * @member {Array} $utils.Promise#deferredArguments
@@ -61,10 +61,10 @@ exports.Promise = $oop.getClass('$utils.Promise')
         then: function (successHandler, failureHandler, progressHandler) {
             if (successHandler) {
                 switch (this.promiseState) {
-                case exports.PROMISE_STATE_FULFILLED:
+                case $utils.PROMISE_STATE_FULFILLED:
                     successHandler.apply(this, this.deferredArguments);
                     break;
-                case exports.PROMISE_STATE_UNFULFILLED:
+                case $utils.PROMISE_STATE_UNFULFILLED:
                     this.successHandlers.push(successHandler);
                     break;
                 }
@@ -72,17 +72,17 @@ exports.Promise = $oop.getClass('$utils.Promise')
 
             if (failureHandler) {
                 switch (this.promiseState) {
-                case exports.PROMISE_STATE_FAILED:
+                case $utils.PROMISE_STATE_FAILED:
                     failureHandler.apply(this, this.deferredArguments);
                     break;
-                case exports.PROMISE_STATE_UNFULFILLED:
+                case $utils.PROMISE_STATE_UNFULFILLED:
                     this.failureHandlers.push(failureHandler);
                     break;
                 }
             }
 
             if (progressHandler) {
-                if (this.promiseState === exports.PROMISE_STATE_UNFULFILLED) {
+                if (this.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
                     // adding progress handler to list of handlers
                     this.progressHandlers.push(progressHandler);
 
@@ -108,7 +108,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
          * @memberOf $utils.Promise
          */
         when: function (promise) {
-            var deferred = exports.Deferred.create(),
+            var deferred = $utils.Deferred.create(),
                 promises = Array.prototype.slice.call(arguments),
                 promiseCount = promises.length,
                 deferredArguments = [];
@@ -126,7 +126,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
             }
 
             promises.forEach(function (promise) {
-                if (exports.Promise.isIncludedBy(promise)) {
+                if ($utils.Promise.isIncludedBy(promise)) {
                     // latching on to next promise in array
                     promise.then(
                         tryResolving,
@@ -141,7 +141,7 @@ exports.Promise = $oop.getClass('$utils.Promise')
         }
     });
 
-$oop.copyProperties(exports, /** @lends $utils */{
+$oop.copyProperties($utils, /** @lends $utils */{
     /** @constant */
     PROMISE_STATE_UNFULFILLED: 'unfulfilled',
 
@@ -160,7 +160,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
      */
     isPromise: function (expr, message) {
         return $assert.assert(
-            exports.Promise.isIncludedBy(expr), message);
+            $utils.Promise.isIncludedBy(expr), message);
     },
 
     /**
@@ -171,6 +171,6 @@ $oop.copyProperties($assert, /** @lends $assert# */{
     isPromiseOptional: function (expr, message) {
         return $assert.assert(
             expr === undefined ||
-            exports.Promise.isIncludedBy(expr), message);
+            $utils.Promise.isIncludedBy(expr), message);
     }
 });

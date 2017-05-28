@@ -8,7 +8,7 @@
  * @extends $utils.Identifiable
  * @implements $utils.Destroyable
  */
-exports.Retrievable = $oop.getClass('$utils.Retrievable')
+$utils.Retrievable = $oop.getClass('$utils.Retrievable')
     .implement($oop.getClass('$utils.Destroyable'))
     .extend($oop.getClass('$utils.Identifiable'))
     .define(/** @lends $utils.Retrievable# */{
@@ -31,7 +31,7 @@ exports.Retrievable = $oop.getClass('$utils.Retrievable')
          * @private
          */
         _addToInstanceRegistry: function () {
-            exports.Retrievable._instanceRegistry[this.instanceId] = this;
+            $utils.Retrievable._instanceRegistry[this.instanceId] = this;
             return this;
         },
 
@@ -41,7 +41,7 @@ exports.Retrievable = $oop.getClass('$utils.Retrievable')
          * @private
          */
         _removeFromInstanceRegistry: function () {
-            delete exports.Retrievable._instanceRegistry[this.instanceId];
+            delete $utils.Retrievable._instanceRegistry[this.instanceId];
             return this;
         },
 
@@ -60,6 +60,6 @@ exports.Retrievable = $oop.getClass('$utils.Retrievable')
          * @memberOf $utils.Retrievable
          */
         getInstanceById: function (instanceId) {
-            return exports.Retrievable._instanceRegistry[instanceId];
+            return $utils.Retrievable._instanceRegistry[instanceId];
         }
     });

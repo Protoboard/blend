@@ -5,7 +5,7 @@
  * Cloning creates a new instance of identical class and state.
  * @mixin $utils.Cloneable
  */
-exports.Cloneable = $oop.getClass('$utils.Cloneable')
+$utils.Cloneable = $oop.getClass('$utils.Cloneable')
     .define(/** @lends $utils.Cloneable# */{
         /**
          * Clones current instance.
