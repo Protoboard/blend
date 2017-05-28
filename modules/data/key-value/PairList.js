@@ -19,20 +19,6 @@ exports.PairList = $oop.getClass('$data.PairList')
     .include($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.PairList# */{
         /**
-         * @memberOf $data.PairList
-         * @type {string}
-         * @constant
-         */
-        keyType: exports.KEY_TYPE_ANY,
-
-        /**
-         * @memberOf $data.PairList
-         * @type {string}
-         * @constant
-         */
-        valueType: exports.VALUE_TYPE_ANY,
-
-        /**
          * @param {Array} data
          * @ignore
          */

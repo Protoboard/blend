@@ -1,6 +1,42 @@
 /* globals $assert, $oop, $utils, slice */
 "use strict";
 
+$oop.copyProperties(exports, /** @lends $data */{
+    /**
+     * @constant
+     */
+    KEY_TYPES: {
+        /** Marks key-value container as having strings for keys. */
+        KEY_TYPE_STRING: 'KEY_TYPE_STRING',
+
+        /** Marks key-value container as having any type for keys. */
+        KEY_TYPE_ANY: 'KEY_TYPE_ANY'
+    },
+
+    /**
+     * @constant
+     */
+    VALUE_TYPES: {
+        /** Marks key-value container as having strings for values. */
+        VALUE_TYPE_STRING: 'VALUE_TYPE_STRING',
+
+        /** Marks key-value container as having any type for values. */
+        VALUE_TYPE_ANY: 'VALUE_TYPE_ANY'
+    },
+
+    /**
+     * Marks key-value container as having unique keys.
+     * @constant
+     */
+    KEY_MUL_UNIQUE: 'KEY_MUL_UNIQUE',
+
+    /**
+     * Marks key-value container as having non-unique keys.
+     * @constant
+     */
+    KEY_MUL_ANY: 'KEY_MUL_ANY'
+});
+
 /**
  * @mixin $data.KeyValueContainer
  * @augments $data.DataContainer
@@ -9,18 +45,22 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .require($oop.getClass('$data.DataContainer'))
     .define(/** @lends $data.KeyValueContainer# */{
         /**
-         * @memberOf $data.KeyValueContainer
          * @type {string}
          * @constant
          */
-        keyType: undefined,
+        keyType: exports.KEY_TYPES.KEY_TYPE_ANY,
 
         /**
-         * @memberOf $data.KeyValueContainer
          * @type {string}
          * @constant
          */
-        valueType: undefined,
+        valueType: exports.VALUE_TYPES.VALUE_TYPE_ANY,
+
+        /**
+         * @type {string}
+         * @constant
+         */
+        keyMultiplicity: exports.KEY_MUL_ANY,
 
         /**
          * @param {object|Array} data
@@ -172,7 +212,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         mapValues: function (callback, context) {
             var data = this._data instanceof Array ? [] : {},
-                ResultClass = exports.getMapResultClass(this, 'VALUE', 'ANY'),
+                ResultClass = exports.getMapResultClass(this, exports.VALUE_TYPES.VALUE_TYPE_ANY),
                 result = ResultClass.create(data);
 
             this.forEachItem(function (value, key, iterable) {
@@ -192,7 +232,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.Collection} Mapped collection
          */
         mapKeys: function (callback, context) {
-            var ResultClass = exports.getMapResultClass(this, 'KEY', 'ANY'),
+            var ResultClass = exports.getMapResultClass(this, exports.KEY_TYPES.KEY_TYPE_ANY),
                 result = ResultClass.create();
 
             this.forEachItem(function (value, key, iterable) {
@@ -314,7 +354,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         filterBy: function (callback, context) {
             var data = this._data instanceof Array ? [] : {},
-                ResultClass = exports.getMapResultClass(this, 'VALUE', 'ANY'),
+                ResultClass = exports.getMapResultClass(this, exports.VALUE_TYPES.VALUE_TYPE_ANY),
                 result = ResultClass.create(data);
 
             this.forEachItem(function (value, key, iterable) {
@@ -406,17 +446,3 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
             }
         }
     });
-
-$oop.copyProperties(exports, /** @lends $data */{
-    /** @constant */
-    KEY_TYPE_STRING: 'KEY_TYPE_STRING',
-
-    /** @constant */
-    KEY_TYPE_ANY: 'KEY_TYPE_ANY',
-
-    /** @constant */
-    VALUE_TYPE_STRING: 'VALUE_TYPE_STRING',
-
-    /** @constant */
-    VALUE_TYPE_ANY: 'VALUE_TYPE_ANY'
-});

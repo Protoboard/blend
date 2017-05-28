@@ -19,18 +19,16 @@ exports.Collection = $oop.getClass('$data.Collection')
     .include($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.Collection# */{
         /**
-         * @memberOf $data.Collection
          * @type {string}
          * @constant
          */
-        keyType: exports.KEY_TYPE_STRING,
+        keyType: exports.KEY_TYPES.KEY_TYPE_STRING,
 
         /**
-         * @memberOf $data.Collection
          * @type {string}
          * @constant
          */
-        valueType: exports.VALUE_TYPE_ANY,
+        keyMultiplicity: exports.KEY_MUL_UNIQUE,
 
         /**
          * @param {string} key

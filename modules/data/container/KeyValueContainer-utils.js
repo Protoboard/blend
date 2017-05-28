@@ -3,53 +3,26 @@
 
 $oop.copyProperties(exports, /** @lends $data */{
     /** @constant */
-    MAP_RESULT_CLASS: {
-        VALUE: {
-            STRING: {
-                '$data.Collection': $oop.getClass('$data.StringCollection'),
-                '$data.StringCollection': $oop.getClass('$data.StringCollection'),
-                '$data.Dictionary': $oop.getClass('$data.StringDictionary'),
-                '$data.StringDictionary': $oop.getClass('$data.StringDictionary'),
-                '$data.PairList': $oop.getClass('$data.StringPairList'),
-                '$data.StringPairList': $oop.getClass('$data.StringPairList')
+    CLASS_BY_TYPE: {
+        KEY_TYPE_STRING: {
+            VALUE_TYPE_STRING: {
+                KEY_MUL_UNIQUE: $oop.getClass('$data.StringCollection'),
+                KEY_MUL_ANY: $oop.getClass('$data.StringDictionary')
             },
-            ANY: {
-                '$data.Collection': $oop.getClass('$data.Collection'),
-                '$data.StringCollection': $oop.getClass('$data.Collection'),
-                '$data.Dictionary': $oop.getClass('$data.Dictionary'),
-                '$data.StringDictionary': $oop.getClass('$data.Dictionary'),
-                '$data.PairList': $oop.getClass('$data.PairList'),
-                '$data.StringPairList': $oop.getClass('$data.PairList')
+            VALUE_TYPE_ANY: {
+                KEY_MUL_UNIQUE: $oop.getClass('$data.Collection'),
+                KEY_MUL_ANY: $oop.getClass('$data.Dictionary')
             }
         },
-        KEY: {
-            STRING: {
-                '$data.Collection': $oop.getClass('$data.Collection'),
-                '$data.StringCollection': $oop.getClass('$data.StringCollection'),
-                '$data.Dictionary': $oop.getClass('$data.Dictionary'),
-                '$data.StringDictionary': $oop.getClass('$data.StringDictionary'),
-                '$data.PairList': $oop.getClass('$data.Dictionary'),
-                '$data.StringPairList': $oop.getClass('$data.StringDictionary')
+        KEY_TYPE_ANY: {
+            VALUE_TYPE_STRING: {
+                KEY_MUL_UNIQUE: $oop.getClass('$data.StringPairList'),
+                KEY_MUL_ANY: $oop.getClass('$data.StringPairList')
             },
-            ANY: {
-                '$data.Collection': $oop.getClass('$data.PairList'),
-                '$data.StringCollection': $oop.getClass('$data.StringPairList'),
-                '$data.Dictionary': $oop.getClass('$data.PairList'),
-                '$data.StringDictionary': $oop.getClass('$data.StringPairList'),
-                '$data.PairList': $oop.getClass('$data.PairList'),
-                '$data.StringPairList': $oop.getClass('$data.StringPairList')
+            VALUE_TYPE_ANY: {
+                KEY_MUL_UNIQUE: $oop.getClass('$data.PairList'),
+                KEY_MUL_ANY: $oop.getClass('$data.PairList')
             }
-        },
-
-        /**
-         * For key-value at once.
-         * TODO: Implement
-         */
-        BOTH: {
-            STRING_STRING: {},
-            STRING_ANY: {},
-            ANY_STRING: {},
-            ANY_ANY: {}
         }
     },
 
@@ -86,15 +59,20 @@ $oop.copyProperties(exports, /** @lends $data */{
     },
 
     /**
-     * @param {$oop.Class} SourceClass
-     * @param {string} [side='VALUE']
-     * @param {string} [sideType='ANY']
-     * @returns {$oop.Class}
+     * @param {$data.KeyValueContainer} SourceClass
+     * @param {string} [resultType='VALUE_TYPE_STRING']
+     * @returns {$data.KeyValueContainer}
      */
-    getMapResultClass: function (SourceClass, side, sideType) {
-        side = side || 'VALUE';
-        sideType = sideType || 'ANY';
-        return exports.MAP_RESULT_CLASS[side][sideType][SourceClass.__classId];
+    getMapResultClass: function (SourceClass, resultType) {
+        resultType = resultType || exports.VALUE_TYPE_STRING;
+
+        var sourceKeyType = SourceClass.keyType,
+            sourceValueType = SourceClass.valueType,
+            sourceKeyMultiplicity = SourceClass.keyMultiplicity,
+            resultKeyType = exports.KEY_TYPES[resultType] || sourceKeyType,
+            resultValueType = exports.VALUE_TYPES[resultType] || sourceValueType;
+
+        return exports.CLASS_BY_TYPE[resultKeyType][resultValueType][sourceKeyMultiplicity];
     },
 
     /**

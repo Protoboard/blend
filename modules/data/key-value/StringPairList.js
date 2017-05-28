@@ -11,24 +11,16 @@
  * Key-value container with any-type keys and string values.
  * **Pairs are not unique.**
  * @class $data.StringPairList
- * @extends $data.Collection
+ * @extends $data.PairList
  */
 exports.StringPairList = $oop.getClass('$data.StringPairList')
-    .extend($oop.getClass('$data.Collection'))
+    .extend($oop.getClass('$data.PairList'))
     .define(/** @lends $data.StringPairList# */{
         /**
-         * @memberOf $data.StringPairList
          * @type {string}
          * @constant
          */
-        keyType: exports.KEY_TYPE_ANY,
-
-        /**
-         * @memberOf $data.StringPairList
-         * @type {string}
-         * @constant
-         */
-        valueType: exports.VALUE_TYPE_STRING
+        valueType: exports.VALUE_TYPES.VALUE_TYPE_STRING
     });
 
 $oop.getClass('$data.DataContainer')

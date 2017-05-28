@@ -17,18 +17,10 @@ exports.StringCollection = $oop.getClass('$data.StringCollection')
     .extend($oop.getClass('$data.Collection'))
     .define(/** @lends $data.StringCollection# */{
         /**
-         * @memberOf $data.StringCollection
          * @type {string}
          * @constant
          */
-        keyType: exports.KEY_TYPE_STRING,
-
-        /**
-         * @memberOf $data.StringCollection
-         * @type {string}
-         * @constant
-         */
-        valueType: exports.VALUE_TYPE_STRING
+        valueType: exports.VALUE_TYPES.VALUE_TYPE_STRING
     });
 
 $oop.getClass('$data.DataContainer')
