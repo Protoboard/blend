@@ -20,7 +20,7 @@ exports.StringCollection = $oop.getClass('$data.StringCollection')
          * @type {string}
          * @constant
          */
-        valueType: exports.VALUE_TYPES.VALUE_TYPE_STRING
+        valueType: exports.VALUE_TYPE_STRING
     });
 
 $oop.getClass('$data.DataContainer')

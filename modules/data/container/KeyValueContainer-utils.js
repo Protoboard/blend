@@ -4,24 +4,24 @@
 $oop.copyProperties(exports, /** @lends $data */{
     /** @constant */
     CLASS_BY_TYPE: {
-        KEY_TYPE_STRING: {
-            VALUE_TYPE_STRING: {
-                KEY_MUL_UNIQUE: $oop.getClass('$data.StringCollection'),
-                KEY_MUL_ANY: $oop.getClass('$data.StringDictionary')
+        string: {
+            string: {
+                unique: $oop.getClass('$data.StringCollection'),
+                undefined: $oop.getClass('$data.StringDictionary')
             },
-            VALUE_TYPE_ANY: {
-                KEY_MUL_UNIQUE: $oop.getClass('$data.Collection'),
-                KEY_MUL_ANY: $oop.getClass('$data.Dictionary')
+            undefined: {
+                unique: $oop.getClass('$data.Collection'),
+                undefined: $oop.getClass('$data.Dictionary')
             }
         },
-        KEY_TYPE_ANY: {
-            VALUE_TYPE_STRING: {
-                KEY_MUL_UNIQUE: $oop.getClass('$data.StringPairList'),
-                KEY_MUL_ANY: $oop.getClass('$data.StringPairList')
+        undefined: {
+            string: {
+                unique: $oop.getClass('$data.StringPairList'),
+                undefined: $oop.getClass('$data.StringPairList')
             },
-            VALUE_TYPE_ANY: {
-                KEY_MUL_UNIQUE: $oop.getClass('$data.PairList'),
-                KEY_MUL_ANY: $oop.getClass('$data.PairList')
+            undefined: {
+                unique: $oop.getClass('$data.PairList'),
+                undefined: $oop.getClass('$data.PairList')
             }
         }
     },
@@ -60,19 +60,15 @@ $oop.copyProperties(exports, /** @lends $data */{
 
     /**
      * @param {$data.KeyValueContainer} SourceClass
-     * @param {string} [resultType='VALUE_TYPE_STRING']
+     * @param {string} [keyType]
+     * @param {string} [valueType]
      * @returns {$data.KeyValueContainer}
      */
-    getMapResultClass: function (SourceClass, resultType) {
-        resultType = resultType || exports.VALUE_TYPE_STRING;
+    getMapResultClass: function (SourceClass, keyType, valueType) {
+        keyType = keyType || SourceClass.keyType;
+        valueType = valueType || SourceClass.valueType;
 
-        var sourceKeyType = SourceClass.keyType,
-            sourceValueType = SourceClass.valueType,
-            sourceKeyMultiplicity = SourceClass.keyMultiplicity,
-            resultKeyType = exports.KEY_TYPES[resultType] || sourceKeyType,
-            resultValueType = exports.VALUE_TYPES[resultType] || sourceValueType;
-
-        return exports.CLASS_BY_TYPE[resultKeyType][resultValueType][sourceKeyMultiplicity];
+        return exports.CLASS_BY_TYPE[keyType][valueType][SourceClass.keyMultiplicity];
     },
 
     /**

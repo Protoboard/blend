@@ -35,22 +35,22 @@ describe("$data", function () {
             describe("to string", function () {
                 it("should return STRING value variant", function () {
                     expect($data.getMapResultClass(Collection,
-                        $data.VALUE_TYPES.VALUE_TYPE_STRING))
+                        null, $data.VALUE_TYPE_STRING))
                         .toBe($data.StringCollection);
                     expect($data.getMapResultClass(StringCollection,
-                        $data.VALUE_TYPES.VALUE_TYPE_STRING))
+                        null, $data.VALUE_TYPE_STRING))
                         .toBe($data.StringCollection);
                     expect($data.getMapResultClass(Dictionary,
-                        $data.VALUE_TYPES.VALUE_TYPE_STRING))
+                        null, $data.VALUE_TYPE_STRING))
                         .toBe($data.StringDictionary);
                     expect($data.getMapResultClass(StringDictionary,
-                        $data.VALUE_TYPES.VALUE_TYPE_STRING))
+                        null, $data.VALUE_TYPE_STRING))
                         .toBe($data.StringDictionary);
                     expect($data.getMapResultClass(PairList,
-                        $data.VALUE_TYPES.VALUE_TYPE_STRING))
+                        null, $data.VALUE_TYPE_STRING))
                         .toBe($data.StringPairList);
                     expect($data.getMapResultClass(StringPairList,
-                        $data.VALUE_TYPES.VALUE_TYPE_STRING))
+                        null, $data.VALUE_TYPE_STRING))
                         .toBe($data.StringPairList);
                 });
             });
@@ -58,22 +58,22 @@ describe("$data", function () {
             describe("to any", function () {
                 it("should return ANY value variant", function () {
                     expect($data.getMapResultClass(Collection,
-                        $data.VALUE_TYPES.VALUE_TYPE_ANY))
+                        null, $data.VALUE_TYPE_ANY))
                         .toBe($data.Collection);
                     expect($data.getMapResultClass(StringCollection,
-                        $data.VALUE_TYPES.VALUE_TYPE_ANY))
+                        null, $data.VALUE_TYPE_ANY))
                         .toBe($data.Collection);
                     expect($data.getMapResultClass(Dictionary,
-                        $data.VALUE_TYPES.VALUE_TYPE_ANY))
+                        null, $data.VALUE_TYPE_ANY))
                         .toBe($data.Dictionary);
                     expect($data.getMapResultClass(StringDictionary,
-                        $data.VALUE_TYPES.VALUE_TYPE_ANY))
+                        null, $data.VALUE_TYPE_ANY))
                         .toBe($data.Dictionary);
                     expect($data.getMapResultClass(PairList,
-                        $data.VALUE_TYPES.VALUE_TYPE_ANY))
+                        null, $data.VALUE_TYPE_ANY))
                         .toBe($data.PairList);
                     expect($data.getMapResultClass(StringPairList,
-                        $data.VALUE_TYPES.VALUE_TYPE_ANY))
+                        null, $data.VALUE_TYPE_ANY))
                         .toBe($data.PairList);
                 });
             });
@@ -83,22 +83,22 @@ describe("$data", function () {
             describe("to string", function () {
                 it("should return self, or Dictionary variants", function () {
                     expect($data.getMapResultClass(Collection,
-                        $data.KEY_TYPES.KEY_TYPE_STRING))
+                        $data.KEY_TYPE_STRING, null))
                         .toBe($data.Collection);
                     expect($data.getMapResultClass(StringCollection,
-                        $data.KEY_TYPES.KEY_TYPE_STRING))
+                        $data.KEY_TYPE_STRING, null))
                         .toBe($data.StringCollection);
                     expect($data.getMapResultClass(Dictionary,
-                        $data.KEY_TYPES.KEY_TYPE_STRING))
+                        $data.KEY_TYPE_STRING, null))
                         .toBe($data.Dictionary);
                     expect($data.getMapResultClass(StringDictionary,
-                        $data.KEY_TYPES.KEY_TYPE_STRING))
+                        $data.KEY_TYPE_STRING, null))
                         .toBe($data.StringDictionary);
                     expect($data.getMapResultClass(PairList,
-                        $data.KEY_TYPES.KEY_TYPE_STRING))
+                        $data.KEY_TYPE_STRING, null))
                         .toBe($data.Dictionary);
                     expect($data.getMapResultClass(StringPairList,
-                        $data.KEY_TYPES.KEY_TYPE_STRING))
+                        $data.KEY_TYPE_STRING, null))
                         .toBe($data.StringDictionary);
                 });
             });
@@ -106,22 +106,22 @@ describe("$data", function () {
             describe("to any", function () {
                 it("should return PairList variants", function () {
                     expect($data.getMapResultClass(Collection,
-                        $data.KEY_TYPES.KEY_TYPE_ANY))
+                        $data.KEY_TYPE_ANY, null))
                         .toBe($data.PairList);
                     expect($data.getMapResultClass(StringCollection,
-                        $data.KEY_TYPES.KEY_TYPE_ANY))
+                        $data.KEY_TYPE_ANY, null))
                         .toBe($data.StringPairList);
                     expect($data.getMapResultClass(Dictionary,
-                        $data.KEY_TYPES.KEY_TYPE_ANY))
+                        $data.KEY_TYPE_ANY, null))
                         .toBe($data.PairList);
                     expect($data.getMapResultClass(StringDictionary,
-                        $data.KEY_TYPES.KEY_TYPE_ANY))
+                        $data.KEY_TYPE_ANY, null))
                         .toBe($data.StringPairList);
                     expect($data.getMapResultClass(PairList,
-                        $data.KEY_TYPES.KEY_TYPE_ANY))
+                        $data.KEY_TYPE_ANY, null))
                         .toBe($data.PairList);
                     expect($data.getMapResultClass(StringPairList,
-                        $data.KEY_TYPES.KEY_TYPE_ANY))
+                        $data.KEY_TYPE_ANY, null))
                         .toBe($data.StringPairList);
                 });
             });

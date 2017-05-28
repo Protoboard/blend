@@ -20,7 +20,7 @@ exports.StringPairList = $oop.getClass('$data.StringPairList')
          * @type {string}
          * @constant
          */
-        valueType: exports.VALUE_TYPES.VALUE_TYPE_STRING
+        valueType: exports.VALUE_TYPE_STRING
     });
 
 $oop.getClass('$data.DataContainer')

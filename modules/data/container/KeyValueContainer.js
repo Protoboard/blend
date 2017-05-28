@@ -3,38 +3,40 @@
 
 $oop.copyProperties(exports, /** @lends $data */{
     /**
+     * Marks key-value container as having strings for keys.
      * @constant
      */
-    KEY_TYPES: {
-        /** Marks key-value container as having strings for keys. */
-        KEY_TYPE_STRING: 'KEY_TYPE_STRING',
-
-        /** Marks key-value container as having any type for keys. */
-        KEY_TYPE_ANY: 'KEY_TYPE_ANY'
-    },
+    KEY_TYPE_STRING: 'string',
 
     /**
+     * Marks key-value container as having any type for keys.
      * @constant
      */
-    VALUE_TYPES: {
-        /** Marks key-value container as having strings for values. */
-        VALUE_TYPE_STRING: 'VALUE_TYPE_STRING',
+    KEY_TYPE_ANY: 'undefined',
 
-        /** Marks key-value container as having any type for values. */
-        VALUE_TYPE_ANY: 'VALUE_TYPE_ANY'
-    },
+    /**
+     * Marks key-value container as having strings for values.
+     * @constant
+     */
+    VALUE_TYPE_STRING: 'string',
+
+    /**
+     * Marks key-value container as having any type for values.
+     * @constant
+     */
+    VALUE_TYPE_ANY: 'undefined',
 
     /**
      * Marks key-value container as having unique keys.
      * @constant
      */
-    KEY_MUL_UNIQUE: 'KEY_MUL_UNIQUE',
+    KEY_MUL_UNIQUE: 'unique',
 
     /**
      * Marks key-value container as having non-unique keys.
      * @constant
      */
-    KEY_MUL_ANY: 'KEY_MUL_ANY'
+    KEY_MUL_ANY: 'undefined'
 });
 
 /**
@@ -48,13 +50,13 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @type {string}
          * @constant
          */
-        keyType: exports.KEY_TYPES.KEY_TYPE_ANY,
+        keyType: exports.KEY_TYPE_ANY,
 
         /**
          * @type {string}
          * @constant
          */
-        valueType: exports.VALUE_TYPES.VALUE_TYPE_ANY,
+        valueType: exports.VALUE_TYPE_ANY,
 
         /**
          * @type {string}
@@ -212,7 +214,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         mapValues: function (callback, context) {
             var data = this._data instanceof Array ? [] : {},
-                ResultClass = exports.getMapResultClass(this, exports.VALUE_TYPES.VALUE_TYPE_ANY),
+                ResultClass = exports.getMapResultClass(this, exports.VALUE_TYPE_ANY),
                 result = ResultClass.create(data);
 
             this.forEachItem(function (value, key, iterable) {
@@ -232,7 +234,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.Collection} Mapped collection
          */
         mapKeys: function (callback, context) {
-            var ResultClass = exports.getMapResultClass(this, exports.KEY_TYPES.KEY_TYPE_ANY),
+            var ResultClass = exports.getMapResultClass(this, exports.KEY_TYPE_ANY),
                 result = ResultClass.create();
 
             this.forEachItem(function (value, key, iterable) {

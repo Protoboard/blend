@@ -22,13 +22,13 @@ exports.StringDictionary = $oop.getClass('$data.StringDictionary')
          * @type {string}
          * @constant
          */
-        keyType: exports.KEY_TYPES.KEY_TYPE_STRING,
+        keyType: exports.KEY_TYPE_STRING,
 
         /**
          * @type {string}
          * @constant
          */
-        valueType: exports.VALUE_TYPES.VALUE_TYPE_STRING,
+        valueType: exports.VALUE_TYPE_STRING,
 
         /**
          * @param {string} key

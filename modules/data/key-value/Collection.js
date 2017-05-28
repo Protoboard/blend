@@ -22,7 +22,7 @@ exports.Collection = $oop.getClass('$data.Collection')
          * @type {string}
          * @constant
          */
-        keyType: exports.KEY_TYPES.KEY_TYPE_STRING,
+        keyType: exports.KEY_TYPE_STRING,
 
         /**
          * @type {string}
