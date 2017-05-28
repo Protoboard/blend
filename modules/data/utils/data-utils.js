@@ -1,7 +1,7 @@
-/* globals $oop, hOP */
+/* globals $data, $oop, hOP */
 "use strict";
 
-$oop.copyProperties(exports, /** @lends $data */{
+$oop.copyProperties($data, /** @lends $data */{
     /**
      * Determines whether an object has any enumerable
      * properties.

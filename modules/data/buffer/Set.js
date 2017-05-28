@@ -1,4 +1,4 @@
-/* globals $assert, $oop, $utils, hOP, slice */
+/* globals $assert, $data, $oop, $utils, hOP, slice */
 "use strict";
 
 /**
@@ -12,7 +12,7 @@
  * @class $data.Set
  * @extends $data.Collection
  */
-exports.Set = $oop.getClass('$data.Set')
+$data.Set = $oop.getClass('$data.Set')
     .extend($oop.getClass('$data.Collection'))
     .define(/** @lends $data.Set# */{
         /**
@@ -156,7 +156,7 @@ $oop.getClass('$data.DataContainer')
          * @returns {$data.Set}
          */
         toSet: function () {
-            return exports.Set.create(this._data);
+            return $data.Set.create(this._data);
         }
     });
 
@@ -165,6 +165,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
      * @returns {$data.Set}
      */
     toSet: function () {
-        return exports.Set.create(this);
+        return $data.Set.create(this);
     }
 });

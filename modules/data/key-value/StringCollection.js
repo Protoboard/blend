@@ -1,4 +1,4 @@
-/* globals $assert, $oop, $utils, hOP, slice */
+/* globals $assert, $data, $oop, $utils, hOP, slice */
 "use strict";
 
 /**
@@ -13,7 +13,7 @@
  * @class $data.StringCollection
  * @extends $data.Collection
  */
-exports.StringCollection = $oop.getClass('$data.StringCollection')
+$data.StringCollection = $oop.getClass('$data.StringCollection')
     .extend($oop.getClass('$data.Collection'))
     .include($oop.getClass('$data.StringValueHost'));
 
@@ -23,7 +23,7 @@ $oop.getClass('$data.DataContainer')
          * @returns {$data.StringCollection}
          */
         toStringCollection: function () {
-            return exports.StringCollection.create(this._data);
+            return $data.StringCollection.create(this._data);
         }
     });
 
@@ -32,6 +32,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
      * @returns {$data.StringCollection}
      */
     toStringCollection: function () {
-        return exports.StringCollection.create(this);
+        return $data.StringCollection.create(this);
     }
 });

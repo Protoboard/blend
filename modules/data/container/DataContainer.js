@@ -1,4 +1,4 @@
-/* globals $assert, $oop, $utils, slice */
+/* globals $assert, $data, $oop, $utils, slice */
 "use strict";
 
 /**
@@ -15,7 +15,7 @@
  * @implements $data.Clearable
  * @mixes $utils.Cloneable
  */
-exports.DataContainer = $oop.getClass('$data.DataContainer')
+$data.DataContainer = $oop.getClass('$data.DataContainer')
     .implement($oop.getClass('$utils.Destroyable'))
     .implement($oop.getClass('$data.Clearable'))
     .include($oop.getClass('$utils.Cloneable'))
@@ -49,7 +49,7 @@ exports.DataContainer = $oop.getClass('$data.DataContainer')
          */
         clone: function clone() {
             var cloned = clone.returned;
-            cloned._data = exports.shallowCopy(this._data);
+            cloned._data = $data.shallowCopy(this._data);
             return cloned;
         },
 

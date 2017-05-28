@@ -1,7 +1,7 @@
-/* globals $oop */
+/* globals $data, $oop */
 "use strict";
 
-$oop.copyProperties(exports, /** @lends $data */{
+$oop.copyProperties($data, /** @lends $data */{
     /**
      * Maps all `KeyValueContainer`-based classes based on their distinctive
      * properties: *key type*, *value type*, and *key multiplicity*.
@@ -42,7 +42,7 @@ $oop.copyProperties(exports, /** @lends $data */{
      * @returns {$data.KeyValueContainer}
      */
     getMapResultClass: function (SourceClass, keyType, valueType) {
-        return exports.CLASS_BY_TYPE
+        return $data.CLASS_BY_TYPE
             [keyType || SourceClass.keyType]
             [valueType || SourceClass.valueType]
             [SourceClass.keyMultiplicity];
@@ -56,10 +56,10 @@ $oop.copyProperties(exports, /** @lends $data */{
      * @returns {$data.KeyValueContainer}
      */
     getSwapResultClass: function (SourceClass) {
-        return exports.CLASS_BY_TYPE
+        return $data.CLASS_BY_TYPE
             [SourceClass.valueType] // value type will be the new key type
             [SourceClass.keyType]   // key type will be the new value type
-            [exports.KEY_MUL_ANY];  // we can't know if keys remain unique
+            [$data.KEY_MUL_ANY];  // we can't know if keys remain unique
     },
 
     /**
@@ -73,14 +73,14 @@ $oop.copyProperties(exports, /** @lends $data */{
     getJoinResultClass: function (LeftClass, RightClass) {
         var keyMultiplicity;
 
-        if (LeftClass.valueType === exports.VALUE_TYPE_STRING &&
-            RightClass.keyType === exports.KEY_TYPE_STRING
+        if (LeftClass.valueType === $data.VALUE_TYPE_STRING &&
+            RightClass.keyType === $data.KEY_TYPE_STRING
         ) {
             keyMultiplicity = LeftClass.keyMultiplicity === RightClass.keyMultiplicity ?
                 LeftClass.keyMultiplicity :
-                exports.KEY_MUL_ANY;
+                $data.KEY_MUL_ANY;
 
-            return exports.CLASS_BY_TYPE
+            return $data.CLASS_BY_TYPE
                 [LeftClass.keyType]
                 [RightClass.valueType]
                 [keyMultiplicity];

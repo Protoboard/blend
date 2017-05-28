@@ -4,6 +4,7 @@
 var $assert = require('giant-assert'),
     $oop = require('giant-oop'),
     $utils = require('giant-utils'),
+    $data = exports,
     hOP = Object.prototype.hasOwnProperty,
     slice = Array.prototype.slice;
 
@@ -15,7 +16,7 @@ var $assert = require('giant-assert'),
  * @external Array
  */
 
-$oop.copyProperties(exports, /** @lends $data */{
+$oop.copyProperties($data, /** @lends $data */{
     /**
      * Marks key-value container as having strings for keys.
      * @constant

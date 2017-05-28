@@ -1,4 +1,4 @@
-/* globals $assert, $oop, $utils, hOP, slice */
+/* globals $assert, $data, $oop, $utils, hOP, slice */
 "use strict";
 
 /**
@@ -14,7 +14,7 @@
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
  */
-exports.StringDictionary = $oop.getClass('$data.StringDictionary')
+$data.StringDictionary = $oop.getClass('$data.StringDictionary')
     .extend($oop.getClass('$data.DataContainer'))
     .include($oop.getClass('$data.KeyValueContainer'))
     .include($oop.getClass('$data.StringKeyHost'))
@@ -69,7 +69,7 @@ exports.StringDictionary = $oop.getClass('$data.StringDictionary')
             if (values && hOP.call(values, value)) {
                 delete values[value];
 
-                if (exports.isEmptyObject(values)) {
+                if ($data.isEmptyObject(values)) {
                     delete data[key];
                 }
 
@@ -116,7 +116,7 @@ $oop.getClass('$data.DataContainer')
          * @returns {$data.StringDictionary}
          */
         toStringDictionary: function () {
-            return exports.StringDictionary.create(this._data);
+            return $data.StringDictionary.create(this._data);
         }
     });
 
@@ -125,6 +125,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
      * @returns {$data.StringDictionary}
      */
     toStringDictionary: function () {
-        return exports.StringDictionary.create(this);
+        return $data.StringDictionary.create(this);
     }
 });

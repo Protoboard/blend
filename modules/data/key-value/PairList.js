@@ -1,4 +1,4 @@
-/* globals $assert, $oop, $utils, hOP, slice */
+/* globals $assert, $data, $oop, $utils, hOP, slice */
 "use strict";
 
 /**
@@ -14,7 +14,7 @@
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
  */
-exports.PairList = $oop.getClass('$data.PairList')
+$data.PairList = $oop.getClass('$data.PairList')
     .extend($oop.getClass('$data.DataContainer'))
     .include($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.PairList# */{
@@ -87,7 +87,7 @@ $oop.getClass('$data.DataContainer')
          * @returns {$data.PairList}
          */
         toPairList: function () {
-            return exports.PairList.create(this._data);
+            return $data.PairList.create(this._data);
         }
     });
 
@@ -96,6 +96,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
      * @returns {$data.PairList}
      */
     toPairList: function () {
-        return exports.PairList.create(this);
+        return $data.PairList.create(this);
     }
 });

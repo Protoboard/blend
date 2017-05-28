@@ -1,10 +1,10 @@
-/* global $assert, $oop */
+/* global $assert, $data, $oop */
 "use strict";
 
 /**
  * @interface $data.Clearable
  */
-exports.Clearable = $oop.getClass('$data.Clearable')
+$data.Clearable = $oop.getClass('$data.Clearable')
     .define(/** @lends $data.Clearable# */{
         /**
          * Resets instance to initial state.

@@ -1,4 +1,4 @@
-/* globals $assert, $oop, $utils, hOP, slice */
+/* globals $assert, $data, $oop, $utils, hOP, slice */
 "use strict";
 
 /**
@@ -14,7 +14,7 @@
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
  */
-exports.Dictionary = $oop.getClass('$data.Dictionary')
+$data.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.DataContainer'))
     .include($oop.getClass('$data.KeyValueContainer'))
     .include($oop.getClass('$data.StringKeyHost'))
@@ -119,7 +119,7 @@ $oop.getClass('$data.DataContainer')
          * @returns {$data.Dictionary}
          */
         toDictionary: function () {
-            return exports.Dictionary.create(this._data);
+            return $data.Dictionary.create(this._data);
         }
     });
 
@@ -128,6 +128,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
      * @returns {$data.Dictionary}
      */
     toDictionary: function () {
-        return exports.Dictionary.create(this);
+        return $data.Dictionary.create(this);
     }
 });

@@ -1,30 +1,30 @@
-/* globals $assert, $oop, $utils, slice */
+/* globals $assert, $data, $oop, $utils, slice */
 "use strict";
 
 /**
  * @mixin $data.KeyValueContainer
  * @augments $data.DataContainer
  */
-exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .require($oop.getClass('$data.DataContainer'))
     .define(/** @lends $data.KeyValueContainer# */{
         /**
          * @type {string}
          * @constant
          */
-        keyType: exports.KEY_TYPE_ANY,
+        keyType: $data.KEY_TYPE_ANY,
 
         /**
          * @type {string}
          * @constant
          */
-        valueType: exports.VALUE_TYPE_ANY,
+        valueType: $data.VALUE_TYPE_ANY,
 
         /**
          * @type {string}
          * @constant
          */
-        keyMultiplicity: exports.KEY_MUL_ANY,
+        keyMultiplicity: $data.KEY_MUL_ANY,
 
         /**
          * @param {object|Array} data
@@ -176,7 +176,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         mapValues: function (callback, context) {
             var data = this._data instanceof Array ? [] : {},
-                ResultClass = exports.getMapResultClass(this, exports.VALUE_TYPE_ANY),
+                ResultClass = $data.getMapResultClass(this, $data.VALUE_TYPE_ANY),
                 result = ResultClass.create(data);
 
             this.forEachItem(function (value, key, iterable) {
@@ -196,7 +196,7 @@ exports.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.Collection} Mapped collection
          */
         mapKeys: function (callback, context) {
-            var ResultClass = exports.getMapResultClass(this, exports.KEY_TYPE_ANY),
+            var ResultClass = $data.getMapResultClass(this, $data.KEY_TYPE_ANY),
                 result = ResultClass.create();
 
             this.forEachItem(function (value, key, iterable) {

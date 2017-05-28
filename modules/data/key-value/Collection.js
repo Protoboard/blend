@@ -1,4 +1,4 @@
-/* globals $assert, $oop, $utils, hOP, slice */
+/* globals $assert, $data, $oop, $utils, hOP, slice */
 "use strict";
 
 /**
@@ -14,7 +14,7 @@
  * @extends $data.DataContainer
  * @mixes $data.KeyValueContainer
  */
-exports.Collection = $oop.getClass('$data.Collection')
+$data.Collection = $oop.getClass('$data.Collection')
     .extend($oop.getClass('$data.DataContainer'))
     .include($oop.getClass('$data.KeyValueContainer'))
     .include($oop.getClass('$data.StringKeyHost'))
@@ -23,7 +23,7 @@ exports.Collection = $oop.getClass('$data.Collection')
          * @type {string}
          * @constant
          */
-        keyMultiplicity: exports.KEY_MUL_UNIQUE,
+        keyMultiplicity: $data.KEY_MUL_UNIQUE,
 
         /**
          * @param {string} key
@@ -102,7 +102,7 @@ $oop.getClass('$data.DataContainer')
          * @returns {$data.Collection}
          */
         toCollection: function () {
-            return exports.Collection.create(this._data);
+            return $data.Collection.create(this._data);
         }
     });
 
@@ -111,6 +111,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
      * @returns {$data.Collection}
      */
     toCollection: function () {
-        return exports.Collection.create(this);
+        return $data.Collection.create(this);
     }
 });
