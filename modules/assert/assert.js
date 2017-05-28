@@ -1,3 +1,4 @@
+/* globals $assert */
 "use strict";
 
 /**
@@ -7,7 +8,7 @@
  * @param {string} [message]
  * @returns {$assert}
  */
-exports.assert = function (expr, message) {
+$assert.assert = function (expr, message) {
     if (!expr) {
         throw new Error(message);
     }
