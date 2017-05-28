@@ -17,13 +17,8 @@
 exports.Collection = $oop.getClass('$data.Collection')
     .extend($oop.getClass('$data.DataContainer'))
     .include($oop.getClass('$data.KeyValueContainer'))
+    .include($oop.getClass('$data.StringKeyHost'))
     .define(/** @lends $data.Collection# */{
-        /**
-         * @type {string}
-         * @constant
-         */
-        keyType: exports.KEY_TYPE_STRING,
-
         /**
          * @type {string}
          * @constant

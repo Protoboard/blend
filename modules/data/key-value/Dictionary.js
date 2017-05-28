@@ -17,13 +17,8 @@
 exports.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.DataContainer'))
     .include($oop.getClass('$data.KeyValueContainer'))
+    .include($oop.getClass('$data.StringKeyHost'))
     .define(/** @lends $data.Dictionary# */{
-        /**
-         * @type {string}
-         * @constant
-         */
-        keyType: exports.KEY_TYPE_STRING,
-
         /**
          * @param {string} key
          * @param {*} value

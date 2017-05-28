@@ -10,7 +10,9 @@
       "key-value/PairList.js",
       "key-value/StringCollection.js",
       "key-value/StringDictionary.js",
+      "key-value/StringKeyHost.js",
       "key-value/StringPairList.js",
+      "key-value/StringValueHost.js",
       "utils/Clearable.js",
       "utils/data-utils.js"
     ]

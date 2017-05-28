@@ -15,13 +15,7 @@
  */
 exports.StringCollection = $oop.getClass('$data.StringCollection')
     .extend($oop.getClass('$data.Collection'))
-    .define(/** @lends $data.StringCollection# */{
-        /**
-         * @type {string}
-         * @constant
-         */
-        valueType: exports.VALUE_TYPE_STRING
-    });
+    .include($oop.getClass('$data.StringValueHost'));
 
 $oop.getClass('$data.DataContainer')
     .delegate(/** @lends $data.DataContainer# */{
