@@ -25,17 +25,6 @@ $data.StringKeyHost = $oop.getClass('$data.StringKeyHost')
          * @returns {$data.KeyValueContainer}
          */
         joinTo: function (leftContainer) {
-            var that = this,
-                ResultClass = $data.getJoinResultClass(leftContainer, this),
-                result = ResultClass.create();
-
-            leftContainer.forEachItem(function (value, key) {
-                var values = that.getValuesForKey(value);
-                values.forEach(function (value) {
-                    result.setItem(key, value);
-                });
-            });
-
-            return result;
+            return leftContainer.join(this);
         }
     });

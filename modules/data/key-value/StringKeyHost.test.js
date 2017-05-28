@@ -15,46 +15,34 @@ describe("$data", function () {
             StringKeyHost = $oop.getClass('StringKeyHost')
                 .extend($data.DataContainer)
                 .include($data.KeyValueContainer)
-                .include($data.StringKeyHost)
-                .include($data.StringValueHost)
-                .define({
-                    getValuesForKey: function (key) {
-                        var data = this._data;
-                        return data.hasOwnProperty(key) ?
-                            [this._data[key]] :
-                            [];
-                    }
-                });
+                .include($data.StringKeyHost);
 
-            stringKeyHost = StringKeyHost.create({
-                foo: "FOO",
-                bar: "BAR",
-                baz: "BAZ"
-            });
+            stringKeyHost = StringKeyHost.create();
         });
 
         describe("joinTo()", function () {
-            var leftContainer;
+            var StringValueHost,
+                leftContainer,
+                joinedContainer;
 
             beforeEach(function () {
-                leftContainer = $data.StringDictionary.create({
-                    hello: {foo: 1, bar: 1},
-                    quux: {quux: 1, baz: 1}
-                });
+                StringValueHost = $oop.getClass('StringValueHost')
+                    .extend($data.DataContainer)
+                    .include($data.KeyValueContainer)
+                    .include($data.StringValueHost);
+
+                leftContainer = StringValueHost.create({});
+
+                joinedContainer = {};
+
+                spyOn(leftContainer, 'join').and.returnValue(joinedContainer);
 
                 result = stringKeyHost.joinTo(leftContainer);
             });
 
-            it("should return correct type", function () {
-                expect($data.StringDictionary.isIncludedBy(result))
-                    .toBeTruthy();
-            });
-
-            it("should return joined data", function () {
-                expect(result._data).toEqual({
-                    hello: {FOO: 1, BAR: 1},
-                    quux: {BAZ: 1}
-                });
+            it("should join containers", function () {
+                expect(leftContainer.join).toHaveBeenCalledWith(stringKeyHost);
+                expect(result).toBe(joinedContainer);
             });
         });
     });
