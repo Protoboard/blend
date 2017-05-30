@@ -385,7 +385,7 @@ describe("$data", function () {
             });
         });
 
-        describe("filterBy()", function () {
+        describe("filter()", function () {
             var callback;
 
             beforeEach(function () {
@@ -393,7 +393,7 @@ describe("$data", function () {
                     .callFake(function (value) {
                         return value[0] === 'F';
                     });
-                result = keyValueContainer.filterBy(callback);
+                result = keyValueContainer.filter(callback);
             });
 
             it("should return instance of correct class", function () {
@@ -419,7 +419,7 @@ describe("$data", function () {
                     keyValueContainer = KeyValueContainer.create([
                         'foo', 'bar', 'baz', 'quux'
                     ]);
-                    result = keyValueContainer.filterBy(function (value) {
+                    result = keyValueContainer.filter(function (value) {
                         return value.length > 3;
                     });
                 });

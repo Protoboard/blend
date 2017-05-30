@@ -16,6 +16,7 @@
       "key-value/StringValueHost.js",
       "set/StringSet.js",
       "utils/Clearable.js",
+      "utils/Filterable.js",
       "utils/data-utils.js"
     ]
   }

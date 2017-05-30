@@ -5,10 +5,12 @@
  * value types. Hosts are expected to implement storage-specific behavior
  * and features.
  * @mixin $data.KeyValueContainer
+ * @implements $data.Filterable
  * @extends $data.ItemContainer
  */
 $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .extend($oop.getClass('$data.ItemContainer'))
+    .implement($oop.getClass('$data.Filterable'))
     .define(/** @lends $data.KeyValueContainer# */{
         /**
          * @type {string}
@@ -243,7 +245,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @param {object} [context] Context for callback
          * @returns {$data.KeyValueContainer} Filtered collection
          */
-        filterBy: function (callback, context) {
+        filter: function (callback, context) {
             var data = this._data instanceof Array ? [] : {},
                 ResultClass = $oop.getClass(this.__classId),
                 result = ResultClass.create(data);
@@ -265,7 +267,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         filterByKeyPrefix: function (prefix) {
             var prefixLength = prefix.length;
-            return this.filterBy(function (value, key) {
+            return this.filter(function (value, key) {
                 return key.slice(0, prefixLength) === prefix;
             });
         },
@@ -276,7 +278,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          */
         filterByPrefix: function (prefix) {
             var prefixLength = prefix.length;
-            return this.filterBy(function (value) {
+            return this.filter(function (value) {
                 return value.slice(0, prefixLength) === prefix;
             });
         },
@@ -288,7 +290,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.KeyValueContainer} Filtered collection
          */
         filterByKeyRegExp: function (regExp) {
-            return this.filterBy(function (value, key) {
+            return this.filter(function (value, key) {
                 return regExp.test(key);
             });
         },
@@ -298,7 +300,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.KeyValueContainer}
          */
         filterByRegExp: function (regExp) {
-            return this.filterBy(function (value) {
+            return this.filter(function (value) {
                 return regExp.test(value);
             });
         },
@@ -316,22 +318,22 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         filterByType: function (type) {
             switch (true) {
             case typeof type === 'string':
-                return this.filterBy(function (value) {
+                return this.filter(function (value) {
                     return typeof value === type;
                 });
 
             case typeof type === 'function':
-                return this.filterBy(function (value) {
+                return this.filter(function (value) {
                     return value instanceof type;
                 });
 
             case $oop.Class.isPrototypeOf(type):
-                return this.filterBy(function (value) {
+                return this.filter(function (value) {
                     return type.isIncludedBy(value);
                 });
 
             case typeof type === 'object':
-                return this.filterBy(function (value) {
+                return this.filter(function (value) {
                     return type.isPrototypeOf(value);
                 });
             }
