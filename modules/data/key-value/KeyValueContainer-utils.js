@@ -85,5 +85,27 @@ $oop.copyProperties($data, /** @lends $data */{
                 [RightClass.valueType]
                 [keyMultiplicity];
         }
+    },
+
+    /**
+     * Determines what `KeyValueContainer` class will be the result of merging
+     * `LeftClass` & `RightClass`.
+     * @param {$data.KeyValueContainer} LeftClass Class of left operand in merge
+     * @param {$data.KeyValueContainer} RightClass Class of right operand in
+     * merge
+     * @returns {$data.KeyValueContainer}
+     */
+    getMergeResultClass: function (LeftClass, RightClass) {
+        var resultKeyType = LeftClass.keyType === RightClass.keyType ?
+                LeftClass.keyType :
+                $data.KEY_TYPE_ANY,
+            resultValueType = LeftClass.valueType === RightClass.valueType ?
+                LeftClass.valueType :
+                $data.VALUE_TYPE_ANY;
+
+        return $data.CLASS_BY_TYPE
+            [resultKeyType]
+            [resultValueType]
+            [$data.KEY_MUL_ANY];
     }
 });

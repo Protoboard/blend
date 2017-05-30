@@ -174,4 +174,56 @@ describe("$data", function () {
                 .toBe($data.StringPairList);
         });
     });
+
+    describe("getMergeResultClass()", function () {
+        it("should return merge result class", function () {
+            expect($data.getMergeResultClass(StringCollection, Collection))
+                .toBe($data.Dictionary);
+            expect($data.getMergeResultClass(StringCollection, StringCollection))
+                .toBe($data.StringDictionary);
+            expect($data.getMergeResultClass(StringCollection, Dictionary))
+                .toBe($data.Dictionary);
+            expect($data.getMergeResultClass(StringCollection, StringDictionary))
+                .toBe($data.StringDictionary);
+            expect($data.getMergeResultClass(StringCollection, PairList))
+                .toBe($data.PairList);
+            expect($data.getMergeResultClass(StringCollection, StringPairList))
+                .toBe($data.StringPairList);
+
+            expect($data.getMergeResultClass(Collection, Collection))
+                .toBe($data.Dictionary);
+            expect($data.getMergeResultClass(Collection, Dictionary))
+                .toBe($data.Dictionary);
+            expect($data.getMergeResultClass(Collection, StringDictionary))
+                .toBe($data.Dictionary);
+            expect($data.getMergeResultClass(Collection, PairList))
+                .toBe($data.PairList);
+            expect($data.getMergeResultClass(Collection, StringPairList))
+                .toBe($data.PairList);
+
+            expect($data.getMergeResultClass(StringDictionary, Dictionary))
+                .toBe($data.Dictionary);
+            expect($data.getMergeResultClass(StringDictionary, StringDictionary))
+                .toBe($data.StringDictionary);
+            expect($data.getMergeResultClass(StringDictionary, PairList))
+                .toBe($data.PairList);
+            expect($data.getMergeResultClass(StringDictionary, StringPairList))
+                .toBe($data.StringPairList);
+
+            expect($data.getMergeResultClass(Dictionary, Dictionary))
+                .toBe($data.Dictionary);
+            expect($data.getMergeResultClass(Dictionary, PairList))
+                .toBe($data.PairList);
+            expect($data.getMergeResultClass(Dictionary, StringPairList))
+                .toBe($data.PairList);
+
+            expect($data.getMergeResultClass(StringPairList, PairList))
+                .toBe($data.PairList);
+            expect($data.getMergeResultClass(StringPairList, StringPairList))
+                .toBe($data.StringPairList);
+
+            expect($data.getMergeResultClass(PairList, PairList))
+                .toBe($data.PairList);
+        });
+    });
 });

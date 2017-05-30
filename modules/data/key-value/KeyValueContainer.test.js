@@ -562,5 +562,30 @@ describe("$data", function () {
                 });
             });
         });
+
+        describe("mergeWith()", function () {
+            var keyValueContainer2;
+
+            beforeEach(function () {
+                keyValueContainer2 = KeyValueContainer.create({
+                    bar: "bar",
+                    baz: "baz"
+                });
+                spyOn($data, 'getMergeResultClass').and.returnValue(Settable);
+                result = keyValueContainer.mergeWith(keyValueContainer2);
+            });
+
+            it("should return instance of correct class", function () {
+                expect(Settable.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should merge keys and values", function () {
+                expect(result._data).toEqual({
+                    foo: "FOO",
+                    bar: "bar",
+                    baz: "baz"
+                });
+            });
+        });
     });
 });

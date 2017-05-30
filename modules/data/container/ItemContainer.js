@@ -42,7 +42,7 @@ $data.ItemContainer = $oop.getClass('$data.ItemContainer')
 
         /**
          * Sets item in container.
-         * @method $data.ItemContainer#setItem
+         * @function $data.ItemContainer#setItem
          * @param {...*} item
          * @returns {$data.ItemContainer}
          * @abstract
@@ -50,7 +50,7 @@ $data.ItemContainer = $oop.getClass('$data.ItemContainer')
 
         /**
          * Deletes item from container.
-         * @method $data.ItemContainer#deleteItem
+         * @function $data.ItemContainer#deleteItem
          * @param {...*} item
          * @returns {$data.ItemContainer}
          * @abstract
@@ -58,14 +58,14 @@ $data.ItemContainer = $oop.getClass('$data.ItemContainer')
 
         /**
          * Tells whether item is present in the container.
-         * @method $data.ItemContainer#hasItem
+         * @function $data.ItemContainer#hasItem
          * @param {...*} item
          * @returns {boolean}
          * @abstract
          */
 
         /**
-         * @method $data.ItemContainer#forEachItem
+         * @function $data.ItemContainer#forEachItem
          * @param {function} callback
          * @param {object} [context]
          * @returns {$data.ItemContainer}

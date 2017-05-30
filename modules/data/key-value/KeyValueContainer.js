@@ -345,5 +345,20 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
             var result = $data.getSwapResultClass(this).create();
             this.forEachItem(result.setItem, result);
             return result;
+        },
+
+        /**
+         * @param {$data.KeyValueContainer} rightContainer
+         * @returns {$data.KeyValueContainer}
+         */
+        mergeWith: function (rightContainer) {
+            var result = $data.getMergeResultClass(this, rightContainer).create();
+            this.forEachItem(function (value, key) {
+                result.setItem(key, value);
+            });
+            rightContainer.forEachItem(function (value, key) {
+                result.setItem(key, value);
+            });
+            return result;
         }
     });

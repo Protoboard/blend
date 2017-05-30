@@ -8,6 +8,7 @@
  */
 
 /**
+ * TODO: Should be filterable & reducible. (But not mappable.)
  * @class $data.StringSet
  * @extends $data.DataContainer
  * @mixes $data.ItemContainer
