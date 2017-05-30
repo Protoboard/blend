@@ -1,4 +1,3 @@
-/* globals $assert, $data, $oop, $utils, slice */
 "use strict";
 
 /**

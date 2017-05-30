@@ -1,4 +1,3 @@
-/* global $assert, $oop */
 "use strict";
 
 var $assert = window['giant-assert'],

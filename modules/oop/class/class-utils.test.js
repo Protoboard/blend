@@ -1,4 +1,3 @@
-/* global $oop */
 "use strict";
 
 var $oop = window['giant-oop'];

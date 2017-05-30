@@ -1,4 +1,3 @@
-/* globals $data, $oop, hOP */
 "use strict";
 
 $oop.copyProperties($data, /** @lends $data */{

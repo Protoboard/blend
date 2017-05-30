@@ -1,0 +1,9 @@
+{
+  "browser": true,
+  "node": true,
+  "jasmine": true,
+  "globalstrict": true,
+  "globals": {
+    "$assert": true
+  }
+}

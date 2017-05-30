@@ -1,4 +1,3 @@
-/* global $utils */
 "use strict";
 
 /**

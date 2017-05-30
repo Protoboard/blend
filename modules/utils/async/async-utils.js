@@ -1,4 +1,3 @@
-/* global $oop, $utils, slice */
 "use strict";
 
 $oop.copyProperties($utils, /** @lends $utils */{

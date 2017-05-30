@@ -1,4 +1,3 @@
-/* global $assert, $oop */
 "use strict";
 
 /**
