@@ -6,11 +6,13 @@
  * features.
  * @mixin $data.ScalarContainer
  * @implements $data.Filterable
+ * @implements $data.Reducible
  * @extends $data.ItemContainer
  */
 $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
     .extend($oop.getClass('$data.ItemContainer'))
     .implement($oop.getClass('$data.Filterable'))
+    .implement($oop.getClass('$data.Reducible'))
     .define(/** @lends $data.ScalarContainer# */{
         /**
          * Extracts items matching the condition in the specified
@@ -28,6 +30,25 @@ $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
                 if (callback.call(this, item)) {
                     result.setItem(item);
                 }
+            }, context);
+
+            return result;
+        },
+
+        /**
+         * Accumulates a value based on the contribution of each item,
+         * as defined by the specified callback.
+         * @param {function} callback Contributes to accumulated value
+         * based on current item
+         * @param {*} [initialValue] Initial value for accumulated result
+         * @param {object} [context] Context for callback
+         * @returns {*} Accummulated value
+         */
+        reduce: function (callback, initialValue, context) {
+            var result = initialValue;
+
+            this.forEachItem(function (value) {
+                result = callback.call(this, result, value);
             }, context);
 
             return result;

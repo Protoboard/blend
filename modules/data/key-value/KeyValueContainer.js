@@ -6,11 +6,13 @@
  * and features.
  * @mixin $data.KeyValueContainer
  * @implements $data.Filterable
+ * @implements $data.Reducible
  * @extends $data.ItemContainer
  */
 $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     .extend($oop.getClass('$data.ItemContainer'))
     .implement($oop.getClass('$data.Filterable'))
+    .implement($oop.getClass('$data.Reducible'))
     .define(/** @lends $data.KeyValueContainer# */{
         /**
          * @type {string}
@@ -29,6 +31,46 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @constant
          */
         keyMultiplicity: $data.KEY_MUL_ANY,
+
+        /**
+         * Extracts items matching the condition in the specified
+         * callback function and returns the result as a new collection.
+         * @param {function} callback Filter function returning a boolean
+         * @param {object} [context] Context for callback
+         * @returns {$data.KeyValueContainer} Filtered collection
+         */
+        filter: function (callback, context) {
+            var data = this._data instanceof Array ? [] : {},
+                ResultClass = $oop.getClass(this.__classId),
+                result = ResultClass.create(data);
+
+            this.forEachItem(function (value, key) {
+                if (callback.call(this, value, key)) {
+                    result.setItem(key, value);
+                }
+            }, context);
+
+            return result;
+        },
+
+        /**
+         * Accumulates a value based on the contribution of each item,
+         * as defined by the specified callback.
+         * @param {function} callback Contributes to accumulated value
+         * based on current item
+         * @param {*} [initialValue] Initial value for accumulated result
+         * @param {object} [context] Context for callback
+         * @returns {*} Accummulated value
+         */
+        reduce: function (callback, initialValue, context) {
+            var result = initialValue;
+
+            this.forEachItem(function (value, key) {
+                result = callback.call(this, result, value, key);
+            }, context);
+
+            return result;
+        },
 
         /**
          * Retrieves a list of all keys in the container.
@@ -137,25 +179,6 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         },
 
         /**
-         * Accumulates a value based on the contribution of each item,
-         * as defined by the specified callback.
-         * @param {function} callback Contributes to accumulated value
-         * based on current item
-         * @param {*} [initialValue] Initial value for accumulated result
-         * @param {object} [context] Context for callback
-         * @returns {*} Accummulated value
-         */
-        reduce: function (callback, initialValue, context) {
-            var result = initialValue;
-
-            this.forEachItem(function (value, key) {
-                result = callback.call(this, result, value, key);
-            }, context);
-
-            return result;
-        },
-
-        /**
          * Passes each item value to the specified callback as one of
          * its arguments, and returns mapped key-value pairs as a
          * new collection.
@@ -236,27 +259,6 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
                     return Class.create(value);
                 });
             }
-        },
-
-        /**
-         * Extracts items matching the condition in the specified
-         * callback function and returns the result as a new collection.
-         * @param {function} callback Filter function returning a boolean
-         * @param {object} [context] Context for callback
-         * @returns {$data.KeyValueContainer} Filtered collection
-         */
-        filter: function (callback, context) {
-            var data = this._data instanceof Array ? [] : {},
-                ResultClass = $oop.getClass(this.__classId),
-                result = ResultClass.create(data);
-
-            this.forEachItem(function (value, key) {
-                if (callback.call(this, value, key)) {
-                    result.setItem(key, value);
-                }
-            }, context);
-
-            return result;
         },
 
         /**

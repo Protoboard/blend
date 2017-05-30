@@ -18,6 +18,7 @@
       "set/StringSet.js",
       "utils/Clearable.js",
       "utils/Filterable.js",
+      "utils/Reducible.js",
       "utils/data-utils.js"
     ]
   }

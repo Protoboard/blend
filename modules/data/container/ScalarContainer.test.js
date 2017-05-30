@@ -13,7 +13,6 @@ describe("$data", function () {
         var data,
             ScalarContainer,
             scalarContainer,
-            Settable,
             result;
 
         beforeEach(function () {
@@ -59,6 +58,29 @@ describe("$data", function () {
             it("should return filtered collection", function () {
                 expect(result).not.toBe(scalarContainer);
                 expect(result._data).toEqual(['foo']);
+            });
+        });
+
+        describe("reduce()", function () {
+            var callback;
+
+            beforeEach(function () {
+                callback = jasmine.createSpy().and.callFake(
+                    function (reduced, value) {
+                        return reduced + value;
+                    });
+                result = scalarContainer.reduce(callback, '');
+            });
+
+            it("should pass item values & keys to callback", function () {
+                expect(callback.calls.allArgs()).toEqual([
+                    ['', 'foo'],
+                    ['foo', 'bar']
+                ]);
+            });
+
+            it("should return reduced value", function () {
+                expect(result).toBe("foobar");
             });
         });
     });

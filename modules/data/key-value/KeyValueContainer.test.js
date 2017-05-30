@@ -51,6 +51,74 @@ describe("$data", function () {
             keyValueContainer = KeyValueContainer.create(data);
         });
 
+        describe("filter()", function () {
+            var callback;
+
+            beforeEach(function () {
+                callback = jasmine.createSpy().and
+                    .callFake(function (value) {
+                        return value[0] === 'F';
+                    });
+                result = keyValueContainer.filter(callback);
+            });
+
+            it("should return instance of correct class", function () {
+                expect(KeyValueContainer.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should pass item values & keys to callback", function () {
+                expect(callback.calls.allArgs()).toEqual([
+                    ["FOO", 'foo'],
+                    ["BAR", 'bar']
+                ]);
+            });
+
+            it("should return filtered collection", function () {
+                expect(result).not.toBe(keyValueContainer);
+                expect(result._data).toEqual({
+                    foo: "FOO"
+                });
+            });
+
+            describe("for array set", function () {
+                beforeEach(function () {
+                    keyValueContainer = KeyValueContainer.create([
+                        'foo', 'bar', 'baz', 'quux'
+                    ]);
+                    result = keyValueContainer.filter(function (value) {
+                        return value.length > 3;
+                    });
+                });
+
+                it("should return array set", function () {
+                    expect(result._data instanceof Array).toBeTruthy();
+                });
+            });
+        });
+
+        describe("reduce()", function () {
+            var callback;
+
+            beforeEach(function () {
+                callback = jasmine.createSpy().and.callFake(
+                    function (reduced, value) {
+                        return reduced + value;
+                    });
+                result = keyValueContainer.reduce(callback, '');
+            });
+
+            it("should pass item values & keys to callback", function () {
+                expect(callback.calls.allArgs()).toEqual([
+                    ['', 'FOO', 'foo'],
+                    ['FOO', 'BAR', 'bar']
+                ]);
+            });
+
+            it("should return reduced value", function () {
+                expect(result).toBe("FOOBAR");
+            });
+        });
+
         describe("getKeys()", function () {
             beforeEach(function () {
                 result = keyValueContainer.getKeys();
@@ -202,29 +270,6 @@ describe("$data", function () {
                     FOO: "FOO",
                     BAR: "BAR"
                 });
-            });
-        });
-
-        describe("reduce()", function () {
-            var callback;
-
-            beforeEach(function () {
-                callback = jasmine.createSpy().and.callFake(
-                    function (reduced, value) {
-                        return reduced + value;
-                    });
-                result = keyValueContainer.reduce(callback, '');
-            });
-
-            it("should pass item values & keys to callback", function () {
-                expect(callback.calls.allArgs()).toEqual([
-                    ['', 'FOO', 'foo'],
-                    ['FOO', 'BAR', 'bar']
-                ]);
-            });
-
-            it("should return reduced value", function () {
-                expect(result).toBe("FOOBAR");
             });
         });
 
@@ -381,51 +426,6 @@ describe("$data", function () {
                         foo: Class2.create('FOO'),
                         bar: Class2.create('BAR')
                     });
-                });
-            });
-        });
-
-        describe("filter()", function () {
-            var callback;
-
-            beforeEach(function () {
-                callback = jasmine.createSpy().and
-                    .callFake(function (value) {
-                        return value[0] === 'F';
-                    });
-                result = keyValueContainer.filter(callback);
-            });
-
-            it("should return instance of correct class", function () {
-                expect(KeyValueContainer.isIncludedBy(result)).toBeTruthy();
-            });
-
-            it("should pass item values & keys to callback", function () {
-                expect(callback.calls.allArgs()).toEqual([
-                    ["FOO", 'foo'],
-                    ["BAR", 'bar']
-                ]);
-            });
-
-            it("should return filtered collection", function () {
-                expect(result).not.toBe(keyValueContainer);
-                expect(result._data).toEqual({
-                    foo: "FOO"
-                });
-            });
-
-            describe("for array set", function () {
-                beforeEach(function () {
-                    keyValueContainer = KeyValueContainer.create([
-                        'foo', 'bar', 'baz', 'quux'
-                    ]);
-                    result = keyValueContainer.filter(function (value) {
-                        return value.length > 3;
-                    });
-                });
-
-                it("should return array set", function () {
-                    expect(result._data instanceof Array).toBeTruthy();
                 });
             });
         });
