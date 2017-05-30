@@ -12,9 +12,9 @@
  * Pairs are unique.
  * @class $data.StringDictionary
  * @extends $data.DataContainer
- * @mixes $data.KeyValueContainer
- * @mixes $data.StringKeyHost
- * @mixes $data.StringValueHost
+ * @extends $data.KeyValueContainer
+ * @extends $data.StringKeyHost
+ * @extends $data.StringValueHost
  */
 $data.StringDictionary = $oop.getClass('$data.StringDictionary')
     .extend($oop.getClass('$data.DataContainer'))

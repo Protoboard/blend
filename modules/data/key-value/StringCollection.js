@@ -12,7 +12,7 @@
  * Pairs are unique.
  * @class $data.StringCollection
  * @extends $data.Collection
- * @mixes $data.StringValueHost
+ * @extends $data.StringValueHost
  */
 $data.StringCollection = $oop.getClass('$data.StringCollection')
     .extend($oop.getClass('$data.Collection'))

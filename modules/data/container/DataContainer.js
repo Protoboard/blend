@@ -13,7 +13,7 @@
  * @class $data.DataContainer
  * @implements $utils.Destroyable
  * @implements $data.Clearable
- * @mixes $utils.Cloneable
+ * @extends $utils.Cloneable
  */
 $data.DataContainer = $oop.getClass('$data.DataContainer')
     .implement($oop.getClass('$utils.Destroyable'))

@@ -11,7 +11,7 @@
  * TODO: Should be filterable & reducible. (But not mappable.)
  * @class $data.StringSet
  * @extends $data.DataContainer
- * @mixes $data.ItemContainer
+ * @extends $data.ItemContainer
  */
 $data.StringSet = $oop.getClass('$data.StringSet')
     .extend($oop.getClass('$data.DataContainer'))

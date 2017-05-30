@@ -12,7 +12,7 @@
  * **Pairs are not unique.**
  * @class $data.PairList
  * @extends $data.DataContainer
- * @mixes $data.KeyValueContainer
+ * @extends $data.KeyValueContainer
  */
 $data.PairList = $oop.getClass('$data.PairList')
     .extend($oop.getClass('$data.DataContainer'))

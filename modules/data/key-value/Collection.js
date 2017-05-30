@@ -12,8 +12,8 @@
  * Pairs are unique.
  * @class $data.Collection
  * @extends $data.DataContainer
- * @mixes $data.KeyValueContainer
- * @mixes $data.StringKeyHost
+ * @extends $data.KeyValueContainer
+ * @extends $data.StringKeyHost
  */
 $data.Collection = $oop.getClass('$data.Collection')
     .extend($oop.getClass('$data.DataContainer'))

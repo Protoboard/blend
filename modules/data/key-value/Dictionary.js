@@ -12,8 +12,8 @@
  * **Pairs are not unique.**
  * @class $data.Dictionary
  * @extends $data.DataContainer
- * @mixes $data.KeyValueContainer
- * @mixes $data.StringKeyHost
+ * @extends $data.KeyValueContainer
+ * @extends $data.StringKeyHost
  */
 $data.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.DataContainer'))
