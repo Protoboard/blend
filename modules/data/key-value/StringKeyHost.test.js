@@ -14,7 +14,7 @@ describe("$data", function () {
         beforeEach(function () {
             StringKeyHost = $oop.getClass('StringKeyHost')
                 .extend($data.DataContainer)
-                .include($data.KeyValueContainer)
+                .extend($data.KeyValueContainer)
                 .include($data.StringKeyHost);
 
             stringKeyHost = StringKeyHost.create();
@@ -28,7 +28,7 @@ describe("$data", function () {
             beforeEach(function () {
                 StringValueHost = $oop.getClass('StringValueHost')
                     .extend($data.DataContainer)
-                    .include($data.KeyValueContainer)
+                    .extend($data.KeyValueContainer)
                     .include($data.StringValueHost);
 
                 leftContainer = StringValueHost.create({});

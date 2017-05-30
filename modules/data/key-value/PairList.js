@@ -16,7 +16,7 @@
  */
 $data.PairList = $oop.getClass('$data.PairList')
     .extend($oop.getClass('$data.DataContainer'))
-    .include($oop.getClass('$data.KeyValueContainer'))
+    .extend($oop.getClass('$data.KeyValueContainer'))
     .define(/** @lends $data.PairList# */{
         /**
          * @param {Array} data

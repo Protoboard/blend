@@ -3,6 +3,7 @@
     "js": [
       "globals.js",
       "container/DataContainer.js",
+      "container/ItemContainer.js",
       "key-value/Collection.js",
       "key-value/Dictionary.js",
       "key-value/KeyValueContainer-utils.js",

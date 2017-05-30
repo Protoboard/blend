@@ -2,11 +2,14 @@
 "use strict";
 
 /**
+ * Maintains a set of key-value pairs. Agnostic about pair storage and key /
+ * value types. Hosts are expected to implement storage-specific behavior
+ * and features.
  * @mixin $data.KeyValueContainer
- * @augments $data.DataContainer
+ * @extends $data.ItemContainer
  */
 $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
-    .require($oop.getClass('$data.DataContainer'))
+    .extend($oop.getClass('$data.ItemContainer'))
     .define(/** @lends $data.KeyValueContainer# */{
         /**
          * @type {string}
@@ -25,81 +28,6 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @constant
          */
         keyMultiplicity: $data.KEY_MUL_ANY,
-
-        /**
-         * @param {object|Array} data
-         * @ignore
-         */
-        init: function (data) {
-            /**
-             * @type {number}
-             */
-            this._itemCount = data ? undefined : 0;
-        },
-
-        /**
-         * Clones current instance.
-         * @returns {$data.KeyValueContainer}
-         */
-        clone: function clone() {
-            var cloned = clone.returned;
-            cloned._itemCount = this._itemCount;
-            return cloned;
-        },
-
-        /**
-         * Resets state of current instance.
-         * @returns {$data.KeyValueContainer}
-         */
-        clear: function () {
-            this._itemCount = 0;
-            return this;
-        },
-
-        /**
-         * Sets a key-value pair in the container.
-         * @method $data.KeyValueContainer#setItem
-         * @param {string} key
-         * @param {*} value
-         * @returns {$data.KeyValueContainer}
-         * @abstract
-         */
-
-        /**
-         * Deletes key-value pair from container.
-         * @method $data.KeyValueContainer#deleteItem
-         * @param {string} key
-         * @param {*} [value]
-         * @returns {$data.KeyValueContainer}
-         * @abstract
-         */
-
-        /**
-         * Iterates over collection and calls specified callback on
-         * each item. Item order is not deterministic. Returns self.
-         * Returning false from callback breaks iteration.
-         * @method $data.KeyValueContainer#forEachItem
-         * @param {function} callback
-         * @param {object} [context]
-         * @returns {$data.KeyValueContainer}
-         * @abstract
-         */
-
-        /**
-         * Retrieves the number of key-value pairs in the container.
-         * @returns {Number}
-         */
-        getItemCount: function () {
-            var itemCount = this._itemCount;
-            if (itemCount === undefined) {
-                itemCount = 0;
-                this.forEachItem(function () {
-                    itemCount++;
-                });
-                this._itemCount = itemCount;
-            }
-            return itemCount;
-        },
 
         /**
          * Retrieves a list of all keys in the container.
@@ -154,7 +82,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         },
 
         /**
-         * Converts current DataContainer to the specified class.
+         * Converts current KeyValueContainer to the specified class.
          * @param {$data.KeyValueContainer} KeyValueContainer
          * @returns {$data.KeyValueContainer}
          */

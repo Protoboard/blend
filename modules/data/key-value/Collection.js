@@ -17,7 +17,7 @@
  */
 $data.Collection = $oop.getClass('$data.Collection')
     .extend($oop.getClass('$data.DataContainer'))
-    .include($oop.getClass('$data.KeyValueContainer'))
+    .extend($oop.getClass('$data.KeyValueContainer'))
     .include($oop.getClass('$data.StringKeyHost'))
     .define(/** @lends $data.Collection# */{
         /**
@@ -67,7 +67,6 @@ $data.Collection = $oop.getClass('$data.Collection')
         },
 
         /**
-         * @inheritDoc
          * @param {function} callback Function to be called for each item
          * @param {object} [context] Context for callback
          * @returns {$data.Collection} Current instance

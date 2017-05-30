@@ -24,7 +24,7 @@ describe("$data", function () {
 
             KeyValueContainer = $oop.getClass('KeyValueContainer')
                 .extend($data.DataContainer)
-                .include($data.KeyValueContainer)
+                .extend($data.KeyValueContainer)
                 .define({
                     setItem: function (key, value) {
                         this._data[key] = value;
@@ -49,66 +49,6 @@ describe("$data", function () {
                 });
 
             keyValueContainer = KeyValueContainer.create(data);
-        });
-
-        describe("create()", function () {
-            it("should initialize _itemCount property", function () {
-                expect(keyValueContainer.hasOwnProperty('_itemCount'))
-                    .toBeTruthy();
-                expect(keyValueContainer._itemCount).toBeUndefined();
-            });
-
-            describe("on missing arguments", function () {
-                it("should set _itemCount property to 0", function () {
-                    keyValueContainer = KeyValueContainer.create();
-                    expect(keyValueContainer._itemCount).toBe(0);
-                });
-            });
-        });
-
-        describe("clone()", function () {
-            var clonedIterable;
-
-            beforeEach(function () {
-                keyValueContainer._itemCount = 2;
-                clonedIterable = keyValueContainer.clone();
-            });
-
-            it("should return cloned instance", function () {
-                expect(clonedIterable).not.toBe(keyValueContainer);
-            });
-
-            it("should set _itemCount", function () {
-                expect(clonedIterable._itemCount).toBe(2);
-            });
-        });
-
-        describe("clear()", function () {
-            beforeEach(function () {
-                result = keyValueContainer.clear();
-            });
-
-            it("should return self", function () {
-                expect(result).toBe(keyValueContainer);
-            });
-
-            it("should reset _itemCount", function () {
-                expect(keyValueContainer._itemCount).toBe(0);
-            });
-        });
-
-        describe("getItemCount()", function () {
-            beforeEach(function () {
-                result = keyValueContainer.getItemCount();
-            });
-
-            it("should return key count", function () {
-                expect(result).toBe(2);
-            });
-
-            it("should set _itemCount", function () {
-                expect(keyValueContainer._itemCount).toBe(2);
-            });
         });
 
         describe("getKeys()", function () {
@@ -215,7 +155,7 @@ describe("$data", function () {
                 });
             });
 
-            describe("for array buffer", function () {
+            describe("for array set", function () {
                 beforeEach(function () {
                     keyValueContainer = KeyValueContainer.create([
                         'foo', 'bar', 'baz', 'quux'
@@ -225,7 +165,7 @@ describe("$data", function () {
                     });
                 });
 
-                it("should return array buffer", function () {
+                it("should return array set", function () {
                     expect(result._data instanceof Array).toBeTruthy();
                 });
             });
@@ -474,7 +414,7 @@ describe("$data", function () {
                 });
             });
 
-            describe("for array buffer", function () {
+            describe("for array set", function () {
                 beforeEach(function () {
                     keyValueContainer = KeyValueContainer.create([
                         'foo', 'bar', 'baz', 'quux'
@@ -484,7 +424,7 @@ describe("$data", function () {
                     });
                 });
 
-                it("should return array buffer", function () {
+                it("should return array set", function () {
                     expect(result._data instanceof Array).toBeTruthy();
                 });
             });

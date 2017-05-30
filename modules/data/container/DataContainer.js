@@ -54,7 +54,7 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
         },
 
         /**
-         * Clears buffer data.
+         * Clears container.
          * @returns {$data.DataContainer}
          */
         clear: function () {

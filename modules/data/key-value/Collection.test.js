@@ -89,9 +89,7 @@ describe("$data", function () {
                 });
 
                 it("should stop at interruption", function () {
-                    expect(callback.calls.allArgs()).toEqual([
-                        ['FOO', 'foo']
-                    ]);
+                    expect(callback).toHaveBeenCalledTimes(1);
                 });
             });
         });
