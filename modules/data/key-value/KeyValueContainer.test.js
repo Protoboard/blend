@@ -435,7 +435,7 @@ describe("$data", function () {
                 result = keyValueContainer.filterByKeyPrefix('f');
             });
 
-            it("should return filtered iterable", function () {
+            it("should return filtered container", function () {
                 expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: 'FOO'
@@ -443,12 +443,12 @@ describe("$data", function () {
             });
         });
 
-        describe("filterByPrefix()", function () {
+        describe("filterByValuePrefix()", function () {
             beforeEach(function () {
-                result = keyValueContainer.filterByPrefix('F');
+                result = keyValueContainer.filterByValuePrefix('F');
             });
 
-            it("should return filtered iterable", function () {
+            it("should return filtered container", function () {
                 expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: 'FOO'
@@ -461,7 +461,7 @@ describe("$data", function () {
                 result = keyValueContainer.filterByKeyRegExp(/o$/);
             });
 
-            it("should return filtered iterable", function () {
+            it("should return filtered container", function () {
                 expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     foo: 'FOO'
@@ -469,12 +469,12 @@ describe("$data", function () {
             });
         });
 
-        describe("filterByRegExp()", function () {
+        describe("filterByValueRegExp()", function () {
             beforeEach(function () {
-                result = keyValueContainer.filterByRegExp(/^B/);
+                result = keyValueContainer.filterByValueRegExp(/^B/);
             });
 
-            it("should return filtered iterable", function () {
+            it("should return filtered container", function () {
                 expect(result).not.toBe(keyValueContainer);
                 expect(result._data).toEqual({
                     bar: 'BAR'
@@ -482,7 +482,7 @@ describe("$data", function () {
             });
         });
 
-        describe("filterByType()", function () {
+        describe("filterByValueType()", function () {
             var object = {},
                 container = $data.DataContainer.create();
 
@@ -496,7 +496,7 @@ describe("$data", function () {
 
             describe("for string argument", function () {
                 beforeEach(function () {
-                    result = keyValueContainer.filterByType('string');
+                    result = keyValueContainer.filterByValueType('string');
                 });
 
                 it("should retrieve typeof matches", function () {
@@ -508,7 +508,7 @@ describe("$data", function () {
 
             describe("for function argument", function () {
                 beforeEach(function () {
-                    result = keyValueContainer.filterByType(Object);
+                    result = keyValueContainer.filterByValueType(Object);
                 });
 
                 it("should retrieve instanceof matches", function () {
@@ -521,7 +521,7 @@ describe("$data", function () {
 
             describe("for object argument", function () {
                 beforeEach(function () {
-                    result = keyValueContainer.filterByType(Object.prototype);
+                    result = keyValueContainer.filterByValueType(Object.prototype);
                 });
 
                 it("should retrieve prototype matches", function () {
@@ -534,7 +534,7 @@ describe("$data", function () {
 
             describe("for Class argument", function () {
                 beforeEach(function () {
-                    result = keyValueContainer.filterByType($utils.Cloneable);
+                    result = keyValueContainer.filterByValueType($utils.Cloneable);
                 });
 
                 it("should retrieve Class inclusion matches", function () {

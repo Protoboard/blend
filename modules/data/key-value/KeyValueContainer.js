@@ -276,7 +276,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @param {string} prefix
          * @returns {$data.KeyValueContainer}
          */
-        filterByPrefix: function (prefix) {
+        filterByValuePrefix: function (prefix) {
             var prefixLength = prefix.length;
             return this.filter(function (value) {
                 return value.slice(0, prefixLength) === prefix;
@@ -299,7 +299,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @param {RegExp} regExp
          * @returns {$data.KeyValueContainer}
          */
-        filterByRegExp: function (regExp) {
+        filterByValueRegExp: function (regExp) {
             return this.filter(function (value) {
                 return regExp.test(value);
             });
@@ -310,12 +310,12 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * returns result as a new collection.
          * TODO: Allow repeating arguments.
          * @param {string|function|Object|$oop.Class} type Describes type
-         * to be matched by item values. When string, `filterByType` will
+         * to be matched by item values. When string, `filterByValueType` will
          * check using `typeof` operator, when function, `instanceof`,
          * when object, `.isPrototypeOf()`, when a class, `.isIncludedBy()`.
          * @returns {$data.KeyValueContainer} Filtered collection
          */
-        filterByType: function (type) {
+        filterByValueType: function (type) {
             switch (true) {
             case typeof type === 'string':
                 return this.filter(function (value) {
@@ -353,7 +353,8 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @returns {$data.KeyValueContainer}
          */
         mergeWith: function (rightContainer) {
-            var result = $data.getMergeResultClass(this, rightContainer).create();
+            var result = $data.getMergeResultClass(this, rightContainer)
+                .create();
             this.forEachItem(function (value, key) {
                 result.setItem(key, value);
             });
