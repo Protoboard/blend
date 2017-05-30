@@ -7,14 +7,14 @@
  */
 
 /**
- * TODO: Should be filterable & reducible. (But not mappable.)
+ * TODO: Should be reducible. (But not mappable.)
  * @class $data.StringSet
  * @extends $data.DataContainer
- * @extends $data.ItemContainer
+ * @extends $data.ScalarContainer
  */
 $data.StringSet = $oop.getClass('$data.StringSet')
     .extend($oop.getClass('$data.DataContainer'))
-    .include($oop.getClass('$data.ItemContainer'))
+    .extend($oop.getClass('$data.ScalarContainer'))
     .define(/** @lends $data.StringSet# */{
         /**
          * @param {string} item
