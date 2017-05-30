@@ -119,9 +119,9 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ["FOO", 'foo', dictionary],
-                    ["BAR", 'bar', dictionary],
-                    ["bar", 'bar', dictionary]
+                    ["FOO", 'foo'],
+                    ["BAR", 'bar'],
+                    ["bar", 'bar']
                 ]);
             });
 

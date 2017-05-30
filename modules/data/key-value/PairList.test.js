@@ -74,8 +74,8 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['FOO', 'foo', pairList],
-                    ['BAR', 'bar', pairList]
+                    ['FOO', 'foo'],
+                    ['BAR', 'bar']
                 ]);
             });
 

@@ -80,7 +80,7 @@ $data.Collection = $oop.getClass('$data.Collection')
 
             for (i = 0; i < keyCount; i++) {
                 key = keys[i];
-                if (callback && callback.call(context, data[key], key, this) === false) {
+                if (callback && callback.call(context || this, data[key], key) === false) {
                     break;
                 }
             }

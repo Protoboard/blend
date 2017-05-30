@@ -35,7 +35,7 @@ describe("$data", function () {
                             i, key;
                         for (i = 0; i < keys.length; i++) {
                             key = keys[i];
-                            callback.call(context, data[key], key, this);
+                            callback.call(context || this, data[key], key);
                         }
                     }
                 });
@@ -202,8 +202,8 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['FOO', 'foo', keyValueContainer],
-                    ['BAR', 'bar', keyValueContainer]
+                    ['FOO', 'foo'],
+                    ['BAR', 'bar']
                 ]);
             });
 
@@ -251,8 +251,8 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['FOO', 'foo', keyValueContainer],
-                    ['BAR', 'bar', keyValueContainer]
+                    ['FOO', 'foo'],
+                    ['BAR', 'bar']
                 ]);
             });
 
@@ -278,8 +278,8 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['', 'FOO', 'foo', keyValueContainer],
-                    ['FOO', 'BAR', 'bar', keyValueContainer]
+                    ['', 'FOO', 'foo'],
+                    ['FOO', 'BAR', 'bar']
                 ]);
             });
 
@@ -462,8 +462,8 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ["FOO", 'foo', keyValueContainer],
-                    ["BAR", 'bar', keyValueContainer]
+                    ["FOO", 'foo'],
+                    ["BAR", 'bar']
                 ]);
             });
 

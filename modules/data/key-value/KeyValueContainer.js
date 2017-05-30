@@ -179,8 +179,8 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
                 ResultClass = $data.getMapResultClass(this, null, $data.VALUE_TYPE_ANY),
                 result = ResultClass.create(data);
 
-            this.forEachItem(function (value, key, iterable) {
-                value = callback.call(this, value, key, iterable);
+            this.forEachItem(function (value, key) {
+                value = callback.call(this, value, key);
                 result.setItem(key, value);
             }, context);
 
@@ -199,8 +199,8 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
             var ResultClass = $data.getMapResultClass(this, $data.KEY_TYPE_ANY, null),
                 result = ResultClass.create();
 
-            this.forEachItem(function (value, key, iterable) {
-                key = callback.call(this, value, key, iterable);
+            this.forEachItem(function (value, key) {
+                key = callback.call(this, value, key);
                 result.setItem(value, key);
             }, context);
 
@@ -219,8 +219,8 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         reduce: function (callback, initialValue, context) {
             var result = initialValue;
 
-            this.forEachItem(function (value, key, iterable) {
-                result = callback.call(context, result, value, key, iterable);
+            this.forEachItem(function (value, key) {
+                result = callback.call(this, result, value, key);
             }, context);
 
             return result;
@@ -321,8 +321,8 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
                 ResultClass = $oop.getClass(this.__classId),
                 result = ResultClass.create(data);
 
-            this.forEachItem(function (value, key, iterable) {
-                if (callback.call(this, value, key, iterable)) {
+            this.forEachItem(function (value, key) {
+                if (callback.call(this, value, key)) {
                     result.setItem(key, value);
                 }
             }, context);

@@ -77,8 +77,8 @@ describe("$data", function () {
 
             it("should pass item values & keys to callback", function () {
                 expect(callback.calls.allArgs()).toEqual([
-                    ['FOO', 'foo', collection],
-                    ['BAR', 'bar', collection]
+                    ['FOO', 'foo'],
+                    ['BAR', 'bar']
                 ]);
             });
 
@@ -90,7 +90,7 @@ describe("$data", function () {
 
                 it("should stop at interruption", function () {
                     expect(callback.calls.allArgs()).toEqual([
-                        ['FOO', 'foo', collection]
+                        ['FOO', 'foo']
                     ]);
                 });
             });

@@ -72,7 +72,7 @@ $data.PairList = $oop.getClass('$data.PairList')
 
             for (i = 0; i < itemCount; i++) {
                 pair = data[i];
-                if (callback && callback.call(context, pair.value, pair.key, this) === false) {
+                if (callback && callback.call(context || this, pair.value, pair.key) === false) {
                     break;
                 }
             }

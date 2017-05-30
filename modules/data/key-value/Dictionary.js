@@ -104,7 +104,7 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
                     values = data[key];
                     valueCount = values.length;
                     for (j = 0; j < valueCount; j++) {
-                        if (callback.call(context, values[j], key, this) === false) {
+                        if (callback.call(context || this, values[j], key) === false) {
                             break loop;
                         }
                     }
