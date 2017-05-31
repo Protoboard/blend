@@ -79,6 +79,13 @@ module.exports = function (grunt) {
             separator: ';'
         }),
 
+        jshint: {
+            options: {
+                jshintrc: true
+            },
+            dist: ['Gruntfile.js', 'modules/**/*.js']
+        },
+
         karma: buildKarmaConfig(),
 
         watch: {
@@ -121,13 +128,15 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
-    grunt.registerTask('build-quick', ['clean:build', 'concat', 'notify:build-quick']);
-    grunt.registerTask('build-full', ['clean', 'karma', 'concat', 'jsdoc', 'notify:build-full']);
+    grunt.registerTask('test', ['jshint', 'karma']);
+    grunt.registerTask('build-quick', ['clean', 'concat', 'jsdoc', 'notify:build-quick']);
+    grunt.registerTask('build-full', ['clean', 'test', 'concat', 'jsdoc', 'notify:build-full']);
     grunt.registerTask('default', ['build-quick', 'watch']);
 };
