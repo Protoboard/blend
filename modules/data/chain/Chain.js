@@ -22,10 +22,10 @@ $data.Chain = $oop.getClass('$data.Chain')
         /** @ignore */
         init: function () {
             /**
-             * @type {$data.MainLink}
+             * @type {$data.MasterLink}
              * @private
              */
-            this._data = $data.MainLink.create(this);
+            this._data = $data.MasterLink.create(this);
         },
 
         /**
@@ -106,3 +106,26 @@ $data.Chain = $oop.getClass('$data.Chain')
             return this._data.nextLink.unlink();
         }
     });
+
+$oop.copyProperties($assert, /** @lends $assert# */{
+    /**
+     * @param {$data.Chain} expr
+     * @param {string} [message]
+     * @returns {$assert}
+     */
+    isChain: function (expr, message) {
+        return $assert.assert(
+            $data.Chain.isIncludedBy(expr), message);
+    },
+
+    /**
+     * @param {$data.Chain} [expr]
+     * @param {string} [message]
+     * @returns {$assert}
+     */
+    isChainOptional: function (expr, message) {
+        return $assert.assert(
+            expr === undefined ||
+            $data.Chain.isIncludedBy(expr), message);
+    }
+});

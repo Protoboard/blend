@@ -3,6 +3,45 @@
 var $oop = window['giant-oop'],
     $data = window['giant-data'];
 
+describe("$assert", function () {
+    var chain;
+
+    beforeEach(function () {
+        chain = $data.Chain.create();
+        spyOn($assert, 'assert').and.callThrough();
+    });
+
+    describe("isChain()", function () {
+        it("should pass message to assert", function () {
+            $assert.isChain(chain, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
+
+        describe("when passing non-promise", function () {
+            it("should throw", function () {
+                expect(function () {
+                    $assert.isChain({});
+                }).toThrow();
+            });
+        });
+    });
+
+    describe("isChainOptional()", function () {
+        it("should pass message to assert", function () {
+            $assert.isChainOptional(chain, "bar");
+            expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+        });
+
+        describe("when passing non-promise", function () {
+            it("should throw", function () {
+                expect(function () {
+                    $assert.isChainOptional({});
+                }).toThrow();
+            });
+        });
+    });
+});
+
 describe("$data", function () {
     describe("Chain", function () {
         var Chain,
@@ -103,7 +142,7 @@ describe("$data", function () {
 
         describe("create()", function () {
             it("should initialize _data", function () {
-                expect(chain._data.includes($data.MainLink)).toBeTruthy();
+                expect(chain._data.includes($data.MasterLink)).toBeTruthy();
             });
         });
 

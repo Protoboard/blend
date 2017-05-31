@@ -4,7 +4,7 @@
       "globals.js",
       "chain/Chain.js",
       "chain/Link.js",
-      "chain/MainLink.js",
+      "chain/MasterLink.js",
       "container/DataContainer.js",
       "container/ItemContainer.js",
       "container/ScalarContainer.js",
