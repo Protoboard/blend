@@ -2,6 +2,9 @@
   "assets": {
     "js": [
       "globals.js",
+      "chain/Chain.js",
+      "chain/Link.js",
+      "chain/MainLink.js",
       "container/DataContainer.js",
       "container/ItemContainer.js",
       "container/ScalarContainer.js",
