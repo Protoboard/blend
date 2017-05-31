@@ -86,7 +86,11 @@ $data.Chain = $oop.getClass('$data.Chain')
          * @returns {$data.Link}
          */
         popLink: function () {
-            return this._data.previousLink.unlink();
+            var masterLink = this._data,
+                previousLink = masterLink.previousLink;
+            if (previousLink !== masterLink) {
+                return previousLink.unlink();
+            }
         },
 
         /**
@@ -103,7 +107,11 @@ $data.Chain = $oop.getClass('$data.Chain')
          * @returns {$data.Link}
          */
         shiftLink: function () {
-            return this._data.nextLink.unlink();
+            var masterLink = this._data,
+                nextLink = masterLink.nextLink;
+            if (nextLink !== masterLink) {
+                return this._data.nextLink.unlink();
+            }
         }
     });
 

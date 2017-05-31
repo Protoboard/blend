@@ -184,6 +184,18 @@ describe("$data", function () {
             it("should return removed link", function () {
                 expect(result).toBe(link2);
             });
+
+            describe("on last link", function () {
+                beforeEach(function () {
+                    chain.popLink();
+                    chain.popLink();
+                });
+
+                it("should leave master link only", function () {
+                    expect(chain._data.nextLink).toBe(chain._data);
+                    expect(chain._data.previousLink).toBe(chain._data);
+                });
+            });
         });
 
         describe("unshiftLink()", function () {
@@ -223,6 +235,18 @@ describe("$data", function () {
 
             it("should return removed link", function () {
                 expect(result).toBe(link1);
+            });
+
+            describe("on last link", function () {
+                beforeEach(function () {
+                    chain.shiftLink();
+                    chain.shiftLink();
+                });
+
+                it("should leave master link only", function () {
+                    expect(chain._data.nextLink).toBe(chain._data);
+                    expect(chain._data.previousLink).toBe(chain._data);
+                });
             });
         });
     });
