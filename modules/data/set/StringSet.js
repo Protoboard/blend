@@ -7,7 +7,6 @@
  */
 
 /**
- * TODO: Should be reducible. (But not mappable.)
  * @class $data.StringSet
  * @extends $data.DataContainer
  * @extends $data.ScalarContainer
