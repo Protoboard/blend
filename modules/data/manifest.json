@@ -15,11 +15,14 @@
       "key-value/StringKeyHost.js",
       "key-value/StringPairList.js",
       "key-value/StringValueHost.js",
+      "list/Comparer.js",
+      "list/OrderedList.js",
+      "list/OrderedStringList.js",
       "set/StringSet.js",
       "utils/Clearable.js",
+      "utils/data-utils.js",
       "utils/Filterable.js",
-      "utils/Reducible.js",
-      "utils/data-utils.js"
+      "utils/Reducible.js"
     ]
   }
 }
