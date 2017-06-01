@@ -35,7 +35,7 @@ $data.Link = $oop.getClass('$data.Link')
 
         /**
          * Adds current unconnected link after the specified link.
-         * @param {$data.Link} link
+         * @param {$data.Link|$data.MasterLink} link
          * @returns {$data.Link}
          */
         addAfter: function (link) {
@@ -71,7 +71,7 @@ $data.Link = $oop.getClass('$data.Link')
 
         /**
          * Adds current link before the specified link.
-         * @param {$data.Link} link
+         * @param {$data.Link|$data.MasterLink} link
          * @returns {$data.Link}
          */
         addBefore: function (link) {
@@ -110,14 +110,13 @@ $data.Link = $oop.getClass('$data.Link')
          * @returns {$data.Link}
          */
         unlink: function () {
-            var nextLinkBefore,
-                previousLinkBefore,
-                chainBefore;
+            var chainBefore = this._chain,
+                nextLinkBefore,
+                previousLinkBefore;
 
-            if (this._chain) {
+            if (chainBefore) {
                 nextLinkBefore = this.nextLink;
                 previousLinkBefore = this.previousLink;
-                chainBefore = this._chain;
 
                 // linking up neighbors
                 if (nextLinkBefore) {
