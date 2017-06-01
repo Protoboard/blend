@@ -52,9 +52,9 @@ $data.Link = $oop.getClass('$data.Link')
             }
 
             // setting links on current link
+            this._chain = link._chain;
             this.previousLink = link;
             this.nextLink = link.nextLink;
-            this._chain = link._chain;
 
             // setting self as previous link on old next link
             if (link.nextLink) {
@@ -88,9 +88,9 @@ $data.Link = $oop.getClass('$data.Link')
             }
 
             // setting links on current link
+            this._chain = link._chain;
             this.nextLink = link;
             this.previousLink = link.previousLink;
-            this._chain = link._chain;
 
             // setting self as next link on old previous link
             if (link.previousLink) {
@@ -127,9 +127,9 @@ $data.Link = $oop.getClass('$data.Link')
                 }
 
                 // clearing references
+                this._chain = undefined;
                 this.previousLink = undefined;
                 this.nextLink = undefined;
-                this._chain = undefined;
 
                 chainBefore._itemCount--;
             }
