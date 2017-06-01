@@ -43,6 +43,7 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
         },
 
         /**
+         * TODO: Move to respective classes? (Depends on buffer structure.)
          * @inheritDoc
          * @returns {$data.DataContainer}
          */
