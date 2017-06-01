@@ -23,6 +23,7 @@
       "list/OrderedStringList.js",
       "set/StringSet.js",
       "utils/Clearable.js",
+      "utils/Comparable.js",
       "utils/data-utils.js",
       "utils/Filterable.js",
       "utils/Reducible.js"
