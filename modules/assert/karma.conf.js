@@ -12,7 +12,7 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             '../../dist/giant-assert.js',
-            '**/*.test.js'
+            '**/*.spec.js'
         ],
 
         // list of files to exclude

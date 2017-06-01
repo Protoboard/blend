@@ -15,7 +15,7 @@ module.exports = function (config) {
             '../../dist/giant-oop.js',
             '../../dist/giant-utils.js',
             '../../dist/giant-data.js',
-            '**/*.test.js'
+            '**/*.spec.js'
         ],
 
         // list of files to exclude
