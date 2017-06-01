@@ -33,6 +33,18 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         keyMultiplicity: $data.KEY_MUL_ANY,
 
         /**
+         * @returns {$data.ScalarContainer}
+         */
+        clone: function clone() {
+            var cloned = clone.returned;
+            cloned.clear();
+            this.forEachItem(function (value, key) {
+                cloned.setItem(key, value);
+            });
+            return cloned;
+        },
+
+        /**
          * Extracts items matching the condition in the specified
          * callback function and returns the result as a new collection.
          * @param {function} callback Filter function returning a boolean

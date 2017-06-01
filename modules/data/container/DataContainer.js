@@ -43,13 +43,12 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
         },
 
         /**
-         * TODO: Move to respective classes? (Depends on buffer structure.)
          * @inheritDoc
          * @returns {$data.DataContainer}
          */
         clone: function clone() {
             var cloned = clone.returned;
-            cloned._data = $data.shallowCopy(this._data);
+            cloned._data = this._data;
             return cloned;
         },
 

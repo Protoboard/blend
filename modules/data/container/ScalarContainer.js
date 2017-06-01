@@ -15,6 +15,18 @@ $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
     .implement($oop.getClass('$data.Reducible'))
     .define(/** @lends $data.ScalarContainer# */{
         /**
+         * @returns {$data.ScalarContainer}
+         */
+        clone: function clone() {
+            var cloned = clone.returned;
+            cloned.clear();
+            this.forEachItem(function (item) {
+                cloned.setItem(item);
+            });
+            return cloned;
+        },
+
+        /**
          * Extracts items matching the condition in the specified
          * callback function and returns the result as a new collection.
          * @param {function} callback Filter function returning a boolean

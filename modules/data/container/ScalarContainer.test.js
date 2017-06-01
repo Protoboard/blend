@@ -1,7 +1,6 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-    $utils = window['giant-utils'],
     $data = window['giant-data'];
 
 describe("$data", function () {
@@ -31,6 +30,21 @@ describe("$data", function () {
                 });
 
             scalarContainer = ScalarContainer.create(data);
+        });
+
+        describe("clone()", function () {
+            beforeEach(function () {
+                result = scalarContainer.clone();
+            });
+
+            it("should return cloned instance", function () {
+                expect(result).not.toBe(scalarContainer);
+            });
+
+            it("should set _data", function () {
+                expect(result._data).not.toBe(scalarContainer._data);
+                expect(result._data).toEqual(scalarContainer._data);
+            });
         });
 
         describe("filter()", function () {

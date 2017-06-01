@@ -51,6 +51,21 @@ describe("$data", function () {
             keyValueContainer = KeyValueContainer.create(data);
         });
 
+        describe("clone()", function () {
+            beforeEach(function () {
+                result = keyValueContainer.clone();
+            });
+
+            it("should return cloned instance", function () {
+                expect(result).not.toBe(keyValueContainer);
+            });
+
+            it("should set _data", function () {
+                expect(result._data).not.toBe(keyValueContainer._data);
+                expect(result._data).toEqual(keyValueContainer._data);
+            });
+        });
+
         describe("filter()", function () {
             var callback;
 

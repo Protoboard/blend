@@ -39,22 +39,16 @@ describe("$data", function () {
         });
 
         describe("clone()", function () {
-            var clonedData,
-                clonedContainer;
-
             beforeEach(function () {
-                clonedData = {foo: "FOO", bar: "BAR"};
-                spyOn($data, 'shallowCopy').and.returnValue(clonedData);
-                clonedContainer = container.clone();
+                result = container.clone();
             });
 
             it("should return cloned instance", function () {
-                expect(clonedContainer).not.toBe(container);
+                expect(result).not.toBe(container);
             });
 
             it("should set _data", function () {
-                expect($data.shallowCopy).toHaveBeenCalledWith(container._data);
-                expect(clonedContainer._data).toBe(clonedData);
+                expect(result._data).toBe(container._data);
             });
         });
 
