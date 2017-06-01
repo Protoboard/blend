@@ -2,8 +2,7 @@
 
 $oop.copyProperties($data, /** @lends $data */{
     /**
-     * Determines whether an object has any enumerable
-     * properties.
+     * Determines whether an object has any enumerable properties.
      * @param {object} obj
      * @returns {boolean}
      */
@@ -18,8 +17,7 @@ $oop.copyProperties($data, /** @lends $data */{
     },
 
     /**
-     * Determines whether an object has exactly one
-     * enumerable property.
+     * Determines whether an object has exactly one enumerable property.
      * @param {object} obj
      * @returns {boolean}
      */
@@ -35,11 +33,10 @@ $oop.copyProperties($data, /** @lends $data */{
     },
 
     /**
-     * Creates a shallow copy of an object.
-     * Property names will be copied, but property values
-     * will point to the original references.
+     * Creates a shallow copy of an object. Property names will be copied,
+     * but property values will point to the original references.
      * @param {object|Array} original
-     * @returns {object|Array} shallow copy of original
+     * @returns {object|Array} Shallow copy of original
      */
     shallowCopy: function (original) {
         var propertyNames,
@@ -50,6 +47,7 @@ $oop.copyProperties($data, /** @lends $data */{
             // shorthand for arrays
             result = original.concat([]);
         } else if (typeof original === 'object' && original !== null) {
+            // actual objects
             propertyNames = Object.getOwnPropertyNames(original);
             result = {};
             for (i = 0; i < propertyNames.length; i++) {
@@ -57,9 +55,51 @@ $oop.copyProperties($data, /** @lends $data */{
                 result[propertyName] = original[propertyName];
             }
         } else {
+            // primitives
             result = original;
         }
 
         return result;
+    },
+
+    /**
+     * Creates a deep copy of an object, optionally limited to the specified
+     * depth. Does not check for loops.
+     * @param {object|Array} original
+     * @param {number} [depth=Infinity]
+     * @returns {object|Array} Deep copy of original
+     */
+    deepCopy: function (original, depth) {
+        depth = depth === undefined ? Infinity : depth;
+
+        return (function deepCopy(original, currentDepth) {
+            var result,
+                keys, keyCount,
+                i, key;
+
+            if (currentDepth < depth) {
+                if (original instanceof Array) {
+                    result = [];
+                    keyCount = original.length;
+                    for (i = 0; i < keyCount; i++) {
+                        result[i] = deepCopy(original[i], currentDepth + 1);
+                    }
+                } else if (typeof original === 'object' && original !== null) {
+                    result = {};
+                    keys = Object.keys(original);
+                    keyCount = keys.length;
+                    for (i = 0; i < keyCount; i++) {
+                        key = keys[i];
+                        result[key] = deepCopy(original[key], currentDepth + 1);
+                    }
+                } else {
+                    result = original;
+                }
+            } else {
+                result = original;
+            }
+
+            return result;
+        }(original, 0));
     }
 });

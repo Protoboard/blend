@@ -32,7 +32,8 @@ describe("$data", function () {
 
         describe("for object with multiple properties", function () {
             it("should return false", function () {
-                expect($data.isSingularObject({foo: "bar", baz: "quux"})).toBe(false);
+                expect($data.isSingularObject({foo: "bar", baz: "quux"}))
+                    .toBe(false);
             });
         });
     });
@@ -82,6 +83,53 @@ describe("$data", function () {
 
             it("should return same content", function () {
                 expect(copy).toEqual(original);
+            });
+        });
+    });
+
+    describe("deepCopy()", function () {
+        var original,
+            copy;
+
+        beforeEach(function () {
+            original = {
+                foo: ['bar', 'baz'],
+                quux: {
+                    hello: {},
+                    world: {}
+                }
+            };
+
+            copy = $data.deepCopy(original);
+        });
+
+        it("should return identical content", function () {
+            expect(copy).toEqual(original);
+        });
+
+        it("should return copy of all nodes", function () {
+            expect(copy).not.toBe(original);
+            expect(copy.foo).not.toBe(original.foo);
+            expect(copy.quux).not.toBe(original.quux);
+            expect(copy.quux.hello).not.toBe(original.quux.hello);
+            expect(copy.quux.world).not.toBe(original.quux.world);
+        });
+
+        describe("when depth is specified", function () {
+            beforeEach(function () {
+                copy = $data.deepCopy(original, 2);
+            });
+
+            it("should return identical content", function () {
+                expect(copy).toEqual(original);
+            });
+
+            it("should not stop at depth", function () {
+                expect(copy).not.toBe(original);
+                expect(copy.foo).not.toBe(original.foo);
+                expect(copy.quux).not.toBe(original.quux);
+                expect(copy.quux.hello).toBe(original.quux.hello);
+                expect(copy.quux.world).toBe(original.quux.world);
             });
         });
     });
