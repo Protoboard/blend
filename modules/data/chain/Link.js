@@ -6,8 +6,7 @@
  */
 
 /**
- * Basic link, can chain other links to it.
- * TODO: Add updating _itemCount on Chain.
+ * Link that can be added to a chain.
  * @class $data.Link
  */
 $data.Link = $oop.getClass('$data.Link')
@@ -40,7 +39,14 @@ $data.Link = $oop.getClass('$data.Link')
          * @returns {$data.Link}
          */
         addAfter: function (link) {
-            if (this.previousLink || this.nextLink) {
+            if (!link._chain) {
+                $assert.assert(false, "Remote link must belong to a Chain");
+            }
+            if (this === link) {
+                $assert.assert(false, "Attempting to link to self");
+            }
+
+            if (this._chain) {
                 // preparing link to be added
                 this.unlink();
             }
@@ -58,6 +64,8 @@ $data.Link = $oop.getClass('$data.Link')
             // setting self as next link on target link
             link.nextLink = this;
 
+            this._chain._itemCount++;
+
             return this;
         },
 
@@ -67,7 +75,14 @@ $data.Link = $oop.getClass('$data.Link')
          * @returns {$data.Link}
          */
         addBefore: function (link) {
-            if (this.previousLink || this.nextLink) {
+            if (!link._chain) {
+                $assert.assert(false, "Remote link must belong to a Chain");
+            }
+            if (this === link) {
+                $assert.assert(false, "Attempting to link to self");
+            }
+
+            if (this._chain) {
                 // preparing link to be added
                 this.unlink();
             }
@@ -85,6 +100,8 @@ $data.Link = $oop.getClass('$data.Link')
             // setting self as previous link on target link
             link.previousLink = this;
 
+            this._chain._itemCount++;
+
             return this;
         },
 
@@ -93,21 +110,30 @@ $data.Link = $oop.getClass('$data.Link')
          * @returns {$data.Link}
          */
         unlink: function () {
-            var nextLink = this.nextLink,
-                previousLink = this.previousLink;
+            var nextLinkBefore,
+                previousLinkBefore,
+                chainBefore;
 
-            // linking up neighbors
-            if (nextLink) {
-                nextLink.previousLink = previousLink;
-            }
-            if (previousLink) {
-                previousLink.nextLink = nextLink;
-            }
+            if (this._chain) {
+                nextLinkBefore = this.nextLink;
+                previousLinkBefore = this.previousLink;
+                chainBefore = this._chain;
 
-            // clearing references
-            this.previousLink = undefined;
-            this.nextLink = undefined;
-            this._chain = undefined;
+                // linking up neighbors
+                if (nextLinkBefore) {
+                    nextLinkBefore.previousLink = previousLinkBefore;
+                }
+                if (previousLinkBefore) {
+                    previousLinkBefore.nextLink = nextLinkBefore;
+                }
+
+                // clearing references
+                this.previousLink = undefined;
+                this.nextLink = undefined;
+                this._chain = undefined;
+
+                chainBefore._itemCount--;
+            }
 
             return this;
         }

@@ -57,6 +57,36 @@ describe("$data", function () {
             link = $data.Link.create();
         });
 
+        describe("create()", function () {
+            it("should initialize _data", function () {
+                expect(chain._data.includes($data.MasterLink)).toBeTruthy();
+            });
+
+            it("should initialize _itemCount", function () {
+                expect(chain._itemCount).toBe(0);
+            });
+        });
+
+        describe("clear()", function () {
+            var oldMasterLink;
+
+            beforeEach(function () {
+                oldMasterLink = chain._data;
+                result = chain.clear();
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(chain);
+            });
+
+            it("should reset _data", function () {
+                expect(chain._data.includes($data.MasterLink)).toBeTruthy();
+                expect(chain._data).not.toBe(oldMasterLink);
+                expect(chain._data.nextLink).toBe(chain._data);
+                expect(chain._data.previousLink).toBe(chain._data);
+            });
+        });
+
         describe("setItem()", function () {
             beforeEach(function () {
                 spyOn(chain, 'pushLink');
@@ -140,12 +170,6 @@ describe("$data", function () {
             });
         });
 
-        describe("create()", function () {
-            it("should initialize _data", function () {
-                expect(chain._data.includes($data.MasterLink)).toBeTruthy();
-            });
-        });
-
         describe("pushLink()", function () {
             beforeEach(function () {
                 result = chain.pushLink(link);
@@ -159,6 +183,10 @@ describe("$data", function () {
                 expect(chain._data.nextLink).toBe(link);
                 expect(link.previousLink).toBe(chain._data);
                 expect(link._chain).toBe(chain);
+            });
+
+            it("should increment _itemCount", function () {
+                expect(chain._itemCount).toBe(1);
             });
         });
 
@@ -183,6 +211,10 @@ describe("$data", function () {
 
             it("should return removed link", function () {
                 expect(result).toBe(link2);
+            });
+
+            it("should decrement _itemCount", function () {
+                expect(chain._itemCount).toBe(1);
             });
 
             describe("on last link", function () {
@@ -212,6 +244,10 @@ describe("$data", function () {
                 expect(link.nextLink).toBe(chain._data);
                 expect(link._chain).toBe(chain);
             });
+
+            it("should increment _itemCount", function () {
+                expect(chain._itemCount).toBe(1);
+            });
         });
 
         describe("shiftLink()", function () {
@@ -235,6 +271,10 @@ describe("$data", function () {
 
             it("should return removed link", function () {
                 expect(result).toBe(link1);
+            });
+
+            it("should decrement _itemCount", function () {
+                expect(chain._itemCount).toBe(1);
             });
 
             describe("on last link", function () {

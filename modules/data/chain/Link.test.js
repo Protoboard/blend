@@ -41,7 +41,7 @@ describe("$data", function () {
                 oldNextLink = {};
                 link2.previousLink = oldPreviousLink;
                 link2.nextLink = oldNextLink;
-                link2._chain = {};
+                link2._chain = $data.Chain.create();
                 result = link.addAfter(link2);
             });
 
@@ -69,10 +69,45 @@ describe("$data", function () {
                 expect(link2.nextLink).toBe(link);
             });
 
+            it("should increment _itemCount on _chain", function () {
+                expect(link._chain._itemCount).toBe(1);
+            });
+
+            describe("to unchained link", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        link.addAfter($data.Link.create());
+                    }).toThrow();
+                });
+            });
+
+            describe("to self", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        link.addAfter(link);
+                    }).toThrow();
+                });
+            });
+
             describe("then adding again", function () {
-                beforeEach(function () {
-                    spyOn(link, 'unlink');
+                it("should end up in same state", function () {
                     link.addAfter(link2);
+                    expect(link.nextLink).toBe(oldNextLink);
+                    expect(link.previousLink).toBe(link2);
+                    expect(link._chain).toBe(link2._chain);
+                    expect(oldNextLink.previousLink).toBe(link);
+                    expect(link2.nextLink).toBe(link);
+                    expect(link._chain._itemCount).toBe(1);
+                });
+            });
+
+            describe("then adding to different link", function () {
+                var link3;
+
+                beforeEach(function () {
+                    link3 = $data.MasterLink.create($data.Chain.create());
+                    spyOn(link, 'unlink');
+                    link.addAfter(link3);
                 });
 
                 it("should unlink link before adding", function () {
@@ -92,7 +127,7 @@ describe("$data", function () {
                 oldNextLink = {};
                 link2.previousLink = oldPreviousLink;
                 link2.nextLink = oldNextLink;
-                link2._chain = {};
+                link2._chain = $data.Chain.create();
                 result = link.addBefore(link2);
             });
 
@@ -120,10 +155,45 @@ describe("$data", function () {
                 expect(link2.previousLink).toBe(link);
             });
 
+            it("should increment _itemCount on _chain", function () {
+                expect(link._chain._itemCount).toBe(1);
+            });
+
+            describe("to unchained link", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        link.addBefore($data.Link.create());
+                    }).toThrow();
+                });
+            });
+
+            describe("to self", function () {
+                it("should throw", function () {
+                    expect(function () {
+                        link.addBefore(link);
+                    }).toThrow();
+                });
+            });
+
             describe("then adding again", function () {
-                beforeEach(function () {
-                    spyOn(link, 'unlink');
+                it("should end up in same state", function () {
                     link.addBefore(link2);
+                    expect(link.nextLink).toBe(link2);
+                    expect(link.previousLink).toBe(oldPreviousLink);
+                    expect(link._chain).toBe(link2._chain);
+                    expect(oldPreviousLink.nextLink).toBe(link);
+                    expect(link2.previousLink).toBe(link);
+                    expect(link._chain._itemCount).toBe(1);
+                });
+            });
+
+            describe("then adding to different link", function () {
+                var link3;
+
+                beforeEach(function () {
+                    link3 = $data.MasterLink.create($data.Chain.create());
+                    spyOn(link, 'unlink');
+                    link.addBefore(link3);
                 });
 
                 it("should unlink link before adding", function () {
@@ -134,11 +204,16 @@ describe("$data", function () {
 
         describe("unlink()", function () {
             var oldPreviousLink,
-                oldNextLink;
+                oldNextLink,
+                oldChain;
 
             beforeEach(function () {
                 oldPreviousLink = {};
                 oldNextLink = {};
+                oldChain = $data.Chain.create()
+                    .setItem($data.Link.create())
+                    .setItem($data.Link.create());
+                link._chain = oldChain;
                 link.previousLink = oldPreviousLink;
                 link.nextLink = oldNextLink;
                 result = link.unlink();
@@ -166,6 +241,10 @@ describe("$data", function () {
 
             it("should clear _chain", function () {
                 expect(link._chain).toBeUndefined();
+            });
+
+            it("should decrement _itemCount on old _chain", function () {
+                expect(oldChain._itemCount).toBe(1);
             });
 
             describe("then unlinking again", function () {

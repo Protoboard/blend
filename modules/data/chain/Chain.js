@@ -10,7 +10,7 @@
  * Chain data structure with two fixed ends and value carrying links in between.
  * Chain behaves like a stack in that you may append and prepend the chain
  * using a stack-like API. (push, pop, etc.)
- * TODO: Add DataContainer#toChain w/ data transform
+ * TODO: Accept & process data in & out
  * @class $data.Chain
  * @extends $data.DataContainer
  * @extends $data.ScalarContainer
@@ -26,6 +26,17 @@ $data.Chain = $oop.getClass('$data.Chain')
              * @private
              */
             this._data = $data.MasterLink.create(this);
+
+            // forcing item count to zero
+            this._itemCount = 0;
+        },
+
+        /**
+         * @returns {$data.Chain}
+         */
+        clear: function () {
+            this._data = $data.MasterLink.create(this);
+            return this;
         },
 
         /**
