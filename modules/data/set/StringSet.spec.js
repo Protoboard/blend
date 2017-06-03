@@ -17,7 +17,7 @@ describe("$data", function () {
                 foo: 1,
                 bar: 1
             };
-            StringSet = $oop.getClass("StringSet")
+            StringSet = $oop.getClass("test.$data.StringSet.StringSet")
                 .extend($data.StringSet);
             set = StringSet.create(data);
             set2 = StringSet.create({

@@ -11,7 +11,7 @@ describe("$utils", function () {
         beforeEach(function () {
             $utils.Identifiable._lastInstanceId = -1;
             $utils.Retrievable._instanceRegistry = {};
-            Retrievable = $oop.getClass("Retrievable")
+            Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
                 .extend($utils.Retrievable);
         });
 

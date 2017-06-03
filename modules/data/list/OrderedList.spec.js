@@ -17,7 +17,7 @@ describe("$data", function () {
             comparer = function (a, b) {
                 return a > b ? 1 : a < b ? -1 : 0;
             };
-            OrderedList = $oop.getClass("OrderedList")
+            OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
                 .extend($data.OrderedList);
             orderedList = OrderedList.create(data, comparer);
         });

@@ -17,7 +17,7 @@ describe("$data", function () {
                 {key: "foo", value: "FOO"},
                 {key: "bar", value: "BAR"}
             ];
-            PairList = $oop.getClass("PairList")
+            PairList = $oop.getClass("test.$data.PairList.PairList")
                 .extend($data.PairList);
             pairList = PairList.create(data);
         });

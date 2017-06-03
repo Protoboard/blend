@@ -14,7 +14,7 @@ describe("$data", function () {
 
         beforeEach(function () {
             data = ['bar', 'foo'];
-            OrderedStringList = $oop.getClass("OrderedStringList")
+            OrderedStringList = $oop.getClass("test.$data.OrderedStringList.OrderedStringList")
                 .extend($data.OrderedStringList);
             orderedStringList = OrderedStringList.create(data);
         });

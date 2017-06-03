@@ -13,19 +13,17 @@ describe("$data", function () {
         result;
 
     beforeEach(function () {
-        $oop.Class.classLookup = {};
-
-        Collection = $oop.getClass('Collection')
+        Collection = $oop.getClass('test.$data.KeyValueContainer-utils.Collection')
             .extend($data.Collection);
-        StringCollection = $oop.getClass('StringCollection')
+        StringCollection = $oop.getClass('test.$data.KeyValueContainer-utils.StringCollection')
             .extend($data.StringCollection);
-        Dictionary = $oop.getClass('Dictionary')
+        Dictionary = $oop.getClass('test.$data.KeyValueContainer-utils.Dictionary')
             .extend($data.Dictionary);
-        StringDictionary = $oop.getClass('StringDictionary')
+        StringDictionary = $oop.getClass('test.$data.KeyValueContainer-utils.StringDictionary')
             .extend($data.StringDictionary);
-        PairList = $oop.getClass('PairList')
+        PairList = $oop.getClass('test.$data.KeyValueContainer-utils.PairList')
             .extend($data.PairList);
-        StringPairList = $oop.getClass('StringPairList')
+        StringPairList = $oop.getClass('test.$data.KeyValueContainer-utils.StringPairList')
             .extend($data.StringPairList);
     });
 

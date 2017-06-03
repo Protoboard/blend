@@ -10,8 +10,7 @@ describe("$data", function () {
             chain;
 
         beforeEach(function () {
-            $oop.Class.classLookup = {};
-            MasterLink = $oop.getClass('MasterLink')
+            MasterLink = $oop.getClass('test.$data.MasterLink.MasterLink')
                 .extend($data.MasterLink);
             chain = $data.Chain.create();
             masterLink = MasterLink.create(chain);

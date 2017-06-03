@@ -17,7 +17,7 @@ describe("$data", function () {
                 foo: "FOO",
                 bar: "BAR"
             };
-            Collection = $oop.getClass("Collection")
+            Collection = $oop.getClass("test.$data.Collection.Collection")
                 .extend($data.Collection);
             collection = Collection.create(data);
         });

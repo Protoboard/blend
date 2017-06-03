@@ -10,8 +10,7 @@ describe("$data", function () {
             result;
 
         beforeEach(function () {
-            $oop.Class.classLookup = {};
-            Link = $oop.getClass('Link')
+            Link = $oop.getClass('test.$data.Link.Link')
                 .extend($data.Link);
             link = Link.create();
         });

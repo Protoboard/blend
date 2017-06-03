@@ -4,10 +4,6 @@ var $oop = window['giant-oop'],
     $data = window['giant-data'];
 
 describe("$data", function () {
-    beforeEach(function () {
-        $oop.Class.classLookup = {};
-    });
-
     describe("ScalarContainer", function () {
         var data,
             ScalarContainer,
@@ -17,7 +13,7 @@ describe("$data", function () {
         beforeEach(function () {
             data = ['foo', 'bar'];
 
-            ScalarContainer = $oop.getClass('ScalarContainer')
+            ScalarContainer = $oop.getClass('test.$data.ScalarContainer.ScalarContainer')
                 .extend($data.DataContainer)
                 .extend($data.ScalarContainer)
                 .define({

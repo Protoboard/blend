@@ -12,7 +12,7 @@ describe("$data", function () {
             stringKeyHost;
 
         beforeEach(function () {
-            StringKeyHost = $oop.getClass('StringKeyHost')
+            StringKeyHost = $oop.getClass('test.$data.StringKeyHost.StringKeyHost')
                 .extend($data.DataContainer)
                 .extend($data.KeyValueContainer)
                 .include($data.StringKeyHost);
@@ -26,7 +26,7 @@ describe("$data", function () {
                 joinedContainer;
 
             beforeEach(function () {
-                StringValueHost = $oop.getClass('StringValueHost')
+                StringValueHost = $oop.getClass('test.$data.StringKeyHost.StringValueHost')
                     .extend($data.DataContainer)
                     .extend($data.KeyValueContainer)
                     .include($data.StringValueHost);

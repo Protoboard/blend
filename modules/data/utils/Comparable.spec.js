@@ -9,9 +9,7 @@ describe("$data", function () {
             comparable;
 
         beforeEach(function () {
-            $oop.Class.classLookup = {};
-
-            Comparable = $oop.getClass('Comparable')
+            Comparable = $oop.getClass('test.$data.Comparable.Comparable')
                 .include($data.Comparable);
 
             comparable = Comparable.create();
@@ -44,7 +42,7 @@ describe("$data", function () {
 
             describe("when passing instanceof different class", function () {
                 it("should return false", function () {
-                    expect(comparable.equals($oop.getClass('Foo').create()))
+                    expect(comparable.equals($oop.getClass('test.$data.Comparable.Foo').create()))
                         .toBeFalsy();
                 });
             });

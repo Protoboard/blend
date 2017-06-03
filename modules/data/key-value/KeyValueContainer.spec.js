@@ -5,10 +5,6 @@ var $oop = window['giant-oop'],
     $data = window['giant-data'];
 
 describe("$data", function () {
-    beforeEach(function () {
-        $oop.Class.classLookup = {};
-    });
-
     describe("KeyValueContainer", function () {
         var data,
             KeyValueContainer,
@@ -22,7 +18,7 @@ describe("$data", function () {
                 bar: "BAR"
             };
 
-            KeyValueContainer = $oop.getClass('KeyValueContainer')
+            KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
                 .extend($data.DataContainer)
                 .extend($data.KeyValueContainer)
                 .define({
@@ -40,7 +36,7 @@ describe("$data", function () {
                     }
                 });
 
-            Settable = $oop.getClass('Settable')
+            Settable = $oop.getClass('test.$data.KeyValueContainer.Settable')
                 .extend($data.DataContainer)
                 .define({
                     setItem: function (key, value) {
@@ -178,7 +174,7 @@ describe("$data", function () {
             var KeyValueContainer;
 
             beforeEach(function () {
-                KeyValueContainer = $oop.getClass('KeyValueContainer')
+                KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
                     .extend($data.DataContainer)
                     .define({
                         init: function (data) {
@@ -389,7 +385,7 @@ describe("$data", function () {
             var Class;
 
             beforeEach(function () {
-                Class = $oop.getClass('Class')
+                Class = $oop.getClass('test.$data.KeyValueContainer.Class')
                     .define({
                         init: function (arg1, arg2) {
                             this.arg1 = arg1;
@@ -419,7 +415,7 @@ describe("$data", function () {
                 var Class2;
 
                 beforeEach(function () {
-                    Class2 = $oop.getClass('Class2')
+                    Class2 = $oop.getClass('test.$data.KeyValueContainer.Class2')
                         .define({
                             init: function (arg1) {
                                 this.arg1 = arg1;

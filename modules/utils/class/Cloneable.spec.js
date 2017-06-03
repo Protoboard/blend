@@ -9,7 +9,7 @@ describe("$utils", function () {
             cloneable;
 
         beforeEach(function () {
-            Cloneable = $oop.getClass('Cloneable')
+            Cloneable = $oop.getClass('test.$utils.Cloneable.Cloneable')
                 .include($utils.Cloneable)
                 .define({
                     clone: function clone() {

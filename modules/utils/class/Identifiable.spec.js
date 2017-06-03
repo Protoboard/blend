@@ -9,7 +9,7 @@ describe("$utils", function () {
 
         beforeEach(function () {
             $utils.Identifiable._lastInstanceId = -1;
-            Identifiable = $oop.getClass('Identifiable')
+            Identifiable = $oop.getClass('test.$utils.Identifiable.Identifiable')
                 .extend($utils.Identifiable);
         });
 
