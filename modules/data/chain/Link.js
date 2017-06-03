@@ -8,8 +8,10 @@
 /**
  * Link that can be added to a chain.
  * @class $data.Link
+ * @mixes $utils.Cloneable
  */
 $data.Link = $oop.getClass('$data.Link')
+    .include($utils.Cloneable)
     .define(/** @lends $data.Link# */{
         /** @ignore */
         init: function () {

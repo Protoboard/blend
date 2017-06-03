@@ -26,7 +26,8 @@
       "utils/Comparable.js",
       "utils/data-utils.js",
       "utils/Filterable.js",
-      "utils/Reducible.js"
+      "utils/Reducible.js",
+      "utils/Stackable.js"
     ]
   }
 }

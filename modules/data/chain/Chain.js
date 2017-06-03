@@ -11,13 +11,16 @@
  * Chain behaves like a stack in that you may append and prepend the chain
  * using a stack-like API. (push, pop, etc.)
  * TODO: Accept & process data in & out
+ * TODO: Make sure clone() is right. Might 'steal' links from original.
  * @class $data.Chain
  * @extends $data.DataContainer
  * @extends $data.ScalarContainer
+ * @implements $data.Stackable
  */
 $data.Chain = $oop.getClass('$data.Chain')
     .extend($oop.getClass('$data.DataContainer'))
     .extend($oop.getClass('$data.ScalarContainer'))
+    .implement($oop.getClass('$data.Stackable'))
     .define(/** @lends $data.Chain# */{
         /** @ignore */
         init: function () {
@@ -44,7 +47,7 @@ $data.Chain = $oop.getClass('$data.Chain')
          * @returns {$data.Chain}
          */
         setItem: function (item) {
-            this.pushLink(item);
+            this.push(item);
             return this;
         },
 
@@ -87,7 +90,7 @@ $data.Chain = $oop.getClass('$data.Chain')
          * Adds link at the end of the chain.
          * @param {$data.Link} link
          */
-        pushLink: function (link) {
+        push: function (link) {
             link.addBefore(this._data);
             return this;
         },
@@ -96,7 +99,7 @@ $data.Chain = $oop.getClass('$data.Chain')
          * Removes link from the end of the chain and returns removed link.
          * @returns {$data.Link}
          */
-        popLink: function () {
+        pop: function () {
             var masterLink = this._data,
                 previousLink = masterLink.previousLink;
             if (previousLink !== masterLink) {
@@ -108,7 +111,7 @@ $data.Chain = $oop.getClass('$data.Chain')
          * Adds link at the start of the chain.
          * @param {$data.Link} link
          */
-        unshiftLink: function (link) {
+        unshift: function (link) {
             link.addAfter(this._data);
             return this;
         },
@@ -117,12 +120,27 @@ $data.Chain = $oop.getClass('$data.Chain')
          * Removes link from the start of the chain and returns removed link.
          * @returns {$data.Link}
          */
-        shiftLink: function () {
+        shift: function () {
             var masterLink = this._data,
                 nextLink = masterLink.nextLink;
             if (nextLink !== masterLink) {
                 return this._data.nextLink.unlink();
             }
+        },
+
+        /**
+         * @param {$data.Chain} chain
+         * @returns {$data.Chain}
+         */
+        concat: function (chain) {
+            var result = $oop.getClass(this.__classId).create();
+            this.forEachItem(function (link) {
+                result.push(link.clone());
+            });
+            chain.forEachItem(function (link) {
+                result.push(link.clone());
+            });
+            return result;
         }
     });
 

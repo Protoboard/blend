@@ -50,8 +50,7 @@ describe("$data", function () {
             result;
 
         beforeEach(function () {
-            $oop.Class.classLookup = {};
-            Chain = $oop.getClass('Chain')
+            Chain = $oop.getClass('test.$data.Chain.Chain')
                 .extend($data.Chain);
             chain = Chain.create();
             link = $data.Link.create();
@@ -89,7 +88,7 @@ describe("$data", function () {
 
         describe("setItem()", function () {
             beforeEach(function () {
-                spyOn(chain, 'pushLink');
+                spyOn(chain, 'push');
                 result = chain.setItem(link);
             });
 
@@ -97,8 +96,8 @@ describe("$data", function () {
                 expect(result).toBe(chain);
             });
 
-            it("should invoke pushLink()", function () {
-                expect(chain.pushLink).toHaveBeenCalledWith(link);
+            it("should invoke push()", function () {
+                expect(chain.push).toHaveBeenCalledWith(link);
             });
         });
 
@@ -141,8 +140,8 @@ describe("$data", function () {
                 link1 = $data.Link.create();
                 link2 = $data.Link.create();
                 chain
-                    .pushLink(link1)
-                    .pushLink(link2);
+                    .push(link1)
+                    .push(link2);
                 callback = jasmine.createSpy();
                 result = chain.forEachItem(callback);
             });
@@ -170,9 +169,9 @@ describe("$data", function () {
             });
         });
 
-        describe("pushLink()", function () {
+        describe("push()", function () {
             beforeEach(function () {
-                result = chain.pushLink(link);
+                result = chain.push(link);
             });
 
             it("should return self", function () {
@@ -190,7 +189,7 @@ describe("$data", function () {
             });
         });
 
-        describe("popLink()", function () {
+        describe("pop()", function () {
             var link1,
                 link2;
 
@@ -199,10 +198,10 @@ describe("$data", function () {
                 link2 = $data.Link.create();
 
                 chain
-                    .pushLink(link1)
-                    .pushLink(link2);
+                    .push(link1)
+                    .push(link2);
 
-                result = chain.popLink();
+                result = chain.pop();
             });
 
             it("should remove link", function () {
@@ -219,8 +218,8 @@ describe("$data", function () {
 
             describe("on last link", function () {
                 beforeEach(function () {
-                    chain.popLink();
-                    chain.popLink();
+                    chain.pop();
+                    chain.pop();
                 });
 
                 it("should leave master link only", function () {
@@ -230,9 +229,9 @@ describe("$data", function () {
             });
         });
 
-        describe("unshiftLink()", function () {
+        describe("unshift()", function () {
             beforeEach(function () {
-                result = chain.unshiftLink(link);
+                result = chain.unshift(link);
             });
 
             it("should return self", function () {
@@ -250,7 +249,7 @@ describe("$data", function () {
             });
         });
 
-        describe("shiftLink()", function () {
+        describe("shift()", function () {
             var link1,
                 link2;
 
@@ -259,10 +258,10 @@ describe("$data", function () {
                 link2 = $data.Link.create();
 
                 chain
-                    .pushLink(link1)
-                    .pushLink(link2);
+                    .push(link1)
+                    .push(link2);
 
-                result = chain.shiftLink();
+                result = chain.shift();
             });
 
             it("should remove link", function () {
@@ -279,14 +278,67 @@ describe("$data", function () {
 
             describe("on last link", function () {
                 beforeEach(function () {
-                    chain.shiftLink();
-                    chain.shiftLink();
+                    chain.shift();
+                    chain.shift();
                 });
 
                 it("should leave master link only", function () {
                     expect(chain._data.nextLink).toBe(chain._data);
                     expect(chain._data.previousLink).toBe(chain._data);
                 });
+            });
+        });
+
+        describe("concat()", function () {
+            var Link,
+                link1, link2,
+                chain2,
+                link3, link4;
+
+            beforeEach(function () {
+                Link = $oop.getClass('test.$data.Chain.Link')
+                    .extend($data.Link)
+                    .define({
+                        init: function (a) {
+                            this.foo = a;
+                        },
+                        clone: function clone() {
+                            clone.returned.foo = this.foo;
+                            return clone.returned;
+                        }
+                    });
+
+                link1 = Link.create('A');
+                link2 = Link.create('B');
+                link3 = Link.create('C');
+                link4 = Link.create('D');
+
+                chain
+                    .push(link1)
+                    .push(link2);
+
+                chain2 = $data.Chain.create()
+                    .push(link3)
+                    .push(link4);
+
+                result = chain.concat(chain2);
+            });
+
+            it("should return instance of right class", function () {
+                expect(result.includes(Chain)).toBeTruthy();
+            });
+
+            it("should concatenate chains", function () {
+                expect(result._data.nextLink.foo).toEqual(link1.foo);
+                expect(result._data.nextLink.nextLink.foo).toEqual(link2.foo);
+                expect(result._data.nextLink.nextLink.nextLink.foo)
+                    .toEqual(link3.foo);
+                expect(result._data.nextLink.nextLink.nextLink.nextLink.foo)
+                    .toEqual(link4.foo);
+            });
+
+            it("should set _itemCount", function () {
+                expect(result._itemCount).toBe(4);
             });
         });
     });
