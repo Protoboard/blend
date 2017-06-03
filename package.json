@@ -35,5 +35,6 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "phantomjs-prebuilt": "^2.1.14",
     "requirejs": "^2.3.3"
-  }
+  },
+  "false": {}
 }
