@@ -15,9 +15,9 @@
  * @extends $utils.Cloneable
  */
 $data.DataContainer = $oop.getClass('$data.DataContainer')
-    .implement($oop.getClass('$utils.Destroyable'))
+    .include($utils.Cloneable)
+    .implement($utils.Destroyable)
     .implement($oop.getClass('$data.Clearable'))
-    .include($oop.getClass('$utils.Cloneable'))
     .define(/** @lends $data.DataContainer# */{
         /**
          * @param {object|Array} [data]
