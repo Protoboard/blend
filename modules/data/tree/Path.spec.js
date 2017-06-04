@@ -16,7 +16,7 @@ describe("$assert", function () {
             expect($assert.assert).toHaveBeenCalledWith(true, "bar");
         });
 
-        describe("when passing non-promise", function () {
+        describe("when passing non-path", function () {
             it("should throw", function () {
                 expect(function () {
                     $assert.isPath({});
@@ -31,7 +31,7 @@ describe("$assert", function () {
             expect($assert.assert).toHaveBeenCalledWith(true, "bar");
         });
 
-        describe("when passing non-promise", function () {
+        describe("when passing non-path", function () {
             it("should throw", function () {
                 expect(function () {
                     $assert.isPathOptional({});
