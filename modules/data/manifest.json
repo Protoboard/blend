@@ -22,6 +22,8 @@
       "list/OrderedList.js",
       "list/OrderedStringList.js",
       "set/StringSet.js",
+      "tree/Path-utils.js",
+      "tree/Path.js",
       "utils/Clearable.js",
       "utils/Comparable.js",
       "utils/data-utils.js",
