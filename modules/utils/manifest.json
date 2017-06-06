@@ -10,7 +10,7 @@
       "async/Timeout.js",
       "async/Timer.js",
       "class/Cloneable.js",
-      "class/Destroyable.js",
+      "class/Destructible.js",
       "class/Identifiable.js",
       "class/Retrievable.js",
       "promise/Deferred.js",

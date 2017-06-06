@@ -10,13 +10,13 @@
  * Maintains data and provides access to it. Supports life cycle, clearing
  * and cloning.
  * @class $data.DataContainer
- * @implements $utils.Destroyable
+ * @implements $utils.Destructible
  * @implements $data.Clearable
  * @extends $utils.Cloneable
  */
 $data.DataContainer = $oop.getClass('$data.DataContainer')
     .include($utils.Cloneable)
-    .implement($utils.Destroyable)
+    .implement($utils.Destructible)
     .implement($oop.getClass('$data.Clearable'))
     .define(/** @lends $data.DataContainer# */{
         /**

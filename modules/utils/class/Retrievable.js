@@ -5,10 +5,10 @@
  * by their unique IDs.
  * @mixin $utils.Retrievable
  * @extends $utils.Identifiable
- * @implements $utils.Destroyable
+ * @implements $utils.Destructible
  */
 $utils.Retrievable = $oop.getClass('$utils.Retrievable')
-    .implement($oop.getClass('$utils.Destroyable'))
+    .implement($oop.getClass('$utils.Destructible'))
     .extend($oop.getClass('$utils.Identifiable'))
     .define(/** @lends $utils.Retrievable# */{
         /**
