@@ -76,7 +76,8 @@ module.exports = function (grunt) {
         },
 
         concat: buildConcatConfig({
-            separator: ';'
+            separator: ';',
+            sourceMap: true
         }),
 
         jshint: {
@@ -89,7 +90,11 @@ module.exports = function (grunt) {
         karma: buildKarmaConfig(),
 
         watch: {
-            files: ['Gruntfile.js', 'modules/**/*.+(js|css|less)', 'modules/*/+(package|manifest).json'],
+            files: [
+                'Gruntfile.js',
+                'modules/**/*@(.js|.css|.less)',
+                '!modules/**/*.spec.js',
+                'modules/*/@(package|manifest).json'],
             tasks: ['build-quick']
         },
 
