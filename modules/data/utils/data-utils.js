@@ -3,7 +3,7 @@
 $oop.copyProperties($data, /** @lends $data */{
     /**
      * Determines whether an object has any enumerable properties.
-     * @param {object} obj
+     * @param {Object} obj
      * @returns {boolean}
      */
     isEmptyObject: function (obj) {
@@ -18,10 +18,11 @@ $oop.copyProperties($data, /** @lends $data */{
 
     /**
      * Determines whether an object has exactly one enumerable property.
-     * @param {object} obj
+     * TODO: Remove?
+     * @param {Object} obj
      * @returns {boolean}
      */
-    isSingularObject: function (obj) {
+    isSingleKeyObject: function (obj) {
         var count = 0,
             key;
         for (key in obj) {
@@ -30,6 +31,22 @@ $oop.copyProperties($data, /** @lends $data */{
             }
         }
         return count === 1;
+    },
+
+    /**
+     * Determines whether an object has more than one enumerable properties.
+     * @param {Object} obj
+     * @returns {boolean}
+     */
+    isMultiKeyObject: function (obj) {
+        var count = 0,
+            key;
+        for (key in obj) {
+            if (hOP.call(obj, key) && ++count > 1) {
+                return true;
+            }
+        }
+        return false;
     },
 
     /**

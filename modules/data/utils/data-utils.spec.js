@@ -17,23 +17,49 @@ describe("$data", function () {
         });
     });
 
-    describe("isSingularObject()", function () {
+    describe("isSingleKeyObject()", function () {
         describe("for empty object", function () {
             it("should return false", function () {
-                expect($data.isSingularObject({})).toBe(false);
+                expect($data.isSingleKeyObject({})).toBe(false);
             });
         });
 
         describe("for singular object", function () {
             it("should return true", function () {
-                expect($data.isSingularObject({foo: "bar"})).toBe(true);
+                expect($data.isSingleKeyObject({foo: "bar"})).toBe(true);
             });
         });
 
         describe("for object with multiple properties", function () {
             it("should return false", function () {
-                expect($data.isSingularObject({foo: "bar", baz: "quux"}))
+                expect($data.isSingleKeyObject({foo: "bar", baz: "quux"}))
                     .toBe(false);
+            });
+        });
+    });
+
+    describe("isMultiKeyObject()", function () {
+        describe("for empty object", function () {
+            it("should return false", function () {
+                expect($data.isMultiKeyObject({})).toBe(false);
+            });
+        });
+
+        describe("for singular object", function () {
+            it("should return false", function () {
+                expect($data.isMultiKeyObject({foo: "bar"})).toBe(false);
+            });
+        });
+
+        describe("for object with multiple properties", function () {
+            it("should return true", function () {
+                expect($data.isMultiKeyObject({foo: "bar", baz: "quux"}))
+                    .toBe(true);
+                expect($data.isMultiKeyObject({
+                    foo: "bar",
+                    baz: "quux",
+                    hello: "world"
+                })).toBe(true);
             });
         });
     });
