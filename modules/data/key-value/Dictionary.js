@@ -17,7 +17,7 @@
 $data.Dictionary = $oop.getClass('$data.Dictionary')
     .extend($oop.getClass('$data.DataContainer'))
     .extend($oop.getClass('$data.KeyValueContainer'))
-    .include($oop.getClass('$data.StringKeyHost'))
+    .extend($oop.getClass('$data.StringKeyHost'))
     .define(/** @lends $data.Dictionary# */{
         /**
          * @param {string} key

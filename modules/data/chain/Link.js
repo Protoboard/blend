@@ -11,7 +11,7 @@
  * @mixes $utils.Cloneable
  */
 $data.Link = $oop.getClass('$data.Link')
-    .include($utils.Cloneable)
+    .extend($utils.Cloneable)
     .define(/** @lends $data.Link# */{
         /** @ignore */
         init: function () {

@@ -17,7 +17,7 @@
 $data.Collection = $oop.getClass('$data.Collection')
     .extend($oop.getClass('$data.DataContainer'))
     .extend($oop.getClass('$data.KeyValueContainer'))
-    .include($oop.getClass('$data.StringKeyHost'))
+    .extend($oop.getClass('$data.StringKeyHost'))
     .define(/** @lends $data.Collection# */{
         /**
          * @type {string}

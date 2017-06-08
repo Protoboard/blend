@@ -15,7 +15,7 @@
  */
 $data.StringCollection = $oop.getClass('$data.StringCollection')
     .extend($oop.getClass('$data.Collection'))
-    .include($oop.getClass('$data.StringValueHost'));
+    .extend($oop.getClass('$data.StringValueHost'));
 
 $oop.getClass('$data.DataContainer')
     .delegate(/** @lends $data.DataContainer# */{

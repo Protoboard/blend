@@ -15,8 +15,8 @@
  * @implements $data.Stackable
  */
 $data.Path = $oop.getClass('$data.Path')
-    .include($utils.Cloneable)
-    .include($oop.getClass('$data.Comparable'))
+    .extend($utils.Cloneable)
+    .extend($oop.getClass('$data.Comparable'))
     .implement($utils.Stringifiable)
     .implement($oop.getClass('$data.Stackable'))
     .define(/** @lends $data.Path# */{
