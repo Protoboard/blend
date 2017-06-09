@@ -7,6 +7,8 @@
  */
 
 /**
+ * Allows access & manipulation of tree (nested JavaScript objects) data
+ * structures.
  * @class $data.Tree
  * @extends $data.DataContainer
  */
@@ -15,6 +17,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     .define(/** @lends $data.Tree# */{
         /**
          * Creates a deep copy of the current tree.
+         * @see $data.deepCopy
          * @returns {$data.Tree}
          */
         clone: function clone() {
@@ -24,6 +27,7 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Tests whether a node exists in the tree on the specified path.
          * @param {$data.Path} path
          * @returns {boolean}
          */
@@ -50,6 +54,9 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Retrieves a path to an existing node in the tree where the
+         * specified path would fork off. For paths that already exist in
+         * the tree, this is the 1st-degree parent.
          * @param {$data.Path} path
          * @returns {$data.Path}
          */
@@ -75,7 +82,8 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
-         * Returns path identifying the last fork on the specified path.
+         * Returns path to the last forking node (ode with more than 1 keys)
+         * on the specified path.
          * @param {$data.Path} path
          * @returns {$data.Path}
          */
@@ -114,6 +122,8 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Retrieves node from the tree at the specified path. If the path
+         * does not exist in the tree, returns `undefined`.
          * @param {$data.Path} path Path to node
          * @returns {*} Whatever value is found at path
          */
@@ -136,6 +146,8 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Retrieves node from the tree at the specified path, wrapped in a
+         * `Tree` instance. For absent paths, returns an empty `Tree`.
          * @param {$data.Path} path
          * @returns {$data.Tree}
          */
@@ -144,6 +156,9 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Sets the specified node at the specified path. When the path
+         * already exists in the tree, it will be overwritten. When there's
+         * a primitive node along the specified path, it will be overwritten.
          * @param {$data.Path} path
          * @param {*} node
          * @returns {$data.Tree}
@@ -169,6 +184,10 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Appends the specified node to the node on the specified path.
+         * Array nodes will be concatenated to existing array nodes. When
+         * path does not exist in tree, `appendNode` is equivalent to `setNode`.
+         * @see $data.Tree#setNode
          * @param {$data.Path} path
          * @param {Object|Array} node
          * @returns {$data.Tree}
@@ -176,8 +195,7 @@ $data.Tree = $oop.getClass('$data.Tree')
         appendNode: function (path, node) {
             var hostNode = this.getNode(path),
                 keys, keyCount,
-                start, i, key,
-                changed = false;
+                start, i, key;
 
             if (hostNode instanceof Array && node instanceof Array) {
                 if (node.length) {
@@ -188,7 +206,6 @@ $data.Tree = $oop.getClass('$data.Tree')
                     for (i = 0; i < keyCount; i++) {
                         hostNode[start + i] = node[i];
                     }
-                    changed = true;
                 }
             } else if (hostNode instanceof Object && node instanceof Object) {
                 // appending object to object
@@ -197,9 +214,6 @@ $data.Tree = $oop.getClass('$data.Tree')
                 keyCount = keys.length;
                 for (i = 0; i < keyCount; i++) {
                     key = keys[i];
-                    if (!changed && hostNode[key] !== node[key]) {
-                        changed = true;
-                    }
                     hostNode[key] = node[key];
                 }
             } else if (hostNode === undefined) {
@@ -217,7 +231,10 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
-         * @param {$data.Path} path Path to node
+         * Removes a single node (with key) from its parent node. For array
+         * parent nodes, it is possible to use splicing for removal. When
+         * path does not exist in tree, `deleteNode` has no effect.
+         * @param {$data.Path} path
          * @param {boolean} [splice=false]
          * @returns {$data.Tree}
          */
@@ -240,6 +257,9 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Removes all non-forking nodes along the specified path, even if
+         * the whole path doesn't exist in the tree. When `path` points to
+         * an existing forking node, `deletePath` is equivalent to `deleteNode`.
          * @param {$data.Path} path
          * @param {boolean} [splice=false]
          * @returns {$data.Tree}
