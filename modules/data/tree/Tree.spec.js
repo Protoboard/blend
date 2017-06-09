@@ -105,23 +105,23 @@ describe("$data", function () {
             });
         });
 
-        describe("getExistingPath()", function () {
+        describe("getParentPath()", function () {
             beforeEach(function () {
-                result = tree.getExistingPath('bar.hello.world'.toPath());
+                result = tree.getParentPath('bar.hello.world'.toPath());
             });
 
             it("should return Path instance", function () {
                 expect($data.Path.isIncludedBy(result)).toBeTruthy();
             });
 
-            it("should retrieve closest existing path", function () {
-                expect(result.equals('bar.hello'.toPath())).toBeTruthy();
+            it("should retrieve path to closest non-leaf node", function () {
+                expect(result.equals('bar'.toPath())).toBeTruthy();
             });
 
             describe("for existing path", function () {
-                it("should return path", function () {
-                    result = tree.getExistingPath('foo.bar'.toPath());
-                    expect('foo.bar'.toPath().equals(result)).toBeTruthy();
+                it("should return path to parent node", function () {
+                    result = tree.getParentPath('foo.bar'.toPath());
+                    expect('foo'.toPath().equals(result)).toBeTruthy();
                 });
             });
         });

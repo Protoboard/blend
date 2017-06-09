@@ -53,19 +53,17 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @param {$data.Path} path
          * @returns {$data.Path}
          */
-        getExistingPath: function (path) {
+        getParentPath: function (path) {
             var pathComponents = path._components,
                 pathComponentCount = pathComponents.length,
                 i, pathComponent,
                 parentNode, childNode,
                 result = [];
 
-            for (i = 0, parentNode = this._data; i < pathComponentCount; i++) {
+            for (i = 0, parentNode = this._data; i < pathComponentCount - 1; i++) {
                 pathComponent = pathComponents[i];
                 childNode = parentNode[pathComponent];
-                if (childNode === undefined &&
-                    !hOP.call(parentNode, pathComponent)
-                ) {
+                if (!(childNode instanceof Object)) {
                     break;
                 } else {
                     result.push(pathComponent);
@@ -146,36 +144,26 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
-         * TODO: Refactor to use #getExistingPath()
          * @param {$data.Path} path
          * @param {*} node
          * @returns {$data.Tree}
          */
         setNode: function (path, node) {
             var pathComponents = path._components,
-                pathComponentCount = pathComponents.length,
-                i, parentNode, pathComponent;
+                lastPathComponentIndex = pathComponents.length - 1,
+                parentPath = this.getParentPath(path),
+                parentPathComponentCount = parentPath._components.length,
+                parentNode = this.getNode(parentPath),
+                i, currentNode;
 
-            for (i = 0, parentNode = this._data; i < pathComponentCount - 1; i++) {
-                pathComponent = pathComponents[i];
-                if (parentNode[pathComponent] === undefined &&
-                    !hOP.call(parentNode, pathComponent)
-                ) {
-                    // key doesn't exist on parent node
-                    // extending path
-                    parentNode = parentNode[pathComponent] = {};
-                } else {
-                    parentNode = parentNode[pathComponent];
-                }
+            // adding container nodes
+            for (i = parentPathComponentCount; i < lastPathComponentIndex; i++) {
+                parentNode[pathComponents[i]] = currentNode = {};
+                parentNode = currentNode;
             }
 
-            pathComponent = pathComponents[i];
-            if (parentNode[pathComponent] !== node || !hOP.call(parentNode, pathComponent)) {
-                // target node is different than specified
-                // or target path does not exist
-                // setting node
-                parentNode[pathComponent] = node;
-            }
+            // setting node on 1st-degree parent
+            parentNode[pathComponents[i]] = node;
 
             return this;
         },
