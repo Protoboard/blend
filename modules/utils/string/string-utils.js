@@ -22,7 +22,7 @@ $oop.copyProperties($utils, /** @lends $utils */{
      * @constant
      * @private
      */
-    _separatorRegexpLookup: {},
+    _splitterRegexpLookup: {},
 
     /**
      * Serializes variables. Returns strings unchanged, converts numbers and
@@ -95,36 +95,32 @@ $oop.copyProperties($utils, /** @lends $utils */{
      * @returns {string[]}
      */
     safeSplit: function (string, separator) {
-        var separatorLookup = $utils._separatorRegexpLookup,
-            re = separatorLookup[separator],
-            hits,
-            indexBefore,
-            indexAfter,
-            result;
+        var splitterRegexpLookup = $utils._splitterRegexpLookup,
+            re = splitterRegexpLookup[separator],
+            tokens, tokenCount,
+            i, token, component,
+            result = [];
 
         if (!re) {
-            // adding separator regexp to cache
-            re = separatorLookup[separator] = new RegExp('[^\\\\][' + separator + ']', 'g');
+            // regexp leaves undefined 'holes' in token list where unescaped
+            // separators would be
+            re = splitterRegexpLookup[separator] =
+                new RegExp('(\\\\[' + separator + '])|[' + separator + ']');
         }
 
-        // leading separator can't be matched by regexp
-        if (string[0] === separator) {
-            result = [''];
-            indexBefore = 1;
-        } else {
-            result = [];
-            indexBefore = 0;
+        // joining tokens between holes
+        tokens = string.split(re);
+        tokenCount = tokens.length;
+        for (i = 0, component = ''; i < tokenCount; i++) {
+            token = tokens[i];
+            if (token === undefined) {
+                result.push(component);
+                component = '';
+            } else {
+                component += token;
+            }
         }
-
-        // adding tokens up to last separator
-        while ((hits = re.exec(string)) !== null) {
-            indexAfter = hits.index + 1;
-            result.push(string.slice(indexBefore, indexAfter));
-            indexBefore = indexAfter + 1;
-        }
-
-        // adding token beyond last separator
-        result.push(string.slice(indexBefore));
+        result.push(component);
 
         return result;
     }
