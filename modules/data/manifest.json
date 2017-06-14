@@ -23,6 +23,7 @@
       "list/OrderedStringList.js",
       "set/StringSet.js",
       "tree/Path.js",
+      "tree/QueryComponent.js",
       "tree/Tree.js",
       "utils/Clearable.js",
       "utils/Comparable.js",
