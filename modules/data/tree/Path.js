@@ -36,26 +36,6 @@ $data.Path = $oop.getClass('$data.Path')
         },
 
         /**
-         * Escapes special characters in path components.
-         * @memberOf $data.Path
-         * @param {string} pathComponent
-         * @returns {string}
-         */
-        escapePathComponent: function (pathComponent) {
-            return $utils.escape(pathComponent, $data.PATH_COMPONENT_SEPARATOR);
-        },
-
-        /**
-         * Un-escapes special characters in path components.
-         * @memberOf $data.Path
-         * @param {string} escapedPathComponent
-         * @returns {string}
-         */
-        unescapePathComponent: function (escapedPathComponent) {
-            return $utils.unescape(escapedPathComponent, $data.PATH_COMPONENT_SEPARATOR);
-        },
-
-        /**
          * Clones path.
          * @returns {$data.Path}
          */
@@ -177,6 +157,26 @@ $data.Path = $oop.getClass('$data.Path')
         toString: function () {
             return this._components.map(this.escapePathComponent)
                 .join($data.PATH_COMPONENT_SEPARATOR);
+        },
+
+        /**
+         * Escapes special characters in path components.
+         * @memberOf $data.Path
+         * @param {string} pathComponentStr
+         * @returns {string}
+         */
+        escapePathComponent: function (pathComponentStr) {
+            return $utils.escape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
+        },
+
+        /**
+         * Un-escapes special characters in path components.
+         * @memberOf $data.Path
+         * @param {string} pathComponentStr
+         * @returns {string}
+         */
+        unescapePathComponent: function (pathComponentStr) {
+            return $utils.unescape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
         }
     });
 
