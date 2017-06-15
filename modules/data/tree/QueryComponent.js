@@ -7,7 +7,6 @@
  */
 
 /**
- * TODO: Should we allow mixing skipper/wildcard and negation? Eg. **!foo
  * @class $data.QueryComponent
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
@@ -21,86 +20,73 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
          * @ignore
          */
         init: function (queryComponentStr) {
-            // separating key & value tokens
-            var RE_KEY_VALUE_TOKENIZER = $data.RE_KEY_VALUE_TOKENIZER,
-                safeSplit = $utils.safeSplit,
-                tokens = safeSplit(queryComponentStr, ':'),
-                key = tokens[0],
-                value = tokens[1];
+            var safeSplit = $utils.safeSplit,
+                // separating key & value tokens
+                componentTokens = safeSplit(queryComponentStr, ':'),
+                keyTokens = componentTokens[0] &&
+                    $data.QC_KEY_TOKENIZER.exec(componentTokens[0]),
+                valueTokens = componentTokens[1] &&
+                    $data.QC_VALUE_TOKENIZER.exec(componentTokens[1]),
+                keyWildcardToken = keyTokens && keyTokens[1],
+                keyNegatorToken = keyTokens && keyTokens[2],
+                keyOptionsToken = keyTokens && keyTokens[3],
+                valuePrimitiveToken = valueTokens && valueTokens[1],
+                valueWildcardToken = valueTokens && valueTokens[2],
+                valueNegatorToken = valueTokens && valueTokens[3],
+                valueOptionsToken = valueTokens && valueTokens[4];
 
-            // setting key properties
-            switch (key) {
-            case '**':
-                /**
-                 * @type {boolean}
-                 * @private
-                 */
-                this._isSkipper = true;
-                break;
+            /**
+             * @type {boolean}
+             * @private
+             */
+            this._isSkipper = keyWildcardToken === '**';
 
-            case '*':
-            case undefined:
-                /**
-                 * @type {boolean}
-                 * @private
-                 */
-                this._matchesAnyKey = true;
-                break;
+            /**
+             * @type {boolean}
+             * @private
+             */
+            this._matchesAnyKey = keyWildcardToken === '*';
 
-            default:
-                key = RE_KEY_VALUE_TOKENIZER.exec(key);
+            /**
+             * @type {boolean}
+             * @private
+             */
+            this._isKeyNegated = keyNegatorToken === '!';
 
-                /**
-                 * @type {Array}
-                 * @private
-                 */
-                this._keyOptions = key[2] && safeSplit(key[2], ',')
-                        .map(this.unescapeQueryComponent);
+            /**
+             * @type {Array}
+             * @private
+             */
+            this._keyOptions = keyOptionsToken && safeSplit(keyOptionsToken, ',')
+                    .map(this.unescapeQueryComponent);
 
-                /**
-                 * @type {boolean}
-                 * @private
-                 */
-                this._isKeyNegated = key[1] === '!';
-                break;
-            }
+            /**
+             * @type {boolean}
+             * @private
+             */
+            this._matchesPrimitiveValues = valuePrimitiveToken === '$';
 
-            // setting value properties
-            switch (value) {
-            case '$':
-                /**
-                 * @type {boolean}
-                 * @private
-                 */
-                this._isValuePrimitive = true;
-                break;
+            /**
+             * @type {boolean}
+             * @private
+             */
+            this._matchesAnyValue = valueWildcardToken === '*' ||
+                valuePrimitiveToken === undefined &&
+                valueWildcardToken === undefined &&
+                valueOptionsToken === undefined;
 
-            case '*':
-            case undefined:
-                /**
-                 * @type {boolean}
-                 * @private
-                 */
-                this._matchesAnyValue = true;
-                break;
+            /**
+             * @type {boolean}
+             * @private
+             */
+            this._isValueNegated = valueNegatorToken === '!';
 
-            default:
-                value = RE_KEY_VALUE_TOKENIZER.exec(value);
-
-                /**
-                 * @type {*}
-                 * @private
-                 */
-                this._valueOptions = value[2] && safeSplit(value[2], ',')
-                        .map(this.unescapeQueryComponent);
-
-                /**
-                 * @type {boolean}
-                 * @private
-                 */
-                this._isValueNegated = value[1] === '!';
-                break;
-            }
+            /**
+             * @type {*}
+             * @private
+             */
+            this._valueOptions = valueOptionsToken && safeSplit(valueOptionsToken, ',')
+                    .map(this.unescapeQueryComponent);
         },
 
         /**
@@ -108,33 +94,32 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
          * @returns {string}
          */
         toString: function () {
-            var key, value;
+            return [
+                // key
+                this._isSkipper ? '**' : undefined,
+                this._matchesAnyKey ?
+                    this._isKeyNegated ? '' : '*' :
+                    undefined,
+                this._isKeyNegated ? '!' : undefined,
+                this._keyOptions ? this._keyOptions
+                    .map(this.escapeQueryComponent)
+                    .join(',') :
+                    undefined,
 
-            if (this._isSkipper) {
-                return '**';
-            } else {
-                if (this._matchesAnyKey) {
-                    key = '*';
-                } else {
-                    key = (this._isKeyNegated ? '!' : '') +
-                        this._keyOptions
-                            .map(this.escapeQueryComponent)
-                            .join(',');
-                }
-
-                if (this._isValuePrimitive) {
-                    value = '$';
-                } else if (this._matchesAnyValue) {
-                    value = '*';
-                } else {
-                    value = (this._isValueNegated ? '!' : '') +
-                        this._valueOptions
-                            .map(this.escapeQueryComponent)
-                            .join(',');
-                }
-
-                return key + ':' + value;
-            }
+                // value
+                this._isSkipper ? undefined : [
+                    ':',
+                    this._matchesPrimitiveValues ? '$' : undefined,
+                    this._matchesAnyValue ?
+                        this._isValueNegated ? '' : '*' :
+                        undefined,
+                    this._isValueNegated ? '!' : undefined,
+                    this._valueOptions ? this._valueOptions
+                        .map(this.escapeQueryComponent)
+                        .join(',') :
+                        undefined
+                ].join('')
+            ].join('');
         },
 
         /**
@@ -142,7 +127,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
          * @returns {string}
          */
         escapeQueryComponent: function (queryComponentStr) {
-            return $utils.escape(queryComponentStr, $data.QUERY_COMPONENT_SPECIAL_CHARS);
+            return $utils.escape(queryComponentStr, $data.QC_SPECIAL_CHARS);
         },
 
         /**
@@ -150,7 +135,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
          * @returns {string}
          */
         unescapeQueryComponent: function (queryComponentStr) {
-            return $utils.unescape(queryComponentStr, $data.QUERY_COMPONENT_SPECIAL_CHARS);
+            return $utils.unescape(queryComponentStr, $data.QC_SPECIAL_CHARS);
         }
     });
 
@@ -159,13 +144,19 @@ $oop.copyProperties($data, /** @lends $data */{
      * Special characters in query components. (To be escaped.)
      * @constant
      */
-    QUERY_COMPONENT_SPECIAL_CHARS: '*.,:!$',
+    QC_SPECIAL_CHARS: '*.,:!$',
 
     /**
      * Tokenizes key or value portion of query component.
      * @constant
      */
-    RE_KEY_VALUE_TOKENIZER: /^(!?)(.*)$/
+    QC_KEY_TOKENIZER: /^(\*\*|\*)?(!)?(.*)$/,
+
+    /**
+     * Tokenizes key or value portion of query component.
+     * @constant
+     */
+    QC_VALUE_TOKENIZER: /^(\$)|(\*)?(!)?(.*)$/
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{

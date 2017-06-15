@@ -52,16 +52,16 @@ describe("$data", function () {
                     .toBeTruthy();
             });
 
-            it("should set _isValuePrimitive property", function () {
-                expect(QueryComponent.create('*:$')._isValuePrimitive)
+            it("should set _matchesPrimitiveValues property", function () {
+                expect(QueryComponent.create('*:$')._matchesPrimitiveValues)
                     .toBeTruthy();
-                expect(QueryComponent.create('foo:$')._isValuePrimitive)
+                expect(QueryComponent.create('foo:$')._matchesPrimitiveValues)
                     .toBeTruthy();
-                expect(QueryComponent.create('!foo:$')._isValuePrimitive)
+                expect(QueryComponent.create('!foo:$')._matchesPrimitiveValues)
                     .toBeTruthy();
-                expect(QueryComponent.create('!foo:\\$')._isValuePrimitive)
+                expect(QueryComponent.create('!foo:\\$')._matchesPrimitiveValues)
                     .toBeFalsy();
-                expect(QueryComponent.create('!foo:bar')._isValuePrimitive)
+                expect(QueryComponent.create('!foo:bar')._matchesPrimitiveValues)
                     .toBeFalsy();
             });
 
@@ -114,8 +114,15 @@ describe("$data", function () {
 
         describe("toString()", function () {
             describe("when _isSkipper is true", function () {
-                it("should discard everyting else", function () {
+                it("should discard value", function () {
                     expect(QueryComponent.create('**:foo') + '').toBe('**');
+                });
+
+                describe("and key is negated", function () {
+                    it("should include negated key options", function () {
+                        expect(QueryComponent.create('**!foo') + '')
+                            .toBe('**!foo');
+                    });
                 });
             });
 
@@ -139,7 +146,7 @@ describe("$data", function () {
                 });
             });
 
-            describe("when _isValuePrimitive is true", function () {
+            describe("when _matchesPrimitiveValues is true", function () {
                 it("should output primitive value marker", function () {
                     expect(QueryComponent.create('foo:$') + '').toBe('foo:$');
                 });
