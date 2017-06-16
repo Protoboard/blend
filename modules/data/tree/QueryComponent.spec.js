@@ -20,14 +20,14 @@ describe("$data", function () {
                 expect(QueryComponent.create('\\*\\*')._isSkipper).toBeFalsy();
             });
 
-            it("should set _isKeyNegated property", function () {
-                expect(QueryComponent.create('foo')._isKeyNegated)
+            it("should set _isKeyExcluded property", function () {
+                expect(QueryComponent.create('foo')._isKeyExcluded)
                     .toBeFalsy();
-                expect(QueryComponent.create('!foo')._isKeyNegated)
+                expect(QueryComponent.create('!foo')._isKeyExcluded)
                     .toBeTruthy();
-                expect(QueryComponent.create('*')._isKeyNegated)
+                expect(QueryComponent.create('*')._isKeyExcluded)
                     .toBeFalsy();
-                expect(QueryComponent.create('**')._isKeyNegated)
+                expect(QueryComponent.create('**')._isKeyExcluded)
                     .toBeFalsy();
             });
 
@@ -84,14 +84,14 @@ describe("$data", function () {
                     .toBeFalsy();
             });
 
-            it("should set _isValueNegated property", function () {
-                expect(QueryComponent.create('foo')._isValueNegated)
+            it("should set _isValueExcluded property", function () {
+                expect(QueryComponent.create('foo')._isValueExcluded)
                     .toBeFalsy();
-                expect(QueryComponent.create('foo:*')._isValueNegated)
+                expect(QueryComponent.create('foo:*')._isValueExcluded)
                     .toBeFalsy();
-                expect(QueryComponent.create('foo:bar')._isValueNegated)
+                expect(QueryComponent.create('foo:bar')._isValueExcluded)
                     .toBeFalsy();
-                expect(QueryComponent.create('foo:!bar')._isValueNegated)
+                expect(QueryComponent.create('foo:!bar')._isValueExcluded)
                     .toBeTruthy();
             });
 
@@ -138,7 +138,7 @@ describe("$data", function () {
             beforeEach(function () {
                 queryComponent = QueryComponent.create('foo')
                     .addValueOption('bar')
-                    .negateValueOptions();
+                    .excludeValueOptions();
                 result = queryComponent.clone();
             });
 
@@ -157,16 +157,16 @@ describe("$data", function () {
                     expect(QueryComponent.create('**:foo') + '').toBe('**');
                 });
 
-                describe("and key is negated", function () {
-                    it("should include negated key options", function () {
+                describe("and key is excluded", function () {
+                    it("should include excluded key options", function () {
                         expect(QueryComponent.create('**!foo') + '')
                             .toBe('**!foo');
                     });
                 });
             });
 
-            describe("when _isKeyNegated is true", function () {
-                it("should negate keys", function () {
+            describe("when _isKeyExcluded is true", function () {
+                it("should exclude keys", function () {
                     expect(QueryComponent.create('!foo') + '').toBe('!foo:*');
                     expect(QueryComponent.create('!foo:baz') + '')
                         .toBe('!foo:baz');
@@ -193,8 +193,8 @@ describe("$data", function () {
                 });
             });
 
-            describe("when _isValueNegated is true", function () {
-                it("should negate keys", function () {
+            describe("when _isValueExcluded is true", function () {
+                it("should exclude keys", function () {
                     expect(QueryComponent.create('foo:!bar') + '')
                         .toBe('foo:!bar');
                 });
@@ -234,7 +234,7 @@ describe("$data", function () {
                     expect(QueryComponent.create('foo,bar').matches('bar'))
                         .toBeTruthy();
 
-                    // negated key options
+                    // excluded key options
                     expect(QueryComponent.create('!foo,bar').matches('baz'))
                         .toBeTruthy();
 
@@ -250,7 +250,7 @@ describe("$data", function () {
                         .matches('foo', 'baz'))
                         .toBeTruthy();
 
-                    // negated value options
+                    // excluded value options
                     expect(QueryComponent.create('foo:!bar,baz')
                         .matches('foo', 'foo'))
                         .toBeTruthy();
@@ -281,7 +281,7 @@ describe("$data", function () {
                     expect(QueryComponent.create('foo,bar').matches('baz'))
                         .toBeFalsy();
 
-                    // negated key options
+                    // excluded key options
                     expect(QueryComponent.create('!foo,bar').matches('foo'))
                         .toBeFalsy();
                     expect(QueryComponent.create('!foo,bar').matches('bar'))
@@ -292,7 +292,7 @@ describe("$data", function () {
                         .matches('foo', 'foo'))
                         .toBeFalsy();
 
-                    // negated value options
+                    // excluded value options
                     expect(QueryComponent.create('foo:!bar,baz')
                         .matches('foo', 'bar'))
                         .toBeFalsy();
@@ -329,22 +329,22 @@ describe("$data", function () {
             });
 
             it("should set _matchesAnyValue to false", function () {
-                expect(queryComponent._isValueNegated).toBeFalsy();
+                expect(queryComponent._isValueExcluded).toBeFalsy();
             });
         });
 
-        describe("negateValueOptions()", function () {
+        describe("excludeValueOptions()", function () {
             beforeEach(function () {
                 queryComponent = QueryComponent.create('foo:bar,baz');
-                result = queryComponent.negateValueOptions();
+                result = queryComponent.excludeValueOptions();
             });
 
             it("should return self", function () {
                 expect(result).toBe(queryComponent);
             });
 
-            it("should set _isValueNegated to true", function () {
-                expect(queryComponent._isValueNegated).toBeTruthy();
+            it("should set _isValueExcluded to true", function () {
+                expect(queryComponent._isValueExcluded).toBeTruthy();
             });
         });
     });

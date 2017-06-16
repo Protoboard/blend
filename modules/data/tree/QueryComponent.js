@@ -2,16 +2,28 @@
 
 /**
  * @function $data.QueryComponent.create
- * @param {string} queryComponentStr
+ * @param {string} queryComponentStr String representation of query component
  * @returns {$data.QueryComponent}
  */
 
 /**
- * TODO: Add return marker.
+ * Matches a single key-value pair. An array of `QueryComponent`s make up a
+ * {@link $data.Query}.
+ * Special characters in query components:
+ * - `*` (Asterisk) Matches any key or value
+ * - `,` (Comma) Separates key or value options
+ * - `:` (Colon) Separates key and value
+ * - `!` (Exclamation mark) Excludes key or value options
+ * - `$` (Dollar sign) Matches primitive values (string, number, boolean,
+ * `null`, `undefined`)
  * @class $data.QueryComponent
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
  * @implements $data.Matchable
+ * @TODO: Add return marker.
+ * @example
+ * $data.QueryComponent.create("foo:bar") // matches a specific pair
+ * $data.QueryComponent.create("*:bar") // matches pair where value is "bar"
  */
 $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     .extend($utils.Cloneable)
@@ -32,11 +44,11 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                     $data.QC_VALUE_TOKENIZER.exec(componentTokens[1]),
                 keyWildcardToken = keyTokens && keyTokens[1],
                 keySkipperToken = keyTokens && keyTokens[2],
-                keyNegatorToken = keyTokens && keyTokens[3],
+                keyExclusionToken = keyTokens && keyTokens[3],
                 keyOptionsToken = keyTokens && keyTokens[4],
                 valuePrimitiveToken = valueTokens && valueTokens[1],
                 valueWildcardToken = valueTokens && valueTokens[2],
-                valueNegatorToken = valueTokens && valueTokens[3],
+                valueExclusionToken = valueTokens && valueTokens[3],
                 valueOptionsToken = valueTokens && valueTokens[4];
 
             /**
@@ -49,13 +61,13 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {boolean}
              * @private
              */
-            this._isKeyNegated = keyNegatorToken === '!';
+            this._isKeyExcluded = keyExclusionToken === '!';
 
             /**
              * @type {boolean}
              * @private
              */
-            this._matchesAnyKey = !this._isKeyNegated && (
+            this._matchesAnyKey = !this._isKeyExcluded && (
                 this._isSkipper ||
                 keyWildcardToken === '*');
 
@@ -65,7 +77,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              */
             this._keyOptions = keyOptionsToken !== undefined ?
                 safeSplit(keyOptionsToken, ',')
-                    .map(this.unescapeQueryComponent) :
+                    .map(this._unescapeQueryComponent) :
                 undefined;
 
             /**
@@ -85,13 +97,13 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {boolean}
              * @private
              */
-            this._isValueNegated = valueNegatorToken === '!';
+            this._isValueExcluded = valueExclusionToken === '!';
 
             /**
              * @type {boolean}
              * @private
              */
-            this._matchesAnyValue = !this._isValueNegated && (
+            this._matchesAnyValue = !this._isValueExcluded && (
                 this._isSkipper ||
                 valueWildcardToken === '*' ||
                 valuePrimitiveToken === undefined &&
@@ -104,7 +116,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              */
             this._valueOptions = valueOptionsToken !== undefined ?
                 safeSplit(valueOptionsToken, ',')
-                    .map(this.unescapeQueryComponent) :
+                    .map(this._unescapeQueryComponent) :
                 undefined;
         },
 
@@ -125,14 +137,33 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         },
 
         /**
-         * @returns {*}
+         * @param {string} queryComponentStr
+         * @returns {string}
+         * @private
+         */
+        _escapeQueryComponent: function (queryComponentStr) {
+            return $utils.escape(queryComponentStr, $data.QC_SPECIAL_CHARS);
+        },
+
+        /**
+         * @param {string} queryComponentStr
+         * @returns {string}
+         * @private
+         */
+        _unescapeQueryComponent: function (queryComponentStr) {
+            return $utils.unescape(queryComponentStr, $data.QC_SPECIAL_CHARS);
+        },
+
+        /**
+         * @inheritDoc
+         * @returns {$data.QueryComponent}
          */
         clone: function clone() {
             var cloned = clone.returned;
             // properties alterable through methods
             cloned._valueOptions = slice.call(this._valueOptions);
             cloned._matchesAnyValue = this._matchesAnyValue;
-            cloned._isValueNegated = this._isValueNegated;
+            cloned._isValueExcluded = this._isValueExcluded;
             return cloned;
         },
 
@@ -145,11 +176,11 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 // key
                 this._isSkipper ? '**' : undefined,
                 this._matchesAnyKey && !this._isSkipper ?
-                    this._isKeyNegated ? '' : '*' :
+                    this._isKeyExcluded ? '' : '*' :
                     undefined,
-                this._isKeyNegated ? '!' : undefined,
+                this._isKeyExcluded ? '!' : undefined,
                 this._keyOptions ? this._keyOptions
-                    .map(this.escapeQueryComponent)
+                    .map(this._escapeQueryComponent)
                     .join(',') :
                     undefined,
 
@@ -158,11 +189,11 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                     ':',
                     this._matchesPrimitiveValues ? '$' : undefined,
                     this._matchesAnyValue ?
-                        this._isValueNegated ? '' : '*' :
+                        this._isValueExcluded ? '' : '*' :
                         undefined,
-                    this._isValueNegated ? '!' : undefined,
+                    this._isValueExcluded ? '!' : undefined,
                     this._valueOptions ? this._valueOptions
-                        .map(this.escapeQueryComponent)
+                        .map(this._escapeQueryComponent)
                         .join(',') :
                         undefined
                 ].join('')
@@ -171,17 +202,20 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 
         /**
          * Matches query component against a key-value pair.
-         * @param {string} pathComponent
-         * @param {*} value
+         * @param {string} key Key to be matched
+         * @param {*} value Value to be matched
          * @returns {boolean}
+         * @example
+         * $data.QueryComponent.create('*:foo').matches('bar', 'foo') // true
+         * $data.QueryComponent.create('*:!foo').matches('bar', 'foo') // false
          */
-        matches: function (pathComponent, value) {
+        matches: function (key, value) {
             // a) either matches any key, or,
             return (this._matchesAnyKey ||
                 // b) pathComponent is (not) one of the available options
-                (this._isKeyNegated ?
-                    !hOP.call(this._keyOptionLookup, pathComponent) :
-                    hOP.call(this._keyOptionLookup, pathComponent))) &&
+                (this._isKeyExcluded ?
+                    !hOP.call(this._keyOptionLookup, key) :
+                    hOP.call(this._keyOptionLookup, key))) &&
 
                 // and
                 // c) either matches any value,
@@ -190,7 +224,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 this._matchesPrimitiveValues &&
                 (typeof value !== 'object' || value === null) ||
                 // e) value is (not) one of the available options
-                !!this._valueOptions && (this._isValueNegated ?
+                !!this._valueOptions && (this._isValueExcluded ?
                     // can't use lookup as values may be other than strings
                     // hence value matching is slower than key matching
                     this._valueOptions.indexOf(value) === -1 :
@@ -214,25 +248,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         /**
          * @returns {$data.QueryComponent}
          */
-        negateValueOptions: function () {
-            this._isValueNegated = true;
+        excludeValueOptions: function () {
+            this._isValueExcluded = true;
             return this;
-        },
-
-        /**
-         * @param {string} queryComponentStr
-         * @returns {string}
-         */
-        escapeQueryComponent: function (queryComponentStr) {
-            return $utils.escape(queryComponentStr, $data.QC_SPECIAL_CHARS);
-        },
-
-        /**
-         * @param {string} queryComponentStr
-         * @returns {string}
-         */
-        unescapeQueryComponent: function (queryComponentStr) {
-            return $utils.unescape(queryComponentStr, $data.QC_SPECIAL_CHARS);
         }
     });
 
@@ -241,7 +259,7 @@ $oop.copyProperties($data, /** @lends $data */{
      * Special characters in query components. (To be escaped.)
      * @constant
      */
-    QC_SPECIAL_CHARS: '*.,:!$',
+    QC_SPECIAL_CHARS: '*,:!$',
 
     /**
      * Tokenizes key or value portion of query component.
