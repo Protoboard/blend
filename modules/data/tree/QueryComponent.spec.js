@@ -167,6 +167,7 @@ describe("$data", function () {
 
             describe("when _isKeyNegated is true", function () {
                 it("should negate keys", function () {
+                    expect(QueryComponent.create('!foo') + '').toBe('!foo:*');
                     expect(QueryComponent.create('!foo:baz') + '')
                         .toBe('!foo:baz');
                 });
@@ -174,6 +175,7 @@ describe("$data", function () {
 
             describe("when _matchesAnyKey is true", function () {
                 it("should output key wildcard", function () {
+                    expect(QueryComponent.create('*') + '').toBe('*:*');
                     expect(QueryComponent.create('*:foo') + '').toBe('*:foo');
                 });
             });
