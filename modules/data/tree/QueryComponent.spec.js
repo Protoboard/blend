@@ -47,13 +47,10 @@ describe("$data", function () {
             it("should set _keyOptions property", function () {
                 expect(QueryComponent.create('foo')._keyOptions)
                     .toEqual(['foo']);
-                expect(QueryComponent.create('foo,bar:$')._keyOptions).toEqual([
-                    'foo', 'bar'
-                ]);
+                expect(QueryComponent.create('foo,bar:$')._keyOptions)
+                    .toEqual(['foo', 'bar']);
                 expect(QueryComponent.create('!foo,bar:$')._keyOptions)
-                    .toEqual([
-                        'foo', 'bar'
-                    ]);
+                    .toEqual(['foo', 'bar']);
             });
 
             it("should set _keyOptionLookup property", function () {
@@ -110,13 +107,11 @@ describe("$data", function () {
                 expect(QueryComponent.create('*:foo')._valueOptions)
                     .toEqual(['foo']);
                 expect(QueryComponent.create('!quux:foo,bar')._valueOptions)
-                    .toEqual([
-                        'foo', 'bar'
-                    ]);
+                    .toEqual(['foo', 'bar']);
                 expect(QueryComponent.create('*:!foo,bar')._valueOptions)
-                    .toEqual([
-                        'foo', 'bar'
-                    ]);
+                    .toEqual(['foo', 'bar']);
+                expect(QueryComponent.create('*:!')._valueOptions)
+                    .toEqual(['']);
             });
         });
 

@@ -59,7 +59,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 keyWildcardToken === '*');
 
             /**
-             * @type {Array}
+             * @type {string[]}
              * @private
              */
             this._keyOptions = safeSplit(keyOptionsToken, ',')
@@ -95,11 +95,13 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 valueOptionsToken === undefined);
 
             /**
-             * @type {*}
+             * @type {Array}
              * @private
              */
-            this._valueOptions = valueOptionsToken && safeSplit(valueOptionsToken, ',')
-                    .map(this.unescapeQueryComponent);
+            this._valueOptions = valueOptionsToken !== undefined ?
+                safeSplit(valueOptionsToken, ',')
+                    .map(this.unescapeQueryComponent) :
+                undefined;
         },
 
         /**
