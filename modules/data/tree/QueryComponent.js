@@ -182,7 +182,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         /**
          * Matches query component against a key-value pair.
          * @param {string} key Key to be matched
-         * @param {*} value Value to be matched
+         * @param {*} [value] Value to be matched
          * @returns {boolean}
          * @example
          * $data.QueryComponent.create('*:foo').matches('bar', 'foo') // true
