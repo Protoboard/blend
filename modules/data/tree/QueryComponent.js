@@ -39,9 +39,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 // separating key & value tokens
                 componentTokens = safeSplit(queryComponentStr, ':'),
                 keyTokens = componentTokens[0] &&
-                    $data.QC_KEY_TOKENIZER.exec(componentTokens[0]),
+                    $data.QUERY_COMPONENT_KEY_TOKENIZER.exec(componentTokens[0]),
                 valueTokens = componentTokens[1] &&
-                    $data.QC_VALUE_TOKENIZER.exec(componentTokens[1]),
+                    $data.QUERY_COMPONENT_VALUE_TOKENIZER.exec(componentTokens[1]),
                 keyWildcardToken = keyTokens && keyTokens[1],
                 keySkipperToken = keyTokens && keyTokens[2],
                 keyExclusionToken = keyTokens && keyTokens[3],
@@ -238,26 +238,26 @@ $oop.copyProperties($data, /** @lends $data */{
      * Special characters in query components. (To be escaped.)
      * @constant
      */
-    QC_SPECIAL_CHARS: '*,:!$',
+    QUERY_COMPONENT_SPECIAL_CHARS: '*,:!$',
 
     /**
      * Tokenizes key or value portion of query component.
      * @constant
      */
-    QC_KEY_TOKENIZER: /^(?:(\*)|(\*\*)?(!)?(.*)?)$/,
+    QUERY_COMPONENT_KEY_TOKENIZER: /^(?:(\*)|(\*\*)?(!)?(.*)?)$/,
 
     /**
      * Tokenizes key or value portion of query component.
      * @constant
      */
-    QC_VALUE_TOKENIZER: /^(?:(\$)|(\*)|(!)?(.*))$/,
+    QUERY_COMPONENT_VALUE_TOKENIZER: /^(?:(\$)|(\*)|(!)?(.*))$/,
 
     /**
      * @param {string} queryComponentStr
      * @returns {string}
      */
     escapeQueryComponent: function (queryComponentStr) {
-        return $utils.escape(queryComponentStr, $data.QC_SPECIAL_CHARS);
+        return $utils.escape(queryComponentStr, $data.QUERY_COMPONENT_SPECIAL_CHARS);
     },
 
     /**
@@ -265,7 +265,7 @@ $oop.copyProperties($data, /** @lends $data */{
      * @returns {string}
      */
     unescapeQueryComponent: function (queryComponentStr) {
-        return $utils.unescape(queryComponentStr, $data.QC_SPECIAL_CHARS);
+        return $utils.unescape(queryComponentStr, $data.QUERY_COMPONENT_SPECIAL_CHARS);
     }
 });
 

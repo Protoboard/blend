@@ -216,7 +216,7 @@ describe("$data", function () {
         });
 
         describe("matches()", function () {
-            describe("for matching pathComponent and value", function () {
+            describe("for matching key and value", function () {
                 it("should return true", function () {
                     // skipper
                     expect(QueryComponent.create('**').matches('foo'))
@@ -271,7 +271,7 @@ describe("$data", function () {
                 });
             });
 
-            describe("for non-matching pathComponent or value", function () {
+            describe("for non-matching key or value", function () {
                 it("should return false", function () {
                     // skipper
                     expect(QueryComponent.create('**!foo').matches('foo'))
