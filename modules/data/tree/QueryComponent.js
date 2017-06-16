@@ -7,7 +7,7 @@
  */
 
 /**
- * TODO: Value options setter
+ * TODO: Add return marker.
  * @class $data.QueryComponent
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
@@ -125,6 +125,18 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         },
 
         /**
+         * @returns {*}
+         */
+        clone: function clone() {
+            var cloned = clone.returned;
+            // properties alterable through methods
+            cloned._valueOptions = slice.call(this._valueOptions);
+            cloned._matchesAnyValue = this._matchesAnyValue;
+            cloned._isValueNegated = this._isValueNegated;
+            return cloned;
+        },
+
+        /**
          * Returns string representation of query component.
          * @returns {string}
          */
@@ -183,6 +195,28 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                     // hence value matching is slower than key matching
                     this._valueOptions.indexOf(value) === -1 :
                     this._valueOptions.indexOf(value) > -1));
+        },
+
+        /**
+         * @param {*} valueOption
+         * @returns {$data.QueryComponent}
+         */
+        addValueOption: function (valueOption) {
+            if (!this._valueOptions) {
+                this._valueOptions = [valueOption];
+                this._matchesAnyValue = false;
+            } else {
+                this._valueOptions.push(valueOption);
+            }
+            return this;
+        },
+
+        /**
+         * @returns {$data.QueryComponent}
+         */
+        negateValueOptions: function () {
+            this._isValueNegated = true;
+            return this;
         },
 
         /**

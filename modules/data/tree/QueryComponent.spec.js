@@ -136,7 +136,9 @@ describe("$data", function () {
 
         describe("clone()", function () {
             beforeEach(function () {
-                queryComponent = QueryComponent.create('foo:!bar');
+                queryComponent = QueryComponent.create('foo')
+                    .addValueOption('bar')
+                    .negateValueOptions();
                 result = queryComponent.clone();
             });
 
@@ -304,6 +306,43 @@ describe("$data", function () {
                         .matches('foo', []))
                         .toBeFalsy();
                 });
+            });
+        });
+
+        describe("addValueOption()", function () {
+            var value;
+
+            beforeEach(function () {
+                value = {};
+                queryComponent = QueryComponent.create('foo:*');
+                result = queryComponent.addValueOption(value);
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(queryComponent);
+            });
+
+            it("should add to _valueOptions", function () {
+                expect(queryComponent._valueOptions).toEqual([value]);
+            });
+
+            it("should set _matchesAnyValue to false", function () {
+                expect(queryComponent._isValueNegated).toBeFalsy();
+            });
+        });
+
+        describe("negateValueOptions()", function () {
+            beforeEach(function () {
+                queryComponent = QueryComponent.create('foo:bar,baz');
+                result = queryComponent.negateValueOptions();
+            });
+
+            it("should return self", function () {
+                expect(result).toBe(queryComponent);
+            });
+
+            it("should set _isValueNegated to true", function () {
+                expect(queryComponent._isValueNegated).toBeTruthy();
             });
         });
     });
