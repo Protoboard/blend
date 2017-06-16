@@ -155,28 +155,8 @@ $data.Path = $oop.getClass('$data.Path')
          * @returns {string}
          */
         toString: function () {
-            return this._components.map(this.escapePathComponent)
+            return this._components.map($data.escapePathComponent)
                 .join($data.PATH_COMPONENT_SEPARATOR);
-        },
-
-        /**
-         * Escapes special characters in path components.
-         * @memberOf $data.Path
-         * @param {string} pathComponentStr
-         * @returns {string}
-         */
-        escapePathComponent: function (pathComponentStr) {
-            return $utils.escape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
-        },
-
-        /**
-         * Un-escapes special characters in path components.
-         * @memberOf $data.Path
-         * @param {string} pathComponentStr
-         * @returns {string}
-         */
-        unescapePathComponent: function (pathComponentStr) {
-            return $utils.unescape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
         }
     });
 
@@ -208,7 +188,25 @@ $oop.copyProperties($data, /** @lends $data */{
      * Separates path components.
      * @constant
      */
-    PATH_COMPONENT_SEPARATOR: '.'
+    PATH_COMPONENT_SEPARATOR: '.',
+
+    /**
+     * Escapes special characters in path components.
+     * @param {string} pathComponentStr
+     * @returns {string}
+     */
+    escapePathComponent: function (pathComponentStr) {
+        return $utils.escape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
+    },
+
+    /**
+     * Un-escapes special characters in path components.
+     * @param {string} pathComponentStr
+     * @returns {string}
+     */
+    unescapePathComponent: function (pathComponentStr) {
+        return $utils.unescape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
+    }
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
@@ -216,10 +214,9 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
      * @returns {$data.Path}
      */
     toPath: function () {
-        var Path = $data.Path,
-            components = $utils.safeSplit(this.valueOf(), $data.PATH_COMPONENT_SEPARATOR)
-                .map(Path.unescapePathComponent);
-        return Path.create(components);
+        var components = $utils.safeSplit(this.valueOf(), $data.PATH_COMPONENT_SEPARATOR)
+            .map($data.unescapePathComponent);
+        return $data.Path.create(components);
     }
 });
 

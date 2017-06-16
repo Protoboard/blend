@@ -77,7 +77,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              */
             this._keyOptions = keyOptionsToken !== undefined ?
                 safeSplit(keyOptionsToken, ',')
-                    .map(this._unescapeQueryComponent) :
+                    .map($data.unescapeQueryComponent) :
                 undefined;
 
             /**
@@ -116,7 +116,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              */
             this._valueOptions = valueOptionsToken !== undefined ?
                 safeSplit(valueOptionsToken, ',')
-                    .map(this._unescapeQueryComponent) :
+                    .map($data.unescapeQueryComponent) :
                 undefined;
         },
 
@@ -134,24 +134,6 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 result[array[i]] = 1;
             }
             return result;
-        },
-
-        /**
-         * @param {string} queryComponentStr
-         * @returns {string}
-         * @private
-         */
-        _escapeQueryComponent: function (queryComponentStr) {
-            return $utils.escape(queryComponentStr, $data.QC_SPECIAL_CHARS);
-        },
-
-        /**
-         * @param {string} queryComponentStr
-         * @returns {string}
-         * @private
-         */
-        _unescapeQueryComponent: function (queryComponentStr) {
-            return $utils.unescape(queryComponentStr, $data.QC_SPECIAL_CHARS);
         },
 
         /**
@@ -180,7 +162,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                     undefined,
                 this._isKeyExcluded ? '!' : undefined,
                 this._keyOptions ? this._keyOptions
-                    .map(this._escapeQueryComponent)
+                    .map($data.escapeQueryComponent)
                     .join(',') :
                     undefined,
 
@@ -190,7 +172,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                     this._matchesPrimitiveValues ? '$' : undefined,
                     this._isValueExcluded ? '!' : undefined,
                     this._valueOptions ? this._valueOptions
-                        .map(this._escapeQueryComponent)
+                        .map($data.escapeQueryComponent)
                         .join(',') :
                         undefined
                 ].join('')
@@ -268,7 +250,23 @@ $oop.copyProperties($data, /** @lends $data */{
      * Tokenizes key or value portion of query component.
      * @constant
      */
-    QC_VALUE_TOKENIZER: /^(?:(\$)|(\*)|(!)?(.*))$/
+    QC_VALUE_TOKENIZER: /^(?:(\$)|(\*)|(!)?(.*))$/,
+
+    /**
+     * @param {string} queryComponentStr
+     * @returns {string}
+     */
+    escapeQueryComponent: function (queryComponentStr) {
+        return $utils.escape(queryComponentStr, $data.QC_SPECIAL_CHARS);
+    },
+
+    /**
+     * @param {string} queryComponentStr
+     * @returns {string}
+     */
+    unescapeQueryComponent: function (queryComponentStr) {
+        return $utils.unescape(queryComponentStr, $data.QC_SPECIAL_CHARS);
+    }
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
