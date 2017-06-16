@@ -11,10 +11,12 @@
  * @class $data.QueryComponent
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
+ * @implements $data.Matchable
  */
 $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     .extend($utils.Cloneable)
     .implement($utils.Stringifiable)
+    .implement($oop.getClass('$data.Matchable'))
     .define(/** @lends $data.QueryComponent# */{
         /**
          * @param {string} queryComponentStr
@@ -52,8 +54,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {boolean}
              * @private
              */
-            this._matchesAnyKey = !this._isKeyNegated &&
-                keyWildcardToken === '*';
+            this._matchesAnyKey = !this._isKeyNegated && (
+                this._isSkipper ||
+                keyWildcardToken === '*');
 
             /**
              * @type {Array}
@@ -85,6 +88,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @private
              */
             this._matchesAnyValue = !this._isValueNegated && (
+                this._isSkipper ||
                 valueWildcardToken === '*' ||
                 valuePrimitiveToken === undefined &&
                 valueWildcardToken === undefined &&
@@ -121,7 +125,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
             return [
                 // key
                 this._isSkipper ? '**' : undefined,
-                this._matchesAnyKey ?
+                this._matchesAnyKey && !this._isSkipper ?
                     this._isKeyNegated ? '' : '*' :
                     undefined,
                 this._isKeyNegated ? '!' : undefined,
@@ -144,6 +148,34 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                         undefined
                 ].join('')
             ].join('');
+        },
+
+        /**
+         * Matches query component against a key-value pair.
+         * @param {string} pathComponent
+         * @param {*} value
+         * @returns {boolean}
+         */
+        matches: function (pathComponent, value) {
+            // a) either matches any key, or,
+            return (this._matchesAnyKey ||
+                // b) pathComponent is (not) one of the available options
+                (this._isKeyNegated ?
+                    !hOP.call(this._keyOptionLookup, pathComponent) :
+                    hOP.call(this._keyOptionLookup, pathComponent))) &&
+
+                // and
+                // c) either matches any value,
+                (this._matchesAnyValue ||
+                // d) matches primitives and value is primitive, or,
+                this._matchesPrimitiveValues &&
+                (typeof value !== 'object' || value === null) ||
+                // e) value is (not) one of the available options
+                !!this._valueOptions && (this._isValueNegated ?
+                    // can't use lookup as values may be other than strings
+                    // hence value matching is slower than key matching
+                    this._valueOptions.indexOf(value) === -1 :
+                    this._valueOptions.indexOf(value) > -1));
         },
 
         /**

@@ -40,7 +40,7 @@ describe("$data", function () {
                     .toBeFalsy();
                 expect(QueryComponent.create('*!foo')._matchesAnyKey)
                     .toBeFalsy();
-                expect(QueryComponent.create('**')._matchesAnyKey).toBeFalsy();
+                expect(QueryComponent.create('**')._matchesAnyKey).toBeTruthy();
                 expect(QueryComponent.create('\\*')._matchesAnyKey).toBeFalsy();
             });
 
@@ -193,6 +193,111 @@ describe("$data", function () {
                 it("should include value options", function () {
                     expect(QueryComponent.create('foo:bar,baz') + '')
                         .toBe('foo:bar,baz');
+                });
+            });
+        });
+
+        describe("matches()", function () {
+            describe("for matching pathComponent and value", function () {
+                it("should return true", function () {
+                    // skipper
+                    expect(QueryComponent.create('**').matches('foo'))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('**bar').matches('foo'))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('**!bar').matches('foo'))
+                        .toBeTruthy();
+
+                    // key wildcard
+                    expect(QueryComponent.create('*').matches('foo'))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('*!bar').matches('foo'))
+                        .toBeTruthy();
+
+                    // key options
+                    expect(QueryComponent.create('foo,bar').matches('foo'))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('foo,bar').matches('bar'))
+                        .toBeTruthy();
+
+                    // negated key options
+                    expect(QueryComponent.create('!foo,bar').matches('baz'))
+                        .toBeTruthy();
+
+                    // value wildcard
+                    expect(QueryComponent.create('foo:*').matches('foo'))
+                        .toBeTruthy();
+
+                    // value options
+                    expect(QueryComponent.create('foo:bar,baz')
+                        .matches('foo', 'bar'))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('foo:bar,baz')
+                        .matches('foo', 'baz'))
+                        .toBeTruthy();
+
+                    // negated value options
+                    expect(QueryComponent.create('foo:!bar,baz')
+                        .matches('foo', 'foo'))
+                        .toBeTruthy();
+
+                    // primitive value
+                    expect(QueryComponent.create('foo:$')
+                        .matches('foo', 'foo'))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('foo:$')
+                        .matches('foo', 1))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('foo:$')
+                        .matches('foo', true))
+                        .toBeTruthy();
+                    expect(QueryComponent.create('foo:$')
+                        .matches('foo', null))
+                        .toBeTruthy();
+                });
+            });
+
+            describe("for non-matching pathComponent or value", function () {
+                it("should return false", function () {
+                    // skipper
+                    expect(QueryComponent.create('**!foo').matches('foo'))
+                        .toBeFalsy();
+
+                    // key wildcard
+                    expect(QueryComponent.create('*!foo').matches('foo'))
+                        .toBeFalsy();
+
+                    // key options
+                    expect(QueryComponent.create('foo,bar').matches('baz'))
+                        .toBeFalsy();
+
+                    // negated key options
+                    expect(QueryComponent.create('!foo,bar').matches('foo'))
+                        .toBeFalsy();
+                    expect(QueryComponent.create('!foo,bar').matches('bar'))
+                        .toBeFalsy();
+
+                    // value wildcard
+                    expect(QueryComponent.create('foo:*!bar').matches('bar'))
+                        .toBeFalsy();
+
+                    // value options
+                    expect(QueryComponent.create('foo:bar,baz')
+                        .matches('foo', 'foo'))
+                        .toBeFalsy();
+
+                    // negated value options
+                    expect(QueryComponent.create('foo:!bar,baz')
+                        .matches('foo', 'bar'))
+                        .toBeFalsy();
+                    expect(QueryComponent.create('foo:!bar,baz')
+                        .matches('foo', 'baz'))
+                        .toBeFalsy();
+
+                    // primitive value
+                    expect(QueryComponent.create('foo:$')
+                        .matches('foo', {}))
+                        .toBeFalsy();
                 });
             });
         });
