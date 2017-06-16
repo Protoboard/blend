@@ -43,6 +43,21 @@ describe("$data", function () {
                     ]);
             });
 
+            it("should set _keyOptionLookup property", function () {
+                expect(QueryComponent.create('foo')._keyOptionLookup)
+                    .toEqual({foo: 1});
+                expect(QueryComponent.create('foo,bar:$')._keyOptionLookup)
+                    .toEqual({
+                        foo: 1,
+                        bar: 1
+                    });
+                expect(QueryComponent.create('!foo,bar:$')._keyOptionLookup)
+                    .toEqual({
+                        foo: 1,
+                        bar: 1
+                    });
+            });
+
             it("should set _isKeyNegated property", function () {
                 expect(QueryComponent.create('foo:$')._isKeyNegated)
                     .toBeFalsy();

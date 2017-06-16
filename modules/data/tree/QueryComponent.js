@@ -7,6 +7,7 @@
  */
 
 /**
+ * TODO: Value options setter
  * @class $data.QueryComponent
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
@@ -57,8 +58,14 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {Array}
              * @private
              */
-            this._keyOptions = keyOptionsToken && safeSplit(keyOptionsToken, ',')
-                    .map(this.unescapeQueryComponent);
+            this._keyOptions = safeSplit(keyOptionsToken, ',')
+                .map(this.unescapeQueryComponent);
+
+            /**
+             * @type {Object}
+             * @private
+             */
+            this._keyOptionLookup = this._arrayToLookup(this._keyOptions);
 
             /**
              * @type {boolean}
@@ -87,6 +94,21 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              */
             this._valueOptions = valueOptionsToken && safeSplit(valueOptionsToken, ',')
                     .map(this.unescapeQueryComponent);
+        },
+
+        /**
+         * @param {Array} array
+         * @returns {Object}
+         * @private
+         */
+        _arrayToLookup: function (array) {
+            var count = array.length,
+                i,
+                result = {};
+            for (i = 0; i < count; i++) {
+                result[array[i]] = 1;
+            }
+            return result;
         },
 
         /**
