@@ -46,13 +46,14 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {boolean}
              * @private
              */
-            this._matchesAnyKey = keyWildcardToken === '*';
+            this._isKeyNegated = keyNegatorToken === '!';
 
             /**
              * @type {boolean}
              * @private
              */
-            this._isKeyNegated = keyNegatorToken === '!';
+            this._matchesAnyKey = !this._isKeyNegated &&
+                keyWildcardToken === '*';
 
             /**
              * @type {Array}
@@ -77,16 +78,17 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {boolean}
              * @private
              */
-            this._matchesAnyValue = valueWildcardToken === '*' ||
-                valuePrimitiveToken === undefined &&
-                valueWildcardToken === undefined &&
-                valueOptionsToken === undefined;
+            this._isValueNegated = valueNegatorToken === '!';
 
             /**
              * @type {boolean}
              * @private
              */
-            this._isValueNegated = valueNegatorToken === '!';
+            this._matchesAnyValue = !this._isValueNegated && (
+                valueWildcardToken === '*' ||
+                valuePrimitiveToken === undefined &&
+                valueWildcardToken === undefined &&
+                valueOptionsToken === undefined);
 
             /**
              * @type {*}

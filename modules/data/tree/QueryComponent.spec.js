@@ -20,6 +20,15 @@ describe("$data", function () {
                 expect(QueryComponent.create('\\*\\*')._isSkipper).toBeFalsy();
             });
 
+            it("should set _isKeyNegated property", function () {
+                expect(QueryComponent.create('foo:$')._isKeyNegated)
+                    .toBeFalsy();
+                expect(QueryComponent.create('!foo:$')._isKeyNegated)
+                    .toBeTruthy();
+                expect(QueryComponent.create('!foo,baz:bar')._isKeyNegated)
+                    .toBeTruthy();
+            });
+
             it("should set _matchesAnyKey property", function () {
                 expect(QueryComponent.create('*')._matchesAnyKey).toBeTruthy();
                 expect(QueryComponent.create('*:!foo')._matchesAnyKey)
@@ -27,6 +36,10 @@ describe("$data", function () {
                 expect(QueryComponent.create('*:$')._matchesAnyKey)
                     .toBeTruthy();
                 expect(QueryComponent.create('foo')._matchesAnyKey).toBeFalsy();
+                expect(QueryComponent.create('!foo')._matchesAnyKey)
+                    .toBeFalsy();
+                expect(QueryComponent.create('*!foo')._matchesAnyKey)
+                    .toBeFalsy();
                 expect(QueryComponent.create('**')._matchesAnyKey).toBeFalsy();
                 expect(QueryComponent.create('\\*')._matchesAnyKey).toBeFalsy();
             });
@@ -58,15 +71,6 @@ describe("$data", function () {
                     });
             });
 
-            it("should set _isKeyNegated property", function () {
-                expect(QueryComponent.create('foo:$')._isKeyNegated)
-                    .toBeFalsy();
-                expect(QueryComponent.create('!foo:$')._isKeyNegated)
-                    .toBeTruthy();
-                expect(QueryComponent.create('!foo,baz:bar')._isKeyNegated)
-                    .toBeTruthy();
-            });
-
             it("should set _matchesPrimitiveValues property", function () {
                 expect(QueryComponent.create('*:$')._matchesPrimitiveValues)
                     .toBeTruthy();
@@ -80,12 +84,25 @@ describe("$data", function () {
                     .toBeFalsy();
             });
 
+            it("should set _isValueNegated property", function () {
+                expect(QueryComponent.create('*:foo')._isValueNegated)
+                    .toBeFalsy();
+                expect(QueryComponent.create('foo:!bar')._isValueNegated)
+                    .toBeTruthy();
+                expect(QueryComponent.create('*:!foo,bar')._isValueNegated)
+                    .toBeTruthy();
+            });
+
             it("should set _matchesAnyValue property", function () {
                 expect(QueryComponent.create('foo')._matchesAnyValue)
                     .toBeTruthy();
                 expect(QueryComponent.create('!quux:*')._matchesAnyValue)
                     .toBeTruthy();
                 expect(QueryComponent.create('*:foo,bar')._matchesAnyValue)
+                    .toBeFalsy();
+                expect(QueryComponent.create('*:!foo')._matchesAnyValue)
+                    .toBeFalsy();
+                expect(QueryComponent.create('*:*!foo')._matchesAnyValue)
                     .toBeFalsy();
             });
 
@@ -100,15 +117,6 @@ describe("$data", function () {
                     .toEqual([
                         'foo', 'bar'
                     ]);
-            });
-
-            it("should set _isValueNegated property", function () {
-                expect(QueryComponent.create('*:foo')._isValueNegated)
-                    .toBeFalsy();
-                expect(QueryComponent.create('foo:!bar')._isValueNegated)
-                    .toBeTruthy();
-                expect(QueryComponent.create('*:!foo,bar')._isValueNegated)
-                    .toBeTruthy();
             });
         });
 
@@ -141,16 +149,16 @@ describe("$data", function () {
                 });
             });
 
-            describe("when _matchesAnyKey is true", function () {
-                it("should output key wildcard", function () {
-                    expect(QueryComponent.create('*:foo') + '').toBe('*:foo');
-                });
-            });
-
             describe("when _isKeyNegated is true", function () {
                 it("should negate keys", function () {
                     expect(QueryComponent.create('!foo:baz') + '')
                         .toBe('!foo:baz');
+                });
+            });
+
+            describe("when _matchesAnyKey is true", function () {
+                it("should output key wildcard", function () {
+                    expect(QueryComponent.create('*:foo') + '').toBe('*:foo');
                 });
             });
 
@@ -167,17 +175,17 @@ describe("$data", function () {
                 });
             });
 
-            describe("when _matchesAnyValue is true", function () {
-                it("should output value wildcard", function () {
-                    expect(QueryComponent.create('foo:*') + '').toBe('foo:*');
-                    expect(QueryComponent.create('foo') + '').toBe('foo:*');
-                });
-            });
-
             describe("when _isValueNegated is true", function () {
                 it("should negate keys", function () {
                     expect(QueryComponent.create('foo:!bar') + '')
                         .toBe('foo:!bar');
+                });
+            });
+
+            describe("when _matchesAnyValue is true", function () {
+                it("should output value wildcard", function () {
+                    expect(QueryComponent.create('foo:*') + '').toBe('foo:*');
+                    expect(QueryComponent.create('foo') + '').toBe('foo:*');
                 });
             });
 
