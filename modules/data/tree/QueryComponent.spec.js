@@ -167,7 +167,7 @@ describe("$data", function () {
 
             describe("when _isKeyExcluded is true", function () {
                 it("should exclude keys", function () {
-                    expect(QueryComponent.create('!foo') + '').toBe('!foo:*');
+                    expect(QueryComponent.create('!foo') + '').toBe('!foo');
                     expect(QueryComponent.create('!foo:baz') + '')
                         .toBe('!foo:baz');
                 });
@@ -175,7 +175,7 @@ describe("$data", function () {
 
             describe("when _matchesAnyKey is true", function () {
                 it("should output key wildcard", function () {
-                    expect(QueryComponent.create('*') + '').toBe('*:*');
+                    expect(QueryComponent.create('*') + '').toBe('*');
                     expect(QueryComponent.create('*:foo') + '').toBe('*:foo');
                 });
             });
@@ -202,8 +202,8 @@ describe("$data", function () {
 
             describe("when _matchesAnyValue is true", function () {
                 it("should output value wildcard", function () {
-                    expect(QueryComponent.create('foo:*') + '').toBe('foo:*');
-                    expect(QueryComponent.create('foo') + '').toBe('foo:*');
+                    expect(QueryComponent.create('foo:*') + '').toBe('foo');
+                    expect(QueryComponent.create('foo') + '').toBe('foo');
                 });
             });
 

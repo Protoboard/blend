@@ -186,11 +186,8 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 
                 // value
                 this._isSkipper ? undefined : [
-                    ':',
+                    this._matchesAnyValue ? undefined : ':',
                     this._matchesPrimitiveValues ? '$' : undefined,
-                    this._matchesAnyValue ?
-                        this._isValueExcluded ? '' : '*' :
-                        undefined,
                     this._isValueExcluded ? '!' : undefined,
                     this._valueOptions ? this._valueOptions
                         .map(this._escapeQueryComponent)
