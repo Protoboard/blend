@@ -2,15 +2,24 @@
 
 /**
  * @function $data.Query.create
- * @param {string[]} components
+ * @param {string[]} components Series of patterns to match corresponding path
+ * components.
  * @returns {$data.Query}
  */
 
 /**
+ * Matches paths that identify nodes in a tree-like structure.
+ * A query is composed of query components, each matching path component(s) in
+ * the corresponding paths. Much like with `Path`, query components in the
+ * string representation of the query are separated by the character '`.`'
+ * (period).
  * @class $data.Query
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
  * @implements $data.Matchable
+ * @see $data.QueryComponent
+ * @example
+ * $data.Query.create(['foo', '*', 'bar:!baz,quux'])
  */
 $data.Query = $oop.getClass('$data.Query')
     .extend($utils.Cloneable)
@@ -40,8 +49,12 @@ $data.Query = $oop.getClass('$data.Query')
         },
 
         /**
-         * Returns string representation of path.
+         * Returns string representation of query. Special characters inside
+         * query components will be escaped.
          * @returns {string}
+         * @example
+         * $data.Query.create(['foo.bar', '*:!baz.quux'])+''
+         * // 'foo\.bar.*:!baz\.quux'
          */
         toString: function () {
             return this._components
@@ -51,8 +64,14 @@ $data.Query = $oop.getClass('$data.Query')
         },
 
         /**
+         * Matches query against a path.
          * @param {$data.Path} path
          * @returns {boolean}
+         * @example
+         * $data.Query.create(['**', 'baz'])
+         *      .matches($data.Path.create(['foo', 'bar', 'baz'])) // true
+         * $data.Query.create(['!foo', 'bar,baz'])
+         *      .matches($data.Path.create(['foo', 'baz'])) // false
          */
         matches: function (path) {
             var queryComponents = this._components,

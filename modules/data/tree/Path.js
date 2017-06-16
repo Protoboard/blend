@@ -8,11 +8,16 @@
 
 /**
  * Unambiguously identifies a node in a tree-like structure.
+ * A path is composed of path components (strings), identifying keys in nodes
+ * along the path. In string representation of the path, components are
+ * separated by the character '`.`' (period).
  * @class $data.Path
  * @mixes $utils.Cloneable
  * @mixes $data.Comparable
  * @implements $utils.Stringifiable
  * @implements $data.Stackable
+ * @example
+ * $data.Path.create(['foo', 'bar', 'baz'])
  */
 $data.Path = $oop.getClass('$data.Path')
     .extend($utils.Cloneable)
@@ -36,7 +41,7 @@ $data.Path = $oop.getClass('$data.Path')
         },
 
         /**
-         * Clones path.
+         * @ingeritDoc
          * @returns {$data.Path}
          */
         clone: function clone() {
@@ -151,8 +156,11 @@ $data.Path = $oop.getClass('$data.Path')
         },
 
         /**
-         * Returns string representation of path.
+         * Returns string representation of path. Special characters inside
+         * path components will be escaped.
          * @returns {string}
+         * @example
+         * $data.Path.create(['foo', 'bar.baz'])+'' // 'foo.bar\.baz'
          */
         toString: function () {
             return this._components.map($data.escapePathComponent)

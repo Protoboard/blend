@@ -10,7 +10,9 @@
  * Matches a single key-value pair. An array of `QueryComponent`s make up a
  * {@link $data.Query}.
  * Special characters in query components:
- * - `*` (Asterisk) Matches any key or value
+ * - `*` (Asterisk) Matches any key or value. When doubled, (`**`) will
+ * match any key plus skip forward on the  path until next query component is
+ * matched. Skipper query components allow key options to be excluded.
  * - `,` (Comma) Separates key or value options
  * - `:` (Colon) Separates key and value
  * - `!` (Exclamation mark) Excludes key or value options
