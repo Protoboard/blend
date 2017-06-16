@@ -31,8 +31,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 valueTokens = componentTokens[1] &&
                     $data.QC_VALUE_TOKENIZER.exec(componentTokens[1]),
                 keyWildcardToken = keyTokens && keyTokens[1],
-                keyNegatorToken = keyTokens && keyTokens[2],
-                keyOptionsToken = keyTokens && keyTokens[3],
+                keySkipperToken = keyTokens && keyTokens[2],
+                keyNegatorToken = keyTokens && keyTokens[3],
+                keyOptionsToken = keyTokens && keyTokens[4],
                 valuePrimitiveToken = valueTokens && valueTokens[1],
                 valueWildcardToken = valueTokens && valueTokens[2],
                 valueNegatorToken = valueTokens && valueTokens[3],
@@ -42,7 +43,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {boolean}
              * @private
              */
-            this._isSkipper = keyWildcardToken === '**';
+            this._isSkipper = keySkipperToken === '**';
 
             /**
              * @type {boolean}
@@ -62,14 +63,17 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
              * @type {string[]}
              * @private
              */
-            this._keyOptions = safeSplit(keyOptionsToken, ',')
-                .map(this.unescapeQueryComponent);
+            this._keyOptions = keyOptionsToken !== undefined ?
+                safeSplit(keyOptionsToken, ',')
+                    .map(this.unescapeQueryComponent) :
+                undefined;
 
             /**
              * @type {Object}
              * @private
              */
-            this._keyOptionLookup = this._arrayToLookup(this._keyOptions);
+            this._keyOptionLookup = this._keyOptions &&
+                this._arrayToLookup(this._keyOptions);
 
             /**
              * @type {boolean}
@@ -105,6 +109,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         },
 
         /**
+         * TODO: Move to namespace?
          * @param {Array} array
          * @returns {Object}
          * @private
@@ -208,13 +213,13 @@ $oop.copyProperties($data, /** @lends $data */{
      * Tokenizes key or value portion of query component.
      * @constant
      */
-    QC_KEY_TOKENIZER: /^(\*\*|\*)?(!)?(.*)$/,
+    QC_KEY_TOKENIZER: /^(?:(\*)|(\*\*)?(!)?(.*)?)$/,
 
     /**
      * Tokenizes key or value portion of query component.
      * @constant
      */
-    QC_VALUE_TOKENIZER: /^(\$)|(\*)?(!)?(.*)$/
+    QC_VALUE_TOKENIZER: /^(?:(\$)|(\*)|(!)?(.*))$/
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
