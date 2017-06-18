@@ -11,9 +11,11 @@
  * structures.
  * @class $data.Tree
  * @extends $data.DataContainer
+ * @implements $data.Queryable
  */
 $data.Tree = $oop.getClass('$data.Tree')
     .extend($oop.getClass('$data.DataContainer'))
+    .implement($oop.getClass('$data.Queryable'))
     .define(/** @lends $data.Tree# */{
         /**
          * Creates a deep copy of the current tree.
@@ -24,6 +26,85 @@ $data.Tree = $oop.getClass('$data.Tree')
             var cloned = clone.returned;
             cloned._data = $data.deepCopy(this._data);
             return cloned;
+        },
+
+        /**
+         * Traverses tree and invokes specified callback on paths that match
+         * the query.
+         * TODO: Compare performance w/ Giant 0.4 Tree
+         * @param {$data.Query} query
+         * @param {function} callback
+         * @returns {$data.Tree}
+         */
+        query: function (query, callback) {
+            var queryComponents = query._components,
+                queryComponentCount = queryComponents.length;
+
+            (function traverse(path, node, i) {
+                var queryComponent = queryComponents[i],
+                    nextQueryComponent = queryComponents[i + 1],
+                    keys, keyCount,
+                    j, key, value;
+
+                if (i === queryComponentCount) {
+                    // reached end of query
+                    // invoking callback with whatever path & node we're at
+                    callback($data.Path.create(path), node);
+                    return;
+                } else if (!(node instanceof Object)) {
+                    // reached leaf node mid-query
+                    if (i === queryComponentCount - 1 &&
+                        queryComponent._isSkipper
+                    ) {
+                        // current q.c. is a trailing skipper
+                        // invoking callback w/ leaf node
+                        callback($data.Path.create(path), node);
+                    }
+                    return;
+                }
+
+                //
+                if (queryComponent._keyOptions &&
+                    !queryComponent._isKeyExcluded
+                ) {
+                    // key options available
+                    // can go directly to child nodes
+                    keys = queryComponent._keyOptions
+                        .filter(function (key) {
+                            return hOP.call(node, key);
+                        });
+                } else {
+                    // iterating over all keys in node
+                    keys = Object.keys(node);
+                }
+
+                keyCount = keys.length;
+                for (j = 0; j < keyCount; j++) {
+                    key = keys[j];
+                    value = node[key];
+                    if (queryComponent._isSkipper) {
+                        // in skipping mode
+                        if (nextQueryComponent &&
+                            nextQueryComponent.matches(key, value)
+                        ) {
+                            // next query component is a match
+                            // staying on path and exiting skipping mode
+                            traverse(path, node, i + 1);
+                        } else if (queryComponent.matches(key, value)) {
+                            // next query component does'n match, but
+                            // current q.c. does
+                            // burrowing, but staying in skipping mode
+                            traverse(path.concat(key), value, i);
+                        }
+                    } else if (queryComponent.matches(key, value)) {
+                        // current (non-skip) query component is a match
+                        // burrowing
+                        traverse(path.concat(key), value, i + 1);
+                    }
+                }
+            }([], this._data, 0));
+
+            return this;
         },
 
         /**

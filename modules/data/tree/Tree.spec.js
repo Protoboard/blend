@@ -79,6 +79,185 @@ describe("$data", function () {
             });
         });
 
+        describe("query()", function () {
+            var callback;
+
+            beforeEach(function () {
+                // JSON taken from
+                // https://www.sitepoint.com/facebook-json-example/
+                tree = $data.Tree.create({
+                    "data": [
+                        {
+                            "id": "X999_Y999",
+                            "from": {
+                                "name": "Tom Brady",
+                                "id": "X12"
+                            },
+                            "message": "Looking forward to 2010!",
+                            "actions": [
+                                {
+                                    "name": "Comment",
+                                    "link": "http://www.facebook.com/X999/posts/Y999"
+                                },
+                                {
+                                    "name": "Like",
+                                    "link": "http://www.facebook.com/X999/posts/Y999"
+                                }
+                            ],
+                            "type": "status",
+                            "created_time": "2010-08-02T21:27:44+0000",
+                            "updated_time": "2010-08-02T21:27:44+0000"
+                        },
+                        {
+                            "id": "X998_Y998",
+                            "from": {
+                                "name": "Peyton Manning",
+                                "id": "X18"
+                            },
+                            "message": "Where's my contract?",
+                            "actions": [
+                                {
+                                    "name": "Comment",
+                                    "link": "http://www.facebook.com/X998/posts/Y998"
+                                },
+                                {
+                                    "name": "Like",
+                                    "link": "http://www.facebook.com/X998/posts/Y998"
+                                }
+                            ],
+                            "type": "status",
+                            "created_time": "2010-08-02T21:27:44+0000",
+                            "updated_time": "2010-08-02T21:27:44+0000"
+                        }
+                    ]
+                });
+
+                callback = jasmine.createSpy();
+            });
+
+            it("should return self", function () {
+                result = tree.query('foo.*.bar'.toQuery(), callback);
+                expect(result).toBe(tree);
+            });
+
+            describe("with single path", function () {
+                it("should invoke single path only", function () {
+                    tree.query('data.0.from.name'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ['data.0.from.name'.toPath(), "Tom Brady"]
+                    ]);
+                });
+            });
+
+            describe("for no matching path", function () {
+                it("should not invoke callback", function () {
+                    tree.query('data.2.*.name'.toQuery(), callback);
+                    expect(callback).not.toHaveBeenCalled();
+                });
+            });
+
+            describe("with key wildcard", function () {
+                it("should iterate over wildcard", function () {
+                    tree.query('data.*.id'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ['data.0.id'.toPath(), "X999_Y999"],
+                        ['data.1.id'.toPath(), "X998_Y998"]
+                    ]);
+                });
+            });
+
+            describe("with key options", function () {
+                it("should iterate over wildcard", function () {
+                    tree.query('data.0.id,type'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ['data.0.id'.toPath(), "X999_Y999"],
+                        ['data.0.type'.toPath(), "status"]
+                    ]);
+                });
+            });
+
+            describe("with key exclusion", function () {
+                it("should iterate over wildcard", function () {
+                    tree.query('data.!0.id'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ['data.1.id'.toPath(), "X998_Y998"]
+                    ]);
+                });
+            });
+
+            describe("with value options", function () {
+                it("should iterate over wildcard", function () {
+                    tree.query('data.*.*.*.name:Like'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ['data.0.actions.1.name'.toPath(), "Like"],
+                        ['data.1.actions.1.name'.toPath(), "Like"]
+                    ]);
+                });
+            });
+
+            describe("with value exclusion", function () {
+                it("should iterate over wildcard", function () {
+                    tree.query('data.*.*.id:!X12'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ['data.1.from.id'.toPath(), "X18"]
+                    ]);
+                });
+            });
+
+            describe("with primitive value matching", function () {
+                it("should iterate over wildcard", function () {
+                    tree.query('data.0.*:$'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ["data.0.id".toPath(), "X999_Y999"],
+                        ["data.0.message".toPath(), "Looking forward to 2010!"],
+                        ["data.0.type".toPath(), "status"],
+                        ["data.0.created_time".toPath(),
+                            "2010-08-02T21:27:44+0000"],
+                        ["data.0.updated_time".toPath(),
+                            "2010-08-02T21:27:44+0000"]
+                    ]);
+                });
+            });
+
+            describe("with skipping", function () {
+                it("should invoke callback", function () {
+                    tree.query('data.**.name'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ["data.0.from.name".toPath(), "Tom Brady"],
+                        ["data.0.actions.0.name".toPath(), "Comment"],
+                        ["data.0.actions.1.name".toPath(), "Like"],
+                        ["data.1.from.name".toPath(), "Peyton Manning"],
+                        ["data.1.actions.0.name".toPath(), "Comment"],
+                        ["data.1.actions.1.name".toPath(), "Like"]
+                    ]);
+                });
+            });
+
+            describe("with trail skipping", function () {
+                it("should invoke callback", function () {
+                    tree.query('data.0.actions.**'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ["data.0.actions.0.name".toPath(), "Comment"],
+                        ["data.0.actions.0.link".toPath(),
+                            "http://www.facebook.com/X999/posts/Y999"],
+                        ["data.0.actions.1.name".toPath(), "Like"],
+                        ["data.0.actions.1.link".toPath(),
+                            "http://www.facebook.com/X999/posts/Y999"]
+                    ]);
+                });
+            });
+
+            describe("with skipping with key exclusion", function () {
+                it("should invoke callback", function () {
+                    tree.query('data.**!actions.name'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ["data.0.from.name".toPath(), "Tom Brady"],
+                        ["data.1.from.name".toPath(), "Peyton Manning"]
+                    ]);
+                });
+            });
+        });
+
         describe("hasPath()", function () {
             beforeEach(function () {
                 // adding special case
