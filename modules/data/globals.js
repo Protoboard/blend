@@ -15,6 +15,10 @@ var $assert = require('giant-assert'),
  * @external Array
  */
 
+/**
+ * @external String
+ */
+
 $oop.copyProperties($data, /** @lends $data */{
     /**
      * Marks key-value container as having strings for keys.

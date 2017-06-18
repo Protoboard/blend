@@ -409,7 +409,7 @@ $oop.copyProperties($assert, /** @lends $assert */{
     }
 });
 
-$oop.copyProperties(Array.prototype, /** @lends Array# */{
+$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
     /**
      * @returns {$data.Tree}
      */

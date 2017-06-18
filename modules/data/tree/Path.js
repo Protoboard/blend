@@ -217,7 +217,7 @@ $oop.copyProperties($data, /** @lends $data */{
     }
 });
 
-$oop.copyProperties(String.prototype, /** @lends String# */{
+$oop.copyProperties(String.prototype, /** @lends external:String# */{
     /**
      * @returns {$data.Path}
      */
@@ -228,7 +228,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
     }
 });
 
-$oop.copyProperties(Array.prototype, /** @lends Array# */{
+$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
     /**
      * @returns {$data.Path}
      */
