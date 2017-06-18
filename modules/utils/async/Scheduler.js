@@ -87,7 +87,7 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
          * @protected
          */
         _clearTimerAtIndex: function (timerIndex) {
-            // TODO: Investigate a good middle ground bw. cpu vs. memory footprint.
+            // todo Investigate a good middle ground bw. cpu vs. memory footprint.
             this._scheduleTimers[timerIndex] = undefined;
         }
 

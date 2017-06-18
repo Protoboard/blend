@@ -87,7 +87,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         /**
          * Retrieves a list of all keys in the container.
          * Result might contain duplicates, depending on host class.
-         * TODO: Should return DataContainer based on key type
+         * @todo Should return DataContainer based on key type
          * @returns {Array}
          */
         getKeys: function () {
@@ -101,7 +101,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         /**
          * Retrieves a list of all values in the container.
          * Result might contain duplicates, depending on host class.
-         * TODO: Should return DataContainer based on value type
+         * @todo Should return DataContainer based on value type
          * @returns {Array}
          */
         getValues: function () {
@@ -152,7 +152,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         /**
          * Maps collection values using the specified callback and
          * returns mapped key-value pairs as a new collection.
-         * TODO: Pass in result value type?
+         * @todo Pass in result value type?
          * @param {function} callback Returns new value based on current item
          * @param {object} [context] Context for callback
          * @returns {$data.Collection} Mapped collection
@@ -173,7 +173,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         /**
          * Maps collection keys using the specified callback and
          * returns mapped key-value pairs as a new collection.
-         * TODO: Pass in result value type?
+         * @todo Pass in result value type?
          * @param {function} callback Returns new value based on current item
          * @param {object} [context] Context for callback
          * @returns {$data.Collection} Mapped collection
@@ -322,7 +322,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         /**
          * Extracts items matching the specified value type and
          * returns result as a new collection.
-         * TODO: Allow repeating arguments.
+         * @todo Allow repeating arguments.
          * @param {string|function|Object|$oop.Class} type Describes type
          * to be matched by item values. When string, `filterByValueType` will
          * check using `typeof` operator, when function, `instanceof`,

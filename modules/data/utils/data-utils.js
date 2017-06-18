@@ -18,7 +18,7 @@ $oop.copyProperties($data, /** @lends $data */{
 
     /**
      * Determines whether an object has exactly one enumerable property.
-     * TODO: Remove?
+     * @todo Remove?
      * @param {Object} obj
      * @returns {boolean}
      */

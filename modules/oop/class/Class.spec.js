@@ -220,7 +220,7 @@ describe("$oop", function () {
                 });
             });
 
-            // TODO: Test if wrappers actually work
+            // todo Test if wrappers actually work
             it("should add wrapper methods", function () {
                 expect(typeof Class.bar === 'function').toBeTruthy();
                 expect(Class.bar).not.toBe(batch.bar);

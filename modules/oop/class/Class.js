@@ -122,7 +122,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
                 /**
                  * Hash function for caching instances.
-                 * TODO: Rename
+                 * @todo Rename
                  * @type {function}
                  * @private
                  */
@@ -157,7 +157,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
         Object.getOwnPropertyNames(batch)
             .forEach(function (memberName) {
-                // TODO: Throw on conflict
+                // todo Throw on conflict
                 members[memberName] = batch[memberName];
                 return members;
             });
@@ -287,7 +287,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
      * For performance reasons, wrapper methods return the result of the last call.
      * It's the responsibility of each contributed method to ensure access
      * to its individual return value, if needed.
-     * TODO: Add original method when there's only 1 contribution.
+     * @todo Add original method when there's only 1 contribution.
      * @param {object} members
      * @private
      */
@@ -304,7 +304,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
             .forEach(function (methodName) {
                 var methodMatrix = that.__methodMatrix;
 
-                // TODO: Test
+                // todo Test
                 that[methodName] = function () {
                     var methods = methodMatrix[methodName],
                         methodCount = methods.length,
@@ -880,7 +880,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     include: function (Class, Through) {
         $assert.isClass(Class, "Class#include expects type Class.");
 
-        // TODO: Detect & throw on circular include
+        // todo Detect & throw on circular include
 
         // adding to downstream includes
         this._addToIncludes(Class);

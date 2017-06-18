@@ -105,7 +105,7 @@ $data.Tree = $oop.getClass('$data.Tree')
         /**
          * Traverses tree and invokes specified callback on paths that match
          * the query.
-         * TODO: Compare performance w/ Giant 0.4 Tree
+         * @todo Compare performance w/ Giant 0.4 Tree
          * @param {$data.Query} query
          * @param {function} callback
          * @returns {$data.Tree}

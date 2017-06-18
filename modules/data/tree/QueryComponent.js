@@ -22,7 +22,7 @@
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
  * @implements $data.Matchable
- * @TODO: Add return marker.
+ * @todo Add return marker.
  * @example
  * $data.QueryComponent.create("foo:bar") // matches a specific pair
  * $data.QueryComponent.create("*:bar") // matches pair where value is "bar"
@@ -123,7 +123,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         },
 
         /**
-         * TODO: Move to namespace?
+         * @todo Move to namespace?
          * @param {Array} array
          * @returns {Object}
          * @private

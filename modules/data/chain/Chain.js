@@ -10,8 +10,8 @@
  * Chain data structure with two fixed ends and value carrying links in between.
  * Chain behaves like a stack in that you may append and prepend the chain
  * using a stack-like API. (push, pop, etc.)
- * TODO: Accept & process data in & out
- * TODO: Make sure clone() is right. Might 'steal' links from original.
+ * @todo Accept & process data in & out
+ * @todo Make sure clone() is right. Might 'steal' links from original.
  * @class $data.Chain
  * @extends $data.DataContainer
  * @extends $data.ScalarContainer
