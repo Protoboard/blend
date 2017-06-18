@@ -18,6 +18,80 @@ $data.Tree = $oop.getClass('$data.Tree')
     .implement($oop.getClass('$data.Queryable'))
     .define(/** @lends $data.Tree# */{
         /**
+         * @param {$data.QueryComponent[]} components Query components
+         * @param {function} callback Function to invoke on matched paths
+         * @param {string[]} path Current path
+         * @param {*} node Current node
+         * @param {number} i Index of current query component
+         * @private
+         */
+        _traverse: function (components, callback, path, node, i) {
+            var queryComponent = components[i],
+                nextQueryComponent = components[i + 1],
+                keys, keyCount,
+                j, key, value;
+
+            if (i === components.length) {
+                // reached end of query
+                // invoking callback with whatever path & node we're at
+                callback($data.Path.create(path), node);
+                return;
+            } else if (!(node instanceof Object)) {
+                // reached leaf node mid-query
+                if (i === components.length - 1 &&
+                    queryComponent._isSkipper
+                ) {
+                    // current q.c. is a trailing skipper
+                    // invoking callback w/ leaf node
+                    callback($data.Path.create(path), node);
+                }
+                return;
+            }
+
+            //
+            if (queryComponent._keyOptions &&
+                !queryComponent._isKeyExcluded
+            ) {
+                // key options available
+                // can go directly to child nodes
+                keys = queryComponent._keyOptions
+                    .filter(function (key) {
+                        return hOP.call(node, key);
+                    });
+            } else {
+                // iterating over all keys in node
+                keys = Object.keys(node);
+            }
+
+            keyCount = keys.length;
+            for (j = 0; j < keyCount; j++) {
+                key = keys[j];
+                value = node[key];
+                if (queryComponent._isSkipper) {
+                    // in skipping mode
+                    if (nextQueryComponent &&
+                        nextQueryComponent.matches(key, value)
+                    ) {
+                        // next query component is a match
+                        // staying on path and exiting skipping mode
+                        this._traverse(components, callback, path, node, i + 1);
+                    } else if (queryComponent.matches(key, value)) {
+                        // next query component does'n match, but
+                        // current q.c. does
+                        // burrowing, but staying in skipping mode
+                        this._traverse(components, callback,
+                            path.concat(key), value, i);
+                    }
+                } else if (queryComponent.matches(key, value)) {
+                    // current (non-skip) query component is a match
+                    // burrowing
+                    this._traverse(components, callback,
+                        path.concat(key), value, i + 1);
+                }
+            }
+        },
+
+        /**
          * Creates a deep copy of the current tree.
          * @see $data.deepCopy
          * @returns {$data.Tree}
@@ -37,73 +111,7 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @returns {$data.Tree}
          */
         query: function (query, callback) {
-            var queryComponents = query._components,
-                queryComponentCount = queryComponents.length;
-
-            (function traverse(path, node, i) {
-                var queryComponent = queryComponents[i],
-                    nextQueryComponent = queryComponents[i + 1],
-                    keys, keyCount,
-                    j, key, value;
-
-                if (i === queryComponentCount) {
-                    // reached end of query
-                    // invoking callback with whatever path & node we're at
-                    callback($data.Path.create(path), node);
-                    return;
-                } else if (!(node instanceof Object)) {
-                    // reached leaf node mid-query
-                    if (i === queryComponentCount - 1 &&
-                        queryComponent._isSkipper
-                    ) {
-                        // current q.c. is a trailing skipper
-                        // invoking callback w/ leaf node
-                        callback($data.Path.create(path), node);
-                    }
-                    return;
-                }
-
-                //
-                if (queryComponent._keyOptions &&
-                    !queryComponent._isKeyExcluded
-                ) {
-                    // key options available
-                    // can go directly to child nodes
-                    keys = queryComponent._keyOptions
-                        .filter(function (key) {
-                            return hOP.call(node, key);
-                        });
-                } else {
-                    // iterating over all keys in node
-                    keys = Object.keys(node);
-                }
-
-                keyCount = keys.length;
-                for (j = 0; j < keyCount; j++) {
-                    key = keys[j];
-                    value = node[key];
-                    if (queryComponent._isSkipper) {
-                        // in skipping mode
-                        if (nextQueryComponent &&
-                            nextQueryComponent.matches(key, value)
-                        ) {
-                            // next query component is a match
-                            // staying on path and exiting skipping mode
-                            traverse(path, node, i + 1);
-                        } else if (queryComponent.matches(key, value)) {
-                            // next query component does'n match, but
-                            // current q.c. does
-                            // burrowing, but staying in skipping mode
-                            traverse(path.concat(key), value, i);
-                        }
-                    } else if (queryComponent.matches(key, value)) {
-                        // current (non-skip) query component is a match
-                        // burrowing
-                        traverse(path.concat(key), value, i + 1);
-                    }
-                }
-            }([], this._data, 0));
-
+            this._traverse(query._components, callback, [], this._data, 0);
             return this;
         },
 
