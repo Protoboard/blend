@@ -247,6 +247,45 @@ describe("$data", function () {
                 });
             });
 
+            describe("with skipping all the way", function () {
+                it("should traverse all leaf nodes", function () {
+                    tree.query('**'.toQuery(), callback);
+                    expect(callback.calls.allArgs()).toEqual([
+                        ["data.0.id".toPath(), "X999_Y999"],
+                        ["data.0.from.name".toPath(), "Tom Brady"],
+                        ["data.0.from.id".toPath(), "X12"],
+                        ["data.0.message".toPath(),
+                            "Looking forward to 2010!"],
+                        ["data.0.actions.0.name".toPath(), "Comment"],
+                        ["data.0.actions.0.link".toPath(),
+                            "http://www.facebook.com/X999/posts/Y999"],
+                        ["data.0.actions.1.name".toPath(), "Like"],
+                        ["data.0.actions.1.link".toPath(),
+                            "http://www.facebook.com/X999/posts/Y999"],
+                        ["data.0.type".toPath(), "status"],
+                        ["data.0.created_time".toPath(),
+                            "2010-08-02T21:27:44+0000"],
+                        ["data.0.updated_time".toPath(),
+                            "2010-08-02T21:27:44+0000"],
+                        ["data.1.id".toPath(), "X998_Y998"],
+                        ["data.1.from.name".toPath(), "Peyton Manning"],
+                        ["data.1.from.id".toPath(), "X18"],
+                        ["data.1.message".toPath(), "Where's my contract?"],
+                        ["data.1.actions.0.name".toPath(), "Comment"],
+                        ["data.1.actions.0.link".toPath(),
+                            "http://www.facebook.com/X998/posts/Y998"],
+                        ["data.1.actions.1.name".toPath(), "Like"],
+                        ["data.1.actions.1.link".toPath(),
+                            "http://www.facebook.com/X998/posts/Y998"],
+                        ["data.1.type".toPath(), "status"],
+                        ["data.1.created_time".toPath(),
+                            "2010-08-02T21:27:44+0000"],
+                        ["data.1.updated_time".toPath(),
+                            "2010-08-02T21:27:44+0000"]
+                    ]);
+                });
+            });
+
             describe("with skipping with key exclusion", function () {
                 it("should invoke callback", function () {
                     tree.query('data.**!actions.name'.toQuery(), callback);
