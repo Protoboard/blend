@@ -378,11 +378,10 @@ $data.Tree = $oop.getClass('$data.Tree')
         /**
          * Queries nodes from the tree matching the specified query. Order
          * of items in the resulting array is non-deterministic.
-         * @todo Add wrapped version
          * @param {$data.Query} query
          * @returns {Array}
          */
-        queryNodes: function (query) {
+        queryNodesAsArray: function (query) {
             var result = [];
             this.query(query, function (/**$data.Path*/path, node) {
                 result.push(node);
@@ -391,13 +390,20 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * @param {$data.Query} query
+         * @returns {$data.Collection}
+         */
+        queryNodes: function (query) {
+            return $data.Collection.create(this.queryNodesAsArray(query));
+        },
+
+        /**
          * Queries keys from the tree matching the specified query. Order of
          * items in the resulting array is non-deterministic.
-         * @todo Add wrapped version
          * @param {$data.Query} query
          * @returns {string[]}
          */
-        queryKeys: function (query) {
+        queryKeysAsArray: function (query) {
             var result = [];
             this.query(query, function (/**$data.Path*/path) {
                 var pathComponents = path._components,
@@ -408,18 +414,33 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * @param {$data.Query} query
+         * @returns {$data.StringCollection}
+         */
+        queryKeys: function (query) {
+            return $data.StringCollection.create(this.queryKeysAsArray(query));
+        },
+
+        /**
          * Queries paths from the tree matching the specified query.
          * Order of items in the resulting array is non-deterministic.
-         * @todo Add wrapped version
          * @param {$data.Query} query
          * @returns {$data.Path[]}
          */
-        queryPaths: function (query) {
+        queryPathsAsArray: function (query) {
             var result = [];
             this.query(query, function (/**$data.Path*/path) {
                 result.push(path);
             });
             return result;
+        },
+
+        /**
+         * @param {$data.Query} query
+         * @returns {$data.Collection}
+         */
+        queryPaths: function (query) {
+            return $data.Collection.create(this.queryPathsAsArray(query));
         },
 
         /**
