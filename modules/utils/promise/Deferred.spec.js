@@ -35,7 +35,7 @@ describe("$utils", function () {
                 expect(result).toBe(deferred);
             });
 
-            describe("when promise state is other than unfulfilled", function () {
+            describe("when promise state is other than pending", function () {
                 beforeEach(function () {
                     deferred.promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
                     result = deferred.resolve("foo", "bar");
@@ -79,7 +79,7 @@ describe("$utils", function () {
                 expect(result).toBe(deferred);
             });
 
-            describe("when promise state is other than unfulfilled", function () {
+            describe("when promise state is other than pending", function () {
                 beforeEach(function () {
                     deferred.promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
                     result = deferred.reject("foo", "bar");
@@ -96,8 +96,8 @@ describe("$utils", function () {
                 expect(deferred.promise.failureHandlers[1]).toHaveBeenCalledWith("foo", "bar");
             });
 
-            it("should set promise state to failed", function () {
-                expect(deferred.promise.promiseState).toBe($utils.PROMISE_STATE_FAILED);
+            it("should set promise state to rejected", function () {
+                expect(deferred.promise.promiseState).toBe($utils.PROMISE_STATE_REJECTED);
             });
 
             it("should set arguments on promise", function () {
@@ -123,7 +123,7 @@ describe("$utils", function () {
                 expect(result).toBe(deferred);
             });
 
-            describe("when promise state is other than unfulfilled", function () {
+            describe("when promise state is other than pending", function () {
                 beforeEach(function () {
                     deferred.promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
                     result = deferred.notify("foo", "bar");

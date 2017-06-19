@@ -23,7 +23,7 @@ $utils.Promise = $oop.getClass('$utils.Promise')
             /**
              * @member {string} $utils.Promise#promiseState
              */
-            this.promiseState = $utils.PROMISE_STATE_UNFULFILLED;
+            this.promiseState = $utils.PROMISE_STATE_PENDING;
 
             /**
              * @member {Array} $utils.Promise#deferredArguments
@@ -63,7 +63,7 @@ $utils.Promise = $oop.getClass('$utils.Promise')
                 case $utils.PROMISE_STATE_FULFILLED:
                     successHandler.apply(this, this.deferredArguments);
                     break;
-                case $utils.PROMISE_STATE_UNFULFILLED:
+                case $utils.PROMISE_STATE_PENDING:
                     this.successHandlers.push(successHandler);
                     break;
                 }
@@ -71,17 +71,17 @@ $utils.Promise = $oop.getClass('$utils.Promise')
 
             if (failureHandler) {
                 switch (this.promiseState) {
-                case $utils.PROMISE_STATE_FAILED:
+                case $utils.PROMISE_STATE_REJECTED:
                     failureHandler.apply(this, this.deferredArguments);
                     break;
-                case $utils.PROMISE_STATE_UNFULFILLED:
+                case $utils.PROMISE_STATE_PENDING:
                     this.failureHandlers.push(failureHandler);
                     break;
                 }
             }
 
             if (progressHandler) {
-                if (this.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
+                if (this.promiseState === $utils.PROMISE_STATE_PENDING) {
                     // adding progress handler to list of handlers
                     this.progressHandlers.push(progressHandler);
 
@@ -96,13 +96,13 @@ $utils.Promise = $oop.getClass('$utils.Promise')
         },
 
         /**
-         * Returns a promise that is fulfilled when all passed promises are fulfilled,
-         * or fails when one of them fails. Invokes progress on each promise' progress,
-         * and when individual promises are fulfilled.
-         * The order of invoking the returned promise and the original promises' handlers
-         * is not deterministic.
-         * @param {...$utils.Promise|*} promise A list of promises. Non-promises will be
-         * treated as resolved promises.
+         * Returns a promise that is fulfilled when all passed promises are
+         * fulfilled, or fails when one of them fails. Invokes progress on each
+         * promise' progress, and when individual promises are fulfilled. The
+         * order of invoking the returned promise and the original promises'
+         * handlers is not deterministic.
+         * @param {...$utils.Promise|*} promise A list of promises.
+         *     Non-promises will be treated as resolved promises.
          * @returns {$utils.Promise}
          * @memberOf $utils.Promise
          */
@@ -142,13 +142,13 @@ $utils.Promise = $oop.getClass('$utils.Promise')
 
 $oop.copyProperties($utils, /** @lends $utils */{
     /** @constant */
-    PROMISE_STATE_UNFULFILLED: 'unfulfilled',
+    PROMISE_STATE_PENDING: 'pending',
 
     /** @constant */
     PROMISE_STATE_FULFILLED: 'fulfilled',
 
     /** @constant */
-    PROMISE_STATE_FAILED: 'failed'
+    PROMISE_STATE_REJECTED: 'rejected'
 });
 
 $oop.copyProperties($assert, /** @lends $assert# */{

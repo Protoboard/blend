@@ -27,7 +27,7 @@ $utils.Deferred = $oop.getClass('$utils.Deferred')
             var deferredArguments = arguments,
                 promise = this.promise;
 
-            if (promise.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
+            if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
                 // setting state
                 promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
 
@@ -50,9 +50,9 @@ $utils.Deferred = $oop.getClass('$utils.Deferred')
             var deferredArguments = arguments,
                 promise = this.promise;
 
-            if (promise.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
+            if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
                 // setting state
-                promise.promiseState = $utils.PROMISE_STATE_FAILED;
+                promise.promiseState = $utils.PROMISE_STATE_REJECTED;
 
                 // storing arguments
                 promise.deferredArguments = deferredArguments;
@@ -73,7 +73,7 @@ $utils.Deferred = $oop.getClass('$utils.Deferred')
             var args = arguments,
                 promise = this.promise;
 
-            if (promise.promiseState === $utils.PROMISE_STATE_UNFULFILLED) {
+            if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
                 // storing arguments
                 promise.notificationArguments.push(args);
 
