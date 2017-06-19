@@ -373,6 +373,81 @@ $data.Tree = $oop.getClass('$data.Tree')
             }
 
             return this;
+        },
+
+        /**
+         * Queries nodes from the tree matching the specified query. Order
+         * of items in the resulting array is non-deterministic.
+         * @todo Add wrapped version
+         * @param {$data.Query} query
+         * @returns {Array}
+         */
+        queryNodes: function (query) {
+            var result = [];
+            this.query(query, function (/**$data.Path*/path, node) {
+                result.push(node);
+            });
+            return result;
+        },
+
+        /**
+         * Queries keys from the tree matching the specified query. Order of
+         * items in the resulting array is non-deterministic.
+         * @todo Add wrapped version
+         * @param {$data.Query} query
+         * @returns {string[]}
+         */
+        queryKeys: function (query) {
+            var result = [];
+            this.query(query, function (/**$data.Path*/path) {
+                var pathComponents = path._components,
+                    key = pathComponents[pathComponents.length - 1];
+                result.push(key);
+            });
+            return result;
+        },
+
+        /**
+         * Queries paths from the tree matching the specified query.
+         * Order of items in the resulting array is non-deterministic.
+         * @todo Add wrapped version
+         * @param {$data.Query} query
+         * @returns {$data.Path[]}
+         */
+        queryPaths: function (query) {
+            var result = [];
+            this.query(query, function (/**$data.Path*/path) {
+                result.push(path);
+            });
+            return result;
+        },
+
+        /**
+         * Queries key-node pairs from the tree matching the specified query.
+         * @param {$data.Query} query
+         * @returns {$data.PairList}
+         */
+        queryKeyNodePairs: function (query) {
+            var result = [];
+            this.query(query, function (/**$data.Path*/path, node) {
+                var pathComponents = path._components,
+                    key = pathComponents[pathComponents.length - 1];
+                result.push({key: key, value: node});
+            });
+            return $data.PairList.create(result);
+        },
+
+        /**
+         * Queries path-node pairs from the tree matching the specified query.
+         * @param {$data.Query} query
+         * @returns {$data.PairList}
+         */
+        queryPathNodePairs: function (query) {
+            var result = [];
+            this.query(query, function (/**$data.Path*/path, node) {
+                result.push({key: path, value: node});
+            });
+            return $data.PairList.create(result);
         }
     });
 

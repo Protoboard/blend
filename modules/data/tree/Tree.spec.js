@@ -712,6 +712,115 @@ describe("$data", function () {
                 });
             });
         });
+
+        describe("queryNodes()", function () {
+            var query;
+
+            beforeEach(function () {
+                query = 'foo.bar.*'.toQuery();
+                spyOn(tree, 'query').and.callThrough();
+                result = tree.queryNodes(query);
+            });
+
+            it("should invoke query(), passing query param", function () {
+                expect(tree.query.calls.argsFor(0)[0]).toBe(query);
+            });
+
+            it("should retrieve array of matching nodes", function () {
+                expect(result).toEqual([
+                    'baz', 'quux'
+                ]);
+            });
+        });
+
+        describe("queryKeys()", function () {
+            var query;
+
+            beforeEach(function () {
+                query = 'foo.bar.*'.toQuery();
+                spyOn(tree, 'query').and.callThrough();
+                result = tree.queryKeys(query);
+            });
+
+            it("should invoke query(), passing query param", function () {
+                expect(tree.query.calls.argsFor(0)[0]).toBe(query);
+            });
+
+            it("should retrieve array of matching keys", function () {
+                expect(result).toEqual(['0', '1']);
+            });
+        });
+
+        describe("queryPaths()", function () {
+            var query;
+
+            beforeEach(function () {
+                query = 'foo.bar.*'.toQuery();
+                spyOn(tree, 'query').and.callThrough();
+                result = tree.queryPaths(query);
+            });
+
+            it("should invoke query(), passing query param", function () {
+                expect(tree.query.calls.argsFor(0)[0]).toBe(query);
+            });
+
+            it("should retrieve array of matching paths", function () {
+                expect(result).toEqual([
+                    'foo.bar.0'.toPath(),
+                    'foo.bar.1'.toPath()
+                ]);
+            });
+        });
+
+        describe("queryKeyNodePairs()", function () {
+            var query;
+
+            beforeEach(function () {
+                query = 'foo.bar.*'.toQuery();
+                spyOn(tree, 'query').and.callThrough();
+                result = tree.queryKeyNodePairs(query);
+            });
+
+            it("should return PairList instance", function () {
+                expect($data.PairList.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should invoke query(), passing query param", function () {
+                expect(tree.query.calls.argsFor(0)[0]).toBe(query);
+            });
+
+            it("should retrieve matching key-node pairs", function () {
+                expect(result._data).toEqual([
+                    {key: '0', value: 'baz'},
+                    {key: '1', value: 'quux'}
+                ]);
+            });
+        });
+
+        describe("queryPathNodePairs()", function () {
+            var query;
+
+            beforeEach(function () {
+                query = 'foo.bar.*'.toQuery();
+                spyOn(tree, 'query').and.callThrough();
+                result = tree.queryPathNodePairs(query);
+            });
+
+            it("should return PairList instance", function () {
+                expect($data.PairList.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should invoke query(), passing query param", function () {
+                expect(tree.query.calls.argsFor(0)[0]).toBe(query);
+            });
+
+            it("should retrieve matching path-node pairs", function () {
+                expect(result._data).toEqual([
+                    {key: 'foo.bar.0'.toPath(), value: 'baz'},
+                    {key: 'foo.bar.1'.toPath(), value: 'quux'}
+                ]);
+            });
+        });
     });
 
     describe("DataContainer", function () {
