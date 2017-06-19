@@ -37,6 +37,9 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
 
         /**
          * @memberOf $data.OrderedList
+         * @param {*} a
+         * @param {*} b
+         * @returns {number}
          * @private
          */
         _defaultComparer: function (a, b) {
