@@ -400,8 +400,18 @@ describe("$data", function () {
         });
 
         describe("getNodeWrapped()", function () {
+            var path,
+                node;
+
             beforeEach(function () {
-                result = tree.getNodeWrapped('foo.bar'.toPath());
+                path = 'foo.bar'.toPath();
+                node = {};
+                spyOn(tree, 'getNode').and.returnValue(node);
+                result = tree.getNodeWrapped(path);
+            });
+
+            it("should invoke getNode()", function () {
+                expect(tree.getNode).toHaveBeenCalledWith(path);
             });
 
             it("should return Tree instance", function () {
@@ -409,10 +419,78 @@ describe("$data", function () {
             });
 
             it("should return wrapped result", function () {
-                expect(result._data).toEqual([
-                    'baz',
-                    'quux'
-                ]);
+                expect(result._data).toBe(node);
+            });
+        });
+
+        describe("getInitializedNode()", function () {
+            var initialNode,
+                initializer;
+
+            beforeEach(function () {
+                initialNode = [];
+                initializer = jasmine.createSpy().and.returnValue(initialNode);
+            });
+
+            it("should retrieve node at path", function () {
+                result = tree.getInitializedNode('foo.bar'.toPath(), initializer);
+                expect(result).toEqual(['baz', 'quux']);
+            });
+
+            describe("for absent path", function () {
+                beforeEach(function () {
+                    result = tree.getInitializedNode('foo.baz'.toPath(), initializer);
+                });
+
+                it("should invoke initializer", function () {
+                    expect(initializer).toHaveBeenCalled();
+                });
+
+                it("should store result of initializer", function () {
+                    expect(tree._data).toEqual({
+                        foo: {
+                            bar: [
+                                'baz',
+                                'quux'
+                            ],
+                            baz: []
+                        },
+                        bar: {
+                            hello: 'world'
+                        }
+                    });
+                });
+
+                it("should retrieve initialized node", function () {
+                    expect(result).toBe(initialNode);
+                });
+            });
+        });
+
+        describe("getInitializedNodeWrapped()", function () {
+            var path,
+                initializer,
+                node;
+
+            beforeEach(function () {
+                path = 'foo.bar'.toPath();
+                initializer = function () {};
+                node = {};
+                spyOn(tree, 'getInitializedNode').and.returnValue(node);
+                result = tree.getInitializedNodeWrapped(path, initializer);
+            });
+
+            it("should invoke getInitializedNode()", function () {
+                expect(tree.getInitializedNode)
+                    .toHaveBeenCalledWith(path, initializer);
+            });
+
+            it("should return Tree instance", function () {
+                expect(Tree.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should return wrapped result", function () {
+                expect(result._data).toBe(node);
             });
         });
 
@@ -787,7 +865,8 @@ describe("$data", function () {
             });
 
             it("should return StringCollection instance", function () {
-                expect($data.StringCollection.isIncludedBy(result)).toBeTruthy();
+                expect($data.StringCollection.isIncludedBy(result))
+                    .toBeTruthy();
             });
 
             it("should invoke queryKeysAsArray() with query", function () {

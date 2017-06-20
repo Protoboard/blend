@@ -245,6 +245,34 @@ $data.Tree = $oop.getClass('$data.Tree')
         },
 
         /**
+         * Retrieves node from the tree at the specified path. If the path
+         * does not exist in the tree, runs `initializer`, stores its
+         * return value as new node, and returns the initialized node.
+         * @param {$data.Path} path Path to node
+         * @param {function} initializer Function that initializes the node
+         * when path is absent
+         * @returns {*} Existing or initialized node
+         */
+        getInitializedNode: function (path, initializer) {
+            var node = this.getNode(path);
+            if (node === undefined && !this.hasPath(path)) {
+                node = initializer(path);
+                this.setNode(path, node);
+            }
+            return node;
+        },
+
+        /**
+         * @param {$data.Path} path Path to node
+         * @param {function} initializer Function that initializes the node
+         * @returns {$data.Tree}
+         */
+        getInitializedNodeWrapped: function (path, initializer) {
+            var initializedNode = this.getInitializedNode(path, initializer);
+            return $oop.getClass(this.__classId).create(initializedNode);
+        },
+
+        /**
          * Sets the specified node at the specified path. When the path
          * already exists in the tree, it will be overwritten. When there's
          * a primitive node along the specified path, it will be overwritten.
