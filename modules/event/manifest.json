@@ -1,0 +1,11 @@
+{
+  "assets": {
+    "js": [
+      "globals.js",
+      "event/EventSource.js",
+      "event/EventSpace.js",
+      "event/EventSpawner.js",
+      "event/EventTarget.js"
+    ]
+  }
+}
