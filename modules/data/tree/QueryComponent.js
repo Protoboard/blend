@@ -37,89 +37,63 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
          * @ignore
          */
         init: function (queryComponentStr) {
-            var safeSplit = $utils.safeSplit,
-                // separating key & value tokens
-                componentTokens = safeSplit(queryComponentStr, ':'),
-                keyTokens = componentTokens[0] &&
-                    $data.QUERY_COMPONENT_KEY_TOKENIZER.exec(componentTokens[0]),
-                valueTokens = componentTokens[1] &&
-                    $data.QUERY_COMPONENT_VALUE_TOKENIZER.exec(componentTokens[1]),
-                keyWildcardToken = keyTokens && keyTokens[1],
-                keySkipperToken = keyTokens && keyTokens[2],
-                keyExclusionToken = keyTokens && keyTokens[3],
-                keyOptionsToken = keyTokens && keyTokens[4],
-                valuePrimitiveToken = valueTokens && valueTokens[1],
-                valueWildcardToken = valueTokens && valueTokens[2],
-                valueExclusionToken = valueTokens && valueTokens[3],
-                valueOptionsToken = valueTokens && valueTokens[4];
+            /**
+             * @type {boolean}
+             * @private
+             */
+            this._isSkipper = false;
 
             /**
              * @type {boolean}
              * @private
              */
-            this._isSkipper = keySkipperToken === '**';
+            this._isKeyExcluded = false;
 
             /**
              * @type {boolean}
              * @private
              */
-            this._isKeyExcluded = keyExclusionToken === '!';
-
-            /**
-             * @type {boolean}
-             * @private
-             */
-            this._matchesAnyKey = !this._isKeyExcluded && (
-                this._isSkipper ||
-                keyWildcardToken === '*');
+            this._matchesAnyKey = true;
 
             /**
              * @type {string[]}
              * @private
              */
-            this._keyOptions = keyOptionsToken !== undefined ?
-                safeSplit(keyOptionsToken, ',')
-                    .map($data.unescapeQueryComponent) :
-                undefined;
+            this._keyOptions = undefined;
 
             /**
              * @type {Object}
              * @private
              */
-            this._keyOptionLookup = this._keyOptions &&
-                this._arrayToLookup(this._keyOptions);
+            this._keyOptionLookup = undefined;
 
             /**
              * @type {boolean}
              * @private
              */
-            this._matchesPrimitiveValues = valuePrimitiveToken === '$';
+            this._matchesPrimitiveValues = false;
 
             /**
              * @type {boolean}
              * @private
              */
-            this._isValueExcluded = valueExclusionToken === '!';
+            this._isValueExcluded = false;
 
             /**
              * @type {boolean}
              * @private
              */
-            this._matchesAnyValue = !this._isValueExcluded && (
-                this._isSkipper ||
-                valueWildcardToken === '*' ||
-                valuePrimitiveToken === undefined &&
-                valueWildcardToken === undefined &&
-                valueOptionsToken === undefined);
+            this._matchesAnyValue = true;
 
             /**
              * @type {Array}
              * @private
              */
-            this._valueOptions = valueOptionsToken !== undefined ?
-                safeSplit(valueOptionsToken, ',')
-                    .map($data.unescapeQueryComponent) :
-                undefined;
+            this._valueOptions = undefined;
+
+            if (queryComponentStr !== undefined) {
+                this._parseQueryComponentString(queryComponentStr);
+            }
         },
 
         /**
@@ -139,12 +113,67 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         },
 
         /**
+         * @param {string} queryComponentStr
+         * @private
+         */
+        _parseQueryComponentString: function (queryComponentStr) {
+            var safeSplit = $utils.safeSplit,
+                // separating key & value tokens
+                componentTokens = safeSplit(queryComponentStr, ':'),
+                keyTokens = componentTokens[0] &&
+                    $data.QUERY_COMPONENT_KEY_TOKENIZER.exec(componentTokens[0]),
+                valueTokens = componentTokens[1] &&
+                    $data.QUERY_COMPONENT_VALUE_TOKENIZER.exec(componentTokens[1]),
+                keyWildcardToken = keyTokens && keyTokens[1],
+                keySkipperToken = keyTokens && keyTokens[2],
+                keyExclusionToken = keyTokens && keyTokens[3],
+                keyOptionsToken = keyTokens && keyTokens[4],
+                valuePrimitiveToken = valueTokens && valueTokens[1],
+                valueWildcardToken = valueTokens && valueTokens[2],
+                valueExclusionToken = valueTokens && valueTokens[3],
+                valueOptionsToken = valueTokens && valueTokens[4];
+
+            this._isSkipper = keySkipperToken === '**';
+
+            this._isKeyExcluded = keyExclusionToken === '!';
+
+            this._matchesAnyKey = !this._isKeyExcluded && (
+                this._isSkipper ||
+                keyWildcardToken === '*');
+
+            if (keyOptionsToken !== undefined) {
+                this.setKeyOptions(safeSplit(keyOptionsToken, ',')
+                    .map($data.unescapeQueryComponent));
+            }
+
+            this._matchesPrimitiveValues = valuePrimitiveToken === '$';
+
+            this._isValueExcluded = valueExclusionToken === '!';
+
+            this._matchesAnyValue = !this._isValueExcluded && (
+                this._isSkipper ||
+                valueWildcardToken === '*' ||
+                valuePrimitiveToken === undefined &&
+                valueWildcardToken === undefined &&
+                valueOptionsToken === undefined);
+
+            if (valueOptionsToken !== undefined) {
+                this.setValueOptions(safeSplit(valueOptionsToken, ',')
+                    .map($data.unescapeQueryComponent));
+            }
+        },
+
+        /**
          * @inheritDoc
          * @returns {$data.QueryComponent}
          */
         clone: function clone() {
             var cloned = clone.returned;
             // properties alterable through methods
+            cloned._keyOptions = slice.call(this._keyOptions);
+            cloned._keyOptionLookup = $data.shallowCopy(this._keyOptionLookup);
+            cloned._matchesAnyKey = this._matchesAnyKey;
+            cloned._isKeyExcluded = this._isKeyExcluded;
             cloned._valueOptions = slice.call(this._valueOptions);
             cloned._matchesAnyValue = this._matchesAnyValue;
             cloned._isValueExcluded = this._isValueExcluded;
@@ -213,20 +242,37 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         },
 
         /**
-         * @param {*} valueOption
+         * @param {string[]} keyOptions
          * @returns {$data.QueryComponent}
          */
-        addValueOption: function (valueOption) {
-            if (!this._valueOptions) {
-                this._valueOptions = [valueOption];
-                this._matchesAnyValue = false;
-            } else {
-                this._valueOptions.push(valueOption);
-            }
+        setKeyOptions: function (keyOptions) {
+            this._keyOptions = keyOptions;
+            this._keyOptionLookup = this._arrayToLookup(keyOptions);
+            this._matchesAnyKey = false;
             return this;
         },
 
         /**
+         * @todo Pass keyOptions or rename to setKeyExcluded?
+         * @returns {$data.QueryComponent}
+         */
+        excludeKeyOptions: function () {
+            this._isKeyExcluded = true;
+            return this;
+        },
+
+        /**
+         * @param {Array} valueOptions
+         * @returns {$data.QueryComponent}
+         */
+        setValueOptions: function (valueOptions) {
+            this._valueOptions = valueOptions;
+            this._matchesAnyValue = false;
+            return this;
+        },
+
+        /**
+         * @todo Pass valueOptions or rename to setValueExcluded?
          * @returns {$data.QueryComponent}
          */
         excludeValueOptions: function () {
