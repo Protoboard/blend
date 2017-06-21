@@ -1012,6 +1012,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     /**
      * Specifies a mapper function to be used to build a registry
      * @todo Rename
+     * @todo Propagate to includers
      * @param {function} mapper
      * @returns {$oop.Class}
      */
