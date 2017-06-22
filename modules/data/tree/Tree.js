@@ -409,7 +409,7 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @param {$data.Query} query
          * @returns {Array}
          */
-        queryNodesAsArray: function (query) {
+        queryNodes: function (query) {
             var result = [];
             this.query(query, function (/**$data.Path*/path, node) {
                 result.push(node);
@@ -421,8 +421,8 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @param {$data.Query} query
          * @returns {$data.Collection}
          */
-        queryNodes: function (query) {
-            return $data.Collection.create(this.queryNodesAsArray(query));
+        queryNodesWrapped: function (query) {
+            return $data.Collection.create(this.queryNodes(query));
         },
 
         /**
@@ -431,7 +431,7 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @param {$data.Query} query
          * @returns {string[]}
          */
-        queryKeysAsArray: function (query) {
+        queryKeys: function (query) {
             var result = [];
             this.query(query, function (/**$data.Path*/path) {
                 var pathComponents = path._components,
@@ -445,8 +445,8 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @param {$data.Query} query
          * @returns {$data.StringCollection}
          */
-        queryKeys: function (query) {
-            return $data.StringCollection.create(this.queryKeysAsArray(query));
+        queryKeysWrapped: function (query) {
+            return $data.StringCollection.create(this.queryKeys(query));
         },
 
         /**
@@ -455,7 +455,7 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @param {$data.Query} query
          * @returns {$data.Path[]}
          */
-        queryPathsAsArray: function (query) {
+        queryPaths: function (query) {
             var result = [];
             this.query(query, function (/**$data.Path*/path) {
                 result.push(path);
@@ -467,8 +467,8 @@ $data.Tree = $oop.getClass('$data.Tree')
          * @param {$data.Query} query
          * @returns {$data.Collection}
          */
-        queryPaths: function (query) {
-            return $data.Collection.create(this.queryPathsAsArray(query));
+        queryPathsWrapped: function (query) {
+            return $data.Collection.create(this.queryPaths(query));
         },
 
         /**

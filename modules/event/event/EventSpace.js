@@ -72,7 +72,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
                     $data.escapeQueryComponent(eventName) : '*',
                 callbacksQuery = $data.Query.create(['callbacks',
                     'bySubscriber', subscriberId, eventNameQc, '*']),
-                callbackPaths = subscriptions.queryPaths(callbacksQuery);
+                callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 
             // removing callbacks from 'bySubscriber' branch
             if (eventName !== undefined) {
@@ -119,7 +119,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
                     $data.escapeQueryComponent(targetPathPc) : '*',
                 callbacksQuery = $data.Query.create(['callbacks',
                     'bySubscription', eventName, targetPathQc, '*']),
-                callbackPaths = subscriptions.queryPaths(callbacksQuery);
+                callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 
             // removing callbacks from 'bySubscription' branch &
             // removing paths from 'paths' branch

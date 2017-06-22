@@ -791,13 +791,13 @@ describe("$data", function () {
             });
         });
 
-        describe("queryNodesAsArray()", function () {
+        describe("queryNodes()", function () {
             var query;
 
             beforeEach(function () {
                 query = 'foo.bar.*'.toQuery();
                 spyOn(tree, 'query').and.callThrough();
-                result = tree.queryNodesAsArray(query);
+                result = tree.queryNodes(query);
             });
 
             it("should invoke query(), passing query param", function () {
@@ -811,37 +811,37 @@ describe("$data", function () {
             });
         });
 
-        describe("queryNodes()", function () {
+        describe("queryNodesWrapped()", function () {
             var query,
                 data;
 
             beforeEach(function () {
                 query = 'foo.bar.*'.toQuery();
                 data = [];
-                spyOn(tree, 'queryNodesAsArray').and.returnValue(data);
-                result = tree.queryNodes(query);
+                spyOn(tree, 'queryNodes').and.returnValue(data);
+                result = tree.queryNodesWrapped(query);
             });
 
             it("should return Collection instance", function () {
                 expect($data.Collection.isIncludedBy(result)).toBeTruthy();
             });
 
-            it("should invoke queryNodesAsArray() with query", function () {
-                expect(tree.queryNodesAsArray).toHaveBeenCalledWith(query);
+            it("should invoke queryNodes() with query", function () {
+                expect(tree.queryNodes).toHaveBeenCalledWith(query);
             });
 
-            it("should return same data as queryNodesAsArray()", function () {
+            it("should return same data as queryNodes()", function () {
                 expect(result._data).toBe(data);
             });
         });
 
-        describe("queryKeysAsArray()", function () {
+        describe("queryKeys()", function () {
             var query;
 
             beforeEach(function () {
                 query = 'foo.bar.*'.toQuery();
                 spyOn(tree, 'query').and.callThrough();
-                result = tree.queryKeysAsArray(query);
+                result = tree.queryKeys(query);
             });
 
             it("should invoke query(), passing query param", function () {
@@ -853,15 +853,15 @@ describe("$data", function () {
             });
         });
 
-        describe("queryKeys()", function () {
+        describe("queryKeysWrapped()", function () {
             var query,
                 data;
 
             beforeEach(function () {
                 query = 'foo.bar.*'.toQuery();
                 data = [];
-                spyOn(tree, 'queryKeysAsArray').and.returnValue(data);
-                result = tree.queryKeys(query);
+                spyOn(tree, 'queryKeys').and.returnValue(data);
+                result = tree.queryKeysWrapped(query);
             });
 
             it("should return StringCollection instance", function () {
@@ -869,22 +869,22 @@ describe("$data", function () {
                     .toBeTruthy();
             });
 
-            it("should invoke queryKeysAsArray() with query", function () {
-                expect(tree.queryKeysAsArray).toHaveBeenCalledWith(query);
+            it("should invoke queryKeys() with query", function () {
+                expect(tree.queryKeys).toHaveBeenCalledWith(query);
             });
 
-            it("should return same data as queryKeysAsArray()", function () {
+            it("should return same data as queryKeys()", function () {
                 expect(result._data).toBe(data);
             });
         });
 
-        describe("queryPathsAsArray()", function () {
+        describe("queryPaths()", function () {
             var query;
 
             beforeEach(function () {
                 query = 'foo.bar.*'.toQuery();
                 spyOn(tree, 'query').and.callThrough();
-                result = tree.queryPathsAsArray(query);
+                result = tree.queryPaths(query);
             });
 
             it("should invoke query(), passing query param", function () {
@@ -899,26 +899,26 @@ describe("$data", function () {
             });
         });
 
-        describe("queryPaths()", function () {
+        describe("queryPathsWrapped()", function () {
             var query,
                 data;
 
             beforeEach(function () {
                 query = 'foo.bar.*'.toQuery();
                 data = [];
-                spyOn(tree, 'queryPathsAsArray').and.returnValue(data);
-                result = tree.queryPaths(query);
+                spyOn(tree, 'queryPaths').and.returnValue(data);
+                result = tree.queryPathsWrapped(query);
             });
 
             it("should return Collection instance", function () {
                 expect($data.Collection.isIncludedBy(result)).toBeTruthy();
             });
 
-            it("should invoke queryPathsAsArray() with query", function () {
-                expect(tree.queryPathsAsArray).toHaveBeenCalledWith(query);
+            it("should invoke queryPaths() with query", function () {
+                expect(tree.queryPaths).toHaveBeenCalledWith(query);
             });
 
-            it("should return same data as queryPathsAsArray()", function () {
+            it("should return same data as queryPaths()", function () {
                 expect(result._data).toBe(data);
             });
         });
