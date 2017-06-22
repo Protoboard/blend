@@ -2,7 +2,7 @@
 
 /**
  * @function $data.QueryComponent.create
- * @param {string} queryComponentStr String representation of query component
+ * @param {string} [queryComponentStr] String representation of query component
  * @returns {$data.QueryComponent}
  */
 
@@ -33,7 +33,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     .implement($oop.getClass('$data.Matchable'))
     .define(/** @lends $data.QueryComponent# */{
         /**
-         * @param {string} queryComponentStr
+         * @param {string} [queryComponentStr]
          * @ignore
          */
         init: function (queryComponentStr) {
