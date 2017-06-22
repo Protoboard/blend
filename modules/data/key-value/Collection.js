@@ -103,6 +103,14 @@ $data.Collection = $oop.getClass('$data.Collection')
          */
         getValue: function (key) {
             return this._data[key];
+        },
+
+        /**
+         * @param {string} key
+         * @returns {$data.DataContainer}
+         */
+        getValueWrapped: function (key) {
+            return $data.DataContainer.create(this.getValue(key));
         }
     });
 

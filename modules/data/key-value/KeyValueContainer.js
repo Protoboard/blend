@@ -87,7 +87,6 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         /**
          * Retrieves a list of all keys in the container.
          * Result might contain duplicates, depending on host class.
-         * @todo Should return DataContainer based on key type
          * @returns {Array}
          */
         getKeys: function () {
@@ -99,9 +98,15 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
         },
 
         /**
+         * @returns {$data.StringCollection}
+         */
+        getKeysWrapped: function () {
+            return $data.StringCollection.create(this.getKeys());
+        },
+
+        /**
          * Retrieves a list of all values in the container.
          * Result might contain duplicates, depending on host class.
-         * @todo Should return DataContainer based on value type
          * @returns {Array}
          */
         getValues: function () {
@@ -110,6 +115,13 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
                 result.push(value);
             });
             return result;
+        },
+
+        /**
+         * @returns {$data.Collection}
+         */
+        getValuesWrapped: function () {
+            return $data.Collection.create(this.getValues());
         },
 
         /**

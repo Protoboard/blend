@@ -140,6 +140,29 @@ describe("$data", function () {
             });
         });
 
+        describe("getKeysWrapped()", function () {
+            var data;
+
+            beforeEach(function () {
+                data = [];
+                spyOn(keyValueContainer, 'getKeys').and.returnValue(data);
+                result = keyValueContainer.getKeysWrapped();
+            });
+
+            it("should return StringCollection instance", function () {
+                expect($data.StringCollection.isIncludedBy(result))
+                    .toBeTruthy();
+            });
+
+            it("should invoke getKeys()", function () {
+                expect(keyValueContainer.getKeys).toHaveBeenCalled();
+            });
+
+            it("should wrap result of getKeys()", function () {
+                expect(result._data).toBe(data);
+            });
+        });
+
         describe("getValues()", function () {
             beforeEach(function () {
                 result = keyValueContainer.getValues();
@@ -147,6 +170,29 @@ describe("$data", function () {
 
             it("should retrieve array of values", function () {
                 expect(result.sort()).toEqual(["FOO", "BAR"].sort());
+            });
+        });
+
+        describe("getValuesWrapped()", function () {
+            var data;
+
+            beforeEach(function () {
+                data = [];
+                spyOn(keyValueContainer, 'getValues').and.returnValue(data);
+                result = keyValueContainer.getValuesWrapped();
+            });
+
+            it("should return Collection instance", function () {
+                expect($data.Collection.isIncludedBy(result))
+                    .toBeTruthy();
+            });
+
+            it("should invoke getValues()", function () {
+                expect(keyValueContainer.getValues).toHaveBeenCalled();
+            });
+
+            it("should wrap result of getValues()", function () {
+                expect(result._data).toBe(data);
             });
         });
 

@@ -38,6 +38,30 @@ describe("$data", function () {
                 ]);
             });
         });
+
+        describe("getRangeByPrefixWrapped()", function () {
+            var data;
+
+            beforeEach(function () {
+                data = [];
+                spyOn(orderedStringList, 'getRangeByPrefix').and
+                    .returnValue(data);
+                result = orderedStringList.getRangeByPrefixWrapped('foo', 10, 5);
+            });
+
+            it("should return instance of the current class", function () {
+                expect(OrderedStringList.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should invoke getRangeByPrefix() with same arguments", function () {
+                expect(orderedStringList.getRangeByPrefix).toHaveBeenCalledWith(
+                    'foo', 10, 5);
+            });
+
+            it("should wrap result of getRangeByPrefix()", function () {
+                expect(result._data).toBe(data);
+            });
+        });
     });
 
     describe("DataContainer", function () {
@@ -49,7 +73,8 @@ describe("$data", function () {
             });
 
             it("should return a OrderedStringList instance", function () {
-                expect($data.OrderedStringList.isIncludedBy(result)).toBeTruthy();
+                expect($data.OrderedStringList.isIncludedBy(result))
+                    .toBeTruthy();
             });
 
             it("should set data set", function () {

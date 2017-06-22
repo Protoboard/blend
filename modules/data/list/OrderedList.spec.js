@@ -255,6 +255,29 @@ describe("$data", function () {
                 });
             });
         });
+
+        describe("getRangeWrapped()", function () {
+            var data;
+
+            beforeEach(function () {
+                data = [];
+                spyOn(orderedList, 'getRange').and.returnValue(data);
+                result = orderedList.getRangeWrapped('foo', 'bar', 10, 5);
+            });
+
+            it("should return instance of the current class", function () {
+                expect(OrderedList.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should invoke getRange() with same arguments", function () {
+                expect(orderedList.getRange).toHaveBeenCalledWith(
+                    'foo', 'bar', 10, 5);
+            });
+
+            it("should wrap result of getRange()", function () {
+                expect(result._data).toBe(data);
+            });
+        });
     });
 
     describe("DataContainer", function () {

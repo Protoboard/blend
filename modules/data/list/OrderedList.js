@@ -172,6 +172,21 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
                     startIndex + limit);
 
             return this._data.slice(startIndex, endIndex);
+        },
+
+        /**
+         * Returns list items in a sorted array wrapped in an instance
+         * of the current class; starting from `startValue` up to but not
+         * including `endValue`.
+         * @param {*} startValue Value marking start of the range.
+         * @param {*} endValue Value marking end of the range.
+         * @param {number} [offset=0] Number of items to skip at start.
+         * @param {number} [limit=Infinity] Number of items to fetch at most.
+         * @returns {$data.OrderedList}
+         */
+        getRangeWrapped: function (startValue, endValue, offset, limit) {
+            return $oop.getClass(this.__classId).create(
+                this.getRange(startValue, endValue, offset, limit));
         }
     });
 

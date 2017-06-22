@@ -119,6 +119,29 @@ describe("$data", function () {
                 expect(collection.getValue('foo')).toBe("FOO");
             });
         });
+
+        describe("getValueWrapped()", function () {
+            var data;
+
+            beforeEach(function () {
+                data = {};
+                spyOn(collection, 'getValue').and.returnValue(data);
+                result = collection.getValueWrapped('foo');
+            });
+
+            it("should return DataContainer instance", function () {
+                expect($data.DataContainer.isIncludedBy(result))
+                    .toBeTruthy();
+            });
+
+            it("should invoke getValue()", function () {
+                expect(collection.getValue).toHaveBeenCalledWith('foo');
+            });
+
+            it("should wrap result of getValue()", function () {
+                expect(result._data).toBe(data);
+            });
+        });
     });
 
     describe("DataContainer", function () {

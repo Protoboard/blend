@@ -32,8 +32,18 @@ $data.OrderedStringList = $oop.getClass('$data.OrderedStringList')
          * @returns {string[]}
          */
         getRangeByPrefix: function (prefix, offset, limit) {
-            return this.getRange(
-                prefix, this._incLastChar(prefix), offset, limit);
+            return this.getRange(prefix, this._incLastChar(prefix), offset, limit);
+        },
+
+        /**
+         * @param {string} prefix
+         * @param {number} [offset=0]
+         * @param {number} [limit=Infinity]
+         * @returns {$data.OrderedStringList}
+         */
+        getRangeByPrefixWrapped: function (prefix, offset, limit) {
+            return $oop.getClass(this.__classId).create(
+                this.getRangeByPrefix(prefix, offset, limit));
         }
     });
 
