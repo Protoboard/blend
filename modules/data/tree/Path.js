@@ -165,6 +165,18 @@ $data.Path = $oop.getClass('$data.Path')
         toString: function () {
             return this._components.map($data.escapePathComponent)
                 .join($data.PATH_COMPONENT_SEPARATOR);
+        },
+
+        /**
+         * Creates a `Path` instance based on the specified string.
+         * @memberOf $data.Path
+         * @param {string} pathStr
+         * @returns {$data.Path}
+         */
+        fromString: function (pathStr) {
+            var components = $utils.safeSplit(pathStr, $data.PATH_COMPONENT_SEPARATOR)
+                .map($data.unescapePathComponent);
+            return $data.Path.create(components);
         }
     });
 
@@ -222,9 +234,7 @@ $oop.copyProperties(String.prototype, /** @lends external:String# */{
      * @returns {$data.Path}
      */
     toPath: function () {
-        var components = $utils.safeSplit(this.valueOf(), $data.PATH_COMPONENT_SEPARATOR)
-            .map($data.unescapePathComponent);
-        return $data.Path.create(components);
+        return $data.Path.fromString(this.valueOf());
     }
 });
 

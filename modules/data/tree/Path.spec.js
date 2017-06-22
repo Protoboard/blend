@@ -236,6 +236,25 @@ describe("$data", function () {
                 expect(result).toBe("foo\\.bar.baz\\\\quux");
             });
         });
+
+        describe("fromString()", function () {
+            var string = 'foo\\.bar.baz\\\\quux';
+
+            beforeEach(function () {
+                result = $data.Path.fromString(string);
+            });
+
+            it("should return a Path instance", function () {
+                expect($data.Path.isIncludedBy(result)).toBeTruthy();
+            });
+
+            it("should set _components property with unescaped components", function () {
+                expect(result._components).toEqual([
+                    'foo.bar',
+                    'baz\\quux'
+                ]);
+            });
+        });
     });
 });
 

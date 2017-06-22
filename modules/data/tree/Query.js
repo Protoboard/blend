@@ -125,6 +125,17 @@ $data.Query = $oop.getClass('$data.Query')
             // reached end of query
             // if we also reached the end of the path, it's a match
             return j === pathComponentCount;
+        },
+
+        /**
+         * Creates a `Query` instance based on the specified string.
+         * @memberOf $data.Query
+         * @param {string} queryStr
+         * @returns {$data.Query}
+         */
+        fromString: function (queryStr) {
+            var components = $utils.safeSplit(queryStr, $data.PATH_COMPONENT_SEPARATOR);
+            return $data.Query.create(components);
         }
     });
 
@@ -156,8 +167,7 @@ $oop.copyProperties(String.prototype, /** @lends external:String# */{
      * @returns {$data.Query}
      */
     toQuery: function () {
-        var components = $utils.safeSplit(this, $data.PATH_COMPONENT_SEPARATOR);
-        return $data.Query.create(components);
+        return $data.Query.fromString(this.valueOf());
     }
 });
 

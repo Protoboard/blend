@@ -134,6 +134,27 @@ describe("$data", function () {
                 });
             });
         });
+
+        describe("fromString()", function () {
+            var query;
+
+            beforeEach(function () {
+                query = $data.Query.create([]);
+                spyOn($data.Query, 'create').and.returnValue(query);
+                result = $data.Query.fromString('foo.*.bar:!baz');
+            });
+
+            it("should create a Query instance", function () {
+                expect($data.Query.create.calls.allArgs())
+                    .toEqual([
+                        [['foo', '*', 'bar:!baz']]
+                    ]);
+            });
+
+            it("should return created instance", function () {
+                expect(result).toBe(query);
+            });
+        });
     });
 });
 
