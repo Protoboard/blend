@@ -1,8 +1,14 @@
 "use strict";
 
 /**
+ * The event mechanism instantiates `EventSpace`. Do not instantiate
+ * it directly.
+ * @function $event.EventSpace.create
+ * @returns {$event.EventSpace}
+ */
+
+/**
  * Traversed by events. Allows subscribing and unsubscribing to/from events.
- * @todo Turn into singleton
  * @class $event.EventSpace
  * @implements $event.EventSpawner
  * @implements $event.EventTarget
@@ -10,6 +16,9 @@
 $event.EventSpace = $oop.getClass('$event.EventSpace')
     .implement($oop.getClass('$event.EventSpawner'))
     .implement($oop.getClass('$event.EventTarget'))
+    .cache(function () {
+        return 'singleton';
+    })
     .define(/** @lends $event.EventSpace# */{
         /** @ignore */
         init: function () {

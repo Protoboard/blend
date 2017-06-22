@@ -29,13 +29,17 @@ describe("$event", function () {
             });
 
             describe("then creating another again", function () {
-                xit("should return the same instance", function () {
-                    expect(EventSpace.create()).toBe(eventSpace);
+                it("should return the same instance", function () {
+                    // todo Revisit once caching propagation is fixed in
+                    // $oop.Class
+                    $event.EventSpace.__instanceLookup = {};
+                    eventSpace = $event.EventSpace.create();
+                    expect($event.EventSpace.create()).toBe(eventSpace);
                 });
             });
         });
 
-        describe('on()', function () {
+        describe("on()", function () {
             var callback;
 
             beforeEach(function () {
