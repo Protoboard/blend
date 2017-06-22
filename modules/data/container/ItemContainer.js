@@ -66,7 +66,7 @@ $data.ItemContainer = $oop.getClass('$data.ItemContainer')
         /**
          * @function $data.ItemContainer#forEachItem
          * @param {function} callback
-         * @param {object} [context]
+         * @param {Object} [context]
          * @returns {$data.ItemContainer}
          * @abstract
          */

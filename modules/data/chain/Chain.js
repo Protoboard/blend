@@ -70,7 +70,7 @@ $data.Chain = $oop.getClass('$data.Chain')
 
         /**
          * @param {function} callback
-         * @param {object} [context]
+         * @param {Object} [context]
          * @returns {$data.Chain}
          */
         forEachItem: function (callback, context) {

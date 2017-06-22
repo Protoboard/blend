@@ -57,7 +57,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
 
         /**
          * @param {function} callback
-         * @param {object} [context]
+         * @param {Object} [context]
          * @returns {$data.StringSet}
          */
         forEachItem: function (callback, context) {

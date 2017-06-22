@@ -67,7 +67,7 @@ $data.Collection = $oop.getClass('$data.Collection')
 
         /**
          * @param {function} callback Function to be called for each item
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @returns {$data.Collection} Current instance
          */
         forEachItem: function (callback, context) {

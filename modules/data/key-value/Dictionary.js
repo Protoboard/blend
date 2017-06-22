@@ -87,7 +87,7 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
 
         /**
          * @param {function} callback
-         * @param {object} [context]
+         * @param {Object} [context]
          * @returns {$data.Dictionary}
          */
         forEachItem: function (callback, context) {

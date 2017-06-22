@@ -11,7 +11,7 @@ $data.Reducible = $oop.getClass('$data.Reducible')
          * @param {function} callback Contributes to accumulated value
          * based on current item
          * @param {*} [initialValue] Initial value for accumulated result
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @returns {*} Accummulated value
          */
         reduce: function (callback, initialValue, context) {}

@@ -67,7 +67,7 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
 
         /**
          * @param {function} callback
-         * @param {function} [context]
+         * @param {Object} [context]
          * @param {number} [argIndex=0]
          * @param {...*} arg
          * @returns {*}
@@ -86,7 +86,7 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
         /**
          * @todo Move to Passable?
          * @param {function} callback
-         * @param {function} [context]
+         * @param {Object} [context]
          * @param {number} [argIndex=0]
          * @param {...*} arg
          * @returns {*}

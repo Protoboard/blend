@@ -61,7 +61,7 @@ $data.PairList = $oop.getClass('$data.PairList')
 
         /**
          * @param {function} callback Function to be called for each item
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @returns {$data.PairList} Current instance
          */
         forEachItem: function (callback, context) {

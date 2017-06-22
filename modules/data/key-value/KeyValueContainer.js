@@ -48,7 +48,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * Extracts items matching the condition in the specified
          * callback function and returns the result as a new collection.
          * @param {function} callback Filter function returning a boolean
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @returns {$data.KeyValueContainer} Filtered collection
          */
         filter: function (callback, context) {
@@ -71,7 +71,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * @param {function} callback Contributes to accumulated value
          * based on current item
          * @param {*} [initialValue] Initial value for accumulated result
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @returns {*} Accummulated value
          */
         reduce: function (callback, initialValue, context) {
@@ -166,7 +166,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * returns mapped key-value pairs as a new collection.
          * @todo Pass in result value type?
          * @param {function} callback Returns new value based on current item
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @returns {$data.Collection} Mapped collection
          */
         mapValues: function (callback, context) {
@@ -187,7 +187,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * returns mapped key-value pairs as a new collection.
          * @todo Pass in result value type?
          * @param {function} callback Returns new value based on current item
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @returns {$data.Collection} Mapped collection
          */
         mapKeys: function (callback, context) {
@@ -207,7 +207,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
          * its arguments, and returns mapped key-value pairs as a
          * new collection.
          * @param {function} callback Returns new value based on arguments
-         * @param {object} [context] Context for callback
+         * @param {Object} [context] Context for callback
          * @param {number} [argIndex=0] Index of item value among arguments
          * @param {...*} [arg] Rest of arguments to be passed to callback.
          * Item value will be spliced in at given index.

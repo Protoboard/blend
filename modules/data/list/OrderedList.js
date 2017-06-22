@@ -136,7 +136,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
 
         /**
          * @param {function} callback
-         * @param {object} [context]
+         * @param {Object} [context]
          * @returns {$data.OrderedList}
          */
         forEachItem: function (callback, context) {
