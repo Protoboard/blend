@@ -7,7 +7,7 @@
  * @returns {$assert}
  */
 $assert.isDefined = function (expr, message) {
-    return $assert.assert(expr !== undefined, message);
+  return $assert.assert(expr !== undefined, message);
 };
 
 /**
@@ -17,7 +17,7 @@ $assert.isDefined = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isUndefined = function (expr, message) {
-    return $assert.assert(expr === undefined, message);
+  return $assert.assert(expr === undefined, message);
 };
 
 /**
@@ -27,8 +27,8 @@ $assert.isUndefined = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isString = function (expr, message) {
-    return $assert.assert(typeof expr === 'string' ||
-        expr instanceof String, message);
+  return $assert.assert(typeof expr === 'string' ||
+    expr instanceof String, message);
 };
 
 /**
@@ -38,9 +38,9 @@ $assert.isString = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isStringOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        typeof expr === 'string' ||
-        expr instanceof String, message);
+  return $assert.assert(expr === undefined ||
+    typeof expr === 'string' ||
+    expr instanceof String, message);
 };
 
 /**
@@ -50,8 +50,8 @@ $assert.isStringOptional = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isBoolean = function (expr, message) {
-    return $assert.assert(typeof expr === 'boolean' ||
-        expr instanceof Boolean, message);
+  return $assert.assert(typeof expr === 'boolean' ||
+    expr instanceof Boolean, message);
 };
 
 /**
@@ -61,9 +61,9 @@ $assert.isBoolean = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isBooleanOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        typeof expr === 'boolean' ||
-        expr instanceof Boolean, message);
+  return $assert.assert(expr === undefined ||
+    typeof expr === 'boolean' ||
+    expr instanceof Boolean, message);
 };
 
 /**
@@ -73,8 +73,8 @@ $assert.isBooleanOptional = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isNumber = function (expr, message) {
-    return $assert.assert(typeof expr === 'number' ||
-        expr instanceof Number, message);
+  return $assert.assert(typeof expr === 'number' ||
+    expr instanceof Number, message);
 };
 
 /**
@@ -84,9 +84,9 @@ $assert.isNumber = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isNumberOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        typeof expr === 'number' ||
-        expr instanceof Number, message);
+  return $assert.assert(expr === undefined ||
+    typeof expr === 'number' ||
+    expr instanceof Number, message);
 };
 
 /**
@@ -96,7 +96,7 @@ $assert.isNumberOptional = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isFunction = function (expr, message) {
-    return $assert.assert(typeof expr === 'function', message);
+  return $assert.assert(typeof expr === 'function', message);
 };
 
 /**
@@ -106,8 +106,8 @@ $assert.isFunction = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isFunctionOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        typeof expr === 'function', message);
+  return $assert.assert(expr === undefined ||
+    typeof expr === 'function', message);
 };
 
 /**
@@ -117,7 +117,7 @@ $assert.isFunctionOptional = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isObject = function (expr, message) {
-    return $assert.assert(expr instanceof Object, message);
+  return $assert.assert(expr instanceof Object, message);
 };
 
 /**
@@ -127,8 +127,8 @@ $assert.isObject = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isObjectOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        expr instanceof Object, message);
+  return $assert.assert(expr === undefined ||
+    expr instanceof Object, message);
 };
 
 /**
@@ -138,7 +138,7 @@ $assert.isObjectOptional = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isArray = function (expr, message) {
-    return $assert.assert(expr instanceof Array, message);
+  return $assert.assert(expr instanceof Array, message);
 };
 
 /**
@@ -148,8 +148,8 @@ $assert.isArray = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isArrayOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        expr instanceof Array, message);
+  return $assert.assert(expr === undefined ||
+    expr instanceof Array, message);
 };
 
 /**
@@ -159,7 +159,7 @@ $assert.isArrayOptional = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isRegExp = function (expr, message) {
-    return $assert.assert(expr instanceof RegExp, message);
+  return $assert.assert(expr instanceof RegExp, message);
 };
 
 /**
@@ -169,8 +169,8 @@ $assert.isRegExp = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isRegExpOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        expr instanceof RegExp, message);
+  return $assert.assert(expr === undefined ||
+    expr instanceof RegExp, message);
 };
 
 /**
@@ -180,7 +180,7 @@ $assert.isRegExpOptional = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isDate = function (expr, message) {
-    return $assert.assert(expr instanceof Date, message);
+  return $assert.assert(expr instanceof Date, message);
 };
 
 /**
@@ -190,6 +190,6 @@ $assert.isDate = function (expr, message) {
  * @returns {$assert}
  */
 $assert.isDateOptional = function (expr, message) {
-    return $assert.assert(expr === undefined ||
-        expr instanceof Date, message);
+  return $assert.assert(expr === undefined ||
+    expr instanceof Date, message);
 };

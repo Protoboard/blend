@@ -11,78 +11,78 @@
  * @class $utils.Deferred
  */
 $utils.Deferred = $oop.getClass('$utils.Deferred')
-    .define(/** @lends $utils.Deferred# */{
-        /** @ignore */
-        init: function () {
-            /**
-             * @member {$utils.Promise} $utils.Deferred#promise
-             */
-            this.promise = $utils.Promise.create();
-        },
+  .define(/** @lends $utils.Deferred# */{
+    /** @ignore */
+    init: function () {
+      /**
+       * @member {$utils.Promise} $utils.Deferred#promise
+       */
+      this.promise = $utils.Promise.create();
+    },
 
-        /**
-         * @returns {$utils.Deferred}
-         */
-        resolve: function () {
-            var deferredArguments = arguments,
-                promise = this.promise;
+    /**
+     * @returns {$utils.Deferred}
+     */
+    resolve: function () {
+      var deferredArguments = arguments,
+        promise = this.promise;
 
-            if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
-                // setting state
-                promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
+      if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
+        // setting state
+        promise.promiseState = $utils.PROMISE_STATE_FULFILLED;
 
-                // storing arguments
-                promise.deferredArguments = deferredArguments;
+        // storing arguments
+        promise.deferredArguments = deferredArguments;
 
-                // calling success handlers
-                promise.successHandlers.forEach(function (handler) {
-                    handler.apply(promise, deferredArguments);
-                });
-            }
+        // calling success handlers
+        promise.successHandlers.forEach(function (handler) {
+          handler.apply(promise, deferredArguments);
+        });
+      }
 
-            return this;
-        },
+      return this;
+    },
 
-        /**
-         * @returns {$utils.Deferred}
-         */
-        reject: function () {
-            var deferredArguments = arguments,
-                promise = this.promise;
+    /**
+     * @returns {$utils.Deferred}
+     */
+    reject: function () {
+      var deferredArguments = arguments,
+        promise = this.promise;
 
-            if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
-                // setting state
-                promise.promiseState = $utils.PROMISE_STATE_REJECTED;
+      if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
+        // setting state
+        promise.promiseState = $utils.PROMISE_STATE_REJECTED;
 
-                // storing arguments
-                promise.deferredArguments = deferredArguments;
+        // storing arguments
+        promise.deferredArguments = deferredArguments;
 
-                // calling failure handlers
-                promise.failureHandlers.forEach(function (handler) {
-                    handler.apply(promise, deferredArguments);
-                });
-            }
+        // calling failure handlers
+        promise.failureHandlers.forEach(function (handler) {
+          handler.apply(promise, deferredArguments);
+        });
+      }
 
-            return this;
-        },
+      return this;
+    },
 
-        /**
-         * @returns {$utils.Deferred}
-         */
-        notify: function () {
-            var args = arguments,
-                promise = this.promise;
+    /**
+     * @returns {$utils.Deferred}
+     */
+    notify: function () {
+      var args = arguments,
+        promise = this.promise;
 
-            if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
-                // storing arguments
-                promise.notificationArguments.push(args);
+      if (promise.promiseState === $utils.PROMISE_STATE_PENDING) {
+        // storing arguments
+        promise.notificationArguments.push(args);
 
-                // calling progress handlers
-                promise.progressHandlers.forEach(function (handler) {
-                    handler.apply(promise, args);
-                });
-            }
+        // calling progress handlers
+        promise.progressHandlers.forEach(function (handler) {
+          handler.apply(promise, args);
+        });
+      }
 
-            return this;
-        }
-    });
+      return this;
+    }
+  });

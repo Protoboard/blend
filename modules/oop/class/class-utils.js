@@ -9,51 +9,52 @@
  * @param {object} [propertyDescriptor]
  */
 $oop.copyProperties = function (target, members, propertyDescriptor) {
-    switch (target) {
-    case Array.prototype:
-    case Date.prototype:
-    case Number.prototype:
-    case Object.prototype:
-    case RegExp.prototype:
-    case String.prototype:
-        $assert.hasOnlyConverters(members, "Attempting to add non-conversion methods to built-in prototype.");
+  switch (target) {
+  case Array.prototype:
+  case Date.prototype:
+  case Number.prototype:
+  case Object.prototype:
+  case RegExp.prototype:
+  case String.prototype:
+    $assert.hasOnlyConverters(members,
+      "Attempting to add non-conversion methods to built-in prototype.");
 
-        Object.defineProperties(
-            target,
-            Object.getOwnPropertyNames(members)
-                .reduce(function (definitions, memberName) {
-                    definitions[memberName] = {
-                        value: members[memberName],
-                        writable: true,
-                        enumerable: false,
-                        configurable: true
-                    };
-                    return definitions;
-                }, {}));
-        break;
+    Object.defineProperties(
+      target,
+      Object.getOwnPropertyNames(members)
+        .reduce(function (definitions, memberName) {
+          definitions[memberName] = {
+            value: members[memberName],
+            writable: true,
+            enumerable: false,
+            configurable: true
+          };
+          return definitions;
+        }, {}));
+    break;
 
-    default:
-        if (propertyDescriptor) {
-            Object.defineProperties(
-                target,
-                Object.getOwnPropertyNames(members)
-                    .reduce(function (definitions, memberName) {
-                        definitions[memberName] = {
-                            value: members[memberName],
-                            writable: propertyDescriptor.writable,
-                            enumerable: propertyDescriptor.enumerable,
-                            configurable: propertyDescriptor.configurable
-                        };
-                        return definitions;
-                    }, {}));
-        } else {
-            Object.getOwnPropertyNames(members)
-                .forEach(function (memberName) {
-                    target[memberName] = members[memberName];
-                });
-        }
-        break;
+  default:
+    if (propertyDescriptor) {
+      Object.defineProperties(
+        target,
+        Object.getOwnPropertyNames(members)
+          .reduce(function (definitions, memberName) {
+            definitions[memberName] = {
+              value: members[memberName],
+              writable: propertyDescriptor.writable,
+              enumerable: propertyDescriptor.enumerable,
+              configurable: propertyDescriptor.configurable
+            };
+            return definitions;
+          }, {}));
+    } else {
+      Object.getOwnPropertyNames(members)
+        .forEach(function (memberName) {
+          target[memberName] = members[memberName];
+        });
     }
+    break;
+  }
 };
 
 /**
@@ -65,9 +66,9 @@ $oop.copyProperties = function (target, members, propertyDescriptor) {
  * @ignore
  */
 $oop.createObject = function (base, members, propertyDescriptor) {
-    var result = Object.create(base || Object.prototype);
-    $oop.copyProperties(result, members, propertyDescriptor);
-    return result;
+  var result = Object.create(base || Object.prototype);
+  $oop.copyProperties(result, members, propertyDescriptor);
+  return result;
 };
 
 /**
@@ -76,5 +77,5 @@ $oop.createObject = function (base, members, propertyDescriptor) {
  * @returns {$oop.Class}
  */
 $oop.getClass = function (classId) {
-    return $oop.Class.getClass(classId);
+  return $oop.Class.getClass(classId);
 };

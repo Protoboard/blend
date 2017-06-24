@@ -14,24 +14,24 @@
  * @extends $data.StringValueHost
  */
 $data.StringCollection = $oop.getClass('$data.StringCollection')
-    .extend($oop.getClass('$data.Collection'))
-    .extend($oop.getClass('$data.StringValueHost'));
+  .extend($oop.getClass('$data.Collection'))
+  .extend($oop.getClass('$data.StringValueHost'));
 
 $oop.getClass('$data.DataContainer')
-    .delegate(/** @lends $data.DataContainer# */{
-        /**
-         * @returns {$data.StringCollection}
-         */
-        toStringCollection: function () {
-            return $data.StringCollection.create(this._data);
-        }
-    });
-
-$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+  .delegate(/** @lends $data.DataContainer# */{
     /**
      * @returns {$data.StringCollection}
      */
     toStringCollection: function () {
-        return $data.StringCollection.create(this);
+      return $data.StringCollection.create(this._data);
     }
+  });
+
+$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+  /**
+   * @returns {$data.StringCollection}
+   */
+  toStringCollection: function () {
+    return $data.StringCollection.create(this);
+  }
 });

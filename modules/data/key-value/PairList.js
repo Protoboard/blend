@@ -14,87 +14,87 @@
  * @extends $data.KeyValueContainer
  */
 $data.PairList = $oop.getClass('$data.PairList')
-    .extend($oop.getClass('$data.DataContainer'))
-    .extend($oop.getClass('$data.KeyValueContainer'))
-    .define(/** @lends $data.PairList# */{
-        /**
-         * @param {Array} data
-         * @ignore
-         */
-        init: function (data) {
-            $assert.isArrayOptional(data, "Invalid data buffer");
+  .extend($oop.getClass('$data.DataContainer'))
+  .extend($oop.getClass('$data.KeyValueContainer'))
+  .define(/** @lends $data.PairList# */{
+    /**
+     * @param {Array} data
+     * @ignore
+     */
+    init: function (data) {
+      $assert.isArrayOptional(data, "Invalid data buffer");
 
-            /**
-             * @type {Array<{key:*,value:*}>}
-             * @private
-             */
-            this._data = data || [];
-        },
+      /**
+       * @type {Array<{key:*,value:*}>}
+       * @private
+       */
+      this._data = data || [];
+    },
 
-        /**
-         * @param {string} key
-         * @param {*} value
-         * @returns {$data.PairList}
-         */
-        setItem: function (key, value) {
-            this._data.push({
-                key: key,
-                value: value
-            });
+    /**
+     * @param {string} key
+     * @param {*} value
+     * @returns {$data.PairList}
+     */
+    setItem: function (key, value) {
+      this._data.push({
+        key: key,
+        value: value
+      });
 
-            this._itemCount++;
+      this._itemCount++;
 
-            return this;
-        },
+      return this;
+    },
 
-        /**
-         * @param {string} key
-         * @param {*} [value]
-         * @returns {$data.PairList}
-         */
-        deleteItem: function (key, value) {
-            $assert.assert(false, [
-                this.__classId + "does not support item deletion."
-            ].join(" "));
-            return this;
-        },
+    /**
+     * @param {string} key
+     * @param {*} [value]
+     * @returns {$data.PairList}
+     */
+    deleteItem: function (key, value) {
+      $assert.assert(false, [
+        this.__classId + "does not support item deletion."
+      ].join(" "));
+      return this;
+    },
 
-        /**
-         * @param {function} callback Function to be called for each item
-         * @param {Object} [context] Context for callback
-         * @returns {$data.PairList} Current instance
-         */
-        forEachItem: function (callback, context) {
-            var data = this._data,
-                itemCount = data.length,
-                i, pair;
+    /**
+     * @param {function} callback Function to be called for each item
+     * @param {Object} [context] Context for callback
+     * @returns {$data.PairList} Current instance
+     */
+    forEachItem: function (callback, context) {
+      var data = this._data,
+        itemCount = data.length,
+        i, pair;
 
-            for (i = 0; i < itemCount; i++) {
-                pair = data[i];
-                if (callback && callback.call(context || this, pair.value, pair.key) === false) {
-                    break;
-                }
-            }
-
-            return this;
+      for (i = 0; i < itemCount; i++) {
+        pair = data[i];
+        if (callback && callback.call(context || this, pair.value, pair.key) === false) {
+          break;
         }
-    });
+      }
+
+      return this;
+    }
+  });
 
 $oop.getClass('$data.DataContainer')
-    .delegate(/** @lends $data.DataContainer# */{
-        /**
-         * @returns {$data.PairList}
-         */
-        toPairList: function () {
-            return $data.PairList.create(this._data);
-        }
-    });
-
-$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+  .delegate(/** @lends $data.DataContainer# */{
     /**
      * @returns {$data.PairList}
      */
     toPairList: function () {
-        return $data.PairList.create(this);
+      return $data.PairList.create(this._data);
     }
+  });
+
+$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+  /**
+   * @returns {$data.PairList}
+   */
+  toPairList: function () {
+    return $data.PairList.create(this);
+  }
 });

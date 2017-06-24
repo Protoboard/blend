@@ -8,8 +8,8 @@
  * @returns {$assert}
  */
 $assert.assert = function (expr, message) {
-    if (!expr) {
-        throw new Error(message);
-    }
-    return this;
+  if (!expr) {
+    throw new Error(message);
+  }
+  return this;
 };

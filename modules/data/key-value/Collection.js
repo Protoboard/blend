@@ -15,120 +15,120 @@
  * @extends $data.StringKeyHost
  */
 $data.Collection = $oop.getClass('$data.Collection')
-    .extend($oop.getClass('$data.DataContainer'))
-    .extend($oop.getClass('$data.KeyValueContainer'))
-    .extend($oop.getClass('$data.StringKeyHost'))
-    .define(/** @lends $data.Collection# */{
-        /**
-         * @type {string}
-         * @constant
-         */
-        keyMultiplicity: $data.KEY_MUL_UNIQUE,
+  .extend($oop.getClass('$data.DataContainer'))
+  .extend($oop.getClass('$data.KeyValueContainer'))
+  .extend($oop.getClass('$data.StringKeyHost'))
+  .define(/** @lends $data.Collection# */{
+    /**
+     * @type {string}
+     * @constant
+     */
+    keyMultiplicity: $data.KEY_MUL_UNIQUE,
 
-        /**
-         * @param {string} key
-         * @param {*} value
-         * @returns {$data.Collection}
-         */
-        setItem: function (key, value) {
-            var data = this._data,
-                hasKey = hOP.call(data, key);
+    /**
+     * @param {string} key
+     * @param {*} value
+     * @returns {$data.Collection}
+     */
+    setItem: function (key, value) {
+      var data = this._data,
+        hasKey = hOP.call(data, key);
 
-            data[key] = value;
+      data[key] = value;
 
-            if (!hasKey && this._itemCount !== undefined) {
-                this._itemCount++;
-            }
+      if (!hasKey && this._itemCount !== undefined) {
+        this._itemCount++;
+      }
 
-            return this;
-        },
+      return this;
+    },
 
-        /**
-         * @param {string} key
-         * @param {*} [value]
-         * @returns {$data.Collection}
-         */
-        deleteItem: function (key, value) {
-            var data = this._data,
-                hasValue = value === undefined ?
-                    hOP.call(data, key) :
-                    data[key] === value;
+    /**
+     * @param {string} key
+     * @param {*} [value]
+     * @returns {$data.Collection}
+     */
+    deleteItem: function (key, value) {
+      var data = this._data,
+        hasValue = value === undefined ?
+          hOP.call(data, key) :
+          data[key] === value;
 
-            if (hasValue) {
-                delete data[key];
+      if (hasValue) {
+        delete data[key];
 
-                if (this._itemCount !== undefined) {
-                    this._itemCount--;
-                }
-            }
-
-            return this;
-        },
-
-        /**
-         * @param {function} callback Function to be called for each item
-         * @param {Object} [context] Context for callback
-         * @returns {$data.Collection} Current instance
-         */
-        forEachItem: function (callback, context) {
-            var data = this._data,
-                keys = Object.keys(data),
-                keyCount = keys.length,
-                i, key;
-
-            for (i = 0; i < keyCount; i++) {
-                key = keys[i];
-                if (callback && callback.call(context || this, data[key], key) === false) {
-                    break;
-                }
-            }
-
-            return this;
-        },
-
-        /**
-         * @param {string} key
-         * @returns {Array}
-         */
-        getValuesForKey: function (key) {
-            var data = this._data;
-            return hOP.call(data, key) ?
-                [data[key]] :
-                [];
-        },
-
-        /**
-         * @param {string} key
-         * @returns {*}
-         */
-        getValue: function (key) {
-            return this._data[key];
-        },
-
-        /**
-         * @param {string} key
-         * @returns {$data.DataContainer}
-         */
-        getValueWrapped: function (key) {
-            return $data.DataContainer.create(this.getValue(key));
+        if (this._itemCount !== undefined) {
+          this._itemCount--;
         }
-    });
+      }
+
+      return this;
+    },
+
+    /**
+     * @param {function} callback Function to be called for each item
+     * @param {Object} [context] Context for callback
+     * @returns {$data.Collection} Current instance
+     */
+    forEachItem: function (callback, context) {
+      var data = this._data,
+        keys = Object.keys(data),
+        keyCount = keys.length,
+        i, key;
+
+      for (i = 0; i < keyCount; i++) {
+        key = keys[i];
+        if (callback && callback.call(context || this, data[key], key) === false) {
+          break;
+        }
+      }
+
+      return this;
+    },
+
+    /**
+     * @param {string} key
+     * @returns {Array}
+     */
+    getValuesForKey: function (key) {
+      var data = this._data;
+      return hOP.call(data, key) ?
+        [data[key]] :
+        [];
+    },
+
+    /**
+     * @param {string} key
+     * @returns {*}
+     */
+    getValue: function (key) {
+      return this._data[key];
+    },
+
+    /**
+     * @param {string} key
+     * @returns {$data.DataContainer}
+     */
+    getValueWrapped: function (key) {
+      return $data.DataContainer.create(this.getValue(key));
+    }
+  });
 
 $oop.getClass('$data.DataContainer')
-    .delegate(/** @lends $data.DataContainer# */{
-        /**
-         * @returns {$data.Collection}
-         */
-        toCollection: function () {
-            return $data.Collection.create(this._data);
-        }
-    });
-
-$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+  .delegate(/** @lends $data.DataContainer# */{
     /**
      * @returns {$data.Collection}
      */
     toCollection: function () {
-        return $data.Collection.create(this);
+      return $data.Collection.create(this._data);
     }
+  });
+
+$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+  /**
+   * @returns {$data.Collection}
+   */
+  toCollection: function () {
+    return $data.Collection.create(this);
+  }
 });
