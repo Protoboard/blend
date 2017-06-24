@@ -25,8 +25,8 @@ describe("$data", function () {
         expect(masterLink.hasOwnProperty('nextLink')).toBeTruthy();
       });
 
-      it("should initialize _chain property", function () {
-        expect(masterLink._chain).toBe(chain);
+      it("should initialize chain property", function () {
+        expect(masterLink.chain).toBe(chain);
       });
 
       describe("on invalid argument", function () {

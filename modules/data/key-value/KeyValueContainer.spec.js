@@ -23,11 +23,11 @@ describe("$data", function () {
         .extend($data.KeyValueContainer)
         .define({
           setItem: function (key, value) {
-            this._data[key] = value;
+            this.data[key] = value;
           },
           forEachItem: function (callback, context) {
-            var data = this._data,
-              keys = Object.keys(this._data),
+            var data = this.data,
+              keys = Object.keys(this.data),
               i, key;
             for (i = 0; i < keys.length; i++) {
               key = keys[i];
@@ -40,7 +40,7 @@ describe("$data", function () {
         .extend($data.DataContainer)
         .define({
           setItem: function (key, value) {
-            this._data[key] = value;
+            this.data[key] = value;
           }
         });
 
@@ -56,9 +56,9 @@ describe("$data", function () {
         expect(result).not.toBe(keyValueContainer);
       });
 
-      it("should set _data", function () {
-        expect(result._data).not.toBe(keyValueContainer._data);
-        expect(result._data).toEqual(keyValueContainer._data);
+      it("should set data", function () {
+        expect(result.data).not.toBe(keyValueContainer.data);
+        expect(result.data).toEqual(keyValueContainer.data);
       });
     });
 
@@ -86,7 +86,7 @@ describe("$data", function () {
 
       it("should return filtered collection", function () {
         expect(result).not.toBe(keyValueContainer);
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: "FOO"
         });
       });
@@ -102,7 +102,7 @@ describe("$data", function () {
         });
 
         it("should return array set", function () {
-          expect(result._data instanceof Array).toBeTruthy();
+          expect(result.data instanceof Array).toBeTruthy();
         });
       });
     });
@@ -158,7 +158,7 @@ describe("$data", function () {
       });
 
       it("should wrap result of getKeys()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
 
@@ -190,7 +190,7 @@ describe("$data", function () {
       });
 
       it("should wrap result of getValues()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
 
@@ -222,11 +222,11 @@ describe("$data", function () {
           .extend($data.DataContainer)
           .define({
             init: function (data) {
-              this._data = data || [];
+              this.data = data || [];
             },
 
             setItem: function (key, value) {
-              this._data.push([key, value]);
+              this.data.push([key, value]);
             }
           });
 
@@ -238,7 +238,7 @@ describe("$data", function () {
       });
 
       it("should set contents", function () {
-        expect(result._data).toEqual([
+        expect(result.data).toEqual([
           ['foo', 'FOO'],
           ['bar', 'BAR']
         ]);
@@ -272,7 +272,7 @@ describe("$data", function () {
 
       it("should return mapped collection", function () {
         expect(result).not.toBe(keyValueContainer);
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: "_FOO",
           bar: "_BAR"
         });
@@ -289,7 +289,7 @@ describe("$data", function () {
         });
 
         it("should return array set", function () {
-          expect(result._data instanceof Array).toBeTruthy();
+          expect(result.data instanceof Array).toBeTruthy();
         });
       });
     });
@@ -321,7 +321,7 @@ describe("$data", function () {
 
       it("should return mapped collection", function () {
         expect(result).not.toBe(keyValueContainer);
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           FOO: "FOO",
           BAR: "BAR"
         });
@@ -350,7 +350,7 @@ describe("$data", function () {
       });
 
       it("should return mapped collection", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: "foo",
           bar: "bar"
         });
@@ -373,7 +373,7 @@ describe("$data", function () {
         });
 
         it("should return mapped collection", function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             foo: "foo",
             bar: "bar"
           });
@@ -396,7 +396,7 @@ describe("$data", function () {
       });
 
       it("should return mapped collection", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: ['F', 'O', 'O'],
           bar: ['B', 'A', 'R']
         });
@@ -416,7 +416,7 @@ describe("$data", function () {
         });
 
         it("should return mapped collection", function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             foo: 'foo',
             bar: 'bar'
           });
@@ -448,7 +448,7 @@ describe("$data", function () {
       });
 
       it("should return mapped collection", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: Class.create('baz', 'FOO'),
           bar: Class.create('baz', 'BAR')
         });
@@ -476,7 +476,7 @@ describe("$data", function () {
         });
 
         it("should return mapped collection", function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             foo: Class2.create('FOO'),
             bar: Class2.create('BAR')
           });
@@ -491,7 +491,7 @@ describe("$data", function () {
 
       it("should return filtered container", function () {
         expect(result).not.toBe(keyValueContainer);
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: 'FOO'
         });
       });
@@ -504,7 +504,7 @@ describe("$data", function () {
 
       it("should return filtered container", function () {
         expect(result).not.toBe(keyValueContainer);
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: 'FOO'
         });
       });
@@ -517,7 +517,7 @@ describe("$data", function () {
 
       it("should return filtered container", function () {
         expect(result).not.toBe(keyValueContainer);
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: 'FOO'
         });
       });
@@ -530,7 +530,7 @@ describe("$data", function () {
 
       it("should return filtered container", function () {
         expect(result).not.toBe(keyValueContainer);
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           bar: 'BAR'
         });
       });
@@ -554,7 +554,7 @@ describe("$data", function () {
         });
 
         it("should retrieve typeof matches", function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             foo: "FOO"
           });
         });
@@ -566,7 +566,7 @@ describe("$data", function () {
         });
 
         it("should retrieve instanceof matches", function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             baz: object,
             quux: container
           });
@@ -579,7 +579,7 @@ describe("$data", function () {
         });
 
         it("should retrieve prototype matches", function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             baz: object,
             quux: container
           });
@@ -592,7 +592,7 @@ describe("$data", function () {
         });
 
         it("should retrieve Class inclusion matches", function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             quux: container
           });
         });
@@ -610,7 +610,7 @@ describe("$data", function () {
       });
 
       it("should swap keys and values", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           FOO: "foo",
           BAR: "bar"
         });
@@ -634,7 +634,7 @@ describe("$data", function () {
       });
 
       it("should merge keys and values", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: "FOO",
           bar: "bar",
           baz: "baz"

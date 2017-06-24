@@ -25,7 +25,7 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
      * @returns {$data.Dictionary}
      */
     setItem: function (key, value) {
-      var data = this._data,
+      var data = this.data,
         values = data[key];
 
       if (values instanceof Array) {
@@ -53,7 +53,7 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
      * @returns {$data.Dictionary}
      */
     deleteItem: function (key, value) {
-      var data = this._data,
+      var data = this.data,
         values = data[key],
         valueIndex;
 
@@ -91,7 +91,7 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
      * @returns {$data.Dictionary}
      */
     forEachItem: function (callback, context) {
-      var data = this._data,
+      var data = this.data,
         keys = Object.keys(data),
         keyCount = keys.length,
         i, key, values, valueCount,
@@ -117,7 +117,7 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
      * @returns {Array}
      */
     getValuesForKey: function (key) {
-      return this._data[key] || [];
+      return this.data[key] || [];
     }
   });
 
@@ -127,7 +127,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.Dictionary}
      */
     toDictionary: function () {
-      return $data.Dictionary.create(this._data);
+      return $data.Dictionary.create(this.data);
     }
   });
 

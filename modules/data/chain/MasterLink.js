@@ -22,21 +22,20 @@ $data.MasterLink = $oop.getClass('$data.MasterLink')
 
       /**
        * Chain instance the link is associated with.
-       * @type {$data.Chain}
-       * @private
+       * @member {$data.Chain} $data.MasterLink#chain
        * @constant
        */
-      this._chain = chain;
+      this.chain = chain;
 
       /**
        * Link that comes before the current link in the chain.
-       * @type {$data.MasterLink}
+       * @member {$data.Link|$data.MasterLink} $data.MasterLink#previousLink
        */
       this.previousLink = this;
 
       /**
        * Link that comes after the current link in the chain.
-       * @type {$data.MasterLink}
+       * @member {$data.Link|$data.MasterLink} $data.MasterLink#nextLink
        */
       this.nextLink = this;
     }

@@ -377,7 +377,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       .filter(function (methodName) {
         return hOP.call(missingMethodLookup, methodName);
       })
-      // unregistering method names
+      // de-registering method names
       .forEach(function (implementedMethodName) {
         missingMethodNames.splice(missingMethodNames.indexOf(implementedMethodName), 1);
         delete missingMethodLookup[implementedMethodName];

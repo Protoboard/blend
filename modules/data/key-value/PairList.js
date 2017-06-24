@@ -25,10 +25,9 @@ $data.PairList = $oop.getClass('$data.PairList')
       $assert.isArrayOptional(data, "Invalid data buffer");
 
       /**
-       * @type {Array<{key:*,value:*}>}
-       * @private
+       * @member {Array<{key:*,value:*}>} $data.PairList#data
        */
-      this._data = data || [];
+      this.data = data || [];
     },
 
     /**
@@ -37,7 +36,7 @@ $data.PairList = $oop.getClass('$data.PairList')
      * @returns {$data.PairList}
      */
     setItem: function (key, value) {
-      this._data.push({
+      this.data.push({
         key: key,
         value: value
       });
@@ -65,7 +64,7 @@ $data.PairList = $oop.getClass('$data.PairList')
      * @returns {$data.PairList} Current instance
      */
     forEachItem: function (callback, context) {
-      var data = this._data,
+      var data = this.data,
         itemCount = data.length,
         i, pair;
 
@@ -86,7 +85,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.PairList}
      */
     toPairList: function () {
-      return $data.PairList.create(this._data);
+      return $data.PairList.create(this.data);
     }
   });
 

@@ -59,7 +59,7 @@ describe("$data", function () {
       });
 
       it("should wrap result of getRangeByPrefix()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
   });
@@ -77,7 +77,7 @@ describe("$data", function () {
       });
 
       it("should set data set", function () {
-        expect(result._data).toBe(buffer._data);
+        expect(result.data).toBe(buffer.data);
       });
     });
   });
@@ -98,7 +98,7 @@ describe("Array", function () {
     });
 
     it("should set data set", function () {
-      expect(result._data).toBe(array);
+      expect(result.data).toBe(array);
     });
   });
 });

@@ -25,11 +25,12 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     /** @ignore */
     init: function () {
       /**
-       * @type {$data.Tree}
+       * @member {$data.Tree} $event.EventSpace#subscription
        */
       this.subscriptions = $data.Tree.create();
 
       /**
+       * @todo Revisit automatic subscriber ID assignment
        * @type {number}
        * @private
        */
@@ -88,7 +89,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       // removing callbacks from 'bySubscription' branch (one-by-one)
       callbackPaths
         .mapValues(function (/**$data.Path*/callbackPath) {
-          var components = callbackPath._components,
+          var components = callbackPath.components,
             eventName = components[3],
             targetPathStr = components[4];
           return $data.Path.create([
@@ -100,7 +101,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       // removing paths from target path registry
       callbackPaths
         .mapValues(function (/**$data.Path*/callbackPath) {
-          var components = callbackPath._components,
+          var components = callbackPath.components,
             eventName = components[3],
             targetPathStr = components[4];
           return $data.Path.create(['paths', eventName,
@@ -141,7 +142,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       // removing callbacks from 'bySubscriber' branch (one-by-one)
       callbackPaths
         .mapValues(function (/**$data.Path*/callbackPath) {
-          var components = callbackPath._components,
+          var components = callbackPath.components,
             targetPathStr = components[3],
             subscriberId = components[4];
           return $data.Path.create([

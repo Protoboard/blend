@@ -24,7 +24,7 @@ describe("$data", function () {
 
     describe("create()", function () {
       it("should set data buffer", function () {
-        expect(orderedList._data).toBe(data);
+        expect(orderedList.data).toBe(data);
       });
 
       it("should set comparer", function () {
@@ -37,7 +37,7 @@ describe("$data", function () {
         });
 
         it("should set default properties", function () {
-          expect(orderedList._data).toEqual([]);
+          expect(orderedList.data).toEqual([]);
           expect(orderedList._comparer)
             .toBe(orderedList._defaultComparer);
         });
@@ -75,7 +75,7 @@ describe("$data", function () {
       });
 
       it("should splice item into list", function () {
-        expect(orderedList._data).toEqual([
+        expect(orderedList.data).toEqual([
           'bar', 'baz', 'foo'
         ]);
       });
@@ -90,7 +90,7 @@ describe("$data", function () {
         });
 
         it("should splice item in at start", function () {
-          expect(orderedList._data).toEqual([
+          expect(orderedList.data).toEqual([
             'abc', 'bar', 'baz', 'foo'
           ]);
         });
@@ -102,7 +102,7 @@ describe("$data", function () {
         });
 
         it("should splice item in at end", function () {
-          expect(orderedList._data).toEqual([
+          expect(orderedList.data).toEqual([
             'bar', 'baz', 'foo', 'quux'
           ]);
         });
@@ -114,7 +114,7 @@ describe("$data", function () {
         });
 
         it("should splice item into list", function () {
-          expect(orderedList._data).toEqual([
+          expect(orderedList.data).toEqual([
             'bar', 'baz', 'baz', 'foo'
           ]);
         });
@@ -131,7 +131,7 @@ describe("$data", function () {
       });
 
       it("should remove item from buffer", function () {
-        expect(orderedList._data).toEqual([
+        expect(orderedList.data).toEqual([
           'foo'
         ]);
       });
@@ -146,7 +146,7 @@ describe("$data", function () {
         });
 
         it("should not change buffer", function () {
-          expect(orderedList._data).toEqual([
+          expect(orderedList.data).toEqual([
             'foo'
           ]);
         });
@@ -275,7 +275,7 @@ describe("$data", function () {
       });
 
       it("should wrap result of getRange()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
   });
@@ -293,7 +293,7 @@ describe("$data", function () {
       });
 
       it("should set data set", function () {
-        expect(result._data).toBe(buffer._data);
+        expect(result.data).toBe(buffer.data);
       });
     });
   });
@@ -314,7 +314,7 @@ describe("Array", function () {
     });
 
     it("should set data set", function () {
-      expect(result._data).toBe(array);
+      expect(result.data).toBe(array);
     });
   });
 });

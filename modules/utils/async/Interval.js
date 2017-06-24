@@ -20,7 +20,7 @@ $utils.Interval = $oop.getClass('$utils.Interval')
      * @returns {$utils.Interval}
      */
     clearTimer: function () {
-      clearInterval(this._timerId);
+      clearInterval(this.timerId);
       return this;
     }
   });

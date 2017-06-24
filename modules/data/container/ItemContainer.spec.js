@@ -22,8 +22,8 @@ describe("$data", function () {
         .extend($data.ItemContainer)
         .define({
           forEachItem: function (callback, context) {
-            var data = this._data,
-              keys = Object.keys(this._data),
+            var data = this.data,
+              keys = Object.keys(this.data),
               i, key;
             for (i = 0; i < keys.length; i++) {
               key = keys[i];

@@ -15,8 +15,8 @@ describe("$data", function () {
     });
 
     describe("create()", function () {
-      it("should set _data property", function () {
-        expect(container._data).toBe(data);
+      it("should set data property", function () {
+        expect(container.data).toBe(data);
       });
 
       describe("on missing arguments", function () {
@@ -24,8 +24,8 @@ describe("$data", function () {
           container = $data.DataContainer.create();
         });
 
-        it("should set _data property", function () {
-          expect(container._data).toEqual({});
+        it("should set data property", function () {
+          expect(container.data).toEqual({});
         });
       });
 
@@ -47,8 +47,8 @@ describe("$data", function () {
         expect(result).not.toBe(container);
       });
 
-      it("should set _data", function () {
-        expect(result._data).toBe(container._data);
+      it("should set data", function () {
+        expect(result.data).toBe(container.data);
       });
     });
 
@@ -83,13 +83,13 @@ describe("$data", function () {
         });
 
         it("should replace data with empty array", function () {
-          expect(container._data).toEqual([]);
+          expect(container.data).toEqual([]);
         });
       });
 
       describe("of object data", function () {
         it("should replace data with empty object", function () {
-          expect(container._data).toEqual({});
+          expect(container.data).toEqual({});
         });
       });
     });
@@ -105,7 +105,7 @@ describe("$data", function () {
       });
 
       it("should pass data to callback", function () {
-        expect(callback).toHaveBeenCalledWith(container._data);
+        expect(callback).toHaveBeenCalledWith(container.data);
       });
 
       it("should return return value of callback", function () {

@@ -34,7 +34,7 @@ describe("$data", function () {
       });
 
       it("should set value in store", function () {
-        expect(collection._data.baz).toBe(value);
+        expect(collection.data.baz).toBe(value);
       });
     });
 
@@ -48,14 +48,14 @@ describe("$data", function () {
       });
 
       it("should remove key", function () {
-        expect(collection._data.hasOwnProperty('foo')).toBeFalsy();
+        expect(collection.data.hasOwnProperty('foo')).toBeFalsy();
       });
 
       describe("when specifying value", function () {
         describe("when value doesn't match", function () {
           it("should not remove key", function () {
             collection.deleteItem('bar', 'bar');
-            expect(collection._data).toEqual({
+            expect(collection.data).toEqual({
               bar: "BAR"
             });
           });
@@ -139,7 +139,7 @@ describe("$data", function () {
       });
 
       it("should wrap result of getValue()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
   });
@@ -157,7 +157,7 @@ describe("$data", function () {
       });
 
       it("should set data buffer", function () {
-        expect(result._data).toBe(container._data);
+        expect(result.data).toBe(container.data);
       });
     });
   });
@@ -178,7 +178,7 @@ describe("Array", function () {
     });
 
     it("should set data buffer", function () {
-      expect(result._data).toBe(array);
+      expect(result.data).toBe(array);
     });
   });
 });

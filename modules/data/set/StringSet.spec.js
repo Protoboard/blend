@@ -37,7 +37,7 @@ describe("$data", function () {
       });
 
       it("should add item", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: 1,
           bar: 1,
           baz: 1
@@ -70,7 +70,7 @@ describe("$data", function () {
       });
 
       it("should delete item", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: 1
         });
       });
@@ -147,7 +147,7 @@ describe("$data", function () {
 
       it("should create intersection with values from original set",
         function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             bar: 1
           });
         });
@@ -166,7 +166,7 @@ describe("$data", function () {
 
       it("should create union with original values taking precedence",
         function () {
-          expect(result._data).toEqual({
+          expect(result.data).toEqual({
             foo: 1,
             bar: 1,
             baz: 1
@@ -186,7 +186,7 @@ describe("$data", function () {
       });
 
       it("should subtract set from original", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: 1
         });
       });
@@ -204,7 +204,7 @@ describe("$data", function () {
       });
 
       it("should subtract set from original", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           baz: 1
         });
       });
@@ -222,7 +222,7 @@ describe("$data", function () {
       });
 
       it("should return symmetric difference", function () {
-        expect(result._data).toEqual({
+        expect(result.data).toEqual({
           foo: 1,
           baz: 1
         });
@@ -243,7 +243,7 @@ describe("$data", function () {
       });
 
       it("should set data set", function () {
-        expect(result._data).toBe(buffer._data);
+        expect(result.data).toBe(buffer.data);
       });
     });
   });
@@ -264,7 +264,7 @@ describe("Array", function () {
     });
 
     it("should set data set", function () {
-      expect(result._data).toBe(array);
+      expect(result.data).toBe(array);
     });
   });
 });

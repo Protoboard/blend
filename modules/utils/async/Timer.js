@@ -24,10 +24,9 @@ $utils.Timer = $oop.getClass('$utils.Timer')
 
       /**
        * ID associated with timer.
-       * @member {number} $utils.Timer#_timerId
-       * @protected
+       * @member {number} $utils.Timer#timerId
        */
-      this._timerId = timerId;
+      this.timerId = timerId;
 
       var timerDeferred = $utils.Deferred.create(),
         timerPromise = timerDeferred.promise;

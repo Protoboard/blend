@@ -73,9 +73,9 @@ describe("$data", function () {
         expect(Tree.isIncludedBy(result)).toBeTruthy();
       });
 
-      it("should initialize _data on clone", function () {
-        expect(result._data).toEqual(tree._data);
-        expect(result._data).not.toBe(tree._data);
+      it("should initialize data on clone", function () {
+        expect(result.data).toEqual(tree.data);
+        expect(result.data).not.toBe(tree.data);
       });
     });
 
@@ -300,7 +300,7 @@ describe("$data", function () {
     describe("hasPath()", function () {
       beforeEach(function () {
         // adding special case
-        tree._data['undefined'] = undefined;
+        tree.data['undefined'] = undefined;
       });
 
       describe("for existing path", function () {
@@ -385,7 +385,7 @@ describe("$data", function () {
 
     describe("getNode()", function () {
       it("should retrieve node from tree", function () {
-        expect(tree.getNode('foo.bar'.toPath())).toBe(tree._data.foo.bar);
+        expect(tree.getNode('foo.bar'.toPath())).toBe(tree.data.foo.bar);
       });
 
       describe("for absent path", function () {
@@ -416,7 +416,7 @@ describe("$data", function () {
       });
 
       it("should return wrapped result", function () {
-        expect(result._data).toBe(node);
+        expect(result.data).toBe(node);
       });
     });
 
@@ -444,7 +444,7 @@ describe("$data", function () {
         });
 
         it("should store result of initializer", function () {
-          expect(tree._data).toEqual({
+          expect(tree.data).toEqual({
             foo: {
               bar: [
                 'baz',
@@ -487,7 +487,7 @@ describe("$data", function () {
       });
 
       it("should return wrapped result", function () {
-        expect(result._data).toBe(node);
+        expect(result.data).toBe(node);
       });
     });
 
@@ -498,7 +498,7 @@ describe("$data", function () {
 
       it("should set node in tree", function () {
         tree.setNode('foo.bar.1'.toPath(), {});
-        expect(tree._data).toEqual({
+        expect(tree.data).toEqual({
           foo: {
             bar: [
               'baz',
@@ -514,7 +514,7 @@ describe("$data", function () {
       describe("when setting undefined", function () {
         it("should create path", function () {
           tree.setNode('bar.baz'.toPath(), undefined);
-          expect(tree._data).toEqual({
+          expect(tree.data).toEqual({
             foo: {
               bar: [
                 'baz',
@@ -548,7 +548,7 @@ describe("$data", function () {
       });
 
       it("should append value to node", function () {
-        expect(tree._data).toEqual({
+        expect(tree.data).toEqual({
           foo: {
             bar: [
               'baz',
@@ -574,7 +574,7 @@ describe("$data", function () {
           });
 
           it("should concatenate to array", function () {
-            expect(tree._data.foo.bar).toEqual([
+            expect(tree.data.foo.bar).toEqual([
               'baz', 'quux', undefined, 'foo', 'bar'
             ]);
           });
@@ -589,7 +589,7 @@ describe("$data", function () {
           });
 
           it("should concatenate to array", function () {
-            expect(tree._data.foo.bar).toEqual([
+            expect(tree.data.foo.bar).toEqual([
               'baz', 'quux', 'foo', 'bar'
             ]);
           });
@@ -640,7 +640,7 @@ describe("$data", function () {
         describe("with splicing", function () {
           it("should splice node out of parent", function () {
             tree.deleteNode('foo.bar.0'.toPath(), true);
-            expect(tree._data).toEqual({
+            expect(tree.data).toEqual({
               foo: {
                 bar: [
                   'quux'
@@ -656,7 +656,7 @@ describe("$data", function () {
         describe("without splicing", function () {
           it("should remove node from parent", function () {
             tree.deleteNode('foo.bar.0'.toPath());
-            expect(tree._data).toEqual({
+            expect(tree.data).toEqual({
               foo: {
                 bar: [
                   undefined,
@@ -667,7 +667,7 @@ describe("$data", function () {
                 hello: 'world'
               }
             });
-            expect(tree._data.foo.bar.hasOwnProperty(0))
+            expect(tree.data.foo.bar.hasOwnProperty(0))
               .toBeFalsy();
           });
         });
@@ -676,7 +676,7 @@ describe("$data", function () {
       describe("from object parent", function () {
         it("should remove node from parent", function () {
           tree.deleteNode('bar.hello'.toPath(), true);
-          expect(tree._data).toEqual({
+          expect(tree.data).toEqual({
             foo: {
               bar: [
                 'baz',
@@ -691,7 +691,7 @@ describe("$data", function () {
       describe("from absent path", function () {
         it("should have no effect", function () {
           tree.deleteNode('bar.baz'.toPath(), true);
-          expect(tree._data).toEqual({
+          expect(tree.data).toEqual({
             foo: {
               bar: [
                 'baz',
@@ -715,7 +715,7 @@ describe("$data", function () {
       describe("for existing path", function () {
         it("should remove affected nodes along path", function () {
           tree.deletePath('bar.hello'.toPath());
-          expect(tree._data).toEqual({
+          expect(tree.data).toEqual({
             foo: {
               bar: [
                 'baz',
@@ -728,7 +728,7 @@ describe("$data", function () {
         describe("that is multi-key", function () {
           it("should remove node at path", function () {
             result = tree.deletePath('foo.bar'.toPath());
-            expect(tree._data).toEqual({
+            expect(tree.data).toEqual({
               foo: {},
               bar: {
                 hello: 'world'
@@ -741,7 +741,7 @@ describe("$data", function () {
       describe("for absent path", function () {
         it("should remove existing portion of the path", function () {
           tree.deletePath('bar.hello.world'.toPath());
-          expect(tree._data).toEqual({
+          expect(tree.data).toEqual({
             foo: {
               bar: [
                 'baz',
@@ -756,7 +756,7 @@ describe("$data", function () {
         describe("with splicing", function () {
           it("should splice affected node out", function () {
             tree.deletePath('foo.bar.0.quux'.toPath(), true);
-            expect(tree._data).toEqual({
+            expect(tree.data).toEqual({
               foo: {
                 bar: [
                   'quux'
@@ -772,7 +772,7 @@ describe("$data", function () {
         describe("without splicing", function () {
           it("should delete affected node", function () {
             tree.deletePath('foo.bar.0.quux'.toPath());
-            expect(tree._data).toEqual({
+            expect(tree.data).toEqual({
               foo: {
                 bar: [
                   undefined,
@@ -828,7 +828,7 @@ describe("$data", function () {
       });
 
       it("should return same data as queryNodes()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
 
@@ -871,7 +871,7 @@ describe("$data", function () {
       });
 
       it("should return same data as queryKeys()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
 
@@ -916,7 +916,7 @@ describe("$data", function () {
       });
 
       it("should return same data as queryPaths()", function () {
-        expect(result._data).toBe(data);
+        expect(result.data).toBe(data);
       });
     });
 
@@ -938,7 +938,7 @@ describe("$data", function () {
       });
 
       it("should retrieve matching key-node pairs", function () {
-        expect(result._data).toEqual([
+        expect(result.data).toEqual([
           {key: '0', value: 'baz'},
           {key: '1', value: 'quux'}
         ]);
@@ -963,7 +963,7 @@ describe("$data", function () {
       });
 
       it("should retrieve matching path-node pairs", function () {
-        expect(result._data).toEqual([
+        expect(result.data).toEqual([
           {key: 'foo.bar.0'.toPath(), value: 'baz'},
           {key: 'foo.bar.1'.toPath(), value: 'quux'}
         ]);
@@ -985,8 +985,8 @@ describe("$data", function () {
         expect($data.Tree.isIncludedBy(result)).toBeTruthy();
       });
 
-      it("should set _data buffer", function () {
-        expect(result._data).toBe(container._data);
+      it("should set data buffer", function () {
+        expect(result.data).toBe(container.data);
       });
     });
   });
@@ -1006,8 +1006,8 @@ describe("Array", function () {
       expect($data.Tree.isIncludedBy(result)).toBeTruthy();
     });
 
-    it("should set _data property", function () {
-      expect(result._data).toBe(array);
+    it("should set data property", function () {
+      expect(result.data).toBe(array);
     });
   });
 });

@@ -34,19 +34,18 @@ $data.Path = $oop.getClass('$data.Path')
 
       /**
        * Path components.
-       * @type {string[]}
-       * @private
+       * @member {string[]} $data.Path#components
        */
-      this._components = components;
+      this.components = components;
     },
 
     /**
-     * @ingeritDoc
+     * @inheritDoc
      * @returns {$data.Path}
      */
     clone: function clone() {
       var cloned = clone.returned;
-      cloned._components = this._components.concat();
+      cloned.components = this.components.concat();
       return cloned;
     },
 
@@ -57,8 +56,8 @@ $data.Path = $oop.getClass('$data.Path')
      */
     equals: function equals(path) {
       var result = equals.returned,
-        componentsLeft = this._components,
-        componentsRight = path._components,
+        componentsLeft = this.components,
+        componentsRight = path.components,
         componentCount = componentsRight.length,
         i;
 
@@ -90,8 +89,8 @@ $data.Path = $oop.getClass('$data.Path')
      */
     greaterThan: function greaterThan(path) {
       var result = greaterThan.returned,
-        componentsLeft = this._components,
-        componentsRight = path._components,
+        componentsLeft = this.components,
+        componentsRight = path.components,
         componentCount = componentsRight.length,
         i;
 
@@ -114,7 +113,7 @@ $data.Path = $oop.getClass('$data.Path')
      * @returns {$data.Path}
      */
     push: function (component) {
-      this._components.push(component);
+      this.components.push(component);
       return this;
     },
 
@@ -123,7 +122,7 @@ $data.Path = $oop.getClass('$data.Path')
      * @returns {string}
      */
     pop: function () {
-      return this._components.pop();
+      return this.components.pop();
     },
 
     /**
@@ -132,7 +131,7 @@ $data.Path = $oop.getClass('$data.Path')
      * @returns {$data.Path}
      */
     unshift: function (component) {
-      this._components.unshift(component);
+      this.components.unshift(component);
       return this;
     },
 
@@ -141,7 +140,7 @@ $data.Path = $oop.getClass('$data.Path')
      * @returns {string}
      */
     shift: function () {
-      return this._components.shift();
+      return this.components.shift();
     },
 
     /**
@@ -150,7 +149,7 @@ $data.Path = $oop.getClass('$data.Path')
      * @returns {$data.Path}
      */
     concat: function (path) {
-      var components = this._components.concat(path._components);
+      var components = this.components.concat(path.components);
       return $oop.getClass(this.__classId).create(components);
     },
 
@@ -162,7 +161,7 @@ $data.Path = $oop.getClass('$data.Path')
      * $data.Path.create(['foo', 'bar.baz'])+'' // 'foo.bar\.baz'
      */
     toString: function () {
-      return this._components.map($data.escapePathComponent)
+      return this.components.map($data.escapePathComponent)
         .join($data.PATH_COMPONENT_SEPARATOR);
     },
 

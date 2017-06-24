@@ -55,8 +55,8 @@ describe("$data", function () {
     });
 
     describe("create()", function () {
-      it("should set _components property", function () {
-        expect(path._components).toEqual(['foo', 'bar', 'baz']);
+      it("should set components property", function () {
+        expect(path.components).toEqual(['foo', 'bar', 'baz']);
       });
 
       describe("on invalid arguments", function () {
@@ -80,9 +80,9 @@ describe("$data", function () {
         expect(Path.isIncludedBy(result)).toBeTruthy();
       });
 
-      it("should initialize _components on clone", function () {
-        expect(result._components).toEqual(path._components);
-        expect(result._components).not.toBe(path._components);
+      it("should initialize components on clone", function () {
+        expect(result.components).toEqual(path.components);
+        expect(result.components).not.toBe(path.components);
       });
     });
 
@@ -149,8 +149,8 @@ describe("$data", function () {
         expect(result).toBe(path);
       });
 
-      it("should append component to _components", function () {
-        expect(path._components).toEqual(['foo', 'bar', 'baz', 'quux']);
+      it("should append component to components", function () {
+        expect(path.components).toEqual(['foo', 'bar', 'baz', 'quux']);
       });
     });
 
@@ -159,8 +159,8 @@ describe("$data", function () {
         result = path.pop();
       });
 
-      it("should remove last component from _components", function () {
-        expect(path._components).toEqual(['foo', 'bar']);
+      it("should remove last component from components", function () {
+        expect(path.components).toEqual(['foo', 'bar']);
       });
 
       it("should return removed component", function () {
@@ -177,8 +177,8 @@ describe("$data", function () {
         expect(result).toBe(path);
       });
 
-      it("should prepend component to _components", function () {
-        expect(path._components).toEqual(['quux', 'foo', 'bar', 'baz']);
+      it("should prepend component to components", function () {
+        expect(path.components).toEqual(['quux', 'foo', 'bar', 'baz']);
       });
     });
 
@@ -187,8 +187,8 @@ describe("$data", function () {
         result = path.shift();
       });
 
-      it("should remove first component from _components", function () {
-        expect(path._components).toEqual(['bar', 'baz']);
+      it("should remove first component from components", function () {
+        expect(path.components).toEqual(['bar', 'baz']);
       });
 
       it("should return removed component", function () {
@@ -209,16 +209,16 @@ describe("$data", function () {
       });
 
       it("should concatenate components", function () {
-        expect(result._components).toEqual([
+        expect(result.components).toEqual([
           'foo', 'bar', 'baz', 'quux'
         ]);
       });
 
       it("should not alter operands", function () {
-        expect(path._components).toEqual([
+        expect(path.components).toEqual([
           'foo', 'bar', 'baz'
         ]);
-        expect(path2._components).toEqual(['quux']);
+        expect(path2.components).toEqual(['quux']);
       });
     });
 
@@ -248,8 +248,8 @@ describe("$data", function () {
         expect($data.Path.isIncludedBy(result)).toBeTruthy();
       });
 
-      it("should set _components property with unescaped components", function () {
-        expect(result._components).toEqual([
+      it("should set components property with unescaped components", function () {
+        expect(result.components).toEqual([
           'foo.bar',
           'baz\\quux'
         ]);
@@ -272,8 +272,8 @@ describe("String", function () {
       expect($data.Path.isIncludedBy(result)).toBeTruthy();
     });
 
-    it("should set _components property with unescaped components", function () {
-      expect(result._components).toEqual([
+    it("should set components property with unescaped components", function () {
+      expect(result.components).toEqual([
         'foo.bar',
         'baz\\quux'
       ]);
@@ -295,8 +295,8 @@ describe("Array", function () {
       expect($data.Path.isIncludedBy(result)).toBeTruthy();
     });
 
-    it("should set _components property", function () {
-      expect(result._components).toBe(array);
+    it("should set components property", function () {
+      expect(result.components).toBe(array);
     });
   });
 });

@@ -57,8 +57,8 @@ describe("$data", function () {
     });
 
     describe("create()", function () {
-      it("should initialize _data", function () {
-        expect(chain._data.includes($data.MasterLink)).toBeTruthy();
+      it("should initialize data", function () {
+        expect(chain.data.includes($data.MasterLink)).toBeTruthy();
       });
 
       it("should initialize _itemCount", function () {
@@ -70,7 +70,7 @@ describe("$data", function () {
       var oldMasterLink;
 
       beforeEach(function () {
-        oldMasterLink = chain._data;
+        oldMasterLink = chain.data;
         result = chain.clear();
       });
 
@@ -78,11 +78,11 @@ describe("$data", function () {
         expect(result).toBe(chain);
       });
 
-      it("should reset _data", function () {
-        expect(chain._data.includes($data.MasterLink)).toBeTruthy();
-        expect(chain._data).not.toBe(oldMasterLink);
-        expect(chain._data.nextLink).toBe(chain._data);
-        expect(chain._data.previousLink).toBe(chain._data);
+      it("should reset data", function () {
+        expect(chain.data.includes($data.MasterLink)).toBeTruthy();
+        expect(chain.data).not.toBe(oldMasterLink);
+        expect(chain.data.nextLink).toBe(chain.data);
+        expect(chain.data.previousLink).toBe(chain.data);
       });
     });
 
@@ -179,9 +179,9 @@ describe("$data", function () {
       });
 
       it("should add link", function () {
-        expect(chain._data.nextLink).toBe(link);
-        expect(link.previousLink).toBe(chain._data);
-        expect(link._chain).toBe(chain);
+        expect(chain.data.nextLink).toBe(link);
+        expect(link.previousLink).toBe(chain.data);
+        expect(link.chain).toBe(chain);
       });
 
       it("should increment _itemCount", function () {
@@ -205,7 +205,7 @@ describe("$data", function () {
       });
 
       it("should remove link", function () {
-        expect(chain._data.previousLink).toBe(link1);
+        expect(chain.data.previousLink).toBe(link1);
       });
 
       it("should return removed link", function () {
@@ -223,8 +223,8 @@ describe("$data", function () {
         });
 
         it("should leave master link only", function () {
-          expect(chain._data.nextLink).toBe(chain._data);
-          expect(chain._data.previousLink).toBe(chain._data);
+          expect(chain.data.nextLink).toBe(chain.data);
+          expect(chain.data.previousLink).toBe(chain.data);
         });
       });
     });
@@ -239,9 +239,9 @@ describe("$data", function () {
       });
 
       it("should add link", function () {
-        expect(chain._data.previousLink).toBe(link);
-        expect(link.nextLink).toBe(chain._data);
-        expect(link._chain).toBe(chain);
+        expect(chain.data.previousLink).toBe(link);
+        expect(link.nextLink).toBe(chain.data);
+        expect(link.chain).toBe(chain);
       });
 
       it("should increment _itemCount", function () {
@@ -265,7 +265,7 @@ describe("$data", function () {
       });
 
       it("should remove link", function () {
-        expect(chain._data.nextLink).toBe(link2);
+        expect(chain.data.nextLink).toBe(link2);
       });
 
       it("should return removed link", function () {
@@ -283,8 +283,8 @@ describe("$data", function () {
         });
 
         it("should leave master link only", function () {
-          expect(chain._data.nextLink).toBe(chain._data);
-          expect(chain._data.previousLink).toBe(chain._data);
+          expect(chain.data.nextLink).toBe(chain.data);
+          expect(chain.data.previousLink).toBe(chain.data);
         });
       });
     });
@@ -329,10 +329,10 @@ describe("$data", function () {
       });
 
       it("should concatenate chains", function () {
-        expect(result._data.nextLink.foo).toEqual(link1.foo);
-        expect(result._data.nextLink.nextLink.foo).toEqual(link2.foo);
-        expect(result._data.nextLink.nextLink.nextLink.foo).toEqual(link3.foo);
-        expect(result._data.nextLink.nextLink.nextLink.nextLink.foo)
+        expect(result.data.nextLink.foo).toEqual(link1.foo);
+        expect(result.data.nextLink.nextLink.foo).toEqual(link2.foo);
+        expect(result.data.nextLink.nextLink.nextLink.foo).toEqual(link3.foo);
+        expect(result.data.nextLink.nextLink.nextLink.nextLink.foo)
           .toEqual(link4.foo);
       });
 

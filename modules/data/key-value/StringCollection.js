@@ -23,7 +23,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.StringCollection}
      */
     toStringCollection: function () {
-      return $data.StringCollection.create(this._data);
+      return $data.StringCollection.create(this.data);
     }
   });
 

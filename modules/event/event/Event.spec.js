@@ -43,7 +43,7 @@ describe("$event", function () {
       });
 
       it("should initialize defaultPrevented", function () {
-        expect(event.defaultPrevented).toBe(false);
+        expect(event.defaultPrevented).toBe(true);
       });
     });
 

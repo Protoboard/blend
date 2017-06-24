@@ -28,7 +28,7 @@ describe("$data", function () {
       });
 
       it("should add item", function () {
-        expect(dictionary._data).toEqual({
+        expect(dictionary.data).toEqual({
           foo: {FOO: 1},
           bar: {BAR: 1, bar: 1},
           baz: {BAZ: 1}
@@ -45,7 +45,7 @@ describe("$data", function () {
         });
 
         it("should add to array", function () {
-          expect(dictionary._data).toEqual({
+          expect(dictionary.data).toEqual({
             foo: {FOO: 1, foo: 1},
             bar: {BAR: 1, bar: 1},
             baz: {BAZ: 1}
@@ -68,7 +68,7 @@ describe("$data", function () {
       });
 
       it("should remove item", function () {
-        expect(dictionary._data).toEqual({
+        expect(dictionary.data).toEqual({
           foo: {"FOO": 1},
           bar: {"BAR": 1}
         });
@@ -84,7 +84,7 @@ describe("$data", function () {
         });
 
         it("should remove item", function () {
-          expect(dictionary._data).toEqual({
+          expect(dictionary.data).toEqual({
             bar: {"BAR": 1}
           });
         });
@@ -97,7 +97,7 @@ describe("$data", function () {
         });
 
         it("should not change data", function () {
-          expect(dictionary._data).toEqual({
+          expect(dictionary.data).toEqual({
             foo: {"FOO": 1},
             bar: {"BAR": 1}
           });
@@ -171,7 +171,7 @@ describe("$data", function () {
       });
 
       it("should set data buffer", function () {
-        expect(result._data).toBe(container._data);
+        expect(result.data).toBe(container.data);
       });
     });
   });
@@ -192,7 +192,7 @@ describe("Array", function () {
     });
 
     it("should set data buffer", function () {
-      expect(result._data).toBe(array);
+      expect(result.data).toBe(array);
     });
   });
 });

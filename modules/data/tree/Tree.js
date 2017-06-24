@@ -39,7 +39,7 @@ $data.Tree = $oop.getClass('$data.Tree')
       } else if (!(node instanceof Object)) {
         // reached leaf node mid-query
         if (i === components.length - 1 &&
-          queryComponent._isSkipper
+          queryComponent.isSkipper
         ) {
           // current q.c. is a trailing skipper
           // invoking callback w/ leaf node
@@ -49,12 +49,12 @@ $data.Tree = $oop.getClass('$data.Tree')
       }
 
       //
-      if (queryComponent._keyOptions &&
-        !queryComponent._isKeyExcluded
+      if (queryComponent.keyOptions &&
+        !queryComponent.isKeyExcluded
       ) {
         // key options available
         // can go directly to child nodes
-        keys = queryComponent._keyOptions
+        keys = queryComponent.keyOptions
           .filter(function (key) {
             return hOP.call(node, key);
           });
@@ -67,7 +67,7 @@ $data.Tree = $oop.getClass('$data.Tree')
       for (j = 0; j < keyCount; j++) {
         key = keys[j];
         value = node[key];
-        if (queryComponent._isSkipper) {
+        if (queryComponent.isSkipper) {
           // in skipping mode
           if (nextQueryComponent &&
             nextQueryComponent.matches(key, value)
@@ -98,7 +98,7 @@ $data.Tree = $oop.getClass('$data.Tree')
      */
     clone: function clone() {
       var cloned = clone.returned;
-      cloned._data = $data.deepCopy(this._data);
+      cloned.data = $data.deepCopy(this.data);
       return cloned;
     },
 
@@ -111,7 +111,7 @@ $data.Tree = $oop.getClass('$data.Tree')
      * @returns {$data.Tree}
      */
     query: function (query, callback) {
-      this._traverse(query._components, callback, [], this._data, 0);
+      this._traverse(query.components, callback, [], this.data, 0);
       return this;
     },
 
@@ -121,13 +121,13 @@ $data.Tree = $oop.getClass('$data.Tree')
      * @returns {boolean}
      */
     hasPath: function (path) {
-      var pathComponents = path._components,
+      var pathComponents = path.components,
         pathComponentCount = pathComponents.length,
         i, pathComponent,
         parentNode, childNode,
         result = true;
 
-      for (i = 0, parentNode = this._data; i < pathComponentCount; i++) {
+      for (i = 0, parentNode = this.data; i < pathComponentCount; i++) {
         pathComponent = pathComponents[i];
         childNode = parentNode[pathComponent];
         if (childNode === undefined &&
@@ -150,13 +150,13 @@ $data.Tree = $oop.getClass('$data.Tree')
      * @returns {$data.Path}
      */
     getParentPath: function (path) {
-      var pathComponents = path._components,
+      var pathComponents = path.components,
         pathComponentCount = pathComponents.length,
         i, pathComponent,
         parentNode, childNode,
         result = [];
 
-      for (i = 0, parentNode = this._data; i < pathComponentCount - 1; i++) {
+      for (i = 0, parentNode = this.data; i < pathComponentCount - 1; i++) {
         pathComponent = pathComponents[i];
         childNode = parentNode[pathComponent];
         if (!(childNode instanceof Object)) {
@@ -177,14 +177,14 @@ $data.Tree = $oop.getClass('$data.Tree')
      * @returns {$data.Path}
      */
     getLastForkPath: function (path) {
-      var pathComponents = path._components,
+      var pathComponents = path.components,
         pathComponentCount = pathComponents.length,
         i, pathComponent, parentNode, currentNode,
         nodes = [],
         nodeCount;
 
       // getting nodes along path in a flat array
-      for (i = 0, parentNode = this._data; i < pathComponentCount; i++) {
+      for (i = 0, parentNode = this.data; i < pathComponentCount; i++) {
         pathComponent = pathComponents[i];
         currentNode = parentNode[pathComponent];
         if (!hOP.call(parentNode, pathComponent)) {
@@ -217,13 +217,13 @@ $data.Tree = $oop.getClass('$data.Tree')
      * @returns {*} Whatever value is found at path
      */
     getNode: function (path) {
-      var pathComponents = path._components,
+      var pathComponents = path.components,
         pathComponentCount = pathComponents.length,
-        result = this._data,
+        result = this.data,
         i;
 
       // we could rely on Path#pop(), but for performance reasons, we're
-      // accessing _components directly
+      // accessing components directly
       for (i = 0; i < pathComponentCount; i++) {
         result = result[pathComponents[i]];
         if (result === undefined) {
@@ -281,10 +281,10 @@ $data.Tree = $oop.getClass('$data.Tree')
      * @returns {$data.Tree}
      */
     setNode: function (path, node) {
-      var pathComponents = path._components,
+      var pathComponents = path.components,
         lastPathComponentIndex = pathComponents.length - 1,
         parentPath = this.getParentPath(path),
-        parentPathComponentCount = parentPath._components.length,
+        parentPathComponentCount = parentPath.components.length,
         parentNode = this.getNode(parentPath),
         i, currentNode;
 
@@ -382,9 +382,9 @@ $data.Tree = $oop.getClass('$data.Tree')
      * @returns {$data.Tree}
      */
     deletePath: function (path, splice) {
-      var pathComponents = path._components,
+      var pathComponents = path.components,
         basePath = this.getLastForkPath(path),
-        basePathComponents = basePath._components,
+        basePathComponents = basePath.components,
         basePathComponentCount = basePathComponents.length;
 
       if (basePathComponentCount === pathComponents.length) {
@@ -434,7 +434,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     queryKeys: function (query) {
       var result = [];
       this.query(query, function (/**$data.Path*/path) {
-        var pathComponents = path._components,
+        var pathComponents = path.components,
           key = pathComponents[pathComponents.length - 1];
         result.push(key);
       });
@@ -479,7 +479,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     queryKeyNodePairs: function (query) {
       var result = [];
       this.query(query, function (/**$data.Path*/path, node) {
-        var pathComponents = path._components,
+        var pathComponents = path.components,
           key = pathComponents[pathComponents.length - 1];
         result.push({key: key, value: node});
       });
@@ -506,7 +506,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.Tree}
      */
     toTree: function () {
-      return $data.Tree.create(this._data);
+      return $data.Tree.create(this.data);
     }
   });
 

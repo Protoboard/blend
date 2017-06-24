@@ -21,7 +21,7 @@ describe("$event", function () {
       it("should initialize subscriptions", function () {
         expect($data.Tree.isIncludedBy(eventSpace.subscriptions))
           .toBeTruthy();
-        expect(eventSpace.subscriptions._data).toEqual({});
+        expect(eventSpace.subscriptions.data).toEqual({});
       });
 
       it("should initialize _lastSubscriptionId", function () {
@@ -68,7 +68,7 @@ describe("$event", function () {
         });
 
         it("should add to subscriptions", function () {
-          expect(eventSpace.subscriptions._data).toEqual({
+          expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
                 eventName: {
@@ -96,7 +96,7 @@ describe("$event", function () {
         describe("then subscribing again", function () {
           it("should not change subscriptions", function () {
             eventSpace.on('eventName', callback, 'foo.bar'.toPath(), 'foo');
-            expect(eventSpace.subscriptions._data).toEqual({
+            expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {
                   eventName: {
@@ -129,7 +129,7 @@ describe("$event", function () {
         });
 
         it("should assign generated subscriptionId", function () {
-          expect(eventSpace.subscriptions._data).toEqual({
+          expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
                 eventName: {
@@ -181,7 +181,7 @@ describe("$event", function () {
       describe("when all arguments are specified", function () {
         it("should remove entries from registry", function () {
           eventSpace.off('event1', callback1, 'foo.bar.baz'.toPath(), 'subscriber1');
-          expect(eventSpace.subscriptions._data).toEqual({
+          expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
                 event1: {
@@ -223,7 +223,7 @@ describe("$event", function () {
       describe("when subscriberId is specified", function () {
         it("should remove entries from registry", function () {
           eventSpace.off(undefined, undefined, undefined, 'subscriber1');
-          expect(eventSpace.subscriptions._data).toEqual({
+          expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
                 event1: {
@@ -251,7 +251,7 @@ describe("$event", function () {
         describe("when eventName is also specified", function () {
           it("should remove entries from registry", function () {
             eventSpace.off('event1', undefined, undefined, 'subscriber1');
-            expect(eventSpace.subscriptions._data).toEqual({
+            expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {
                   event1: {
@@ -294,7 +294,7 @@ describe("$event", function () {
       describe("when eventName is specified", function () {
         it("should remove entries from registry", function () {
           eventSpace.off('event1');
-          expect(eventSpace.subscriptions._data).toEqual({
+          expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
                 event2: {
@@ -322,7 +322,7 @@ describe("$event", function () {
         describe("when targetPath is also specified", function () {
           it("should remove entries from registry", function () {
             eventSpace.off('event1', undefined, 'foo.bar.baz'.toPath());
-            expect(eventSpace.subscriptions._data).toEqual({
+            expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {
                   event1: {

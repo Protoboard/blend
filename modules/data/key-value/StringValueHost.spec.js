@@ -18,9 +18,9 @@ describe("$data", function () {
         .include($data.StringKeyHost)
         .define({
           getValuesForKey: function (key) {
-            var data = this._data;
+            var data = this.data;
             return data.hasOwnProperty(key) ?
-              [this._data[key]] :
+              [this.data[key]] :
               [];
           }
         });
@@ -31,10 +31,10 @@ describe("$data", function () {
         .include($data.StringValueHost)
         .define({
           forEachItem: function (callback) {
-            var keys = Object.keys(this._data),
+            var keys = Object.keys(this.data),
               i, values, j;
             for (i = 0; i < keys.length; i++) {
-              values = this._data[keys[i]];
+              values = this.data[keys[i]];
               for (j = 0; j < values.length; j++) {
                 callback(values[j], keys[i]);
               }
@@ -67,7 +67,7 @@ describe("$data", function () {
       });
 
       it("should return joined data", function () {
-        expect(result._data).toEqual([
+        expect(result.data).toEqual([
           {key: "hello", value: 'FOO'},
           {key: "hello", value: 'BAR'},
           {key: "quux", value: 'BAZ'}

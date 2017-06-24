@@ -26,11 +26,11 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
         .isArrayOptional(data, "Invalid data buffer")
         .isFunctionOptional(comparer, "Invalid comparer function");
 
-      this._data = data || [];
+      this.data = data || [];
 
       /**
        * @type {$data.Comparer}
-       * @private
+       * @protected
        */
       this._comparer = comparer || this._defaultComparer;
     },
@@ -59,7 +59,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
      * @private
      */
     _spliceIndexOf: function (value, start, end) {
-      var data = this._data;
+      var data = this.data;
 
       start = start || 0;
       end = end === undefined ? data.length : end;
@@ -99,7 +99,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
      * @returns {$data.OrderedList}
      */
     setItem: function (item) {
-      var data = this._data;
+      var data = this.data;
       data.splice(this._spliceIndexOf(item), 0, item);
       this._itemCount = data.length;
       return this;
@@ -110,7 +110,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
      * @returns {$data.OrderedList}
      */
     deleteItem: function (item) {
-      var data = this._data,
+      var data = this.data,
         spliceIndex = this._spliceIndexOf(item);
 
       if (data[spliceIndex] === item) {
@@ -127,7 +127,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
      * @returns {boolean}
      */
     hasItem: function (item) {
-      var data = this._data,
+      var data = this.data,
         spliceIndex = this._spliceIndexOf(item);
       return data[spliceIndex] === item;
     },
@@ -138,7 +138,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
      * @returns {$data.OrderedList}
      */
     forEachItem: function (callback, context) {
-      var data = this._data,
+      var data = this.data,
         itemCount = data.length,
         i;
 
@@ -169,7 +169,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
           this._spliceIndexOf(endValue),
           startIndex + limit);
 
-      return this._data.slice(startIndex, endIndex);
+      return this.data.slice(startIndex, endIndex);
     },
 
     /**
@@ -194,7 +194,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.OrderedList}
      */
     toOrderedList: function () {
-      return $data.OrderedList.create(this._data);
+      return $data.OrderedList.create(this.data);
     }
   });
 

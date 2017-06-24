@@ -31,7 +31,7 @@ $data.Collection = $oop.getClass('$data.Collection')
      * @returns {$data.Collection}
      */
     setItem: function (key, value) {
-      var data = this._data,
+      var data = this.data,
         hasKey = hOP.call(data, key);
 
       data[key] = value;
@@ -49,7 +49,7 @@ $data.Collection = $oop.getClass('$data.Collection')
      * @returns {$data.Collection}
      */
     deleteItem: function (key, value) {
-      var data = this._data,
+      var data = this.data,
         hasValue = value === undefined ?
           hOP.call(data, key) :
           data[key] === value;
@@ -71,7 +71,7 @@ $data.Collection = $oop.getClass('$data.Collection')
      * @returns {$data.Collection} Current instance
      */
     forEachItem: function (callback, context) {
-      var data = this._data,
+      var data = this.data,
         keys = Object.keys(data),
         keyCount = keys.length,
         i, key;
@@ -91,7 +91,7 @@ $data.Collection = $oop.getClass('$data.Collection')
      * @returns {Array}
      */
     getValuesForKey: function (key) {
-      var data = this._data;
+      var data = this.data;
       return hOP.call(data, key) ?
         [data[key]] :
         [];
@@ -102,7 +102,7 @@ $data.Collection = $oop.getClass('$data.Collection')
      * @returns {*}
      */
     getValue: function (key) {
-      return this._data[key];
+      return this.data[key];
     },
 
     /**
@@ -120,7 +120,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.Collection}
      */
     toCollection: function () {
-      return $data.Collection.create(this._data);
+      return $data.Collection.create(this.data);
     }
   });
 

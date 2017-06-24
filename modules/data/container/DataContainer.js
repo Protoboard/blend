@@ -27,10 +27,9 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
       $assert.isObjectOptional(data, "Invalid data buffer");
 
       /**
-       * @type {Object|Array}
-       * @protected
+       * @member {object|Array} $data.DataContainer#data
        */
-      this._data = data || {};
+      this.data = data || {};
     },
 
     /**
@@ -48,7 +47,7 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
      */
     clone: function clone() {
       var cloned = clone.returned;
-      cloned._data = this._data;
+      cloned.data = this.data;
       return cloned;
     },
 
@@ -57,10 +56,10 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
      * @returns {$data.DataContainer}
      */
     clear: function () {
-      if (this._data instanceof Array) {
-        this._data = [];
+      if (this.data instanceof Array) {
+        this.data = [];
       } else {
-        this._data = {};
+        this.data = {};
       }
       return this;
     },
@@ -76,10 +75,10 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
       var args;
       if (arguments.length > 2) {
         args = slice.call(arguments, 2);
-        args.splice(argIndex, 0, this._data);
+        args.splice(argIndex, 0, this.data);
         return callback.apply(context, args);
       } else {
-        return callback.call(context, this._data);
+        return callback.call(context, this.data);
       }
     },
 

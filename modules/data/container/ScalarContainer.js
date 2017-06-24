@@ -33,7 +33,7 @@ $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
      * @returns {$data.ScalarContainer} Filtered collection
      */
     filter: function (callback, context) {
-      var data = this._data instanceof Array ? [] : {},
+      var data = this.data instanceof Array ? [] : {},
         ResultClass = $oop.getClass(this.__classId),
         result = ResultClass.create(data);
 
@@ -53,7 +53,7 @@ $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
      * based on current item
      * @param {*} [initialValue] Initial value for accumulated result
      * @param {Object} [context] Context for callback
-     * @returns {*} Accummulated value
+     * @returns {*} Accumulated value
      */
     reduce: function (callback, initialValue, context) {
       var result = initialValue;

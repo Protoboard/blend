@@ -48,11 +48,12 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
      * Extracts items matching the condition in the specified callback function
      * and returns the result as a new collection. @param {function} callback
      * Filter function returning a boolean
+     * @param {function} callback
      * @param {Object} [context] Context for callback
      * @returns {$data.KeyValueContainer} Filtered collection
      */
     filter: function (callback, context) {
-      var data = this._data instanceof Array ? [] : {},
+      var data = this.data instanceof Array ? [] : {},
         ResultClass = $oop.getClass(this.__classId),
         result = ResultClass.create(data);
 
@@ -72,7 +73,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
      * based on current item
      * @param {*} [initialValue] Initial value for accumulated result
      * @param {Object} [context] Context for callback
-     * @returns {*} Accummulated value
+     * @returns {*} Accumulated value
      */
     reduce: function (callback, initialValue, context) {
       var result = initialValue;
@@ -170,7 +171,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
      * @returns {$data.Collection} Mapped collection
      */
     mapValues: function (callback, context) {
-      var data = this._data instanceof Array ? [] : {},
+      var data = this.data instanceof Array ? [] : {},
         ResultClass = $data.getMapResultClass(this, null, $data.VALUE_TYPE_ANY),
         result = ResultClass.create(data);
 

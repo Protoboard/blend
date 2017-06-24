@@ -58,8 +58,8 @@ describe("$data", function () {
     });
 
     describe("create()", function () {
-      it("should initialize _components property", function () {
-        expect(query._components).toEqual([
+      it("should initialize components property", function () {
+        expect(query.components).toEqual([
           $data.QueryComponent.create('foo'),
           $data.QueryComponent.create('bar'),
           $data.QueryComponent.create('*')
@@ -73,8 +73,8 @@ describe("$data", function () {
       });
 
       it("should initialize properties", function () {
-        expect(result._components).not.toBe(query._components);
-        expect(result._components).toEqual(query._components);
+        expect(result.components).not.toBe(query.components);
+        expect(result.components).toEqual(query.components);
       });
     });
 

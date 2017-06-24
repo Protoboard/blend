@@ -36,10 +36,9 @@ $data.Query = $oop.getClass('$data.Query')
 
       /**
        * Query components.
-       * @type {QueryComponent[]}
-       * @private
+       * @member {QueryComponent[]} $data.Query#components
        */
-      this._components = components
+      this.components = components
         .map(function (component) {
           return QueryComponent.isIncludedBy(component) ?
             component :
@@ -56,7 +55,7 @@ $data.Query = $oop.getClass('$data.Query')
      * // 'foo\.bar.*:!baz\.quux'
      */
     toString: function () {
-      return this._components
+      return this.components
         .map(String)
         .map($data.escapePathComponent)
         .join($data.PATH_COMPONENT_SEPARATOR);
@@ -73,16 +72,16 @@ $data.Query = $oop.getClass('$data.Query')
      *      .matches($data.Path.create(['foo', 'baz'])) // false
      */
     matches: function (path) {
-      var queryComponents = this._components,
+      var queryComponents = this.components,
         queryComponentCount = queryComponents.length,
-        pathComponents = path._components,
+        pathComponents = path.components,
         pathComponentCount = pathComponents.length,
         i, currentQueryComponent, nextQueryComponent,
         j, currentPathComponent;
 
       for (i = 0, j = 0; i < queryComponentCount; i++, j++) {
         currentQueryComponent = queryComponents[i];
-        if (currentQueryComponent._isSkipper) {
+        if (currentQueryComponent.isSkipper) {
           // current query component skips
           nextQueryComponent = queryComponents[i + 1];
 

@@ -25,10 +25,9 @@ $data.Chain = $oop.getClass('$data.Chain')
     /** @ignore */
     init: function () {
       /**
-       * @type {$data.MasterLink}
-       * @private
+       * @member {$data.MasterLink} $data.Chain#data
        */
-      this._data = $data.MasterLink.create(this);
+      this.data = $data.MasterLink.create(this);
 
       // forcing item count to zero
       this._itemCount = 0;
@@ -38,7 +37,7 @@ $data.Chain = $oop.getClass('$data.Chain')
      * @returns {$data.Chain}
      */
     clear: function () {
-      this._data = $data.MasterLink.create(this);
+      this.data = $data.MasterLink.create(this);
       return this;
     },
 
@@ -65,7 +64,7 @@ $data.Chain = $oop.getClass('$data.Chain')
      * @returns {boolean}
      */
     hasItem: function (item) {
-      return item._chain === this;
+      return item.chain === this;
     },
 
     /**
@@ -74,9 +73,9 @@ $data.Chain = $oop.getClass('$data.Chain')
      * @returns {$data.Chain}
      */
     forEachItem: function (callback, context) {
-      var link = this._data.nextLink;
+      var link = this.data.nextLink;
 
-      while (link !== this._data) {
+      while (link !== this.data) {
         if (callback.call(context || this, link) === false) {
           break;
         }
@@ -91,7 +90,7 @@ $data.Chain = $oop.getClass('$data.Chain')
      * @param {$data.Link} link
      */
     push: function (link) {
-      link.addBefore(this._data);
+      link.addBefore(this.data);
       return this;
     },
 
@@ -100,7 +99,7 @@ $data.Chain = $oop.getClass('$data.Chain')
      * @returns {$data.Link}
      */
     pop: function () {
-      var masterLink = this._data,
+      var masterLink = this.data,
         previousLink = masterLink.previousLink;
       if (previousLink !== masterLink) {
         return previousLink.unlink();
@@ -112,7 +111,7 @@ $data.Chain = $oop.getClass('$data.Chain')
      * @param {$data.Link} link
      */
     unshift: function (link) {
-      link.addAfter(this._data);
+      link.addAfter(this.data);
       return this;
     },
 
@@ -121,10 +120,10 @@ $data.Chain = $oop.getClass('$data.Chain')
      * @returns {$data.Link}
      */
     shift: function () {
-      var masterLink = this._data,
+      var masterLink = this.data,
         nextLink = masterLink.nextLink;
       if (nextLink !== masterLink) {
-        return this._data.nextLink.unlink();
+        return this.data.nextLink.unlink();
       }
     },
 

@@ -19,8 +19,8 @@ describe("$utils", function () {
         });
       });
 
-      it("should set _timerId property", function () {
-        expect(timer._timerId).toBe(1);
+      it("should set timerId property", function () {
+        expect(timer.timerId).toBe(1);
       });
 
       it("should initialize timerDeferred property", function () {

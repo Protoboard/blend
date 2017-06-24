@@ -27,7 +27,7 @@ $data.StringDictionary = $oop.getClass('$data.StringDictionary')
      * @returns {$data.StringDictionary}
      */
     setItem: function (key, value) {
-      var data = this._data,
+      var data = this.data,
         values = data[key];
 
       if (values instanceof Object) {
@@ -64,7 +64,7 @@ $data.StringDictionary = $oop.getClass('$data.StringDictionary')
      * @returns {$data.StringDictionary}
      */
     deleteItem: function (key, value) {
-      var data = this._data,
+      var data = this.data,
         values = data[key];
 
       if (values && hOP.call(values, value)) {
@@ -89,7 +89,7 @@ $data.StringDictionary = $oop.getClass('$data.StringDictionary')
      * @returns {$data.StringDictionary}
      */
     forEachItem: function (callback, context) {
-      var data = this._data,
+      var data = this.data,
         keys = Object.keys(data),
         keyCount = keys.length,
         i, key, values, valueCount,
@@ -115,7 +115,7 @@ $data.StringDictionary = $oop.getClass('$data.StringDictionary')
      * @returns {Array}
      */
     getValuesForKey: function (key) {
-      var data = this._data;
+      var data = this.data;
       return hOP.call(data, key) ?
         Object.keys(data[key]) :
         [];
@@ -128,7 +128,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.StringDictionary}
      */
     toStringDictionary: function () {
-      return $data.StringDictionary.create(this._data);
+      return $data.StringDictionary.create(this.data);
     }
   });
 

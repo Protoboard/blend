@@ -18,10 +18,10 @@ describe("$data", function () {
         .extend($data.ScalarContainer)
         .define({
           setItem: function (value) {
-            this._data.push(value);
+            this.data.push(value);
           },
           forEachItem: function (callback, context) {
-            this._data.forEach(callback, context);
+            this.data.forEach(callback, context);
           }
         });
 
@@ -37,9 +37,9 @@ describe("$data", function () {
         expect(result).not.toBe(scalarContainer);
       });
 
-      it("should set _data", function () {
-        expect(result._data).not.toBe(scalarContainer._data);
-        expect(result._data).toEqual(scalarContainer._data);
+      it("should set data", function () {
+        expect(result.data).not.toBe(scalarContainer.data);
+        expect(result.data).toEqual(scalarContainer.data);
       });
     });
 
@@ -67,7 +67,7 @@ describe("$data", function () {
 
       it("should return filtered collection", function () {
         expect(result).not.toBe(scalarContainer);
-        expect(result._data).toEqual(['foo']);
+        expect(result.data).toEqual(['foo']);
       });
     });
 

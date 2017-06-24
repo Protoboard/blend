@@ -12,7 +12,7 @@ describe("$utils", function () {
 
     describe("create()", function () {
       it("should set scheduleDelay", function () {
-        expect(debouncer._debounceDelay).toBe(50);
+        expect(debouncer.debounceDelay).toBe(50);
       });
     });
 

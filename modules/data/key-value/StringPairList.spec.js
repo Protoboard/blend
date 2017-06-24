@@ -21,7 +21,7 @@ describe("$data", function () {
       });
 
       it("should set data buffer", function () {
-        expect(result._data).toBe(container._data);
+        expect(result.data).toBe(container.data);
       });
     });
   });
@@ -42,7 +42,7 @@ describe("Array", function () {
     });
 
     it("should set data buffer", function () {
-      expect(result._data).toBe(array);
+      expect(result.data).toBe(array);
     });
   });
 });

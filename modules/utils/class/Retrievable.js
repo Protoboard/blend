@@ -16,6 +16,7 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
      * @memberOf $utils.Retrievable
      * @type {object}
      * @private
+     * @todo Rename to "instances"
      */
     _instanceRegistry: {},
 

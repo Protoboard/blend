@@ -14,92 +14,92 @@ describe("$data", function () {
     });
 
     describe("create()", function () {
-      it("should set _isSkipper property", function () {
-        expect(QueryComponent.create('**')._isSkipper).toBeTruthy();
-        expect(QueryComponent.create('**!foo')._isSkipper).toBeTruthy();
-        expect(QueryComponent.create('\\*\\*')._isSkipper).toBeFalsy();
+      it("should set isSkipper property", function () {
+        expect(QueryComponent.create('**').isSkipper).toBeTruthy();
+        expect(QueryComponent.create('**!foo').isSkipper).toBeTruthy();
+        expect(QueryComponent.create('\\*\\*').isSkipper).toBeFalsy();
       });
 
-      it("should set _isKeyExcluded property", function () {
-        expect(QueryComponent.create('foo')._isKeyExcluded).toBeFalsy();
-        expect(QueryComponent.create('!foo')._isKeyExcluded).toBeTruthy();
-        expect(QueryComponent.create('*')._isKeyExcluded).toBeFalsy();
-        expect(QueryComponent.create('**')._isKeyExcluded).toBeFalsy();
+      it("should set isKeyExcluded property", function () {
+        expect(QueryComponent.create('foo').isKeyExcluded).toBeFalsy();
+        expect(QueryComponent.create('!foo').isKeyExcluded).toBeTruthy();
+        expect(QueryComponent.create('*').isKeyExcluded).toBeFalsy();
+        expect(QueryComponent.create('**').isKeyExcluded).toBeFalsy();
       });
 
-      it("should set _matchesAnyKey property", function () {
-        expect(QueryComponent.create('*')._matchesAnyKey).toBeTruthy();
-        expect(QueryComponent.create('\\*')._matchesAnyKey).toBeFalsy();
-        expect(QueryComponent.create('foo')._matchesAnyKey).toBeFalsy();
-        expect(QueryComponent.create('!foo')._matchesAnyKey).toBeFalsy();
-        expect(QueryComponent.create('**')._matchesAnyKey).toBeTruthy();
-        expect(QueryComponent.create('\\*\\*')._matchesAnyKey).toBeFalsy();
+      it("should set matchesAnyKey property", function () {
+        expect(QueryComponent.create('*').matchesAnyKey).toBeTruthy();
+        expect(QueryComponent.create('\\*').matchesAnyKey).toBeFalsy();
+        expect(QueryComponent.create('foo').matchesAnyKey).toBeFalsy();
+        expect(QueryComponent.create('!foo').matchesAnyKey).toBeFalsy();
+        expect(QueryComponent.create('**').matchesAnyKey).toBeTruthy();
+        expect(QueryComponent.create('\\*\\*').matchesAnyKey).toBeFalsy();
       });
 
-      it("should set _keyOptions property", function () {
-        expect(QueryComponent.create('foo')._keyOptions).toEqual(['foo']);
-        expect(QueryComponent.create('foo,bar')._keyOptions)
+      it("should set keyOptions property", function () {
+        expect(QueryComponent.create('foo').keyOptions).toEqual(['foo']);
+        expect(QueryComponent.create('foo,bar').keyOptions)
           .toEqual(['foo', 'bar']);
-        expect(QueryComponent.create('foo\\,bar')._keyOptions)
+        expect(QueryComponent.create('foo\\,bar').keyOptions)
           .toEqual(['foo,bar']);
-        expect(QueryComponent.create('!foo')._keyOptions).toEqual(['foo']);
-        expect(QueryComponent.create('')._keyOptions).toEqual(['']);
-        expect(QueryComponent.create('**')._keyOptions).toBeUndefined();
-        expect(QueryComponent.create('*')._keyOptions).toBeUndefined();
+        expect(QueryComponent.create('!foo').keyOptions).toEqual(['foo']);
+        expect(QueryComponent.create('').keyOptions).toEqual(['']);
+        expect(QueryComponent.create('**').keyOptions).toBeUndefined();
+        expect(QueryComponent.create('*').keyOptions).toBeUndefined();
       });
 
-      it("should set _keyOptionLookup property", function () {
-        expect(QueryComponent.create('foo')._keyOptionLookup).toEqual({foo: 1});
-        expect(QueryComponent.create('foo,bar')._keyOptionLookup).toEqual({
+      it("should set keyOptionLookup property", function () {
+        expect(QueryComponent.create('foo').keyOptionLookup).toEqual({foo: 1});
+        expect(QueryComponent.create('foo,bar').keyOptionLookup).toEqual({
           foo: 1,
           bar: 1
         });
-        expect(QueryComponent.create('!foo')._keyOptionLookup).toEqual({
+        expect(QueryComponent.create('!foo').keyOptionLookup).toEqual({
           foo: 1
         });
       });
 
-      it("should set _matchesPrimitiveValues property", function () {
-        expect(QueryComponent.create('foo')._matchesPrimitiveValues)
+      it("should set matchesPrimitiveValues property", function () {
+        expect(QueryComponent.create('foo').matchesPrimitiveValues)
           .toBeFalsy();
-        expect(QueryComponent.create('foo:$')._matchesPrimitiveValues)
+        expect(QueryComponent.create('foo:$').matchesPrimitiveValues)
           .toBeTruthy();
-        expect(QueryComponent.create('foo:\\$')._matchesPrimitiveValues)
+        expect(QueryComponent.create('foo:\\$').matchesPrimitiveValues)
           .toBeFalsy();
-        expect(QueryComponent.create('foo:bar')._matchesPrimitiveValues)
+        expect(QueryComponent.create('foo:bar').matchesPrimitiveValues)
           .toBeFalsy();
       });
 
-      it("should set _isValueExcluded property", function () {
-        expect(QueryComponent.create('foo')._isValueExcluded).toBeFalsy();
-        expect(QueryComponent.create('foo:*')._isValueExcluded).toBeFalsy();
-        expect(QueryComponent.create('foo:bar')._isValueExcluded).toBeFalsy();
-        expect(QueryComponent.create('foo:!bar')._isValueExcluded).toBeTruthy();
+      it("should set isValueExcluded property", function () {
+        expect(QueryComponent.create('foo').isValueExcluded).toBeFalsy();
+        expect(QueryComponent.create('foo:*').isValueExcluded).toBeFalsy();
+        expect(QueryComponent.create('foo:bar').isValueExcluded).toBeFalsy();
+        expect(QueryComponent.create('foo:!bar').isValueExcluded).toBeTruthy();
       });
 
-      it("should set _matchesAnyValue property", function () {
-        expect(QueryComponent.create('foo')._matchesAnyValue).toBeTruthy();
-        expect(QueryComponent.create('foo:*')._matchesAnyValue).toBeTruthy();
-        expect(QueryComponent.create('foo:\\*')._matchesAnyValue).toBeFalsy();
-        expect(QueryComponent.create('foo:bar')._matchesAnyValue).toBeFalsy();
-        expect(QueryComponent.create('foo:!bar')._matchesAnyValue).toBeFalsy();
+      it("should set matchesAnyValue property", function () {
+        expect(QueryComponent.create('foo').matchesAnyValue).toBeTruthy();
+        expect(QueryComponent.create('foo:*').matchesAnyValue).toBeTruthy();
+        expect(QueryComponent.create('foo:\\*').matchesAnyValue).toBeFalsy();
+        expect(QueryComponent.create('foo:bar').matchesAnyValue).toBeFalsy();
+        expect(QueryComponent.create('foo:!bar').matchesAnyValue).toBeFalsy();
       });
 
-      it("should set _valueOptions property", function () {
-        expect(QueryComponent.create('**')._valueOptions).toBeUndefined();
-        expect(QueryComponent.create('**!foo')._valueOptions).toBeUndefined();
-        expect(QueryComponent.create('*')._valueOptions).toBeUndefined();
-        expect(QueryComponent.create('*:foo')._valueOptions).toEqual(['foo']);
-        expect(QueryComponent.create('*:foo\\,bar')._valueOptions)
+      it("should set valueOptions property", function () {
+        expect(QueryComponent.create('**').valueOptions).toBeUndefined();
+        expect(QueryComponent.create('**!foo').valueOptions).toBeUndefined();
+        expect(QueryComponent.create('*').valueOptions).toBeUndefined();
+        expect(QueryComponent.create('*:foo').valueOptions).toEqual(['foo']);
+        expect(QueryComponent.create('*:foo\\,bar').valueOptions)
           .toEqual(['foo,bar']);
-        expect(QueryComponent.create('!quux:foo,bar')._valueOptions)
+        expect(QueryComponent.create('!quux:foo,bar').valueOptions)
           .toEqual(['foo', 'bar']);
-        expect(QueryComponent.create('*:!foo,bar')._valueOptions)
+        expect(QueryComponent.create('*:!foo,bar').valueOptions)
           .toEqual(['foo', 'bar']);
-        expect(QueryComponent.create('*:')._valueOptions).toEqual(['']);
-        expect(QueryComponent.create('*:!')._valueOptions).toEqual(['']);
-        expect(QueryComponent.create('*:*')._valueOptions).toBeUndefined();
-        expect(QueryComponent.create('*:$')._valueOptions).toBeUndefined();
+        expect(QueryComponent.create('*:').valueOptions).toEqual(['']);
+        expect(QueryComponent.create('*:!').valueOptions).toEqual(['']);
+        expect(QueryComponent.create('*:*').valueOptions).toBeUndefined();
+        expect(QueryComponent.create('*:$').valueOptions).toBeUndefined();
       });
     });
 
@@ -123,7 +123,7 @@ describe("$data", function () {
     });
 
     describe("toString()", function () {
-      describe("when _isSkipper is true", function () {
+      describe("when isSkipper is true", function () {
         it("should discard value", function () {
           expect(QueryComponent.create('**:foo') + '').toBe('**');
         });
@@ -135,46 +135,46 @@ describe("$data", function () {
         });
       });
 
-      describe("when _isKeyExcluded is true", function () {
+      describe("when isKeyExcluded is true", function () {
         it("should exclude keys", function () {
           expect(QueryComponent.create('!foo') + '').toBe('!foo');
           expect(QueryComponent.create('!foo:baz') + '').toBe('!foo:baz');
         });
       });
 
-      describe("when _matchesAnyKey is true", function () {
+      describe("when matchesAnyKey is true", function () {
         it("should output key wildcard", function () {
           expect(QueryComponent.create('*') + '').toBe('*');
           expect(QueryComponent.create('*:foo') + '').toBe('*:foo');
         });
       });
 
-      describe("when _keyOptions are specified", function () {
+      describe("when keyOptions are specified", function () {
         it("should include key options", function () {
           expect(QueryComponent.create('foo,bar:baz') + '').toBe('foo,bar:baz');
         });
       });
 
-      describe("when _matchesPrimitiveValues is true", function () {
+      describe("when matchesPrimitiveValues is true", function () {
         it("should output primitive value marker", function () {
           expect(QueryComponent.create('foo:$') + '').toBe('foo:$');
         });
       });
 
-      describe("when _isValueExcluded is true", function () {
+      describe("when isValueExcluded is true", function () {
         it("should exclude keys", function () {
           expect(QueryComponent.create('foo:!bar') + '').toBe('foo:!bar');
         });
       });
 
-      describe("when _matchesAnyValue is true", function () {
+      describe("when matchesAnyValue is true", function () {
         it("should output value wildcard", function () {
           expect(QueryComponent.create('foo:*') + '').toBe('foo');
           expect(QueryComponent.create('foo') + '').toBe('foo');
         });
       });
 
-      describe("when _valueOptions are specified", function () {
+      describe("when valueOptions are specified", function () {
         it("should include value options", function () {
           expect(QueryComponent.create('foo:bar,baz') + '').toBe('foo:bar,baz');
         });
@@ -265,20 +265,20 @@ describe("$data", function () {
         expect(result).toBe(queryComponent);
       });
 
-      it("should add to _keyOptions", function () {
-        expect(queryComponent._keyOptions.sort())
+      it("should add to keyOptions", function () {
+        expect(queryComponent.keyOptions.sort())
           .toEqual(['foo', 'bar'].sort());
       });
 
-      it("should add to _keyOptionLookup", function () {
-        expect(queryComponent._keyOptionLookup).toEqual({
+      it("should add to keyOptionLookup", function () {
+        expect(queryComponent.keyOptionLookup).toEqual({
           foo: 1,
           bar: 1
         });
       });
 
-      it("should set _matchesAnyKey to false", function () {
-        expect(queryComponent._matchesAnyKey).toBeFalsy();
+      it("should set matchesAnyKey to false", function () {
+        expect(queryComponent.matchesAnyKey).toBeFalsy();
       });
     });
 
@@ -292,8 +292,8 @@ describe("$data", function () {
         expect(result).toBe(queryComponent);
       });
 
-      it("should set _isKeyExcluded to true", function () {
-        expect(queryComponent._isKeyExcluded).toBeTruthy();
+      it("should set isKeyExcluded to true", function () {
+        expect(queryComponent.isKeyExcluded).toBeTruthy();
       });
     });
 
@@ -310,12 +310,12 @@ describe("$data", function () {
         expect(result).toBe(queryComponent);
       });
 
-      it("should add to _valueOptions", function () {
-        expect(queryComponent._valueOptions).toBe(valueOptions);
+      it("should add to valueOptions", function () {
+        expect(queryComponent.valueOptions).toBe(valueOptions);
       });
 
-      it("should set _matchesAnyValue to false", function () {
-        expect(queryComponent._isValueExcluded).toBeFalsy();
+      it("should set matchesAnyValue to false", function () {
+        expect(queryComponent.isValueExcluded).toBeFalsy();
       });
     });
 
@@ -329,8 +329,8 @@ describe("$data", function () {
         expect(result).toBe(queryComponent);
       });
 
-      it("should set _isValueExcluded to true", function () {
-        expect(queryComponent._isValueExcluded).toBeTruthy();
+      it("should set isValueExcluded to true", function () {
+        expect(queryComponent.isValueExcluded).toBeTruthy();
       });
     });
   });

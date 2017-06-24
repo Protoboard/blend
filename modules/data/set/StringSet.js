@@ -20,7 +20,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
      * @returns {$data.StringSet}
      */
     setItem: function (item) {
-      var data = this._data;
+      var data = this.data;
       if (!hOP.call(data, item)) {
         data[item] = 1;
 
@@ -36,7 +36,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
      * @returns {$data.StringSet}
      */
     deleteItem: function (item) {
-      var data = this._data;
+      var data = this.data;
       if (hOP.call(data, item)) {
         delete data[item];
 
@@ -52,7 +52,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
      * @returns {boolean}
      */
     hasItem: function (item) {
-      return hOP.call(this._data, item);
+      return hOP.call(this.data, item);
     },
 
     /**
@@ -61,7 +61,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
      * @returns {$data.StringSet}
      */
     forEachItem: function (callback, context) {
-      var items = Object.keys(this._data),
+      var items = Object.keys(this.data),
         itemCount = items.length,
         i, item;
 
@@ -170,7 +170,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.StringSet}
      */
     toStringSet: function () {
-      return $data.StringSet.create(this._data);
+      return $data.StringSet.create(this.data);
     }
   });
 

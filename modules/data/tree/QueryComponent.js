@@ -38,58 +38,69 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
      */
     init: function (queryComponentStr) {
       /**
-       * @type {boolean}
-       * @private
+       * Whether to skip matching path components (keys) until next path
+       * component is matched by the next `QueryComponent` in a
+       * {@link $data.Query}.
+       * @member {boolean} $data.QueryComponent#isSkipper
        */
-      this._isSkipper = false;
+      this.isSkipper = false;
 
       /**
-       * @type {boolean}
-       * @private
+       * Whether to exclude specified key options.
+       * @member {boolean} $data.QueryComponent#isKeyExcluded
+       * @see $data.QueryComponent#keyOptions
        */
-      this._isKeyExcluded = false;
+      this.isKeyExcluded = false;
 
       /**
-       * @type {boolean}
-       * @private
+       * Whether `QueryComponent` matches any key in a key-value pair.
+       * @member {boolean} $data.QueryComponent#matchesAnyKey
+       * @default true
        */
-      this._matchesAnyKey = true;
+      this.matchesAnyKey = true;
 
       /**
-       * @type {string[]}
-       * @private
+       * List of keys to be matched. For iterating over options and access to
+       * option count.
+       * @member {string[]} $data.QueryComponent#keyOptions
        */
-      this._keyOptions = undefined;
+      this.keyOptions = undefined;
 
       /**
-       * @type {Object}
-       * @private
+       * List of keys to be matched. For checking whether a key option is
+       * present.
+       * @member {Object} $data.QueryComponent#keyOptionLookup
        */
-      this._keyOptionLookup = undefined;
+      this.keyOptionLookup = undefined;
 
       /**
-       * @type {boolean}
-       * @private
+       * Whether `QueryComponent` matches primitive values only. (String,
+       * number, boolean, & `null`.)
+       * @member {boolean} $data.QueryComponent#matchesPrimitiveValues
        */
-      this._matchesPrimitiveValues = false;
+      this.matchesPrimitiveValues = false;
 
       /**
-       * @type {boolean}
-       * @private
+       * Whether to exclude specified value options.
+       * @member {boolean} $data.QueryComponent#isValueExcluded
+       * @see $data.QueryComponent#valueOptions
        */
-      this._isValueExcluded = false;
+      this.isValueExcluded = false;
 
       /**
-       * @type {boolean}
-       * @private
+       * Whether `QueryComponent` matches any value in a key-value pair.
+       * Query components except for the last one in a query usually have
+       * this flag set.
+       * @member {boolean} $data.QueryComponent#matchesAnyValue
+       * @default true
        */
-      this._matchesAnyValue = true;
+      this.matchesAnyValue = true;
 
       /**
-       * @type {Array}
-       * @private
+       * List of keys to be matched.
+       * @member {Array} $data.QueryComponent#valueOptions
        */
-      this._valueOptions = undefined;
+      this.valueOptions = undefined;
 
       if (queryComponentStr !== undefined) {
         this._parseQueryComponentString(queryComponentStr);
@@ -133,12 +144,12 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         valueExclusionToken = valueTokens && valueTokens[3],
         valueOptionsToken = valueTokens && valueTokens[4];
 
-      this._isSkipper = keySkipperToken === '**';
+      this.isSkipper = keySkipperToken === '**';
 
-      this._isKeyExcluded = keyExclusionToken === '!';
+      this.isKeyExcluded = keyExclusionToken === '!';
 
-      this._matchesAnyKey = !this._isKeyExcluded && (
-        this._isSkipper ||
+      this.matchesAnyKey = !this.isKeyExcluded && (
+        this.isSkipper ||
         keyWildcardToken === '*');
 
       if (keyOptionsToken !== undefined) {
@@ -146,12 +157,12 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
           .map($data.unescapeQueryComponent));
       }
 
-      this._matchesPrimitiveValues = valuePrimitiveToken === '$';
+      this.matchesPrimitiveValues = valuePrimitiveToken === '$';
 
-      this._isValueExcluded = valueExclusionToken === '!';
+      this.isValueExcluded = valueExclusionToken === '!';
 
-      this._matchesAnyValue = !this._isValueExcluded && (
-        this._isSkipper ||
+      this.matchesAnyValue = !this.isValueExcluded && (
+        this.isSkipper ||
         valueWildcardToken === '*' ||
         valuePrimitiveToken === undefined &&
         valueWildcardToken === undefined &&
@@ -170,13 +181,13 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     clone: function clone() {
       var cloned = clone.returned;
       // properties alterable through methods
-      cloned._keyOptions = slice.call(this._keyOptions);
-      cloned._keyOptionLookup = $data.shallowCopy(this._keyOptionLookup);
-      cloned._matchesAnyKey = this._matchesAnyKey;
-      cloned._isKeyExcluded = this._isKeyExcluded;
-      cloned._valueOptions = slice.call(this._valueOptions);
-      cloned._matchesAnyValue = this._matchesAnyValue;
-      cloned._isValueExcluded = this._isValueExcluded;
+      cloned.keyOptions = slice.call(this.keyOptions);
+      cloned.keyOptionLookup = $data.shallowCopy(this.keyOptionLookup);
+      cloned.matchesAnyKey = this.matchesAnyKey;
+      cloned.isKeyExcluded = this.isKeyExcluded;
+      cloned.valueOptions = slice.call(this.valueOptions);
+      cloned.matchesAnyValue = this.matchesAnyValue;
+      cloned.isValueExcluded = this.isValueExcluded;
       return cloned;
     },
 
@@ -187,22 +198,22 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     toString: function () {
       return [
         // key
-        this._isSkipper ? '**' : undefined,
-        this._matchesAnyKey && !this._isSkipper ?
-          this._isKeyExcluded ? '' : '*' :
+        this.isSkipper ? '**' : undefined,
+        this.matchesAnyKey && !this.isSkipper ?
+          this.isKeyExcluded ? '' : '*' :
           undefined,
-        this._isKeyExcluded ? '!' : undefined,
-        this._keyOptions ? this._keyOptions
+        this.isKeyExcluded ? '!' : undefined,
+        this.keyOptions ? this.keyOptions
           .map($data.escapeQueryComponent)
           .join(',') :
           undefined,
 
         // value
-        this._isSkipper ? undefined : [
-          this._matchesAnyValue ? undefined : ':',
-          this._matchesPrimitiveValues ? '$' : undefined,
-          this._isValueExcluded ? '!' : undefined,
-          this._valueOptions ? this._valueOptions
+        this.isSkipper ? undefined : [
+          this.matchesAnyValue ? undefined : ':',
+          this.matchesPrimitiveValues ? '$' : undefined,
+          this.isValueExcluded ? '!' : undefined,
+          this.valueOptions ? this.valueOptions
             .map($data.escapeQueryComponent)
             .join(',') :
             undefined
@@ -221,24 +232,24 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
      */
     matches: function (key, value) {
       // a) either matches any key, or,
-      return (this._matchesAnyKey ||
+      return (this.matchesAnyKey ||
         // b) pathComponent is (not) one of the available options
-        (this._isKeyExcluded ?
-          !hOP.call(this._keyOptionLookup, key) :
-          hOP.call(this._keyOptionLookup, key))) &&
+        (this.isKeyExcluded ?
+          !hOP.call(this.keyOptionLookup, key) :
+          hOP.call(this.keyOptionLookup, key))) &&
 
         // and
         // c) either matches any value,
-        (this._matchesAnyValue ||
+        (this.matchesAnyValue ||
         // d) matches primitives and value is primitive, or,
-        this._matchesPrimitiveValues &&
+        this.matchesPrimitiveValues &&
         (typeof value !== 'object' || value === null) ||
         // e) value is (not) one of the available options
-        !!this._valueOptions && (this._isValueExcluded ?
+        !!this.valueOptions && (this.isValueExcluded ?
           // can't use lookup as values may be other than strings
           // hence value matching is slower than key matching
-          this._valueOptions.indexOf(value) === -1 :
-          this._valueOptions.indexOf(value) > -1));
+          this.valueOptions.indexOf(value) === -1 :
+          this.valueOptions.indexOf(value) > -1));
     },
 
     /**
@@ -247,9 +258,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
      */
     setKeyOptions: function (keyOptions) {
       var keyOptionLookup = this._arrayToLookup(keyOptions);
-      this._keyOptions = Object.keys(keyOptionLookup);
-      this._keyOptionLookup = keyOptionLookup;
-      this._matchesAnyKey = false;
+      this.keyOptions = Object.keys(keyOptionLookup);
+      this.keyOptionLookup = keyOptionLookup;
+      this.matchesAnyKey = false;
       return this;
     },
 
@@ -258,7 +269,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
      * @returns {$data.QueryComponent}
      */
     excludeKeyOptions: function () {
-      this._isKeyExcluded = true;
+      this.isKeyExcluded = true;
       return this;
     },
 
@@ -267,8 +278,8 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
      * @returns {$data.QueryComponent}
      */
     setValueOptions: function (valueOptions) {
-      this._valueOptions = valueOptions;
-      this._matchesAnyValue = false;
+      this.valueOptions = valueOptions;
+      this.matchesAnyValue = false;
       return this;
     },
 
@@ -277,7 +288,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
      * @returns {$data.QueryComponent}
      */
     excludeValueOptions: function () {
-      this._isValueExcluded = true;
+      this.isValueExcluded = true;
       return this;
     }
   });

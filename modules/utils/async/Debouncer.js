@@ -22,10 +22,9 @@ $utils.Debouncer = $oop.getClass('$utils.Debouncer')
         'onTimerCancel');
 
       /**
-       * @member {number} $utils.Debouncer#_debounceDelay
-       * @private
+       * @member {number} $utils.Debouncer#debounceDelay
        */
-      this._debounceDelay = delay || 0;
+      this.debounceDelay = delay || 0;
     },
 
     /**
@@ -35,7 +34,7 @@ $utils.Debouncer = $oop.getClass('$utils.Debouncer')
     schedule: function (arg) {
       // looking up arguments in list
       var callbackArguments = slice.call(arguments),
-        timeoutArguments = [this._debounceDelay].concat(callbackArguments),
+        timeoutArguments = [this.debounceDelay].concat(callbackArguments),
         timerIndex = this._getTimerIndexByArguments(callbackArguments),
         timer;
 

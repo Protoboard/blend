@@ -28,7 +28,7 @@ $oop.getClass('$data.DataContainer')
      * @returns {$data.StringPairList}
      */
     toStringPairList: function () {
-      return $data.StringPairList.create(this._data);
+      return $data.StringPairList.create(this.data);
     }
   });
 

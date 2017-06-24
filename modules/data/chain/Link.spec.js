@@ -24,8 +24,8 @@ describe("$data", function () {
         expect(link.hasOwnProperty('nextLink')).toBeTruthy();
       });
 
-      it("should initialize _chain property", function () {
-        expect(link.hasOwnProperty('_chain')).toBeTruthy();
+      it("should initialize chain property", function () {
+        expect(link.hasOwnProperty('chain')).toBeTruthy();
       });
     });
 
@@ -40,7 +40,7 @@ describe("$data", function () {
         oldNextLink = {};
         link2.previousLink = oldPreviousLink;
         link2.nextLink = oldNextLink;
-        link2._chain = $data.Chain.create();
+        link2.chain = $data.Chain.create();
         result = link.addAfter(link2);
       });
 
@@ -56,8 +56,8 @@ describe("$data", function () {
         expect(link.nextLink).toBe(oldNextLink);
       });
 
-      it("should set _chain", function () {
-        expect(link._chain).toBe(link2._chain);
+      it("should set chain", function () {
+        expect(link.chain).toBe(link2.chain);
       });
 
       it("should set self as new previousLink of old nextLink", function () {
@@ -68,8 +68,8 @@ describe("$data", function () {
         expect(link2.nextLink).toBe(link);
       });
 
-      it("should increment _itemCount on _chain", function () {
-        expect(link._chain._itemCount).toBe(1);
+      it("should increment _itemCount on chain", function () {
+        expect(link.chain._itemCount).toBe(1);
       });
 
       describe("to unchained link", function () {
@@ -93,10 +93,10 @@ describe("$data", function () {
           link.addAfter(link2);
           expect(link.nextLink).toBe(oldNextLink);
           expect(link.previousLink).toBe(link2);
-          expect(link._chain).toBe(link2._chain);
+          expect(link.chain).toBe(link2.chain);
           expect(oldNextLink.previousLink).toBe(link);
           expect(link2.nextLink).toBe(link);
-          expect(link._chain._itemCount).toBe(1);
+          expect(link.chain._itemCount).toBe(1);
         });
       });
 
@@ -126,7 +126,7 @@ describe("$data", function () {
         oldNextLink = {};
         link2.previousLink = oldPreviousLink;
         link2.nextLink = oldNextLink;
-        link2._chain = $data.Chain.create();
+        link2.chain = $data.Chain.create();
         result = link.addBefore(link2);
       });
 
@@ -142,8 +142,8 @@ describe("$data", function () {
         expect(link.previousLink).toBe(oldPreviousLink);
       });
 
-      it("should set _chain", function () {
-        expect(link._chain).toBe(link2._chain);
+      it("should set chain", function () {
+        expect(link.chain).toBe(link2.chain);
       });
 
       it("should set self as new nextLink of old previousLink", function () {
@@ -154,8 +154,8 @@ describe("$data", function () {
         expect(link2.previousLink).toBe(link);
       });
 
-      it("should increment _itemCount on _chain", function () {
-        expect(link._chain._itemCount).toBe(1);
+      it("should increment _itemCount on chain", function () {
+        expect(link.chain._itemCount).toBe(1);
       });
 
       describe("to unchained link", function () {
@@ -179,10 +179,10 @@ describe("$data", function () {
           link.addBefore(link2);
           expect(link.nextLink).toBe(link2);
           expect(link.previousLink).toBe(oldPreviousLink);
-          expect(link._chain).toBe(link2._chain);
+          expect(link.chain).toBe(link2.chain);
           expect(oldPreviousLink.nextLink).toBe(link);
           expect(link2.previousLink).toBe(link);
-          expect(link._chain._itemCount).toBe(1);
+          expect(link.chain._itemCount).toBe(1);
         });
       });
 
@@ -212,7 +212,7 @@ describe("$data", function () {
         oldChain = $data.Chain.create()
           .setItem($data.Link.create())
           .setItem($data.Link.create());
-        link._chain = oldChain;
+        link.chain = oldChain;
         link.previousLink = oldPreviousLink;
         link.nextLink = oldNextLink;
         result = link.unlink();
@@ -238,11 +238,11 @@ describe("$data", function () {
         expect(link.previousLink).toBeUndefined();
       });
 
-      it("should clear _chain", function () {
-        expect(link._chain).toBeUndefined();
+      it("should clear chain", function () {
+        expect(link.chain).toBeUndefined();
       });
 
-      it("should decrement _itemCount on old _chain", function () {
+      it("should decrement _itemCount on old chain", function () {
         expect(oldChain._itemCount).toBe(1);
       });
 

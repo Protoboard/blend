@@ -17,20 +17,19 @@ $data.Link = $oop.getClass('$data.Link')
     init: function () {
       /**
        * Chain instance the link is associated with.
-       * @type {$data.Chain}
-       * @private
+       * @member {$data.Chain} $data.Link#chain
        */
-      this._chain = undefined;
+      this.chain = undefined;
 
       /**
        * Link that comes before the current link in the chain.
-       * @type {$data.Link}
+       * @member {$data.Link} $data.Link#previousLink
        */
       this.previousLink = undefined;
 
       /**
        * Link that comes after the current link in the chain.
-       * @type {$data.Link}
+       * @member {$data.Link} $data.Link#nextLink
        */
       this.nextLink = undefined;
     },
@@ -41,20 +40,20 @@ $data.Link = $oop.getClass('$data.Link')
      * @returns {$data.Link}
      */
     addAfter: function (link) {
-      if (!link._chain) {
+      if (!link.chain) {
         $assert.assert(false, "Remote link must belong to a Chain");
       }
       if (this === link) {
         $assert.assert(false, "Attempting to link to self");
       }
 
-      if (this._chain) {
+      if (this.chain) {
         // preparing link to be added
         this.unlink();
       }
 
       // setting links on current link
-      this._chain = link._chain;
+      this.chain = link.chain;
       this.previousLink = link;
       this.nextLink = link.nextLink;
 
@@ -66,7 +65,7 @@ $data.Link = $oop.getClass('$data.Link')
       // setting self as next link on target link
       link.nextLink = this;
 
-      this._chain._itemCount++;
+      this.chain._itemCount++;
 
       return this;
     },
@@ -77,20 +76,20 @@ $data.Link = $oop.getClass('$data.Link')
      * @returns {$data.Link}
      */
     addBefore: function (link) {
-      if (!link._chain) {
+      if (!link.chain) {
         $assert.assert(false, "Remote link must belong to a Chain");
       }
       if (this === link) {
         $assert.assert(false, "Attempting to link to self");
       }
 
-      if (this._chain) {
+      if (this.chain) {
         // preparing link to be added
         this.unlink();
       }
 
       // setting links on current link
-      this._chain = link._chain;
+      this.chain = link.chain;
       this.nextLink = link;
       this.previousLink = link.previousLink;
 
@@ -102,7 +101,7 @@ $data.Link = $oop.getClass('$data.Link')
       // setting self as previous link on target link
       link.previousLink = this;
 
-      this._chain._itemCount++;
+      this.chain._itemCount++;
 
       return this;
     },
@@ -112,7 +111,7 @@ $data.Link = $oop.getClass('$data.Link')
      * @returns {$data.Link}
      */
     unlink: function () {
-      var chainBefore = this._chain,
+      var chainBefore = this.chain,
         nextLinkBefore,
         previousLinkBefore;
 
@@ -129,7 +128,7 @@ $data.Link = $oop.getClass('$data.Link')
         }
 
         // clearing references
-        this._chain = undefined;
+        this.chain = undefined;
         this.previousLink = undefined;
         this.nextLink = undefined;
 
