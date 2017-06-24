@@ -185,8 +185,7 @@ describe("$utils", function () {
 
     describe("when()", function () {
       var deferred, thenable,
-        thenableResolve, thenableReject,
-        handlers;
+        thenableResolve, thenableReject;
 
       beforeEach(function () {
         deferred = $utils.Deferred.create();
@@ -200,10 +199,11 @@ describe("$utils", function () {
             };
           }
         };
-        promise = $utils.Promise.when(
+        promise = $utils.Promise.when([
           deferred.promise,
           "foo",
-          thenable);
+          thenable
+        ]);
       });
 
       it("should return a promise", function () {
@@ -211,32 +211,30 @@ describe("$utils", function () {
       });
 
       describe("when all promises are fulfilled", function () {
-        beforeEach(function () {
-          handlers = {
-            successHandler: function () {},
-            progressHandler: function () {}
-          };
+        var successHandler,
+          progressHandler;
 
-          spyOn(handlers, 'successHandler');
-          spyOn(handlers, 'progressHandler');
+        beforeEach(function () {
+          successHandler = jasmine.createSpy();
+          progressHandler = jasmine.createSpy();
 
           promise.then(
-            handlers.successHandler,
+            successHandler,
             null,
-            handlers.progressHandler);
+            progressHandler);
 
           thenableResolve("foo", "bar");
           deferred.resolve("baz", "quux");
         });
 
         it("should notify aggregate promise", function () {
-          expect(handlers.progressHandler).toHaveBeenCalledWith("foo", "bar");
+          expect(progressHandler).toHaveBeenCalledWith("foo", "bar");
         });
 
         it("should resolve aggregate promise", function () {
           // first argument of the first call to successHandler
           // ... is an array of Arguments
-          expect(handlers.successHandler.calls.argsFor(0)[0]
+          expect(successHandler.calls.argsFor(0)[0]
             .map(function (arg) {
               return [].slice.call(arg);
             }))
@@ -249,20 +247,18 @@ describe("$utils", function () {
       });
 
       describe("when at least one promise fails", function () {
+        var failureHandler;
+
         beforeEach(function () {
-          handlers = {
-            failureHandler: function () {}
-          };
+          failureHandler = jasmine.createSpy();
 
-          spyOn(handlers, 'failureHandler');
-
-          promise.then(null, handlers.failureHandler);
+          promise.then(null, failureHandler);
 
           thenableReject("foo", "bar");
         });
 
         it("should reject the aggregate promise", function () {
-          expect(handlers.failureHandler).toHaveBeenCalledWith("foo", "bar");
+          expect(failureHandler).toHaveBeenCalledWith("foo", "bar");
         });
       });
     });

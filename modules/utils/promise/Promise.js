@@ -101,15 +101,13 @@ $utils.Promise = $oop.getClass('$utils.Promise')
      * promise' progress, and when individual promises are fulfilled. The order
      * of invoking the returned promise and the original promises' handlers is
      * not deterministic.
-     * @param {...$utils.Promise|*} promise A list of promises. Non-promises
+     * @param {$utils.Promise[]} promises A list of promises. Non-promises
      *   will be treated as resolved promises.
      * @returns {$utils.Promise}
      * @memberOf $utils.Promise
-     * @todo Change to accept array for perf reasons
      */
-    when: function (promise) {
+    when: function (promises) {
       var deferred = $utils.Deferred.create(),
-        promises = Array.prototype.slice.call(arguments),
         promiseCount = promises.length,
         deferredArguments = [];
 
