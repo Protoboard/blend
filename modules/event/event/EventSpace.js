@@ -10,10 +10,12 @@
 /**
  * Traversed by events. Allows subscribing and unsubscribing to/from events.
  * @class $event.EventSpace
+ * @extends $utils.Destructible
  * @implements $event.EventSpawner
  * @implements $event.EventTarget
  */
 $event.EventSpace = $oop.getClass('$event.EventSpace')
+    .include($utils.Destructible)
     .implement($oop.getClass('$event.EventSpawner'))
     .implement($oop.getClass('$event.EventTarget'))
     .cache(function () {
@@ -150,10 +152,11 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
         },
 
         /**
-         * @private
+         * @returns {$event.EventSpace}
          */
-        _offEverything: function () {
-            this.subscriptions.clear();
+        destroy: function () {
+            this.subscriptions.destroy();
+            return this;
         },
 
         /**
@@ -254,8 +257,8 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
                 break;
 
             default:
-                // unsubscribing from everything
-                this._offEverything();
+                $assert.assert(false,
+                    "Invalid event unsubscription parameters");
                 break;
             }
 

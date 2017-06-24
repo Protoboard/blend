@@ -39,6 +39,17 @@ describe("$event", function () {
             });
         });
 
+        describe("destroy()", function () {
+            beforeEach(function () {
+                spyOn(eventSpace.subscriptions, 'destroy');
+            });
+
+            it("should destroy subscriptions", function () {
+                eventSpace.destroy();
+                expect(eventSpace.subscriptions.destroy).toHaveBeenCalled();
+            });
+        });
+
         describe("on()", function () {
             var callback;
 
@@ -352,9 +363,10 @@ describe("$event", function () {
             });
 
             describe("when nothing is specified", function () {
-                it("should clear subscription registry", function () {
-                    eventSpace.off();
-                    expect(eventSpace.subscriptions._data).toEqual({});
+                it("should throw", function () {
+                    expect(function () {
+                        eventSpace.off();
+                    }).toThrow();
                 });
             });
         });
