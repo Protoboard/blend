@@ -246,8 +246,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
          * @returns {$data.QueryComponent}
          */
         setKeyOptions: function (keyOptions) {
-            this._keyOptions = keyOptions;
-            this._keyOptionLookup = this._arrayToLookup(keyOptions);
+            var keyOptionLookup = this._arrayToLookup(keyOptions);
+            this._keyOptions = Object.keys(keyOptionLookup);
+            this._keyOptionLookup = keyOptionLookup;
             this._matchesAnyKey = false;
             return this;
         },

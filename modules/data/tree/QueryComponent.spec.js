@@ -317,7 +317,7 @@ describe("$data", function () {
             var keyOptions;
 
             beforeEach(function () {
-                keyOptions = ['foo', 'bar'];
+                keyOptions = ['foo', 'foo', 'bar'];
                 queryComponent = QueryComponent.create();
                 result = queryComponent.setKeyOptions(keyOptions);
             });
@@ -327,7 +327,8 @@ describe("$data", function () {
             });
 
             it("should add to _keyOptions", function () {
-                expect(queryComponent._keyOptions).toBe(keyOptions);
+                expect(queryComponent._keyOptions.sort())
+                    .toEqual(['foo', 'bar'].sort());
             });
 
             it("should add to _keyOptionLookup", function () {
