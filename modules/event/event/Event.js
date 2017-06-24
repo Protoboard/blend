@@ -10,14 +10,15 @@
  * Signals a change in the state of some component of the application.
  * Carries information about the affected component and the cause(s) that
  * led to the corresponding change.
- * @todo Extend $data.Link
  * @todo What about payload?
  * @class $event.Event
+ * @extends $data.Link
  * @extends $utils.Cloneable
  * @implements $event.EventSource
  */
 $event.Event = $oop.getClass('$event.Event')
-  .include($utils.Cloneable)
+  .extend($data.Link)
+  .extend($utils.Cloneable)
   .implement($oop.getClass('$event.EventSource'))
   .define(/** @lends $event.Event# */{
     /**
@@ -76,11 +77,17 @@ $event.Event = $oop.getClass('$event.Event')
        * @default true
        */
       this.defaultPrevented = true;
+
+      this.elevateMethods('unlink');
     },
 
-    /** @private */
+    /**
+     * @returns {Array<$utils.Thenable|*>}
+     * @private
+     */
     _invokeCallbacksOnParentPaths: function () {
       var eventSpace = $event.EventSpace.create(),
+        originalEventChain = $event.OriginalEventChain.create(),
         event = this.clone(),
         subscriptions = eventSpace.subscriptions,
         eventName = event.eventName,
@@ -89,7 +96,8 @@ $event.Event = $oop.getClass('$event.Event')
         callbacksPath = $data.Path.create(['callbacks',
           'bySubscription', eventName, null]),
         callbacks, subscriberIds, callbackCount,
-        i;
+        i,
+        results = [];
 
       do {
         // obtaining callbacks associated with eventName / targetPath
@@ -100,18 +108,20 @@ $event.Event = $oop.getClass('$event.Event')
           subscriberIds = Object.keys(callbacks);
           callbackCount = subscriberIds.length;
           for (i = 0; i < callbackCount; i++) {
-            // todo Add event unlinking
-            callbacks[subscriberIds[i]](event);
+            results.push(callbacks[subscriberIds[i]](event));
           }
         }
 
         // bubbling one level up
         currentPath.pop();
       } while (currentPath.components.length && event.bubbles);
+
+      return results;
     },
 
     /**
      * @todo Add event initializer callback?
+     * @returns {Array<$utils.Thenable|*>}
      * @private
      */
     _invokeCallbacksOnDescendantPaths: function () {
@@ -123,7 +133,8 @@ $event.Event = $oop.getClass('$event.Event')
         targetPath = event.targetPath,
         pathsQc = $data.QueryComponent.create(),
         callbacksQuery = $data.Query.create([
-          'callbacks', 'bySubscription', eventName, pathsQc, '*']);
+          'callbacks', 'bySubscription', eventName, pathsQc, '*']),
+        results = [];
 
       // obtaining affected paths
       subscriptions.getNodeWrapped(['paths', eventName].toPath())
@@ -138,8 +149,26 @@ $event.Event = $oop.getClass('$event.Event')
           // todo Defer preparation to host / subclass
           var currentPathStr = callbackPath.components[3];
           event.currentPath = $data.Path.fromString(currentPathStr);
-          callback(event);
+          results.push(callback(event));
         });
+
+      return results;
+    },
+
+    /**
+     * @private
+     */
+    _pushToOriginalEvents: function () {
+      $event.OriginalEventChain.create().push(this);
+    },
+
+    /**
+     * @param {Array<$utils.Thenable>} thenables
+     * @private
+     */
+    _unlinkWhen: function (thenables) {
+      $utils.Promise.when(thenables)
+        .then(this.unlink, this.unlink);
     },
 
     /**
@@ -168,13 +197,20 @@ $event.Event = $oop.getClass('$event.Event')
      * @see $event.EventSpace#on
      */
     trigger: function () {
-      $assert
-        .isDefined(this.sender, "Event sender is not defined. Can't trigger.")
-        .isDefined(this.originalEvent,
-          "Original event is not defined. Can't trigger.");
+      if (this.sender === undefined) {
+        $assert.assert(false, "Event sender is not defined. Can't trigger.");
+      }
+      if (this.originalEvent === undefined) {
+        $assert.assert(false, "Original event is not defined. Can't trigger.");
+      }
 
-      this._invokeCallbacksOnParentPaths();
+      this._pushToOriginalEvents();
 
+      var callbackResults = this._invokeCallbacksOnParentPaths();
+
+      this._unlinkWhen(callbackResults);
+
+      // todo Return promise?
       return this;
     },
 
@@ -185,14 +221,21 @@ $event.Event = $oop.getClass('$event.Event')
      * @returns {$event.Event}
      */
     broadcast: function () {
-      $assert
-        .isDefined(this.sender, "Event sender is not defined. Can't trigger.")
-        .isDefined(this.originalEvent,
-          "Original event is not defined. Can't trigger.");
+      if (this.sender === undefined) {
+        $assert.assert(false, "Event sender is not defined. Can't broadcast.");
+      }
+      if (this.originalEvent === undefined) {
+        $assert.assert(false, "Original event is not defined. Can't broadcast.");
+      }
 
-      this._invokeCallbacksOnDescendantPaths();
-      this._invokeCallbacksOnParentPaths();
+      this._pushToOriginalEvents();
 
+      var callbackResults1 = this._invokeCallbacksOnDescendantPaths(),
+        callbackResults2 = this._invokeCallbacksOnParentPaths();
+
+      this._unlinkWhen(callbackResults1.concat(callbackResults2));
+
+      // todo Return promise?
       return this;
     },
 

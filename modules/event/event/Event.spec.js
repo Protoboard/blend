@@ -1,7 +1,7 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'],
+  $utils = window['giant-utils'],
   $event = window['giant-event'];
 
 describe("$event", function () {
@@ -45,6 +45,10 @@ describe("$event", function () {
       it("should initialize defaultPrevented", function () {
         expect(event.defaultPrevented).toBe(true);
       });
+
+      it("should elevate unlink()", function () {
+        expect(event.hasOwnProperty('unlink')).toBeTruthy();
+      });
     });
 
     describe("clone()", function () {
@@ -75,12 +79,18 @@ describe("$event", function () {
     });
 
     describe("trigger()", function () {
-      var callback1, callback2, callback3;
+      var deferred,
+        callback1, callback2, callback3,
+        originalEventChain;
 
       beforeEach(function () {
-        callback1 = jasmine.createSpy();
+        deferred = $utils.Deferred.create();
+
+        callback1 = jasmine.createSpy().and.returnValue(deferred.promise);
         callback2 = jasmine.createSpy();
         callback3 = jasmine.createSpy();
+
+        originalEventChain = $event.OriginalEventChain.create().clear();
 
         $event.EventSpace.create()
           .destroy()
@@ -92,11 +102,27 @@ describe("$event", function () {
           .setOriginalEvent(Event.create('event1'))
           .setSender({})
           .setTargetPath('foo.bar.baz'.toPath());
+
+        result = event.trigger();
       });
 
       it("should return self", function () {
-        result = event.trigger();
         expect(result).toBe(event);
+      });
+
+      it("should push event to chain", function () {
+        expect(originalEventChain.data.nextLink).toBe(event);
+        expect(originalEventChain.getItemCount()).toBe(1);
+      });
+
+      describe("when callbacks complete", function () {
+        beforeEach(function () {
+          deferred.resolve();
+        });
+
+        it("should unlink event", function () {
+          expect(originalEventChain.getItemCount()).toBe(0);
+        });
       });
 
       describe("on missing sender", function () {
@@ -134,7 +160,6 @@ describe("$event", function () {
 
       describe("when bubbling is off", function () {
         it("should not invoke callbacks on parent paths", function () {
-          event.trigger();
           expect(callback1).toHaveBeenCalledTimes(1);
           expect(callback2).toHaveBeenCalledTimes(1);
           expect(callback3).not.toHaveBeenCalled();
@@ -142,10 +167,17 @@ describe("$event", function () {
       });
 
       describe("when bubbling is on", function () {
-        it("should invoke callbacks on parent paths", function () {
+        beforeEach(function () {
+          callback1.calls.reset();
+          callback2.calls.reset();
+          callback3.calls.reset();
+
           event
             .setBubbles(true)
             .trigger();
+        });
+
+        it("should invoke callbacks on parent paths", function () {
           expect(callback1).toHaveBeenCalledTimes(1);
           expect(callback2).toHaveBeenCalledTimes(1);
           expect(callback3).toHaveBeenCalledTimes(1);
@@ -153,14 +185,20 @@ describe("$event", function () {
       });
     });
 
-    describe("broadcast", function () {
-      var callback1, callback2, callback3, callback4;
+    describe("broadcast()", function () {
+      var deferred,
+        callback1, callback2, callback3, callback4,
+        originalEventChain;
 
       beforeEach(function () {
-        callback1 = jasmine.createSpy();
+        deferred = $utils.Deferred.create();
+
+        callback1 = jasmine.createSpy().and.returnValue(deferred.promise);
         callback2 = jasmine.createSpy();
         callback3 = jasmine.createSpy();
         callback4 = jasmine.createSpy();
+
+        originalEventChain = $event.OriginalEventChain.create().clear();
 
         $event.EventSpace.create()
           .destroy()
@@ -173,18 +211,33 @@ describe("$event", function () {
           .setOriginalEvent(Event.create('event1'))
           .setSender({})
           .setTargetPath('foo.bar'.toPath());
+
+        result = event.broadcast();
       });
 
       it("should return self", function () {
-        result = event.broadcast();
         expect(result).toBe(event);
       });
 
       it("should invoke callbacks on descendant paths", function () {
-        event.broadcast();
         expect(callback1).toHaveBeenCalledTimes(1);
         expect(callback2).toHaveBeenCalledTimes(1);
         expect(callback3).toHaveBeenCalledTimes(1);
+      });
+
+      it("should push event to chain", function () {
+        expect(originalEventChain.data.nextLink).toBe(event);
+        expect(originalEventChain.getItemCount()).toBe(1);
+      });
+
+      describe("when callbacks complete", function () {
+        beforeEach(function () {
+          deferred.resolve();
+        });
+
+        it("should unlink event", function () {
+          expect(originalEventChain.getItemCount()).toBe(0);
+        });
       });
 
       describe("on missing sender", function () {
@@ -222,16 +275,23 @@ describe("$event", function () {
 
       describe("when bubbling is off", function () {
         it("should not invoke callbacks on parent paths", function () {
-          event.broadcast();
           expect(callback4).not.toHaveBeenCalled();
         });
       });
 
       describe("when bubbling is on", function () {
-        it("should invoke callbacks on parent paths", function () {
+        beforeEach(function () {
+          callback1.calls.reset();
+          callback2.calls.reset();
+          callback3.calls.reset();
+          callback4.calls.reset();
+
           event
             .setBubbles(true)
             .broadcast();
+        });
+
+        it("should invoke callbacks on parent paths", function () {
           expect(callback4).toHaveBeenCalledTimes(1);
         });
       });
