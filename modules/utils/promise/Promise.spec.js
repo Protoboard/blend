@@ -51,7 +51,7 @@ describe("$utils", function () {
       promise = $utils.Promise.create();
     });
 
-    describe("instantiation", function () {
+    describe("create()", function () {
       it("should initialize state property", function () {
         expect(promise.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
@@ -77,7 +77,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("chaining", function () {
+    describe("then()", function () {
       var result,
         handlers;
 
@@ -183,17 +183,27 @@ describe("$utils", function () {
       });
     });
 
-    describe("aggregation", function () {
-      var deferred1, deferred2,
+    describe("when()", function () {
+      var deferred, thenable,
+        thenableResolve, thenableReject,
         handlers;
 
       beforeEach(function () {
-        deferred1 = $utils.Deferred.create();
-        deferred2 = $utils.Deferred.create();
+        deferred = $utils.Deferred.create();
+        thenable = {
+          then: function (successHandler, failureHandler) {
+            thenableResolve = function () {
+              successHandler.apply(this, arguments);
+            };
+            thenableReject = function () {
+              failureHandler.apply(this, arguments);
+            };
+          }
+        };
         promise = $utils.Promise.when(
-          deferred1.promise,
+          deferred.promise,
           "foo",
-          deferred2.promise);
+          thenable);
       });
 
       it("should return a promise", function () {
@@ -215,8 +225,8 @@ describe("$utils", function () {
             null,
             handlers.progressHandler);
 
-          deferred2.resolve("foo", "bar");
-          deferred1.resolve("baz", "quux");
+          thenableResolve("foo", "bar");
+          deferred.resolve("baz", "quux");
         });
 
         it("should notify aggregate promise", function () {
@@ -248,7 +258,7 @@ describe("$utils", function () {
 
           promise.then(null, handlers.failureHandler);
 
-          deferred2.reject("foo", "bar");
+          thenableReject("foo", "bar");
         });
 
         it("should reject the aggregate promise", function () {

@@ -105,6 +105,7 @@ $utils.Promise = $oop.getClass('$utils.Promise')
      *   will be treated as resolved promises.
      * @returns {$utils.Promise}
      * @memberOf $utils.Promise
+     * @todo Change to accept array for perf reasons
      */
     when: function (promise) {
       var deferred = $utils.Deferred.create(),
@@ -125,7 +126,7 @@ $utils.Promise = $oop.getClass('$utils.Promise')
       }
 
       promises.forEach(function (promise) {
-        if ($utils.Promise.isIncludedBy(promise)) {
+        if (promise && typeof promise.then === 'function') {
           // latching on to next promise in array
           promise.then(
             tryResolving,
