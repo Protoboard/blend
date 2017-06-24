@@ -2,6 +2,7 @@
   "assets": {
     "js": [
       "globals.js",
+      "event/Event.js",
       "event/EventSource.js",
       "event/EventSpace.js",
       "event/EventSpawner.js",
