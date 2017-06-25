@@ -2,8 +2,8 @@
 
 /**
  * Maintains a set of key-value pairs. Agnostic about pair storage and key /
- * value types. Hosts are expected to implement storage-specific behavior
- * and features.
+ * value types. Hosts are expected to implement storage-specific behavior and
+ * features.
  * @mixin $data.KeyValueContainer
  * @implements $data.Filterable
  * @implements $data.Reducible

@@ -30,14 +30,14 @@ $oop.copyProperties($data, /** @lends $data */{
   },
 
   /**
-   * Determines what `KeyValueContainer` class will be the result of
-   * mapping the specified container class using the specified types.
-   * @param {$data.KeyValueContainer} SourceClass KeyValueContainer class
-   * to be mapped.
-   * @param {string} [keyType] Key type of result. Defaults to the
-   * source's key type.
-   * @param {string} [valueType] Value type of result. Default to the
-   * source's value type.
+   * Determines what `KeyValueContainer` class will be the result of mapping
+   * the specified container class using the specified types.
+   * @param {$data.KeyValueContainer} SourceClass KeyValueContainer class to be
+   *     mapped.
+   * @param {string} [keyType] Key type of result. Defaults to the source's key
+   *     type.
+   * @param {string} [valueType] Value type of result. Default to the source's
+   *     value type.
    * @returns {$data.KeyValueContainer}
    */
   getMapResultClass: function (SourceClass, keyType, valueType) {
@@ -48,25 +48,24 @@ $oop.copyProperties($data, /** @lends $data */{
   },
 
   /**
-   * Determines what `KeyValueContainer` class will be the result of
-   * swapping the specified `KeyValueContainer` class.
-   * @param {$data.KeyValueContainer} SourceClass KeyValueContainer class
-   * the keys & values of which to be swapped.
+   * Determines what `KeyValueContainer` class will be the result of swapping
+   * the specified `KeyValueContainer` class.
+   * @param {$data.KeyValueContainer} SourceClass KeyValueContainer class the
+   *     keys & values of which to be swapped.
    * @returns {$data.KeyValueContainer}
    */
   getSwapResultClass: function (SourceClass) {
     return $data.CLASS_BY_TYPE
         [SourceClass.valueType] // value type will be the new key type
-        [SourceClass.keyType]   // key type will be the new value type
-        [$data.KEY_MUL_ANY];  // we can't know if keys remain unique
+        [SourceClass.keyType] // key type will be the new value type
+        [$data.KEY_MUL_ANY]; // we can't know if keys remain unique
   },
 
   /**
    * Determines what `KeyValueContainer` class will be the result of joining
    * `LeftClass` & `RightClass`.
    * @param {$data.KeyValueContainer} LeftClass Class of left operand in join
-   * @param {$data.KeyValueContainer} RightClass Class of right operand in
-   * join
+   * @param {$data.KeyValueContainer} RightClass Class of right operand in join
    * @returns {$data.KeyValueContainer}
    */
   getJoinResultClass: function (LeftClass, RightClass) {
@@ -90,8 +89,7 @@ $oop.copyProperties($data, /** @lends $data */{
    * Determines what `KeyValueContainer` class will be the result of merging
    * `LeftClass` & `RightClass`.
    * @param {$data.KeyValueContainer} LeftClass Class of left operand in merge
-   * @param {$data.KeyValueContainer} RightClass Class of right operand in
-   * merge
+   * @param {$data.KeyValueContainer} RightClass Class of right operand in merge
    * @returns {$data.KeyValueContainer}
    */
   getMergeResultClass: function (LeftClass, RightClass) {

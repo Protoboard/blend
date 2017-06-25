@@ -390,8 +390,7 @@ describe("$data", function () {
 
       describe("for absent path", function () {
         it("should return undefined", function () {
-          expect(tree.getNode('foo.bar.baz'.toPath()))
-          .toBeUndefined();
+          expect(tree.getNode('foo.bar.baz'.toPath())).toBeUndefined();
         });
       });
     });
@@ -478,8 +477,7 @@ describe("$data", function () {
       });
 
       it("should invoke getInitializedNode()", function () {
-        expect(tree.getInitializedNode)
-        .toHaveBeenCalledWith(path, initializer);
+        expect(tree.getInitializedNode).toHaveBeenCalledWith(path, initializer);
       });
 
       it("should return Tree instance", function () {
@@ -609,8 +607,7 @@ describe("$data", function () {
         });
 
         it("should set node", function () {
-          expect(tree.setNode)
-          .toHaveBeenCalledWith(path, node);
+          expect(tree.setNode).toHaveBeenCalledWith(path, node);
         });
       });
 
@@ -667,8 +664,7 @@ describe("$data", function () {
                 hello: 'world'
               }
             });
-            expect(tree.data.foo.bar.hasOwnProperty(0))
-            .toBeFalsy();
+            expect(tree.data.foo.bar.hasOwnProperty(0)).toBeFalsy();
           });
         });
       });
@@ -862,8 +858,7 @@ describe("$data", function () {
       });
 
       it("should return StringCollection instance", function () {
-        expect($data.StringCollection.isIncludedBy(result))
-        .toBeTruthy();
+        expect($data.StringCollection.isIncludedBy(result)).toBeTruthy();
       });
 
       it("should invoke queryKeys() with query", function () {

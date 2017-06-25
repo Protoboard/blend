@@ -26,8 +26,8 @@ $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
   },
 
   /**
-   * Extracts items matching the condition in the specified callback
-   * function and returns the result as a new collection.
+   * Extracts items matching the condition in the specified callback function
+   * and returns the result as a new collection.
    * @param {function} callback Filter function returning a boolean
    * @param {Object} [context] Context for callback
    * @returns {$data.ScalarContainer} Filtered collection
@@ -47,10 +47,10 @@ $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
   },
 
   /**
-   * Accumulates a value based on the contribution of each item, as defined
-   * by the specified callback.
-   * @param {function} callback Contributes to accumulated value
-   * based on current item
+   * Accumulates a value based on the contribution of each item, as defined by
+   * the specified callback.
+   * @param {function} callback Contributes to accumulated value based on
+   *     current item
    * @param {*} [initialValue] Initial value for accumulated result
    * @param {Object} [context] Context for callback
    * @returns {*} Accumulated value

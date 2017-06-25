@@ -145,8 +145,7 @@ describe("$data", function () {
       });
 
       it("should create a Query instance", function () {
-        expect($data.Query.create.calls.allArgs())
-        .toEqual([
+        expect($data.Query.create.calls.allArgs()).toEqual([
           [['foo', '*', 'bar:!baz']]
         ]);
       });
@@ -171,8 +170,7 @@ describe("String", function () {
     });
 
     it("should create a Query instance", function () {
-      expect($data.Query.create.calls.allArgs())
-      .toEqual([
+      expect($data.Query.create.calls.allArgs()).toEqual([
         [['foo', '*', 'bar:!baz']]
       ]);
     });
@@ -199,8 +197,7 @@ describe("Array", function () {
     });
 
     it("should create a Query instance", function () {
-      expect($data.Query.create)
-      .toHaveBeenCalledWith(components);
+      expect($data.Query.create).toHaveBeenCalledWith(components);
     });
 
     it("should return created instance", function () {

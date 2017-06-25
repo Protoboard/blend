@@ -76,8 +76,8 @@ $data.StringSet = $oop.getClass('$data.StringSet')
   },
 
   /**
-   * Intersects current set with specified set and returns the result as a
-   * new set.
+   * Intersects current set with specified set and returns the result as a new
+   * set.
    * @param {$data.StringSet} set Set to intersect current set with
    * @returns {$data.StringSet} Intersection
    */
@@ -92,8 +92,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
   },
 
   /**
-   * Unites current set with specified set and returns the result as a new
-   * set.
+   * Unites current set with specified set and returns the result as a new set.
    * @param {$data.StringSet} set Set to unite current set with
    * @returns {$data.StringSet} Union
    */

@@ -7,8 +7,8 @@
  */
 
 /**
- * Maintains data and provides access to it. Supports life cycle, clearing
- * and cloning.
+ * Maintains data and provides access to it. Supports life cycle, clearing and
+ * cloning.
  * @class $data.DataContainer
  * @implements $utils.Destructible
  * @implements $data.Clearable

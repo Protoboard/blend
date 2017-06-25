@@ -101,8 +101,8 @@ $utils.Promise = $oop.getClass('$utils.Promise')
    * promise' progress, and when individual promises are fulfilled. The order
    * of invoking the returned promise and the original promises' handlers is
    * not deterministic.
-   * @param {$utils.Promise[]} promises A list of promises. Non-promises
-   *   will be treated as resolved promises.
+   * @param {$utils.Promise[]} promises A list of promises. Non-promises will
+   *     be treated as resolved promises.
    * @returns {$utils.Promise}
    * @memberOf $utils.Promise
    */

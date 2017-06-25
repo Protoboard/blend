@@ -49,9 +49,9 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
   /**
    * Gets splice index of specified value in the specified range of interest.
    * Performs binary search on the list's sorted array buffer and returns the
-   * lowest index where a given value would be spliced into or out of the
-   * list. For exact hits, this is the actual position, but no information is
-   * given whether the value is present in the list or not.
+   * lowest index where a given value would be spliced into or out of the list.
+   * For exact hits, this is the actual position, but no information is given
+   * whether the value is present in the list or not.
    * @param {*} value
    * @param {number} [start=0]
    * @param {number} [end]
@@ -152,8 +152,8 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
   },
 
   /**
-   * Returns list items in a sorted array starting from `startValue` up to
-   * but not including `endValue`.
+   * Returns list items in a sorted array starting from `startValue` up to but
+   * not including `endValue`.
    * @param {*} startValue Value marking start of the range.
    * @param {*} endValue Value marking end of the range.
    * @param {number} [offset=0] Number of items to skip at start.
@@ -173,9 +173,8 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
   },
 
   /**
-   * Returns list items in a sorted array wrapped in an instance of the
-   * current class; starting from `startValue` up to but not including
-   * `endValue`.
+   * Returns list items in a sorted array wrapped in an instance of the current
+   * class; starting from `startValue` up to but not including `endValue`.
    * @param {*} startValue Value marking start of the range.
    * @param {*} endValue Value marking end of the range.
    * @param {number} [offset=0] Number of items to skip at start.

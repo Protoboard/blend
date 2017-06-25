@@ -96,10 +96,9 @@ $data.Query = $oop.getClass('$data.Query')
           } else if (nextQueryComponent &&
               nextQueryComponent.matches(currentPathComponent)
           ) {
-            // next query component matches current path
-            // component
-            // keeping focus on current path component while
-            // letting query component advance to next
+            // next query component matches current path component
+            // keeping focus on current path component while letting query
+            // component advance to next
             j--;
             break;
           }

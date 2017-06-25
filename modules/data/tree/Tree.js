@@ -103,8 +103,8 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * Traverses tree and invokes specified callback on paths that match
-   * the query.
+   * Traverses tree and invokes specified callback on paths that match the
+   * query.
    * @todo Compare performance w/ Giant 0.4 Tree
    * @param {$data.Query} query
    * @param {function} callback
@@ -143,9 +143,9 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * Retrieves a path to an existing node in the tree where the specified
-   * path would fork off. For paths that already exist in the tree, this is
-   * the 1st-degree parent.
+   * Retrieves a path to an existing node in the tree where the specified path
+   * would fork off. For paths that already exist in the tree, this is the
+   * 1st-degree parent.
    * @param {$data.Path} path
    * @returns {$data.Path}
    */
@@ -249,8 +249,8 @@ $data.Tree = $oop.getClass('$data.Tree')
    * exist in the tree, runs `initializer`, stores its return value as new
    * node, and returns the initialized node.
    * @param {$data.Path} path Path to node
-   * @param {function} initializer Function that initializes the node
-   * when path is absent
+   * @param {function} initializer Function that initializes the node when path
+   *     is absent
    * @returns {*} Existing or initialized node
    */
   getInitializedNode: function (path, initializer) {
@@ -274,8 +274,8 @@ $data.Tree = $oop.getClass('$data.Tree')
 
   /**
    * Sets the specified node at the specified path. When the path already
-   * exists in the tree, it will be overwritten. When there's a primitive
-   * node along the specified path, it will be overwritten.
+   * exists in the tree, it will be overwritten. When there's a primitive node
+   * along the specified path, it will be overwritten.
    * @param {$data.Path} path
    * @param {*} node
    * @returns {$data.Tree}
@@ -301,9 +301,9 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * Appends the specified node to the node on the specified path. Array
-   * nodes will be concatenated to existing array nodes. When path does not
-   * exist in tree, `appendNode` is equivalent to `setNode`.
+   * Appends the specified node to the node on the specified path. Array nodes
+   * will be concatenated to existing array nodes. When path does not exist in
+   * tree, `appendNode` is equivalent to `setNode`.
    * @see $data.Tree#setNode
    * @param {$data.Path} path
    * @param {Object|Array} node
@@ -374,9 +374,9 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * Removes all non-forking nodes along the specified path, even if the
-   * whole path doesn't exist in the tree. When `path` points to an existing
-   * forking node, `deletePath` is equivalent to `deleteNode`.
+   * Removes all non-forking nodes along the specified path, even if the whole
+   * path doesn't exist in the tree. When `path` points to an existing forking
+   * node, `deletePath` is equivalent to `deleteNode`.
    * @param {$data.Path} path
    * @param {boolean} [splice=false]
    * @returns {$data.Tree}
@@ -426,8 +426,8 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * Queries keys from the tree matching the specified query. Order of items
-   * in the resulting array is non-deterministic.
+   * Queries keys from the tree matching the specified query. Order of items in
+   * the resulting array is non-deterministic.
    * @param {$data.Query} query
    * @returns {string[]}
    */

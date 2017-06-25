@@ -7,8 +7,8 @@
  */
 
 /**
- * Master link in a `Chain`. Non-removable. All other link in the chain
- * attach through a `MasterLink` instance.
+ * Master link in a `Chain`. Non-removable. All other link in the chain attach
+ * through a `MasterLink` instance.
  * @class $data.MasterLink
  */
 $data.MasterLink = $oop.getClass('$data.MasterLink')

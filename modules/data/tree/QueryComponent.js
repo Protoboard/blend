@@ -67,15 +67,14 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     this.keyOptions = undefined;
 
     /**
-     * List of keys to be matched. For checking whether a key option is
-     * present.
+     * List of keys to be matched. For checking whether a key option is present.
      * @member {Object} $data.QueryComponent#keyOptionLookup
      */
     this.keyOptionLookup = undefined;
 
     /**
-     * Whether `QueryComponent` matches primitive values only. (String,
-     * number, boolean, & `null`.)
+     * Whether `QueryComponent` matches primitive values only. (String, number,
+     * boolean, & `null`.)
      * @member {boolean} $data.QueryComponent#matchesPrimitiveValues
      */
     this.matchesPrimitiveValues = false;
@@ -88,9 +87,8 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     this.isValueExcluded = false;
 
     /**
-     * Whether `QueryComponent` matches any value in a key-value pair.
-     * Query components except for the last one in a query usually have
-     * this flag set.
+     * Whether `QueryComponent` matches any value in a key-value pair. Query
+     * components except for the last one in a query usually have this flag set.
      * @member {boolean} $data.QueryComponent#matchesAnyValue
      * @default true
      */

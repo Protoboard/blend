@@ -186,7 +186,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * Adds class to list of contributors.
    * @param {$oop.Class} Class Contributing class
    * @param {$oop.Class} [Next] Class before which the contributing class
-   *   should be placed.
+   *     should be placed.
    * @private
    */
   _addToContributors: function (Class, Next) {
@@ -989,8 +989,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Forwards the class to the specified class, if
-   * constructor arguments satisfy the supplied filter.
+   * Forwards the class to the specified class, if constructor arguments
+   * satisfy the supplied filter.
    * @param {$oop.Class} Class
    * @param {function} filter
    * @returns {$oop.Class}
@@ -1013,7 +1013,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Specifies a mapper function to be used to build a registry
+   * Specifies a mapper function to be used to build a registry.
    * @todo Rename
    * @todo Propagate to includers
    * @param {function} mapper
