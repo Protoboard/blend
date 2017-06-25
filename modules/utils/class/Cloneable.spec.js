@@ -1,21 +1,21 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $utils = window['giant-utils'];
+    $utils = window['giant-utils'];
 
 describe("$utils", function () {
   describe("Cloneable", function () {
     var Cloneable,
-      cloneable;
+        cloneable;
 
     beforeEach(function () {
       Cloneable = $oop.getClass('test.$utils.Cloneable.Cloneable')
-        .include($utils.Cloneable)
-        .define({
-          clone: function clone() {
-            return clone.returned;
-          }
-        });
+      .include($utils.Cloneable)
+      .define({
+        clone: function clone() {
+          return clone.returned;
+        }
+      });
       cloneable = Cloneable.create('foo');
     });
 

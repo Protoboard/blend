@@ -21,7 +21,7 @@ describe("$utils", function () {
 
       it("should initialize schedulerDeferred", function () {
         expect($utils.Deferred.isIncludedBy(scheduler.schedulerDeferred))
-          .toBeTruthy();
+        .toBeTruthy();
       });
     });
   });

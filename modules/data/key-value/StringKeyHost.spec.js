@@ -1,35 +1,35 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $oop = window['giant-oop'],
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var result;
 
   describe("StringKeyHost", function () {
     var StringKeyHost,
-      stringKeyHost;
+        stringKeyHost;
 
     beforeEach(function () {
       StringKeyHost = $oop.getClass('test.$data.StringKeyHost.StringKeyHost')
-        .extend($data.DataContainer)
-        .extend($data.KeyValueContainer)
-        .include($data.StringKeyHost);
+      .extend($data.DataContainer)
+      .extend($data.KeyValueContainer)
+      .include($data.StringKeyHost);
 
       stringKeyHost = StringKeyHost.create();
     });
 
     describe("joinTo()", function () {
       var StringValueHost,
-        leftContainer,
-        joinedContainer;
+          leftContainer,
+          joinedContainer;
 
       beforeEach(function () {
         StringValueHost = $oop.getClass('test.$data.StringKeyHost.StringValueHost')
-          .extend($data.DataContainer)
-          .extend($data.KeyValueContainer)
-          .include($data.StringValueHost);
+        .extend($data.DataContainer)
+        .extend($data.KeyValueContainer)
+        .include($data.StringValueHost);
 
         leftContainer = StringValueHost.create({});
 

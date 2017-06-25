@@ -39,7 +39,7 @@ describe("$utils", function () {
 
       it("should add timer to list", function () {
         expect($utils.Timeout.isIncludedBy(debouncer._scheduleTimers[0]))
-          .toBeTruthy();
+        .toBeTruthy();
       });
 
       it("should start timer", function () {

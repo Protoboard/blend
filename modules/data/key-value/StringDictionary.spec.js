@@ -1,12 +1,12 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var data,
-    dictionary,
-    result;
+      dictionary,
+      result;
 
   describe("StringDictionary", function () {
     beforeEach(function () {

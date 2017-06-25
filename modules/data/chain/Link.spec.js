@@ -1,17 +1,17 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   describe("Link", function () {
     var Link,
-      link,
-      result;
+        link,
+        result;
 
     beforeEach(function () {
       Link = $oop.getClass('test.$data.Link.Link')
-        .extend($data.Link);
+      .extend($data.Link);
       link = Link.create();
     });
 
@@ -31,8 +31,8 @@ describe("$data", function () {
 
     describe("addAfter()", function () {
       var link2,
-        oldPreviousLink,
-        oldNextLink;
+          oldPreviousLink,
+          oldNextLink;
 
       beforeEach(function () {
         link2 = Link.create();
@@ -117,8 +117,8 @@ describe("$data", function () {
 
     describe("addBefore()", function () {
       var link2,
-        oldPreviousLink,
-        oldNextLink;
+          oldPreviousLink,
+          oldNextLink;
 
       beforeEach(function () {
         link2 = Link.create();
@@ -203,15 +203,15 @@ describe("$data", function () {
 
     describe("unlink()", function () {
       var oldPreviousLink,
-        oldNextLink,
-        oldChain;
+          oldNextLink,
+          oldChain;
 
       beforeEach(function () {
         oldPreviousLink = {};
         oldNextLink = {};
         oldChain = $data.Chain.create()
-          .setItem($data.Link.create())
-          .setItem($data.Link.create());
+        .setItem($data.Link.create())
+        .setItem($data.Link.create());
         link.chain = oldChain;
         link.previousLink = oldPreviousLink;
         link.nextLink = oldNextLink;

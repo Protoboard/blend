@@ -61,7 +61,7 @@ $oop.copyProperties($utils, /** @lends $utils */{
    */
   escape: function (string, chars) {
     var escapeRegexpLookup = $utils._escapeRegexpLookup,
-      re = escapeRegexpLookup[chars];
+        re = escapeRegexpLookup[chars];
 
     if (!re) {
       re = escapeRegexpLookup[chars] = new RegExp('\\\\|[' + chars + ']', 'g');
@@ -78,7 +78,7 @@ $oop.copyProperties($utils, /** @lends $utils */{
    */
   unescape: function (string, chars) {
     var unescapeRegexpLookup = $utils._unescapeRegexpLookup,
-      re = unescapeRegexpLookup[chars];
+        re = unescapeRegexpLookup[chars];
 
     if (!re) {
       re = unescapeRegexpLookup[chars] = new RegExp('\\\\(\\\\|[' + chars + '])', 'g');
@@ -96,16 +96,16 @@ $oop.copyProperties($utils, /** @lends $utils */{
    */
   safeSplit: function (string, separator) {
     var splitterRegexpLookup = $utils._splitterRegexpLookup,
-      re = splitterRegexpLookup[separator],
-      tokens, tokenCount,
-      i, token, component,
-      result = [];
+        re = splitterRegexpLookup[separator],
+        tokens, tokenCount,
+        i, token, component,
+        result = [];
 
     if (!re) {
       // regexp leaves undefined 'holes' in token list where unescaped
       // separators would be
       re = splitterRegexpLookup[separator] =
-        new RegExp('(\\\\[' + separator + '])|[' + separator + ']');
+          new RegExp('(\\\\[' + separator + '])|[' + separator + ']');
     }
 
     // joining tokens between holes

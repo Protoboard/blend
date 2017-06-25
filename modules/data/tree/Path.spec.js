@@ -44,12 +44,12 @@ describe("$assert", function () {
 describe("$data", function () {
   describe("Path", function () {
     var Path,
-      path,
-      result;
+        path,
+        result;
 
     beforeEach(function () {
       Path = $oop.getClass('test.$data.Path.Path')
-        .extend($data.Path);
+      .extend($data.Path);
 
       path = Path.create(['foo', 'bar', 'baz']);
     });

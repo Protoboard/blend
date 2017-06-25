@@ -1,15 +1,15 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $oop = window['giant-oop'],
-  $utils = window['giant-utils'],
-  $data = window['giant-data'];
+    $oop = window['giant-oop'],
+    $utils = window['giant-utils'],
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var data,
-    Collection,
-    collection,
-    result;
+      Collection,
+      collection,
+      result;
 
   describe("Collection", function () {
     beforeEach(function () {
@@ -18,7 +18,7 @@ describe("$data", function () {
         bar: "BAR"
       };
       Collection = $oop.getClass("test.$data.Collection.Collection")
-        .extend($data.Collection);
+      .extend($data.Collection);
       collection = Collection.create(data);
     });
 
@@ -131,7 +131,7 @@ describe("$data", function () {
 
       it("should return DataContainer instance", function () {
         expect($data.DataContainer.isIncludedBy(result))
-          .toBeTruthy();
+        .toBeTruthy();
       });
 
       it("should invoke getValue()", function () {

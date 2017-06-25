@@ -1,8 +1,8 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'],
-  $event = window['giant-event'];
+    $data = window['giant-data'],
+    $event = window['giant-event'];
 
 describe("$event", function () {
   describe("OriginalEventChain", function () {

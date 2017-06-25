@@ -24,7 +24,7 @@ $oop.copyProperties($data, /** @lends $data */{
    */
   isSingleKeyObject: function (obj) {
     var count = 0,
-      key;
+        key;
     for (key in obj) {
       if (hOP.call(obj, key) && ++count > 1) {
         return false;
@@ -40,7 +40,7 @@ $oop.copyProperties($data, /** @lends $data */{
    */
   isMultiKeyObject: function (obj) {
     var count = 0,
-      key;
+        key;
     for (key in obj) {
       if (hOP.call(obj, key) && ++count > 1) {
         return true;
@@ -57,8 +57,8 @@ $oop.copyProperties($data, /** @lends $data */{
    */
   shallowCopy: function (original) {
     var propertyNames,
-      i, propertyName,
-      result;
+        i, propertyName,
+        result;
 
     if (original instanceof Array) {
       // shorthand for arrays
@@ -91,8 +91,8 @@ $oop.copyProperties($data, /** @lends $data */{
 
     return (function deepCopy(original, currentDepth) {
       var result,
-        keys, keyCount,
-        i, key;
+          keys, keyCount,
+          i, key;
 
       if (currentDepth < depth) {
         if (original instanceof Array) {

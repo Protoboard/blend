@@ -1,18 +1,18 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $utils = window['giant-utils'],
-  $event = window['giant-event'];
+    $utils = window['giant-utils'],
+    $event = window['giant-event'];
 
 describe("$event", function () {
   describe("Event", function () {
     var Event,
-      event,
-      result;
+        event,
+        result;
 
     beforeEach(function () {
       Event = $oop.getClass('test.$event.Event.Event')
-        .extend($event.Event);
+      .extend($event.Event);
 
       event = Event.create('event1');
     });
@@ -54,11 +54,11 @@ describe("$event", function () {
     describe("clone()", function () {
       beforeEach(function () {
         event
-          .setOriginalEvent(Event.create('event2'))
-          .setSender({})
-          .setTargetPath('foo.bar.baz'.toPath())
-          .setBubbles(true)
-          .preventDefault();
+        .setOriginalEvent(Event.create('event2'))
+        .setSender({})
+        .setTargetPath('foo.bar.baz'.toPath())
+        .setBubbles(true)
+        .preventDefault();
 
         result = event.clone();
       });
@@ -80,8 +80,8 @@ describe("$event", function () {
 
     describe("trigger()", function () {
       var deferred,
-        callback1, callback2, callback3,
-        originalEventChain;
+          callback1, callback2, callback3,
+          originalEventChain;
 
       beforeEach(function () {
         deferred = $utils.Deferred.create();
@@ -93,15 +93,15 @@ describe("$event", function () {
         originalEventChain = $event.OriginalEventChain.create().clear();
 
         $event.EventSpace.create()
-          .destroy()
-          .on('event1', callback1, 'foo.bar.baz'.toPath(), '1')
-          .on('event1', callback2, 'foo.bar.baz'.toPath(), '2')
-          .on('event1', callback3, 'foo'.toPath(), '3');
+        .destroy()
+        .on('event1', callback1, 'foo.bar.baz'.toPath(), '1')
+        .on('event1', callback2, 'foo.bar.baz'.toPath(), '2')
+        .on('event1', callback3, 'foo'.toPath(), '3');
 
         event
-          .setOriginalEvent(Event.create('event1'))
-          .setSender({})
-          .setTargetPath('foo.bar.baz'.toPath());
+        .setOriginalEvent(Event.create('event1'))
+        .setSender({})
+        .setTargetPath('foo.bar.baz'.toPath());
 
         result = event.trigger();
       });
@@ -134,9 +134,9 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-              .setOriginalEvent(Event.create('foo'))
-              .setTargetPath('foo.bar'.toPath())
-              .trigger();
+            .setOriginalEvent(Event.create('foo'))
+            .setTargetPath('foo.bar'.toPath())
+            .trigger();
           }).toThrow();
         });
       });
@@ -145,9 +145,9 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-              .setSender({})
-              .setTargetPath('foo.bar'.toPath())
-              .trigger();
+            .setSender({})
+            .setTargetPath('foo.bar'.toPath())
+            .trigger();
           }).toThrow();
         });
       });
@@ -156,9 +156,9 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-              .setSender({})
-              .setOriginalEvent(Event.create('foo'))
-              .trigger();
+            .setSender({})
+            .setOriginalEvent(Event.create('foo'))
+            .trigger();
           }).toThrow();
         });
       });
@@ -178,8 +178,8 @@ describe("$event", function () {
           callback3.calls.reset();
 
           event
-            .setBubbles(true)
-            .trigger();
+          .setBubbles(true)
+          .trigger();
         });
 
         it("should invoke callbacks on parent paths", function () {
@@ -192,8 +192,8 @@ describe("$event", function () {
 
     describe("broadcast()", function () {
       var deferred,
-        callback1, callback2, callback3, callback4,
-        originalEventChain;
+          callback1, callback2, callback3, callback4,
+          originalEventChain;
 
       beforeEach(function () {
         deferred = $utils.Deferred.create();
@@ -206,16 +206,16 @@ describe("$event", function () {
         originalEventChain = $event.OriginalEventChain.create().clear();
 
         $event.EventSpace.create()
-          .destroy()
-          .on('event1', callback1, 'foo.bar.baz.quux'.toPath(), '1')
-          .on('event1', callback2, 'foo.bar.baz.quux'.toPath(), '2')
-          .on('event1', callback3, 'foo.bar'.toPath(), '3')
-          .on('event1', callback4, 'foo'.toPath(), '4');
+        .destroy()
+        .on('event1', callback1, 'foo.bar.baz.quux'.toPath(), '1')
+        .on('event1', callback2, 'foo.bar.baz.quux'.toPath(), '2')
+        .on('event1', callback3, 'foo.bar'.toPath(), '3')
+        .on('event1', callback4, 'foo'.toPath(), '4');
 
         event
-          .setOriginalEvent(Event.create('event1'))
-          .setSender({})
-          .setTargetPath('foo.bar'.toPath());
+        .setOriginalEvent(Event.create('event1'))
+        .setSender({})
+        .setTargetPath('foo.bar'.toPath());
 
         result = event.broadcast();
       });
@@ -254,9 +254,9 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-              .setOriginalEvent(Event.create('foo'))
-              .setTargetPath('foo.bar'.toPath())
-              .broadcast();
+            .setOriginalEvent(Event.create('foo'))
+            .setTargetPath('foo.bar'.toPath())
+            .broadcast();
           }).toThrow();
         });
       });
@@ -265,9 +265,9 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-              .setSender({})
-              .setTargetPath('foo.bar'.toPath())
-              .broadcast();
+            .setSender({})
+            .setTargetPath('foo.bar'.toPath())
+            .broadcast();
           }).toThrow();
         });
       });
@@ -276,9 +276,9 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-              .setSender({})
-              .setOriginalEvent(Event.create('foo'))
-              .broadcast();
+            .setSender({})
+            .setOriginalEvent(Event.create('foo'))
+            .broadcast();
           }).toThrow();
         });
       });
@@ -297,8 +297,8 @@ describe("$event", function () {
           callback4.calls.reset();
 
           event
-            .setBubbles(true)
-            .broadcast();
+          .setBubbles(true)
+          .broadcast();
         });
 
         it("should invoke callbacks on parent paths", function () {
@@ -378,8 +378,8 @@ describe("$event", function () {
     describe("stopPropagation()", function () {
       beforeEach(function () {
         result = event
-          .setBubbles(true)
-          .stopPropagation();
+        .setBubbles(true)
+        .stopPropagation();
       });
 
       it("should return self", function () {

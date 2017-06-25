@@ -1,29 +1,29 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   describe("ScalarContainer", function () {
     var data,
-      ScalarContainer,
-      scalarContainer,
-      result;
+        ScalarContainer,
+        scalarContainer,
+        result;
 
     beforeEach(function () {
       data = ['foo', 'bar'];
 
       ScalarContainer = $oop.getClass('test.$data.ScalarContainer.ScalarContainer')
-        .extend($data.DataContainer)
-        .extend($data.ScalarContainer)
-        .define({
-          setItem: function (value) {
-            this.data.push(value);
-          },
-          forEachItem: function (callback, context) {
-            this.data.forEach(callback, context);
-          }
-        });
+      .extend($data.DataContainer)
+      .extend($data.ScalarContainer)
+      .define({
+        setItem: function (value) {
+          this.data.push(value);
+        },
+        forEachItem: function (callback, context) {
+          this.data.forEach(callback, context);
+        }
+      });
 
       scalarContainer = ScalarContainer.create(data);
     });
@@ -48,9 +48,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and
-          .callFake(function (value) {
-            return value[0] === 'f';
-          });
+        .callFake(function (value) {
+          return value[0] === 'f';
+        });
         result = scalarContainer.filter(callback);
       });
 
@@ -76,9 +76,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and.callFake(
-          function (reduced, value) {
-            return reduced + value;
-          });
+            function (reduced, value) {
+              return reduced + value;
+            });
         result = scalarContainer.reduce(callback, '');
       });
 

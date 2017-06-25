@@ -1,15 +1,15 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $oop = window['giant-oop'],
-  $utils = window['giant-utils'],
-  $data = window['giant-data'];
+    $oop = window['giant-oop'],
+    $utils = window['giant-utils'],
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var data,
-    StringSet,
-    set, set2,
-    result;
+      StringSet,
+      set, set2,
+      result;
 
   describe("StringSet", function () {
     beforeEach(function () {
@@ -18,7 +18,7 @@ describe("$data", function () {
         bar: 1
       };
       StringSet = $oop.getClass("test.$data.StringSet.StringSet")
-        .extend($data.StringSet);
+      .extend($data.StringSet);
       set = StringSet.create(data);
       set2 = StringSet.create({
         bar: 1,
@@ -146,11 +146,11 @@ describe("$data", function () {
       });
 
       it("should create intersection with values from original set",
-        function () {
-          expect(result.data).toEqual({
-            bar: 1
+          function () {
+            expect(result.data).toEqual({
+              bar: 1
+            });
           });
-        });
     });
 
     describe("uniteWith()", function () {
@@ -165,13 +165,13 @@ describe("$data", function () {
       });
 
       it("should create union with original values taking precedence",
-        function () {
-          expect(result.data).toEqual({
-            foo: 1,
-            bar: 1,
-            baz: 1
+          function () {
+            expect(result.data).toEqual({
+              foo: 1,
+              bar: 1,
+              baz: 1
+            });
           });
-        });
     });
 
     describe("subtract()", function () {

@@ -44,12 +44,12 @@ describe("$assert", function () {
 describe("$data", function () {
   describe("Query", function () {
     var Query,
-      query,
-      result;
+        query,
+        result;
 
     beforeEach(function () {
       Query = $oop.getClass('test.$data.Query.Query')
-        .extend($data.Query);
+      .extend($data.Query);
       query = Query.create([
         'foo',
         'bar',
@@ -97,40 +97,40 @@ describe("$data", function () {
       describe("for matching path", function () {
         it("should return true", function () {
           expect('foo.bar.baz'.toQuery()
-            .matches('foo.bar.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.baz'.toPath())).toBeTruthy();
           expect('foo.*.baz'.toQuery()
-            .matches('foo.bar.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.baz'.toPath())).toBeTruthy();
           expect('foo.!bar.baz'.toQuery()
-            .matches('foo.quux.baz'.toPath())).toBeTruthy();
+          .matches('foo.quux.baz'.toPath())).toBeTruthy();
           expect('foo.**.baz'.toQuery()
-            .matches('foo.bar.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.baz'.toPath())).toBeTruthy();
           expect('foo.**.baz'.toQuery()
-            .matches('foo.baz'.toPath())).toBeTruthy();
+          .matches('foo.baz'.toPath())).toBeTruthy();
           expect('foo.**.baz'.toQuery()
-            .matches('foo.bar.quux.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.quux.baz'.toPath())).toBeTruthy();
           expect('foo.bar.**'.toQuery()
-            .matches('foo.bar.quux.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.quux.baz'.toPath())).toBeTruthy();
           expect('**!foo.baz'.toQuery()
-            .matches('bar.quux.baz'.toPath())).toBeTruthy();
+          .matches('bar.quux.baz'.toPath())).toBeTruthy();
         });
       });
 
       describe("for non-matching path", function () {
         it("should return false", function () {
           expect('foo.bar.baz'.toQuery()
-            .matches('foo.bar.baz.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.baz.quux'.toPath())).toBeFalsy();
           expect('foo.bar.baz.quux'.toQuery()
-            .matches('foo.bar.baz'.toPath())).toBeFalsy();
+          .matches('foo.bar.baz'.toPath())).toBeFalsy();
           expect('foo.bar.baz'.toQuery()
-            .matches('foo.bar.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.quux'.toPath())).toBeFalsy();
           expect('foo.*.baz'.toQuery()
-            .matches('foo.bar.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.quux'.toPath())).toBeFalsy();
           expect('foo.!bar.baz'.toQuery()
-            .matches('foo.bar.baz'.toPath())).toBeFalsy();
+          .matches('foo.bar.baz'.toPath())).toBeFalsy();
           expect('foo.**.baz'.toQuery()
-            .matches('foo.bar.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.quux'.toPath())).toBeFalsy();
           expect('**!foo.baz'.toQuery()
-            .matches('bar.foo.baz'.toPath())).toBeFalsy();
+          .matches('bar.foo.baz'.toPath())).toBeFalsy();
         });
       });
     });
@@ -146,9 +146,9 @@ describe("$data", function () {
 
       it("should create a Query instance", function () {
         expect($data.Query.create.calls.allArgs())
-          .toEqual([
-            [['foo', '*', 'bar:!baz']]
-          ]);
+        .toEqual([
+          [['foo', '*', 'bar:!baz']]
+        ]);
       });
 
       it("should return created instance", function () {
@@ -172,9 +172,9 @@ describe("String", function () {
 
     it("should create a Query instance", function () {
       expect($data.Query.create.calls.allArgs())
-        .toEqual([
-          [['foo', '*', 'bar:!baz']]
-        ]);
+      .toEqual([
+        [['foo', '*', 'bar:!baz']]
+      ]);
     });
 
     it("should return created instance", function () {
@@ -188,19 +188,19 @@ describe("Array", function () {
 
   describe("toQuery()", function () {
     var components,
-      query;
+        query;
 
     beforeEach(function () {
       components = ['!foo', '*:baz'];
       query = $data.Query.create(components);
       spyOn($data.Query, 'create').and
-        .returnValue(query);
+      .returnValue(query);
       result = components.toQuery();
     });
 
     it("should create a Query instance", function () {
       expect($data.Query.create)
-        .toHaveBeenCalledWith(components);
+      .toHaveBeenCalledWith(components);
     });
 
     it("should return created instance", function () {

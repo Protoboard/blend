@@ -6,32 +6,32 @@
  * @interface $data.Stackable
  */
 $data.Stackable = $oop.getClass('$data.Stackable')
-  .define(/** @lends $data.Stackable# */{
-    /**
-     * @param {*} element
-     * @returns {$data.Stackable}
-     */
-    push: function (element) {},
+.define(/** @lends $data.Stackable# */{
+  /**
+   * @param {*} element
+   * @returns {$data.Stackable}
+   */
+  push: function (element) {},
 
-    /**
-     * @returns {*} Removed element
-     */
-    pop: function () {},
+  /**
+   * @returns {*} Removed element
+   */
+  pop: function () {},
 
-    /**
-     * @param {*} element
-     * @returns {$data.Stackable}
-     */
-    unshift: function (element) {},
+  /**
+   * @param {*} element
+   * @returns {$data.Stackable}
+   */
+  unshift: function (element) {},
 
-    /**
-     * @returns {*} Removed element
-     */
-    shift: function () {},
+  /**
+   * @returns {*} Removed element
+   */
+  shift: function () {},
 
-    /**
-     * @param {$data.Stackable} stackable
-     * @returns {$data.Stackable} Concatenated stackable
-     */
-    concat: function (stackable) {}
-  });
+  /**
+   * @param {$data.Stackable} stackable
+   * @returns {$data.Stackable} Concatenated stackable
+   */
+  concat: function (stackable) {}
+});

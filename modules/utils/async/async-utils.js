@@ -15,8 +15,8 @@ $oop.copyProperties($utils, /** @lends $utils */{
    */
   setTimeout: function (delay) {
     var proxyArgs = [timeoutCallback].concat(slice.call(arguments)),
-      timeout = setTimeout.apply(null, proxyArgs).toTimeout(),
-      deferred = timeout.timerDeferred;
+        timeout = setTimeout.apply(null, proxyArgs).toTimeout(),
+        deferred = timeout.timerDeferred;
 
     function timeoutCallback() {
       deferred.resolve.apply(deferred, arguments);
@@ -38,8 +38,8 @@ $oop.copyProperties($utils, /** @lends $utils */{
    */
   setInterval: function (delay) {
     var proxyArgs = [intervalCallback].concat(slice.call(arguments)),
-      interval = setInterval.apply(null, proxyArgs).toInterval(),
-      deferred = interval.timerDeferred;
+        interval = setInterval.apply(null, proxyArgs).toInterval(),
+        deferred = interval.timerDeferred;
 
     function intervalCallback() {
       deferred.notify.apply(deferred, arguments);

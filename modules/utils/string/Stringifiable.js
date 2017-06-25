@@ -7,7 +7,7 @@
  * @interface $utils.Stringifiable
  */
 $utils.Stringifiable = $oop.getClass('$utils.Stringifiable')
-  .define(/** @lends $utils.Stringifiable# */{
-    /** @returns {string} */
-    toString: function () {}
-  });
+.define(/** @lends $utils.Stringifiable# */{
+  /** @returns {string} */
+  toString: function () {}
+});

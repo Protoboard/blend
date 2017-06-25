@@ -1,46 +1,46 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var result;
 
   describe("StringValueHost", function () {
     var StringKeyHost,
-      StringValueHost,
-      stringValueHost;
+        StringValueHost,
+        stringValueHost;
 
     beforeEach(function () {
       StringKeyHost = $oop.getClass('test.$data.StringValueHost.StringKeyHost')
-        .extend($data.DataContainer)
-        .extend($data.KeyValueContainer)
-        .include($data.StringKeyHost)
-        .define({
-          getValuesForKey: function (key) {
-            var data = this.data;
-            return data.hasOwnProperty(key) ?
+      .extend($data.DataContainer)
+      .extend($data.KeyValueContainer)
+      .include($data.StringKeyHost)
+      .define({
+        getValuesForKey: function (key) {
+          var data = this.data;
+          return data.hasOwnProperty(key) ?
               [this.data[key]] :
               [];
-          }
-        });
+        }
+      });
 
       StringValueHost = $oop.getClass('test.$data.StringValueHost.StringValueHost')
-        .extend($data.DataContainer)
-        .extend($data.KeyValueContainer)
-        .include($data.StringValueHost)
-        .define({
-          forEachItem: function (callback) {
-            var keys = Object.keys(this.data),
+      .extend($data.DataContainer)
+      .extend($data.KeyValueContainer)
+      .include($data.StringValueHost)
+      .define({
+        forEachItem: function (callback) {
+          var keys = Object.keys(this.data),
               i, values, j;
-            for (i = 0; i < keys.length; i++) {
-              values = this.data[keys[i]];
-              for (j = 0; j < values.length; j++) {
-                callback(values[j], keys[i]);
-              }
+          for (i = 0; i < keys.length; i++) {
+            values = this.data[keys[i]];
+            for (j = 0; j < values.length; j++) {
+              callback(values[j], keys[i]);
             }
           }
-        });
+        }
+      });
 
       stringValueHost = StringValueHost.create({
         hello: ['foo', 'bar'],
@@ -63,7 +63,7 @@ describe("$data", function () {
 
       it("should return correct type", function () {
         expect($data.PairList.isIncludedBy(result))
-          .toBeTruthy();
+        .toBeTruthy();
       });
 
       it("should return joined data", function () {

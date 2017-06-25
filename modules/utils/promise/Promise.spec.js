@@ -1,8 +1,8 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $oop = window['giant-oop'],
-  $utils = window['giant-utils'];
+    $oop = window['giant-oop'],
+    $utils = window['giant-utils'];
 
 describe("$assert", function () {
   var promise;
@@ -79,7 +79,7 @@ describe("$utils", function () {
 
     describe("then()", function () {
       var result,
-        handlers;
+          handlers;
 
       beforeEach(function () {
         result = promise.then();
@@ -97,9 +97,9 @@ describe("$utils", function () {
             progressHandler: function () {}
           };
           promise.then(
-            handlers.successHandler,
-            handlers.failureHandler,
-            handlers.progressHandler);
+              handlers.successHandler,
+              handlers.failureHandler,
+              handlers.progressHandler);
         });
 
         it("should add handlers", function () {
@@ -116,14 +116,14 @@ describe("$utils", function () {
             ];
             spyOn(handlers, 'progressHandler');
             promise.then(
-              handlers.successHandler,
-              handlers.failureHandler,
-              handlers.progressHandler);
+                handlers.successHandler,
+                handlers.failureHandler,
+                handlers.progressHandler);
           });
 
           it("should call handler with recorded arguments", function () {
             expect(handlers.progressHandler.calls.allArgs())
-              .toEqual(promise.notificationArguments);
+            .toEqual(promise.notificationArguments);
           });
         });
       });
@@ -139,9 +139,9 @@ describe("$utils", function () {
           };
           spyOn(handlers, 'successHandler');
           promise.then(
-            handlers.successHandler,
-            handlers.failureHandler,
-            handlers.progressHandler);
+              handlers.successHandler,
+              handlers.failureHandler,
+              handlers.progressHandler);
         });
 
         it("should call success handler", function () {
@@ -166,9 +166,9 @@ describe("$utils", function () {
           };
           spyOn(handlers, 'failureHandler');
           promise.then(
-            handlers.successHandler,
-            handlers.failureHandler,
-            handlers.progressHandler);
+              handlers.successHandler,
+              handlers.failureHandler,
+              handlers.progressHandler);
         });
 
         it("should call failure handler", function () {
@@ -185,7 +185,7 @@ describe("$utils", function () {
 
     describe("when()", function () {
       var deferred, thenable,
-        thenableResolve, thenableReject;
+          thenableResolve, thenableReject;
 
       beforeEach(function () {
         deferred = $utils.Deferred.create();
@@ -212,16 +212,16 @@ describe("$utils", function () {
 
       describe("when all promises are fulfilled", function () {
         var successHandler,
-          progressHandler;
+            progressHandler;
 
         beforeEach(function () {
           successHandler = jasmine.createSpy();
           progressHandler = jasmine.createSpy();
 
           promise.then(
-            successHandler,
-            null,
-            progressHandler);
+              successHandler,
+              null,
+              progressHandler);
 
           thenableResolve("foo", "bar");
           deferred.resolve("baz", "quux");
@@ -235,14 +235,14 @@ describe("$utils", function () {
           // first argument of the first call to successHandler
           // ... is an array of Arguments
           expect(successHandler.calls.argsFor(0)[0]
-            .map(function (arg) {
-              return [].slice.call(arg);
-            }))
-            .toEqual([
-              ["foo"],
-              ["foo", "bar"],
-              ["baz", "quux"]
-            ]);
+          .map(function (arg) {
+            return [].slice.call(arg);
+          }))
+          .toEqual([
+            ["foo"],
+            ["foo", "bar"],
+            ["baz", "quux"]
+          ]);
         });
       });
 

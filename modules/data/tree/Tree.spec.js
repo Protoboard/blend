@@ -44,12 +44,12 @@ describe("$assert", function () {
 describe("$data", function () {
   describe("Tree", function () {
     var Tree,
-      tree,
-      result;
+        tree,
+        result;
 
     beforeEach(function () {
       Tree = $oop.getClass('test.$data.Tree.Tree')
-        .extend($data.Tree);
+      .extend($data.Tree);
 
       tree = Tree.create({
         foo: {
@@ -391,14 +391,14 @@ describe("$data", function () {
       describe("for absent path", function () {
         it("should return undefined", function () {
           expect(tree.getNode('foo.bar.baz'.toPath()))
-            .toBeUndefined();
+          .toBeUndefined();
         });
       });
     });
 
     describe("getNodeWrapped()", function () {
       var path,
-        node;
+          node;
 
       beforeEach(function () {
         path = 'foo.bar'.toPath();
@@ -422,7 +422,7 @@ describe("$data", function () {
 
     describe("getInitializedNode()", function () {
       var initialNode,
-        initializer;
+          initializer;
 
       beforeEach(function () {
         initialNode = [];
@@ -466,8 +466,8 @@ describe("$data", function () {
 
     describe("getInitializedNodeWrapped()", function () {
       var path,
-        initializer,
-        node;
+          initializer,
+          node;
 
       beforeEach(function () {
         path = 'foo.bar'.toPath();
@@ -479,7 +479,7 @@ describe("$data", function () {
 
       it("should invoke getInitializedNode()", function () {
         expect(tree.getInitializedNode)
-          .toHaveBeenCalledWith(path, initializer);
+        .toHaveBeenCalledWith(path, initializer);
       });
 
       it("should return Tree instance", function () {
@@ -532,7 +532,7 @@ describe("$data", function () {
 
     describe("appendNode()", function () {
       var path, value,
-        callback;
+          callback;
 
       beforeEach(function () {
         path = 'bar'.toPath();
@@ -610,7 +610,7 @@ describe("$data", function () {
 
         it("should set node", function () {
           expect(tree.setNode)
-            .toHaveBeenCalledWith(path, node);
+          .toHaveBeenCalledWith(path, node);
         });
       });
 
@@ -668,7 +668,7 @@ describe("$data", function () {
               }
             });
             expect(tree.data.foo.bar.hasOwnProperty(0))
-              .toBeFalsy();
+            .toBeFalsy();
           });
         });
       });
@@ -810,7 +810,7 @@ describe("$data", function () {
 
     describe("queryNodesWrapped()", function () {
       var query,
-        data;
+          data;
 
       beforeEach(function () {
         query = 'foo.bar.*'.toQuery();
@@ -852,7 +852,7 @@ describe("$data", function () {
 
     describe("queryKeysWrapped()", function () {
       var query,
-        data;
+          data;
 
       beforeEach(function () {
         query = 'foo.bar.*'.toQuery();
@@ -863,7 +863,7 @@ describe("$data", function () {
 
       it("should return StringCollection instance", function () {
         expect($data.StringCollection.isIncludedBy(result))
-          .toBeTruthy();
+        .toBeTruthy();
       });
 
       it("should invoke queryKeys() with query", function () {
@@ -898,7 +898,7 @@ describe("$data", function () {
 
     describe("queryPathsWrapped()", function () {
       var query,
-        data;
+          data;
 
       beforeEach(function () {
         query = 'foo.bar.*'.toQuery();

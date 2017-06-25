@@ -53,7 +53,7 @@ describe("$data", function () {
     describe("for object with multiple properties", function () {
       it("should return true", function () {
         expect($data.isMultiKeyObject({foo: "bar", baz: "quux"}))
-          .toBe(true);
+        .toBe(true);
         expect($data.isMultiKeyObject({
           foo: "bar",
           baz: "quux",
@@ -65,7 +65,7 @@ describe("$data", function () {
 
   describe("shallowCopy()", function () {
     var original,
-      copy;
+        copy;
 
     describe("for undefined", function () {
       it("should return undefined", function () {
@@ -114,7 +114,7 @@ describe("$data", function () {
 
   describe("deepCopy()", function () {
     var original,
-      copy;
+        copy;
 
     beforeEach(function () {
       original = {

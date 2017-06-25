@@ -1,18 +1,18 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $utils = window['giant-utils'];
+    $utils = window['giant-utils'];
 
 describe("$utils", function () {
   describe("Retrievable", function () {
     var Retrievable,
-      instance;
+        instance;
 
     beforeEach(function () {
       $utils.Identifiable._lastInstanceId = -1;
       $utils.Retrievable._instanceRegistry = {};
       Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
-        .extend($utils.Retrievable);
+      .extend($utils.Retrievable);
     });
 
     describe("create()", function () {

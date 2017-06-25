@@ -1,13 +1,13 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var data,
-    OrderedList,
-    orderedList,
-    result;
+      OrderedList,
+      orderedList,
+      result;
 
   describe("OrderedList", function () {
     var comparer;
@@ -18,7 +18,7 @@ describe("$data", function () {
         return a > b ? 1 : a < b ? -1 : 0;
       };
       OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
-        .extend($data.OrderedList);
+      .extend($data.OrderedList);
       orderedList = OrderedList.create(data, comparer);
     });
 
@@ -39,7 +39,7 @@ describe("$data", function () {
         it("should set default properties", function () {
           expect(orderedList.data).toEqual([]);
           expect(orderedList._comparer)
-            .toBe(orderedList._defaultComparer);
+          .toBe(orderedList._defaultComparer);
         });
       });
 
@@ -204,12 +204,12 @@ describe("$data", function () {
     describe("getRange()", function () {
       beforeEach(function () {
         orderedList
-          .setItem('baz')
-          .setItem('quux')
-          .setItem('hello')
-          .setItem('world')
-          .setItem('lorem')
-          .setItem('ipsum');
+        .setItem('baz')
+        .setItem('quux')
+        .setItem('hello')
+        .setItem('world')
+        .setItem('lorem')
+        .setItem('ipsum');
 
         result = orderedList.getRange('foo', 'lorem');
       });
@@ -271,7 +271,7 @@ describe("$data", function () {
 
       it("should invoke getRange() with same arguments", function () {
         expect(orderedList.getRange).toHaveBeenCalledWith(
-          'foo', 'bar', 10, 5);
+            'foo', 'bar', 10, 5);
       });
 
       it("should wrap result of getRange()", function () {

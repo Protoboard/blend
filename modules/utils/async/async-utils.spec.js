@@ -13,8 +13,8 @@ describe("$utils", function () {
 
   describe("setTimeout()", function () {
     var successHandler,
-      failureHandler,
-      result;
+        failureHandler,
+        result;
 
     beforeEach(function () {
       result = $utils.setTimeout(10, "foo");
@@ -50,8 +50,8 @@ describe("$utils", function () {
 
   describe("setInterval()", function () {
     var progressHandler,
-      failureHandler,
-      result;
+        failureHandler,
+        result;
 
     beforeEach(function () {
       result = $utils.setInterval(10, "foo");

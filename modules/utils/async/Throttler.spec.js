@@ -43,7 +43,7 @@ describe("$utils", function () {
 
       it("should add timer to list", function () {
         expect($utils.Interval.isIncludedBy(throttler._scheduleTimers[0]))
-          .toBeTruthy();
+        .toBeTruthy();
       });
 
       it("should increment call count", function () {

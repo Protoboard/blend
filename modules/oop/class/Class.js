@@ -23,7 +23,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     $assert.isString(classId, "No class ID was specified.");
 
     var classes = this.classLookup,
-      Class = classes[classId];
+        Class = classes[classId];
 
     if (!Class) {
       // class is not initialized yet
@@ -160,11 +160,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var members = this.__members;
 
     Object.getOwnPropertyNames(batch)
-      .forEach(function (memberName) {
-        // todo Throw on conflict
-        members[memberName] = batch[memberName];
-        return members;
-      });
+    .forEach(function (memberName) {
+      // todo Throw on conflict
+      members[memberName] = batch[memberName];
+      return members;
+    });
   },
 
   /**
@@ -176,10 +176,10 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var delegates = this.__delegates;
 
     Object.getOwnPropertyNames(batch)
-      .forEach(function (memberName) {
-        delegates[memberName] = batch[memberName];
-        return delegates;
-      });
+    .forEach(function (memberName) {
+      delegates[memberName] = batch[memberName];
+      return delegates;
+    });
   },
 
   /**
@@ -191,9 +191,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToContributors: function (Class, Next) {
     var contributors = this.__contributors,
-      contributorList = contributors.list,
-      contributorLookup = contributors.lookup,
-      classId = Class.__classId;
+        contributorList = contributors.list,
+        contributorLookup = contributors.lookup,
+        classId = Class.__classId;
 
     if (!hOP.call(contributorLookup, classId)) {
       if (Next) {
@@ -220,40 +220,40 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addMethodsToMatrix: function (members, classId, nextId) {
     var methodMatrix = this.__methodMatrix,
-      contributorLookup = this.__contributors.lookup,
-      classIndex = contributorLookup[classId],
-      nextIndex = contributorLookup[nextId];
+        contributorLookup = this.__contributors.lookup,
+        classIndex = contributorLookup[classId],
+        nextIndex = contributorLookup[nextId];
 
     if (nextId !== undefined) {
       // through class is defined
       // making room for incoming methods
       Object.getOwnPropertyNames(methodMatrix)
-        // we don't need to splice where there are no methods beyond nextIndex
-        .filter(function (methodName) {
-          var methods = methodMatrix[methodName];
-          return methods && methods.length >= nextIndex;
-        })
-        // making room for contributor
-        .forEach(function (methodName) {
-          var methods = methodMatrix[methodName];
-          methods.splice(nextIndex - 1, 0, undefined);
-        });
+      // we don't need to splice where there are no methods beyond nextIndex
+      .filter(function (methodName) {
+        var methods = methodMatrix[methodName];
+        return methods && methods.length >= nextIndex;
+      })
+      // making room for contributor
+      .forEach(function (methodName) {
+        var methods = methodMatrix[methodName];
+        methods.splice(nextIndex - 1, 0, undefined);
+      });
     }
 
     // just setting members in method matrix
     Object.getOwnPropertyNames(members)
-      .filter(function (memberName) {
-        return typeof members[memberName] === 'function';
-      })
-      .forEach(function (methodName) {
-        var methods;
-        if (hOP.call(methodMatrix, methodName)) {
-          methods = methodMatrix[methodName];
-        } else {
-          methods = methodMatrix[methodName] = [];
-        }
-        methods[classIndex] = members[methodName];
-      });
+    .filter(function (memberName) {
+      return typeof members[memberName] === 'function';
+    })
+    .forEach(function (methodName) {
+      var methods;
+      if (hOP.call(methodMatrix, methodName)) {
+        methods = methodMatrix[methodName];
+      } else {
+        methods = methodMatrix[methodName] = [];
+      }
+      methods[classIndex] = members[methodName];
+    });
   },
 
   /**
@@ -263,26 +263,26 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addPropertiesToClass: function (members) {
     var Class = $oop.Class,
-      that = this;
+        that = this;
 
     Object.getOwnPropertyNames(members)
-      .filter(function (memberName) {
-        return typeof members[memberName] !== 'function';
-      })
-      .forEach(function (propertyName) {
-        var propertyValue = members[propertyName];
+    .filter(function (memberName) {
+      return typeof members[memberName] !== 'function';
+    })
+    .forEach(function (propertyName) {
+      var propertyValue = members[propertyName];
 
-        if (Class.isPrototypeOf(propertyValue) &&
+      if (Class.isPrototypeOf(propertyValue) &&
           Object.getPrototypeOf(propertyValue) !== Class
-        ) {
-          $assert.assert(false, [
-            "Instance not allowed as static property value for '" + that.__classId + "." + propertyName + "'.",
-            "Can't build."
-          ].join(" "));
-        }
+      ) {
+        $assert.assert(false, [
+          "Instance not allowed as static property value for '" + that.__classId + "." + propertyName + "'.",
+          "Can't build."
+        ].join(" "));
+      }
 
-        that[propertyName] = propertyValue;
-      });
+      that[propertyName] = propertyValue;
+    });
   },
 
   /**
@@ -299,33 +299,33 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var that = this;
 
     Object.getOwnPropertyNames(members)
-      .filter(function (memberName) {
-        return typeof members[memberName] === 'function';
-      })
-      .filter(function (methodName) {
-        return !hOP.call(that, methodName);
-      })
-      .forEach(function (methodName) {
-        var methodMatrix = that.__methodMatrix;
+    .filter(function (memberName) {
+      return typeof members[memberName] === 'function';
+    })
+    .filter(function (methodName) {
+      return !hOP.call(that, methodName);
+    })
+    .forEach(function (methodName) {
+      var methodMatrix = that.__methodMatrix;
 
-        // todo Test
-        that[methodName] = function () {
-          var methods = methodMatrix[methodName],
+      // todo Test
+      that[methodName] = function () {
+        var methods = methodMatrix[methodName],
             methodCount = methods.length,
             i, method, result;
 
-          // calling function in order of contributions
-          for (i = 0; i < methodCount; i++) {
-            method = methods[i];
-            if (method) {
-              method.returned = result;
-              result = method.apply(this, arguments);
-            }
+        // calling function in order of contributions
+        for (i = 0; i < methodCount; i++) {
+          method = methods[i];
+          if (method) {
+            method.returned = result;
+            result = method.apply(this, arguments);
           }
+        }
 
-          return result;
-        };
-      });
+        return result;
+      };
+    });
   },
 
   /**
@@ -334,9 +334,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToInterfaces: function (Interface) {
     var interfaces = this.__interfaces.downstream,
-      interfaceList = interfaces.list,
-      interfaceLookup = interfaces.lookup,
-      interfaceId = Interface.__classId;
+        interfaceList = interfaces.list,
+        interfaceLookup = interfaces.lookup,
+        interfaceId = Interface.__classId;
 
     if (!hOP.call(interfaceLookup, interfaceId)) {
       interfaceList.push(Interface);
@@ -350,9 +350,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToImplementers: function (Class) {
     var implementers = this.__interfaces.upstream,
-      implementerList = implementers.list,
-      implementerLookup = implementers.lookup,
-      classId = Class.__classId;
+        implementerList = implementers.list,
+        implementerLookup = implementers.lookup,
+        classId = Class.__classId;
 
     if (!hOP.call(implementerLookup, classId)) {
       implementerList.push(Class);
@@ -366,22 +366,22 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _removeFromMissingMethods: function (members) {
     var missingMethodNames = this.__missingMethodNames.list,
-      missingMethodLookup = this.__missingMethodNames.lookup;
+        missingMethodLookup = this.__missingMethodNames.lookup;
 
     // removing methods from registry
     Object.getOwnPropertyNames(members)
-      .filter(function (memberName) {
-        return typeof members[memberName] === 'function';
-      })
-      // leaving only those already registered
-      .filter(function (methodName) {
-        return hOP.call(missingMethodLookup, methodName);
-      })
-      // de-registering method names
-      .forEach(function (implementedMethodName) {
-        missingMethodNames.splice(missingMethodNames.indexOf(implementedMethodName), 1);
-        delete missingMethodLookup[implementedMethodName];
-      });
+    .filter(function (memberName) {
+      return typeof members[memberName] === 'function';
+    })
+    // leaving only those already registered
+    .filter(function (methodName) {
+      return hOP.call(missingMethodLookup, methodName);
+    })
+    // de-registering method names
+    .forEach(function (implementedMethodName) {
+      missingMethodNames.splice(missingMethodNames.indexOf(implementedMethodName), 1);
+      delete missingMethodLookup[implementedMethodName];
+    });
   },
 
   /**
@@ -392,37 +392,37 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToMissingMethods: function (members) {
     var contributions = this.__contributors.list,
-      interfaces = this.__interfaces.downstream.list,
-      missingMethodNames = this.__missingMethodNames.list,
-      missingMethodLookup = this.__missingMethodNames.lookup;
+        interfaces = this.__interfaces.downstream.list,
+        missingMethodNames = this.__missingMethodNames.list,
+        missingMethodLookup = this.__missingMethodNames.lookup;
 
     Object.getOwnPropertyNames(members)
-      .filter(function (memberName) {
-        return typeof members[memberName] === 'function';
-      })
-      // leaving out any methods already found in contributions
-      .filter(function (methodName) {
-        return !contributions.some(function (Class) {
-          var method = Class.__members[methodName];
-          return typeof method === 'function';
-        });
-      })
-      // leaving out methods not found in any interfaces
-      .filter(function (methodName) {
-        return interfaces.some(function (Interface) {
-          var method = Interface.__members[methodName];
-          return typeof method === 'function';
-        });
-      })
-      // leaving only those not yet registered
-      .filter(function (missingMethodName) {
-        return !hOP.call(missingMethodLookup, missingMethodName);
-      })
-      // registering method names as missing
-      .forEach(function (missingMethodName) {
-        missingMethodNames.push(missingMethodName);
-        missingMethodLookup[missingMethodName] = true;
+    .filter(function (memberName) {
+      return typeof members[memberName] === 'function';
+    })
+    // leaving out any methods already found in contributions
+    .filter(function (methodName) {
+      return !contributions.some(function (Class) {
+        var method = Class.__members[methodName];
+        return typeof method === 'function';
       });
+    })
+    // leaving out methods not found in any interfaces
+    .filter(function (methodName) {
+      return interfaces.some(function (Interface) {
+        var method = Interface.__members[methodName];
+        return typeof method === 'function';
+      });
+    })
+    // leaving only those not yet registered
+    .filter(function (missingMethodName) {
+      return !hOP.call(missingMethodLookup, missingMethodName);
+    })
+    // registering method names as missing
+    .forEach(function (missingMethodName) {
+      missingMethodNames.push(missingMethodName);
+      missingMethodLookup[missingMethodName] = true;
+    });
   },
 
   /**
@@ -431,9 +431,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToIncludes: function (Class) {
     var includes = this.__includes.downstream,
-      includeList = includes.list,
-      includeLookup = includes.lookup,
-      classId = Class.__classId;
+        includeList = includes.list,
+        includeLookup = includes.lookup,
+        classId = Class.__classId;
 
     if (!hOP.call(includeLookup, classId)) {
       // adding include and initial distance
@@ -448,9 +448,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToIncluders: function (Class) {
     var hosts = this.__includes.upstream,
-      hostList = hosts.list,
-      hostLookup = hosts.lookup,
-      classId = Class.__classId;
+        hostList = hosts.list,
+        hostLookup = hosts.lookup,
+        classId = Class.__classId;
 
     if (!hOP.call(hostLookup, classId)) {
       // adding host and initial distance
@@ -466,53 +466,53 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _updateClassDistances: function (Include) {
     var classId = this.__classId,
-      includeId = Include.__classId,
-      includeLookup = this.__includes.downstream.lookup;
+        includeId = Include.__classId,
+        includeLookup = this.__includes.downstream.lookup;
 
     // updating distance of parent paths hosts of 2nd degree includes
     var includeHosts2deg = Include.__includes.upstream,
-      includeHosts2degLookup = includeHosts2deg.lookup;
+        includeHosts2degLookup = includeHosts2deg.lookup;
     includeHosts2deg.lookup[classId] = includeLookup[includeId] =
-      includeHosts2deg.list
+        includeHosts2deg.list
         .filter(function (IncludeHost) {
           return hOP.call(includeLookup, IncludeHost.__classId);
         })
         .reduce(function (distance, IncludeHost) {
           return Math.max(distance,
-            includeLookup[IncludeHost.__classId] +
-            IncludeHost.__includes.downstream.lookup[includeId]);
+              includeLookup[IncludeHost.__classId] +
+              IncludeHost.__includes.downstream.lookup[includeId]);
         }, includeLookup[includeId]);
 
     // updating distances of child paths with lead 2nd degree includes & lookup
     var includes2deg = Include.__includes.downstream,
-      includes2degLookup = includes2deg.lookup;
+        includes2degLookup = includes2deg.lookup;
     includes2deg.list
-      .filter(function (Include2deg) {
-        return hOP.call(includeLookup, Include2deg.__classId);
-      })
-      .forEach(function (Include2deg) {
-        var include2degId = Include2deg.__classId,
+    .filter(function (Include2deg) {
+      return hOP.call(includeLookup, Include2deg.__classId);
+    })
+    .forEach(function (Include2deg) {
+      var include2degId = Include2deg.__classId,
           includeHost3degLookup = Include2deg.__includes.upstream.lookup;
-        includeHost3degLookup[classId] = includeLookup[include2degId] =
+      includeHost3degLookup[classId] = includeLookup[include2degId] =
           Math.max(includeLookup[include2degId],
-            includeLookup[includeId] +
-            includes2degLookup[include2degId]);
-      });
+              includeLookup[includeId] +
+              includes2degLookup[include2degId]);
+    });
 
     // updating distances of child paths with trail
     var hosts = this.__includes.upstream;
     hosts.list
-      .filter(function (Host) {
-        return hOP.call(Host.__includes.downstream.lookup, includeId);
-      })
-      .forEach(function (Host) {
-        var hostId = Host.__classId,
+    .filter(function (Host) {
+      return hOP.call(Host.__includes.downstream.lookup, includeId);
+    })
+    .forEach(function (Host) {
+      var hostId = Host.__classId,
           hostIncludeLookup = Host.__includes.downstream.lookup;
-        includeHosts2degLookup[hostId] = hostIncludeLookup[includeId] =
+      includeHosts2degLookup[hostId] = hostIncludeLookup[includeId] =
           Math.max(hostIncludeLookup[includeId],
-            includeLookup[includeId] +
-            hostIncludeLookup[classId]);
-      });
+              includeLookup[includeId] +
+              hostIncludeLookup[classId]);
+    });
   },
 
   /**
@@ -521,9 +521,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToExtenders: function (Class) {
     var extenders = this.__extenders,
-      extenderList = extenders.list,
-      extenderLookup = extenders.lookup,
-      classId = Class.__classId;
+        extenderList = extenders.list,
+        extenderLookup = extenders.lookup,
+        classId = Class.__classId;
 
     if (!hOP.call(extenderLookup, classId)) {
       extenderList.push(Class);
@@ -537,15 +537,15 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToRequires: function (Class) {
     var classId = this.__classId,
-      requireId = Class.__classId,
-      includeLookup = this.__includes.downstream.lookup,
-      requires = this.__requires.downstream,
-      requireList = requires.list,
-      requireLookup = requires.lookup;
+        requireId = Class.__classId,
+        includeLookup = this.__includes.downstream.lookup,
+        requires = this.__requires.downstream,
+        requireList = requires.list,
+        requireLookup = requires.lookup;
 
     if (classId !== requireId &&
-      !hOP.call(includeLookup, requireId) &&
-      !hOP.call(requireLookup, requireId)
+        !hOP.call(includeLookup, requireId) &&
+        !hOP.call(requireLookup, requireId)
     ) {
       // require is not included (which would cancel each other out)
       // adding to requires
@@ -560,9 +560,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToHosts: function (Class) {
     var hosts = this.__requires.upstream,
-      hostList = hosts.list,
-      hostLookup = hosts.lookup,
-      classId = Class.__classId;
+        hostList = hosts.list,
+        hostLookup = hosts.lookup,
+        classId = Class.__classId;
 
     if (!hOP.call(hostLookup, classId)) {
       hostList.push(Class);
@@ -576,9 +576,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _removeFromRequires: function (Class) {
     var classId = Class.__classId,
-      requires = this.__requires.downstream,
-      requireList = requires.list,
-      requireLookup = requires.lookup;
+        requires = this.__requires.downstream,
+        requireList = requires.list,
+        requireLookup = requires.lookup;
 
     if (hOP.call(requireLookup, classId)) {
       requireList.splice(requireList.indexOf(classId), 1);
@@ -597,23 +597,23 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     // transferring requires & includes of class to current class as requires
     Class.__requires.downstream.list.concat(Class.__includes.downstream.list)
-      .forEach(function (Class) {
-        // adding require to registry
-        that._addToRequires(Class);
+    .forEach(function (Class) {
+      // adding require to registry
+      that._addToRequires(Class);
 
-        // adding to hosts on require
-        Class._addToHosts(that);
-      });
+      // adding to hosts on require
+      Class._addToHosts(that);
+    });
 
     // transferring class AS require to includers and hosts of current class
     this.__includes.upstream.list.concat(this.__requires.upstream.list)
-      .forEach(function (Host) {
-        // adding require to registry
-        Host._addToRequires(Class);
+    .forEach(function (Host) {
+      // adding require to registry
+      Host._addToRequires(Class);
 
-        // adding to hosts on require
-        Class._addToHosts(Host);
-      });
+      // adding to hosts on require
+      Class._addToHosts(Host);
+    });
   },
 
   /**
@@ -641,19 +641,19 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var classId = this.__classId;
 
     this.__includes.upstream.list
-      .forEach(function (Class) {
-        // adding methods to lookup at specified index
-        Class._addMethodsToMatrix(members, classId);
+    .forEach(function (Class) {
+      // adding methods to lookup at specified index
+      Class._addMethodsToMatrix(members, classId);
 
-        // adding / overwriting properties
-        Class._addPropertiesToClass(members);
+      // adding / overwriting properties
+      Class._addPropertiesToClass(members);
 
-        // adding wrapper method when necessary
-        Class._addWrapperMethodsToClass(members);
+      // adding wrapper method when necessary
+      Class._addWrapperMethodsToClass(members);
 
-        // updating missing method names
-        Class._removeFromMissingMethods(members);
-      });
+      // updating missing method names
+      Class._removeFromMissingMethods(members);
+    });
   },
 
   /**
@@ -664,10 +664,10 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _delegateToImplementers: function (members) {
     this.__interfaces.upstream.list
-      .forEach(function (Class) {
-        // updating missing method names
-        Class._addToMissingMethods(members);
-      });
+    .forEach(function (Class) {
+      // updating missing method names
+      Class._addToMissingMethods(members);
+    });
   },
 
   /**
@@ -679,13 +679,13 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _gatherAllContributorsFrom: function (Class) {
     var contributors = [],
-      contributorLookup = {};
+        contributorLookup = {};
 
     (function getContributors(Class) {
       var classId = Class.__classId,
-        contributorList = Class.__contributors.list,
-        contributorCount = contributorList.length,
-        i, contributor;
+          contributorList = Class.__contributors.list,
+          contributorCount = contributorList.length,
+          i, contributor;
 
       // adding deeper inclusions' contributions first to maintain order of
       // method calls
@@ -713,16 +713,16 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _updateForwards: function () {
     var forwards = this.__forwards,
-      hostDistances = this.__includes.upstream.lookup;
+        hostDistances = this.__includes.upstream.lookup;
 
     // sorting forwards by priority (descending)
     // here we're relying on Array#sort() mutating the array as the same array
     // is referenced from the final class
     forwards.sort(function (/**$oop.ForwardDescriptor*/a, /**$oop.ForwardDescriptor*/b) {
       var aId = a.class.__classId,
-        bId = b.class.__classId,
-        ap = hostDistances[aId] || 0,
-        bp = hostDistances[bId] || 0;
+          bId = b.class.__classId,
+          ap = hostDistances[aId] || 0,
+          bp = hostDistances[bId] || 0;
       return ap > bp ? -1 : bp > ap ? 1 : 0;
     });
   },
@@ -734,9 +734,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   create: function () {
     // retrieving forward class (if any)
     var that = this,
-      forwards = this.__forwards,
-      forwardsCount = forwards.length,
-      i, forward;
+        forwards = this.__forwards,
+        forwardsCount = forwards.length,
+        i, forward;
     for (i = 0; i < forwardsCount; i++) {
       forward = forwards[i];
       if (forward.filter.apply(this, arguments)) {
@@ -749,8 +749,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     // fetching cached instance
     var mapper = that.__mapper,
-      instances,
-      instanceId, instance;
+        instances,
+        instanceId, instance;
     if (mapper) {
       instances = that.__instanceLookup;
       instanceId = mapper.apply(this, arguments);
@@ -768,9 +768,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       $assert.assert(false, [
         "Class '" + that.__classId + "' doesn't implement method(s): " +
         missingMethodNames
-          .map(function (methodName) {
-            return "'" + methodName + "'";
-          }) + ".",
+        .map(function (methodName) {
+          return "'" + methodName + "'";
+        }) + ".",
         "Can't instantiate."
       ].join(" "));
     }
@@ -782,10 +782,10 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       $assert.assert(false, [
         "Class '" + that.__classId + "' doesn't satisfy require(s): " +
         requires
-          .map(function (Class) {
-            return "'" + Class.__classId + "'";
-          })
-          .join(",") + ".",
+        .map(function (Class) {
+          return "'" + Class.__classId + "'";
+        })
+        .join(",") + ".",
         "Can't instantiate."
       ].join(" "));
     }
@@ -934,7 +934,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   extend: function (Class) {
     // gathering all dependencies (including Class)
     var that = this,
-      contributors = this._gatherAllContributorsFrom(Class);
+        contributors = this._gatherAllContributorsFrom(Class);
 
     // including all dependencies
     contributors.forEach(function (Class) {
@@ -1045,7 +1045,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   isImplementedBy: function (Class) {
     return $oop.Class.isPrototypeOf(Class) &&
-      Class.implements(this);
+        Class.implements(this);
   },
 
   /**
@@ -1059,7 +1059,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var classId = Class.__classId;
 
     return this.__classId === classId ||
-      !!this.__includes.downstream.lookup[classId];
+        !!this.__includes.downstream.lookup[classId];
   },
 
   /**
@@ -1069,7 +1069,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   isIncludedBy: function (Class) {
     return $oop.Class.isPrototypeOf(Class) &&
-      Class.includes(this);
+        Class.includes(this);
   },
 
   /**
@@ -1090,7 +1090,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   isRequiredBy: function (Class) {
     return $oop.Class.isPrototypeOf(Class) &&
-      Class.requires(this);
+        Class.requires(this);
   },
 
   /**
@@ -1101,7 +1101,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   elevateMethods: function (methodName) {
     var argumentCount = arguments.length,
-      i, method;
+        i, method;
 
     for (i = 0; i < argumentCount; i++) {
       methodName = arguments[i];
@@ -1131,7 +1131,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
  */
 $assert.isClass = function (expr, message) {
   return $assert.assert(
-    $oop.Class.isPrototypeOf(expr), message);
+      $oop.Class.isPrototypeOf(expr), message);
 };
 
 /**
@@ -1141,6 +1141,6 @@ $assert.isClass = function (expr, message) {
  */
 $assert.isClassOptional = function (expr, message) {
   return $assert.assert(
-    expr === undefined ||
-    $oop.Class.isPrototypeOf(expr), message);
+      expr === undefined ||
+      $oop.Class.isPrototypeOf(expr), message);
 };

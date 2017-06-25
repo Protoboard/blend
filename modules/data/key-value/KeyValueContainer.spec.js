@@ -1,16 +1,16 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $utils = window['giant-utils'],
-  $data = window['giant-data'];
+    $utils = window['giant-utils'],
+    $data = window['giant-data'];
 
 describe("$data", function () {
   describe("KeyValueContainer", function () {
     var data,
-      KeyValueContainer,
-      keyValueContainer,
-      Settable,
-      result;
+        KeyValueContainer,
+        keyValueContainer,
+        Settable,
+        result;
 
     beforeEach(function () {
       data = {
@@ -19,30 +19,30 @@ describe("$data", function () {
       };
 
       KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
-        .extend($data.DataContainer)
-        .extend($data.KeyValueContainer)
-        .define({
-          setItem: function (key, value) {
-            this.data[key] = value;
-          },
-          forEachItem: function (callback, context) {
-            var data = this.data,
+      .extend($data.DataContainer)
+      .extend($data.KeyValueContainer)
+      .define({
+        setItem: function (key, value) {
+          this.data[key] = value;
+        },
+        forEachItem: function (callback, context) {
+          var data = this.data,
               keys = Object.keys(this.data),
               i, key;
-            for (i = 0; i < keys.length; i++) {
-              key = keys[i];
-              callback.call(context || this, data[key], key);
-            }
+          for (i = 0; i < keys.length; i++) {
+            key = keys[i];
+            callback.call(context || this, data[key], key);
           }
-        });
+        }
+      });
 
       Settable = $oop.getClass('test.$data.KeyValueContainer.Settable')
-        .extend($data.DataContainer)
-        .define({
-          setItem: function (key, value) {
-            this.data[key] = value;
-          }
-        });
+      .extend($data.DataContainer)
+      .define({
+        setItem: function (key, value) {
+          this.data[key] = value;
+        }
+      });
 
       keyValueContainer = KeyValueContainer.create(data);
     });
@@ -67,9 +67,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and
-          .callFake(function (value) {
-            return value[0] === 'F';
-          });
+        .callFake(function (value) {
+          return value[0] === 'F';
+        });
         result = keyValueContainer.filter(callback);
       });
 
@@ -112,9 +112,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and.callFake(
-          function (reduced, value) {
-            return reduced + value;
-          });
+            function (reduced, value) {
+              return reduced + value;
+            });
         result = keyValueContainer.reduce(callback, '');
       });
 
@@ -219,16 +219,16 @@ describe("$data", function () {
 
       beforeEach(function () {
         KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
-          .extend($data.DataContainer)
-          .define({
-            init: function (data) {
-              this.data = data || [];
-            },
+        .extend($data.DataContainer)
+        .define({
+          init: function (data) {
+            this.data = data || [];
+          },
 
-            setItem: function (key, value) {
-              this.data.push([key, value]);
-            }
-          });
+          setItem: function (key, value) {
+            this.data.push([key, value]);
+          }
+        });
 
         result = keyValueContainer.toType(KeyValueContainer);
       });
@@ -250,9 +250,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and
-          .callFake(function (value) {
-            return '_' + value;
-          });
+        .callFake(function (value) {
+          return '_' + value;
+        });
 
         spyOn($data, 'getMapResultClass').and.returnValue(Settable);
 
@@ -299,9 +299,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and
-          .callFake(function (value) {
-            return value.toUpperCase();
-          });
+        .callFake(function (value) {
+          return value.toUpperCase();
+        });
 
         spyOn($data, 'getMapResultClass').and.returnValue(Settable);
 
@@ -333,9 +333,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and
-          .callFake(function (foo, value) {
-            return value.toLowerCase();
-          });
+        .callFake(function (foo, value) {
+          return value.toLowerCase();
+        });
 
         spyOn($data, 'getMapResultClass').and.returnValue(Settable);
 
@@ -359,9 +359,9 @@ describe("$data", function () {
       describe("on no extra arguments", function () {
         beforeEach(function () {
           callback = jasmine.createSpy().and
-            .callFake(function (value) {
-              return value.toLowerCase();
-            });
+          .callFake(function (value) {
+            return value.toLowerCase();
+          });
           result = keyValueContainer.passEachValueTo(callback);
         });
 
@@ -429,12 +429,12 @@ describe("$data", function () {
 
       beforeEach(function () {
         Class = $oop.getClass('test.$data.KeyValueContainer.Class')
-          .define({
-            init: function (arg1, arg2) {
-              this.arg1 = arg1;
-              this.arg2 = arg2;
-            }
-          });
+        .define({
+          init: function (arg1, arg2) {
+            this.arg1 = arg1;
+            this.arg2 = arg2;
+          }
+        });
         spyOn(Class, 'create').and.callThrough();
         spyOn($data, 'getMapResultClass').and.returnValue(Settable);
         result = keyValueContainer.createWithEachValue(Class, 1, 'baz');
@@ -459,11 +459,11 @@ describe("$data", function () {
 
         beforeEach(function () {
           Class2 = $oop.getClass('test.$data.KeyValueContainer.Class2')
-            .define({
-              init: function (arg1) {
-                this.arg1 = arg1;
-              }
-            });
+          .define({
+            init: function (arg1) {
+              this.arg1 = arg1;
+            }
+          });
           spyOn(Class2, 'create').and.callThrough();
           result = keyValueContainer.createWithEachValue(Class2);
         });
@@ -538,7 +538,7 @@ describe("$data", function () {
 
     describe("filterByValueType()", function () {
       var object = {},
-        container = $data.DataContainer.create();
+          container = $data.DataContainer.create();
 
       beforeEach(function () {
         keyValueContainer = KeyValueContainer.create({

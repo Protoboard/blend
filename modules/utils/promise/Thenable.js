@@ -6,16 +6,16 @@
  * @interface $utils.Thenable
  */
 $utils.Thenable = $oop.getClass('$utils.Thenable')
-  .define(/** @lends $utils.Thenable# */{
-    /**
-     * @param {function} successHandler
-     * @param {function} failureHandler
-     * @param {function} progressHandler
-     * @returns {$utils.Thenable}
-     */
-    then: function (successHandler, failureHandler, progressHandler) {
-    }
-  });
+.define(/** @lends $utils.Thenable# */{
+  /**
+   * @param {function} successHandler
+   * @param {function} failureHandler
+   * @param {function} progressHandler
+   * @returns {$utils.Thenable}
+   */
+  then: function (successHandler, failureHandler, progressHandler) {
+  }
+});
 
 $oop.copyProperties($assert, /** @lends $assert# */{
   /**
@@ -25,8 +25,8 @@ $oop.copyProperties($assert, /** @lends $assert# */{
    */
   isThenable: function (expr, message) {
     return $assert.assert(
-      expr instanceof Object && typeof expr.then === 'function',
-      message);
+        expr instanceof Object && typeof expr.then === 'function',
+        message);
   },
 
   /**
@@ -36,8 +36,8 @@ $oop.copyProperties($assert, /** @lends $assert# */{
    */
   isThenableOptional: function (expr, message) {
     return $assert.assert(
-      expr === undefined ||
-      expr instanceof Object && typeof expr.then === 'function',
-      message);
+        expr === undefined ||
+        expr instanceof Object && typeof expr.then === 'function',
+        message);
   }
 });

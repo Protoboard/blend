@@ -5,12 +5,12 @@ var $data = window['giant-data'];
 describe("$data", function () {
   describe("QueryComponent", function () {
     var QueryComponent,
-      queryComponent,
-      result;
+        queryComponent,
+        result;
 
     beforeEach(function () {
       QueryComponent = $oop.getClass('test.$data.QueryComponent.QueryComponent')
-        .extend($data.QueryComponent);
+      .extend($data.QueryComponent);
     });
 
     describe("create()", function () {
@@ -39,9 +39,9 @@ describe("$data", function () {
       it("should set keyOptions property", function () {
         expect(QueryComponent.create('foo').keyOptions).toEqual(['foo']);
         expect(QueryComponent.create('foo,bar').keyOptions)
-          .toEqual(['foo', 'bar']);
+        .toEqual(['foo', 'bar']);
         expect(QueryComponent.create('foo\\,bar').keyOptions)
-          .toEqual(['foo,bar']);
+        .toEqual(['foo,bar']);
         expect(QueryComponent.create('!foo').keyOptions).toEqual(['foo']);
         expect(QueryComponent.create('').keyOptions).toEqual(['']);
         expect(QueryComponent.create('**').keyOptions).toBeUndefined();
@@ -61,13 +61,13 @@ describe("$data", function () {
 
       it("should set matchesPrimitiveValues property", function () {
         expect(QueryComponent.create('foo').matchesPrimitiveValues)
-          .toBeFalsy();
+        .toBeFalsy();
         expect(QueryComponent.create('foo:$').matchesPrimitiveValues)
-          .toBeTruthy();
+        .toBeTruthy();
         expect(QueryComponent.create('foo:\\$').matchesPrimitiveValues)
-          .toBeFalsy();
+        .toBeFalsy();
         expect(QueryComponent.create('foo:bar').matchesPrimitiveValues)
-          .toBeFalsy();
+        .toBeFalsy();
       });
 
       it("should set isValueExcluded property", function () {
@@ -91,11 +91,11 @@ describe("$data", function () {
         expect(QueryComponent.create('*').valueOptions).toBeUndefined();
         expect(QueryComponent.create('*:foo').valueOptions).toEqual(['foo']);
         expect(QueryComponent.create('*:foo\\,bar').valueOptions)
-          .toEqual(['foo,bar']);
+        .toEqual(['foo,bar']);
         expect(QueryComponent.create('!quux:foo,bar').valueOptions)
-          .toEqual(['foo', 'bar']);
+        .toEqual(['foo', 'bar']);
         expect(QueryComponent.create('*:!foo,bar').valueOptions)
-          .toEqual(['foo', 'bar']);
+        .toEqual(['foo', 'bar']);
         expect(QueryComponent.create('*:').valueOptions).toEqual(['']);
         expect(QueryComponent.create('*:!').valueOptions).toEqual(['']);
         expect(QueryComponent.create('*:*').valueOptions).toBeUndefined();
@@ -106,10 +106,10 @@ describe("$data", function () {
     describe("clone()", function () {
       beforeEach(function () {
         queryComponent = QueryComponent.create()
-          .setKeyOptions(['foo', 'bar'])
-          .excludeKeyOptions()
-          .setValueOptions(['baz'])
-          .excludeValueOptions();
+        .setKeyOptions(['foo', 'bar'])
+        .excludeKeyOptions()
+        .setValueOptions(['baz'])
+        .excludeValueOptions();
         result = queryComponent.clone();
       });
 
@@ -200,26 +200,26 @@ describe("$data", function () {
 
           // value wildcard
           expect(QueryComponent.create('foo:*').matches('foo', 'bar'))
-            .toBeTruthy();
+          .toBeTruthy();
 
           // value options
           expect(QueryComponent.create('foo:bar,baz').matches('foo', 'bar'))
-            .toBeTruthy();
+          .toBeTruthy();
           expect(QueryComponent.create('foo:bar,baz').matches('foo', 'baz'))
-            .toBeTruthy();
+          .toBeTruthy();
 
           // excluded value options
           expect(QueryComponent.create('foo:!bar,baz').matches('foo', 'foo'))
-            .toBeTruthy();
+          .toBeTruthy();
 
           // primitive value
           expect(QueryComponent.create('foo:$').matches('foo', 'foo'))
-            .toBeTruthy();
+          .toBeTruthy();
           expect(QueryComponent.create('foo:$').matches('foo', 1)).toBeTruthy();
           expect(QueryComponent.create('foo:$').matches('foo', true))
-            .toBeTruthy();
+          .toBeTruthy();
           expect(QueryComponent.create('foo:$').matches('foo', null))
-            .toBeTruthy();
+          .toBeTruthy();
         });
       });
 
@@ -237,13 +237,13 @@ describe("$data", function () {
 
           // value options
           expect(QueryComponent.create('foo:bar,baz').matches('foo', 'foo'))
-            .toBeFalsy();
+          .toBeFalsy();
 
           // excluded value options
           expect(QueryComponent.create('foo:!bar,baz').matches('foo', 'bar'))
-            .toBeFalsy();
+          .toBeFalsy();
           expect(QueryComponent.create('foo:!bar,baz').matches('foo', 'baz'))
-            .toBeFalsy();
+          .toBeFalsy();
 
           // primitive value
           expect(QueryComponent.create('foo:$').matches('foo', {})).toBeFalsy();
@@ -267,7 +267,7 @@ describe("$data", function () {
 
       it("should add to keyOptions", function () {
         expect(queryComponent.keyOptions.sort())
-          .toEqual(['foo', 'bar'].sort());
+        .toEqual(['foo', 'bar'].sort());
       });
 
       it("should add to keyOptionLookup", function () {
@@ -341,13 +341,13 @@ describe("String", function () {
 
   describe("toQueryComponent()", function () {
     var string,
-      queryComponent;
+        queryComponent;
 
     beforeEach(function () {
       string = 'foo:!bar';
       queryComponent = $data.QueryComponent.create(string);
       spyOn($data.QueryComponent, 'create').and
-        .returnValue(queryComponent);
+      .returnValue(queryComponent);
       result = string.toQueryComponent();
     });
 

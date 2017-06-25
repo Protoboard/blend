@@ -1,13 +1,13 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var data,
-    OrderedStringList,
-    orderedStringList,
-    result;
+      OrderedStringList,
+      orderedStringList,
+      result;
 
   describe("OrderedStringList", function () {
     var comparer;
@@ -15,19 +15,19 @@ describe("$data", function () {
     beforeEach(function () {
       data = ['bar', 'foo'];
       OrderedStringList = $oop.getClass("test.$data.OrderedStringList.OrderedStringList")
-        .extend($data.OrderedStringList);
+      .extend($data.OrderedStringList);
       orderedStringList = OrderedStringList.create(data);
     });
 
     describe("getRangeByPrefix()", function () {
       beforeEach(function () {
         orderedStringList
-          .setItem('baz')
-          .setItem('quux')
-          .setItem('hello')
-          .setItem('world')
-          .setItem('lorem')
-          .setItem('ipsum');
+        .setItem('baz')
+        .setItem('quux')
+        .setItem('hello')
+        .setItem('world')
+        .setItem('lorem')
+        .setItem('ipsum');
 
         result = orderedStringList.getRangeByPrefix('b');
       });
@@ -45,7 +45,7 @@ describe("$data", function () {
       beforeEach(function () {
         data = [];
         spyOn(orderedStringList, 'getRangeByPrefix').and
-          .returnValue(data);
+        .returnValue(data);
         result = orderedStringList.getRangeByPrefixWrapped('foo', 10, 5);
       });
 
@@ -55,7 +55,7 @@ describe("$data", function () {
 
       it("should invoke getRangeByPrefix() with same arguments", function () {
         expect(orderedStringList.getRangeByPrefix).toHaveBeenCalledWith(
-          'foo', 10, 5);
+            'foo', 10, 5);
       });
 
       it("should wrap result of getRangeByPrefix()", function () {

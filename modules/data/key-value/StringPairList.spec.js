@@ -1,11 +1,11 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var data,
-    result;
+      result;
 
   describe("DataContainer", function () {
     describe("toStringPairList()", function () {
@@ -17,7 +17,7 @@ describe("$data", function () {
 
       it("should return a StringPairList instance", function () {
         expect($data.StringPairList.isIncludedBy(result))
-          .toBeTruthy();
+        .toBeTruthy();
       });
 
       it("should set data buffer", function () {

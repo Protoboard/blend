@@ -51,9 +51,9 @@ describe("$oop", function () {
 
       it("should make members non-enumerable", function () {
         expect(Object.getOwnPropertyDescriptor(String.prototype, 'toFoo').enumerable)
-          .toBeFalsy();
+        .toBeFalsy();
         expect(Object.getOwnPropertyDescriptor(String.prototype, 'toBar').enumerable)
-          .toBeFalsy();
+        .toBeFalsy();
       });
     });
 
@@ -86,7 +86,7 @@ describe("$oop", function () {
 
   describe("createObject()", function () {
     var base, members, propertyDescriptor,
-      result;
+        result;
 
     beforeEach(function () {
       base = {};
@@ -105,15 +105,15 @@ describe("$oop", function () {
 
     it("should copy members", function () {
       expect($oop.copyProperties).toHaveBeenCalledWith(
-        result,
-        members,
-        propertyDescriptor);
+          result,
+          members,
+          propertyDescriptor);
     });
   });
 
   describe("getClass()", function () {
     var Class,
-      result;
+        result;
 
     beforeEach(function () {
       Class = $oop.Class.getClass('Class');

@@ -1,17 +1,17 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   describe("MasterLink", function () {
     var MasterLink,
-      masterLink,
-      chain;
+        masterLink,
+        chain;
 
     beforeEach(function () {
       MasterLink = $oop.getClass('test.$data.MasterLink.MasterLink')
-        .extend($data.MasterLink);
+      .extend($data.MasterLink);
       chain = $data.Chain.create();
       masterLink = MasterLink.create(chain);
     });

@@ -1,18 +1,18 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'],
-  $event = window['giant-event'];
+    $data = window['giant-data'],
+    $event = window['giant-event'];
 
 describe("$event", function () {
   describe("EventSpace", function () {
     var EventSpace,
-      eventSpace,
-      result;
+        eventSpace,
+        result;
 
     beforeEach(function () {
       EventSpace = $oop.getClass('test.$event.EventSpace.EventSpace')
-        .extend($event.EventSpace);
+      .extend($event.EventSpace);
 
       eventSpace = EventSpace.create();
     });
@@ -20,7 +20,7 @@ describe("$event", function () {
     describe("create()", function () {
       it("should initialize subscriptions", function () {
         expect($data.Tree.isIncludedBy(eventSpace.subscriptions))
-          .toBeTruthy();
+        .toBeTruthy();
         expect(eventSpace.subscriptions.data).toEqual({});
       });
 
@@ -167,9 +167,9 @@ describe("$event", function () {
         callback2 = function () {};
         callback3 = function () {};
         result = eventSpace
-          .on('event1', callback1, 'foo.bar.baz'.toPath(), 'subscriber1')
-          .on('event1', callback2, 'foo.bar.quux'.toPath(), 'subscriber2')
-          .on('event2', callback3, 'foo.baz'.toPath(), 'subscriber1');
+        .on('event1', callback1, 'foo.bar.baz'.toPath(), 'subscriber1')
+        .on('event1', callback2, 'foo.bar.quux'.toPath(), 'subscriber2')
+        .on('event2', callback3, 'foo.baz'.toPath(), 'subscriber1');
       });
 
       it("should return self", function () {

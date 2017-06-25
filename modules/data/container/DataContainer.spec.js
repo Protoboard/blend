@@ -1,13 +1,13 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   describe("DataContainer", function () {
     var data,
-      container,
-      result;
+        container,
+        result;
 
     beforeEach(function () {
       data = {};
@@ -96,7 +96,7 @@ describe("$data", function () {
 
     describe("passDataTo()", function () {
       var callback,
-        returnValue;
+          returnValue;
 
       beforeEach(function () {
         returnValue = {};
@@ -115,7 +115,7 @@ describe("$data", function () {
 
     describe("passSelfTo()", function () {
       var callback,
-        returnValue;
+          returnValue;
 
       beforeEach(function () {
         returnValue = {};

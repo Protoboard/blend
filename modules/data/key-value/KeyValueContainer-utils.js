@@ -42,9 +42,9 @@ $oop.copyProperties($data, /** @lends $data */{
    */
   getMapResultClass: function (SourceClass, keyType, valueType) {
     return $data.CLASS_BY_TYPE
-      [keyType || SourceClass.keyType]
-      [valueType || SourceClass.valueType]
-      [SourceClass.keyMultiplicity];
+        [keyType || SourceClass.keyType]
+        [valueType || SourceClass.valueType]
+        [SourceClass.keyMultiplicity];
   },
 
   /**
@@ -56,9 +56,9 @@ $oop.copyProperties($data, /** @lends $data */{
    */
   getSwapResultClass: function (SourceClass) {
     return $data.CLASS_BY_TYPE
-      [SourceClass.valueType] // value type will be the new key type
-      [SourceClass.keyType]   // key type will be the new value type
-      [$data.KEY_MUL_ANY];  // we can't know if keys remain unique
+        [SourceClass.valueType] // value type will be the new key type
+        [SourceClass.keyType]   // key type will be the new value type
+        [$data.KEY_MUL_ANY];  // we can't know if keys remain unique
   },
 
   /**
@@ -73,16 +73,16 @@ $oop.copyProperties($data, /** @lends $data */{
     var keyMultiplicity;
 
     if (LeftClass.valueType === $data.VALUE_TYPE_STRING &&
-      RightClass.keyType === $data.KEY_TYPE_STRING
+        RightClass.keyType === $data.KEY_TYPE_STRING
     ) {
       keyMultiplicity = LeftClass.keyMultiplicity === RightClass.keyMultiplicity ?
-        LeftClass.keyMultiplicity :
-        $data.KEY_MUL_ANY;
+          LeftClass.keyMultiplicity :
+          $data.KEY_MUL_ANY;
 
       return $data.CLASS_BY_TYPE
-        [LeftClass.keyType]
-        [RightClass.valueType]
-        [keyMultiplicity];
+          [LeftClass.keyType]
+          [RightClass.valueType]
+          [keyMultiplicity];
     }
   },
 
@@ -96,15 +96,15 @@ $oop.copyProperties($data, /** @lends $data */{
    */
   getMergeResultClass: function (LeftClass, RightClass) {
     var resultKeyType = LeftClass.keyType === RightClass.keyType ?
-        LeftClass.keyType :
-        $data.KEY_TYPE_ANY,
-      resultValueType = LeftClass.valueType === RightClass.valueType ?
-        LeftClass.valueType :
-        $data.VALUE_TYPE_ANY;
+            LeftClass.keyType :
+            $data.KEY_TYPE_ANY,
+        resultValueType = LeftClass.valueType === RightClass.valueType ?
+            LeftClass.valueType :
+            $data.VALUE_TYPE_ANY;
 
     return $data.CLASS_BY_TYPE
-      [resultKeyType]
-      [resultValueType]
-      [$data.KEY_MUL_ANY];
+        [resultKeyType]
+        [resultValueType]
+        [$data.KEY_MUL_ANY];
   }
 });

@@ -28,7 +28,7 @@ $assert.isUndefined = function (expr, message) {
  */
 $assert.isString = function (expr, message) {
   return $assert.assert(typeof expr === 'string' ||
-    expr instanceof String, message);
+      expr instanceof String, message);
 };
 
 /**
@@ -39,8 +39,8 @@ $assert.isString = function (expr, message) {
  */
 $assert.isStringOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    typeof expr === 'string' ||
-    expr instanceof String, message);
+      typeof expr === 'string' ||
+      expr instanceof String, message);
 };
 
 /**
@@ -51,7 +51,7 @@ $assert.isStringOptional = function (expr, message) {
  */
 $assert.isBoolean = function (expr, message) {
   return $assert.assert(typeof expr === 'boolean' ||
-    expr instanceof Boolean, message);
+      expr instanceof Boolean, message);
 };
 
 /**
@@ -62,8 +62,8 @@ $assert.isBoolean = function (expr, message) {
  */
 $assert.isBooleanOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    typeof expr === 'boolean' ||
-    expr instanceof Boolean, message);
+      typeof expr === 'boolean' ||
+      expr instanceof Boolean, message);
 };
 
 /**
@@ -74,7 +74,7 @@ $assert.isBooleanOptional = function (expr, message) {
  */
 $assert.isNumber = function (expr, message) {
   return $assert.assert(typeof expr === 'number' ||
-    expr instanceof Number, message);
+      expr instanceof Number, message);
 };
 
 /**
@@ -85,8 +85,8 @@ $assert.isNumber = function (expr, message) {
  */
 $assert.isNumberOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    typeof expr === 'number' ||
-    expr instanceof Number, message);
+      typeof expr === 'number' ||
+      expr instanceof Number, message);
 };
 
 /**
@@ -107,7 +107,7 @@ $assert.isFunction = function (expr, message) {
  */
 $assert.isFunctionOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    typeof expr === 'function', message);
+      typeof expr === 'function', message);
 };
 
 /**
@@ -128,7 +128,7 @@ $assert.isObject = function (expr, message) {
  */
 $assert.isObjectOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    expr instanceof Object, message);
+      expr instanceof Object, message);
 };
 
 /**
@@ -149,7 +149,7 @@ $assert.isArray = function (expr, message) {
  */
 $assert.isArrayOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    expr instanceof Array, message);
+      expr instanceof Array, message);
 };
 
 /**
@@ -170,7 +170,7 @@ $assert.isRegExp = function (expr, message) {
  */
 $assert.isRegExpOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    expr instanceof RegExp, message);
+      expr instanceof RegExp, message);
 };
 
 /**
@@ -191,5 +191,5 @@ $assert.isDate = function (expr, message) {
  */
 $assert.isDateOptional = function (expr, message) {
   return $assert.assert(expr === undefined ||
-    expr instanceof Date, message);
+      expr instanceof Date, message);
 };

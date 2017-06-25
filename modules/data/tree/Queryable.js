@@ -6,13 +6,13 @@
  * @interface $data.Queryable
  */
 $data.Queryable = $oop.getClass('$data.Queryable')
-  .define(/** @lends $data.Queryable# */{
-    /**
-     * Queries instance according to `expression` and calls `callback` on each
-     * match, passing identifier and value of the matching part.
-     * @param {*} expression
-     * @param {function} callback
-     * @returns {$data.Queryable}
-     */
-    query: function (expression, callback) {}
-  });
+.define(/** @lends $data.Queryable# */{
+  /**
+   * Queries instance according to `expression` and calls `callback` on each
+   * match, passing identifier and value of the matching part.
+   * @param {*} expression
+   * @param {function} callback
+   * @returns {$data.Queryable}
+   */
+  query: function (expression, callback) {}
+});

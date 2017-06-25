@@ -1,7 +1,7 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $utils = window['giant-oop'];
+    $utils = window['giant-oop'];
 
 describe("$utils", function () {
   describe("Deferred", function () {
@@ -22,8 +22,8 @@ describe("$utils", function () {
 
       beforeEach(function () {
         deferred.promise
-          .then(function () {})
-          .then(function () {});
+        .then(function () {})
+        .then(function () {});
 
         spyOn(deferred.promise.successHandlers, '0');
         spyOn(deferred.promise.successHandlers, '1');
@@ -49,19 +49,19 @@ describe("$utils", function () {
 
       it("should call handlers with resolution arguments", function () {
         expect(deferred.promise.successHandlers[0])
-          .toHaveBeenCalledWith("foo", "bar");
+        .toHaveBeenCalledWith("foo", "bar");
         expect(deferred.promise.successHandlers[1])
-          .toHaveBeenCalledWith("foo", "bar");
+        .toHaveBeenCalledWith("foo", "bar");
       });
 
       it("should set promise state to fulfilled", function () {
         expect(deferred.promise.promiseState)
-          .toBe($utils.PROMISE_STATE_FULFILLED);
+        .toBe($utils.PROMISE_STATE_FULFILLED);
       });
 
       it("should set arguments on promise", function () {
         expect(Array.prototype.slice.call(deferred.promise.deferredArguments))
-          .toEqual(["foo", "bar"]);
+        .toEqual(["foo", "bar"]);
       });
     });
 
@@ -70,8 +70,8 @@ describe("$utils", function () {
 
       beforeEach(function () {
         deferred.promise
-          .then(null, function () {})
-          .then(null, function () {});
+        .then(null, function () {})
+        .then(null, function () {});
 
         spyOn(deferred.promise.failureHandlers, '0');
         spyOn(deferred.promise.failureHandlers, '1');
@@ -97,19 +97,19 @@ describe("$utils", function () {
 
       it("should call handlers with resolution arguments", function () {
         expect(deferred.promise.failureHandlers[0])
-          .toHaveBeenCalledWith("foo", "bar");
+        .toHaveBeenCalledWith("foo", "bar");
         expect(deferred.promise.failureHandlers[1])
-          .toHaveBeenCalledWith("foo", "bar");
+        .toHaveBeenCalledWith("foo", "bar");
       });
 
       it("should set promise state to rejected", function () {
         expect(deferred.promise.promiseState)
-          .toBe($utils.PROMISE_STATE_REJECTED);
+        .toBe($utils.PROMISE_STATE_REJECTED);
       });
 
       it("should set arguments on promise", function () {
         expect(Array.prototype.slice.call(deferred.promise.deferredArguments))
-          .toEqual(["foo", "bar"]);
+        .toEqual(["foo", "bar"]);
       });
     });
 
@@ -118,8 +118,8 @@ describe("$utils", function () {
 
       beforeEach(function () {
         deferred.promise
-          .then(null, null, function () {})
-          .then(null, null, function () {});
+        .then(null, null, function () {})
+        .then(null, null, function () {});
 
         spyOn(deferred.promise.progressHandlers, '0');
         spyOn(deferred.promise.progressHandlers, '1');
@@ -145,16 +145,16 @@ describe("$utils", function () {
 
       it("should call handlers with notify arguments", function () {
         expect(deferred.promise.progressHandlers[0])
-          .toHaveBeenCalledWith("foo", "bar");
+        .toHaveBeenCalledWith("foo", "bar");
         expect(deferred.promise.progressHandlers[1])
-          .toHaveBeenCalledWith("foo", "bar");
+        .toHaveBeenCalledWith("foo", "bar");
       });
 
       it("should add arguments to promise", function () {
         expect(deferred.promise.notificationArguments
-          .map(function (args) {
-            return Array.prototype.slice.call(args);
-          })).toEqual([["foo", "bar"]]);
+        .map(function (args) {
+          return Array.prototype.slice.call(args);
+        })).toEqual([["foo", "bar"]]);
       });
     });
   });

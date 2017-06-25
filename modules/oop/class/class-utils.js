@@ -17,11 +17,11 @@ $oop.copyProperties = function (target, members, propertyDescriptor) {
   case RegExp.prototype:
   case String.prototype:
     $assert.hasOnlyConverters(members,
-      "Attempting to add non-conversion methods to built-in prototype.");
+        "Attempting to add non-conversion methods to built-in prototype.");
 
     Object.defineProperties(
-      target,
-      Object.getOwnPropertyNames(members)
+        target,
+        Object.getOwnPropertyNames(members)
         .reduce(function (definitions, memberName) {
           definitions[memberName] = {
             value: members[memberName],
@@ -36,8 +36,8 @@ $oop.copyProperties = function (target, members, propertyDescriptor) {
   default:
     if (propertyDescriptor) {
       Object.defineProperties(
-        target,
-        Object.getOwnPropertyNames(members)
+          target,
+          Object.getOwnPropertyNames(members)
           .reduce(function (definitions, memberName) {
             definitions[memberName] = {
               value: members[memberName],
@@ -49,9 +49,9 @@ $oop.copyProperties = function (target, members, propertyDescriptor) {
           }, {}));
     } else {
       Object.getOwnPropertyNames(members)
-        .forEach(function (memberName) {
-          target[memberName] = members[memberName];
-        });
+      .forEach(function (memberName) {
+        target[memberName] = members[memberName];
+      });
     }
     break;
   }

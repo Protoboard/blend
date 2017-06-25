@@ -1,7 +1,7 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$assert", function () {
   var chain;
@@ -45,13 +45,13 @@ describe("$assert", function () {
 describe("$data", function () {
   describe("Chain", function () {
     var Chain,
-      chain,
-      link,
-      result;
+        chain,
+        link,
+        result;
 
     beforeEach(function () {
       Chain = $oop.getClass('test.$data.Chain.Chain')
-        .extend($data.Chain);
+      .extend($data.Chain);
       chain = Chain.create();
       link = $data.Link.create();
     });
@@ -133,15 +133,15 @@ describe("$data", function () {
 
     describe("forEachItem()", function () {
       var link1,
-        link2,
-        callback;
+          link2,
+          callback;
 
       beforeEach(function () {
         link1 = $data.Link.create();
         link2 = $data.Link.create();
         chain
-          .push(link1)
-          .push(link2);
+        .push(link1)
+        .push(link2);
         callback = jasmine.createSpy();
         result = chain.forEachItem(callback);
       });
@@ -191,15 +191,15 @@ describe("$data", function () {
 
     describe("pop()", function () {
       var link1,
-        link2;
+          link2;
 
       beforeEach(function () {
         link1 = $data.Link.create();
         link2 = $data.Link.create();
 
         chain
-          .push(link1)
-          .push(link2);
+        .push(link1)
+        .push(link2);
 
         result = chain.pop();
       });
@@ -251,15 +251,15 @@ describe("$data", function () {
 
     describe("shift()", function () {
       var link1,
-        link2;
+          link2;
 
       beforeEach(function () {
         link1 = $data.Link.create();
         link2 = $data.Link.create();
 
         chain
-          .push(link1)
-          .push(link2);
+        .push(link1)
+        .push(link2);
 
         result = chain.shift();
       });
@@ -291,22 +291,22 @@ describe("$data", function () {
 
     describe("concat()", function () {
       var Link,
-        link1, link2,
-        chain2,
-        link3, link4;
+          link1, link2,
+          chain2,
+          link3, link4;
 
       beforeEach(function () {
         Link = $oop.getClass('test.$data.Chain.Link')
-          .extend($data.Link)
-          .define({
-            init: function (a) {
-              this.foo = a;
-            },
-            clone: function clone() {
-              clone.returned.foo = this.foo;
-              return clone.returned;
-            }
-          });
+        .extend($data.Link)
+        .define({
+          init: function (a) {
+            this.foo = a;
+          },
+          clone: function clone() {
+            clone.returned.foo = this.foo;
+            return clone.returned;
+          }
+        });
 
         link1 = Link.create('A');
         link2 = Link.create('B');
@@ -314,12 +314,12 @@ describe("$data", function () {
         link4 = Link.create('D');
 
         chain
-          .push(link1)
-          .push(link2);
+        .push(link1)
+        .push(link2);
 
         chain2 = $data.Chain.create()
-          .push(link3)
-          .push(link4);
+        .push(link3)
+        .push(link4);
 
         result = chain.concat(chain2);
       });
@@ -333,7 +333,7 @@ describe("$data", function () {
         expect(result.data.nextLink.nextLink.foo).toEqual(link2.foo);
         expect(result.data.nextLink.nextLink.nextLink.foo).toEqual(link3.foo);
         expect(result.data.nextLink.nextLink.nextLink.nextLink.foo)
-          .toEqual(link4.foo);
+        .toEqual(link4.foo);
       });
 
       it("should set _itemCount", function () {

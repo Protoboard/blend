@@ -1,15 +1,15 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $oop = window['giant-oop'],
-  $utils = window['giant-utils'],
-  $data = window['giant-data'];
+    $oop = window['giant-oop'],
+    $utils = window['giant-utils'],
+    $data = window['giant-data'];
 
 describe("$data", function () {
   var data,
-    PairList,
-    pairList,
-    result;
+      PairList,
+      pairList,
+      result;
 
   describe("PairList", function () {
     beforeEach(function () {
@@ -18,7 +18,7 @@ describe("$data", function () {
         {key: "bar", value: "BAR"}
       ];
       PairList = $oop.getClass("test.$data.PairList.PairList")
-        .extend($data.PairList);
+      .extend($data.PairList);
       pairList = PairList.create(data);
     });
 

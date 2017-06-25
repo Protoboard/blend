@@ -1,15 +1,15 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $utils = window['giant-utils'],
-  $data = window['giant-data'];
+    $utils = window['giant-utils'],
+    $data = window['giant-data'];
 
 describe("$data", function () {
   describe("ItemContainer", function () {
     var data,
-      ItemContainer,
-      itemContainer,
-      result;
+        ItemContainer,
+        itemContainer,
+        result;
 
     beforeEach(function () {
       data = {
@@ -18,19 +18,19 @@ describe("$data", function () {
       };
 
       ItemContainer = $oop.getClass('test.$data.ItemContainer.ItemContainer')
-        .extend($data.DataContainer)
-        .extend($data.ItemContainer)
-        .define({
-          forEachItem: function (callback, context) {
-            var data = this.data,
+      .extend($data.DataContainer)
+      .extend($data.ItemContainer)
+      .define({
+        forEachItem: function (callback, context) {
+          var data = this.data,
               keys = Object.keys(this.data),
               i, key;
-            for (i = 0; i < keys.length; i++) {
-              key = keys[i];
-              callback.call(context, data[key], key, this);
-            }
+          for (i = 0; i < keys.length; i++) {
+            key = keys[i];
+            callback.call(context, data[key], key, this);
           }
-        });
+        }
+      });
 
       itemContainer = ItemContainer.create(data);
     });

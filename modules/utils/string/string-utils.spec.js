@@ -57,41 +57,41 @@ describe("$utils", function () {
   describe("escape()", function () {
     it("should escape separator", function () {
       expect($utils.escape('foo.bar', '.'))
-        .toEqual('foo\\.bar');
+      .toEqual('foo\\.bar');
     });
     it("should escape escape-character", function () {
       expect($utils.escape('foo\\bar', '.'))
-        .toEqual('foo\\\\bar');
+      .toEqual('foo\\\\bar');
     });
   });
 
   describe("unescape()", function () {
     it("should un-escape escaped separator", function () {
       expect($utils.unescape('foo\\.bar', '.'))
-        .toEqual('foo.bar');
+      .toEqual('foo.bar');
     });
     it("should un-escape escaped escape character", function () {
       expect($utils.unescape('foo\\\\bar', '.'))
-        .toEqual('foo\\bar');
+      .toEqual('foo\\bar');
     });
   });
 
   describe("safeSplit()", function () {
     it("should split path along separators", function () {
       expect($utils.safeSplit('foo.bar.baz', '.'))
-        .toEqual(['foo', 'bar', 'baz']);
+      .toEqual(['foo', 'bar', 'baz']);
     });
     it("should handle leading separator", function () {
       expect($utils.safeSplit('.foo.bar.baz', '.'))
-        .toEqual(['', 'foo', 'bar', 'baz']);
+      .toEqual(['', 'foo', 'bar', 'baz']);
     });
     it("should handle trailing separator", function () {
       expect($utils.safeSplit('foo.bar.baz.', '.'))
-        .toEqual(['foo', 'bar', 'baz', '']);
+      .toEqual(['foo', 'bar', 'baz', '']);
     });
     it("should leave escaped separators intact", function () {
       expect($utils.safeSplit('foo\\.bar.baz\\.quux', '.'))
-        .toEqual(['foo\\.bar', 'baz\\.quux']);
+      .toEqual(['foo\\.bar', 'baz\\.quux']);
     });
   });
 });

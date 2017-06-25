@@ -1,7 +1,7 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $utils = window['giant-utils'];
+    $utils = window['giant-utils'];
 
 describe("$assert", function () {
   describe("isThenable()", function () {

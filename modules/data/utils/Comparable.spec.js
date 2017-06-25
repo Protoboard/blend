@@ -1,16 +1,16 @@
 "use strict";
 
 var $oop = window['giant-oop'],
-  $data = window['giant-data'];
+    $data = window['giant-data'];
 
 describe("$data", function () {
   describe("Comparable", function () {
     var Comparable,
-      comparable;
+        comparable;
 
     beforeEach(function () {
       Comparable = $oop.getClass('test.$data.Comparable.Comparable')
-        .include($data.Comparable);
+      .include($data.Comparable);
 
       comparable = Comparable.create();
     });
@@ -43,8 +43,8 @@ describe("$data", function () {
       describe("when passing instanceof different class", function () {
         it("should return false", function () {
           expect(comparable.equals($oop.getClass('test.$data.Comparable.Foo')
-            .create()))
-            .toBeFalsy();
+          .create()))
+          .toBeFalsy();
         });
       });
     });

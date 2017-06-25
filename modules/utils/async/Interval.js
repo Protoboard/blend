@@ -13,17 +13,17 @@
  * @extends $utils.Timer
  */
 $utils.Interval = $oop.getClass('$utils.Interval')
-  .extend($oop.getClass('$utils.Timer'))
-  .define(/** @lends $utils.Interval# */{
-    /**
-     * @inheritDoc
-     * @returns {$utils.Interval}
-     */
-    clearTimer: function () {
-      clearInterval(this.timerId);
-      return this;
-    }
-  });
+.extend($oop.getClass('$utils.Timer'))
+.define(/** @lends $utils.Interval# */{
+  /**
+   * @inheritDoc
+   * @returns {$utils.Interval}
+   */
+  clearTimer: function () {
+    clearInterval(this.timerId);
+    return this;
+  }
+});
 
 /** @external Number */
 $oop.copyProperties(Number.prototype, /** @lends external:Number# */{

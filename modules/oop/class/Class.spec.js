@@ -1,12 +1,12 @@
 "use strict";
 
 var $assert = window['giant-assert'],
-  $oop = window['giant-oop'];
+    $oop = window['giant-oop'];
 
 describe("$oop", function () {
   describe("Class", function () {
     var Class,
-      result;
+        result;
 
     beforeEach(function () {
       $oop.Class.classLookup = {};
@@ -71,7 +71,7 @@ describe("$oop", function () {
 
       it("should initialize missing method names", function () {
         expect(result.__missingMethodNames)
-          .toEqual({list: [], lookup: {}});
+        .toEqual({list: [], lookup: {}});
       });
 
       it("should initialize forwards", function () {
@@ -229,12 +229,12 @@ describe("$oop", function () {
       describe("then implementing relevant interface", function () {
         beforeEach(function () {
           Class.implement($oop.Class.getClass('Interface')
-            .define({
-              bar: function () {
-              },
-              baz: function () {
-              }
-            }));
+          .define({
+            bar: function () {
+            },
+            baz: function () {
+            }
+          }));
         });
 
         it("should not register implemented methods", function () {
@@ -287,7 +287,7 @@ describe("$oop", function () {
 
         it("should define delegates", function () {
           expect(Class.define.calls.mostRecent().args)
-            .toEqual([Class.__delegates]);
+          .toEqual([Class.__delegates]);
         });
       });
     });
@@ -297,11 +297,11 @@ describe("$oop", function () {
 
       beforeEach(function () {
         Interface = $oop.Class.getClass('Interface')
-          .define({
-            foo: "FOO",
-            bar: function () {
-            }
-          });
+        .define({
+          foo: "FOO",
+          bar: function () {
+          }
+        });
         result = Class.implement(Interface);
       });
 
@@ -357,10 +357,10 @@ describe("$oop", function () {
       describe("then defining relevant methods", function () {
         beforeEach(function () {
           Class.implement($oop.Class.getClass('Interface2')
-            .define({
-              baz: function () {
-              }
-            }));
+          .define({
+            baz: function () {
+            }
+          }));
 
           Class.define({
             bar: function () {
@@ -379,16 +379,16 @@ describe("$oop", function () {
       describe("then including same class", function () {
         beforeEach(function () {
           Class
-            .implement($oop.Class.getClass('Interface2')
-              .define({
-                baz: function () {
-                }
-              }))
-            .include($oop.Class.getClass('Include')
-              .define({
-                bar: function () {},
-                quux: function () {}
-              }));
+          .implement($oop.Class.getClass('Interface2')
+          .define({
+            baz: function () {
+            }
+          }))
+          .include($oop.Class.getClass('Include')
+          .define({
+            bar: function () {},
+            quux: function () {}
+          }));
         });
 
         it("should cancel out missing methods", function () {
@@ -401,9 +401,9 @@ describe("$oop", function () {
         describe("then defining members on include", function () {
           beforeEach(function () {
             $oop.Class.getClass('Include')
-              .define({
-                baz: function () {}
-              });
+            .define({
+              baz: function () {}
+            });
           });
 
           it("should cancel out missing methods", function () {
@@ -439,10 +439,10 @@ describe("$oop", function () {
 
       beforeEach(function () {
         Trait = $oop.Class.getClass('Trait')
-          .define({
-            foo: "FOO",
-            bar: function () {}
-          });
+        .define({
+          foo: "FOO",
+          bar: function () {}
+        });
 
         result = Class.include(Trait);
       });
@@ -519,12 +519,12 @@ describe("$oop", function () {
       describe("then implementing relevant interface", function () {
         beforeEach(function () {
           Class.implement($oop.Class.getClass('Interface')
-            .define({
-              bar: function () {
-              },
-              baz: function () {
-              }
-            }));
+          .define({
+            bar: function () {
+            },
+            baz: function () {
+            }
+          }));
         });
 
         it("should not register implemented methods", function () {
@@ -553,7 +553,7 @@ describe("$oop", function () {
 
         beforeEach(function () {
           Class.require(Require2 = $oop.Class.getClass('Require2')
-            .include(Include = $oop.Class.getClass('Include')));
+          .include(Include = $oop.Class.getClass('Include')));
 
           Include.require(Require3 = $oop.getClass('Require3'));
         });
@@ -620,9 +620,9 @@ describe("$oop", function () {
 
           it("should set include distances", function () {
             expect(A.__includes.downstream.lookup)
-              .toEqual({B: 1, C: 2, D: 3});
+            .toEqual({B: 1, C: 2, D: 3});
             expect(D.__includes.upstream.lookup)
-              .toEqual({C: 1, B: 2, A: 3});
+            .toEqual({C: 1, B: 2, A: 3});
           });
 
           it("should update forwards", function () {
@@ -644,9 +644,9 @@ describe("$oop", function () {
 
           it("should set include distances", function () {
             expect(A.__includes.downstream.lookup)
-              .toEqual({B: 1, C: 2, D: 3});
+            .toEqual({B: 1, C: 2, D: 3});
             expect(D.__includes.upstream.lookup)
-              .toEqual({C: 1, B: 2, A: 3});
+            .toEqual({C: 1, B: 2, A: 3});
           });
 
           it("should update forwards", function () {
@@ -668,9 +668,9 @@ describe("$oop", function () {
 
           it("should set include distances", function () {
             expect(A.__includes.downstream.lookup)
-              .toEqual({B: 1, C: 2, D: 3});
+            .toEqual({B: 1, C: 2, D: 3});
             expect(D.__includes.upstream.lookup)
-              .toEqual({C: 1, B: 2, A: 3});
+            .toEqual({C: 1, B: 2, A: 3});
           });
 
           it("should update forwards", function () {
@@ -692,9 +692,9 @@ describe("$oop", function () {
 
           it("should set include distances", function () {
             expect(A.__includes.downstream.lookup)
-              .toEqual({B: 1, C: 2, D: 3});
+            .toEqual({B: 1, C: 2, D: 3});
             expect(D.__includes.upstream.lookup)
-              .toEqual({C: 1, B: 2, A: 3});
+            .toEqual({C: 1, B: 2, A: 3});
           });
 
           it("should update forwards", function () {
@@ -708,24 +708,24 @@ describe("$oop", function () {
 
     describe("extend()", function () {
       var Include1,
-        Include2;
+          Include2;
 
       beforeEach(function () {
         Include1 = $oop.getClass("Include1")
-          .define({
-            bar: function () {}
-          });
+        .define({
+          bar: function () {}
+        });
         Include2 = $oop.getClass("Include2")
-          .include(Include1)
-          .define({
-            baz: function () {}
-          });
+        .include(Include1)
+        .define({
+          baz: function () {}
+        });
 
         Class
-          .extend(Include2)
-          .define({
-            foo: function () {}
-          });
+        .extend(Include2)
+        .define({
+          foo: function () {}
+        });
       });
 
       it("should add all dependencies", function () {
@@ -741,20 +741,20 @@ describe("$oop", function () {
 
       describe("then including a class", function () {
         var Include3,
-          Include4;
+            Include4;
 
         beforeEach(function () {
           Include3 = $oop.getClass("Include3")
-            .define({
-              quux: function () {}
-            });
+          .define({
+            quux: function () {}
+          });
           Include4 = $oop.getClass("Include4")
-            .define({
-              foo: function () {}
-            });
+          .define({
+            foo: function () {}
+          });
           Include1
-            .include(Include3)
-            .include(Include4);
+          .include(Include3)
+          .include(Include4);
         });
 
         it("should propagate to extenders", function () {
@@ -854,7 +854,7 @@ describe("$oop", function () {
 
         beforeEach(function () {
           Class.require(Require2 = $oop.Class.getClass('Require2')
-            .require(Require3 = $oop.Class.getClass('Require3')));
+          .require(Require3 = $oop.Class.getClass('Require3')));
 
           Require2.include(Include = $oop.Class.getClass('Include'));
         });
@@ -899,16 +899,16 @@ describe("$oop", function () {
 
       describe("when adding more specific class to forwards", function () {
         var Class2, Class3,
-          filter2, filter3;
+            filter2, filter3;
 
         beforeEach(function () {
           Class2 = $oop.Class.getClass('Class2')
-            .include(Class);
+          .include(Class);
           filter2 = function () {
           };
           Class3 = $oop.Class.getClass('Class3')
-            .include(Class2)
-            .include(Class);
+          .include(Class2)
+          .include(Class);
           filter3 = function () {
           };
           Class.forward(Class3, filter3);
@@ -1196,12 +1196,12 @@ describe("$oop", function () {
           });
 
           Forward = $oop.Class.getClass('Forward')
-            .include(Class);
+          .include(Class);
 
           $oop.Class.getClass('Class')
-            .forward(Forward, function (foo) {
-              return foo === 1;
-            });
+          .forward(Forward, function (foo) {
+            return foo === 1;
+          });
         });
 
         describe("for matching arguments", function () {
@@ -1225,15 +1225,15 @@ describe("$oop", function () {
 
           beforeEach(function () {
             Forward2 = $oop.Class.getClass('Forward2')
-              .cache(function (foo) {
-                return '_' + foo;
-              })
-              .include(Class);
+            .cache(function (foo) {
+              return '_' + foo;
+            })
+            .include(Class);
 
             $oop.Class.getClass('Class')
-              .forward(Forward2, function (foo) {
-                return foo === 2;
-              });
+            .forward(Forward2, function (foo) {
+              return foo === 2;
+            });
           });
 
           it("should return cached forward instance", function () {
@@ -1246,10 +1246,10 @@ describe("$oop", function () {
       describe("of unimplemented class", function () {
         beforeEach(function () {
           Class.implement($oop.Class.getClass('Interface')
-            .define({
-              foo: function () {
-              }
-            }));
+          .define({
+            foo: function () {
+            }
+          }));
         });
 
         it("should throw", function () {
