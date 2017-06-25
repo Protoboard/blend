@@ -7,12 +7,12 @@
 $event.EventSource = $oop.getClass('$event.EventSource')
   .define(/** @lends $event.EventSource# */{
     /**
-     * @returns {$event.EventSource}
+     * @returns {$utils.Thenable}
      */
     trigger: function () {},
 
     /**
-     * @returns {$event.EventSource}
+     * @returns {$utils.Thenable}
      */
     broadcast: function () {}
   });

@@ -87,7 +87,6 @@ $event.Event = $oop.getClass('$event.Event')
      */
     _invokeCallbacksOnParentPaths: function () {
       var eventSpace = $event.EventSpace.create(),
-        originalEventChain = $event.OriginalEventChain.create(),
         event = this.clone(),
         subscriptions = eventSpace.subscriptions,
         eventName = event.eventName,
@@ -120,7 +119,6 @@ $event.Event = $oop.getClass('$event.Event')
     },
 
     /**
-     * @todo Add event initializer callback?
      * @returns {Array<$utils.Thenable|*>}
      * @private
      */
@@ -145,8 +143,6 @@ $event.Event = $oop.getClass('$event.Event')
       // invoking callbacks
       subscriptions.queryPathNodePairs(callbacksQuery)
         .forEachItem(function (/**function*/callback, /**$data.Path*/callbackPath) {
-          // preparing event
-          // todo Defer preparation to host / subclass
           var currentPathStr = callbackPath.components[3];
           event.currentPath = $data.Path.fromString(currentPathStr);
           results.push(callback(event));
@@ -164,10 +160,11 @@ $event.Event = $oop.getClass('$event.Event')
 
     /**
      * @param {Array<$utils.Thenable>} thenables
+     * @returns {$utils.Promise}
      * @private
      */
     _unlinkWhen: function (thenables) {
-      $utils.Promise.when(thenables)
+      return $utils.Promise.when(thenables)
         .then(this.unlink, this.unlink);
     },
 
@@ -192,8 +189,9 @@ $event.Event = $oop.getClass('$event.Event')
      * `targetPath`. When bubbling is allowed, the event will traverse
      * `targetPath` up to its root, and invoke subscribed callbacks at each
      * step. Callbacks on a certain path will be invoked in an unspecified
-     * order.
-     * @returns {$event.Event}
+     * order. The returned promise resolves when all subscribed callbacks
+     * (synchronous or otherwise) have completed.
+     * @returns {$utils.Promise}
      * @see $event.EventSpace#on
      */
     trigger: function () {
@@ -208,17 +206,17 @@ $event.Event = $oop.getClass('$event.Event')
 
       var callbackResults = this._invokeCallbacksOnParentPaths();
 
-      this._unlinkWhen(callbackResults);
-
-      // todo Return promise?
-      return this;
+      return this._unlinkWhen(callbackResults);
     },
 
     /**
      * Broadcasts event. Invokes callbacks subscribed to `eventName`, on all
      * paths relative to `targetPath`, in an unspecified order, then
-     * continues as {@link $event.Event#trigger}.
-     * @returns {$event.Event}
+     * continues as {@link $event.Event#trigger}. The returned promise
+     * resolves when all subscribed callbacks (synchronous or otherwise)
+     * have completed.
+     * @returns {$utils.Promise}
+     * @see $event.EventSpace#on
      */
     broadcast: function () {
       if (this.sender === undefined) {
@@ -233,10 +231,7 @@ $event.Event = $oop.getClass('$event.Event')
       var callbackResults1 = this._invokeCallbacksOnDescendantPaths(),
         callbackResults2 = this._invokeCallbacksOnParentPaths();
 
-      this._unlinkWhen(callbackResults1.concat(callbackResults2));
-
-      // todo Return promise?
-      return this;
+      return this._unlinkWhen(callbackResults1.concat(callbackResults2));
     },
 
     /**

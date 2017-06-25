@@ -106,8 +106,9 @@ describe("$event", function () {
         result = event.trigger();
       });
 
-      it("should return self", function () {
-        expect(result).toBe(event);
+      it("should return pending promise", function () {
+        expect($utils.Promise.isIncludedBy(result)).toBeTruthy();
+        expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
 
       it("should push event to chain", function () {
@@ -122,6 +123,10 @@ describe("$event", function () {
 
         it("should unlink event", function () {
           expect(originalEventChain.getItemCount()).toBe(0);
+        });
+
+        it("should resolve returned promise", function () {
+          expect(result.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
         });
       });
 
@@ -215,8 +220,9 @@ describe("$event", function () {
         result = event.broadcast();
       });
 
-      it("should return self", function () {
-        expect(result).toBe(event);
+      it("should return pending promise", function () {
+        expect($utils.Promise.isIncludedBy(result)).toBeTruthy();
+        expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
 
       it("should invoke callbacks on descendant paths", function () {
@@ -237,6 +243,10 @@ describe("$event", function () {
 
         it("should unlink event", function () {
           expect(originalEventChain.getItemCount()).toBe(0);
+        });
+
+        it("should resolve returned promise", function () {
+          expect(result.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
         });
       });
 
