@@ -7,7 +7,7 @@
       "chain/MasterLink.js",
       "container/DataContainer.js",
       "container/ItemContainer.js",
-      "container/ScalarContainer.js",
+      "container/SetContainer.js",
       "key-value/Collection.js",
       "key-value/Dictionary.js",
       "key-value/KeyValueContainer-utils.js",

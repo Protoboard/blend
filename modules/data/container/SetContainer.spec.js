@@ -4,18 +4,18 @@ var $oop = window['giant-oop'],
     $data = window['giant-data'];
 
 describe("$data", function () {
-  describe("ScalarContainer", function () {
+  describe("SetContainer", function () {
     var data,
-        ScalarContainer,
+        SetContainer,
         scalarContainer,
         result;
 
     beforeEach(function () {
       data = ['foo', 'bar'];
 
-      ScalarContainer = $oop.getClass('test.$data.ScalarContainer.ScalarContainer')
+      SetContainer = $oop.getClass('test.$data.SetContainer.SetContainer')
       .extend($data.DataContainer)
-      .extend($data.ScalarContainer)
+      .extend($data.SetContainer)
       .define({
         setItem: function (value) {
           this.data.push(value);
@@ -25,7 +25,7 @@ describe("$data", function () {
         }
       });
 
-      scalarContainer = ScalarContainer.create(data);
+      scalarContainer = SetContainer.create(data);
     });
 
     describe("clone()", function () {
@@ -55,7 +55,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(ScalarContainer.isIncludedBy(result)).toBeTruthy();
+        expect(SetContainer.isIncludedBy(result)).toBeTruthy();
       });
 
       it("should pass item values & keys to callback", function () {

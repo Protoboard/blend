@@ -3,18 +3,18 @@
 /**
  * Maintains a set of singular values. Agnostic about value storage and types.
  * Hosts are expected to implement storage-specific behavior and features.
- * @mixin $data.ScalarContainer
+ * @mixin $data.SetContainer
  * @implements $data.Filterable
  * @implements $data.Reducible
  * @extends $data.ItemContainer
  */
-$data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
+$data.SetContainer = $oop.getClass('$data.SetContainer')
 .extend($oop.getClass('$data.ItemContainer'))
 .implement($oop.getClass('$data.Filterable'))
 .implement($oop.getClass('$data.Reducible'))
-.define(/** @lends $data.ScalarContainer# */{
+.define(/** @lends $data.SetContainer# */{
   /**
-   * @returns {$data.ScalarContainer}
+   * @returns {$data.SetContainer}
    */
   clone: function clone() {
     var cloned = clone.returned;
@@ -30,7 +30,7 @@ $data.ScalarContainer = $oop.getClass('$data.ScalarContainer')
    * and returns the result as a new collection.
    * @param {function} callback Filter function returning a boolean
    * @param {Object} [context] Context for callback
-   * @returns {$data.ScalarContainer} Filtered collection
+   * @returns {$data.SetContainer} Filtered collection
    */
   filter: function (callback, context) {
     var data = this.data instanceof Array ? [] : {},

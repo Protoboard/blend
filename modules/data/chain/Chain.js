@@ -14,12 +14,12 @@
  * @todo Make sure clone() is right. Might 'steal' links from original.
  * @class $data.Chain
  * @extends $data.DataContainer
- * @extends $data.ScalarContainer
+ * @extends $data.SetContainer
  * @implements $data.Stackable
  */
 $data.Chain = $oop.getClass('$data.Chain')
 .extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.ScalarContainer'))
+.extend($oop.getClass('$data.SetContainer'))
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Chain# */{
   /** @ignore */

@@ -33,7 +33,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
   keyMultiplicity: $data.KEY_MUL_ANY,
 
   /**
-   * @returns {$data.ScalarContainer}
+   * @returns {$data.SetContainer}
    */
   clone: function clone() {
     var cloned = clone.returned;

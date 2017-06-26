@@ -10,11 +10,11 @@
 /**
  * @class $data.OrderedList
  * @extends $data.DataContainer
- * @extends $data.ScalarContainer
+ * @extends $data.SetContainer
  */
 $data.OrderedList = $oop.getClass('$data.OrderedList')
 .extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.ScalarContainer'))
+.extend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
   /**
    * @param {Array} [data]
