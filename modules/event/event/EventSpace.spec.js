@@ -24,10 +24,6 @@ describe("$event", function () {
         expect(eventSpace.subscriptions.data).toEqual({});
       });
 
-      it("should initialize _lastSubscriptionId", function () {
-        expect(eventSpace._lastSubscriptionId).toBe(-1);
-      });
-
       describe("then creating another again", function () {
         it("should return the same instance", function () {
           // todo Revisit once caching propagation is fixed in $oop.Class
@@ -119,42 +115,6 @@ describe("$event", function () {
               }
             });
           });
-        });
-      });
-
-      describe("without subscriptionId", function () {
-        beforeEach(function () {
-          result = eventSpace.on('eventName', callback, 'foo.bar'.toPath());
-        });
-
-        it("should assign generated subscriptionId", function () {
-          expect(eventSpace.subscriptions.data).toEqual({
-            callbacks: {
-              bySubscription: {
-                eventName: {
-                  'foo.bar': {
-                    0: callback
-                  }
-                }
-              },
-              bySubscriber: {
-                0: {
-                  eventName: {
-                    'foo.bar': callback
-                  }
-                }
-              }
-            },
-            paths: {
-              eventName: [
-                'foo.bar'
-              ]
-            }
-          });
-        });
-
-        it("should increment _lastSubscriptionId", function () {
-          expect(eventSpace._lastSubscriptionId).toBe(0);
         });
       });
     });

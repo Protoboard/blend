@@ -11,12 +11,10 @@
  * Traversed by events. Allows subscribing and unsubscribing to/from events.
  * @class $event.EventSpace
  * @extends $utils.Destructible
- * @implements $event.EventSpawner
  * @implements $event.EventTarget
  */
 $event.EventSpace = $oop.getClass('$event.EventSpace')
 .include($utils.Destructible)
-.implement($oop.getClass('$event.EventSpawner'))
 .implement($oop.getClass('$event.EventTarget'))
 .cache(function () {
   return 'singleton';
@@ -28,13 +26,6 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
      * @member {$data.Tree} $event.EventSpace#subscription
      */
     this.subscriptions = $data.Tree.create();
-
-    /**
-     * @todo Revisit automatic subscriber ID assignment
-     * @type {number}
-     * @private
-     */
-    this._lastSubscriptionId = -1;
   },
 
   /**
@@ -161,26 +152,15 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
   },
 
   /**
-   * @todo Implement once Event is ready
-   * @param eventName
-   */
-  spawnEvent: function (eventName) {
-  },
-
-  /**
    * Subscribes specified callback to the event `eventName` being triggered on
    * the path `targetPath`.
    * @param {string} eventName Identifies event type
    * @param {function} callback Function to be invoked when event is triggered
    * @param {$data.Path} targetPath Path on which to listen to event
-   * @param {string} [subscriberId] Identifies subscriber
+   * @param {string} subscriberId Identifies subscriber
    * @returns {$event.EventSpace}
    */
   on: function (eventName, callback, targetPath, subscriberId) {
-    subscriberId = subscriberId === undefined ?
-        ++this._lastSubscriptionId :
-        subscriberId;
-
     var subscriptions = this.subscriptions,
         targetPathStr = targetPath.toString(),
 
