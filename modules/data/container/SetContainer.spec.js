@@ -15,6 +15,7 @@ describe("$data", function () {
 
       SetContainer = $oop.getClass('test.$data.SetContainer.SetContainer')
       .extend($data.DataContainer)
+      .extend($data.ArrayContainer)
       .extend($data.SetContainer)
       .define({
         setItem: function (value) {

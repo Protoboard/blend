@@ -5,6 +5,7 @@ var $assert = window['giant-assert'],
 
 describe("$data", function () {
   var data,
+      Dictionary,
       dictionary,
       result;
 
@@ -14,8 +15,19 @@ describe("$data", function () {
         foo: ["FOO"],
         bar: ["BAR", "bar"]
       };
-      dictionary = $data.Dictionary.create(data);
+      Dictionary = $oop.getClass("test.$data.Dictionary.Dictionary")
+      .extend($data.Dictionary);
+      dictionary = Dictionary.create(data);
       dictionary._itemCount = 3;
+    });
+
+    describe("create()", function () {
+      describe("on missing arguments", function () {
+        it("should initialize data to empty object", function () {
+          dictionary = Dictionary.create();
+          expect(dictionary.data).toEqual({});
+        });
+      });
     });
 
     describe("setItem()", function () {

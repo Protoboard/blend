@@ -9,10 +9,12 @@
 /**
  * @class $data.StringSet
  * @extends $data.DataContainer
+ * @extends $data.ObjectContainer
  * @extends $data.SetContainer
  */
 $data.StringSet = $oop.getClass('$data.StringSet')
 .extend($oop.getClass('$data.DataContainer'))
+.extend($oop.getClass('$data.ObjectContainer'))
 .extend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.StringSet# */{
   /**

@@ -33,9 +33,8 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
    * @returns {$data.SetContainer} Filtered collection
    */
   filter: function (callback, context) {
-    var data = this.data instanceof Array ? [] : {},
-        ResultClass = $oop.getClass(this.__classId),
-        result = ResultClass.create(data);
+    var ResultClass = $oop.getClass(this.__classId),
+        result = ResultClass.create();
 
     this.forEachItem(function (item) {
       if (callback.call(this, item)) {

@@ -26,6 +26,15 @@ describe("$data", function () {
       });
     });
 
+    describe("create()", function () {
+      describe("on missing arguments", function () {
+        it("should initialize data to empty object", function () {
+          set = StringSet.create();
+          expect(set.data).toEqual({});
+        });
+      });
+    });
+
     describe("setItem()", function () {
       beforeEach(function () {
         set._itemCount = 2;

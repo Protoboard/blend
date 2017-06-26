@@ -64,6 +64,15 @@ describe("$data", function () {
       });
     });
 
+    describe("create()", function () {
+      describe("on missing arguments", function () {
+        it("should initialize data to empty object", function () {
+          tree = Tree.create();
+          expect(tree.data).toEqual({});
+        });
+      });
+    });
+
     describe("clone()", function () {
       beforeEach(function () {
         result = tree.clone();

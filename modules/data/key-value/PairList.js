@@ -11,25 +11,14 @@
  * **Pairs are not unique.**
  * @class $data.PairList
  * @extends $data.DataContainer
+ * @extends $data.ArrayContainer
  * @extends $data.KeyValueContainer
  */
 $data.PairList = $oop.getClass('$data.PairList')
 .extend($oop.getClass('$data.DataContainer'))
+.extend($oop.getClass('$data.ArrayContainer'))
 .extend($oop.getClass('$data.KeyValueContainer'))
 .define(/** @lends $data.PairList# */{
-  /**
-   * @param {Array} data
-   * @ignore
-   */
-  init: function (data) {
-    $assert.isArrayOptional(data, "Invalid data buffer");
-
-    /**
-     * @member {Array<{key:*,value:*}>} $data.PairList#data
-     */
-    this.data = data || [];
-  },
-
   /**
    * @param {string} key
    * @param {*} value

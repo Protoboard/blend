@@ -11,11 +11,13 @@
  * Pairs are unique.
  * @class $data.Collection
  * @extends $data.DataContainer
+ * @extends $data.ObjectContainer
  * @extends $data.KeyValueContainer
  * @extends $data.StringKeyHost
  */
 $data.Collection = $oop.getClass('$data.Collection')
 .extend($oop.getClass('$data.DataContainer'))
+.extend($oop.getClass('$data.ObjectContainer'))
 .extend($oop.getClass('$data.KeyValueContainer'))
 .extend($oop.getClass('$data.StringKeyHost'))
 .define(/** @lends $data.Collection# */{

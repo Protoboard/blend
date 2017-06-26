@@ -42,6 +42,15 @@ $data.Chain = $oop.getClass('$data.Chain')
   },
 
   /**
+   * @todo Test
+   * @returns {boolean}
+   */
+  isEmpty: function () {
+    var masterLink = this.data;
+    return masterLink === masterLink.nextLink === masterLink.previousLink;
+  },
+
+  /**
    * @param {$data.Link} item
    * @returns {$data.Chain}
    */

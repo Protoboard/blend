@@ -30,6 +30,13 @@ describe("$data", function () {
           }).toThrow();
         });
       });
+
+      describe("on missing arguments", function () {
+        it("should initialize data to empty array", function () {
+          pairList = PairList.create();
+          expect(pairList.data).toEqual([]);
+        });
+      });
     });
 
     describe("setItem()", function () {

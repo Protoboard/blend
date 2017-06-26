@@ -11,11 +11,13 @@
  * **Pairs are not unique.**
  * @class $data.Dictionary
  * @extends $data.DataContainer
+ * @extends $data.ObjectContainer
  * @extends $data.KeyValueContainer
  * @extends $data.StringKeyHost
  */
 $data.Dictionary = $oop.getClass('$data.Dictionary')
 .extend($oop.getClass('$data.DataContainer'))
+.extend($oop.getClass('$data.ObjectContainer'))
 .extend($oop.getClass('$data.KeyValueContainer'))
 .extend($oop.getClass('$data.StringKeyHost'))
 .define(/** @lends $data.Dictionary# */{

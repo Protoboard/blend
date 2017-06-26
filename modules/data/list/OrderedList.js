@@ -10,10 +10,12 @@
 /**
  * @class $data.OrderedList
  * @extends $data.DataContainer
+ * @extends $data.ArrayContainer
  * @extends $data.SetContainer
  */
 $data.OrderedList = $oop.getClass('$data.OrderedList')
 .extend($oop.getClass('$data.DataContainer'))
+.extend($oop.getClass('$data.ArrayContainer'))
 .extend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
   /**
@@ -23,10 +25,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
    */
   init: function (data, comparer) {
     $assert
-    .isArrayOptional(data, "Invalid data buffer")
     .isFunctionOptional(comparer, "Invalid comparer function");
-
-    this.data = data || [];
 
     /**
      * @type {$data.Comparer}

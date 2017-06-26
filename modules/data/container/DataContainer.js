@@ -20,16 +20,14 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
 .implement($oop.getClass('$data.Clearable'))
 .define(/** @lends $data.DataContainer# */{
   /**
-   * @param {object|Array} [data]
+   * @param {*} [data]
    * @ignore
    */
   init: function (data) {
-    $assert.isObjectOptional(data, "Invalid data buffer");
-
     /**
-     * @member {object|Array} $data.DataContainer#data
+     * @member {*} $data.DataContainer#data
      */
-    this.data = data || {};
+    this.data = data;
   },
 
   /**
@@ -56,12 +54,15 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
    * @returns {$data.DataContainer}
    */
   clear: function () {
-    if (this.data instanceof Array) {
-      this.data = [];
-    } else {
-      this.data = {};
-    }
+    this.data = undefined;
     return this;
+  },
+
+  /**
+   * @returns {boolean}
+   */
+  isEmpty: function () {
+    return this.data === undefined;
   },
 
   /**

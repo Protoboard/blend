@@ -11,10 +11,12 @@
  * structures.
  * @class $data.Tree
  * @extends $data.DataContainer
+ * @extends $data.ObjectContainer
  * @implements $data.Queryable
  */
 $data.Tree = $oop.getClass('$data.Tree')
 .extend($oop.getClass('$data.DataContainer'))
+.extend($oop.getClass('$data.ObjectContainer'))
 .implement($oop.getClass('$data.Queryable'))
 .define(/** @lends $data.Tree# */{
   /**

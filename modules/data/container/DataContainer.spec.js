@@ -5,36 +5,19 @@ var $assert = window['giant-assert'],
 
 describe("$data", function () {
   describe("DataContainer", function () {
-    var data,
+    var DataContainer,
         container,
         result;
 
     beforeEach(function () {
-      data = {};
-      container = $data.DataContainer.create(data);
+      DataContainer = $oop.getClass("test.$data.DataContainer.DataContainer")
+      .extend($data.DataContainer);
+      container = DataContainer.create(null);
     });
 
     describe("create()", function () {
       it("should set data property", function () {
-        expect(container.data).toBe(data);
-      });
-
-      describe("on missing arguments", function () {
-        beforeEach(function () {
-          container = $data.DataContainer.create();
-        });
-
-        it("should set data property", function () {
-          expect(container.data).toEqual({});
-        });
-      });
-
-      describe("on invalid arguments", function () {
-        it("should throw", function () {
-          expect(function () {
-            $data.DataContainer.create("foo");
-          }).toThrow();
-        });
+        expect(container.data).toBe(null);
       });
     });
 
@@ -76,20 +59,21 @@ describe("$data", function () {
         expect(result).toBe(container);
       });
 
-      describe("of array data", function () {
-        beforeEach(function () {
-          container = $data.DataContainer.create([1, 2, 3]);
-          container.clear();
-        });
+      it("should replace data with undefined", function () {
+        expect(container.data).toEqual(undefined);
+      });
+    });
 
-        it("should replace data with empty array", function () {
-          expect(container.data).toEqual([]);
+    describe("isEmpty()", function () {
+      describe("when data is defined", function () {
+        it("should return false", function () {
+          expect(DataContainer.create(1).isEmpty()).toBeFalsy();
         });
       });
 
-      describe("of object data", function () {
-        it("should replace data with empty object", function () {
-          expect(container.data).toEqual({});
+      describe("when data is undefined", function () {
+        it("should return false", function () {
+          expect(DataContainer.create().isEmpty()).toBeTruthy();
         });
       });
     });

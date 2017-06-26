@@ -22,6 +22,15 @@ describe("$data", function () {
       collection = Collection.create(data);
     });
 
+    describe("create()", function () {
+      describe("on missing arguments", function () {
+        it("should initialize data to empty object", function () {
+          collection = Collection.create();
+          expect(collection.data).toEqual({});
+        });
+      });
+    });
+
     describe("setItem()", function () {
       var value = {};
 

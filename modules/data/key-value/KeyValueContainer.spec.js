@@ -20,6 +20,7 @@ describe("$data", function () {
 
       KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
       .extend($data.DataContainer)
+      .extend($data.ObjectContainer)
       .extend($data.KeyValueContainer)
       .define({
         setItem: function (key, value) {
@@ -38,6 +39,7 @@ describe("$data", function () {
 
       Settable = $oop.getClass('test.$data.KeyValueContainer.Settable')
       .extend($data.DataContainer)
+      .extend($data.ObjectContainer)
       .define({
         setItem: function (key, value) {
           this.data[key] = value;
