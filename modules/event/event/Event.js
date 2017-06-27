@@ -152,13 +152,6 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @private
-   */
-  _pushToOriginalEvents: function () {
-    $event.OriginalEventChain.create().push(this);
-  },
-
-  /**
    * @param {Array<$utils.Thenable>} thenables
    * @returns {$utils.Promise}
    * @private
@@ -198,11 +191,14 @@ $event.Event = $oop.getClass('$event.Event')
     if (this.sender === undefined) {
       $assert.assert(false, "Event sender is not defined. Can't trigger.");
     }
-    if (this.originalEvent === undefined) {
-      $assert.assert(false, "Original event is not defined. Can't trigger.");
+
+    var originalEventChain = $event.OriginalEventChain.create();
+
+    if (this.originalEvent === undefined && !originalEventChain.isEmpty()) {
+      this.originalEvent = originalEventChain.data.previousLink;
     }
 
-    this._pushToOriginalEvents();
+    originalEventChain.push(this);
 
     var callbackResults = this._invokeCallbacksOnParentPaths();
 
@@ -221,11 +217,14 @@ $event.Event = $oop.getClass('$event.Event')
     if (this.sender === undefined) {
       $assert.assert(false, "Event sender is not defined. Can't broadcast.");
     }
-    if (this.originalEvent === undefined) {
-      $assert.assert(false, "Original event is not defined. Can't broadcast.");
+
+    var originalEventChain = $event.OriginalEventChain.create();
+
+    if (this.originalEvent === undefined && !originalEventChain.isEmpty()) {
+      this.originalEvent = originalEventChain.data.previousLink;
     }
 
-    this._pushToOriginalEvents();
+    originalEventChain.push(this);
 
     var callbackResults1 = this._invokeCallbacksOnDescendantPaths(),
         callbackResults2 = this._invokeCallbacksOnParentPaths();

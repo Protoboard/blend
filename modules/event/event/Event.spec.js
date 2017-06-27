@@ -99,7 +99,6 @@ describe("$event", function () {
         .on('event1', callback3, 'foo'.toPath(), '3');
 
         event
-        .setOriginalEvent(Event.create('event1'))
         .setSender({})
         .setTargetPath('foo.bar.baz'.toPath());
 
@@ -134,7 +133,6 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-            .setOriginalEvent(Event.create('foo'))
             .setTargetPath('foo.bar'.toPath())
             .trigger();
           }).toThrow();
@@ -142,13 +140,21 @@ describe("$event", function () {
       });
 
       describe("on missing originalEvent", function () {
-        it("should throw", function () {
-          expect(function () {
-            Event.create('event1')
-            .setSender({})
-            .setTargetPath('foo.bar'.toPath())
-            .trigger();
-          }).toThrow();
+        var event2;
+
+        beforeEach(function () {
+          event = Event.create('event1');
+          event2 = Event.create('event2');
+          originalEventChain.push(event2);
+
+          event
+          .setSender({})
+          .setTargetPath('foo.bar.baz'.toPath())
+          .trigger();
+        });
+
+        it("should add last original event as originalEvent", function () {
+          expect(event.originalEvent).toBe(event2);
         });
       });
 
@@ -262,13 +268,21 @@ describe("$event", function () {
       });
 
       describe("on missing originalEvent", function () {
-        it("should throw", function () {
-          expect(function () {
-            Event.create('event1')
-            .setSender({})
-            .setTargetPath('foo.bar'.toPath())
-            .broadcast();
-          }).toThrow();
+        var event2;
+
+        beforeEach(function () {
+          event = Event.create('event1');
+          event2 = Event.create('event2');
+          originalEventChain.push(event2);
+
+          event
+          .setSender({})
+          .setTargetPath('foo.bar.baz'.toPath())
+          .broadcast();
+        });
+
+        it("should add last original event as originalEvent", function () {
+          expect(event.originalEvent).toBe(event2);
         });
       });
 
