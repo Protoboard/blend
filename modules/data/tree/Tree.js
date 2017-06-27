@@ -241,6 +241,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * instance. For absent paths, returns an empty `Tree`.
    * @param {$data.Path} path
    * @returns {$data.Tree}
+   * @todo Wrap primitives in DataContainer
    */
   getNodeWrapped: function (path) {
     return $oop.getClass(this.__classId).create(this.getNode(path));
