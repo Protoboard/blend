@@ -5,7 +5,6 @@
       "event/Event.js",
       "event/EventSource.js",
       "event/EventSpace.js",
-      "event/EventSpawner.js",
       "event/EventTarget.js",
       "event/OriginalEventChain.js"
     ]
