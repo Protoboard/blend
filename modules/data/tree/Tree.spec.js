@@ -356,7 +356,7 @@ describe("$data", function () {
         // adding long unique path
         tree.setNode('bar.baz.quux.hello.world'.toPath(), true);
         // making singular node
-        tree.deleteNode('bar.world'.toPath());
+        tree.deleteNode('bar.world'.toPath()); // todo ?
         result = tree.getLastForkPath('bar.baz.quux.hello.world'.toPath());
       });
 
@@ -376,18 +376,9 @@ describe("$data", function () {
       });
 
       describe("for existing shorter path", function () {
-        describe("that points to multi-key node", function () {
-          it("should return specified path", function () {
-            result = tree.getLastForkPath('foo.bar'.toPath());
-            expect('foo.bar'.toPath().equals(result)).toBeTruthy();
-          });
-        });
-
-        describe("that points to single-key node", function () {
-          it("should return specified path", function () {
-            result = tree.getLastForkPath('bar.world'.toPath());
-            expect('bar'.toPath().equals(result)).toBeTruthy();
-          });
+        it("should return path to last multi-key node", function () {
+          result = tree.getLastForkPath('foo.bar'.toPath());
+          expect([].toPath().equals(result)).toBeTruthy();
         });
       });
     });
@@ -400,6 +391,12 @@ describe("$data", function () {
       describe("for absent path", function () {
         it("should return undefined", function () {
           expect(tree.getNode('foo.bar.baz'.toPath())).toBeUndefined();
+        });
+      });
+
+      describe("for empty path", function () {
+        it("should return data buffer", function () {
+          expect(tree.getNode([].toPath())).toBe(tree.data);
         });
       });
     });
@@ -730,11 +727,10 @@ describe("$data", function () {
           });
         });
 
-        describe("that is multi-key", function () {
-          it("should remove node at path", function () {
-            result = tree.deletePath('foo.bar'.toPath());
+        describe("when last forking noe is root", function () {
+          it("should remove affected nodes along path", function () {
+            tree.deletePath('foo.bar'.toPath());
             expect(tree.data).toEqual({
-              foo: {},
               bar: {
                 hello: 'world'
               }

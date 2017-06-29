@@ -120,13 +120,15 @@ describe("$event", function () {
     });
 
     describe("off()", function () {
-      var callback1, callback2, callback3;
+      var callback1, callback2, callback3, callback4;
 
       beforeEach(function () {
         callback1 = function () {};
         callback2 = function () {};
         callback3 = function () {};
+        callback4 = function () {};
         result = eventSpace
+        .on('event1', callback4, 'foo.bar'.toPath(), 'subscriber3')
         .on('event1', callback1, 'foo.bar.baz'.toPath(), 'subscriber1')
         .on('event1', callback2, 'foo.bar.quux'.toPath(), 'subscriber2')
         .on('event2', callback3, 'foo.baz'.toPath(), 'subscriber1');
@@ -144,36 +146,30 @@ describe("$event", function () {
             callbacks: {
               bySubscription: {
                 event1: {
-                  'foo.bar.quux': {
-                    subscriber2: callback2
-                  }
+                  'foo.bar': {subscriber3: callback4},
+                  'foo.bar.baz': {},
+                  'foo.bar.quux': {subscriber2: callback2}
                 },
                 event2: {
-                  'foo.baz': {
-                    subscriber1: callback3
-                  }
+                  'foo.baz': {subscriber1: callback3}
                 }
               },
               bySubscriber: {
                 subscriber1: {
-                  event2: {
-                    'foo.baz': callback3
-                  }
+                  event2: {'foo.baz': callback3},
+                  event1: {}
                 },
                 subscriber2: {
-                  event1: {
-                    'foo.bar.quux': callback2
-                  }
+                  event1: {'foo.bar.quux': callback2}
+                },
+                subscriber3: {
+                  event1: {'foo.bar': callback4}
                 }
               }
             },
             paths: {
-              event1: [
-                'foo.bar.quux'
-              ],
-              event2: [
-                'foo.baz'
-              ]
+              event1: ['foo.bar', 'foo.bar.quux'],
+              event2: ['foo.baz']
             }
           });
         });
@@ -186,23 +182,22 @@ describe("$event", function () {
             callbacks: {
               bySubscription: {
                 event1: {
-                  'foo.bar.quux': {
-                    subscriber2: callback2
-                  }
+                  'foo.bar': {subscriber3: callback4},
+                  'foo.bar.quux': {subscriber2: callback2}
                 }
               },
               bySubscriber: {
                 subscriber2: {
-                  event1: {
-                    'foo.bar.quux': callback2
-                  }
+                  event1: {'foo.bar.quux': callback2}
+                },
+                subscriber3: {
+                  event1: {'foo.bar': callback4}
                 }
               }
             },
             paths: {
-              event1: [
-                'foo.bar.quux'
-              ]
+              event1: ['foo.bar', 'foo.bar.quux'],
+              event2: []
             }
           });
         });
@@ -214,36 +209,28 @@ describe("$event", function () {
               callbacks: {
                 bySubscription: {
                   event1: {
-                    'foo.bar.quux': {
-                      subscriber2: callback2
-                    }
+                    'foo.bar': {subscriber3: callback4},
+                    'foo.bar.quux': {subscriber2: callback2}
                   },
                   event2: {
-                    'foo.baz': {
-                      subscriber1: callback3
-                    }
+                    'foo.baz': {subscriber1: callback3}
                   }
                 },
                 bySubscriber: {
                   subscriber1: {
-                    event2: {
-                      'foo.baz': callback3
-                    }
+                    event2: {'foo.baz': callback3}
                   },
                   subscriber2: {
-                    event1: {
-                      'foo.bar.quux': callback2
-                    }
+                    event1: {'foo.bar.quux': callback2}
+                  },
+                  subscriber3: {
+                    event1: {'foo.bar': callback4}
                   }
                 }
               },
               paths: {
-                event1: [
-                  'foo.bar.quux'
-                ],
-                event2: [
-                  'foo.baz'
-                ]
+                event1: ['foo.bar', 'foo.bar.quux'],
+                event2: ['foo.baz']
               }
             });
           });
@@ -257,23 +244,24 @@ describe("$event", function () {
             callbacks: {
               bySubscription: {
                 event2: {
-                  'foo.baz': {
-                    subscriber1: callback3
-                  }
+                  'foo.baz': {subscriber1: callback3}
                 }
               },
               bySubscriber: {
                 subscriber1: {
-                  event2: {
-                    'foo.baz': callback3
-                  }
+                  event1: {},
+                  event2: {'foo.baz': callback3}
+                },
+                subscriber2: {
+                  event1: {}
+                },
+                subscriber3: {
+                  event1: {}
                 }
               }
             },
             paths: {
-              event2: [
-                'foo.baz'
-              ]
+              event2: ['foo.baz']
             }
           });
         });
@@ -285,36 +273,29 @@ describe("$event", function () {
               callbacks: {
                 bySubscription: {
                   event1: {
-                    'foo.bar.quux': {
-                      subscriber2: callback2
-                    }
+                    'foo.bar': {subscriber3: callback4},
+                    'foo.bar.quux': {subscriber2: callback2}
                   },
                   event2: {
-                    'foo.baz': {
-                      subscriber1: callback3
-                    }
+                    'foo.baz': {subscriber1: callback3}
                   }
                 },
                 bySubscriber: {
                   subscriber1: {
-                    event2: {
-                      'foo.baz': callback3
-                    }
+                    event1: {},
+                    event2: {'foo.baz': callback3}
                   },
                   subscriber2: {
-                    event1: {
-                      'foo.bar.quux': callback2
-                    }
+                    event1: {'foo.bar.quux': callback2}
+                  },
+                  subscriber3: {
+                    event1: {'foo.bar': callback4}
                   }
                 }
               },
               paths: {
-                event1: [
-                  'foo.bar.quux'
-                ],
-                event2: [
-                  'foo.baz'
-                ]
+                event1: ['foo.bar', 'foo.bar.quux'],
+                event2: ['foo.baz']
               }
             });
           });

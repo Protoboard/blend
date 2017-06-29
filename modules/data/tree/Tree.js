@@ -50,7 +50,6 @@ $data.Tree = $oop.getClass('$data.Tree')
       return;
     }
 
-    //
     if (queryComponent.keyOptions &&
         !queryComponent.isKeyExcluded
     ) {
@@ -173,7 +172,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * Returns path to the last forking node (ode with more than 1 keys) on the
+   * Returns path to the last forking node (node with more than 1 keys) on the
    * specified path.
    * @param {$data.Path} path
    * @returns {$data.Path}
@@ -182,34 +181,34 @@ $data.Tree = $oop.getClass('$data.Tree')
     var pathComponents = path.components,
         pathComponentCount = pathComponents.length,
         i, pathComponent, parentNode, currentNode,
-        nodes = [],
-        nodeCount;
+        parentNodes = [],
+        parentNodeCount;
 
-    // getting nodes along path in a flat array
+    // collecting parent nodes along path in a flat array
     for (i = 0, parentNode = this.data; i < pathComponentCount; i++) {
+      parentNodes.unshift(parentNode);
       pathComponent = pathComponents[i];
-      currentNode = parentNode[pathComponent];
       if (!hOP.call(parentNode, pathComponent)) {
         break;
       } else {
-        nodes.unshift(currentNode);
-        parentNode = currentNode;
+        parentNode = parentNode[pathComponent];
       }
     }
-    nodeCount = nodes.length;
+    parentNodeCount = parentNodes.length;
 
     // looping through nodes until first multi-key node is found
-    for (i = 0; i < nodeCount; i++) {
-      currentNode = nodes[i];
+    for (i = 0; i < parentNodeCount; i++) {
+      currentNode = parentNodes[i];
       if (currentNode instanceof Object &&
           $data.isMultiKeyObject(currentNode)
       ) {
+        // making it seem we're exiting normally
+        i++;
         break;
       }
     }
 
-    return $data.Path.create(pathComponents
-    .slice(0, nodeCount - i));
+    return $data.Path.create(pathComponents.slice(0, parentNodeCount - i));
   },
 
   /**
@@ -386,20 +385,20 @@ $data.Tree = $oop.getClass('$data.Tree')
    */
   deletePath: function (path, splice) {
     var pathComponents = path.components,
-        basePath = this.getLastForkPath(path),
-        basePathComponents = basePath.components,
-        basePathComponentCount = basePathComponents.length;
+        parentPath = this.getLastForkPath(path),
+        parentPathComponents = parentPath.components,
+        parentPathComponentCount = parentPathComponents.length;
 
-    if (basePathComponentCount === pathComponents.length) {
-      // path exists in tree
+    if (parentPathComponentCount === pathComponents.length - 1) {
+      // target parent is 1st degree parent
       // removing node at path
       this.deleteNode(path, splice);
     } else {
-      // stem path exists in tree
-      // removing node from stem path
+      // target parent is closer to root
+      // removing node from under parentPath
       this.deleteNode(
-          basePath.clone()
-          .push(pathComponents[basePathComponentCount]),
+          parentPath.clone()
+          .push(pathComponents[parentPathComponentCount]),
           splice);
     }
 
