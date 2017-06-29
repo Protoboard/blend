@@ -85,6 +85,33 @@ $event.Event = $oop.getClass('$event.Event')
    * @returns {Array<$utils.Thenable|*>}
    * @private
    */
+  _invokeCallbacksOnTargetPath: function () {
+    var eventSpace = $event.EventSpace.create(),
+        eventName = this.eventName,
+        targetPath = this.targetPath,
+        callbacksPath = $data.Path.create([
+          'callbacks', 'bySubscription', eventName, targetPath.toString()]),
+        callbacks = eventSpace.subscriptions.getNode(callbacksPath),
+        subscriberIds = callbacks && Object.keys(callbacks),
+        callbackCount = subscriberIds && subscriberIds.length || 0,
+        i,
+        results = [];
+
+    // setting current path
+    this.currentPath = targetPath;
+
+    // invoking callbacks for eventName / targetPath
+    for (i = 0; i < callbackCount; i++) {
+      results.push(callbacks[subscriberIds[i]](this));
+    }
+
+    return results;
+  },
+
+  /**
+   * @returns {Array<$utils.Thenable|*>}
+   * @private
+   */
   _invokeCallbacksOnParentPaths: function () {
     var eventSpace = $event.EventSpace.create(),
         event = this.clone(),
@@ -92,8 +119,8 @@ $event.Event = $oop.getClass('$event.Event')
         eventName = event.eventName,
         targetPath = event.targetPath,
         currentPath = event.currentPath = targetPath.clone(),
-        callbacksPath = $data.Path.create(['callbacks',
-          'bySubscription', eventName, null]),
+        callbacksPath = $data.Path.create([
+          'callbacks', 'bySubscription', eventName, null]),
         callbacks, subscriberIds, callbackCount,
         i,
         results = [];
@@ -200,7 +227,9 @@ $event.Event = $oop.getClass('$event.Event')
 
     originalEventChain.push(this);
 
-    var callbackResults = this._invokeCallbacksOnParentPaths();
+    var callbackResults = this.bubbles ?
+        this._invokeCallbacksOnParentPaths() :
+        this._invokeCallbacksOnTargetPath();
 
     return this._unlinkWhen(callbackResults);
   },
@@ -227,7 +256,9 @@ $event.Event = $oop.getClass('$event.Event')
     originalEventChain.push(this);
 
     var callbackResults1 = this._invokeCallbacksOnDescendantPaths(),
-        callbackResults2 = this._invokeCallbacksOnParentPaths();
+        callbackResults2 = this.bubbles ?
+            this._invokeCallbacksOnParentPaths() :
+            this._invokeCallbacksOnTargetPath();
 
     return this._unlinkWhen(callbackResults1.concat(callbackResults2));
   },
