@@ -18,7 +18,7 @@ describe("$data", function () {
         return a > b ? 1 : a < b ? -1 : 0;
       };
       OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
-      .extend($data.OrderedList);
+      .mix($data.OrderedList);
       orderedList = OrderedList.create(data, comparer);
     });
 
@@ -266,7 +266,7 @@ describe("$data", function () {
       });
 
       it("should return instance of the current class", function () {
-        expect(OrderedList.isIncludedBy(result)).toBeTruthy();
+        expect(OrderedList.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke getRange() with same arguments", function () {
@@ -289,7 +289,7 @@ describe("$data", function () {
       });
 
       it("should return a OrderedList instance", function () {
-        expect($data.OrderedList.isIncludedBy(result)).toBeTruthy();
+        expect($data.OrderedList.mixedBy(result)).toBeTruthy();
       });
 
       it("should set data set", function () {
@@ -310,7 +310,7 @@ describe("Array", function () {
     });
 
     it("should return a OrderedList instance", function () {
-      expect($data.OrderedList.isIncludedBy(result)).toBeTruthy();
+      expect($data.OrderedList.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data set", function () {

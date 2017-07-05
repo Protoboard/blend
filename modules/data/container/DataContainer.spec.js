@@ -11,7 +11,7 @@ describe("$data", function () {
 
     beforeEach(function () {
       DataContainer = $oop.getClass("test.$data.DataContainer.DataContainer")
-      .extend($data.DataContainer);
+      .mix($data.DataContainer);
       container = DataContainer.create(null);
     });
 

@@ -11,7 +11,7 @@ describe("$data", function () {
 
     beforeEach(function () {
       MasterLink = $oop.getClass('test.$data.MasterLink.MasterLink')
-      .extend($data.MasterLink);
+      .mix($data.MasterLink);
       chain = $data.Chain.create();
       masterLink = MasterLink.create(chain);
     });

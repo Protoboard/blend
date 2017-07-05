@@ -18,8 +18,8 @@ describe("$data", function () {
       };
 
       ItemContainer = $oop.getClass('test.$data.ItemContainer.ItemContainer')
-      .extend($data.DataContainer)
-      .extend($data.ItemContainer)
+      .mix($data.DataContainer)
+      .mix($data.ItemContainer)
       .define({
         forEachItem: function (callback, context) {
           var data = this.data,

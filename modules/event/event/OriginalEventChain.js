@@ -11,7 +11,7 @@
  * @extends $data.Chain
  */
 $event.OriginalEventChain = $oop.getClass('$event.OriginalEventChain')
-.extend($data.Chain)
+.mix($data.Chain)
 .cache(function () {
   return 'singleton';
 });

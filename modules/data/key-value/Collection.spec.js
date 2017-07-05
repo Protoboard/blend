@@ -18,7 +18,7 @@ describe("$data", function () {
         bar: "BAR"
       };
       Collection = $oop.getClass("test.$data.Collection.Collection")
-      .extend($data.Collection);
+      .mix($data.Collection);
       collection = Collection.create(data);
     });
 
@@ -139,7 +139,7 @@ describe("$data", function () {
       });
 
       it("should return DataContainer instance", function () {
-        expect($data.DataContainer.isIncludedBy(result))
+        expect($data.DataContainer.mixedBy(result))
         .toBeTruthy();
       });
 
@@ -162,7 +162,7 @@ describe("$data", function () {
       });
 
       it("should return a Collection instance", function () {
-        expect($data.Collection.isIncludedBy(result)).toBeTruthy();
+        expect($data.Collection.mixedBy(result)).toBeTruthy();
       });
 
       it("should set data buffer", function () {
@@ -183,7 +183,7 @@ describe("Array", function () {
     });
 
     it("should return a Collection instance", function () {
-      expect($data.Collection.isIncludedBy(result)).toBeTruthy();
+      expect($data.Collection.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data buffer", function () {

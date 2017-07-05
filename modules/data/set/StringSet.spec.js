@@ -18,7 +18,7 @@ describe("$data", function () {
         bar: 1
       };
       StringSet = $oop.getClass("test.$data.StringSet.StringSet")
-      .extend($data.StringSet);
+      .mix($data.StringSet);
       set = StringSet.create(data);
       set2 = StringSet.create({
         bar: 1,
@@ -149,7 +149,7 @@ describe("$data", function () {
       });
 
       it("should return new StringSet instance", function () {
-        expect(StringSet.isIncludedBy(result));
+        expect(StringSet.mixedBy(result));
         expect(result).not.toBe(set);
         expect(result).not.toBe(set2);
       });
@@ -168,7 +168,7 @@ describe("$data", function () {
       });
 
       it("should return new StringSet instance", function () {
-        expect(StringSet.isIncludedBy(result));
+        expect(StringSet.mixedBy(result));
         expect(result).not.toBe(set);
         expect(result).not.toBe(set2);
       });
@@ -189,7 +189,7 @@ describe("$data", function () {
       });
 
       it("should return new StringSet instance", function () {
-        expect(StringSet.isIncludedBy(result));
+        expect(StringSet.mixedBy(result));
         expect(result).not.toBe(set);
         expect(result).not.toBe(set2);
       });
@@ -207,7 +207,7 @@ describe("$data", function () {
       });
 
       it("should return new StringSet instance", function () {
-        expect(StringSet.isIncludedBy(result));
+        expect(StringSet.mixedBy(result));
         expect(result).not.toBe(set);
         expect(result).not.toBe(set2);
       });
@@ -225,7 +225,7 @@ describe("$data", function () {
       });
 
       it("should return new StringSet instance", function () {
-        expect(StringSet.isIncludedBy(result));
+        expect(StringSet.mixedBy(result));
         expect(result).not.toBe(set);
         expect(result).not.toBe(set2);
       });
@@ -248,7 +248,7 @@ describe("$data", function () {
       });
 
       it("should return a StringSet instance", function () {
-        expect($data.StringSet.isIncludedBy(result)).toBeTruthy();
+        expect($data.StringSet.mixedBy(result)).toBeTruthy();
       });
 
       it("should set data set", function () {
@@ -269,7 +269,7 @@ describe("Array", function () {
     });
 
     it("should return a StringSet instance", function () {
-      expect($data.StringSet.isIncludedBy(result)).toBeTruthy();
+      expect($data.StringSet.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data set", function () {

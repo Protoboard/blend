@@ -15,9 +15,9 @@
  * @extends $data.KeyValueContainer
  */
 $data.PairList = $oop.getClass('$data.PairList')
-.extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.ArrayContainer'))
-.extend($oop.getClass('$data.KeyValueContainer'))
+.mix($oop.getClass('$data.DataContainer'))
+.mix($oop.getClass('$data.ArrayContainer'))
+.mix($oop.getClass('$data.KeyValueContainer'))
 .define(/** @lends $data.PairList# */{
   /**
    * @param {string} key

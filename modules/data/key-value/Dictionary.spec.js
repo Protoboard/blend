@@ -16,7 +16,7 @@ describe("$data", function () {
         bar: ["BAR", "bar"]
       };
       Dictionary = $oop.getClass("test.$data.Dictionary.Dictionary")
-      .extend($data.Dictionary);
+      .mix($data.Dictionary);
       dictionary = Dictionary.create(data);
       dictionary._itemCount = 3;
     });
@@ -179,7 +179,7 @@ describe("$data", function () {
       });
 
       it("should return a Dictionary instance", function () {
-        expect($data.Dictionary.isIncludedBy(result)).toBeTruthy();
+        expect($data.Dictionary.mixedBy(result)).toBeTruthy();
       });
 
       it("should set data buffer", function () {
@@ -200,7 +200,7 @@ describe("Array", function () {
     });
 
     it("should return a Dictionary instance", function () {
-      expect($data.Dictionary.isIncludedBy(result)).toBeTruthy();
+      expect($data.Dictionary.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data buffer", function () {

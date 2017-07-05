@@ -18,7 +18,7 @@ describe("$data", function () {
         {key: "bar", value: "BAR"}
       ];
       PairList = $oop.getClass("test.$data.PairList.PairList")
-      .extend($data.PairList);
+      .mix($data.PairList);
       pairList = PairList.create(data);
     });
 
@@ -108,7 +108,7 @@ describe("$data", function () {
       });
 
       it("should return a PairList instance", function () {
-        expect($data.PairList.isIncludedBy(result)).toBeTruthy();
+        expect($data.PairList.mixedBy(result)).toBeTruthy();
       });
 
       it("should set data buffer", function () {
@@ -129,7 +129,7 @@ describe("Array", function () {
     });
 
     it("should return a PairList instance", function () {
-      expect($data.PairList.isIncludedBy(result)).toBeTruthy();
+      expect($data.PairList.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data buffer", function () {

@@ -14,7 +14,7 @@
  * @implements $event.EventTarget
  */
 $event.EventSpace = $oop.getClass('$event.EventSpace')
-.include($utils.Destructible)
+.mixOnly($utils.Destructible)
 .implement($oop.getClass('$event.EventTarget'))
 .cache(function () {
   return 'singleton';

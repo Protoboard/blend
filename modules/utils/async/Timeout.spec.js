@@ -11,7 +11,7 @@ describe("Number", function () {
     });
 
     it("should return Timeout instance", function () {
-      expect($utils.Timeout.isIncludedBy(timeout)).toBeTruthy();
+      expect($utils.Timeout.mixedBy(timeout)).toBeTruthy();
     });
 
     it("should set timerId property", function () {

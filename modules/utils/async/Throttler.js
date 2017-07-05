@@ -13,7 +13,7 @@
  * @extends $utils.Scheduler
  */
 $utils.Throttler = $oop.getClass('$utils.Throttler')
-.extend($oop.getClass('$utils.Scheduler'))
+.mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Throttler# */{
   /** @ignore */
   init: function (interval) {

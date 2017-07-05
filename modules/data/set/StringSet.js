@@ -13,9 +13,9 @@
  * @extends $data.SetContainer
  */
 $data.StringSet = $oop.getClass('$data.StringSet')
-.extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.ObjectContainer'))
-.extend($oop.getClass('$data.SetContainer'))
+.mix($oop.getClass('$data.DataContainer'))
+.mix($oop.getClass('$data.ObjectContainer'))
+.mix($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.StringSet# */{
   /**
    * @param {string} item

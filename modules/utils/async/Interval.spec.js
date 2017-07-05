@@ -11,7 +11,7 @@ describe("Number", function () {
     });
 
     it("should return Interval instance", function () {
-      expect($utils.Interval.isIncludedBy(interval)).toBeTruthy();
+      expect($utils.Interval.mixedBy(interval)).toBeTruthy();
     });
 
     it("should set timerId property", function () {

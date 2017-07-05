@@ -16,10 +16,10 @@
  * @extends $data.StringKeyHost
  */
 $data.Collection = $oop.getClass('$data.Collection')
-.extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.ObjectContainer'))
-.extend($oop.getClass('$data.KeyValueContainer'))
-.extend($oop.getClass('$data.StringKeyHost'))
+.mix($oop.getClass('$data.DataContainer'))
+.mix($oop.getClass('$data.ObjectContainer'))
+.mix($oop.getClass('$data.KeyValueContainer'))
+.mix($oop.getClass('$data.StringKeyHost'))
 .define(/** @lends $data.Collection# */{
   /**
    * @type {string}

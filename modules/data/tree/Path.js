@@ -20,8 +20,8 @@
  * $data.Path.create(['foo', 'bar', 'baz'])
  */
 $data.Path = $oop.getClass('$data.Path')
-.extend($utils.Cloneable)
-.extend($oop.getClass('$data.Comparable'))
+.mix($utils.Cloneable)
+.mix($oop.getClass('$data.Comparable'))
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Path# */{
@@ -186,7 +186,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
    */
   isPath: function (expr, message) {
     return $assert.assert(
-        $data.Path.isIncludedBy(expr), message);
+        $data.Path.mixedBy(expr), message);
   },
 
   /**
@@ -197,7 +197,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
   isPathOptional: function (expr, message) {
     return $assert.assert(
         expr === undefined ||
-        $data.Path.isIncludedBy(expr), message);
+        $data.Path.mixedBy(expr), message);
   }
 });
 

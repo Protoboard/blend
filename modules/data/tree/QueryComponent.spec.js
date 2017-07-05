@@ -10,7 +10,7 @@ describe("$data", function () {
 
     beforeEach(function () {
       QueryComponent = $oop.getClass('test.$data.QueryComponent.QueryComponent')
-      .extend($data.QueryComponent);
+      .mix($data.QueryComponent);
     });
 
     describe("create()", function () {
@@ -114,7 +114,7 @@ describe("$data", function () {
       });
 
       it("should return QueryComponent instance", function () {
-        expect(QueryComponent.isIncludedBy(result)).toBeTruthy();
+        expect(QueryComponent.mixedBy(result)).toBeTruthy();
       });
 
       it("should initialize properties", function () {

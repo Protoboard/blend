@@ -28,7 +28,7 @@
  * $data.QueryComponent.create("*:bar") // matches pair where value is "bar"
  */
 $data.QueryComponent = $oop.getClass('$data.QueryComponent')
-.extend($utils.Cloneable)
+.mix($utils.Cloneable)
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.QueryComponent# */{

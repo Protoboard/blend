@@ -15,7 +15,7 @@ describe("$data", function () {
     beforeEach(function () {
       data = ['bar', 'foo'];
       OrderedStringList = $oop.getClass("test.$data.OrderedStringList.OrderedStringList")
-      .extend($data.OrderedStringList);
+      .mix($data.OrderedStringList);
       orderedStringList = OrderedStringList.create(data);
     });
 
@@ -50,7 +50,7 @@ describe("$data", function () {
       });
 
       it("should return instance of the current class", function () {
-        expect(OrderedStringList.isIncludedBy(result)).toBeTruthy();
+        expect(OrderedStringList.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke getRangeByPrefix() with same arguments", function () {
@@ -73,7 +73,7 @@ describe("$data", function () {
       });
 
       it("should return a OrderedStringList instance", function () {
-        expect($data.OrderedStringList.isIncludedBy(result)).toBeTruthy();
+        expect($data.OrderedStringList.mixedBy(result)).toBeTruthy();
       });
 
       it("should set data set", function () {
@@ -94,7 +94,7 @@ describe("Array", function () {
     });
 
     it("should return a OrderedStringList instance", function () {
-      expect($data.OrderedStringList.isIncludedBy(result)).toBeTruthy();
+      expect($data.OrderedStringList.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data set", function () {

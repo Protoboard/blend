@@ -17,8 +17,8 @@
  * @implements $event.EventSource
  */
 $event.Event = $oop.getClass('$event.Event')
-.extend($data.Link)
-.extend($utils.Cloneable)
+.mix($data.Link)
+.mix($utils.Cloneable)
 .implement($oop.getClass('$event.EventSource'))
 .define(/** @lends $event.Event# */{
   /**

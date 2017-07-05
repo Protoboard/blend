@@ -13,7 +13,7 @@
  * @extends $utils.Timer
  */
 $utils.Interval = $oop.getClass('$utils.Interval')
-.extend($oop.getClass('$utils.Timer'))
+.mix($oop.getClass('$utils.Timer'))
 .define(/** @lends $utils.Interval# */{
   /**
    * @inheritDoc

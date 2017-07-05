@@ -12,7 +12,7 @@ describe("$utils", function () {
       $utils.Identifiable._lastInstanceId = -1;
       $utils.Retrievable._instanceRegistry = {};
       Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
-      .extend($utils.Retrievable);
+      .mix($utils.Retrievable);
     });
 
     describe("create()", function () {

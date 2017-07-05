@@ -24,7 +24,7 @@ describe("$utils", function () {
     });
 
     it("should return Timeout instance", function () {
-      expect($utils.Timeout.isIncludedBy(result)).toBeTruthy();
+      expect($utils.Timeout.mixedBy(result)).toBeTruthy();
     });
 
     describe("on timeout", function () {
@@ -61,7 +61,7 @@ describe("$utils", function () {
     });
 
     it("should return Interval instance", function () {
-      expect($utils.Interval.isIncludedBy(result)).toBeTruthy();
+      expect($utils.Interval.mixedBy(result)).toBeTruthy();
     });
 
     describe("on interval", function () {

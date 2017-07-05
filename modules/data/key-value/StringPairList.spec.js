@@ -16,7 +16,7 @@ describe("$data", function () {
       });
 
       it("should return a StringPairList instance", function () {
-        expect($data.StringPairList.isIncludedBy(result))
+        expect($data.StringPairList.mixedBy(result))
         .toBeTruthy();
       });
 
@@ -38,7 +38,7 @@ describe("Array", function () {
     });
 
     it("should return a StringPairList instance", function () {
-      expect($data.StringPairList.isIncludedBy(result)).toBeTruthy();
+      expect($data.StringPairList.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data buffer", function () {

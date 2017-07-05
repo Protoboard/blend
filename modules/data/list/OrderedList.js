@@ -14,9 +14,9 @@
  * @extends $data.SetContainer
  */
 $data.OrderedList = $oop.getClass('$data.OrderedList')
-.extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.ArrayContainer'))
-.extend($oop.getClass('$data.SetContainer'))
+.mix($oop.getClass('$data.DataContainer'))
+.mix($oop.getClass('$data.ArrayContainer'))
+.mix($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
   /**
    * @param {Array} [data]

@@ -13,9 +13,9 @@ describe("$data", function () {
 
     beforeEach(function () {
       StringKeyHost = $oop.getClass('test.$data.StringValueHost.StringKeyHost')
-      .extend($data.DataContainer)
-      .extend($data.KeyValueContainer)
-      .include($data.StringKeyHost)
+      .mix($data.DataContainer)
+      .mix($data.KeyValueContainer)
+      .mixOnly($data.StringKeyHost)
       .define({
         getValuesForKey: function (key) {
           var data = this.data;
@@ -26,9 +26,9 @@ describe("$data", function () {
       });
 
       StringValueHost = $oop.getClass('test.$data.StringValueHost.StringValueHost')
-      .extend($data.DataContainer)
-      .extend($data.KeyValueContainer)
-      .include($data.StringValueHost)
+      .mix($data.DataContainer)
+      .mix($data.KeyValueContainer)
+      .mixOnly($data.StringValueHost)
       .define({
         forEachItem: function (callback) {
           var keys = Object.keys(this.data),
@@ -62,7 +62,7 @@ describe("$data", function () {
       });
 
       it("should return correct type", function () {
-        expect($data.PairList.isIncludedBy(result))
+        expect($data.PairList.mixedBy(result))
         .toBeTruthy();
       });
 

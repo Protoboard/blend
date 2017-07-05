@@ -13,8 +13,8 @@ describe("$data", function () {
     beforeEach(function () {
       data = [];
       ArrayContainer = $oop.getClass('test.$data.ArrayContainer.ArrayContainer')
-      .extend($data.DataContainer)
-      .extend($data.ArrayContainer);
+      .mix($data.DataContainer)
+      .mix($data.ArrayContainer);
       arrayContainer = ArrayContainer.create(data);
     });
 

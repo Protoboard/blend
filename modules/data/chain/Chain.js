@@ -18,8 +18,8 @@
  * @implements $data.Stackable
  */
 $data.Chain = $oop.getClass('$data.Chain')
-.extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.SetContainer'))
+.mix($oop.getClass('$data.DataContainer'))
+.mix($oop.getClass('$data.SetContainer'))
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Chain# */{
   /** @ignore */
@@ -160,7 +160,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
    */
   isChain: function (expr, message) {
     return $assert.assert(
-        $data.Chain.isIncludedBy(expr), message);
+        $data.Chain.mixedBy(expr), message);
   },
 
   /**
@@ -171,6 +171,6 @@ $oop.copyProperties($assert, /** @lends $assert# */{
   isChainOptional: function (expr, message) {
     return $assert.assert(
         expr === undefined ||
-        $data.Chain.isIncludedBy(expr), message);
+        $data.Chain.mixedBy(expr), message);
   }
 });

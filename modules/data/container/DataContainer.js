@@ -15,7 +15,7 @@
  * @extends $utils.Cloneable
  */
 $data.DataContainer = $oop.getClass('$data.DataContainer')
-.extend($utils.Cloneable)
+.mix($utils.Cloneable)
 .implement($utils.Destructible)
 .implement($oop.getClass('$data.Clearable'))
 .define(/** @lends $data.DataContainer# */{

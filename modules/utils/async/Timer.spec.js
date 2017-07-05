@@ -24,11 +24,11 @@ describe("$utils", function () {
       });
 
       it("should initialize timerDeferred property", function () {
-        expect($utils.Deferred.isIncludedBy(timer.timerDeferred)).toBeTruthy();
+        expect($utils.Deferred.mixedBy(timer.timerDeferred)).toBeTruthy();
       });
 
       it("should initialize timerPromise property", function () {
-        expect($utils.Promise.isIncludedBy(timer.timerPromise)).toBeTruthy();
+        expect($utils.Promise.mixedBy(timer.timerPromise)).toBeTruthy();
       });
     });
 

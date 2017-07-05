@@ -15,8 +15,8 @@
  * @implements $data.Queryable
  */
 $data.Tree = $oop.getClass('$data.Tree')
-.extend($oop.getClass('$data.DataContainer'))
-.extend($oop.getClass('$data.ObjectContainer'))
+.mix($oop.getClass('$data.DataContainer'))
+.mix($oop.getClass('$data.ObjectContainer'))
 .implement($oop.getClass('$data.Queryable'))
 .define(/** @lends $data.Tree# */{
   /**
@@ -520,7 +520,7 @@ $oop.copyProperties($assert, /** @lends $assert */{
    */
   isTree: function (expr, message) {
     return $assert.assert(
-        $data.Tree.isIncludedBy(expr), message);
+        $data.Tree.mixedBy(expr), message);
   },
 
   /**
@@ -531,7 +531,7 @@ $oop.copyProperties($assert, /** @lends $assert */{
   isTreeOptional: function (expr, message) {
     return $assert.assert(
         expr === undefined ||
-        $data.Tree.isIncludedBy(expr), message);
+        $data.Tree.mixedBy(expr), message);
   }
 });
 

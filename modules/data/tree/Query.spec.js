@@ -49,7 +49,7 @@ describe("$data", function () {
 
     beforeEach(function () {
       Query = $oop.getClass('test.$data.Query.Query')
-      .extend($data.Query);
+      .mix($data.Query);
       query = Query.create([
         'foo',
         'bar',

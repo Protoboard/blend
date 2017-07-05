@@ -12,14 +12,14 @@ describe("$event", function () {
 
     beforeEach(function () {
       EventSpace = $oop.getClass('test.$event.EventSpace.EventSpace')
-      .extend($event.EventSpace);
+      .mix($event.EventSpace);
 
       eventSpace = EventSpace.create();
     });
 
     describe("create()", function () {
       it("should initialize subscriptions", function () {
-        expect($data.Tree.isIncludedBy(eventSpace.subscriptions))
+        expect($data.Tree.mixedBy(eventSpace.subscriptions))
         .toBeTruthy();
         expect(eventSpace.subscriptions.data).toEqual({});
       });

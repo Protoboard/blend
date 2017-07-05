@@ -14,17 +14,17 @@ describe("$data", function () {
 
   beforeEach(function () {
     Collection = $oop.getClass('test.$data.KeyValueContainer-utils.Collection')
-    .extend($data.Collection);
+    .mix($data.Collection);
     StringCollection = $oop.getClass('test.$data.KeyValueContainer-utils.StringCollection')
-    .extend($data.StringCollection);
+    .mix($data.StringCollection);
     Dictionary = $oop.getClass('test.$data.KeyValueContainer-utils.Dictionary')
-    .extend($data.Dictionary);
+    .mix($data.Dictionary);
     StringDictionary = $oop.getClass('test.$data.KeyValueContainer-utils.StringDictionary')
-    .extend($data.StringDictionary);
+    .mix($data.StringDictionary);
     PairList = $oop.getClass('test.$data.KeyValueContainer-utils.PairList')
-    .extend($data.PairList);
+    .mix($data.PairList);
     StringPairList = $oop.getClass('test.$data.KeyValueContainer-utils.StringPairList')
-    .extend($data.StringPairList);
+    .mix($data.StringPairList);
   });
 
   describe("getMapResultClass()", function () {

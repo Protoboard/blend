@@ -19,9 +19,9 @@ describe("$data", function () {
       };
 
       KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
-      .extend($data.DataContainer)
-      .extend($data.ObjectContainer)
-      .extend($data.KeyValueContainer)
+      .mix($data.DataContainer)
+      .mix($data.ObjectContainer)
+      .mix($data.KeyValueContainer)
       .define({
         setItem: function (key, value) {
           this.data[key] = value;
@@ -38,8 +38,8 @@ describe("$data", function () {
       });
 
       Settable = $oop.getClass('test.$data.KeyValueContainer.Settable')
-      .extend($data.DataContainer)
-      .extend($data.ObjectContainer)
+      .mix($data.DataContainer)
+      .mix($data.ObjectContainer)
       .define({
         setItem: function (key, value) {
           this.data[key] = value;
@@ -76,7 +76,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(KeyValueContainer.isIncludedBy(result)).toBeTruthy();
+        expect(KeyValueContainer.mixedBy(result)).toBeTruthy();
       });
 
       it("should pass item values & keys to callback", function () {
@@ -152,7 +152,7 @@ describe("$data", function () {
       });
 
       it("should return StringCollection instance", function () {
-        expect($data.StringCollection.isIncludedBy(result)).toBeTruthy();
+        expect($data.StringCollection.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke getKeys()", function () {
@@ -184,7 +184,7 @@ describe("$data", function () {
       });
 
       it("should return Collection instance", function () {
-        expect($data.Collection.isIncludedBy(result)).toBeTruthy();
+        expect($data.Collection.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke getValues()", function () {
@@ -221,7 +221,7 @@ describe("$data", function () {
 
       beforeEach(function () {
         KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
-        .extend($data.DataContainer)
+        .mix($data.DataContainer)
         .define({
           init: function (data) {
             this.data = data || [];
@@ -236,7 +236,7 @@ describe("$data", function () {
       });
 
       it("should return instance of specified class", function () {
-        expect(KeyValueContainer.isIncludedBy(result)).toBeTruthy();
+        expect(KeyValueContainer.mixedBy(result)).toBeTruthy();
       });
 
       it("should set contents", function () {
@@ -262,7 +262,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(Settable.isIncludedBy(result)).toBeTruthy();
+        expect(Settable.mixedBy(result)).toBeTruthy();
       });
 
       it("should pass item values & keys to callback", function () {
@@ -311,7 +311,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(Settable.isIncludedBy(result)).toBeTruthy();
+        expect(Settable.mixedBy(result)).toBeTruthy();
       });
 
       it("should pass item values & keys to callback", function () {
@@ -608,7 +608,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(Settable.isIncludedBy(result)).toBeTruthy();
+        expect(Settable.mixedBy(result)).toBeTruthy();
       });
 
       it("should swap keys and values", function () {
@@ -632,7 +632,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(Settable.isIncludedBy(result)).toBeTruthy();
+        expect(Settable.mixedBy(result)).toBeTruthy();
       });
 
       it("should merge keys and values", function () {

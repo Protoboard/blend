@@ -10,7 +10,7 @@
  * @extends $data.ItemContainer
  */
 $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
-.extend($oop.getClass('$data.ItemContainer'))
+.mix($oop.getClass('$data.ItemContainer'))
 .implement($oop.getClass('$data.Filterable'))
 .implement($oop.getClass('$data.Reducible'))
 .define(/** @lends $data.KeyValueContainer# */{
@@ -338,7 +338,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    * @param {string|function|Object|$oop.Class} type Describes type
    * to be matched by item values. When string, `filterByValueType` will
    * check using `typeof` operator, when function, `instanceof`,
-   * when object, `.isPrototypeOf()`, when a class, `.isIncludedBy()`.
+   * when object, `.isPrototypeOf()`, when a class, `.mixedBy()`.
    * @returns {$data.KeyValueContainer} Filtered collection
    */
   filterByValueType: function (type) {
@@ -355,7 +355,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
 
     case $oop.Class.isPrototypeOf(type):
       return this.filter(function (value) {
-        return type.isIncludedBy(value);
+        return type.mixedBy(value);
       });
 
     case typeof type === 'object':

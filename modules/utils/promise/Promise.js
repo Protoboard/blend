@@ -158,7 +158,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
    */
   isPromise: function (expr, message) {
     return $assert.assert(
-        $utils.Promise.isIncludedBy(expr), message);
+        $utils.Promise.mixedBy(expr), message);
   },
 
   /**
@@ -169,6 +169,6 @@ $oop.copyProperties($assert, /** @lends $assert# */{
   isPromiseOptional: function (expr, message) {
     return $assert.assert(
         expr === undefined ||
-        $utils.Promise.isIncludedBy(expr), message);
+        $utils.Promise.mixedBy(expr), message);
   }
 });

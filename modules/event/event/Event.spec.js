@@ -12,7 +12,7 @@ describe("$event", function () {
 
     beforeEach(function () {
       Event = $oop.getClass('test.$event.Event.Event')
-      .extend($event.Event);
+      .mix($event.Event);
 
       event = Event.create('event1');
     });
@@ -106,7 +106,7 @@ describe("$event", function () {
       });
 
       it("should return pending promise", function () {
-        expect($utils.Promise.isIncludedBy(result)).toBeTruthy();
+        expect($utils.Promise.mixedBy(result)).toBeTruthy();
         expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
 
@@ -227,7 +227,7 @@ describe("$event", function () {
       });
 
       it("should return pending promise", function () {
-        expect($utils.Promise.isIncludedBy(result)).toBeTruthy();
+        expect($utils.Promise.mixedBy(result)).toBeTruthy();
         expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
 

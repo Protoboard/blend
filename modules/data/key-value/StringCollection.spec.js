@@ -16,7 +16,7 @@ describe("$data", function () {
       });
 
       it("should return a StringCollection instance", function () {
-        expect($data.StringCollection.isIncludedBy(result))
+        expect($data.StringCollection.mixedBy(result))
         .toBeTruthy();
       });
 
@@ -38,7 +38,7 @@ describe("Array", function () {
     });
 
     it("should return a StringCollection instance", function () {
-      expect($data.StringCollection.isIncludedBy(result)).toBeTruthy();
+      expect($data.StringCollection.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data buffer", function () {

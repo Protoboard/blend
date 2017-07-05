@@ -62,13 +62,13 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         },
 
         /**
-         * Registry of classes included by the current class, and classes that
-         * include the current class.
+         * Registry of classes mixed by the current class, and classes that mix
+         * the current class.
          * @todo Add typedef
          * @type {object}
          * @private
          */
-        __includes: {
+        __mixins: {
           downstream: {list: [], lookup: {}},
           upstream: {list: [], lookup: {}}
         },
@@ -86,11 +86,12 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         },
 
         /**
-         * Registry of classes that extend the current class.
+         * Registry of classes that transitively mix the current class.
+         * Transitive mixers mix the class and all its mixins.
          * @type {{list: Array, lookup: object}}
          * @private
          */
-        __extenders: {list: [], lookup: {}},
+        __transitiveMixers: {list: [], lookup: {}},
 
         /**
          * Registry of methods not implemented by current class.
@@ -197,14 +198,14 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     if (!hOP.call(contributorLookup, classId)) {
       if (Next) {
-        // placing include before Next class, and reconstructing lookup
+        // placing mixin before Next class, and reconstructing lookup
         contributorList.splice(contributorList.indexOf(Next), 0, Class);
         contributors.lookup = contributorList.reduce(function (lookup, Class, i) {
           lookup[Class.__classId] = i;
           return lookup;
         }, {});
       } else {
-        // adding include
+        // adding mixin
         contributorLookup[classId] = contributorList.length;
         contributorList.push(Class);
       }
@@ -386,7 +387,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
   /**
    * Adds functions in members to registry of missing methods names, unless
-   * they're already implemented by the class, or any of the includes.
+   * they're already implemented by the class, or any of the mixins.
    * @param {object} members
    * @private
    */
@@ -429,16 +430,16 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToIncludes: function (Class) {
-    var includes = this.__includes.downstream,
-        includeList = includes.list,
-        includeLookup = includes.lookup,
+  _addToMixins: function (Class) {
+    var mixins = this.__mixins.downstream,
+        mixinList = mixins.list,
+        mixinLookup = mixins.lookup,
         classId = Class.__classId;
 
-    if (!hOP.call(includeLookup, classId)) {
-      // adding include and initial distance
-      includeList.push(Class);
-      includeLookup[classId] = 1;
+    if (!hOP.call(mixinLookup, classId)) {
+      // adding mixin and initial distance
+      mixinList.push(Class);
+      mixinLookup[classId] = 1;
     }
   },
 
@@ -446,8 +447,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToIncluders: function (Class) {
-    var hosts = this.__includes.upstream,
+  _addToMixers: function (Class) {
+    var hosts = this.__mixins.upstream,
         hostList = hosts.list,
         hostLookup = hosts.lookup,
         classId = Class.__classId;
@@ -464,54 +465,54 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * Inclusion distance determines forwards priority.
    * @private
    */
-  _updateClassDistances: function (Include) {
+  _updateClassDistances: function (Mixin) {
     var classId = this.__classId,
-        includeId = Include.__classId,
-        includeLookup = this.__includes.downstream.lookup;
+        mixinId = Mixin.__classId,
+        mixinLookup = this.__mixins.downstream.lookup;
 
-    // updating distance of parent paths hosts of 2nd degree includes
-    var includeHosts2deg = Include.__includes.upstream,
-        includeHosts2degLookup = includeHosts2deg.lookup;
-    includeHosts2deg.lookup[classId] = includeLookup[includeId] =
-        includeHosts2deg.list
-        .filter(function (IncludeHost) {
-          return hOP.call(includeLookup, IncludeHost.__classId);
+    // updating distance of parent paths hosts of 2nd degree mixins
+    var mixinHosts2deg = Mixin.__mixins.upstream,
+        mixinHosts2degLookup = mixinHosts2deg.lookup;
+    mixinHosts2deg.lookup[classId] = mixinLookup[mixinId] =
+        mixinHosts2deg.list
+        .filter(function (MixinHost) {
+          return hOP.call(mixinLookup, MixinHost.__classId);
         })
-        .reduce(function (distance, IncludeHost) {
+        .reduce(function (distance, MixinHost) {
           return Math.max(distance,
-              includeLookup[IncludeHost.__classId] +
-              IncludeHost.__includes.downstream.lookup[includeId]);
-        }, includeLookup[includeId]);
+              mixinLookup[MixinHost.__classId] +
+              MixinHost.__mixins.downstream.lookup[mixinId]);
+        }, mixinLookup[mixinId]);
 
-    // updating distances of child paths with lead 2nd degree includes & lookup
-    var includes2deg = Include.__includes.downstream,
-        includes2degLookup = includes2deg.lookup;
-    includes2deg.list
-    .filter(function (Include2deg) {
-      return hOP.call(includeLookup, Include2deg.__classId);
+    // updating distances of child paths with lead 2nd degree mixins & lookup
+    var mixins2deg = Mixin.__mixins.downstream,
+        mixins2degLookup = mixins2deg.lookup;
+    mixins2deg.list
+    .filter(function (Mixin2deg) {
+      return hOP.call(mixinLookup, Mixin2deg.__classId);
     })
-    .forEach(function (Include2deg) {
-      var include2degId = Include2deg.__classId,
-          includeHost3degLookup = Include2deg.__includes.upstream.lookup;
-      includeHost3degLookup[classId] = includeLookup[include2degId] =
-          Math.max(includeLookup[include2degId],
-              includeLookup[includeId] +
-              includes2degLookup[include2degId]);
+    .forEach(function (Mixin2deg) {
+      var mixin2degId = Mixin2deg.__classId,
+          mixinHost3degLookup = Mixin2deg.__mixins.upstream.lookup;
+      mixinHost3degLookup[classId] = mixinLookup[mixin2degId] =
+          Math.max(mixinLookup[mixin2degId],
+              mixinLookup[mixinId] +
+              mixins2degLookup[mixin2degId]);
     });
 
     // updating distances of child paths with trail
-    var hosts = this.__includes.upstream;
+    var hosts = this.__mixins.upstream;
     hosts.list
     .filter(function (Host) {
-      return hOP.call(Host.__includes.downstream.lookup, includeId);
+      return hOP.call(Host.__mixins.downstream.lookup, mixinId);
     })
     .forEach(function (Host) {
       var hostId = Host.__classId,
-          hostIncludeLookup = Host.__includes.downstream.lookup;
-      includeHosts2degLookup[hostId] = hostIncludeLookup[includeId] =
-          Math.max(hostIncludeLookup[includeId],
-              includeLookup[includeId] +
-              hostIncludeLookup[classId]);
+          hostMixinLookup = Host.__mixins.downstream.lookup;
+      mixinHosts2degLookup[hostId] = hostMixinLookup[mixinId] =
+          Math.max(hostMixinLookup[mixinId],
+              mixinLookup[mixinId] +
+              hostMixinLookup[classId]);
     });
   },
 
@@ -519,15 +520,15 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToExtenders: function (Class) {
-    var extenders = this.__extenders,
-        extenderList = extenders.list,
-        extenderLookup = extenders.lookup,
+  _addToTransitiveMixers: function (Class) {
+    var transitiveMixers = this.__transitiveMixers,
+        transitiveMixerList = transitiveMixers.list,
+        transitiveMixerLookup = transitiveMixers.lookup,
         classId = Class.__classId;
 
-    if (!hOP.call(extenderLookup, classId)) {
-      extenderList.push(Class);
-      extenderLookup[classId] = Class;
+    if (!hOP.call(transitiveMixerLookup, classId)) {
+      transitiveMixerList.push(Class);
+      transitiveMixerLookup[classId] = Class;
     }
   },
 
@@ -538,16 +539,16 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   _addToRequires: function (Class) {
     var classId = this.__classId,
         requireId = Class.__classId,
-        includeLookup = this.__includes.downstream.lookup,
+        mixinLookup = this.__mixins.downstream.lookup,
         requires = this.__requires.downstream,
         requireList = requires.list,
         requireLookup = requires.lookup;
 
     if (classId !== requireId &&
-        !hOP.call(includeLookup, requireId) &&
+        !hOP.call(mixinLookup, requireId) &&
         !hOP.call(requireLookup, requireId)
     ) {
-      // require is not included (which would cancel each other out)
+      // require is not mixed (which would cancel each other out)
       // adding to requires
       requireList.push(Class);
       requireLookup[requireId] = Class;
@@ -587,7 +588,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Extracts includes and requires from class and transfers them to the
+   * Extracts mixins and requires from class and transfers them to the
    * current class as first-degree requires.
    * @param {$oop.Class} Class
    * @private
@@ -595,8 +596,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   _transferRequiresFrom: function (Class) {
     var that = this;
 
-    // transferring requires & includes of class to current class as requires
-    Class.__requires.downstream.list.concat(Class.__includes.downstream.list)
+    // transferring requires & mixins of class to current class as requires
+    Class.__requires.downstream.list.concat(Class.__mixins.downstream.list)
     .forEach(function (Class) {
       // adding require to registry
       that._addToRequires(Class);
@@ -605,8 +606,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       Class._addToHosts(that);
     });
 
-    // transferring class AS require to includers and hosts of current class
-    this.__includes.upstream.list.concat(this.__requires.upstream.list)
+    // transferring class AS require to mixers and hosts of current class
+    this.__mixins.upstream.list.concat(this.__requires.upstream.list)
     .forEach(function (Host) {
       // adding require to registry
       Host._addToRequires(Class);
@@ -617,30 +618,31 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Transfers specified class as include to all extenders of the current class.
+   * Transfers specified class as mixin to all transitive mixers of the current
+   * class.
    * @param {$oop.Class} Class
    * @private
    */
-  _transferIncludeToExtenders: function (Class) {
+  _transferMixinToTransitiveMixers: function (Class) {
     var that = this;
-    this.__extenders.list.forEach(function (Extender) {
-      // adding extender to include
-      Class._addToExtenders(Extender);
+    this.__transitiveMixers.list.forEach(function (TransitiveMixer) {
+      // adding mixer to mixin
+      Class._addToTransitiveMixers(TransitiveMixer);
 
-      // including class in extender
-      Extender.include(Class, that);
+      // mixing class in mixer
+      TransitiveMixer.mixOnly(Class, that);
     });
   },
 
   /**
-   * Delegates a batch of methods to includers.
+   * Delegates a batch of methods to mixers.
    * @param {object} members
    * @private
    */
-  _delegateToIncluders: function (members) {
+  _delegateToMixers: function (members) {
     var classId = this.__classId;
 
-    this.__includes.upstream.list
+    this.__mixins.upstream.list
     .forEach(function (Class) {
       // adding methods to lookup at specified index
       Class._addMethodsToMatrix(members, classId);
@@ -713,7 +715,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _updateForwards: function () {
     var forwards = this.__forwards,
-        hostDistances = this.__includes.upstream.lookup;
+        hostDistances = this.__mixins.upstream.lookup;
 
     // sorting forwards by priority (descending)
     // here we're relying on Array#sort() mutating the array as the same array
@@ -775,7 +777,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       ].join(" "));
     }
 
-    // ... all requires are included
+    // ... all requires are mixed
     var requires = that.__requires.downstream.list;
     if (requires.length) {
       // there are unfulfilled requires - can't instantiate
@@ -841,8 +843,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // updating missing methods names
     this._removeFromMissingMethods(batch);
 
-    // delegating batch to includers
-    this._delegateToIncluders(batch);
+    // delegating batch to mixers
+    this._delegateToMixers(batch);
 
     // updating implementers
     this._delegateToImplementers(batch);
@@ -875,39 +877,39 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Specifies a class to be included by the host class.
+   * Specifies a class to be mixed by the host class.
    * @param {$oop.Class} Class
    * @param {$oop.Class} [Through]
    * @returns {$oop.Class}
    */
-  include: function (Class, Through) {
-    $assert.isClass(Class, "Class#include expects type Class.");
+  mixOnly: function (Class, Through) {
+    $assert.isClass(Class, "Class#mixOnly expects type Class.");
 
-    // todo Detect & throw on circular include
+    // todo Detect & throw on circular mixin
 
-    // adding to downstream includes
-    this._addToIncludes(Class);
+    // adding to downstream mixins
+    this._addToMixins(Class);
 
-    // adding to upstream includes
-    Class._addToIncluders(this);
+    // adding to upstream mixins
+    Class._addToMixers(this);
 
-    // determining how include affects distances
+    // determining how mixin affects distances
     this._updateClassDistances(Class);
 
     // rebuilding forwards information
     this._updateForwards();
 
-    // adding included class to contributions
+    // adding mixed class to contributions
     this._addToContributors(Class, Through);
 
     // removing fulfilled require
     this._removeFromRequires(Class);
 
-    // transferring includes & requires from include
+    // transferring 2nd dregree mixins & requires from mixin
     this._transferRequiresFrom(Class);
 
-    // transferring as include to extenders
-    this._transferIncludeToExtenders(Class);
+    // transferring as mixin to transitive mixers
+    this._transferMixinToTransitiveMixers(Class);
 
     var members = Class.__members;
 
@@ -927,21 +929,21 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Includes specified class and all its includes, direct or indirect.
+   * Mixes specified class and all its mixins, direct or indirect.
    * @param {$oop.Class} Class
    * @returns {$oop.Class}
    */
-  extend: function (Class) {
+  mix: function (Class) {
     // gathering all dependencies (including Class)
     var that = this,
         contributors = this._gatherAllContributorsFrom(Class);
 
     // including all dependencies
     contributors.forEach(function (Class) {
-      // adding current class to include as extender
-      Class._addToExtenders(that);
+      // adding current class to mixin as transitive mixer
+      Class._addToTransitiveMixers(that);
 
-      that.include(Class);
+      that.mixOnly(Class);
     });
 
     return this;
@@ -982,7 +984,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // adding to hosts on require
     Class._addToHosts(this);
 
-    // transferring includes & requires from require
+    // transferring mixins & requires from require
     this._transferRequiresFrom(Class);
 
     return this;
@@ -1015,7 +1017,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
    * Specifies a mapper function to be used to build a registry.
    * @todo Rename
-   * @todo Propagate to includers
+   * @todo Propagate to mixins
    * @param {function} mapper
    * @returns {$oop.Class}
    */
@@ -1049,27 +1051,27 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Tells whether current class is or includes the specified class.
+   * Tells whether current class is or mixes the specified class.
    * @param {$oop.Class} Class
    * @returns {boolean}
    */
-  includes: function (Class) {
+  mixes: function (Class) {
     $assert.isClass(Class, "Class type expected");
 
     var classId = Class.__classId;
 
     return this.__classId === classId ||
-        !!this.__includes.downstream.lookup[classId];
+        !!this.__mixins.downstream.lookup[classId];
   },
 
   /**
-   * Tells whether the specified class includes the current class.
+   * Tells whether the specified class mixes the current class.
    * @param {$oop.Class} Class
    * @returns {boolean}
    */
-  isIncludedBy: function (Class) {
+  mixedBy: function (Class) {
     return $oop.Class.isPrototypeOf(Class) &&
-        Class.includes(this);
+        Class.mixes(this);
   },
 
   /**

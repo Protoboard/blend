@@ -9,7 +9,7 @@
  * @extends $data.ItemContainer
  */
 $data.SetContainer = $oop.getClass('$data.SetContainer')
-.extend($oop.getClass('$data.ItemContainer'))
+.mix($oop.getClass('$data.ItemContainer'))
 .implement($oop.getClass('$data.Filterable'))
 .implement($oop.getClass('$data.Reducible'))
 .define(/** @lends $data.SetContainer# */{

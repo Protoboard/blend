@@ -207,7 +207,7 @@ describe("$utils", function () {
       });
 
       it("should return a promise", function () {
-        expect($utils.Promise.isIncludedBy(promise)).toBeTruthy();
+        expect($utils.Promise.mixedBy(promise)).toBeTruthy();
       });
 
       describe("when all promises are fulfilled", function () {

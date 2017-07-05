@@ -51,14 +51,14 @@ describe("$data", function () {
 
     beforeEach(function () {
       Chain = $oop.getClass('test.$data.Chain.Chain')
-      .extend($data.Chain);
+      .mix($data.Chain);
       chain = Chain.create();
       link = $data.Link.create();
     });
 
     describe("create()", function () {
       it("should initialize data", function () {
-        expect(chain.data.includes($data.MasterLink)).toBeTruthy();
+        expect(chain.data.mixes($data.MasterLink)).toBeTruthy();
       });
 
       it("should initialize _itemCount", function () {
@@ -79,7 +79,7 @@ describe("$data", function () {
       });
 
       it("should reset data", function () {
-        expect(chain.data.includes($data.MasterLink)).toBeTruthy();
+        expect(chain.data.mixes($data.MasterLink)).toBeTruthy();
         expect(chain.data).not.toBe(oldMasterLink);
         expect(chain.data.nextLink).toBe(chain.data);
         expect(chain.data.previousLink).toBe(chain.data);
@@ -297,7 +297,7 @@ describe("$data", function () {
 
       beforeEach(function () {
         Link = $oop.getClass('test.$data.Chain.Link')
-        .extend($data.Link)
+        .mix($data.Link)
         .define({
           init: function (a) {
             this.foo = a;
@@ -325,7 +325,7 @@ describe("$data", function () {
       });
 
       it("should return instance of right class", function () {
-        expect(result.includes(Chain)).toBeTruthy();
+        expect(result.mixes(Chain)).toBeTruthy();
       });
 
       it("should concatenate chains", function () {

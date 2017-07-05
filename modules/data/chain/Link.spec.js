@@ -11,7 +11,7 @@ describe("$data", function () {
 
     beforeEach(function () {
       Link = $oop.getClass('test.$data.Link.Link')
-      .extend($data.Link);
+      .mix($data.Link);
       link = Link.create();
     });
 

@@ -11,7 +11,7 @@
  * @extends $utils.Scheduler
  */
 $utils.Debouncer = $oop.getClass('$utils.Debouncer')
-.extend($oop.getClass('$utils.Scheduler'))
+.mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Debouncer# */{
   /** @ignore */
   init: function (delay) {

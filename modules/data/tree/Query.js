@@ -21,7 +21,7 @@
  * $data.Query.create(['foo', '*', 'bar:!baz,quux'])
  */
 $data.Query = $oop.getClass('$data.Query')
-.extend($utils.Cloneable)
+.mix($utils.Cloneable)
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.Query# */{
@@ -40,7 +40,7 @@ $data.Query = $oop.getClass('$data.Query')
      */
     this.components = components
     .map(function (component) {
-      return QueryComponent.isIncludedBy(component) ?
+      return QueryComponent.mixedBy(component) ?
           component :
           QueryComponent.create(component);
     });
@@ -144,7 +144,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
    */
   isQuery: function (expr, message) {
     return $assert.assert(
-        $data.Query.isIncludedBy(expr), message);
+        $data.Query.mixedBy(expr), message);
   },
 
   /**
@@ -155,7 +155,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
   isQueryOptional: function (expr, message) {
     return $assert.assert(
         expr === undefined ||
-        $data.Query.isIncludedBy(expr), message);
+        $data.Query.mixedBy(expr), message);
   }
 });
 

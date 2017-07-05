@@ -47,8 +47,8 @@ describe("$oop", function () {
         });
       });
 
-      it("should initialize includes", function () {
-        expect(result.__includes).toEqual({
+      it("should initialize mixins", function () {
+        expect(result.__mixins).toEqual({
           downstream: {list: [], lookup: {}},
           upstream: {list: [], lookup: {}}
         });
@@ -384,7 +384,7 @@ describe("$oop", function () {
             baz: function () {
             }
           }))
-          .include($oop.Class.getClass('Include')
+          .mixOnly($oop.Class.getClass('Mixin')
           .define({
             bar: function () {},
             quux: function () {}
@@ -398,9 +398,9 @@ describe("$oop", function () {
           });
         });
 
-        describe("then defining members on include", function () {
+        describe("then defining members on mixin", function () {
           beforeEach(function () {
-            $oop.Class.getClass('Include')
+            $oop.Class.getClass('Mixin')
             .define({
               baz: function () {}
             });
@@ -434,7 +434,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("include()", function () {
+    describe("mixOnly()", function () {
       var Trait;
 
       beforeEach(function () {
@@ -444,13 +444,13 @@ describe("$oop", function () {
           bar: function () {}
         });
 
-        result = Class.include(Trait);
+        result = Class.mixOnly(Trait);
       });
 
       describe("when passing no arguments", function () {
         it("should throw", function () {
           expect(function () {
-            Class.include();
+            Class.mixOnly();
           }).toThrow();
         });
       });
@@ -459,8 +459,8 @@ describe("$oop", function () {
         expect(result).toBe(Class);
       });
 
-      it("should add to includes", function () {
-        expect(Class.__includes.downstream).toEqual({
+      it("should add to mixins", function () {
+        expect(Class.__mixins.downstream).toEqual({
           list: [Trait],
           lookup: {
             Trait: 1
@@ -469,7 +469,7 @@ describe("$oop", function () {
       });
 
       it("should add self to includers on remote class", function () {
-        expect(Trait.__includes.upstream).toEqual({
+        expect(Trait.__mixins.upstream).toEqual({
           list: [Class],
           lookup: {
             Class: 1
@@ -488,7 +488,7 @@ describe("$oop", function () {
 
       describe("on duplication", function () {
         beforeEach(function () {
-          Class.include(Trait);
+          Class.mixOnly(Trait);
         });
 
         it("should not add to contributions again", function () {
@@ -548,21 +548,21 @@ describe("$oop", function () {
         });
       });
 
-      describe("when include has requires or includes", function () {
-        var Require2, Require3, Include;
+      describe("when mixin has requires or mixins", function () {
+        var Require2, Require3, Mixin;
 
         beforeEach(function () {
           Class.require(Require2 = $oop.Class.getClass('Require2')
-          .include(Include = $oop.Class.getClass('Include')));
+          .mixOnly(Mixin = $oop.Class.getClass('Mixin')));
 
-          Include.require(Require3 = $oop.getClass('Require3'));
+          Mixin.require(Require3 = $oop.getClass('Require3'));
         });
 
         it("should transfer requires", function () {
           expect(Class.__requires.downstream).toEqual({
-            list: [Require2, Include, Require3],
+            list: [Require2, Mixin, Require3],
             lookup: {
-              Include: Include,
+              Mixin: Mixin,
               Require2: Require2,
               Require3: Require3
             }
@@ -570,7 +570,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("then defining members on include", function () {
+      describe("then defining members on mixins", function () {
         beforeEach(function () {
           Trait.define({
             baz: function () {},
@@ -610,18 +610,18 @@ describe("$oop", function () {
 
         describe("short paths first", function () {
           beforeEach(function () {
-            A.include(B);
-            B.include(C);
-            C.include(D);
-            B.include(D);
-            A.include(C);
-            A.include(D);
+            A.mixOnly(B);
+            B.mixOnly(C);
+            C.mixOnly(D);
+            B.mixOnly(D);
+            A.mixOnly(C);
+            A.mixOnly(D);
           });
 
-          it("should set include distances", function () {
-            expect(A.__includes.downstream.lookup)
+          it("should set mixin distances", function () {
+            expect(A.__mixins.downstream.lookup)
             .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__includes.upstream.lookup)
+            expect(D.__mixins.upstream.lookup)
             .toEqual({C: 1, B: 2, A: 3});
           });
 
@@ -634,18 +634,18 @@ describe("$oop", function () {
 
         describe("long leading paths first", function () {
           beforeEach(function () {
-            A.include(D);
-            B.include(D);
-            C.include(D);
-            A.include(C);
-            B.include(C);
-            A.include(B);
+            A.mixOnly(D);
+            B.mixOnly(D);
+            C.mixOnly(D);
+            A.mixOnly(C);
+            B.mixOnly(C);
+            A.mixOnly(B);
           });
 
-          it("should set include distances", function () {
-            expect(A.__includes.downstream.lookup)
+          it("should set mixin distances", function () {
+            expect(A.__mixins.downstream.lookup)
             .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__includes.upstream.lookup)
+            expect(D.__mixins.upstream.lookup)
             .toEqual({C: 1, B: 2, A: 3});
           });
 
@@ -658,18 +658,18 @@ describe("$oop", function () {
 
         describe("long trailing paths first", function () {
           beforeEach(function () {
-            A.include(D);
-            A.include(C);
-            A.include(B);
-            B.include(D);
-            B.include(C);
-            C.include(D);
+            A.mixOnly(D);
+            A.mixOnly(C);
+            A.mixOnly(B);
+            B.mixOnly(D);
+            B.mixOnly(C);
+            C.mixOnly(D);
           });
 
-          it("should set include distances", function () {
-            expect(A.__includes.downstream.lookup)
+          it("should set mixin distances", function () {
+            expect(A.__mixins.downstream.lookup)
             .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__includes.upstream.lookup)
+            expect(D.__mixins.upstream.lookup)
             .toEqual({C: 1, B: 2, A: 3});
           });
 
@@ -682,18 +682,18 @@ describe("$oop", function () {
 
         describe("randomly", function () {
           beforeEach(function () {
-            A.include(B);
-            A.include(D);
-            B.include(D);
-            A.include(C);
-            B.include(C);
-            C.include(D);
+            A.mixOnly(B);
+            A.mixOnly(D);
+            B.mixOnly(D);
+            A.mixOnly(C);
+            B.mixOnly(C);
+            C.mixOnly(D);
           });
 
-          it("should set include distances", function () {
-            expect(A.__includes.downstream.lookup)
+          it("should set mixin distances", function () {
+            expect(A.__mixins.downstream.lookup)
             .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__includes.upstream.lookup)
+            expect(D.__mixins.upstream.lookup)
             .toEqual({C: 1, B: 2, A: 3});
           });
 
@@ -706,23 +706,23 @@ describe("$oop", function () {
       });
     });
 
-    describe("extend()", function () {
-      var Include1,
-          Include2;
+    describe("mix()", function () {
+      var Mixin1,
+          Mixin2;
 
       beforeEach(function () {
-        Include1 = $oop.getClass("Include1")
+        Mixin1 = $oop.getClass("Mixin1")
         .define({
           bar: function () {}
         });
-        Include2 = $oop.getClass("Include2")
-        .include(Include1)
+        Mixin2 = $oop.getClass("Mixin2")
+        .mixOnly(Mixin1)
         .define({
           baz: function () {}
         });
 
         Class
-        .extend(Include2)
+        .mix(Mixin2)
         .define({
           foo: function () {}
         });
@@ -730,51 +730,51 @@ describe("$oop", function () {
 
       it("should add all dependencies", function () {
         expect(Class.__contributors.list).toEqual([
-          Include1, Include2, Class
+          Mixin1, Mixin2, Class
         ]);
       });
 
-      it("should add to extenders on includes", function () {
-        expect(Include1.__extenders.list).toEqual([Class]);
-        expect(Include2.__extenders.list).toEqual([Class]);
+      it("should add to transitive mixers to mixins", function () {
+        expect(Mixin1.__transitiveMixers.list).toEqual([Class]);
+        expect(Mixin2.__transitiveMixers.list).toEqual([Class]);
       });
 
       describe("then including a class", function () {
-        var Include3,
-            Include4;
+        var Mixin3,
+            Mixin4;
 
         beforeEach(function () {
-          Include3 = $oop.getClass("Include3")
+          Mixin3 = $oop.getClass("Mixin3")
           .define({
             quux: function () {}
           });
-          Include4 = $oop.getClass("Include4")
+          Mixin4 = $oop.getClass("Mixin4")
           .define({
             foo: function () {}
           });
-          Include1
-          .include(Include3)
-          .include(Include4);
+          Mixin1
+          .mixOnly(Mixin3)
+          .mixOnly(Mixin4);
         });
 
-        it("should propagate to extenders", function () {
-          expect(Class.__includes.downstream.list).toEqual([
-            Include1, Include2, Include3, Include4
+        it("should propagate to transitive mixers", function () {
+          expect(Class.__mixins.downstream.list).toEqual([
+            Mixin1, Mixin2, Mixin3, Mixin4
           ]);
           expect(Class.__contributors).toEqual({
-            list: [Include3, Include4, Include1, Include2, Class],
+            list: [Mixin3, Mixin4, Mixin1, Mixin2, Class],
             lookup: {
-              Include3: 0,
-              Include4: 1,
-              Include1: 2,
-              Include2: 3,
+              Mixin3: 0,
+              Mixin4: 1,
+              Mixin1: 2,
+              Mixin2: 3,
               Class: 4
             }
           });
           expect(Class.__methodMatrix).toEqual({
             foo: [
               undefined,
-              Include4.__members.foo,
+              Mixin4.__members.foo,
               undefined,
               undefined,
               Class.__members.foo
@@ -782,16 +782,16 @@ describe("$oop", function () {
             bar: [
               undefined,
               undefined,
-              Include1.__members.bar
+              Mixin1.__members.bar
             ],
             baz: [
               undefined,
               undefined,
               undefined,
-              Include2.__members.baz
+              Mixin2.__members.baz
             ],
             quux: [
-              Include3.__members.quux
+              Mixin3.__members.quux
             ]
           });
         });
@@ -838,7 +838,7 @@ describe("$oop", function () {
 
       describe("then including same class", function () {
         beforeEach(function () {
-          Class.include(Require);
+          Class.mixOnly(Require);
         });
 
         it("should remove class from requires", function () {
@@ -849,21 +849,21 @@ describe("$oop", function () {
         });
       });
 
-      describe("when require has requires or includes", function () {
-        var Require2, Require3, Include, Include2;
+      describe("when require has requires or mixins", function () {
+        var Require2, Require3, Mixin, Mixin2;
 
         beforeEach(function () {
           Class.require(Require2 = $oop.Class.getClass('Require2')
           .require(Require3 = $oop.Class.getClass('Require3')));
 
-          Require2.include(Include = $oop.Class.getClass('Include'));
+          Require2.mixOnly(Mixin = $oop.Class.getClass('Mixin'));
         });
 
         it("should transfer requires", function () {
           expect(Class.__requires.downstream).toEqual({
-            list: [Require, Require2, Require3, Include],
+            list: [Require, Require2, Require3, Mixin],
             lookup: {
-              Include: Include,
+              Mixin: Mixin,
               Require: Require,
               Require2: Require2,
               Require3: Require3
@@ -903,12 +903,12 @@ describe("$oop", function () {
 
         beforeEach(function () {
           Class2 = $oop.Class.getClass('Class2')
-          .include(Class);
+          .mixOnly(Class);
           filter2 = function () {
           };
           Class3 = $oop.Class.getClass('Class3')
-          .include(Class2)
-          .include(Class);
+          .mixOnly(Class2)
+          .mixOnly(Class);
           filter3 = function () {
           };
           Class.forward(Class3, filter3);
@@ -1014,66 +1014,66 @@ describe("$oop", function () {
       });
     });
 
-    describe("includes()", function () {
+    describe("mixes()", function () {
       var Trait;
 
       beforeEach(function () {
         Trait = $oop.Class.getClass('Trait');
-        Class.include(Trait);
+        Class.mixOnly(Trait);
       });
 
       describe("on invalid argument", function () {
         it("should throw", function () {
           expect(function () {
-            Class.includes();
+            Class.mixes();
           }).toThrow();
         });
       });
 
       describe("on self", function () {
         it("should return true", function () {
-          expect(Class.includes(Class)).toBe(true);
+          expect(Class.mixes(Class)).toBe(true);
         });
       });
 
-      describe("on present include", function () {
+      describe("on present mixin", function () {
         it("should return true", function () {
-          expect(Class.includes(Trait)).toBe(true);
+          expect(Class.mixes(Trait)).toBe(true);
         });
       });
 
-      describe("on absent include", function () {
+      describe("on absent mixin", function () {
         it("should return false", function () {
           var Trait2 = $oop.Class.getClass('Trait2');
-          expect(Class.includes(Trait2)).toBe(false);
+          expect(Class.mixes(Trait2)).toBe(false);
         });
       });
     });
 
-    describe("isIncludedBy()", function () {
+    describe("mixedBy()", function () {
       var Trait;
 
       beforeEach(function () {
         Trait = $oop.Class.getClass('Interface');
-        Class.include(Trait);
+        Class.mixOnly(Trait);
       });
 
       describe("when passing non-class", function () {
         it("should return false", function () {
-          expect(Trait.isIncludedBy(undefined)).toBe(false);
+          expect(Trait.mixedBy(undefined)).toBe(false);
         });
       });
 
       describe("on including class", function () {
         it("should return true", function () {
-          expect(Trait.isIncludedBy(Class)).toBe(true);
+          expect(Trait.mixedBy(Class)).toBe(true);
         });
       });
 
       describe("on non-including class", function () {
         it("should return false", function () {
           var Class2 = $oop.Class.getClass('Class2');
-          expect(Trait.isIncludedBy(Class2)).toBe(false);
+          expect(Trait.mixedBy(Class2)).toBe(false);
         });
       });
     });
@@ -1196,7 +1196,7 @@ describe("$oop", function () {
           });
 
           Forward = $oop.Class.getClass('Forward')
-          .include(Class);
+          .mixOnly(Class);
 
           $oop.Class.getClass('Class')
           .forward(Forward, function (foo) {
@@ -1207,16 +1207,16 @@ describe("$oop", function () {
         describe("for matching arguments", function () {
           it("should instantiate forward class", function () {
             result = Class.create(1);
-            expect(result.includes(Class)).toBeTruthy();
-            expect(result.includes(Forward)).toBeTruthy();
+            expect(result.mixes(Class)).toBeTruthy();
+            expect(result.mixes(Forward)).toBeTruthy();
           });
         });
 
         describe("for non-matching arguments", function () {
           it("should instantiate original class", function () {
             result = Class.create(0);
-            expect(result.includes(Class)).toBeTruthy();
-            expect(result.includes(Forward)).toBeFalsy();
+            expect(result.mixes(Class)).toBeTruthy();
+            expect(result.mixes(Forward)).toBeFalsy();
           });
         });
 
@@ -1228,7 +1228,7 @@ describe("$oop", function () {
             .cache(function (foo) {
               return '_' + foo;
             })
-            .include(Class);
+            .mixOnly(Class);
 
             $oop.Class.getClass('Class')
             .forward(Forward2, function (foo) {

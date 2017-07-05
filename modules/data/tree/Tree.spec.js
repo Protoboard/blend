@@ -49,7 +49,7 @@ describe("$data", function () {
 
     beforeEach(function () {
       Tree = $oop.getClass('test.$data.Tree.Tree')
-      .extend($data.Tree);
+      .mix($data.Tree);
 
       tree = Tree.create({
         foo: {
@@ -79,7 +79,7 @@ describe("$data", function () {
       });
 
       it("should return Tree instance", function () {
-        expect(Tree.isIncludedBy(result)).toBeTruthy();
+        expect(Tree.mixedBy(result)).toBeTruthy();
       });
 
       it("should initialize data on clone", function () {
@@ -336,7 +336,7 @@ describe("$data", function () {
       });
 
       it("should return Path instance", function () {
-        expect($data.Path.isIncludedBy(result)).toBeTruthy();
+        expect($data.Path.mixedBy(result)).toBeTruthy();
       });
 
       it("should retrieve path to closest non-leaf node", function () {
@@ -361,7 +361,7 @@ describe("$data", function () {
       });
 
       it("should return Path instance", function () {
-        expect($data.Path.isIncludedBy(result)).toBeTruthy();
+        expect($data.Path.mixedBy(result)).toBeTruthy();
       });
 
       it("should return path to last multi-key node", function () {
@@ -417,7 +417,7 @@ describe("$data", function () {
       });
 
       it("should return Tree instance", function () {
-        expect(Tree.isIncludedBy(result)).toBeTruthy();
+        expect(Tree.mixedBy(result)).toBeTruthy();
       });
 
       it("should return wrapped result", function () {
@@ -487,7 +487,7 @@ describe("$data", function () {
       });
 
       it("should return Tree instance", function () {
-        expect(Tree.isIncludedBy(result)).toBeTruthy();
+        expect(Tree.mixedBy(result)).toBeTruthy();
       });
 
       it("should return wrapped result", function () {
@@ -821,7 +821,7 @@ describe("$data", function () {
       });
 
       it("should return Collection instance", function () {
-        expect($data.Collection.isIncludedBy(result)).toBeTruthy();
+        expect($data.Collection.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke queryNodes() with query", function () {
@@ -863,7 +863,7 @@ describe("$data", function () {
       });
 
       it("should return StringCollection instance", function () {
-        expect($data.StringCollection.isIncludedBy(result)).toBeTruthy();
+        expect($data.StringCollection.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke queryKeys() with query", function () {
@@ -908,7 +908,7 @@ describe("$data", function () {
       });
 
       it("should return Collection instance", function () {
-        expect($data.Collection.isIncludedBy(result)).toBeTruthy();
+        expect($data.Collection.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke queryPaths() with query", function () {
@@ -930,7 +930,7 @@ describe("$data", function () {
       });
 
       it("should return PairList instance", function () {
-        expect($data.PairList.isIncludedBy(result)).toBeTruthy();
+        expect($data.PairList.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke query(), passing query param", function () {
@@ -955,7 +955,7 @@ describe("$data", function () {
       });
 
       it("should return PairList instance", function () {
-        expect($data.PairList.isIncludedBy(result)).toBeTruthy();
+        expect($data.PairList.mixedBy(result)).toBeTruthy();
       });
 
       it("should invoke query(), passing query param", function () {
@@ -982,7 +982,7 @@ describe("$data", function () {
       });
 
       it("should return a Tree instance", function () {
-        expect($data.Tree.isIncludedBy(result)).toBeTruthy();
+        expect($data.Tree.mixedBy(result)).toBeTruthy();
       });
 
       it("should set data buffer", function () {
@@ -1003,7 +1003,7 @@ describe("Array", function () {
     });
 
     it("should return a Tree instance", function () {
-      expect($data.Tree.isIncludedBy(result)).toBeTruthy();
+      expect($data.Tree.mixedBy(result)).toBeTruthy();
     });
 
     it("should set data property", function () {

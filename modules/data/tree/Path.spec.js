@@ -49,7 +49,7 @@ describe("$data", function () {
 
     beforeEach(function () {
       Path = $oop.getClass('test.$data.Path.Path')
-      .extend($data.Path);
+      .mix($data.Path);
 
       path = Path.create(['foo', 'bar', 'baz']);
     });
@@ -77,7 +77,7 @@ describe("$data", function () {
       });
 
       it("should return Path instance", function () {
-        expect(Path.isIncludedBy(result)).toBeTruthy();
+        expect(Path.mixedBy(result)).toBeTruthy();
       });
 
       it("should initialize components on clone", function () {
@@ -205,7 +205,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(result.includes(Path)).toBeTruthy();
+        expect(result.mixes(Path)).toBeTruthy();
       });
 
       it("should concatenate components", function () {
@@ -245,7 +245,7 @@ describe("$data", function () {
       });
 
       it("should return a Path instance", function () {
-        expect($data.Path.isIncludedBy(result)).toBeTruthy();
+        expect($data.Path.mixedBy(result)).toBeTruthy();
       });
 
       it("should set components property with unescaped components", function () {
@@ -269,7 +269,7 @@ describe("String", function () {
     });
 
     it("should return a Path instance", function () {
-      expect($data.Path.isIncludedBy(result)).toBeTruthy();
+      expect($data.Path.mixedBy(result)).toBeTruthy();
     });
 
     it("should set components property with unescaped components", function () {
@@ -292,7 +292,7 @@ describe("Array", function () {
     });
 
     it("should return a Path instance", function () {
-      expect($data.Path.isIncludedBy(result)).toBeTruthy();
+      expect($data.Path.mixedBy(result)).toBeTruthy();
     });
 
     it("should set components property", function () {

@@ -14,9 +14,9 @@ describe("$data", function () {
       data = ['foo', 'bar'];
 
       SetContainer = $oop.getClass('test.$data.SetContainer.SetContainer')
-      .extend($data.DataContainer)
-      .extend($data.ArrayContainer)
-      .extend($data.SetContainer)
+      .mix($data.DataContainer)
+      .mix($data.ArrayContainer)
+      .mix($data.SetContainer)
       .define({
         setItem: function (value) {
           this.data.push(value);
@@ -56,7 +56,7 @@ describe("$data", function () {
       });
 
       it("should return instance of correct class", function () {
-        expect(SetContainer.isIncludedBy(result)).toBeTruthy();
+        expect(SetContainer.mixedBy(result)).toBeTruthy();
       });
 
       it("should pass item values & keys to callback", function () {

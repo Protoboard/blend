@@ -13,7 +13,7 @@ describe("$utils", function () {
 
     describe("create()", function () {
       it("should initialize promise property", function () {
-        expect($utils.Promise.isIncludedBy(deferred.promise)).toBeTruthy();
+        expect($utils.Promise.mixedBy(deferred.promise)).toBeTruthy();
       });
     });
 

@@ -14,8 +14,8 @@
  * @extends $data.StringValueHost
  */
 $data.StringCollection = $oop.getClass('$data.StringCollection')
-.extend($oop.getClass('$data.Collection'))
-.extend($oop.getClass('$data.StringValueHost'));
+.mix($oop.getClass('$data.Collection'))
+.mix($oop.getClass('$data.StringValueHost'));
 
 $oop.getClass('$data.DataContainer')
 .delegate(/** @lends $data.DataContainer# */{

@@ -13,9 +13,9 @@ describe("$data", function () {
 
     beforeEach(function () {
       StringKeyHost = $oop.getClass('test.$data.StringKeyHost.StringKeyHost')
-      .extend($data.DataContainer)
-      .extend($data.KeyValueContainer)
-      .include($data.StringKeyHost);
+      .mix($data.DataContainer)
+      .mix($data.KeyValueContainer)
+      .mixOnly($data.StringKeyHost);
 
       stringKeyHost = StringKeyHost.create();
     });
@@ -27,9 +27,9 @@ describe("$data", function () {
 
       beforeEach(function () {
         StringValueHost = $oop.getClass('test.$data.StringKeyHost.StringValueHost')
-        .extend($data.DataContainer)
-        .extend($data.KeyValueContainer)
-        .include($data.StringValueHost);
+        .mix($data.DataContainer)
+        .mix($data.KeyValueContainer)
+        .mixOnly($data.StringValueHost);
 
         leftContainer = StringValueHost.create({});
 
