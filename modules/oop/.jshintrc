@@ -6,6 +6,7 @@
   "globals": {
     "$assert": true,
     "$oop": true,
-    "hOP": true
+    "hOP": true,
+    "slice": true
   }
 }

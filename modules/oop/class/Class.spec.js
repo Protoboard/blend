@@ -9,7 +9,7 @@ describe("$oop", function () {
         result;
 
     beforeEach(function () {
-      $oop.Class.classLookup = {};
+      $oop.Class.classByClassId = {};
       Class = $oop.Class.getClass('Class');
     });
 
@@ -1308,7 +1308,7 @@ describe("$assert", function () {
   var Class;
 
   beforeEach(function () {
-    $oop.Class.classLookup = {};
+    $oop.Class.classByClassId = {};
     Class = $oop.Class.getClass('Class');
   });
 

@@ -10,7 +10,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @memberOf $oop.Class
    * @type {object}
    */
-  classLookup: {},
+  classByClassId: {},
 
   /**
    * Fetches the class by the specified ID. Creates the class if it doesn't
@@ -22,8 +22,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   getClass: function (classId) {
     $assert.isString(classId, "No class ID was specified.");
 
-    var classes = this.classLookup,
-        Class = classes[classId];
+    var classByClassId = this.classByClassId,
+        Class = classByClassId[classId];
 
     if (!Class) {
       // class is not initialized yet
@@ -146,7 +146,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       });
 
       // adding class to registry
-      classes[classId] = Class;
+      classByClassId[classId] = Class;
     }
 
     return Class;
