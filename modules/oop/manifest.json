@@ -2,12 +2,11 @@
   "assets": {
     "js": [
       "globals.js",
-      "class/assertions.js",
-      "class/class-utils.js",
+      "utils/class-utils.js",
       "utils/guid-utils.js",
       "utils/access-utils.js",
+      "class/assertions.js",
       "class/ForwardDescriptor.js",
-      "class/ProtoclassBuilder.js",
       "class/Class.js",
       "class/Class-mixClass.js"
     ]
