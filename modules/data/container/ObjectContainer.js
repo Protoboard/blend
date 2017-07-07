@@ -8,7 +8,7 @@
  * @implements $data.Clearable
  */
 $data.ObjectContainer = $oop.getClass('$data.ObjectContainer')
-.require($oop.getClass('$data.DataContainer'))
+.expect($oop.getClass('$data.DataContainer'))
 .implement($oop.getClass('$data.Clearable'))
 .define(/** @lends $data.ObjectContainer# */{
   /**

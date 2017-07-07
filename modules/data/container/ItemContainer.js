@@ -7,7 +7,7 @@
  * @augments $data.DataContainer
  */
 $data.ItemContainer = $oop.getClass('$data.ItemContainer')
-.require($oop.getClass('$data.DataContainer'))
+.expect($oop.getClass('$data.DataContainer'))
 .define(/** @lends $data.ItemContainer# */{
   /**
    * @param {object|Array} data

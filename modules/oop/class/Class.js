@@ -74,13 +74,13 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         },
 
         /**
-         * Registry of classes required by the current class, and classes
+         * Registry of classes expected by the current class, and classes
          * requiring the current class.
          * @todo Add typedef
          * @type {object}
          * @private
          */
-        __requires: {
+        __expected: {
           downstream: {list: [], lookup: {}},
           upstream: {list: [], lookup: {}}
         },
@@ -536,22 +536,22 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToRequires: function (Class) {
+  _addToExpected: function (Class) {
     var classId = this.__classId,
-        requireId = Class.__classId,
+        expectedId = Class.__classId,
         mixinLookup = this.__mixins.downstream.lookup,
-        requires = this.__requires.downstream,
-        requireList = requires.list,
-        requireLookup = requires.lookup;
+        expected = this.__expected.downstream,
+        expectedList = expected.list,
+        expectedLookup = expected.lookup;
 
-    if (classId !== requireId &&
-        !hOP.call(mixinLookup, requireId) &&
-        !hOP.call(requireLookup, requireId)
+    if (classId !== expectedId &&
+        !hOP.call(mixinLookup, expectedId) &&
+        !hOP.call(expectedLookup, expectedId)
     ) {
-      // require is not mixed (which would cancel each other out)
-      // adding to requires
-      requireList.push(Class);
-      requireLookup[requireId] = Class;
+      // expected mixin is not mixed (which would cancel each other out)
+      // adding to list of expected mixins
+      expectedList.push(Class);
+      expectedLookup[expectedId] = Class;
     }
   },
 
@@ -560,7 +560,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @private
    */
   _addToHosts: function (Class) {
-    var hosts = this.__requires.upstream,
+    var hosts = this.__expected.upstream,
         hostList = hosts.list,
         hostLookup = hosts.lookup,
         classId = Class.__classId;
@@ -575,44 +575,45 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _removeFromRequires: function (Class) {
+  _removeFromExpected: function (Class) {
     var classId = Class.__classId,
-        requires = this.__requires.downstream,
-        requireList = requires.list,
-        requireLookup = requires.lookup;
+        expected = this.__expected.downstream,
+        expectedList = expected.list,
+        expectedLookup = expected.lookup;
 
-    if (hOP.call(requireLookup, classId)) {
-      requireList.splice(requireList.indexOf(classId), 1);
-      delete requireLookup[classId];
+    if (hOP.call(expectedLookup, classId)) {
+      expectedList.splice(expectedList.indexOf(classId), 1);
+      delete expectedLookup[classId];
     }
   },
 
   /**
-   * Extracts mixins and requires from class and transfers them to the
-   * current class as first-degree requires.
+   * Extracts mixins (present & expected) from class and transfers them to the
+   * current class as first-degree expectations.
    * @param {$oop.Class} Class
    * @private
    */
-  _transferRequiresFrom: function (Class) {
+  _transferExpectedFrom: function (Class) {
     var that = this;
 
-    // transferring requires & mixins of class to current class as requires
-    Class.__requires.downstream.list.concat(Class.__mixins.downstream.list)
+    // transferring mixins (present & expected) of class to current class as
+    // expectations
+    Class.__expected.downstream.list.concat(Class.__mixins.downstream.list)
     .forEach(function (Class) {
-      // adding require to registry
-      that._addToRequires(Class);
+      // adding expected mixin to registry
+      that._addToExpected(Class);
 
-      // adding to hosts on require
+      // adding to hosts on expected
       Class._addToHosts(that);
     });
 
-    // transferring class AS require to mixers and hosts of current class
-    this.__mixins.upstream.list.concat(this.__requires.upstream.list)
+    // transferring class AS expected to mixers and hosts of current class
+    this.__mixins.upstream.list.concat(this.__expected.upstream.list)
     .forEach(function (Host) {
-      // adding require to registry
-      Host._addToRequires(Class);
+      // adding expected mixin to registry
+      Host._addToExpected(Class);
 
-      // adding to hosts on require
+      // adding to hosts on expected mixin
       Class._addToHosts(Host);
     });
   },
@@ -777,13 +778,13 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       ].join(" "));
     }
 
-    // ... all requires are mixed
-    var requires = that.__requires.downstream.list;
-    if (requires.length) {
-      // there are unfulfilled requires - can't instantiate
+    // ... all expected mixins are mixed
+    var expected = that.__expected.downstream.list;
+    if (expected.length) {
+      // there are unmet expectations - can't instantiate
       $assert.assert(false, [
-        "Class '" + that.__classId + "' doesn't satisfy require(s): " +
-        requires
+        "Class '" + that.__classId + "' doesn't satisfy expectation(s): " +
+        expected
         .map(function (Class) {
           return "'" + Class.__classId + "'";
         })
@@ -902,11 +903,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // adding mixed class to contributions
     this._addToContributors(Class, Through);
 
-    // removing fulfilled require
-    this._removeFromRequires(Class);
+    // removing met expectations
+    this._removeFromExpected(Class);
 
-    // transferring 2nd dregree mixins & requires from mixin
-    this._transferRequiresFrom(Class);
+    // transferring 2nd dregree mixins (present & expected) from mixin
+    this._transferExpectedFrom(Class);
 
     // transferring as mixin to transitive mixers
     this._transferMixinToTransitiveMixers(Class);
@@ -970,22 +971,22 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Specifies a required base, or trait of the host class.
+   * Specifies that a mixin is expected by to be (on) the host class.
    * Used by traits only.
    * @param {$oop.Class} Class
    * @returns {$oop.Class}
    */
-  require: function (Class) {
-    $assert.isClass(Class, "Class#require expects type Class.");
+  expect: function (Class) {
+    $assert.isClass(Class, "Class#expect expects type Class.");
 
-    // adding require to registry
-    this._addToRequires(Class);
+    // adding expected mixin to registry
+    this._addToExpected(Class);
 
-    // adding to hosts on require
+    // adding to hosts on expected
     Class._addToHosts(this);
 
-    // transferring mixins & requires from require
-    this._transferRequiresFrom(Class);
+    // transferring mixins (present & expected) from expected mixin
+    this._transferExpectedFrom(Class);
 
     return this;
   },
@@ -1075,24 +1076,25 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Tells whether current class requires the specified class.
+   * Tells whether current class expects the specified class.
    * @param {$oop.Class} Class
    * @returns {boolean}
    */
-  requires: function (Class) {
+  expects: function (Class) {
     $assert.isClass(Class, "Class type expected");
 
-    return !!this.__requires.downstream.lookup[Class.__classId];
+    return !!this.__expected.downstream.lookup[Class.__classId];
   },
 
   /**
-   * Tells whether specified class requires the current class.
+   * Tells whether specified class expects the current class to be (on) the
+   * host class.
    * @param {$oop.Class} Class
    * @returns {boolean}
    */
-  isRequiredBy: function (Class) {
+  expectedBy: function (Class) {
     return $oop.Class.isPrototypeOf(Class) &&
-        Class.requires(this);
+        Class.expects(this);
   },
 
   /**

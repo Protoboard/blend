@@ -54,8 +54,8 @@ describe("$oop", function () {
         });
       });
 
-      it("should initialize requires", function () {
-        expect(result.__requires).toEqual({
+      it("should initialize expected", function () {
+        expect(result.__expected).toEqual({
           downstream: {list: [], lookup: {}},
           upstream: {list: [], lookup: {}}
         });
@@ -537,34 +537,34 @@ describe("$oop", function () {
 
       describe("then requiring same class", function () {
         beforeEach(function () {
-          Class.require(Trait);
+          Class.expect(Trait);
         });
 
-        it("should not add class to requires", function () {
-          expect(Class.__requires.downstream).toEqual({
+        it("should not add class to expected mixins", function () {
+          expect(Class.__expected.downstream).toEqual({
             list: [],
             lookup: {}
           });
         });
       });
 
-      describe("when mixin has requires or mixins", function () {
-        var Require2, Require3, Mixin;
+      describe("when mixin has expectations or mixins", function () {
+        var Expected2, Expected3, Mixin;
 
         beforeEach(function () {
-          Class.require(Require2 = $oop.Class.getClass('Require2')
+          Class.expect(Expected2 = $oop.Class.getClass('Expected2')
           .mixOnly(Mixin = $oop.Class.getClass('Mixin')));
 
-          Mixin.require(Require3 = $oop.getClass('Require3'));
+          Mixin.expect(Expected3 = $oop.getClass('Expected3'));
         });
 
-        it("should transfer requires", function () {
-          expect(Class.__requires.downstream).toEqual({
-            list: [Require2, Mixin, Require3],
+        it("should transfer expected mixins", function () {
+          expect(Class.__expected.downstream).toEqual({
+            list: [Expected2, Mixin, Expected3],
             lookup: {
               Mixin: Mixin,
-              Require2: Require2,
-              Require3: Require3
+              Expected2: Expected2,
+              Expected3: Expected3
             }
           });
         });
@@ -798,18 +798,18 @@ describe("$oop", function () {
       });
     });
 
-    describe("require()", function () {
-      var Require;
+    describe("expect()", function () {
+      var Expected;
 
       beforeEach(function () {
-        Require = $oop.Class.getClass('Require');
-        result = Class.require(Require);
+        Expected = $oop.Class.getClass('Expected');
+        result = Class.expect(Expected);
       });
 
       describe("when passing no arguments", function () {
         it("should throw", function () {
           expect(function () {
-            Class.require();
+            Class.expect();
           }).toThrow();
         });
       });
@@ -818,17 +818,17 @@ describe("$oop", function () {
         expect(result).toBe(Class);
       });
 
-      it("should add requires", function () {
-        expect(Class.__requires.downstream).toEqual({
-          list: [Require],
+      it("should add expects", function () {
+        expect(Class.__expected.downstream).toEqual({
+          list: [Expected],
           lookup: {
-            Require: Require
+            Expected: Expected
           }
         });
       });
 
       it("should add self to hosts on remote class", function () {
-        expect(Require.__requires.upstream).toEqual({
+        expect(Expected.__expected.upstream).toEqual({
           list: [Class],
           lookup: {
             Class: Class
@@ -838,35 +838,35 @@ describe("$oop", function () {
 
       describe("then including same class", function () {
         beforeEach(function () {
-          Class.mixOnly(Require);
+          Class.mixOnly(Expected);
         });
 
-        it("should remove class from requires", function () {
-          expect(Class.__requires.downstream).toEqual({
+        it("should remove class from expected mixins", function () {
+          expect(Class.__expected.downstream).toEqual({
             list: [],
             lookup: {}
           });
         });
       });
 
-      describe("when require has requires or mixins", function () {
-        var Require2, Require3, Mixin, Mixin2;
+      describe("when expected mixin has mixins (present or expected)", function () {
+        var Expected2, Expected3, Mixin, Mixin2;
 
         beforeEach(function () {
-          Class.require(Require2 = $oop.Class.getClass('Require2')
-          .require(Require3 = $oop.Class.getClass('Require3')));
+          Class.expect(Expected2 = $oop.Class.getClass('Expected2')
+          .expect(Expected3 = $oop.Class.getClass('Expected3')));
 
-          Require2.mixOnly(Mixin = $oop.Class.getClass('Mixin'));
+          Expected2.mixOnly(Mixin = $oop.Class.getClass('Mixin'));
         });
 
-        it("should transfer requires", function () {
-          expect(Class.__requires.downstream).toEqual({
-            list: [Require, Require2, Require3, Mixin],
+        it("should transfer expected mixins", function () {
+          expect(Class.__expected.downstream).toEqual({
+            list: [Expected, Expected2, Expected3, Mixin],
             lookup: {
               Mixin: Mixin,
-              Require: Require,
-              Require2: Require2,
-              Require3: Require3
+              Expected: Expected,
+              Expected2: Expected2,
+              Expected3: Expected3
             }
           });
         });
@@ -1078,60 +1078,60 @@ describe("$oop", function () {
       });
     });
 
-    describe("requires()", function () {
+    describe("expects()", function () {
       var Host;
 
       beforeEach(function () {
         Host = $oop.Class.getClass('Host');
-        Class.require(Host);
+        Class.expect(Host);
       });
 
       describe("on invalid argument", function () {
         it("should throw", function () {
           expect(function () {
-            Class.requires();
+            Class.expects();
           }).toThrow();
         });
       });
 
-      describe("on present require", function () {
+      describe("on expected mixin being present", function () {
         it("should return true", function () {
-          expect(Class.requires(Host)).toBe(true);
+          expect(Class.expects(Host)).toBe(true);
         });
       });
 
-      describe("on absent require", function () {
+      describe("on expected mixin not present", function () {
         it("should return false", function () {
           var Host2 = $oop.Class.getClass('Host2');
-          expect(Class.requires(Host2)).toBe(false);
+          expect(Class.expects(Host2)).toBe(false);
         });
       });
     });
 
-    describe("isRequiredBy()", function () {
+    describe("expectedBy()", function () {
       var Host;
 
       beforeEach(function () {
         Host = $oop.Class.getClass('Interface');
-        Class.require(Host);
+        Class.expect(Host);
       });
 
       describe("when passing non-class", function () {
         it("should return false", function () {
-          expect(Host.isRequiredBy(undefined)).toBe(false);
+          expect(Host.expectedBy(undefined)).toBe(false);
         });
       });
 
       describe("on requiring class", function () {
         it("should return true", function () {
-          expect(Host.isRequiredBy(Class)).toBe(true);
+          expect(Host.expectedBy(Class)).toBe(true);
         });
       });
 
       describe("on non-requiring class", function () {
         it("should return false", function () {
           var Class2 = $oop.Class.getClass('Class2');
-          expect(Host.isRequiredBy(Class2)).toBe(false);
+          expect(Host.expectedBy(Class2)).toBe(false);
         });
       });
     });
@@ -1144,7 +1144,7 @@ describe("$oop", function () {
 
         beforeEach(function () {
           Host = $oop.Class.getClass('Host');
-          Class.require(Host);
+          Class.expect(Host);
         });
 
         it("should throw", function () {

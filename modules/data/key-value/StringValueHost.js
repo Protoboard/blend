@@ -5,7 +5,7 @@
  * @augments $data.KeyValueContainer
  */
 $data.StringValueHost = $oop.getClass('$data.StringValueHost')
-.require($oop.getClass('$data.KeyValueContainer'))
+.expect($oop.getClass('$data.KeyValueContainer'))
 .define(/** @lends $data.StringValueHost# */{
   /**
    * @type {string}
