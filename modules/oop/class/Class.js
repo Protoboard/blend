@@ -1076,28 +1076,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Tells whether current class expects the specified class.
-   * @param {$oop.Class} Class
-   * @returns {boolean}
-   */
-  expects: function (Class) {
-    $assert.isClass(Class, "Class type expected");
-
-    return !!this.__expected.downstream.lookup[Class.__classId];
-  },
-
-  /**
-   * Tells whether specified class expects the current class to be (on) the
-   * host class.
-   * @param {$oop.Class} Class
-   * @returns {boolean}
-   */
-  expectedBy: function (Class) {
-    return $oop.Class.isPrototypeOf(Class) &&
-        Class.expects(this);
-  },
-
-  /**
    * Binds and stores the specified methods on the instance, so they're
    * reusable as callbacks.
    * @param {...string} methodName

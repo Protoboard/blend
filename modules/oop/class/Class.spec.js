@@ -1078,64 +1078,6 @@ describe("$oop", function () {
       });
     });
 
-    describe("expects()", function () {
-      var Host;
-
-      beforeEach(function () {
-        Host = $oop.Class.getClass('Host');
-        Class.expect(Host);
-      });
-
-      describe("on invalid argument", function () {
-        it("should throw", function () {
-          expect(function () {
-            Class.expects();
-          }).toThrow();
-        });
-      });
-
-      describe("on expected mixin being present", function () {
-        it("should return true", function () {
-          expect(Class.expects(Host)).toBe(true);
-        });
-      });
-
-      describe("on expected mixin not present", function () {
-        it("should return false", function () {
-          var Host2 = $oop.Class.getClass('Host2');
-          expect(Class.expects(Host2)).toBe(false);
-        });
-      });
-    });
-
-    describe("expectedBy()", function () {
-      var Host;
-
-      beforeEach(function () {
-        Host = $oop.Class.getClass('Interface');
-        Class.expect(Host);
-      });
-
-      describe("when passing non-class", function () {
-        it("should return false", function () {
-          expect(Host.expectedBy(undefined)).toBe(false);
-        });
-      });
-
-      describe("on requiring class", function () {
-        it("should return true", function () {
-          expect(Host.expectedBy(Class)).toBe(true);
-        });
-      });
-
-      describe("on non-requiring class", function () {
-        it("should return false", function () {
-          var Class2 = $oop.Class.getClass('Class2');
-          expect(Host.expectedBy(Class2)).toBe(false);
-        });
-      });
-    });
-
     describe("create()", function () {
       var instance;
 
