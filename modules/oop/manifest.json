@@ -3,7 +3,7 @@
     "js": [
       "globals.js",
       "utils/class-utils.js",
-      "utils/guid-utils.js",
+      "utils/uuid-utils.js",
       "utils/access-utils.js",
       "class/assertions.js",
       "class/ForwardDescriptor.js",

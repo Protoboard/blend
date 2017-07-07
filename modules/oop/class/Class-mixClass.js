@@ -13,6 +13,8 @@ $oop.copyProperties($oop.Class, /** @lends $oop.Class */{
    * mixins.
    * @param {...$oop.Class} Mixin
    * @returns {$oop.Class}
+   * @todo Should be able to retrieve a regular class that mixes only.
+   * (Eg. $data.StringCollection = $data.Collection + $data.StringValueHost.)
    */
   mixClass: function (Mixin) {
     var classByMixinIds = $oop.Class.classByMixinIds,
@@ -27,7 +29,7 @@ $oop.copyProperties($oop.Class, /** @lends $oop.Class */{
       // class does not exist in index
 
       // creating class and adding mixins
-      Class = $oop.getClass($oop.generateGuid());
+      Class = $oop.getClass($oop.generateUuid());
       Mixins.forEach(function (Mixin) {
         Class.mix(Mixin);
       });
