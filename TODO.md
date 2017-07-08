@@ -36,6 +36,8 @@ Routing
 - When module gets loaded, look at current route & activate if necessary.
     - Depends on module management.
 - Investigate `window.onBeforeUnload`
+- Store Route subclass as state in `pushState`, that has a serial number.
+    (Routes need to be identifiable re. where they are in the browser history)
 
 I18n
 ----
