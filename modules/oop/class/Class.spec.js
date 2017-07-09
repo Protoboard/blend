@@ -376,7 +376,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("then including same class", function () {
+      describe("then mixing same class", function () {
         beforeEach(function () {
           Class
           .implement($oop.Class.getClass('Interface2')
@@ -595,7 +595,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("including multiple classes", function () {
+      describe("mixing multiple classes", function () {
         var A, B, C, D;
 
         beforeEach(function () {
@@ -739,7 +739,7 @@ describe("$oop", function () {
         expect(Mixin2.__transitiveMixers.list).toEqual([Class]);
       });
 
-      describe("then including a class", function () {
+      describe("then mixing a class", function () {
         var Mixin3,
             Mixin4;
 
@@ -836,7 +836,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("then including same class", function () {
+      describe("then mixing same class", function () {
         beforeEach(function () {
           Class.mixOnly(Expected);
         });
@@ -1064,13 +1064,13 @@ describe("$oop", function () {
         });
       });
 
-      describe("on including class", function () {
+      describe("on mixing class", function () {
         it("should return true", function () {
           expect(Trait.mixedBy(Class)).toBe(true);
         });
       });
 
-      describe("on non-including class", function () {
+      describe("on non-mixing class", function () {
         it("should return false", function () {
           var Class2 = $oop.Class.getClass('Class2');
           expect(Trait.mixedBy(Class2)).toBe(false);
