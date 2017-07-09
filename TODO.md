@@ -146,7 +146,6 @@ OOP
 - Tie built-in extensions to 'dev' flag
 - **Merge interfaces into mixins (as all abstract)**
     - add $oop.abstract as special function
-- Requiring interface to be implemented (by include)
 - Merging property overrides:
     - objects: deep tree merge
     - string / XML: XML tree merge
@@ -183,11 +182,6 @@ OOP
 - Turning off contributors at runtime?
     - `inhibitContributor` - would require instance level copies.
 - Performance benchmarks
-- Investigate runtime class / instance composition.
-    - Costly is OK.
-    - GUID as Class ID for ad-hoc classes?
-        - How would we clean it up?
-        - Not caching builder / class?
 - Make `$oop.Base` a Class for compatibility, but make sure overrides are in place
 - Swap back contribution vs. delegate terminology
 

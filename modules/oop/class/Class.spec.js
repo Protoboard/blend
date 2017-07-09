@@ -65,7 +65,7 @@ describe("$oop", function () {
         expect(result.__contributors).toEqual({list: [], lookup: {}});
       });
 
-      it("should initialize method matrix", function () {
+      it("should initialize __methodMatrix", function () {
         expect(result.__methodMatrix).toEqual({});
       });
 
@@ -159,7 +159,7 @@ describe("$oop", function () {
         });
       });
 
-      it("should add methods to method matrix", function () {
+      it("should add methods to __methodMatrix", function () {
         expect(Class.__methodMatrix).toEqual({
           bar: [batch.bar]
         });
@@ -501,13 +501,19 @@ describe("$oop", function () {
         });
       });
 
-      it("should add methods to method matrix", function () {
+      it("should add methods to __methodMatrix", function () {
         expect(Class.__methodMatrix).toEqual({
           bar: [Trait.__members.bar]
         });
       });
 
-      it("should copy properties to class", function () {
+      it("should add properties to __propertyMatrix", function () {
+        expect(Class.__propertyMatrix).toEqual({
+          foo: [Trait.__members.foo]
+        });
+      });
+
+      it("should re-calculate properties on class", function () {
         expect(Class.foo).toBe("FOO");
       });
 
@@ -574,18 +580,27 @@ describe("$oop", function () {
         beforeEach(function () {
           Trait.define({
             baz: function () {},
+            foo: "BAR",
             quux: "QUUX"
           });
         });
 
-        it("should add new methods to method matrix", function () {
+        it("should add new methods to __methodMatrix", function () {
           expect(Class.__methodMatrix).toEqual({
             bar: [Trait.__members.bar],
             baz: [Trait.__members.baz]
           });
         });
 
-        it("should add new properties to class", function () {
+        it("should add new properties to __propertyMatrix", function () {
+          expect(Class.__propertyMatrix).toEqual({
+            foo: [Trait.__members.foo],
+            quux: [Trait.__members.quux]
+          });
+        });
+
+        it("should re-calculate properties on class", function () {
+          expect(Class.foo).toBe("BAR");
           expect(Class.quux).toBe("QUUX");
         });
 
@@ -713,17 +728,20 @@ describe("$oop", function () {
       beforeEach(function () {
         Mixin1 = $oop.getClass("Mixin1")
         .define({
+          BAR: "BAR",
           bar: function () {}
         });
         Mixin2 = $oop.getClass("Mixin2")
         .mixOnly(Mixin1)
         .define({
+          BAZ: "BAZ",
           baz: function () {}
         });
 
         Class
         .mix(Mixin2)
         .define({
+          BAR: "QUUX",
           foo: function () {}
         });
       });
@@ -746,10 +764,12 @@ describe("$oop", function () {
         beforeEach(function () {
           Mixin3 = $oop.getClass("Mixin3")
           .define({
+            QUUX: "QUUX",
             quux: function () {}
           });
           Mixin4 = $oop.getClass("Mixin4")
           .define({
+            FOO: "FOO",
             foo: function () {}
           });
           Mixin1
@@ -792,6 +812,28 @@ describe("$oop", function () {
             ],
             quux: [
               Mixin3.__members.quux
+            ]
+          });
+          expect(Class.__propertyMatrix).toEqual({
+            BAR: [
+              undefined,
+              undefined,
+              Mixin1.__members.BAR,
+              undefined,
+              Class.__members.BAR
+            ],
+            BAZ: [
+              undefined,
+              undefined,
+              undefined,
+              Mixin2.__members.BAZ
+            ],
+            QUUX: [
+              Mixin3.__members.QUUX
+            ],
+            FOO: [
+              undefined,
+              Mixin4.__members.FOO
             ]
           });
         });

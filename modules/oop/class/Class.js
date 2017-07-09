@@ -113,10 +113,20 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
          * by method name, then contributor index. (Index of contributor in
          * `__contributors.list`.)
          * **Order is important.**
-         * @type {object}
+         * @type {$oop.MemberMatrix}
          * @private
          */
         __methodMatrix: {},
+
+        /**
+         * Two dimensional lookup of properties contributed to the class.
+         * Indexed by method name, then contributor index. (Index of
+         * contributor in `__contributors.list`.)
+         * **Order is important.**
+         * @type {$oop.MemberMatrix}
+         * @private
+         */
+        __propertyMatrix: {},
 
         /**
          * List of forwards (surrogate) descriptors.
@@ -213,6 +223,49 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * Adds members to the specified member lookup, indexed by method name, then
+   * order.
+   * @param {$oop.MemberMatrix} memberMatrix
+   * @param {object} members Contributed members (may contain properties)
+   * @param {string} classId ID of contributing class
+   * @param {string} [nextId] ID of class the contributor is inserted before
+   * @private
+   */
+  _addToMemberMatrix: function (memberMatrix, members, classId, nextId) {
+    var contributorLookup = this.__contributors.lookup,
+        classIndex = contributorLookup[classId],
+        nextIndex = contributorLookup[nextId];
+
+    if (nextId !== undefined) {
+      // through class is defined
+      // making room for incoming methods
+      Object.getOwnPropertyNames(memberMatrix)
+      // we don't need to splice where there are no methods beyond nextIndex
+      .filter(function (methodName) {
+        var methods = memberMatrix[methodName];
+        return methods && methods.length >= nextIndex;
+      })
+      // making room for contributor
+      .forEach(function (methodName) {
+        var methods = memberMatrix[methodName];
+        methods.splice(nextIndex - 1, 0, undefined);
+      });
+    }
+
+    // just setting members in method matrix
+    Object.getOwnPropertyNames(members)
+    .forEach(function (memberName) {
+      var methods;
+      if (hOP.call(memberMatrix, memberName)) {
+        methods = memberMatrix[memberName];
+      } else {
+        methods = memberMatrix[memberName] = [];
+      }
+      methods[classIndex] = members[memberName];
+    });
+  },
+
+  /**
    * Adds methods to method lookup, indexed by method name, then order.
    * @param {object} members Contributed members (may contain properties)
    * @param {string} classId ID of contributing class
@@ -220,59 +273,43 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @private
    */
   _addMethodsToMatrix: function (members, classId, nextId) {
-    var methodMatrix = this.__methodMatrix,
-        contributorLookup = this.__contributors.lookup,
-        classIndex = contributorLookup[classId],
-        nextIndex = contributorLookup[nextId];
-
-    if (nextId !== undefined) {
-      // through class is defined
-      // making room for incoming methods
-      Object.getOwnPropertyNames(methodMatrix)
-      // we don't need to splice where there are no methods beyond nextIndex
-      .filter(function (methodName) {
-        var methods = methodMatrix[methodName];
-        return methods && methods.length >= nextIndex;
-      })
-      // making room for contributor
-      .forEach(function (methodName) {
-        var methods = methodMatrix[methodName];
-        methods.splice(nextIndex - 1, 0, undefined);
-      });
-    }
-
-    // just setting members in method matrix
-    Object.getOwnPropertyNames(members)
+    // todo Break out method extractor?
+    var methods = Object.getOwnPropertyNames(members)
     .filter(function (memberName) {
       return typeof members[memberName] === 'function';
     })
-    .forEach(function (methodName) {
-      var methods;
-      if (hOP.call(methodMatrix, methodName)) {
-        methods = methodMatrix[methodName];
-      } else {
-        methods = methodMatrix[methodName] = [];
-      }
-      methods[classIndex] = members[methodName];
-    });
+    .reduce(function (result, methodName) {
+      result[methodName] = members[methodName];
+      return result;
+    }, {});
+
+    this._addToMemberMatrix(this.__methodMatrix, methods, classId, nextId);
   },
 
   /**
-   * Adds properties to class.
-   * @param {object} members
+   * Adds methods to method lookup, indexed by method name, then order.
+   * @param {object} members Contributed members (may contain properties)
+   * @param {string} classId ID of contributing class
+   * @param {string} [nextId] ID of class the contributor is inserted before
    * @private
    */
-  _addPropertiesToClass: function (members) {
+  _addPropertiesToMatrix: function (members, classId, nextId) {
+    // todo Break out property extractor?
     var Class = $oop.Class,
-        that = this;
+        that = this,
+        properties = Object.getOwnPropertyNames(members)
+        .filter(function (memberName) {
+          return typeof members[memberName] !== 'function';
+        })
+        .reduce(function (result, propertyName) {
+          result[propertyName] = members[propertyName];
+          return result;
+        }, {});
 
-    Object.getOwnPropertyNames(members)
-    .filter(function (memberName) {
-      return typeof members[memberName] !== 'function';
-    })
+    // making sure no static property is a Class instance
+    Object.getOwnPropertyNames(properties)
     .forEach(function (propertyName) {
-      var propertyValue = members[propertyName];
-
+      var propertyValue = properties[propertyName];
       if (Class.isPrototypeOf(propertyValue) &&
           Object.getPrototypeOf(propertyValue) !== Class
       ) {
@@ -281,8 +318,32 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           "Can't build."
         ].join(" "));
       }
+    });
 
-      that[propertyName] = propertyValue;
+    this._addToMemberMatrix(this.__propertyMatrix, properties, classId, nextId);
+  },
+
+  /**
+   * Adds properties to class.
+   * @param {object} members
+   * @private
+   */
+  _addPropertiesToClass: function (members) {
+    var that = this,
+        propertyMatrix = this.__propertyMatrix;
+
+    Object.getOwnPropertyNames(members)
+    .filter(function (memberName) {
+      return typeof members[memberName] !== 'function';
+    })
+    .forEach(function (propertyName) {
+      // calculating property value based on __propertyMatrix
+      // todo We should be able to pass in property type checker & reducer
+      that[propertyName] = propertyMatrix[propertyName]
+      .reduce(function (curr, next) {
+        // todo This would be the default reducer for untyped properties
+        return next !== undefined ? next : curr;
+      });
     });
   },
 
@@ -648,6 +709,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       // adding methods to lookup at specified index
       Class._addMethodsToMatrix(members, classId);
 
+      // adding properties to lookup at specified index
+      Class._addPropertiesToMatrix(members, classId);
+
       // adding / overwriting properties
       Class._addPropertiesToClass(members);
 
@@ -835,6 +899,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // adding methods to lookup at specified index
     this._addMethodsToMatrix(batch, this.__classId);
 
+    // adding properties to lookup at specified index
+    this._addPropertiesToMatrix(batch, this.__classId);
+
     // adding / overwriting properties
     this._addPropertiesToClass(batch);
 
@@ -917,6 +984,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // adding methods to lookup at specified index
     this._addMethodsToMatrix(members, Class.__classId, Through && Through.__classId);
 
+    // adding properties to lookup at specified index
+    this._addPropertiesToMatrix(members, Class.__classId, Through && Through.__classId);
+
     // adding / overwriting properties
     this._addPropertiesToClass(members);
 
@@ -939,7 +1009,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var that = this,
         contributors = this._gatherAllContributorsFrom(Class);
 
-    // including all dependencies
+    // mixing all dependencies
     contributors.forEach(function (Class) {
       // adding current class to mixin as transitive mixer
       Class._addToTransitiveMixers(that);
