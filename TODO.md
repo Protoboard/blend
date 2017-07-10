@@ -38,6 +38,8 @@ Routing
 - Investigate `window.onBeforeUnload`
 - Store Route subclass as state in `pushState`, that has a serial number.
     (Routes need to be identifiable re. where they are in the browser history)
+- Distinguish routing events based on whether it's a genuine navigation, or 
+moving within history
 
 I18n
 ----
@@ -191,6 +193,5 @@ Assert
 Grunt
 -----
 
-- Rename folders to complete NPM module names
 - Auto-generate asset list(s) in manifest (except for $oop & $asset)
 - LESS
