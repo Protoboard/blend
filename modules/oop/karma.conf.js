@@ -11,8 +11,8 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../../dist/giant-assert.js',
-      '../../dist/giant-oop.js',
+      '../../dist/cake-assert.js',
+      '../../dist/cake-oop.js',
       '**/*.spec.js'
     ],
 

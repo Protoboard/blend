@@ -1,2 +1,2 @@
-Giant Event
-===========
+Layercake Event Module
+======================

@@ -1,7 +1,7 @@
 "use strict";
 
-var $assert = window['giant-assert'],
-    $data = window['giant-data'];
+var $assert = window['cake-assert'],
+    $data = window['cake-data'];
 
 describe("$data", function () {
   describe("DataContainer", function () {

@@ -1,2 +1,2 @@
-Giant Assertions
-================
+Layercake Assertion Module
+==========================

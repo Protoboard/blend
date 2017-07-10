@@ -1,2 +1,2 @@
-Giant Utils
-===========
+Layercake Utils Module
+======================

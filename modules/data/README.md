@@ -1,2 +1,2 @@
-Giant Data
-==========
+Layercake Data Structures Module
+================================

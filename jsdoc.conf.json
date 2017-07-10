@@ -2,7 +2,9 @@
   "tags": {
     "allowUnknownTags": true
   },
-  "plugins": ["plugins/markdown"],
+  "plugins": [
+    "plugins/markdown"
+  ],
   "templates": {
     "logoFile": "",
     "cleverLinks": false,
@@ -10,9 +12,9 @@
     "dateFormat": "ddd MMM Do YYYY",
     "outputSourceFiles": true,
     "outputSourcePath": true,
-    "systemName": "GiantJS",
+    "systemName": "LayercakeJS",
     "footer": "",
-    "copyright": "GiantJS Copyright © 2011-2017 Dan Stocker, Production Minds SD Limited, Blue Duck Education Ltd.",
+    "copyright": "LayercakeJS Copyright © 2011-2017 Dan Stocker, Production Minds SD Limited, Blue Duck Education Ltd.",
     "navType": "vertical",
     "theme": "cosmo",
     "linenums": true,

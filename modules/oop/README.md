@@ -1,2 +1,2 @@
-Giant OOP
-=========
+Layercake OOP Module
+====================

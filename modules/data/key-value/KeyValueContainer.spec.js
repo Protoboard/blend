@@ -1,8 +1,8 @@
 "use strict";
 
-var $oop = window['giant-oop'],
-    $utils = window['giant-utils'],
-    $data = window['giant-data'];
+var $oop = window['cake-oop'],
+    $utils = window['cake-utils'],
+    $data = window['cake-data'];
 
 describe("$data", function () {
   describe("KeyValueContainer", function () {

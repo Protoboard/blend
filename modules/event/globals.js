@@ -1,9 +1,9 @@
 "use strict";
 
-var $assert = require('giant-assert'),
-    $oop = require('giant-oop'),
-    $utils = require('giant-utils'),
-    $data = require('giant-data'),
+var $assert = require('cake-assert'),
+    $oop = require('cake-oop'),
+    $utils = require('cake-utils'),
+    $data = require('cake-data'),
     $event = exports;
 
 /**

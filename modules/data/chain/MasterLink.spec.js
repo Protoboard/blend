@@ -1,7 +1,7 @@
 "use strict";
 
-var $oop = window['giant-oop'],
-    $data = window['giant-data'];
+var $oop = window['cake-oop'],
+    $data = window['cake-data'];
 
 describe("$data", function () {
   describe("MasterLink", function () {

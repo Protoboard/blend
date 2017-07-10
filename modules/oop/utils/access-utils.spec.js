@@ -1,6 +1,6 @@
 "use strict";
 
-var $oop = window['giant-oop'];
+var $oop = window['cake-oop'];
 
 describe("$oop", function () {
   var data;

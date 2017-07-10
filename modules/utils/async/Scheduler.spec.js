@@ -1,6 +1,6 @@
 "use strict";
 
-var $utils = window['giant-utils'];
+var $utils = window['cake-utils'];
 
 describe("$utils", function () {
   describe("Scheduler", function () {

@@ -1,6 +1,6 @@
 "use strict";
 
-var $data = window['giant-data'];
+var $data = window['cake-data'];
 
 describe("$assert", function () {
   var path;

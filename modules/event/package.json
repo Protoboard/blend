@@ -1,7 +1,7 @@
 {
-  "name": "giant-event",
+  "name": "cake-event",
   "version": "0.5.0",
-  "description": "Event module for Giant",
+  "description": "Event module for Layercake",
   "keywords": [
     "custom",
     "universal event",
@@ -12,15 +12,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:giantjs/giant.git"
+    "url": "git@github.com:danstocker/layercake.git"
   },
   "engines": {
     "npm": "^3.0.0"
   },
   "dependencies": {
-    "giant-assert": "~0.5.0",
-    "giant-data": "~0.5.0",
-    "giant-oop": "~0.5.0",
-    "giant-utils": "~0.5.0"
+    "cake-assert": "~0.5.0",
+    "cake-data": "~0.5.0",
+    "cake-oop": "~0.5.0",
+    "cake-utils": "~0.5.0"
   }
 }

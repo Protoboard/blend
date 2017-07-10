@@ -1,6 +1,6 @@
 "use strict";
 
-var $assert = require('giant-assert'),
+var $assert = require('cake-assert'),
     $oop = exports,
     hOP = Object.prototype.hasOwnProperty,
     slice = Array.prototype.slice;

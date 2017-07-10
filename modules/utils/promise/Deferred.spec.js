@@ -1,7 +1,7 @@
 "use strict";
 
-var $oop = window['giant-oop'],
-    $utils = window['giant-oop'];
+var $oop = window['cake-oop'],
+    $utils = window['cake-oop'];
 
 describe("$utils", function () {
   describe("Deferred", function () {

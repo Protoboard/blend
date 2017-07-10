@@ -1,7 +1,7 @@
 "use strict";
 
-var $assert = require('giant-assert'),
-    $oop = require('giant-oop'),
+var $assert = require('cake-assert'),
+    $oop = require('cake-oop'),
     $utils = exports,
     slice = Array.prototype.slice;
 

@@ -1,6 +1,6 @@
 "use strict";
 
-var $assert = window['giant-assert'];
+var $assert = window['cake-assert'];
 
 describe("$assert", function () {
   beforeEach(function () {

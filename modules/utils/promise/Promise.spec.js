@@ -1,8 +1,8 @@
 "use strict";
 
-var $assert = window['giant-assert'],
-    $oop = window['giant-oop'],
-    $utils = window['giant-utils'];
+var $assert = window['cake-assert'],
+    $oop = window['cake-oop'],
+    $utils = window['cake-utils'];
 
 describe("$assert", function () {
   var promise;

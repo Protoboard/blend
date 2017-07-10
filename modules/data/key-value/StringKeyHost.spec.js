@@ -1,8 +1,8 @@
 "use strict";
 
-var $assert = window['giant-assert'],
-    $oop = window['giant-oop'],
-    $data = window['giant-data'];
+var $assert = window['cake-assert'],
+    $oop = window['cake-oop'],
+    $data = window['cake-data'];
 
 describe("$data", function () {
   var result;

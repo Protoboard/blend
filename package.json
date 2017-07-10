@@ -1,7 +1,7 @@
 {
-  "name": "giant",
+  "name": "layercake",
   "version": "0.5.0",
-  "description": "Full-featured SPA framework",
+  "description": "Web app framework",
   "keywords": [
     "front end",
     "framework",
@@ -13,7 +13,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:giantjs/giant.git"
+    "url": "git@github.com:danstocker/layercake.git"
   },
   "engines": {
     "npm": "^3.0.0"

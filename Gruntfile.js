@@ -100,7 +100,7 @@ module.exports = function (grunt) {
 
     notify: {
       options: {
-        title: 'GiantJS'
+        title: 'LayercakeJS'
       },
       doc: {
         options: {

@@ -1,8 +1,8 @@
 "use strict";
 
-var $oop = window['giant-oop'],
-    $utils = window['giant-utils'],
-    $event = window['giant-event'];
+var $oop = window['cake-oop'],
+    $utils = window['cake-utils'],
+    $event = window['cake-event'];
 
 describe("$event", function () {
   describe("Event", function () {

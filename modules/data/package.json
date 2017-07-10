@@ -1,7 +1,7 @@
 {
-  "name": "giant-data",
+  "name": "cake-data",
   "version": "0.5.0",
-  "description": "Data structures & functional programming module for Giant",
+  "description": "Data structures module for Layercake",
   "keywords": [
     "data",
     "hash",
@@ -18,14 +18,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:giantjs/giant.git"
+    "url": "git@github.com:danstocker/layercake.git"
   },
   "engines": {
     "npm": "^3.0.0"
   },
   "dependencies": {
-    "giant-assert": "~0.5.0",
-    "giant-oop": "~0.5.0",
-    "giant-utils": "~0.5.0"
+    "cake-assert": "~0.5.0",
+    "cake-oop": "~0.5.0",
+    "cake-utils": "~0.5.0"
   }
 }

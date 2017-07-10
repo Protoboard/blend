@@ -1,2 +1,2 @@
-GiantJS
-=======
+LayercakeJS
+===========

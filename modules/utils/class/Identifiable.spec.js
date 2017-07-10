@@ -1,7 +1,7 @@
 "use strict";
 
-var $oop = window['giant-oop'],
-    $utils = window['giant-utils'];
+var $oop = window['cake-oop'],
+    $utils = window['cake-utils'];
 
 describe("$utils", function () {
   describe("Identifiable", function () {
