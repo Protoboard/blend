@@ -71,6 +71,10 @@ Entity
 Event
 -----
 
+- Change "original event" terminology
+    - `originalEvent` and `originalEventChain` to `causedBy`/`causeEvent` and 
+    `eventTrail`
+    - `getOriginalEvent...` to `getCause...`
 - `propagationPaths` & `setPropagationPaths`
     - for altering propagation
 - Replace `propagates` flag w/ `bubblingDistance` or `bubblingDepth`
@@ -132,6 +136,8 @@ having it?
 Utils
 -----
 
+### Low Pri
+
 - Classes to be made `Destructible`?
 - **Promise chaining** (Think overrides returning promise)
     - Look into other promise specs (B/etc)
@@ -139,16 +145,10 @@ Utils
 OOP
 ---
 
-- Full overrides (`Class.override()`)
-- Shorthand for singletons (`.singleton()`)
-- Instant tester (`.isIntance()`)
-- **BUG** Mapper doesn't propagate to includers
-- Move cached instances to global lookup
-- Single CTR arg: lookup of properties
-- Tie built-in extensions to 'dev' flag
 - **Merge interfaces into mixins (as all abstract)**
     - add $oop.abstract as special function
 - Merging property overrides:
+    - **customization**
     - objects: deep tree merge
     - string / XML: XML tree merge
     - string / JSON: string JSON merge
@@ -156,15 +156,18 @@ OOP
     - $oop.Registry
     - $oop.BidirectionalRegistry
 - Break down Class.js
+- Full overrides (`Class.override()`)
+- Move cached instances to global lookup
+- Instance tester (`.isIntance()`)
+- Single CTR arg: lookup of properties
+- Tie built-in extensions to 'dev' flag
 - Checks
     - ~~Do not allow instances as static properties in Class#define~~
     - Whether forward includes class being instantiated. ON instantiation
     - Property vs. method collisions
-    - Circular include
+    - Circular mixin
     - Circular require
     - Member conflict in `define` / `_addToMembers`
-- _What if includes have conflicting hash functions?_
-    - Concatenate hashes
 
 ### Low Pri
 
@@ -176,6 +179,9 @@ OOP
     `$oop.getClassBuilder('$foo.Foo').define(...)...`
 - Per-method memoization
     - How to set method to be memoized?
+- Temporary instance caching: for routines expected to be instantiation-heavy
+ on a few instances, but otherwise not good candidates for global caching (eg
+ . Paths)
 - Integrate `$utils.Identifiable`, `$utils.Retrievable`, and `$utils
 .Destroyable` into `Class`
     - so we can store class / instance information on methods
@@ -186,6 +192,9 @@ OOP
 - Performance benchmarks
 - Make `$oop.Base` a Class for compatibility, but make sure overrides are in place
 - Swap back contribution vs. delegate terminology
+- On conflicting cache functions
+    - Lower class distance wins, or
+    - Concatenate hashes
 
 Assert
 ------
