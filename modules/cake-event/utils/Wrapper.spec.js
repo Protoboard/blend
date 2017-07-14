@@ -12,6 +12,7 @@ describe("$event", function () {
 
     beforeEach(function () {
       Wrapper = $oop.getClass('test.$event.Wrapper.Wrapper')
+      .mix($utils.Cloneable)
       .mix($event.Wrapper);
 
       wrapper = Wrapper.create('event1');

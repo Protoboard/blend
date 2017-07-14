@@ -1,12 +1,13 @@
 "use strict";
 
 /**
+ * Wraps any value or object in an `$oop.Class` instance.
  * @mixin $event.Wrapper
- * @mixes $utils.Cloneable
+ * @augments $utils.Cloneable
  * @todo Move to cake-utils?
  */
 $event.Wrapper = $oop.getClass('$event.Wrapper')
-.mix($utils.Cloneable)
+.expect($utils.Cloneable)
 .define(/** @lends $event.Wrapper# */{
   /**
    * @ignore
