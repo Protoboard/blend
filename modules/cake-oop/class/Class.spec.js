@@ -719,6 +719,19 @@ describe("$oop", function () {
           });
         });
       });
+
+      describe("then setting mapper on mixin", function () {
+        var mapper;
+
+        beforeEach(function () {
+          mapper = function () {};
+          Trait.cache(mapper);
+        });
+
+        it("should transfer mapper to mixer", function () {
+          expect(Class.__mapper).toBe(mapper);
+        });
+      });
     });
 
     describe("mix()", function () {
@@ -993,8 +1006,21 @@ describe("$oop", function () {
         expect(result).toBe(Class);
       });
 
-      it("should set hash function", function () {
+      it("should set mapper function", function () {
         expect(Class.__mapper).toBe(mapper);
+      });
+
+      describe("then mixOnly()", function () {
+        var Mixer;
+
+        beforeEach(function () {
+          Mixer = $oop.getClass("test.$oop.Class.Mixer")
+          .mix(Class);
+        });
+
+        it("should transfer mapper to mixer", function () {
+          expect(Mixer.__mapper).toBe(mapper);
+        });
       });
     });
 

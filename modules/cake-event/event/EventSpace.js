@@ -14,11 +14,9 @@
  * @implements $event.EventTarget
  */
 $event.EventSpace = $oop.getClass('$event.EventSpace')
-.mixOnly($utils.Destructible)
+.mix($oop.Singleton)
+.mix($utils.Destructible)
 .implement($oop.getClass('$event.EventTarget'))
-.cache(function () {
-  return 'singleton';
-})
 .define(/** @lends $event.EventSpace# */{
   /** @ignore */
   init: function () {

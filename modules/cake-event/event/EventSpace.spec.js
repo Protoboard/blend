@@ -11,6 +11,7 @@ describe("$event", function () {
         result;
 
     beforeEach(function () {
+      delete $oop.Class.classByClassId['test.$event.EventSpace.EventSpace'];
       EventSpace = $oop.getClass('test.$event.EventSpace.EventSpace')
       .mix($event.EventSpace);
 
@@ -19,17 +20,13 @@ describe("$event", function () {
 
     describe("create()", function () {
       it("should initialize subscriptions", function () {
-        expect($data.Tree.mixedBy(eventSpace.subscriptions))
-        .toBeTruthy();
+        expect($data.Tree.mixedBy(eventSpace.subscriptions)).toBeTruthy();
         expect(eventSpace.subscriptions.data).toEqual({});
       });
 
       describe("then creating another again", function () {
         it("should return the same instance", function () {
-          // todo Revisit once caching propagation is fixed in $oop.Class
-          $event.EventSpace.__instanceLookup = {};
-          eventSpace = $event.EventSpace.create();
-          expect($event.EventSpace.create()).toBe(eventSpace);
+          expect(EventSpace.create()).toBe(eventSpace);
         });
       });
     });

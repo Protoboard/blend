@@ -137,7 +137,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
         /**
          * Hash function for caching instances.
-         * @todo Rename
+         * @todo Rename?
          * @type {function}
          * @private
          */
@@ -172,7 +172,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     Object.getOwnPropertyNames(batch)
     .forEach(function (memberName) {
-      // todo Throw on conflict
+      // todo Throw on conflict?
       members[memberName] = batch[memberName];
       return members;
     });
@@ -795,6 +795,23 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * @param {function} mapper
+   * @private
+   */
+  _setInstanceMapper: function (mapper) {
+    if (!this.__mapper) {
+      // no mapper has been set yet
+      this.__mapper = mapper;
+    } else if (this.__mapper !== mapper) {
+      // mapper already exists and is different than specified
+      $assert.assert(false, [
+        "Instance mapper collision in '" + this.__classId + "'.",
+        "Can't mix."
+      ].join(" "));
+    }
+  },
+
+  /**
    * Creates a new instance.
    * @returns {$oop.Class}
    */
@@ -996,6 +1013,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // updating missing method names
     this._removeFromMissingMethods(members);
 
+    // updating instance mapper
+    if (Class.__mapper) {
+      this._setInstanceMapper(Class.__mapper);
+    }
+
     return this;
   },
 
@@ -1088,14 +1110,20 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
    * Specifies a mapper function to be used to build a registry.
    * @todo Rename
-   * @todo Propagate to mixins
    * @param {function} mapper
    * @returns {$oop.Class}
    */
   cache: function (mapper) {
     $assert.isFunction(mapper, "Class#cache expects function argument.");
 
-    this.__mapper = mapper;
+    this._setInstanceMapper(mapper);
+
+    // delegating mapper to mixers
+    this.__mixins.upstream.list
+    .forEach(function (Class) {
+      // setting mapper on mixer
+      Class._setInstanceMapper(mapper);
+    });
 
     return this;
   },
