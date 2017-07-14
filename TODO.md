@@ -71,10 +71,6 @@ Entity
 Event
 -----
 
-- Change "original event" terminology
-    - `originalEvent` and `originalEventChain` to `causedBy`/`causeEvent` and 
-    `eventTrail`
-    - `getOriginalEvent...` to `getCause...`
 - `propagationPaths` & `setPropagationPaths`
     - for altering propagation
 - Replace `propagates` flag w/ `bubblingDistance` or `bubblingDepth`
@@ -87,7 +83,7 @@ Event
     - ~~delegation~~
     - ~~one-off subscription~~ (substitute w/ .whenTriggers)
     - ~~"next payload" - makes things untraceable~~
-- ~~Mandatory #originalEvent on giant events~~
+- ~~Mandatory #cause on giant events~~
 
 ### Performance
 
@@ -180,8 +176,8 @@ OOP
 - Per-method memoization
     - How to set method to be memoized?
 - Temporary instance caching: for routines expected to be instantiation-heavy
- on a few instances, but otherwise not good candidates for global caching (eg
- . Paths)
+ on a few instances, but otherwise not good candidates for global caching (eg.
+ Paths)
 - Integrate `$utils.Identifiable`, `$utils.Retrievable`, and `$utils
 .Destroyable` into `Class`
     - so we can store class / instance information on methods
@@ -190,7 +186,8 @@ OOP
 - Turning off contributors at runtime?
     - `inhibitContributor` - would require instance level copies.
 - Performance benchmarks
-- Make `$oop.Base` a Class for compatibility, but make sure overrides are in place
+- Make `$oop.Base` a Class for compatibility, but make sure overrides are in 
+place
 - Swap back contribution vs. delegate terminology
 - On conflicting cache functions
     - Lower class distance wins, or

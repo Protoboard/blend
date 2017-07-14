@@ -22,8 +22,8 @@ describe("$event", function () {
         expect(event.eventName).toBe('event1');
       });
 
-      it("should initialize originalEvent", function () {
-        expect(event.hasOwnProperty('originalEvent')).toBeTruthy();
+      it("should initialize causingEvent", function () {
+        expect(event.hasOwnProperty('causingEvent')).toBeTruthy();
       });
 
       it("should initialize sender", function () {
@@ -54,7 +54,7 @@ describe("$event", function () {
     describe("clone()", function () {
       beforeEach(function () {
         event
-        .setOriginalEvent(Event.create('event2'))
+        .setCausingEvent(Event.create('event2'))
         .setSender({})
         .setTargetPath('foo.bar.baz'.toPath())
         .setBubbles(true)
@@ -69,7 +69,7 @@ describe("$event", function () {
 
       it("should be equivalent", function () {
         expect(result.eventName).toEqual(event.eventName);
-        expect(result.originalEvent).toEqual(event.originalEvent);
+        expect(result.causingEvent).toEqual(event.causingEvent);
         expect(result.sender).toEqual(event.sender);
         expect(result.targetPath).toEqual(event.targetPath);
         expect(result.currentPath).toEqual(event.currentPath);
@@ -81,7 +81,7 @@ describe("$event", function () {
     describe("trigger()", function () {
       var deferred,
           callback1, callback2, callback3,
-          originalEventChain;
+          eventTrail;
 
       beforeEach(function () {
         deferred = $utils.Deferred.create();
@@ -90,7 +90,7 @@ describe("$event", function () {
         callback2 = jasmine.createSpy();
         callback3 = jasmine.createSpy();
 
-        originalEventChain = $event.OriginalEventChain.create().clear();
+        eventTrail = $event.EventTrail.create().clear();
 
         $event.EventSpace.create()
         .destroy()
@@ -111,8 +111,8 @@ describe("$event", function () {
       });
 
       it("should push event to chain", function () {
-        expect(originalEventChain.data.nextLink).toBe(event);
-        expect(originalEventChain.getItemCount()).toBe(1);
+        expect(eventTrail.data.nextLink).toBe(event);
+        expect(eventTrail.getItemCount()).toBe(1);
       });
 
       describe("when callbacks complete", function () {
@@ -121,7 +121,7 @@ describe("$event", function () {
         });
 
         it("should unlink event", function () {
-          expect(originalEventChain.getItemCount()).toBe(0);
+          expect(eventTrail.getItemCount()).toBe(0);
         });
 
         it("should resolve returned promise", function () {
@@ -139,13 +139,13 @@ describe("$event", function () {
         });
       });
 
-      describe("on missing originalEvent", function () {
+      describe("on missing causingEvent", function () {
         var event2;
 
         beforeEach(function () {
           event = Event.create('event1');
           event2 = Event.create('event2');
-          originalEventChain.push(event2);
+          eventTrail.push(event2);
 
           event
           .setSender({})
@@ -153,8 +153,8 @@ describe("$event", function () {
           .trigger();
         });
 
-        it("should add last original event as originalEvent", function () {
-          expect(event.originalEvent).toBe(event2);
+        it("should add last event in EventTrail as causingEvent", function () {
+          expect(event.causingEvent).toBe(event2);
         });
       });
 
@@ -163,7 +163,7 @@ describe("$event", function () {
           expect(function () {
             Event.create('event1')
             .setSender({})
-            .setOriginalEvent(Event.create('foo'))
+            .setCausingEvent(Event.create('foo'))
             .trigger();
           }).toThrow();
         });
@@ -199,7 +199,7 @@ describe("$event", function () {
     describe("broadcast()", function () {
       var deferred,
           callback1, callback2, callback3, callback4,
-          originalEventChain;
+          eventTrail;
 
       beforeEach(function () {
         deferred = $utils.Deferred.create();
@@ -209,7 +209,7 @@ describe("$event", function () {
         callback3 = jasmine.createSpy();
         callback4 = jasmine.createSpy();
 
-        originalEventChain = $event.OriginalEventChain.create().clear();
+        eventTrail = $event.EventTrail.create().clear();
 
         $event.EventSpace.create()
         .destroy()
@@ -219,7 +219,7 @@ describe("$event", function () {
         .on('event1', callback4, 'foo'.toPath(), '4');
 
         event
-        .setOriginalEvent(Event.create('event1'))
+        .setCausingEvent(Event.create('event1'))
         .setSender({})
         .setTargetPath('foo.bar'.toPath());
 
@@ -238,8 +238,8 @@ describe("$event", function () {
       });
 
       it("should push event to chain", function () {
-        expect(originalEventChain.data.nextLink).toBe(event);
-        expect(originalEventChain.getItemCount()).toBe(1);
+        expect(eventTrail.data.nextLink).toBe(event);
+        expect(eventTrail.getItemCount()).toBe(1);
       });
 
       describe("when callbacks complete", function () {
@@ -248,7 +248,7 @@ describe("$event", function () {
         });
 
         it("should unlink event", function () {
-          expect(originalEventChain.getItemCount()).toBe(0);
+          expect(eventTrail.getItemCount()).toBe(0);
         });
 
         it("should resolve returned promise", function () {
@@ -260,20 +260,20 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create('event1')
-            .setOriginalEvent(Event.create('foo'))
+            .setCausingEvent(Event.create('foo'))
             .setTargetPath('foo.bar'.toPath())
             .broadcast();
           }).toThrow();
         });
       });
 
-      describe("on missing originalEvent", function () {
+      describe("on missing causingEvent", function () {
         var event2;
 
         beforeEach(function () {
           event = Event.create('event1');
           event2 = Event.create('event2');
-          originalEventChain.push(event2);
+          eventTrail.push(event2);
 
           event
           .setSender({})
@@ -281,8 +281,8 @@ describe("$event", function () {
           .broadcast();
         });
 
-        it("should add last original event as originalEvent", function () {
-          expect(event.originalEvent).toBe(event2);
+        it("should add last event in EventTrail as causingEvent", function () {
+          expect(event.causingEvent).toBe(event2);
         });
       });
 
@@ -291,7 +291,7 @@ describe("$event", function () {
           expect(function () {
             Event.create('event1')
             .setSender({})
-            .setOriginalEvent(Event.create('foo'))
+            .setCausingEvent(Event.create('foo'))
             .broadcast();
           }).toThrow();
         });
@@ -321,20 +321,20 @@ describe("$event", function () {
       });
     });
 
-    describe("setOriginalEvent()", function () {
-      var originalEvent;
+    describe("setCausingEvent()", function () {
+      var causingEvent;
 
       beforeEach(function () {
-        originalEvent = Event.create('event2');
-        result = event.setOriginalEvent(originalEvent);
+        causingEvent = Event.create('event2');
+        result = event.setCausingEvent(causingEvent);
       });
 
       it("should return self", function () {
         expect(result).toBe(event);
       });
 
-      it("should set originalEvent", function () {
-        expect(event.originalEvent).toBe(originalEvent);
+      it("should set causingEvent", function () {
+        expect(event.causingEvent).toBe(causingEvent);
       });
     });
 

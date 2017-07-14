@@ -6,7 +6,7 @@
       "event/EventSource.js",
       "event/EventSpace.js",
       "event/EventTarget.js",
-      "event/OriginalEventChain.js",
+      "event/EventTrail.js",
       "event/WrapperEvent.js",
       "utils/Wrapper.js"
     ]

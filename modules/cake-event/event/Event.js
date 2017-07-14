@@ -12,13 +12,13 @@
  * corresponding change.
  * @todo What about payload?
  * @class $event.Event
- * @extends $data.Link
  * @extends $utils.Cloneable
+ * @extends $data.Link
  * @implements $event.EventSource
  */
 $event.Event = $oop.getClass('$event.Event')
-.mix($data.Link)
 .mix($utils.Cloneable)
+.mix($data.Link)
 .implement($oop.getClass('$event.EventSource'))
 .define(/** @lends $event.Event# */{
   /**
@@ -33,12 +33,13 @@ $event.Event = $oop.getClass('$event.Event')
     this.eventName = eventName;
 
     /**
-     * Event instance the triggering of which led to the triggering of the
-     * current event. A chain of `originalEvents` usually leads back to user
-     * interaction, or scheduled operations.
-     * @member {$event.Event|Event|*} $event.Event#originalEvent
+     * Event instance the current event is the effect of. In other words, the
+     * triggering of which led to the triggering of the current event. A chain
+     * of causing events usually leads back to user interaction, or scheduled
+     * operations.
+     * @member {$event.Event} $event.Event#causingEvent
      */
-    this.originalEvent = undefined;
+    this.causingEvent = undefined;
 
     /**
      * Identifies the application component (instance) that is responsible for
@@ -194,7 +195,7 @@ $event.Event = $oop.getClass('$event.Event')
   clone: function clone() {
     var cloned = clone.returned;
 
-    cloned.originalEvent = this.originalEvent;
+    cloned.causingEvent = this.causingEvent;
     cloned.sender = this.sender;
     cloned.targetPath = this.targetPath;
     cloned.currentPath = this.currentPath;
@@ -219,13 +220,13 @@ $event.Event = $oop.getClass('$event.Event')
       $assert.assert(false, "Event sender is not defined. Can't trigger.");
     }
 
-    var originalEventChain = $event.OriginalEventChain.create();
+    var eventTrail = $event.EventTrail.create();
 
-    if (this.originalEvent === undefined && !originalEventChain.isEmpty()) {
-      this.originalEvent = originalEventChain.data.previousLink;
+    if (this.causingEvent === undefined && !eventTrail.isEmpty()) {
+      this.causingEvent = eventTrail.data.previousLink;
     }
 
-    originalEventChain.push(this);
+    eventTrail.push(this);
 
     var callbackResults = this.bubbles ?
         this._invokeCallbacksOnParentPaths() :
@@ -247,13 +248,13 @@ $event.Event = $oop.getClass('$event.Event')
       $assert.assert(false, "Event sender is not defined. Can't broadcast.");
     }
 
-    var originalEventChain = $event.OriginalEventChain.create();
+    var eventTrail = $event.EventTrail.create();
 
-    if (this.originalEvent === undefined && !originalEventChain.isEmpty()) {
-      this.originalEvent = originalEventChain.data.previousLink;
+    if (this.causingEvent === undefined && !eventTrail.isEmpty()) {
+      this.causingEvent = eventTrail.data.previousLink;
     }
 
-    originalEventChain.push(this);
+    eventTrail.push(this);
 
     var callbackResults1 = this._invokeCallbacksOnDescendantPaths(),
         callbackResults2 = this.bubbles ?
@@ -264,11 +265,11 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param originalEvent
+   * @param causingEvent
    * @returns {$event.Event}
    */
-  setOriginalEvent: function (originalEvent) {
-    this.originalEvent = originalEvent;
+  setCausingEvent: function (causingEvent) {
+    this.causingEvent = causingEvent;
     return this;
   },
 

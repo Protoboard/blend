@@ -17,7 +17,7 @@
  * @example
  * window.addEventListener('click', function (event) {
  *   var clickWrapper = $event.WrapperEvent.create('clickWrapper').wrap(event);
- *   $event.OriginalEventChain.create().push(clickWrapper);
+ *   $event.EventTrail.create().push(clickWrapper);
  * });
  */
 $event.WrapperEvent = $oop.getClass('$event.WrapperEvent')
