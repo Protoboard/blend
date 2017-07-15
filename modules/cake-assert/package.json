@@ -1,6 +1,6 @@
 {
   "name": "cake-assert",
-  "version": "0.5.0",
+  "version": "0.1.0",
   "description": "Assertion module for Layercake",
   "keywords": [
     "layercake",
