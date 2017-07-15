@@ -10,19 +10,17 @@ module.exports = function (grunt) {
       });
 
   /**
-   * @param {Object} options
-   * @returns {object}
+   * @param {Object} config Holds module-independent configuration.
+   * @returns {Object} Task configuration with modules.
    */
-  function buildConcatConfig(options) {
-    var result = {};
-
-    result.options = options;
+  function buildConcatConfig(config) {
+    config = config || {};
 
     moduleNames.forEach(function (moduleName, i) {
       var assets = manifests[i].assets,
           pkg = packages[i];
 
-      result[moduleName] = {
+      config[moduleName] = {
         src: assets.js.map(function (relativePath) {
           return ['modules', moduleName, relativePath].join('/');
         }),
@@ -48,25 +46,23 @@ module.exports = function (grunt) {
       };
     });
 
-    return result;
+    return config;
   }
 
   /**
-   * @param {Object} options
-   * @returns {object}
+   * @param {Object} config Holds module-independent configuration.
+   * @returns {Object} Task configuration with modules.
    */
-  function buildKarmaConfig(options) {
-    var result = {};
-
-    result.options = options;
+  function buildKarmaConfig(config) {
+    config = config || {};
 
     moduleNames.forEach(function (moduleName) {
-      result[moduleName] = {
+      config[moduleName] = {
         configFile: ['modules', moduleName, 'karma.conf.js'].join('/')
       };
     });
 
-    return result;
+    return config;
   }
 
   /**
@@ -74,10 +70,10 @@ module.exports = function (grunt) {
    * @returns {Object} Task configuration with modules.
    */
   function buildWatchConfig(config) {
-    var result = config;
+    config = config || {};
 
     moduleNames.forEach(function (moduleName) {
-      result[moduleName] = {
+      config[moduleName] = {
         files: [
           'modules/' + moduleName + '/**/*@(.js|.css|.less)',
           '!modules/' + moduleName + '/**/*.spec.js',
@@ -86,7 +82,7 @@ module.exports = function (grunt) {
       };
     });
 
-    return result;
+    return config;
   }
 
   /**
@@ -94,17 +90,17 @@ module.exports = function (grunt) {
    * @returns {Object} Task configuration with modules.
    */
   function buildNotifyConfig(config) {
-    var result = config;
+    config = config || {};
 
     moduleNames.forEach(function (moduleName) {
-      result['build-' + moduleName] = {
+      config['build-' + moduleName] = {
         options: {
           message: 'Module "' + moduleName + '" built'
         }
       };
     });
 
-    return result;
+    return config;
   }
 
   grunt.initConfig({
@@ -114,8 +110,10 @@ module.exports = function (grunt) {
     },
 
     concat: buildConcatConfig({
-      separator: ';',
-      sourceMap: true
+      options: {
+        separator: ';',
+        sourceMap: true
+      }
     }),
 
     jshint: {
@@ -178,7 +176,7 @@ module.exports = function (grunt) {
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['jshint', 'karma']);
   grunt.registerTask('build-quick', ['clean', 'concat', 'notify:build-quick']);
-  grunt.registerTask('build-full', ['clean', 'test', 'concat', 'jsdoc',
+  grunt.registerTask('build-full', ['clean', 'concat', 'test', 'jsdoc',
     'notify:build-full']);
   grunt.registerTask('default', ['build-quick', 'watch']);
 };
