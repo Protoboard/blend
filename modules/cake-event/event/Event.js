@@ -37,6 +37,9 @@ $event.Event = $oop.getClass('$event.Event')
      * triggering of which led to the triggering of the current event. A chain
      * of causing events usually leads back to user interaction, or scheduled
      * operations.
+     * It is possible to set this property using
+     * {@link $event.Event#setCausingEvent}, but most of the time it's set
+     * by the event mechanism once the event is triggered.
      * @member {$event.Event} $event.Event#causingEvent
      */
     this.causingEvent = undefined;
