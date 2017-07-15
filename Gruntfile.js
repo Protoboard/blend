@@ -10,7 +10,7 @@ module.exports = function (grunt) {
       });
 
   /**
-   * @param options
+   * @param {Object} options
    * @returns {object}
    */
   function buildConcatConfig(options) {
@@ -52,7 +52,7 @@ module.exports = function (grunt) {
   }
 
   /**
-   * @param options
+   * @param {Object} options
    * @returns {object}
    */
   function buildKarmaConfig(options) {
@@ -63,6 +63,44 @@ module.exports = function (grunt) {
     moduleNames.forEach(function (moduleName) {
       result[moduleName] = {
         configFile: ['modules', moduleName, 'karma.conf.js'].join('/')
+      };
+    });
+
+    return result;
+  }
+
+  /**
+   * @param {Object} config Holds module-independent configuration.
+   * @returns {Object} Task configuration with modules.
+   */
+  function buildWatchConfig(config) {
+    var result = config;
+
+    moduleNames.forEach(function (moduleName) {
+      result[moduleName] = {
+        files: [
+          'modules/' + moduleName + '/**/*@(.js|.css|.less)',
+          '!modules/' + moduleName + '/**/*.spec.js',
+          'modules/' + moduleName + '/@(package|manifest).json'],
+        tasks: ['concat:' + moduleName, 'notify:build-' + moduleName]
+      };
+    });
+
+    return result;
+  }
+
+  /**
+   * @param {Object} config Holds module-independent configuration.
+   * @returns {Object} Task configuration with modules.
+   */
+  function buildNotifyConfig(config) {
+    var result = config;
+
+    moduleNames.forEach(function (moduleName) {
+      result['build-' + moduleName] = {
+        options: {
+          message: 'Module "' + moduleName + '" built'
+        }
       };
     });
 
@@ -89,16 +127,14 @@ module.exports = function (grunt) {
 
     karma: buildKarmaConfig(),
 
-    watch: {
-      files: [
-        'Gruntfile.js',
-        'modules/**/*@(.js|.css|.less)',
-        '!modules/**/*.spec.js',
-        'modules/*/@(package|manifest).json'],
-      tasks: ['build-quick']
-    },
+    watch: buildWatchConfig({
+      gruntfile: {
+        files: ['Gruntfile.js'],
+        tasks: ['build-quick']
+      }
+    }),
 
-    notify: {
+    notify: buildNotifyConfig({
       options: {
         title: 'LayercakeJS'
       },
@@ -117,7 +153,7 @@ module.exports = function (grunt) {
           message: 'Full build ready'
         }
       }
-    },
+    }),
 
     jsdoc: {
       dist: {
@@ -141,8 +177,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['jshint', 'karma']);
-  grunt.registerTask('build-quick', ['clean', 'concat', 'jsdoc',
-    'notify:build-quick']);
+  grunt.registerTask('build-quick', ['clean', 'concat', 'notify:build-quick']);
   grunt.registerTask('build-full', ['clean', 'test', 'concat', 'jsdoc',
     'notify:build-full']);
   grunt.registerTask('default', ['build-quick', 'watch']);
