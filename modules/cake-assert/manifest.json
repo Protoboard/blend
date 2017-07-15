@@ -2,8 +2,8 @@
   "assets": {
     "js": [
       "globals.js",
-      "assert.js",
-      "assertions.js"
+      "assert/assert.js",
+      "assert/assertions.js"
     ]
   }
 }
