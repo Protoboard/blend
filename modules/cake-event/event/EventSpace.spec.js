@@ -132,13 +132,13 @@ describe("$event", function () {
       });
 
       it("should return self", function () {
-        result = eventSpace.off('event1', callback1, 'foo.bar.baz'.toPath(), 'subscriber1');
+        result = eventSpace.off('event1', 'foo.bar.baz'.toPath(), 'subscriber1');
         expect(result).toBe(eventSpace);
       });
 
       describe("when all arguments are specified", function () {
         it("should remove entries from registry", function () {
-          eventSpace.off('event1', callback1, 'foo.bar.baz'.toPath(), 'subscriber1');
+          eventSpace.off('event1', 'foo.bar.baz'.toPath(), 'subscriber1');
           expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
@@ -174,7 +174,7 @@ describe("$event", function () {
 
       describe("when subscriberId is specified", function () {
         it("should remove entries from registry", function () {
-          eventSpace.off(undefined, undefined, undefined, 'subscriber1');
+          eventSpace.off(undefined, undefined, 'subscriber1');
           expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
@@ -201,7 +201,7 @@ describe("$event", function () {
 
         describe("when eventName is also specified", function () {
           it("should remove entries from registry", function () {
-            eventSpace.off('event1', undefined, undefined, 'subscriber1');
+            eventSpace.off('event1', undefined, 'subscriber1');
             expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {
@@ -265,7 +265,7 @@ describe("$event", function () {
 
         describe("when targetPath is also specified", function () {
           it("should remove entries from registry", function () {
-            eventSpace.off('event1', undefined, 'foo.bar.baz'.toPath());
+            eventSpace.off('event1', 'foo.bar.baz'.toPath());
             expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {

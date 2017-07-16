@@ -212,13 +212,11 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
    * subscribing to `eventName` will be unsubscribed.
    * - When all arguments are omitted, all callbacks will be unsubscribed.
    * @param {string} [eventName] Identifies event type
-   * @param {function} [callback] Function to be invoked when event is
-   *     triggered. *Has no effect*
    * @param {$data.Path} [targetPath] Path on which to listen to event
    * @param {string} [subscriberId] Identifies subscriber
    * @returns {$event.EventSpace}
    */
-  off: function (eventName, callback, targetPath, subscriberId) {
+  off: function (eventName, targetPath, subscriberId) {
     switch (true) {
     case eventName !== undefined && targetPath && subscriberId !== undefined:
       // everything provided, straight up unsubscription of a single callback

@@ -15,8 +15,7 @@ $event.EventTarget = $oop.getClass('$event.EventTarget')
 
   /**
    * @param {string} eventName
-   * @param {function} callback
    * @returns {$event.EventTarget}
    */
-  off: function (eventName, callback) {}
+  off: function (eventName) {}
 });
