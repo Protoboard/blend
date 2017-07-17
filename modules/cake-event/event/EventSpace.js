@@ -202,8 +202,8 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
   },
 
   /**
-   * Unsubscribes the specified callback from the event `eventName` on the path
-   * `targetPath`. Supports multiple unsubscriptions at a time.
+   * Unsubscribes the specified subscriber from the event `eventName` on the
+   * path `targetPath`. Supports multiple unsubscriptions at a time.
    * - When `targetPath` is omitted, all callbacks subscribed to `eventName` by
    * `subscriberId` will be unsubscribed.
    * - When `targetPath` and `eventName` are both omitted, all callbacks
