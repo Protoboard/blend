@@ -220,10 +220,8 @@ describe("$oop", function () {
         });
       });
 
-      // todo Test if wrappers actually work
-      it("should add wrapper methods", function () {
-        expect(typeof Class.bar === 'function').toBeTruthy();
-        expect(Class.bar).not.toBe(batch.bar);
+      it("should add methods to class", function () {
+        expect(Class.bar).toBe(batch.bar);
       });
 
       describe("then implementing relevant interface", function () {
@@ -517,9 +515,8 @@ describe("$oop", function () {
         expect(Class.foo).toBe("FOO");
       });
 
-      it("should add wrapper methods", function () {
-        expect(typeof Class.bar === 'function').toBeTruthy();
-        expect(Class.bar).not.toBe(Trait.__members.bar);
+      it("should add methods to class", function () {
+        expect(Class.bar).toBe(Trait.__members.bar);
       });
 
       describe("then implementing relevant interface", function () {
@@ -579,6 +576,7 @@ describe("$oop", function () {
       describe("then defining members on mixins", function () {
         beforeEach(function () {
           Trait.define({
+            bar: function () {},
             baz: function () {},
             foo: "BAR",
             quux: "QUUX"
@@ -604,9 +602,28 @@ describe("$oop", function () {
           expect(Class.quux).toBe("QUUX");
         });
 
-        it("should add new wrapper methods", function () {
-          expect(typeof Class.baz === 'function').toBeTruthy();
-          expect(Class.baz).not.toBe(Trait.__members.baz);
+        it("should replace methods on class", function () {
+          expect(Class.bar).toBe(Trait.__members.bar);
+        });
+
+        it("should replace methods on class", function () {
+          expect(Class.baz).toBe(Trait.__members.baz);
+        });
+      });
+
+      describe("then defining methods on class", function () {
+        var batch;
+
+        beforeEach(function () {
+          batch = {
+            bar: function () {}
+          };
+          Class.define(batch);
+        });
+
+        it("should add wrapper methods", function () {
+          expect(typeof Class.bar === 'function').toBeTruthy();
+          expect(Class.bar).not.toBe(batch.bar);
         });
       });
 

@@ -1,6 +1,25 @@
 Layercake ToDo
 ==============
 
+| Module                | Done  | Priority  | Complexity    |
+| --------------------- | ----- | --------- | ------------- |
+| cake-event            | N     | 0         |               |
+| cake-entity           | N     | 0         |               |
+| cake-ajax             | N     | 0         |               |
+| cake-widget           | N     | 0         |               |
+| cake-i18n             | N     | 0         |               |
+| cake-basic-widgets    | N     | 0         |               |
+| cake-api              | N     | 0         |               |
+| cake-routing          | N     | 0         |               |
+| cake-template         | N     | 1         |               |
+| cake-table            | N     | 2         |               |
+| cake-devtools         | N     | 2         |               |
+| cake-asset            | N     | 2         |               |
+| cake-assert           | Y     | 0         |               |
+| cake-oop              | Y     | 0         |               |
+| cake-utils            | Y     | 0         |               |
+| cake-data             | Y     | 0         |               |
+ 
 Diagnostic tools
 ----------------
 
@@ -14,6 +33,9 @@ Diagnostic tools
      processed the event so far
 - Event bubbling slowdown
 
+Basic widgets
+-------------
+
 Widget
 ------
 
@@ -26,6 +48,9 @@ API
 
 - Come up with a solution for query params re. endpoint lookups
     - Tagging entities by query params? (in index)
+
+Ajax
+----
 
 Routing
 -------
@@ -68,6 +93,9 @@ Entity
 - Additional `StringSet` based on KeyValueContainer?
     - for detecting changes
 
+Template
+--------
+
 Event
 -----
 
@@ -92,7 +120,6 @@ Event
 
 ### Low Pri
 
-- Set `Evented#eventPath(s)` on first trigger?
 - Revisit EventSource#on/#off method signature
 - Diagnostic add-on
     - Collecting processing history (ClassID + function)
@@ -132,6 +159,9 @@ having it?
 Utils
 -----
 
+- `Identifiable` to be mixed with instance caching?
+    - cached instances to automatically get the `Identifiable` trait?
+
 ### Low Pri
 
 - Classes to be made `Destructible`?
@@ -141,6 +171,7 @@ Utils
 OOP
 ---
 
+- Elevate handlers automatically. (Matching "on...()")
 - **Merge interfaces into mixins (as all abstract)**
     - add $oop.abstract as special function
 - Merging property overrides:
@@ -182,7 +213,6 @@ OOP
 .Destroyable` into `Class`
     - so we can store class / instance information on methods
     - affects event subscriptions in `$event`
-- Compacting methodMatrix on first `create()`
 - Turning off contributors at runtime?
     - `inhibitContributor` - would require instance level copies.
 - Performance benchmarks

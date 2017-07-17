@@ -353,40 +353,45 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * order of contributions. For performance reasons, wrapper methods return
    * the result of the last call. It's the responsibility of each contributed
    * method to ensure access to its individual return value, if needed.
-   * @todo Add original method when there's only 1 contribution.
    * @param {object} members
    * @private
+   * @todo Add tests for wrapper invocation
    */
   _addWrapperMethodsToClass: function (members) {
     var that = this;
 
+    // adding / replacing wrapper method for existing methods
     Object.getOwnPropertyNames(members)
     .filter(function (memberName) {
       return typeof members[memberName] === 'function';
     })
-    .filter(function (methodName) {
-      return !hOP.call(that, methodName);
-    })
     .forEach(function (methodName) {
-      var methodMatrix = that.__methodMatrix;
+      // compacting method array
+      var methodMatrix = that.__methodMatrix,
+          compactedMethods = methodMatrix[methodName]
+          .filter(function (method) {
+            return typeof method === 'function';
+          }),
+          methodCount = compactedMethods.length;
 
-      // todo Test
-      that[methodName] = function () {
-        var methods = methodMatrix[methodName],
-            methodCount = methods.length,
-            i, method, result;
+      if (methodCount === 1) {
+        // there is only 1 function so far for this method
+        that[methodName] = compactedMethods[0];
+      } else if (methodCount > 1) {
+        // there are more than 1 functions for this method in the matrix
+        that[methodName] = function wrapper() {
+          var i, method, result;
 
-        // calling function in order of contributions
-        for (i = 0; i < methodCount; i++) {
-          method = methods[i];
-          if (method) {
+          // calling function in order of contributions
+          for (i = 0; i < methodCount; i++) {
+            method = compactedMethods[i];
             method.returned = result;
             result = method.apply(this, arguments);
           }
-        }
 
-        return result;
-      };
+          return result;
+        };
+      }
     });
   },
 
