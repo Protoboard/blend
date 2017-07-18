@@ -24,8 +24,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
    * @ignore
    */
   init: function (data, comparer) {
-    $assert
-    .isFunctionOptional(comparer, "Invalid comparer function");
+    $assert.isFunctionOptional(comparer, "Invalid comparer function");
 
     /**
      * @type {$data.Comparer}
