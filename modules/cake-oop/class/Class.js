@@ -314,7 +314,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           Object.getPrototypeOf(propertyValue) !== Class
       ) {
         $assert.assert(false, [
-          "Instance not allowed as static property value for '" + that.__classId + "." + propertyName + "'.",
+          "Instance not allowed as static property value for '" +
+          that.__classId + "." + propertyName + "'.",
           "Can't build."
         ].join(" "));
       }
@@ -370,7 +371,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       var methodMatrix = that.__methodMatrix,
           compactedMethods = methodMatrix[methodName]
           .filter(function (method) {
-            return typeof method === 'function';
+            return method !== undefined;
           }),
           methodCount = compactedMethods.length;
 
@@ -1191,7 +1192,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     for (i = 0; i < argumentCount; i++) {
       methodName = arguments[i];
       if (hOP.call(this, methodName)) {
-        $assert.assert(false, "Method '" + this.__classId + "#" + methodName + "' already elevated.");
+        $assert.assert(false, "Method '" + this.__classId + "#" + methodName +
+            "' already elevated.");
       } else {
         method = this[methodName];
         if (typeof method !== 'function') {
