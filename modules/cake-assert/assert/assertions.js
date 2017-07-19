@@ -1,6 +1,14 @@
 "use strict";
 
 /**
+ * @param {string} [message]
+ * @returns {$assert}
+ */
+$assert.fail = function (message) {
+  return $assert.assert(false, message);
+};
+
+/**
  * @function $assert#isDefined
  * @param {*} expr
  * @param {string} [message]
@@ -18,6 +26,26 @@ $assert.isDefined = function (expr, message) {
  */
 $assert.isUndefined = function (expr, message) {
   return $assert.assert(expr === undefined, message);
+};
+
+/**
+ * @function $assert#isTruthy
+ * @param {*} expr
+ * @param {string} [message]
+ * @returns {$assert}
+ */
+$assert.isTruthy = function (expr, message) {
+  return $assert.assert(!!expr, message);
+};
+
+/**
+ * @function $assert#isFalsy
+ * @param {*} expr
+ * @param {string} [message]
+ * @returns {$assert}
+ */
+$assert.isFalsy = function (expr, message) {
+  return $assert.assert(!expr, message);
 };
 
 /**

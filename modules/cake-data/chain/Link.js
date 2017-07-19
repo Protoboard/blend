@@ -41,10 +41,10 @@ $data.Link = $oop.getClass('$data.Link')
    */
   addAfter: function (link) {
     if (!link.chain) {
-      $assert.assert(false, "Remote link must belong to a Chain");
+      $assert.fail("Remote link must belong to a Chain");
     }
     if (this === link) {
-      $assert.assert(false, "Attempting to link to self");
+      $assert.fail("Attempting to link to self");
     }
 
     if (this.chain) {
@@ -77,10 +77,10 @@ $data.Link = $oop.getClass('$data.Link')
    */
   addBefore: function (link) {
     if (!link.chain) {
-      $assert.assert(false, "Remote link must belong to a Chain");
+      $assert.fail("Remote link must belong to a Chain");
     }
     if (this === link) {
-      $assert.assert(false, "Attempting to link to self");
+      $assert.fail("Attempting to link to self");
     }
 
     if (this.chain) {

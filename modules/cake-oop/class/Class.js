@@ -313,7 +313,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       if (Class.isPrototypeOf(propertyValue) &&
           Object.getPrototypeOf(propertyValue) !== Class
       ) {
-        $assert.assert(false, [
+        $assert.fail([
           "Instance not allowed as static property value for '" +
           that.__classId + "." + propertyName + "'.",
           "Can't build."
@@ -810,7 +810,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       this.__mapper = mapper;
     } else if (this.__mapper !== mapper) {
       // mapper already exists and is different than specified
-      $assert.assert(false, [
+      $assert.fail([
         "Instance mapper collision in '" + this.__classId + "'.",
         "Can't mix."
       ].join(" "));
@@ -855,7 +855,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // ... methods match interfaces
     var missingMethodNames = this.__missingMethodNames.list;
     if (missingMethodNames.length) {
-      $assert.assert(false, [
+      $assert.fail([
         "Class '" + that.__classId + "' doesn't implement method(s): " +
         missingMethodNames
         .map(function (methodName) {
@@ -869,7 +869,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var expected = that.__expected.downstream.list;
     if (expected.length) {
       // there are unmet expectations - can't instantiate
-      $assert.assert(false, [
+      $assert.fail([
         "Class '" + that.__classId + "' doesn't satisfy expectation(s): " +
         expected
         .map(function (Class) {
@@ -1192,12 +1192,12 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     for (i = 0; i < argumentCount; i++) {
       methodName = arguments[i];
       if (hOP.call(this, methodName)) {
-        $assert.assert(false, "Method '" + this.__classId + "#" + methodName +
+        $assert.fail("Method '" + this.__classId + "#" + methodName +
             "' already elevated.");
       } else {
         method = this[methodName];
         if (typeof method !== 'function') {
-          $assert.assert(false, [
+          $assert.fail([
             "Method '" + this.__classId + '#' + methodName + "' not a function.",
             "Can't elevate."
           ].join(" "));

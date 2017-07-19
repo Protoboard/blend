@@ -342,8 +342,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     } else {
       // node exists and is not an object
       // or specified node is primitive
-      $assert.assert(false,
-          "Attempting to append (to) primitive node.");
+      $assert.fail("Attempting to append (to) primitive node.");
     }
 
     return this;

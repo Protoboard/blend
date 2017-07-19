@@ -41,7 +41,7 @@ $data.PairList = $oop.getClass('$data.PairList')
    * @returns {$data.PairList}
    */
   deleteItem: function (key, value) {
-    $assert.assert(false, [
+    $assert.fail([
       this.__classId + "does not support item deletion."
     ].join(" "));
     return this;

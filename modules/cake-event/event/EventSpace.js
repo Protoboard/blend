@@ -235,7 +235,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       break;
 
     default:
-      $assert.assert(false, "Invalid event unsubscription parameters");
+      $assert.fail("Invalid event unsubscription parameters");
       break;
     }
 

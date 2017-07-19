@@ -7,6 +7,20 @@ describe("$assert", function () {
     spyOn($assert, 'assert').and.callThrough();
   });
 
+  describe("fail()", function () {
+    it("should throw", function () {
+      expect(function () {
+        $assert.fail();
+      }).toThrow();
+    });
+
+    it("should pass message to assert", function () {
+      $assert.assert.and.callFake(function () {});
+      $assert.fail("bar");
+      expect($assert.assert).toHaveBeenCalledWith(false, "bar");
+    });
+  });
+
   describe("isDefined()", function () {
     describe("when passing null or undefined", function () {
       it("should not throw", function () {
@@ -50,6 +64,114 @@ describe("$assert", function () {
 
     it("should pass message to assert", function () {
       $assert.isUndefined(undefined, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+  });
+
+  describe("isTruthy()", function () {
+    describe("when passing falsy", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isTruthy(0);
+        }).toThrow();
+        expect(function () {
+          $assert.isTruthy("");
+        }).toThrow();
+        expect(function () {
+          $assert.isTruthy(null);
+        }).toThrow();
+        expect(function () {
+          $assert.isTruthy(undefined);
+        }).toThrow();
+        expect(function () {
+          $assert.isTruthy(false);
+        }).toThrow();
+        expect(function () {
+          $assert.isTruthy(NaN);
+        }).toThrow();
+      });
+    });
+
+    describe("when passing truthy", function () {
+      it("should not throw", function () {
+        expect(function () {
+          $assert.isTruthy(1);
+        }).not.toThrow();
+        expect(function () {
+          $assert.isTruthy("a");
+        }).not.toThrow();
+        expect(function () {
+          $assert.isTruthy([]);
+        }).not.toThrow();
+        expect(function () {
+          $assert.isTruthy({});
+        }).not.toThrow();
+        expect(function () {
+          $assert.isTruthy(true);
+        }).not.toThrow();
+      });
+    });
+
+    it("should return self", function () {
+      expect($assert.isTruthy(true, "bar")).toBe($assert);
+    });
+
+    it("should pass message to assert", function () {
+      $assert.isTruthy(true, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+  });
+
+  describe("isFalsy()", function () {
+    describe("when passing falsy", function () {
+      it("should not throw", function () {
+        expect(function () {
+          $assert.isFalsy(0);
+        }).not.toThrow();
+        expect(function () {
+          $assert.isFalsy("");
+        }).not.toThrow();
+        expect(function () {
+          $assert.isFalsy(null);
+        }).not.toThrow();
+        expect(function () {
+          $assert.isFalsy(undefined);
+        }).not.toThrow();
+        expect(function () {
+          $assert.isFalsy(false);
+        }).not.toThrow();
+        expect(function () {
+          $assert.isFalsy(NaN);
+        }).not.toThrow();
+      });
+    });
+
+    describe("when passing truthy", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isFalsy(1);
+        }).toThrow();
+        expect(function () {
+          $assert.isFalsy("a");
+        }).toThrow();
+        expect(function () {
+          $assert.isFalsy([]);
+        }).toThrow();
+        expect(function () {
+          $assert.isFalsy({});
+        }).toThrow();
+        expect(function () {
+          $assert.isFalsy(true);
+        }).toThrow();
+      });
+    });
+
+    it("should return self", function () {
+      expect($assert.isFalsy(false, "bar")).toBe($assert);
+    });
+
+    it("should pass message to assert", function () {
+      $assert.isFalsy(false, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");
     });
   });

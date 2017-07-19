@@ -220,7 +220,7 @@ $event.Event = $oop.getClass('$event.Event')
    */
   trigger: function () {
     if (this.sender === undefined) {
-      $assert.assert(false, "Event sender is not defined. Can't trigger.");
+      $assert.fail("Event sender is not defined. Can't trigger.");
     }
 
     var eventTrail = $event.EventTrail.create();
@@ -248,7 +248,7 @@ $event.Event = $oop.getClass('$event.Event')
    */
   broadcast: function () {
     if (this.sender === undefined) {
-      $assert.assert(false, "Event sender is not defined. Can't broadcast.");
+      $assert.fail("Event sender is not defined. Can't broadcast.");
     }
 
     var eventTrail = $event.EventTrail.create();
