@@ -57,25 +57,26 @@ $oop.copyProperties = function (target, members, propertyDescriptor) {
   }
 };
 
-/**
- * @function $oop.createObject
- * @param {object} base
- * @param {object} members
- * @param {object} [propertyDescriptor]
- * @returns {Object}
- * @ignore
- */
-$oop.createObject = function (base, members, propertyDescriptor) {
-  var result = Object.create(base || Object.prototype);
-  $oop.copyProperties(result, members, propertyDescriptor);
-  return result;
-};
+$oop.copyProperties($oop, /** @lends $oop */{
+  /**
+   * @param {object} base
+   * @param {object} members
+   * @param {object} [propertyDescriptor]
+   * @returns {Object}
+   * @ignore
+   */
+  createObject: function (base, members, propertyDescriptor) {
+    var result = Object.create(base || Object.prototype);
+    $oop.copyProperties(result, members, propertyDescriptor);
+    return result;
+  },
 
-/**
- * @function $oop.getClass
- * @param {string} classId
- * @returns {$oop.Class}
- */
-$oop.getClass = function (classId) {
-  return $oop.Class.getClass(classId);
-};
+  /**
+   * @param {string} classId
+   * @returns {$oop.Class}
+   */
+  getClass: function (classId) {
+    return $oop.Class.getClass(classId);
+  }
+});
+

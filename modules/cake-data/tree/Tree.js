@@ -512,7 +512,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert */{
+$oop.copyProperties($assert, /** @lends $assert# */{
   /**
    * @param {$data.Tree} expr
    * @param {string} [message]

@@ -1211,23 +1211,25 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   }
 });
 
-/**
- * @param {$oop.Class} expr
- * @param {string} [message]
- * @returns {$assert}
- */
-$assert.isClass = function (expr, message) {
-  return $assert.assert(
-      $oop.Class.isPrototypeOf(expr), message);
-};
+$oop.copyProperties($assert, /** @lends $assert# */{
+  /**
+   * @param {$oop.Class} expr
+   * @param {string} [message]
+   * @returns {$assert}
+   */
+  isClass: function (expr, message) {
+    return $assert.assert(
+        $oop.Class.isPrototypeOf(expr), message);
+  },
 
-/**
- * @param {$oop.Class} [expr]
- * @param {string} [message]
- * @returns {$assert}
- */
-$assert.isClassOptional = function (expr, message) {
-  return $assert.assert(
-      expr === undefined ||
-      $oop.Class.isPrototypeOf(expr), message);
-};
+  /**
+   * @param {$oop.Class} [expr]
+   * @param {string} [message]
+   * @returns {$assert}
+   */
+  isClassOptional: function (expr, message) {
+    return $assert.assert(
+        expr === undefined ||
+        $oop.Class.isPrototypeOf(expr), message);
+  }
+});

@@ -42,11 +42,12 @@ $oop.copyProperties($oop.Class, /** @lends $oop.Class */{
   }
 });
 
-/**
- * @function $oop.mixClass
- * @param {...$oop.Class} Mixin
- * @returns {$oop.Class}
- */
-$oop.mixClass = function (Mixin) {
-  return $oop.Class.mixClass.apply(null, arguments);
-};
+$oop.copyProperties($oop, /** @lends $oop */{
+  /**
+   * @param {...$oop.Class} Mixin
+   * @returns {$oop.Class}
+   */
+  mixClass: function (Mixin) {
+    return $oop.Class.mixClass.apply(null, arguments);
+  }
+});
