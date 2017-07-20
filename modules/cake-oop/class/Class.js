@@ -174,7 +174,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     .forEach(function (memberName) {
       // todo Throw on conflict?
       members[memberName] = batch[memberName];
-      return members;
     });
   },
 
@@ -188,8 +187,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     Object.getOwnPropertyNames(batch)
     .forEach(function (memberName) {
+      // todo Throw on conflict?
       delegates[memberName] = batch[memberName];
-      return delegates;
     });
   },
 
