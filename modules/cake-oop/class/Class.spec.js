@@ -1307,15 +1307,17 @@ describe("$oop", function () {
         });
       });
 
-      describe("when method name is taken", function () {
+      describe("when method is already elevated", function () {
+        var elevated;
+
         beforeEach(function () {
-          instance.foo = "FOO";
+          instance.elevateMethods('foo');
+          elevated = instance.foo;
         });
 
-        it("should throw", function () {
-          expect(function () {
-            instance.elevateMethods('foo');
-          }).toThrow();
+        it("should replace elevated method", function () {
+          instance.elevateMethods('foo');
+          expect(instance.foo).not.toBe(elevated);
         });
       });
 

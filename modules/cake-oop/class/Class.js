@@ -1185,24 +1185,21 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @returns {$oop.Class}
    */
   elevateMethods: function (methodName) {
-    var argumentCount = arguments.length,
+    var classId = this.__classId,
+        Class = $oop.getClass(classId),
+        argumentCount = arguments.length,
         i, method;
 
     for (i = 0; i < argumentCount; i++) {
       methodName = arguments[i];
-      if (hOP.call(this, methodName)) {
-        $assert.fail("Method '" + this.__classId + "#" + methodName +
-            "' already elevated.");
+      method = Class[methodName];
+      if (typeof method !== 'function') {
+        $assert.fail([
+          "Method '" + classId + '#' + methodName + "' not a function.",
+          "Can't elevate."
+        ].join(" "));
       } else {
-        method = this[methodName];
-        if (typeof method !== 'function') {
-          $assert.fail([
-            "Method '" + this.__classId + '#' + methodName + "' not a function.",
-            "Can't elevate."
-          ].join(" "));
-        } else {
-          this[methodName] = this[methodName].bind(this);
-        }
+        this[methodName] = method.bind(this);
       }
     }
 
