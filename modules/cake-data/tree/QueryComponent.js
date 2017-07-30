@@ -2,7 +2,9 @@
 
 /**
  * @function $data.QueryComponent.create
- * @param {string} [queryComponentStr] String representation of query component
+ * @param {Object} [properties]
+ * @param {string} [properties.queryComponentStr] String representation of query
+ * component
  * @returns {$data.QueryComponent}
  */
 
@@ -24,8 +26,8 @@
  * @implements $data.Matchable
  * @todo Add return marker.
  * @example
- * $data.QueryComponent.create("foo:bar") // matches a specific pair
- * $data.QueryComponent.create("*:bar") // matches pair where value is "bar"
+ * $data.QueryComponent.create({queryComponentStr: "foo:bar"}) // matches a specific pair
+ * $data.QueryComponent.create({queryComponentStr: "*:bar"}) // matches pair where value is "bar"
  */
 $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 .mix($utils.Cloneable)
@@ -33,10 +35,14 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.QueryComponent# */{
   /**
-   * @param {string} [queryComponentStr]
    * @ignore
+   * @todo Move to spread, add rest of spread properties
    */
-  init: function (queryComponentStr) {
+  init: function () {
+    /**
+     * @member {string} $data.QueryComponent#queryComponentStr
+     */
+
     /**
      * Whether to skip matching path components (keys) until next path
      * component is matched by the next `QueryComponent` in a
@@ -100,8 +106,8 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
      */
     this.valueOptions = undefined;
 
-    if (queryComponentStr !== undefined) {
-      this._parseQueryComponentString(queryComponentStr);
+    if (this.queryComponentStr !== undefined) {
+      this._parseQueryComponentString(this.queryComponentStr);
     }
   },
 
@@ -225,8 +231,8 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    * @param {*} [value] Value to be matched
    * @returns {boolean}
    * @example
-   * $data.QueryComponent.create('*:foo').matches('bar', 'foo') // true
-   * $data.QueryComponent.create('*:!foo').matches('bar', 'foo') // false
+   * $data.QueryComponent.create({queryComponentStr: '*:foo'}).matches('bar', 'foo') // true
+   * $data.QueryComponent.create({queryComponentStr: '*:!foo'}).matches('bar', 'foo') // false
    */
   matches: function (key, value) {
     // a) either matches any key, or,
@@ -332,6 +338,6 @@ $oop.copyProperties(String.prototype, /** @lends external:String# */{
    * @returns {$data.QueryComponent}
    */
   toQueryComponent: function () {
-    return $data.QueryComponent.create(this);
+    return $data.QueryComponent.create({queryComponentStr: this});
   }
 });

@@ -2,7 +2,8 @@
 
 /**
  * @function $data.DataContainer.create
- * @param {object|Array} [data]
+ * @param {Object} [properties]
+ * @param {*} [properties.data]
  * @returns {$data.DataContainer}
  */
 
@@ -20,15 +21,8 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
 .implement($oop.getClass('$data.Clearable'))
 .define(/** @lends $data.DataContainer# */{
   /**
-   * @param {*} [data]
-   * @ignore
+   * @member {*} $data.DataContainer#data
    */
-  init: function (data) {
-    /**
-     * @member {*} $data.DataContainer#data
-     */
-    this.data = data;
-  },
 
   /**
    * @inheritDoc

@@ -2,8 +2,9 @@
 
 /**
  * @function $data.Query.create
- * @param {string[]} components Series of patterns to match corresponding path
- * components.
+ * @param {Object} properties
+ * @param {string[]} properties.components Series of patterns to match
+ * corresponding path components.
  * @returns {$data.Query}
  */
 
@@ -26,11 +27,10 @@ $data.Query = $oop.getClass('$data.Query')
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.Query# */{
   /**
-   * @param {QueryComponent[]|string[]} components
    * @ignore
    */
-  init: function (components) {
-    $assert.isArray(components, "Invalid component list");
+  init: function () {
+    $assert.isArray(this.components, "Invalid component list");
 
     var QueryComponent = $data.QueryComponent;
 
@@ -38,11 +38,11 @@ $data.Query = $oop.getClass('$data.Query')
      * Query components.
      * @member {QueryComponent[]} $data.Query#components
      */
-    this.components = components
+    this.components = this.components
     .map(function (component) {
       return QueryComponent.mixedBy(component) ?
           component :
-          QueryComponent.create(component);
+          QueryComponent.create({queryComponentStr: component});
     });
   },
 
@@ -132,7 +132,7 @@ $data.Query = $oop.getClass('$data.Query')
    */
   fromString: function (queryStr) {
     var components = $utils.safeSplit(queryStr, $data.PATH_COMPONENT_SEPARATOR);
-    return $data.Query.create(components);
+    return $data.Query.create({components: components});
   }
 });
 
@@ -173,6 +173,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.Query}
    */
   toQuery: function () {
-    return $data.Query.create(this);
+    return $data.Query.create({components: this});
   }
 });

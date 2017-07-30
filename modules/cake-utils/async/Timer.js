@@ -2,7 +2,8 @@
 
 /**
  * @function $utils.Timer.create
- * @param {number} timerId
+ * @param {Object} properties]
+ * @param {number} properties.timerId
  * @returns {$utils.Timer}
  */
 
@@ -12,21 +13,17 @@
 $utils.Timer = $oop.getClass('$utils.Timer')
 .define(/** @lends $utils.Timer# */{
   /**
-   * @param {number} timerId
-   * @ignore
+   * ID associated with timer.
+   * @member {number} $utils.Timer#timerId
    */
-  init: function (timerId) {
-    $assert.isNumber(timerId, "Invalid timer ID");
+
+  /** @ignore */
+  init: function () {
+    $assert.isNumber(this.timerId, "Invalid timer ID");
 
     this.elevateMethods(
         'onTimerPromiseResolve',
         'onTimerPromiseReject');
-
-    /**
-     * ID associated with timer.
-     * @member {number} $utils.Timer#timerId
-     */
-    this.timerId = timerId;
 
     var timerDeferred = $utils.Deferred.create(),
         timerPromise = timerDeferred.promise;

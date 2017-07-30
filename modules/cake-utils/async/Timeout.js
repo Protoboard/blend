@@ -2,7 +2,8 @@
 
 /**
  * @function $utils.Timeout.create
- * @param {number} timerId
+ * @param {Object} properties
+ * @param {number} properties.timerId
  * @returns {$utils.Timeout}
  */
 
@@ -32,6 +33,6 @@ $oop.copyProperties(Number.prototype, /** @lends external:Number# */{
    * @returns {$utils.Timeout}
    */
   toTimeout: function () {
-    return $utils.Timeout.create(this.valueOf());
+    return $utils.Timeout.create({timerId: this.valueOf()});
   }
 });

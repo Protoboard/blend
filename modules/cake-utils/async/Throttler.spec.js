@@ -7,7 +7,7 @@ describe("$utils", function () {
     var throttler;
 
     beforeEach(function () {
-      throttler = $utils.Throttler.create(50);
+      throttler = $utils.Throttler.create({_throttleInterval: 50});
     });
 
     describe("create()", function () {

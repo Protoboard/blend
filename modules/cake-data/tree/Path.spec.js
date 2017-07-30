@@ -6,7 +6,7 @@ describe("$assert", function () {
   var path;
 
   beforeEach(function () {
-    path = $data.Path.create(['foo', 'bar']);
+    path = $data.Path.create({components: ['foo', 'bar']});
     spyOn($assert, 'assert').and.callThrough();
   });
 
@@ -51,7 +51,7 @@ describe("$data", function () {
       Path = $oop.getClass('test.$data.Path.Path')
       .mix($data.Path);
 
-      path = Path.create(['foo', 'bar', 'baz']);
+      path = Path.create({components: ['foo', 'bar', 'baz']});
     });
 
     describe("create()", function () {
@@ -65,7 +65,7 @@ describe("$data", function () {
             Path.create();
           }).toThrow();
           expect(function () {
-            Path.create('foo');
+            Path.create({components: 'foo'});
           }).toThrow();
         });
       });
@@ -91,14 +91,14 @@ describe("$data", function () {
 
       describe("for equivalent Path", function () {
         it("should return true", function () {
-          path2 = Path.create(['foo', 'bar', 'baz']);
+          path2 = Path.create({components: ['foo', 'bar', 'baz']});
           expect(path.equals(path2)).toBeTruthy();
         });
       });
 
       describe("for non-equivalent Path", function () {
         it("should return false", function () {
-          path2 = Path.create(['baz', 'bar', 'foo']);
+          path2 = Path.create({components: ['baz', 'bar', 'foo']});
           expect(path.equals(path2)).toBeFalsy();
         });
       });
@@ -109,14 +109,14 @@ describe("$data", function () {
 
       describe("for containing Path", function () {
         it("should return true", function () {
-          path2 = Path.create(['foo', 'bar', 'baz', 'quux']);
+          path2 = Path.create({components: ['foo', 'bar', 'baz', 'quux']});
           expect(path.lessThan(path2)).toBeTruthy();
         });
       });
 
       describe("for non-containing Path", function () {
         it("should return true", function () {
-          path2 = Path.create(['baz', 'quux']);
+          path2 = Path.create({components: ['baz', 'quux']});
           expect(path.lessThan(path2)).toBeFalsy();
         });
       });
@@ -127,14 +127,14 @@ describe("$data", function () {
 
       describe("for contained Path", function () {
         it("should return true", function () {
-          path2 = Path.create(['foo', 'bar']);
+          path2 = Path.create({components: ['foo', 'bar']});
           expect(path.greaterThan(path2)).toBeTruthy();
         });
       });
 
       describe("for non-contained Path", function () {
         it("should return true", function () {
-          path2 = Path.create(['baz', 'quux']);
+          path2 = Path.create({components: ['baz', 'quux']});
           expect(path.greaterThan(path2)).toBeFalsy();
         });
       });
@@ -200,7 +200,7 @@ describe("$data", function () {
       var path2;
 
       beforeEach(function () {
-        path2 = Path.create(['quux']);
+        path2 = Path.create({components: ['quux']});
         result = path.concat(path2);
       });
 
@@ -224,7 +224,7 @@ describe("$data", function () {
 
     describe("toString()", function () {
       beforeEach(function () {
-        path = Path.create(['foo.bar', 'baz\\quux']);
+        path = Path.create({components: ['foo.bar', 'baz\\quux']});
         result = path.toString();
       });
 

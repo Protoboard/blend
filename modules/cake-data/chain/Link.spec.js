@@ -104,7 +104,7 @@ describe("$data", function () {
         var link3;
 
         beforeEach(function () {
-          link3 = $data.MasterLink.create($data.Chain.create());
+          link3 = $data.MasterLink.create({chain: $data.Chain.create()});
           spyOn(link, 'unlink');
           link.addAfter(link3);
         });
@@ -190,7 +190,7 @@ describe("$data", function () {
         var link3;
 
         beforeEach(function () {
-          link3 = $data.MasterLink.create($data.Chain.create());
+          link3 = $data.MasterLink.create({chain: $data.Chain.create()});
           spyOn(link, 'unlink');
           link.addBefore(link3);
         });

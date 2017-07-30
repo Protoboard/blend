@@ -47,13 +47,17 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     // `deleteNode` does not clean up the registry nicely, but is
     // functionally sufficient and also much faster than `deletePath`
     subscriptions
-    .deleteNode($data.Path.create([
-      'callbacks', 'bySubscription', eventName, targetPathPc, subscriberId]))
-    .deleteNode($data.Path.create([
-      'callbacks', 'bySubscriber', subscriberId, eventName, targetPathPc]));
+    .deleteNode($data.Path.create({
+      components: [
+        'callbacks', 'bySubscription', eventName, targetPathPc, subscriberId]
+    }))
+    .deleteNode($data.Path.create({
+      components: [
+        'callbacks', 'bySubscriber', subscriberId, eventName, targetPathPc]
+    }));
 
     subscriptions
-    .getNodeWrapped($data.Path.create(['paths', eventName]))
+    .getNodeWrapped($data.Path.create({components: ['paths', eventName]}))
     .toOrderedStringList()
     .deleteItem(targetPathPc);
   },
@@ -67,17 +71,21 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     var subscriptions = this.subscriptions,
         eventNameQc = eventName !== undefined ?
             $data.escapeQueryComponent(eventName) : '*',
-        callbacksQuery = $data.Query.create([
-          'callbacks', 'bySubscriber', subscriberId, eventNameQc, '*']),
+        callbacksQuery = $data.Query.create({
+          components: [
+            'callbacks', 'bySubscriber', subscriberId, eventNameQc, '*']
+        }),
         callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 
     // removing callbacks from 'bySubscriber' branch
     if (eventName !== undefined) {
-      subscriptions.deletePath($data.Path.create([
-        'callbacks', 'bySubscriber', subscriberId, eventName]));
+      subscriptions.deletePath($data.Path.create({
+        components: ['callbacks', 'bySubscriber', subscriberId, eventName]
+      }));
     } else {
-      subscriptions.deleteNode($data.Path.create([
-        'callbacks', 'bySubscriber', subscriberId]));
+      subscriptions.deleteNode($data.Path.create({
+        components: ['callbacks', 'bySubscriber', subscriberId]
+      }));
     }
 
     // removing callbacks from 'bySubscription' branch (one-by-one)
@@ -86,8 +94,10 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       var components = callbackPath.components,
           eventName = components[3],
           targetPathStr = components[4];
-      return $data.Path.create([
-        'callbacks', 'bySubscription', eventName, targetPathStr, subscriberId]);
+      return $data.Path.create({
+        components: [
+          'callbacks', 'bySubscription', eventName, targetPathStr, subscriberId]
+      });
     })
     .passEachValueTo(subscriptions.deletePath, subscriptions);
 
@@ -98,7 +108,9 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
           eventName = components[3],
           targetPathStr = components[4];
 
-      subscriptions.getNodeWrapped($data.Path.create(['paths', eventName]))
+      subscriptions.getNodeWrapped($data.Path.create({
+        components: ['paths', eventName]
+      }))
       .toOrderedStringList()
       .deleteItem(targetPathStr);
     });
@@ -114,25 +126,31 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
         targetPathPc = targetPath && targetPath.toString(),
         targetPathQc = targetPath ?
             $data.escapeQueryComponent(targetPathPc) : '*',
-        callbacksQuery = $data.Query.create([
-          'callbacks', 'bySubscription', eventName, targetPathQc, '*']),
+        callbacksQuery = $data.Query.create({
+          components: [
+            'callbacks', 'bySubscription', eventName, targetPathQc, '*']
+        }),
         callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 
     // removing callbacks from 'bySubscription' branch &
     // removing paths from 'paths' branch
     if (targetPath) {
       subscriptions
-      .deleteNode($data.Path.create([
-        'callbacks', 'bySubscription', eventName, targetPathPc]));
+      .deleteNode($data.Path.create({
+        components: [
+          'callbacks', 'bySubscription', eventName, targetPathPc]
+      }));
 
       subscriptions
-      .getNodeWrapped($data.Path.create(['paths', eventName]))
+      .getNodeWrapped($data.Path.create({components: ['paths', eventName]}))
       .toOrderedStringList()
       .deleteItem(targetPathPc);
     } else {
       subscriptions
-      .deleteNode($data.Path.create(['callbacks', 'bySubscription', eventName]))
-      .deleteNode($data.Path.create(['paths', eventName]));
+      .deleteNode($data.Path.create({
+        components: ['callbacks', 'bySubscription', eventName]
+      }))
+      .deleteNode($data.Path.create({components: ['paths', eventName]}));
     }
 
     // removing callbacks from 'bySubscriber' branch (one-by-one)
@@ -141,8 +159,10 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       var components = callbackPath.components,
           targetPathStr = components[3],
           subscriberId = components[4];
-      return $data.Path.create([
-        'callbacks', 'bySubscriber', subscriberId, eventName, targetPathStr]);
+      return $data.Path.create({
+        components: [
+          'callbacks', 'bySubscriber', subscriberId, eventName, targetPathStr]
+      });
     })
     .passEachValueTo(subscriptions.deleteNode, subscriptions);
   },
@@ -170,8 +190,10 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
         // intended to be used for looking up callbacks when triggering /
         // broadcasting event
-        callbackByTargetPath = $data.Path.create(['callbacks', 'bySubscription',
-          eventName, targetPathStr, subscriberId]),
+        callbackByTargetPath = $data.Path.create({
+          components: ['callbacks', 'bySubscription', eventName, targetPathStr,
+            subscriberId]
+        }),
 
         // intended to be used for looking up callbacks for a specific
         // subscriber (and then unsubscribing, etc.)
@@ -181,9 +203,11 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
         pathsPath;
 
     if (!subscriptions.hasPath(callbackByTargetPath)) {
-      callbackBySubscriptionPath = $data.Path.create([
-        'callbacks', 'bySubscriber', subscriberId, eventName, targetPathStr]);
-      pathsPath = $data.Path.create(['paths', eventName]);
+      callbackBySubscriptionPath = $data.Path.create({
+        components: [
+          'callbacks', 'bySubscriber', subscriberId, eventName, targetPathStr]
+      });
+      pathsPath = $data.Path.create({components: ['paths', eventName]});
 
       // callback is not registered yet
       // adding callback

@@ -26,7 +26,7 @@ describe("$data", function () {
         }
       });
 
-      scalarContainer = SetContainer.create(data);
+      scalarContainer = SetContainer.create({data: data});
     });
 
     describe("clone()", function () {

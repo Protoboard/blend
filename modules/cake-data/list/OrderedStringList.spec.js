@@ -16,7 +16,7 @@ describe("$data", function () {
       data = ['bar', 'foo'];
       OrderedStringList = $oop.getClass("test.$data.OrderedStringList.OrderedStringList")
       .mix($data.OrderedStringList);
-      orderedStringList = OrderedStringList.create(data);
+      orderedStringList = OrderedStringList.create({data: data});
     });
 
     describe("getRangeByPrefix()", function () {
@@ -66,7 +66,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toOrderedStringList()", function () {
-      var buffer = $data.DataContainer.create([1, 2, 3]);
+      var buffer = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = buffer.toOrderedStringList();

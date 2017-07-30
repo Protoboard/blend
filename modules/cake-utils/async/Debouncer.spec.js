@@ -7,7 +7,7 @@ describe("$utils", function () {
     var debouncer;
 
     beforeEach(function () {
-      debouncer = $utils.Debouncer.create(50);
+      debouncer = $utils.Debouncer.create({debounceDelay: 50});
     });
 
     describe("create()", function () {

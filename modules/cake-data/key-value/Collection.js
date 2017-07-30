@@ -2,7 +2,8 @@
 
 /**
  * @function $data.Collection.create
- * @param {object|Array} [data]
+ * @param {Object} [properties]
+ * @param {object|Array} [properties.data]
  * @returns {$data.Collection}
  */
 
@@ -112,7 +113,7 @@ $data.Collection = $oop.getClass('$data.Collection')
    * @returns {$data.DataContainer}
    */
   getValueWrapped: function (key) {
-    return $data.DataContainer.create(this.getValue(key));
+    return $data.DataContainer.create({data: this.getValue(key)});
   }
 });
 
@@ -122,7 +123,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.Collection}
    */
   toCollection: function () {
-    return $data.Collection.create(this.data);
+    return $data.Collection.create({data: this.data});
   }
 });
 
@@ -131,6 +132,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.Collection}
    */
   toCollection: function () {
-    return $data.Collection.create(this);
+    return $data.Collection.create({data: this});
   }
 });

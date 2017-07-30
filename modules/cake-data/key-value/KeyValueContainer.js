@@ -55,7 +55,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
   filter: function (callback, context) {
     var data = this.data instanceof Array ? [] : {},
         ResultClass = $oop.getClass(this.__classId),
-        result = ResultClass.create(data);
+        result = ResultClass.create({data: data});
 
     this.forEachItem(function (value, key) {
       if (callback.call(this, value, key)) {
@@ -102,7 +102,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    * @returns {$data.StringCollection}
    */
   getKeysWrapped: function () {
-    return $data.StringCollection.create(this.getKeys());
+    return $data.StringCollection.create({data: this.getKeys()});
   },
 
   /**
@@ -122,7 +122,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    * @returns {$data.Collection}
    */
   getValuesWrapped: function () {
-    return $data.Collection.create(this.getValues());
+    return $data.Collection.create({data: this.getValues()});
   },
 
   /**
@@ -173,7 +173,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
   mapValues: function (callback, context) {
     var data = this.data instanceof Array ? [] : {},
         ResultClass = $data.getMapResultClass(this, null, $data.VALUE_TYPE_ANY),
-        result = ResultClass.create(data);
+        result = ResultClass.create({data: data});
 
     this.forEachItem(function (value, key) {
       value = callback.call(this, value, key);
@@ -252,35 +252,6 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     } else {
       return this.mapValues(function (value) {
         return value[methodName]();
-      });
-    }
-  },
-
-  /**
-   * Creates a new instance of the specified class, passing each item value
-   * as one of the constructor arguments.
-   * @param {$oop.Class} Class Class to create new instances of
-   * @param {number} [argIndex] Index of item value among ctr arguments
-   * @param {...*} [arg] Rest of arguments to be passed to callback.
-   * Item value will be spliced in at given index.
-   * @returns {$data.KeyValueContainer} Mapped collection
-   */
-  createWithEachValue: function (Class, argIndex, arg) {
-    var args;
-
-    if (arguments.length > 2) {
-      // there are additional arguments
-      // splicing in placeholder for item value
-      args = slice.call(arguments, 2);
-      args.splice(argIndex, 0, null);
-      return this.mapValues(function (value) {
-        args[argIndex] = value;
-        return Class.create.apply(Class, args);
-      });
-    } else {
-      // no additional arguments
-      return this.mapValues(function (value) {
-        return Class.create(value);
       });
     }
   },

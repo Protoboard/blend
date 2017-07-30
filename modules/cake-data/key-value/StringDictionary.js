@@ -2,7 +2,8 @@
 
 /**
  * @function $data.StringDictionary.create
- * @param {object|Array} [data]
+ * @param {Object} [properties]
+ * @param {object|Array} [properties.data]
  * @returns {$data.StringDictionary}
  */
 
@@ -130,7 +131,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.StringDictionary}
    */
   toStringDictionary: function () {
-    return $data.StringDictionary.create(this.data);
+    return $data.StringDictionary.create({data: this.data});
   }
 });
 
@@ -139,6 +140,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.StringDictionary}
    */
   toStringDictionary: function () {
-    return $data.StringDictionary.create(this);
+    return $data.StringDictionary.create({data: this});
   }
 });

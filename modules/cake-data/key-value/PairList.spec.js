@@ -19,14 +19,14 @@ describe("$data", function () {
       ];
       PairList = $oop.getClass("test.$data.PairList.PairList")
       .mix($data.PairList);
-      pairList = PairList.create(data);
+      pairList = PairList.create({data: data});
     });
 
     describe("create()", function () {
       describe("on invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
-            PairList.create({});
+            PairList.create({data: {}});
           }).toThrow();
         });
       });
@@ -101,7 +101,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toPairList()", function () {
-      var container = $data.DataContainer.create([1, 2, 3]);
+      var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = container.toPairList();

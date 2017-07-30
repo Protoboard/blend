@@ -15,7 +15,7 @@ describe("$event", function () {
       .mix($utils.Cloneable)
       .mix($event.Wrapper);
 
-      wrapper = Wrapper.create('event1');
+      wrapper = Wrapper.create({eventName: 'event1'});
     });
 
     describe("create()", function () {

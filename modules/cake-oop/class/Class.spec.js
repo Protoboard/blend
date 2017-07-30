@@ -1166,6 +1166,67 @@ describe("$oop", function () {
     describe("create()", function () {
       var instance;
 
+      it("should copy properties", function () {
+        instance = Class.create({foo: 'FOO', bar: 'BAR'});
+        expect(instance.foo).toBe('FOO');
+        expect(instance.bar).toBe('BAR');
+      });
+
+      describe("on invalid argument", function () {
+        it("should throw", function () {
+          expect(function () {
+            Class.create(null);
+          }).toThrow();
+          expect(function () {
+            Class.create(1);
+          }).toThrow();
+          expect(function () {
+            Class.create('foo');
+          }).toThrow();
+          expect(function () {
+            Class.create(true);
+          }).toThrow();
+        });
+      });
+
+      describe("when spread is defined", function () {
+        var spread,
+            args;
+
+        beforeEach(function () {
+          args = {};
+          spread = jasmine.createSpy();
+          Class.define({
+            spread: spread
+          });
+
+          Class.create(args);
+        });
+
+        it("should invoke spread", function () {
+          expect(spread).toHaveBeenCalledWith();
+        });
+      });
+
+      describe("when init is defined", function () {
+        var init,
+            args;
+
+        beforeEach(function () {
+          args = {};
+          init = jasmine.createSpy();
+          Class.define({
+            init: init
+          });
+
+          Class.create(args);
+        });
+
+        it("should invoke init", function () {
+          expect(init).toHaveBeenCalledWith();
+        });
+      });
+
       describe("of trait", function () {
         var Host;
 
@@ -1183,14 +1244,14 @@ describe("$oop", function () {
 
       describe("of cached class", function () {
         beforeEach(function () {
-          Class.cache(function (foo) {
-            return '_' + foo;
+          Class.cache(function (args) {
+            return '_' + args.foo;
           });
         });
 
         describe("when instance is not cached yet", function () {
           it("should store new instance in cache", function () {
-            instance = Class.create('foo');
+            instance = Class.create({foo: 'foo'});
             expect(Class.__instanceLookup).toEqual({
               '_foo': instance
             });
@@ -1201,12 +1262,12 @@ describe("$oop", function () {
           var cached;
 
           beforeEach(function () {
-            Class.create('foo');
+            Class.create({foo: 'foo'});
             cached = Class.__instanceLookup._foo;
           });
 
           it("should return cached instance", function () {
-            instance = Class.create('foo');
+            instance = Class.create({foo: 'foo'});
             expect(instance).toBe(cached);
           });
         });
@@ -1226,14 +1287,14 @@ describe("$oop", function () {
           .mixOnly(Class);
 
           $oop.Class.getClass('Class')
-          .forward(Forward, function (foo) {
-            return foo === 1;
+          .forward(Forward, function (args) {
+            return args.foo === 1;
           });
         });
 
         describe("for matching arguments", function () {
           it("should instantiate forward class", function () {
-            result = Class.create(1);
+            result = Class.create({foo: 1});
             expect(result.mixes(Class)).toBeTruthy();
             expect(result.mixes(Forward)).toBeTruthy();
           });
@@ -1241,7 +1302,7 @@ describe("$oop", function () {
 
         describe("for non-matching arguments", function () {
           it("should instantiate original class", function () {
-            result = Class.create(0);
+            result = Class.create({foo: 0});
             expect(result.mixes(Class)).toBeTruthy();
             expect(result.mixes(Forward)).toBeFalsy();
           });
@@ -1252,19 +1313,19 @@ describe("$oop", function () {
 
           beforeEach(function () {
             Forward2 = $oop.Class.getClass('Forward2')
-            .cache(function (foo) {
-              return '_' + foo;
+            .cache(function (args) {
+              return '_' + args.foo;
             })
             .mixOnly(Class);
 
             $oop.Class.getClass('Class')
-            .forward(Forward2, function (foo) {
-              return foo === 2;
+            .forward(Forward2, function (args) {
+              return args.foo === 2;
             });
           });
 
           it("should return cached forward instance", function () {
-            result = Class.create(2);
+            result = Class.create({foo: 2});
             expect(result).toBe(Forward2.__instanceLookup._2);
           });
         });

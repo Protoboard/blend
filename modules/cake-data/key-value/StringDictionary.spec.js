@@ -17,7 +17,7 @@ describe("$data", function () {
       };
       StringDictionary = $oop.getClass("test.$data.StringDictionary.StringDictionary")
       .mix($data.StringDictionary);
-      dictionary = StringDictionary.create(data);
+      dictionary = StringDictionary.create({data: data});
       dictionary._itemCount = 3;
     });
 
@@ -172,7 +172,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toStringDictionary()", function () {
-      var container = $data.DataContainer.create([1, 2, 3]);
+      var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = container.toStringDictionary();

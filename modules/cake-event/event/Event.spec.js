@@ -14,7 +14,7 @@ describe("$event", function () {
       Event = $oop.getClass('test.$event.Event.Event')
       .mix($event.Event);
 
-      event = Event.create('event1');
+      event = Event.create({eventName: 'event1'});
     });
 
     describe("create()", function () {
@@ -54,7 +54,7 @@ describe("$event", function () {
     describe("clone()", function () {
       beforeEach(function () {
         event
-        .setCausingEvent(Event.create('event2'))
+        .setCausingEvent(Event.create({eventName: 'event2'}))
         .setSender({})
         .setTargetPath('foo.bar.baz'.toPath())
         .setBubbles(true)
@@ -132,7 +132,7 @@ describe("$event", function () {
       describe("on missing sender", function () {
         it("should throw", function () {
           expect(function () {
-            Event.create('event1')
+            Event.create({eventName: 'event1'})
             .setTargetPath('foo.bar'.toPath())
             .trigger();
           }).toThrow();
@@ -143,8 +143,8 @@ describe("$event", function () {
         var event2;
 
         beforeEach(function () {
-          event = Event.create('event1');
-          event2 = Event.create('event2');
+          event = Event.create({eventName: 'event1'});
+          event2 = Event.create({eventName: 'event2'});
           eventTrail.push(event2);
 
           event
@@ -161,9 +161,9 @@ describe("$event", function () {
       describe("on missing targetPath", function () {
         it("should throw", function () {
           expect(function () {
-            Event.create('event1')
+            Event.create({eventName: 'event1'})
             .setSender({})
-            .setCausingEvent(Event.create('foo'))
+            .setCausingEvent(Event.create({eventName: 'foo'}))
             .trigger();
           }).toThrow();
         });
@@ -219,7 +219,7 @@ describe("$event", function () {
         .on('event1', callback4, 'foo'.toPath(), '4');
 
         event
-        .setCausingEvent(Event.create('event1'))
+        .setCausingEvent(Event.create({eventName: 'event1'}))
         .setSender({})
         .setTargetPath('foo.bar'.toPath());
 
@@ -259,8 +259,8 @@ describe("$event", function () {
       describe("on missing sender", function () {
         it("should throw", function () {
           expect(function () {
-            Event.create('event1')
-            .setCausingEvent(Event.create('foo'))
+            Event.create({eventName: 'event1'})
+            .setCausingEvent(Event.create({eventName: 'foo'}))
             .setTargetPath('foo.bar'.toPath())
             .broadcast();
           }).toThrow();
@@ -271,8 +271,8 @@ describe("$event", function () {
         var event2;
 
         beforeEach(function () {
-          event = Event.create('event1');
-          event2 = Event.create('event2');
+          event = Event.create({eventName: 'event1'});
+          event2 = Event.create({eventName: 'event2'});
           eventTrail.push(event2);
 
           event
@@ -289,9 +289,9 @@ describe("$event", function () {
       describe("on missing targetPath", function () {
         it("should throw", function () {
           expect(function () {
-            Event.create('event1')
+            Event.create({eventName: 'event1'})
             .setSender({})
-            .setCausingEvent(Event.create('foo'))
+            .setCausingEvent(Event.create({eventName: 'foo'}))
             .broadcast();
           }).toThrow();
         });
@@ -325,7 +325,7 @@ describe("$event", function () {
       var causingEvent;
 
       beforeEach(function () {
-        causingEvent = Event.create('event2');
+        causingEvent = Event.create({eventName: 'event2'});
         result = event.setCausingEvent(causingEvent);
       });
 

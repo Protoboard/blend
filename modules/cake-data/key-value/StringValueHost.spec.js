@@ -43,8 +43,10 @@ describe("$data", function () {
       });
 
       stringValueHost = StringValueHost.create({
-        hello: ['foo', 'bar'],
-        quux: ['quux', 'baz']
+        data: {
+          hello: ['foo', 'bar'],
+          quux: ['quux', 'baz']
+        }
       });
     });
 
@@ -53,9 +55,11 @@ describe("$data", function () {
 
       beforeEach(function () {
         rightContainer = StringKeyHost.create({
-          foo: "FOO",
-          bar: "BAR",
-          baz: "BAZ"
+          data: {
+            foo: "FOO",
+            bar: "BAR",
+            baz: "BAZ"
+          }
         });
 
         result = stringValueHost.join(rightContainer);

@@ -6,7 +6,7 @@ describe("$assert", function () {
   var query;
 
   beforeEach(function () {
-    query = $data.Query.create(['foo', 'bar']);
+    query = $data.Query.create({components: ['foo', 'bar']});
     spyOn($assert, 'assert').and.callThrough();
   });
 
@@ -50,19 +50,21 @@ describe("$data", function () {
     beforeEach(function () {
       Query = $oop.getClass('test.$data.Query.Query')
       .mix($data.Query);
-      query = Query.create([
-        'foo',
-        'bar',
-        $data.QueryComponent.create('*')
-      ]);
+      query = Query.create({
+        components: [
+          'foo',
+          'bar',
+          $data.QueryComponent.create({queryComponentStr: '*'})
+        ]
+      });
     });
 
     describe("create()", function () {
       it("should initialize components property", function () {
         expect(query.components).toEqual([
-          $data.QueryComponent.create('foo'),
-          $data.QueryComponent.create('bar'),
-          $data.QueryComponent.create('*')
+          $data.QueryComponent.create({queryComponentStr: 'foo'}),
+          $data.QueryComponent.create({queryComponentStr: 'bar'}),
+          $data.QueryComponent.create({queryComponentStr: '*'})
         ]);
       });
     });
@@ -80,7 +82,7 @@ describe("$data", function () {
 
     describe("toString()", function () {
       beforeEach(function () {
-        query = Query.create(['foo.baz', 'bar', '*']);
+        query = Query.create({components: ['foo.baz', 'bar', '*']});
         result = query.toString();
       });
 
@@ -139,14 +141,14 @@ describe("$data", function () {
       var query;
 
       beforeEach(function () {
-        query = $data.Query.create([]);
+        query = $data.Query.create({components: []});
         spyOn($data.Query, 'create').and.returnValue(query);
         result = $data.Query.fromString('foo.*.bar:!baz');
       });
 
       it("should create a Query instance", function () {
         expect($data.Query.create.calls.allArgs()).toEqual([
-          [['foo', '*', 'bar:!baz']]
+          [{components: ['foo', '*', 'bar:!baz']}]
         ]);
       });
 
@@ -164,14 +166,14 @@ describe("String", function () {
     var query;
 
     beforeEach(function () {
-      query = $data.Query.create([]);
+      query = $data.Query.create({components: []});
       spyOn($data.Query, 'create').and.returnValue(query);
       result = 'foo.*.bar:!baz'.toQuery();
     });
 
     it("should create a Query instance", function () {
       expect($data.Query.create.calls.allArgs()).toEqual([
-        [['foo', '*', 'bar:!baz']]
+        [{components: ['foo', '*', 'bar:!baz']}]
       ]);
     });
 
@@ -190,14 +192,14 @@ describe("Array", function () {
 
     beforeEach(function () {
       components = ['!foo', '*:baz'];
-      query = $data.Query.create(components);
+      query = $data.Query.create({components: components});
       spyOn($data.Query, 'create').and
       .returnValue(query);
       result = components.toQuery();
     });
 
     it("should create a Query instance", function () {
-      expect($data.Query.create).toHaveBeenCalledWith(components);
+      expect($data.Query.create).toHaveBeenCalledWith({components: components});
     });
 
     it("should return created instance", function () {

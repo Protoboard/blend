@@ -2,7 +2,9 @@
 
 /**
  * @function $data.OrderedStringList.create
- * @param {string[]} [data] If data has content, it must be already ordered and
+ * @param {Object} [properties]
+ * @param {string[]} [properties.data] If data has content, it must be already
+ * ordered and
  * contain strings only!
  * @returns {$data.OrderedStringList}
  */
@@ -42,8 +44,9 @@ $data.OrderedStringList = $oop.getClass('$data.OrderedStringList')
    * @returns {$data.OrderedStringList}
    */
   getRangeByPrefixWrapped: function (prefix, offset, limit) {
-    return $oop.getClass(this.__classId).create(
-        this.getRangeByPrefix(prefix, offset, limit));
+    return $oop.getClass(this.__classId).create({
+      data: this.getRangeByPrefix(prefix, offset, limit)
+    });
   }
 });
 
@@ -53,7 +56,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.OrderedStringList}
    */
   toOrderedStringList: function () {
-    return $data.OrderedStringList.create(this.data);
+    return $data.OrderedStringList.create({data: this.data});
   }
 });
 
@@ -62,6 +65,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.OrderedStringList}
    */
   toOrderedStringList: function () {
-    return $data.OrderedStringList.create(this);
+    return $data.OrderedStringList.create({data: this});
   }
 });

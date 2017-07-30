@@ -2,7 +2,8 @@
 
 /**
  * @function $data.StringSet.create
- * @param {object|Array} [data]
+ * @param {Object} [properties]
+ * @param {Object|Array} [properties.data]
  * @returns {$data.StringSet}
  */
 
@@ -171,7 +172,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.StringSet}
    */
   toStringSet: function () {
-    return $data.StringSet.create(this.data);
+    return $data.StringSet.create({data: this.data});
   }
 });
 
@@ -180,6 +181,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.StringSet}
    */
   toStringSet: function () {
-    return $data.StringSet.create(this);
+    return $data.StringSet.create({data: this});
   }
 });

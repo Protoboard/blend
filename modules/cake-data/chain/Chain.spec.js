@@ -299,19 +299,16 @@ describe("$data", function () {
         Link = $oop.getClass('test.$data.Chain.Link')
         .mix($data.Link)
         .define({
-          init: function (a) {
-            this.foo = a;
-          },
           clone: function clone() {
             clone.returned.foo = this.foo;
             return clone.returned;
           }
         });
 
-        link1 = Link.create('A');
-        link2 = Link.create('B');
-        link3 = Link.create('C');
-        link4 = Link.create('D');
+        link1 = Link.create({foo: 'A'});
+        link2 = Link.create({foo: 'B'});
+        link3 = Link.create({foo: 'C'});
+        link4 = Link.create({foo: 'D'});
 
         chain
         .push(link1)

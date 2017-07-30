@@ -31,7 +31,7 @@ describe("$data", function () {
         .mix($data.KeyValueContainer)
         .mixOnly($data.StringValueHost);
 
-        leftContainer = StringValueHost.create({});
+        leftContainer = StringValueHost.create({data: {}});
 
         joinedContainer = {};
 

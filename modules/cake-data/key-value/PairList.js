@@ -2,7 +2,8 @@
 
 /**
  * @function $data.PairList.create
- * @param {Array} [data]
+ * @param {Object} [properties]
+ * @param {Array} [properties.data]
  * @returns {$data.PairList}
  */
 
@@ -74,7 +75,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.PairList}
    */
   toPairList: function () {
-    return $data.PairList.create(this.data);
+    return $data.PairList.create({data: this.data});
   }
 });
 
@@ -83,6 +84,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.PairList}
    */
   toPairList: function () {
-    return $data.PairList.create(this);
+    return $data.PairList.create({data: this});
   }
 });

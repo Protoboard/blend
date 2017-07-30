@@ -2,7 +2,8 @@
 
 /**
  * @function $utils.Throttler.create
- * @param {number} [interval] Time interval between dispatched calls.
+ * @param {Object} [properties]
+ * @param {number} [properties.interval] Time interval between dispatched calls.
  * @returns {$utils.Throttler}
  */
 
@@ -16,8 +17,8 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
 .mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Throttler# */{
   /** @ignore */
-  init: function (interval) {
-    $assert.isNumberOptional(interval, "Invalid throttle interval");
+  init: function () {
+    $assert.isNumberOptional(this._throttleInterval, "Invalid throttle interval");
 
     this.elevateMethods(
         'onTimerTick',
@@ -26,8 +27,9 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
     /**
      * @member {number} $utils.Throttler#_throttleInterval
      * @private
+     * @todo Rename
      */
-    this._throttleInterval = interval || 0;
+    this._throttleInterval = this._throttleInterval || 0;
 
     /**
      * @member {number[]} $utils.Throttler#_throttledCallCounts

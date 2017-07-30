@@ -9,7 +9,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toStringPairList()", function () {
-      var container = $data.DataContainer.create([1, 2, 3]);
+      var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = container.toStringPairList();

@@ -9,15 +9,12 @@
 $data.ItemContainer = $oop.getClass('$data.ItemContainer')
 .expect($oop.getClass('$data.DataContainer'))
 .define(/** @lends $data.ItemContainer# */{
-  /**
-   * @param {object|Array} data
-   * @ignore
-   */
-  init: function (data) {
+  /** @ignore */
+  spread: function () {
     /**
      * @type {number}
      */
-    this._itemCount = data ? undefined : 0;
+    this._itemCount = this.data ? undefined : 0;
   },
 
   /**

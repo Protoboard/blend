@@ -17,7 +17,7 @@ describe("$data", function () {
       };
       Dictionary = $oop.getClass("test.$data.Dictionary.Dictionary")
       .mix($data.Dictionary);
-      dictionary = Dictionary.create(data);
+      dictionary = Dictionary.create({data: data});
       dictionary._itemCount = 3;
     });
 
@@ -172,7 +172,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toDictionary()", function () {
-      var container = $data.DataContainer.create([1, 2, 3]);
+      var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = container.toDictionary();

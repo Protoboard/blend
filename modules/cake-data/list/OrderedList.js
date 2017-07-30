@@ -2,7 +2,9 @@
 
 /**
  * @function $data.OrderedList.create
- * @param {Array} [data] If data has content, it must be already ordered!
+ * @param {Object} [properties]
+ * @param {Array} [properties.data] If data has content, it must be already
+ * ordered!
  * @param {function} [comparer]
  * @returns {$data.OrderedList}
  */
@@ -18,19 +20,15 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
 .mix($oop.getClass('$data.ArrayContainer'))
 .mix($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
-  /**
-   * @param {Array} [data]
-   * @param {function} [comparer]
-   * @ignore
-   */
-  init: function (data, comparer) {
-    $assert.isFunctionOptional(comparer, "Invalid comparer function");
+  /** @ignore */
+  init: function () {
+    $assert.isFunctionOptional(this.comparer, "Invalid comparer function");
 
     /**
      * @type {$data.Comparer}
      * @protected
      */
-    this._comparer = comparer || this._defaultComparer;
+    this._comparer = this.comparer || this._defaultComparer;
   },
 
   /**
@@ -181,8 +179,9 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
    * @returns {$data.OrderedList}
    */
   getRangeWrapped: function (startValue, endValue, offset, limit) {
-    return $oop.getClass(this.__classId).create(
-        this.getRange(startValue, endValue, offset, limit));
+    return $oop.getClass(this.__classId).create({
+      data: this.getRange(startValue, endValue, offset, limit)
+    });
   }
 });
 
@@ -192,7 +191,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.OrderedList}
    */
   toOrderedList: function () {
-    return $data.OrderedList.create(this.data);
+    return $data.OrderedList.create({data: this.data});
   }
 });
 
@@ -201,6 +200,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.OrderedList}
    */
   toOrderedList: function () {
-    return $data.OrderedList.create(this);
+    return $data.OrderedList.create({data: this});
   }
 });

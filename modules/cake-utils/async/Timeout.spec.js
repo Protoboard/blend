@@ -26,7 +26,7 @@ describe("$utils", function () {
     var timeout;
 
     beforeEach(function () {
-      timeout = $utils.Timeout.create(1);
+      timeout = $utils.Timeout.create({timerId: 1});
     });
 
     describe("clearTimer()", function () {

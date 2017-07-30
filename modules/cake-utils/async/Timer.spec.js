@@ -7,14 +7,14 @@ describe("$utils", function () {
     var timer;
 
     beforeEach(function () {
-      timer = $utils.Timer.create(1);
+      timer = $utils.Timer.create({timerId: 1});
     });
 
     describe("create()", function () {
       describe("when passing invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
-            $utils.Timer.create("foo");
+            $utils.Timer.create({timerId: "foo"});
           }).toThrow();
         });
       });

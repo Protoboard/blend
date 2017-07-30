@@ -2,7 +2,8 @@
 
 /**
  * @function $data.MasterLink.create
- * @param {$data.Chain} parentChain
+ * @param {Object} parameters
+ * @param {$data.Chain} parameters.parentChain
  * @returns {$data.MasterLink}
  */
 
@@ -14,18 +15,16 @@
 $data.MasterLink = $oop.getClass('$data.MasterLink')
 .define(/** @lends $data.MasterLink# */{
   /**
-   * @param {$data.Chain} chain
    * @ignore
    */
-  init: function (chain) {
-    $assert.isChain(chain, "Invalid chain");
+  init: function () {
+    $assert.isChain(this.chain, "Invalid chain");
 
     /**
      * Chain instance the link is associated with.
      * @member {$data.Chain} $data.MasterLink#chain
      * @constant
      */
-    this.chain = chain;
 
     /**
      * Link that comes before the current link in the chain.

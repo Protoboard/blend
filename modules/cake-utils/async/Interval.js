@@ -2,7 +2,8 @@
 
 /**
  * @function $utils.Interval.create
- * @param {number} timerId
+ * @param {Object} properties
+ * @param {number} properties.timerId
  * @returns {$utils.Interval}
  */
 
@@ -32,6 +33,6 @@ $oop.copyProperties(Number.prototype, /** @lends external:Number# */{
    * @returns {$utils.Interval}
    */
   toInterval: function () {
-    return $utils.Interval.create(this.valueOf());
+    return $utils.Interval.create({timerId: this.valueOf()});
   }
 });

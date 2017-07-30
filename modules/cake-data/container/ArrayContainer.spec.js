@@ -15,7 +15,7 @@ describe("$data", function () {
       ArrayContainer = $oop.getClass('test.$data.ArrayContainer.ArrayContainer')
       .mix($data.DataContainer)
       .mix($data.ArrayContainer);
-      arrayContainer = ArrayContainer.create(data);
+      arrayContainer = ArrayContainer.create({data: data});
     });
 
     describe("create()", function () {
@@ -36,7 +36,7 @@ describe("$data", function () {
       describe("on invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
-            $data.ArrayContainer.create({});
+            $data.ArrayContainer.create({data: {}});
           }).toThrow();
         });
       });

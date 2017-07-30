@@ -12,7 +12,7 @@ describe("$data", function () {
     beforeEach(function () {
       DataContainer = $oop.getClass("test.$data.DataContainer.DataContainer")
       .mix($data.DataContainer);
-      container = DataContainer.create(null);
+      container = DataContainer.create({data: null});
     });
 
     describe("create()", function () {
@@ -67,7 +67,7 @@ describe("$data", function () {
     describe("isEmpty()", function () {
       describe("when data is defined", function () {
         it("should return false", function () {
-          expect(DataContainer.create(1).isEmpty()).toBeFalsy();
+          expect(DataContainer.create({data: 1}).isEmpty()).toBeFalsy();
         });
       });
 

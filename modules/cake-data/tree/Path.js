@@ -2,7 +2,8 @@
 
 /**
  * @function $data.Path.create
- * @param {string[]} components Identifiable 'steps' along the path.
+ * @param {Object} properties
+ * @param {string[]} properties.components Identifiable 'steps' along the path.
  * @returns {$data.Path}
  */
 
@@ -25,18 +26,14 @@ $data.Path = $oop.getClass('$data.Path')
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Path# */{
-  /**
-   * @param {string[]} components
-   * @ignore
-   */
-  init: function (components) {
-    $assert.isArray(components, "Invalid component list");
+  /** @ignore */
+  init: function () {
+    $assert.isArray(this.components, "Invalid component list");
 
     /**
      * Path components.
      * @member {string[]} $data.Path#components
      */
-    this.components = components;
   },
 
   /**
@@ -150,7 +147,7 @@ $data.Path = $oop.getClass('$data.Path')
    */
   concat: function (path) {
     var components = this.components.concat(path.components);
-    return $oop.getClass(this.__classId).create(components);
+    return $oop.getClass(this.__classId).create({components: components});
   },
 
   /**
@@ -174,7 +171,7 @@ $data.Path = $oop.getClass('$data.Path')
   fromString: function (pathStr) {
     var components = $utils.safeSplit(pathStr, $data.PATH_COMPONENT_SEPARATOR)
     .map($data.unescapePathComponent);
-    return $data.Path.create(components);
+    return $data.Path.create({components: components});
   }
 });
 
@@ -241,6 +238,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.Path}
    */
   toPath: function () {
-    return $data.Path.create(this);
+    return $data.Path.create({components: this});
   }
 });

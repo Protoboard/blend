@@ -2,7 +2,8 @@
 
 /**
  * @function $data.StringCollection.create
- * @param {object|Array} [data]
+ * @param {Object} [properties]
+ * @param {Object|Array} [properties.data]
  * @returns {$data.StringCollection}
  */
 
@@ -23,7 +24,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.StringCollection}
    */
   toStringCollection: function () {
-    return $data.StringCollection.create(this.data);
+    return $data.StringCollection.create({data: this.data});
   }
 });
 
@@ -32,6 +33,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.StringCollection}
    */
   toStringCollection: function () {
-    return $data.StringCollection.create(this);
+    return $data.StringCollection.create({data: this});
   }
 });

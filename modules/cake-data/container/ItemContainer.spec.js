@@ -32,7 +32,7 @@ describe("$data", function () {
         }
       });
 
-      itemContainer = ItemContainer.create(data);
+      itemContainer = ItemContainer.create({data: data});
     });
 
     describe("create()", function () {

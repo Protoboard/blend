@@ -13,7 +13,7 @@ describe("$data", function () {
       MasterLink = $oop.getClass('test.$data.MasterLink.MasterLink')
       .mix($data.MasterLink);
       chain = $data.Chain.create();
-      masterLink = MasterLink.create(chain);
+      masterLink = MasterLink.create({chain: chain});
     });
 
     describe("create()", function () {
@@ -35,7 +35,7 @@ describe("$data", function () {
             MasterLink.create();
           }).toThrow();
           expect(function () {
-            MasterLink.create('foo');
+            MasterLink.create({chain: 'foo'});
           }).toThrow();
         });
       });

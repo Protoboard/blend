@@ -46,7 +46,7 @@ describe("$data", function () {
         }
       });
 
-      keyValueContainer = KeyValueContainer.create(data);
+      keyValueContainer = KeyValueContainer.create({data: data});
     });
 
     describe("clone()", function () {
@@ -95,9 +95,9 @@ describe("$data", function () {
 
       describe("for array set", function () {
         beforeEach(function () {
-          keyValueContainer = KeyValueContainer.create([
-            'foo', 'bar', 'baz', 'quux'
-          ]);
+          keyValueContainer = KeyValueContainer.create({
+            data: ['foo', 'bar', 'baz', 'quux']
+          });
           result = keyValueContainer.filter(function (value) {
             return value.length > 3;
           });
@@ -217,14 +217,14 @@ describe("$data", function () {
     });
 
     describe("toType()", function () {
-      var KeyValueContainer;
+      var KeyValueContainer1;
 
       beforeEach(function () {
-        KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
+        KeyValueContainer1 = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer1')
         .mix($data.DataContainer)
         .define({
-          init: function (data) {
-            this.data = data || [];
+          init: function () {
+            this.data = this.data || [];
           },
 
           setItem: function (key, value) {
@@ -232,11 +232,11 @@ describe("$data", function () {
           }
         });
 
-        result = keyValueContainer.toType(KeyValueContainer);
+        result = keyValueContainer.toType(KeyValueContainer1);
       });
 
       it("should return instance of specified class", function () {
-        expect(KeyValueContainer.mixedBy(result)).toBeTruthy();
+        expect(KeyValueContainer1.mixedBy(result)).toBeTruthy();
       });
 
       it("should set contents", function () {
@@ -282,9 +282,9 @@ describe("$data", function () {
 
       describe("for array set", function () {
         beforeEach(function () {
-          keyValueContainer = KeyValueContainer.create([
-            'foo', 'bar', 'baz', 'quux'
-          ]);
+          keyValueContainer = KeyValueContainer.create({
+            data: ['foo', 'bar', 'baz', 'quux']
+          });
           result = keyValueContainer.mapValues(function (value) {
             return value.toLowerCase();
           });
@@ -426,66 +426,6 @@ describe("$data", function () {
       });
     });
 
-    describe("createWithEachValue()", function () {
-      var Class;
-
-      beforeEach(function () {
-        Class = $oop.getClass('test.$data.KeyValueContainer.Class')
-        .define({
-          init: function (arg1, arg2) {
-            this.arg1 = arg1;
-            this.arg2 = arg2;
-          }
-        });
-        spyOn(Class, 'create').and.callThrough();
-        spyOn($data, 'getMapResultClass').and.returnValue(Settable);
-        result = keyValueContainer.createWithEachValue(Class, 1, 'baz');
-      });
-
-      it("should pass values to constructor", function () {
-        expect(Class.create.calls.allArgs()).toEqual([
-          ['baz', 'FOO'],
-          ['baz', 'BAR']
-        ]);
-      });
-
-      it("should return mapped collection", function () {
-        expect(result.data).toEqual({
-          foo: Class.create('baz', 'FOO'),
-          bar: Class.create('baz', 'BAR')
-        });
-      });
-
-      describe("on no extra arguments", function () {
-        var Class2;
-
-        beforeEach(function () {
-          Class2 = $oop.getClass('test.$data.KeyValueContainer.Class2')
-          .define({
-            init: function (arg1) {
-              this.arg1 = arg1;
-            }
-          });
-          spyOn(Class2, 'create').and.callThrough();
-          result = keyValueContainer.createWithEachValue(Class2);
-        });
-
-        it("should pass values to constructor", function () {
-          expect(Class2.create.calls.allArgs()).toEqual([
-            ['FOO'],
-            ['BAR']
-          ]);
-        });
-
-        it("should return mapped collection", function () {
-          expect(result.data).toEqual({
-            foo: Class2.create('FOO'),
-            bar: Class2.create('BAR')
-          });
-        });
-      });
-    });
-
     describe("filterByKeyPrefix()", function () {
       beforeEach(function () {
         result = keyValueContainer.filterByKeyPrefix('f');
@@ -544,9 +484,11 @@ describe("$data", function () {
 
       beforeEach(function () {
         keyValueContainer = KeyValueContainer.create({
-          foo: "FOO",
-          baz: object,
-          quux: container
+          data: {
+            foo: "FOO",
+            baz: object,
+            quux: container
+          }
         });
       });
 
@@ -624,8 +566,10 @@ describe("$data", function () {
 
       beforeEach(function () {
         keyValueContainer2 = KeyValueContainer.create({
-          bar: "bar",
-          baz: "baz"
+          data: {
+            bar: "bar",
+            baz: "baz"
+          }
         });
         spyOn($data, 'getMergeResultClass').and.returnValue(Settable);
         result = keyValueContainer.mergeWith(keyValueContainer2);

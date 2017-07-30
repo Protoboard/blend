@@ -2,7 +2,8 @@
 
 /**
  * @function $data.Tree.create
- * @param {object|Array} [data]
+ * @param {Object} [properties]
+ * @param {Object|Array} [properties.data]
  * @returns {$data.Tree}
  */
 
@@ -36,7 +37,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     if (i === components.length) {
       // reached end of query
       // invoking callback with whatever path & node we're at
-      callback($data.Path.create(path), node);
+      callback($data.Path.create({components: path}), node);
       return;
     } else if (!(node instanceof Object)) {
       // reached leaf node mid-query
@@ -45,7 +46,7 @@ $data.Tree = $oop.getClass('$data.Tree')
       ) {
         // current q.c. is a trailing skipper
         // invoking callback w/ leaf node
-        callback($data.Path.create(path), node);
+        callback($data.Path.create({components: path}), node);
       }
       return;
     }
@@ -168,7 +169,7 @@ $data.Tree = $oop.getClass('$data.Tree')
       parentNode = childNode;
     }
 
-    return $data.Path.create(result);
+    return $data.Path.create({components: result});
   },
 
   /**
@@ -208,7 +209,9 @@ $data.Tree = $oop.getClass('$data.Tree')
       }
     }
 
-    return $data.Path.create(pathComponents.slice(0, parentNodeCount - i));
+    return $data.Path.create({
+      components: pathComponents.slice(0, parentNodeCount - i)
+    });
   },
 
   /**
@@ -243,7 +246,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * @todo Wrap primitives in DataContainer
    */
   getNodeWrapped: function (path) {
-    return $oop.getClass(this.__classId).create(this.getNode(path));
+    return $oop.getClass(this.__classId).create({data: this.getNode(path)});
   },
 
   /**
@@ -271,7 +274,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    */
   getInitializedNodeWrapped: function (path, initializer) {
     var initializedNode = this.getInitializedNode(path, initializer);
-    return $oop.getClass(this.__classId).create(initializedNode);
+    return $oop.getClass(this.__classId).create({data: initializedNode});
   },
 
   /**
@@ -423,7 +426,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * @returns {$data.Collection}
    */
   queryNodesWrapped: function (query) {
-    return $data.Collection.create(this.queryNodes(query));
+    return $data.Collection.create({data: this.queryNodes(query)});
   },
 
   /**
@@ -447,7 +450,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * @returns {$data.StringCollection}
    */
   queryKeysWrapped: function (query) {
-    return $data.StringCollection.create(this.queryKeys(query));
+    return $data.StringCollection.create({data: this.queryKeys(query)});
   },
 
   /**
@@ -469,7 +472,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * @returns {$data.Collection}
    */
   queryPathsWrapped: function (query) {
-    return $data.Collection.create(this.queryPaths(query));
+    return $data.Collection.create({data: this.queryPaths(query)});
   },
 
   /**
@@ -484,7 +487,7 @@ $data.Tree = $oop.getClass('$data.Tree')
           key = pathComponents[pathComponents.length - 1];
       result.push({key: key, value: node});
     });
-    return $data.PairList.create(result);
+    return $data.PairList.create({data: result});
   },
 
   /**
@@ -497,7 +500,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     this.query(query, function (/**$data.Path*/path, node) {
       result.push({key: path, value: node});
     });
-    return $data.PairList.create(result);
+    return $data.PairList.create({data: result});
   }
 });
 
@@ -507,7 +510,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.Tree}
    */
   toTree: function () {
-    return $data.Tree.create(this.data);
+    return $data.Tree.create({data: this.data});
   }
 });
 
@@ -539,6 +542,6 @@ $oop.copyProperties(Array.prototype, /** @lends external:Array# */{
    * @returns {$data.Tree}
    */
   toTree: function () {
-    return $data.Tree.create(this);
+    return $data.Tree.create({data: this});
   }
 });

@@ -1,8 +1,9 @@
 "use strict";
 
 /**
- * @function $event.Event#create
- * @param {string} eventName
+ * @function $event.Event.create
+ * @param {Object} properties
+ * @param {string} properties.eventName
  * @returns {$event.Event}
  */
 
@@ -21,16 +22,12 @@ $event.Event = $oop.getClass('$event.Event')
 .mix($data.Link)
 .implement($oop.getClass('$event.EventSource'))
 .define(/** @lends $event.Event# */{
-  /**
-   * @param {string} eventName
-   * @ignore
-   */
-  init: function (eventName) {
+  /** @ignore */
+  init: function () {
     /**
      * Identifies event type.
      * @member {string} $event.Event#eventName
      */
-    this.eventName = eventName;
 
     /**
      * Event instance the current event is the effect of. In other words, the
@@ -93,8 +90,10 @@ $event.Event = $oop.getClass('$event.Event')
     var eventSpace = $event.EventSpace.create(),
         eventName = this.eventName,
         targetPath = this.targetPath,
-        callbacksPath = $data.Path.create([
-          'callbacks', 'bySubscription', eventName, targetPath.toString()]),
+        callbacksPath = $data.Path.create({
+          components: [
+            'callbacks', 'bySubscription', eventName, targetPath.toString()]
+        }),
         callbacks = eventSpace.subscriptions.getNode(callbacksPath),
         subscriberIds = callbacks && Object.keys(callbacks),
         callbackCount = subscriberIds && subscriberIds.length || 0,
@@ -123,8 +122,9 @@ $event.Event = $oop.getClass('$event.Event')
         eventName = event.eventName,
         targetPath = event.targetPath,
         currentPath = event.currentPath = targetPath.clone(),
-        callbacksPath = $data.Path.create([
-          'callbacks', 'bySubscription', eventName, null]),
+        callbacksPath = $data.Path.create({
+          components: ['callbacks', 'bySubscription', eventName, null]
+        }),
         callbacks, subscriberIds, callbackCount,
         i,
         results = [];
@@ -161,8 +161,9 @@ $event.Event = $oop.getClass('$event.Event')
         eventName = event.eventName,
         targetPath = event.targetPath,
         pathsQc = $data.QueryComponent.create(),
-        callbacksQuery = $data.Query.create([
-          'callbacks', 'bySubscription', eventName, pathsQc, '*']),
+        callbacksQuery = $data.Query.create({
+          components: ['callbacks', 'bySubscription', eventName, pathsQc, '*']
+        }),
         results = [];
 
     // obtaining affected paths

@@ -19,7 +19,7 @@ describe("$data", function () {
       };
       OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
       .mix($data.OrderedList);
-      orderedList = OrderedList.create(data, comparer);
+      orderedList = OrderedList.create({data: data, comparer: comparer});
     });
 
     describe("create()", function () {
@@ -46,10 +46,10 @@ describe("$data", function () {
       describe("on invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
-            OrderedList.create('foo');
+            OrderedList.create({data: 'foo'});
           }).toThrow();
           expect(function () {
-            OrderedList.create([], 'foo');
+            OrderedList.create({data: [], comparer: 'foo'});
           }).toThrow();
         });
       });
@@ -282,7 +282,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toOrderedList()", function () {
-      var buffer = $data.DataContainer.create([1, 2, 3]);
+      var buffer = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = buffer.toOrderedList();

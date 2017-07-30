@@ -19,7 +19,7 @@ describe("$data", function () {
       };
       Collection = $oop.getClass("test.$data.Collection.Collection")
       .mix($data.Collection);
-      collection = Collection.create(data);
+      collection = Collection.create({data: data});
     });
 
     describe("create()", function () {
@@ -155,7 +155,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toCollection()", function () {
-      var container = $data.DataContainer.create([1, 2, 3]);
+      var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = container.toCollection();

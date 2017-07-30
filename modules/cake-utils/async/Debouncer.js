@@ -2,7 +2,8 @@
 
 /**
  * @function $utils.Debouncer.create
- * @param {number} [delay] Minimum delay between dispatched calls.
+ * @param {Object} [properties]
+ * @param {number} [properties.delay] Minimum delay between dispatched calls.
  * @returns {$utils.Debouncer}
  */
 
@@ -14,8 +15,8 @@ $utils.Debouncer = $oop.getClass('$utils.Debouncer')
 .mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Debouncer# */{
   /** @ignore */
-  init: function (delay) {
-    $assert.isNumberOptional(delay, "Invalid debounce delay");
+  init: function () {
+    $assert.isNumberOptional(this.debounceDelay, "Invalid debounce delay");
 
     this.elevateMethods(
         'onTimerEnd',
@@ -23,8 +24,9 @@ $utils.Debouncer = $oop.getClass('$utils.Debouncer')
 
     /**
      * @member {number} $utils.Debouncer#debounceDelay
+     * @todo Rename
      */
-    this.debounceDelay = delay || 0;
+    this.debounceDelay = this.debounceDelay || 0;
   },
 
   /**

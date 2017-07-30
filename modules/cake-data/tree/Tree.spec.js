@@ -6,7 +6,7 @@ describe("$assert", function () {
   var tree;
 
   beforeEach(function () {
-    tree = $data.Tree.create(['foo', 'bar']);
+    tree = $data.Tree.create({data: ['foo', 'bar']});
     spyOn($assert, 'assert').and.callThrough();
   });
 
@@ -52,14 +52,16 @@ describe("$data", function () {
       .mix($data.Tree);
 
       tree = Tree.create({
-        foo: {
-          bar: [
-            'baz',
-            'quux'
-          ]
-        },
-        bar: {
-          hello: 'world'
+        data: {
+          foo: {
+            bar: [
+              'baz',
+              'quux'
+            ]
+          },
+          bar: {
+            hello: 'world'
+          }
         }
       });
     });
@@ -95,50 +97,52 @@ describe("$data", function () {
         // JSON taken from
         // https://www.sitepoint.com/facebook-json-example/
         tree = $data.Tree.create({
-          "data": [
-            {
-              "id": "X999_Y999",
-              "from": {
-                "name": "Tom Brady",
-                "id": "X12"
-              },
-              "message": "Looking forward to 2010!",
-              "actions": [
-                {
-                  "name": "Comment",
-                  "link": "http://www.facebook.com/X999/posts/Y999"
+          data: {
+            "data": [
+              {
+                "id": "X999_Y999",
+                "from": {
+                  "name": "Tom Brady",
+                  "id": "X12"
                 },
-                {
-                  "name": "Like",
-                  "link": "http://www.facebook.com/X999/posts/Y999"
-                }
-              ],
-              "type": "status",
-              "created_time": "2010-08-02T21:27:44+0000",
-              "updated_time": "2010-08-02T21:27:44+0000"
-            },
-            {
-              "id": "X998_Y998",
-              "from": {
-                "name": "Peyton Manning",
-                "id": "X18"
+                "message": "Looking forward to 2010!",
+                "actions": [
+                  {
+                    "name": "Comment",
+                    "link": "http://www.facebook.com/X999/posts/Y999"
+                  },
+                  {
+                    "name": "Like",
+                    "link": "http://www.facebook.com/X999/posts/Y999"
+                  }
+                ],
+                "type": "status",
+                "created_time": "2010-08-02T21:27:44+0000",
+                "updated_time": "2010-08-02T21:27:44+0000"
               },
-              "message": "Where's my contract?",
-              "actions": [
-                {
-                  "name": "Comment",
-                  "link": "http://www.facebook.com/X998/posts/Y998"
+              {
+                "id": "X998_Y998",
+                "from": {
+                  "name": "Peyton Manning",
+                  "id": "X18"
                 },
-                {
-                  "name": "Like",
-                  "link": "http://www.facebook.com/X998/posts/Y998"
-                }
-              ],
-              "type": "status",
-              "created_time": "2010-08-02T21:27:44+0000",
-              "updated_time": "2010-08-02T21:27:44+0000"
-            }
-          ]
+                "message": "Where's my contract?",
+                "actions": [
+                  {
+                    "name": "Comment",
+                    "link": "http://www.facebook.com/X998/posts/Y998"
+                  },
+                  {
+                    "name": "Like",
+                    "link": "http://www.facebook.com/X998/posts/Y998"
+                  }
+                ],
+                "type": "status",
+                "created_time": "2010-08-02T21:27:44+0000",
+                "updated_time": "2010-08-02T21:27:44+0000"
+              }
+            ]
+          }
         });
 
         callback = jasmine.createSpy();
@@ -975,7 +979,7 @@ describe("$data", function () {
     var result;
 
     describe("toTree()", function () {
-      var container = $data.DataContainer.create([1, 2, 3]);
+      var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = container.toTree();

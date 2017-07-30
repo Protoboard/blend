@@ -19,10 +19,12 @@ describe("$data", function () {
       };
       StringSet = $oop.getClass("test.$data.StringSet.StringSet")
       .mix($data.StringSet);
-      set = StringSet.create(data);
+      set = StringSet.create({data: data});
       set2 = StringSet.create({
-        bar: 1,
-        baz: 1
+        data: {
+          bar: 1,
+          baz: 1
+        }
       });
     });
 
@@ -241,7 +243,7 @@ describe("$data", function () {
 
   describe("DataContainer", function () {
     describe("toStringSet()", function () {
-      var buffer = $data.DataContainer.create([1, 2, 3]);
+      var buffer = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
         result = buffer.toStringSet();

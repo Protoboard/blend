@@ -1,8 +1,7 @@
 "use strict";
 
 /**
- * @name $data.Chain.create
- * @function
+ * @function $data.Chain.create
  * @returns {$data.Chain}
  */
 
@@ -27,7 +26,7 @@ $data.Chain = $oop.getClass('$data.Chain')
     /**
      * @member {$data.MasterLink} $data.Chain#data
      */
-    this.data = $data.MasterLink.create(this);
+    this.data = $data.MasterLink.create({chain: this});
 
     // forcing item count to zero
     this._itemCount = 0;
@@ -37,7 +36,7 @@ $data.Chain = $oop.getClass('$data.Chain')
    * @returns {$data.Chain}
    */
   clear: function () {
-    this.data = $data.MasterLink.create(this);
+    this.data = $data.MasterLink.create({chain: this});
     return this;
   },
 

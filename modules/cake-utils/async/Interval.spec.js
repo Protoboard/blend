@@ -26,7 +26,7 @@ describe("$utils", function () {
     var interval;
 
     beforeEach(function () {
-      interval = $utils.Interval.create(1);
+      interval = $utils.Interval.create({timerId: 1});
     });
 
     describe("clearTimer()", function () {

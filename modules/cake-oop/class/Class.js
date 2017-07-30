@@ -818,9 +818,10 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
   /**
    * Creates a new instance.
+   * @param {Object} [properties]
    * @returns {$oop.Class}
    */
-  create: function () {
+  create: function (properties) {
     // retrieving forward class (if any)
     var that = this,
         forwards = this.__forwards,
@@ -828,8 +829,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         i, forward;
     for (i = 0; i < forwardsCount; i++) {
       forward = forwards[i];
-      if (forward.filter.apply(this, arguments)) {
-        // ctr arguments fit forward filter
+      if (forward.filter(properties)) {
+        // properties fit forward filter
         // forwarding
         that = forward['class'];
         break;
@@ -842,7 +843,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         instanceId, instance;
     if (mapper) {
       instances = that.__instanceLookup;
-      instanceId = mapper.apply(this, arguments);
+      instanceId = mapper(properties);
       instance = instances[instanceId];
       if (instance) {
         // instance found in cache
@@ -882,11 +883,34 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // instantiating class
     instance = Object.create(that);
 
-    // invoking .init
-    // initializing instance properties
-    if (typeof that.init === 'function') {
-      // running instance initializer
-      that.init.apply(instance, arguments);
+    var propertyNames,
+        propertyCount,
+        propertyName;
+
+    if (properties instanceof Object) {
+      // copying properties to instance
+      propertyNames = Object.getOwnPropertyNames(properties);
+      propertyCount = propertyNames.length;
+      for (i = 0; i < propertyCount; i++) {
+        propertyName = propertyNames[i];
+        instance[propertyName] = properties[propertyName];
+      }
+    } else if (properties !== undefined) {
+      // invalid properties supplied
+      $assert.fail([
+        "Invalid properties supplied to class '" + this.__classId + "'.",
+        "Can't instantiate."
+      ].join(" "));
+    }
+
+    // spreading properties
+    if (typeof instance.spread === 'function') {
+      instance.spread();
+    }
+
+    // initializing instance
+    if (typeof instance.init === 'function') {
+      instance.init();
     }
 
     // caching instance (if necessary)
