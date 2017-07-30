@@ -2,9 +2,18 @@
 
 /**
  * @function $data.QueryComponent.create
- * @param {Object} [properties]
- * @param {string} [properties.componentString] String representation of query
+ * @param {Object}   [properties]
+ * @param {string}   [properties.componentString] String representation of query
  * component
+ * @param {boolean}  [properties.isSkipper]
+ * @param {boolean}  [properties.isKeyExcluded]
+ * @param {boolean}  [properties.matchesAnyKey]
+ * @param {string[]} [properties.keyOptions]
+ * @param {Object}   [properties.keyOptionLookup]
+ * @param {boolean}  [properties.matchesPrimitiveValues]
+ * @param {boolean}  [properties.isValueExcluded]
+ * @param {boolean}  [properties.matchesAnyValue]
+ * @param {Array}    [properties.valueOptions]
  * @returns {$data.QueryComponent}
  */
 
@@ -25,7 +34,6 @@
  * @implements $utils.Stringifiable
  * @implements $data.Matchable
  * @todo Add return marker.
- * @todo Remove setters
  * @example
  * $data.QueryComponent.create({componentString: "foo:bar"})
  * // matches a specific pair
@@ -39,6 +47,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 .define(/** @lends $data.QueryComponent# */{
   /**
    * @member {string} $data.QueryComponent#componentString
+   * @constant
    */
 
   /**
@@ -46,39 +55,46 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    * component is matched by the next `QueryComponent` in a
    * {@link $data.Query}.
    * @member {boolean} $data.QueryComponent#isSkipper
+   * @constant
    */
 
   /**
    * Whether to exclude specified key options.
    * @member {boolean} $data.QueryComponent#isKeyExcluded
+   * @constant
    * @see $data.QueryComponent#keyOptions
    */
 
   /**
    * Whether `QueryComponent` matches any key in a key-value pair.
    * @member {boolean} $data.QueryComponent#matchesAnyKey
+   * @constant
    */
 
   /**
    * List of keys to be matched. For iterating over options and access to
    * option count.
    * @member {string[]} $data.QueryComponent#keyOptions
+   * @constant
    */
 
   /**
    * List of keys to be matched. For checking whether a key option is present.
    * @member {Object} $data.QueryComponent#keyOptionLookup
+   * @constant
    */
 
   /**
    * Whether `QueryComponent` matches primitive values only. (String, number,
    * boolean, & `null`.)
    * @member {boolean} $data.QueryComponent#matchesPrimitiveValues
+   * @constant
    */
 
   /**
    * Whether to exclude specified value options.
    * @member {boolean} $data.QueryComponent#isValueExcluded
+   * @constant
    * @see $data.QueryComponent#valueOptions
    */
 
@@ -86,11 +102,13 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    * Whether `QueryComponent` matches any value in a key-value pair. Query
    * components except for the last one in a query usually have this flag set.
    * @member {boolean} $data.QueryComponent#matchesAnyValue
+   * @constant
    */
 
   /**
    * List of keys to be matched.
    * @member {Array} $data.QueryComponent#valueOptions
+   * @constant
    */
 
   /** @ignore */
@@ -273,46 +291,6 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
                 // hence value matching is slower than key matching
                 this.valueOptions.indexOf(value) === -1 :
                 this.valueOptions.indexOf(value) > -1));
-  },
-
-  /**
-   * @param {string[]} keyOptions
-   * @returns {$data.QueryComponent}
-   */
-  setKeyOptions: function (keyOptions) {
-    var keyOptionLookup = this._arrayToLookup(keyOptions);
-    this.keyOptions = Object.keys(keyOptionLookup);
-    this.keyOptionLookup = keyOptionLookup;
-    this.matchesAnyKey = false;
-    return this;
-  },
-
-  /**
-   * @todo Pass keyOptions or rename to setKeyExcluded?
-   * @returns {$data.QueryComponent}
-   */
-  excludeKeyOptions: function () {
-    this.isKeyExcluded = true;
-    return this;
-  },
-
-  /**
-   * @param {Array} valueOptions
-   * @returns {$data.QueryComponent}
-   */
-  setValueOptions: function (valueOptions) {
-    this.valueOptions = valueOptions;
-    this.matchesAnyValue = false;
-    return this;
-  },
-
-  /**
-   * @todo Pass valueOptions or rename to setValueExcluded?
-   * @returns {$data.QueryComponent}
-   */
-  excludeValueOptions: function () {
-    this.isValueExcluded = true;
-    return this;
   }
 });
 

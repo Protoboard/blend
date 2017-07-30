@@ -185,11 +185,12 @@ describe("$data", function () {
 
     describe("clone()", function () {
       beforeEach(function () {
-        queryComponent = QueryComponent.create()
-        .setKeyOptions(['foo', 'bar'])
-        .excludeKeyOptions()
-        .setValueOptions(['baz'])
-        .excludeValueOptions();
+        queryComponent = QueryComponent.create({
+          keyOptions: ['foo', 'bar'],
+          isKeyExcluded: true,
+          valueOptions: ['baz'],
+          isValueExcluded: true
+        });
         result = queryComponent.clone();
       });
 
@@ -355,88 +356,6 @@ describe("$data", function () {
           expect(QueryComponent.create({componentString: 'foo:$'})
           .matches('foo', [])).toBeFalsy();
         });
-      });
-    });
-
-    describe("setKeyOptions()", function () {
-      var keyOptions;
-
-      beforeEach(function () {
-        keyOptions = ['foo', 'foo', 'bar'];
-        queryComponent = QueryComponent.create();
-        result = queryComponent.setKeyOptions(keyOptions);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(queryComponent);
-      });
-
-      it("should add to keyOptions", function () {
-        expect(queryComponent.keyOptions.sort())
-        .toEqual(['foo', 'bar'].sort());
-      });
-
-      it("should add to keyOptionLookup", function () {
-        expect(queryComponent.keyOptionLookup).toEqual({
-          foo: 1,
-          bar: 1
-        });
-      });
-
-      it("should set matchesAnyKey to false", function () {
-        expect(queryComponent.matchesAnyKey).toBeFalsy();
-      });
-    });
-
-    describe("excludeKeyOptions()", function () {
-      beforeEach(function () {
-        queryComponent = QueryComponent.create({componentString: 'foo:bar,baz'});
-        result = queryComponent.excludeKeyOptions();
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(queryComponent);
-      });
-
-      it("should set isKeyExcluded to true", function () {
-        expect(queryComponent.isKeyExcluded).toBeTruthy();
-      });
-    });
-
-    describe("setValueOptions()", function () {
-      var valueOptions;
-
-      beforeEach(function () {
-        valueOptions = [1, 2, 3];
-        queryComponent = QueryComponent.create({componentString: 'foo:*'});
-        result = queryComponent.setValueOptions(valueOptions);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(queryComponent);
-      });
-
-      it("should add to valueOptions", function () {
-        expect(queryComponent.valueOptions).toBe(valueOptions);
-      });
-
-      it("should set matchesAnyValue to false", function () {
-        expect(queryComponent.isValueExcluded).toBeFalsy();
-      });
-    });
-
-    describe("excludeValueOptions()", function () {
-      beforeEach(function () {
-        queryComponent = QueryComponent.create({componentString: 'foo:bar,baz'});
-        result = queryComponent.excludeValueOptions();
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(queryComponent);
-      });
-
-      it("should set isValueExcluded to true", function () {
-        expect(queryComponent.isValueExcluded).toBeTruthy();
       });
     });
   });

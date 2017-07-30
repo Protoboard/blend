@@ -160,17 +160,15 @@ $event.Event = $oop.getClass('$event.Event')
         subscriptions = eventSpace.subscriptions,
         eventName = event.eventName,
         targetPath = event.targetPath,
-        pathsQc = $data.QueryComponent.create(),
+        keyOptions = subscriptions.getNodeWrapped(['paths', eventName].toPath())
+        .toOrderedStringList()
+        .getRangeByPrefixWrapped(targetPath.toString(), 1)
+            .data,
+        pathsQc = $data.QueryComponent.create({keyOptions: keyOptions}),
         callbacksQuery = $data.Query.create({
           components: ['callbacks', 'bySubscription', eventName, pathsQc, '*']
         }),
         results = [];
-
-    // obtaining affected paths
-    subscriptions.getNodeWrapped(['paths', eventName].toPath())
-    .toOrderedStringList()
-    .getRangeByPrefixWrapped(targetPath.toString(), 1)
-    .passDataTo(pathsQc.setKeyOptions, pathsQc);
 
     // invoking callbacks
     subscriptions.queryPathNodePairs(callbacksQuery)
