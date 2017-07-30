@@ -3,7 +3,7 @@
 /**
  * @function $data.QueryComponent.create
  * @param {Object} [properties]
- * @param {string} [properties.queryComponentStr] String representation of query
+ * @param {string} [properties.componentString] String representation of query
  * component
  * @returns {$data.QueryComponent}
  */
@@ -25,9 +25,12 @@
  * @implements $utils.Stringifiable
  * @implements $data.Matchable
  * @todo Add return marker.
+ * @todo Remove setters
  * @example
- * $data.QueryComponent.create({queryComponentStr: "foo:bar"}) // matches a specific pair
- * $data.QueryComponent.create({queryComponentStr: "*:bar"}) // matches pair where value is "bar"
+ * $data.QueryComponent.create({componentString: "foo:bar"})
+ * // matches a specific pair
+ * $data.QueryComponent.create({componentString: "*:bar"})
+ * // matches pair where value is "bar"
  */
 $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 .mix($utils.Cloneable)
@@ -35,79 +38,73 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.QueryComponent# */{
   /**
-   * @member {string} $data.QueryComponent#queryComponentStr
+   * @member {string} $data.QueryComponent#componentString
    */
 
   /**
-   * @ignore
-   * @todo Add rest of spread properties
+   * Whether to skip matching path components (keys) until next path
+   * component is matched by the next `QueryComponent` in a
+   * {@link $data.Query}.
+   * @member {boolean} $data.QueryComponent#isSkipper
    */
+
+  /**
+   * Whether to exclude specified key options.
+   * @member {boolean} $data.QueryComponent#isKeyExcluded
+   * @see $data.QueryComponent#keyOptions
+   */
+
+  /**
+   * Whether `QueryComponent` matches any key in a key-value pair.
+   * @member {boolean} $data.QueryComponent#matchesAnyKey
+   */
+
+  /**
+   * List of keys to be matched. For iterating over options and access to
+   * option count.
+   * @member {string[]} $data.QueryComponent#keyOptions
+   */
+
+  /**
+   * List of keys to be matched. For checking whether a key option is present.
+   * @member {Object} $data.QueryComponent#keyOptionLookup
+   */
+
+  /**
+   * Whether `QueryComponent` matches primitive values only. (String, number,
+   * boolean, & `null`.)
+   * @member {boolean} $data.QueryComponent#matchesPrimitiveValues
+   */
+
+  /**
+   * Whether to exclude specified value options.
+   * @member {boolean} $data.QueryComponent#isValueExcluded
+   * @see $data.QueryComponent#valueOptions
+   */
+
+  /**
+   * Whether `QueryComponent` matches any value in a key-value pair. Query
+   * components except for the last one in a query usually have this flag set.
+   * @member {boolean} $data.QueryComponent#matchesAnyValue
+   */
+
+  /**
+   * List of keys to be matched.
+   * @member {Array} $data.QueryComponent#valueOptions
+   */
+
+  /** @ignore */
   spread: function () {
-    /**
-     * Whether to skip matching path components (keys) until next path
-     * component is matched by the next `QueryComponent` in a
-     * {@link $data.Query}.
-     * @member {boolean} $data.QueryComponent#isSkipper
-     */
-    this.isSkipper = false;
+    if (this.componentString !== undefined) {
+      this._spreadComponentString();
+    }
 
-    /**
-     * Whether to exclude specified key options.
-     * @member {boolean} $data.QueryComponent#isKeyExcluded
-     * @see $data.QueryComponent#keyOptions
-     */
-    this.isKeyExcluded = false;
+    if (this.keyOptions) {
+      this._spreadKeyOptions();
+    }
 
-    /**
-     * Whether `QueryComponent` matches any key in a key-value pair.
-     * @member {boolean} $data.QueryComponent#matchesAnyKey
-     * @default true
-     */
-    this.matchesAnyKey = true;
-
-    /**
-     * List of keys to be matched. For iterating over options and access to
-     * option count.
-     * @member {string[]} $data.QueryComponent#keyOptions
-     */
-    this.keyOptions = undefined;
-
-    /**
-     * List of keys to be matched. For checking whether a key option is present.
-     * @member {Object} $data.QueryComponent#keyOptionLookup
-     */
-    this.keyOptionLookup = undefined;
-
-    /**
-     * Whether `QueryComponent` matches primitive values only. (String, number,
-     * boolean, & `null`.)
-     * @member {boolean} $data.QueryComponent#matchesPrimitiveValues
-     */
-    this.matchesPrimitiveValues = false;
-
-    /**
-     * Whether to exclude specified value options.
-     * @member {boolean} $data.QueryComponent#isValueExcluded
-     * @see $data.QueryComponent#valueOptions
-     */
-    this.isValueExcluded = false;
-
-    /**
-     * Whether `QueryComponent` matches any value in a key-value pair. Query
-     * components except for the last one in a query usually have this flag set.
-     * @member {boolean} $data.QueryComponent#matchesAnyValue
-     * @default true
-     */
-    this.matchesAnyValue = true;
-
-    /**
-     * List of keys to be matched.
-     * @member {Array} $data.QueryComponent#valueOptions
-     */
-    this.valueOptions = undefined;
-
-    if (this.queryComponentStr !== undefined) {
-      this._parseQueryComponentString(this.queryComponentStr);
+    if (this.valueOptions) {
+      this._spreadValueOptions();
     }
   },
 
@@ -127,14 +124,11 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     return result;
   },
 
-  /**
-   * @param {string} queryComponentStr
-   * @private
-   */
-  _parseQueryComponentString: function (queryComponentStr) {
+  /** @private */
+  _spreadComponentString: function () {
     var safeSplit = $utils.safeSplit,
         // separating key & value tokens
-        componentTokens = safeSplit(queryComponentStr, ':'),
+        componentTokens = safeSplit(this.componentString, ':'),
         keyTokens = componentTokens[0] &&
             $data.QUERY_COMPONENT_KEY_TOKENIZER.exec(componentTokens[0]),
         valueTokens = componentTokens[1] &&
@@ -157,8 +151,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         keyWildcardToken === '*');
 
     if (keyOptionsToken !== undefined) {
-      this.setKeyOptions(safeSplit(keyOptionsToken, ',')
-      .map($data.unescapeQueryComponent));
+      this.keyOptions = safeSplit(keyOptionsToken, ',')
+      .map($data.unescapeQueryComponent);
+      this._spreadKeyOptions();
     }
 
     this.matchesPrimitiveValues = valuePrimitiveToken === '$';
@@ -173,9 +168,31 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         valueOptionsToken === undefined);
 
     if (valueOptionsToken !== undefined) {
-      this.setValueOptions(safeSplit(valueOptionsToken, ',')
-      .map($data.unescapeQueryComponent));
+      this.valueOptions = safeSplit(valueOptionsToken, ',')
+      .map($data.unescapeQueryComponent);
+      this._spreadValueOptions();
     }
+  },
+
+  /**
+   * @returns {$data.QueryComponent}
+   * @private
+   */
+  _spreadKeyOptions: function () {
+    var keyOptionLookup = this._arrayToLookup(this.keyOptions);
+    this.keyOptions = Object.keys(keyOptionLookup);
+    this.keyOptionLookup = keyOptionLookup;
+    this.matchesAnyKey = false;
+    return this;
+  },
+
+  /**
+   * @returns {$data.QueryComponent}
+   * @private
+   */
+  _spreadValueOptions: function () {
+    this.matchesAnyValue = false;
+    return this;
   },
 
   /**
@@ -231,8 +248,10 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    * @param {*} [value] Value to be matched
    * @returns {boolean}
    * @example
-   * $data.QueryComponent.create({queryComponentStr: '*:foo'}).matches('bar', 'foo') // true
-   * $data.QueryComponent.create({queryComponentStr: '*:!foo'}).matches('bar', 'foo') // false
+   * $data.QueryComponent.create({componentString: '*:foo'})
+   * .matches('bar', 'foo') // true
+   * $data.QueryComponent.create({componentString: '*:!foo'})
+   * .matches('bar', 'foo') // false
    */
   matches: function (key, value) {
     // a) either matches any key, or,
@@ -245,15 +264,15 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
         // and
         // c) either matches any value,
         (this.matchesAnyValue ||
-        // d) matches primitives and value is primitive, or,
-        this.matchesPrimitiveValues &&
-        (typeof value !== 'object' || value === null) ||
-        // e) value is (not) one of the available options
-        !!this.valueOptions && (this.isValueExcluded ?
-            // can't use lookup as values may be other than strings
-            // hence value matching is slower than key matching
-            this.valueOptions.indexOf(value) === -1 :
-            this.valueOptions.indexOf(value) > -1));
+            // d) matches primitives and value is primitive, or,
+            this.matchesPrimitiveValues &&
+            (typeof value !== 'object' || value === null) ||
+            // e) value is (not) one of the available options
+            !!this.valueOptions && (this.isValueExcluded ?
+                // can't use lookup as values may be other than strings
+                // hence value matching is slower than key matching
+                this.valueOptions.indexOf(value) === -1 :
+                this.valueOptions.indexOf(value) > -1));
   },
 
   /**
@@ -317,19 +336,19 @@ $oop.copyProperties($data, /** @lends $data */{
   QUERY_COMPONENT_VALUE_TOKENIZER: /^(?:(\$)|(\*)|(!)?(.*))$/,
 
   /**
-   * @param {string} queryComponentStr
+   * @param {string} componentString
    * @returns {string}
    */
-  escapeQueryComponent: function (queryComponentStr) {
-    return $utils.escape(queryComponentStr, $data.QUERY_COMPONENT_SPECIAL_CHARS);
+  escapeQueryComponent: function (componentString) {
+    return $utils.escape(componentString, $data.QUERY_COMPONENT_SPECIAL_CHARS);
   },
 
   /**
-   * @param {string} queryComponentStr
+   * @param {string} componentString
    * @returns {string}
    */
-  unescapeQueryComponent: function (queryComponentStr) {
-    return $utils.unescape(queryComponentStr, $data.QUERY_COMPONENT_SPECIAL_CHARS);
+  unescapeQueryComponent: function (componentString) {
+    return $utils.unescape(componentString, $data.QUERY_COMPONENT_SPECIAL_CHARS);
   }
 });
 
@@ -338,6 +357,6 @@ $oop.copyProperties(String.prototype, /** @lends external:String# */{
    * @returns {$data.QueryComponent}
    */
   toQueryComponent: function () {
-    return $data.QueryComponent.create({queryComponentStr: this});
+    return $data.QueryComponent.create({componentString: this});
   }
 });
