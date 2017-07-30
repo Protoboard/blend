@@ -26,9 +26,7 @@ $data.Query = $oop.getClass('$data.Query')
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.Query# */{
-  /**
-   * @ignore
-   */
+  /** @ignore */
   init: function () {
     $assert.isArray(this.components, "Invalid component list");
 

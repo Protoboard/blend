@@ -22,63 +22,63 @@ $event.Event = $oop.getClass('$event.Event')
 .mix($data.Link)
 .implement($oop.getClass('$event.EventSource'))
 .define(/** @lends $event.Event# */{
+  /**
+   * Identifies event type.
+   * @member {string} $event.Event#eventName
+   */
+
+  /**
+   * Event instance the current event is the effect of. In other words, the
+   * triggering of which led to the triggering of the current event. A chain
+   * of causing events usually leads back to user interaction, or scheduled
+   * operations.
+   * It is possible to set this property using
+   * {@link $event.Event#setCausingEvent}, but most of the time it's set
+   * by the event mechanism once the event is triggered.
+   * @member {$event.Event} $event.Event#causingEvent
+   */
+
+  /**
+   * Identifies the application component (instance) that is responsible for
+   * triggering the current event.
+   * @member {*} $event.Event#sender
+   */
+
+  /**
+   * Original path the event was triggered on. When event was broadcast, it's
+   * the broadcast path. When the event has not been triggered (or broadcast)
+   * yet, `targetPath` is `undefined`.
+   * @member {$data.Path} $event.Event#targetPath
+   */
+
+  /**
+   * Path currently visited by the event in the process of bubbling or
+   * broadcasting.
+   * @member {$data.Path} $event.Event#currentPath
+   */
+
+  /**
+   * Whether event bubbles along parent chain.
+   * @member {boolean} $event.Event#bubbles
+   * @default false
+   * @todo Special case for 1-level bubbling?
+   */
+
+  /**
+   * Whether default behavior associated with event (if any) is going to be
+   * triggered.
+   * @member {boolean} $event.Event#defaultPrevented
+   * @default true
+   */
+
+  /** @ignore */
+  spread: function () {
+    this.bubbles = false;
+    this.defaultPrevented = true;
+  },
+
   /** @ignore */
   init: function () {
-    /**
-     * Identifies event type.
-     * @member {string} $event.Event#eventName
-     */
-
-    /**
-     * Event instance the current event is the effect of. In other words, the
-     * triggering of which led to the triggering of the current event. A chain
-     * of causing events usually leads back to user interaction, or scheduled
-     * operations.
-     * It is possible to set this property using
-     * {@link $event.Event#setCausingEvent}, but most of the time it's set
-     * by the event mechanism once the event is triggered.
-     * @member {$event.Event} $event.Event#causingEvent
-     */
-    this.causingEvent = undefined;
-
-    /**
-     * Identifies the application component (instance) that is responsible for
-     * triggering the current event.
-     * @member {*} $event.Event#sender
-     */
-    this.sender = undefined;
-
-    /**
-     * Original path the event was triggered on. When event was broadcast, it's
-     * the broadcast path. When the event has not been triggered (or broadcast)
-     * yet, `targetPath` is `undefined`.
-     * @member {$data.Path} $event.Event#targetPath
-     */
-    this.targetPath = undefined;
-
-    /**
-     * Path currently visited by the event in the process of bubbling or
-     * broadcasting.
-     * @member {$data.Path} $event.Event#currentPath
-     */
-    this.currentPath = undefined;
-
-    /**
-     * Whether event bubbles along parent chain.
-     * @member {boolean} $event.Event#bubbles
-     * @default false
-     * @todo Special case for 1-level bubbling?
-     */
-    this.bubbles = false;
-
-    /**
-     * Whether default behavior associated with event (if any) is going to be
-     * triggered.
-     * @member {boolean} $event.Event#defaultPrevented
-     * @default true
-     */
-    this.defaultPrevented = true;
-
     this.elevateMethods('unlink');
   },
 

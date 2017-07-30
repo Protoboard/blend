@@ -14,19 +14,23 @@
 $utils.Debouncer = $oop.getClass('$utils.Debouncer')
 .mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Debouncer# */{
+  /**
+   * @member {number} $utils.Debouncer#debounceDelay
+   * @todo Rename
+   */
+
+  /** @ignore */
+  spread: function () {
+    this.debounceDelay = this.debounceDelay || 0;
+  },
+
   /** @ignore */
   init: function () {
-    $assert.isNumberOptional(this.debounceDelay, "Invalid debounce delay");
+    $assert.isNumber(this.debounceDelay, "Invalid debounce delay");
 
     this.elevateMethods(
         'onTimerEnd',
         'onTimerCancel');
-
-    /**
-     * @member {number} $utils.Debouncer#debounceDelay
-     * @todo Rename
-     */
-    this.debounceDelay = this.debounceDelay || 0;
   },
 
   /**

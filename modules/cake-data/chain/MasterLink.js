@@ -15,27 +15,29 @@
 $data.MasterLink = $oop.getClass('$data.MasterLink')
 .define(/** @lends $data.MasterLink# */{
   /**
-   * @ignore
+   * Chain instance the link is associated with.
+   * @member {$data.Chain} $data.MasterLink#chain
+   * @constant
    */
+
+  /**
+   * Link that comes before the current link in the chain.
+   * @member {$data.Link|$data.MasterLink} $data.MasterLink#previousLink
+   */
+
+  /**
+   * Link that comes after the current link in the chain.
+   * @member {$data.Link|$data.MasterLink} $data.MasterLink#nextLink
+   */
+
+  /** @ignore */
+  spread: function () {
+    this.previousLink = this;
+    this.nextLink = this;
+  },
+
+  /** @ignore */
   init: function () {
     $assert.isChain(this.chain, "Invalid chain");
-
-    /**
-     * Chain instance the link is associated with.
-     * @member {$data.Chain} $data.MasterLink#chain
-     * @constant
-     */
-
-    /**
-     * Link that comes before the current link in the chain.
-     * @member {$data.Link|$data.MasterLink} $data.MasterLink#previousLink
-     */
-    this.previousLink = this;
-
-    /**
-     * Link that comes after the current link in the chain.
-     * @member {$data.Link|$data.MasterLink} $data.MasterLink#nextLink
-     */
-    this.nextLink = this;
   }
 });

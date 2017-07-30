@@ -19,7 +19,7 @@ $utils.Promise = $oop.getClass('$utils.Promise')
 .implement($oop.getClass('$utils.Thenable'))
 .define(/** @lends $utils.Promise# */{
   /** @ignore */
-  init: function () {
+  spread: function () {
     /**
      * @member {string} $utils.Promise#promiseState
      */

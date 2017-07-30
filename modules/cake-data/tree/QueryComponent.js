@@ -35,14 +35,14 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.QueryComponent# */{
   /**
-   * @ignore
-   * @todo Move to spread, add rest of spread properties
+   * @member {string} $data.QueryComponent#queryComponentStr
    */
-  init: function () {
-    /**
-     * @member {string} $data.QueryComponent#queryComponentStr
-     */
 
+  /**
+   * @ignore
+   * @todo Add rest of spread properties
+   */
+  spread: function () {
     /**
      * Whether to skip matching path components (keys) until next path
      * component is matched by the next `QueryComponent` in a

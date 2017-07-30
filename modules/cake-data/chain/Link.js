@@ -13,26 +13,20 @@
 $data.Link = $oop.getClass('$data.Link')
 .mix($utils.Cloneable)
 .define(/** @lends $data.Link# */{
-  /** @ignore */
-  init: function () {
-    /**
-     * Chain instance the link is associated with.
-     * @member {$data.Chain} $data.Link#chain
-     */
-    this.chain = undefined;
+  /**
+   * Chain instance the link is associated with.
+   * @member {$data.Chain} $data.Link#chain
+   */
 
-    /**
-     * Link that comes before the current link in the chain.
-     * @member {$data.Link} $data.Link#previousLink
-     */
-    this.previousLink = undefined;
+  /**
+   * Link that comes before the current link in the chain.
+   * @member {$data.Link} $data.Link#previousLink
+   */
 
-    /**
-     * Link that comes after the current link in the chain.
-     * @member {$data.Link} $data.Link#nextLink
-     */
-    this.nextLink = undefined;
-  },
+  /**
+   * Link that comes after the current link in the chain.
+   * @member {$data.Link} $data.Link#nextLink
+   */
 
   /**
    * Adds current unconnected link after the specified link.

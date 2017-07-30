@@ -14,7 +14,7 @@ $utils.Identifiable = $oop.getClass('$utils.Identifiable')
   _lastInstanceId: -1,
 
   /** @ignore */
-  init: function () {
+  spread: function () {
     /**
      * Identifies instance globally.
      * @member {number} $utils.Identifiable#instanceId

@@ -15,20 +15,6 @@ describe("$data", function () {
       link = Link.create();
     });
 
-    describe("create()", function () {
-      it("should initialize previousLink property", function () {
-        expect(link.hasOwnProperty('previousLink')).toBeTruthy();
-      });
-
-      it("should initialize nextLink property", function () {
-        expect(link.hasOwnProperty('nextLink')).toBeTruthy();
-      });
-
-      it("should initialize chain property", function () {
-        expect(link.hasOwnProperty('chain')).toBeTruthy();
-      });
-    });
-
     describe("addAfter()", function () {
       var link2,
           oldPreviousLink,

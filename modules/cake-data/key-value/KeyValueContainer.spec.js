@@ -223,7 +223,7 @@ describe("$data", function () {
         KeyValueContainer1 = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer1')
         .mix($data.DataContainer)
         .define({
-          init: function () {
+          spread: function () {
             this.data = this.data || [];
           },
 

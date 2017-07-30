@@ -11,6 +11,7 @@
  * using a stack-like API. (push, pop, etc.)
  * @todo Accept & process data in & out
  * @todo Make sure clone() is right. Might 'steal' links from original.
+ * @todo Add Clearable?
  * @class $data.Chain
  * @extends $data.DataContainer
  * @extends $data.SetContainer
@@ -21,11 +22,18 @@ $data.Chain = $oop.getClass('$data.Chain')
 .mix($oop.getClass('$data.SetContainer'))
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Chain# */{
+  /**
+   * @member {$data.MasterLink} $data.Chain#data
+   */
+
+  /**
+   * @member {number} $data.Chain#_itemCount
+   * @private
+   */
+
   /** @ignore */
-  init: function () {
-    /**
-     * @member {$data.MasterLink} $data.Chain#data
-     */
+  spread: function () {
+    // forcing data buffer to be a MasterLink
     this.data = $data.MasterLink.create({chain: this});
 
     // forcing item count to zero

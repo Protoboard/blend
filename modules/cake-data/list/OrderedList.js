@@ -21,14 +21,17 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
 .mix($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
   /** @ignore */
-  init: function () {
-    $assert.isFunctionOptional(this.comparer, "Invalid comparer function");
-
+  spread: function () {
     /**
-     * @type {$data.Comparer}
+     * @member {$data.Comparer} $data.OrderedList#comparer
      * @protected
      */
-    this._comparer = this.comparer || this._defaultComparer;
+    this.comparer = this.comparer || this._defaultComparer;
+  },
+
+  /** @ignore */
+  init: function () {
+    $assert.isFunction(this.comparer, "Invalid comparer function");
   },
 
   /**
@@ -87,7 +90,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
    */
   clone: function clone() {
     var cloned = clone.returned;
-    cloned._comparer = this._comparer;
+    cloned.comparer = this.comparer;
     return cloned;
   },
 

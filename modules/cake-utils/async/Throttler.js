@@ -16,26 +16,30 @@
 $utils.Throttler = $oop.getClass('$utils.Throttler')
 .mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Throttler# */{
+  /**
+   * @member {number} $utils.Throttler#_throttleInterval
+   * @private
+   * @todo Rename
+   */
+
+  /**
+   * @member {number[]} $utils.Throttler#_throttledCallCounts
+   * @private
+   */
+
+  /** @ignore */
+  spread: function () {
+    this._throttleInterval = this._throttleInterval || 0;
+    this._throttledCallCounts = [];
+  },
+
   /** @ignore */
   init: function () {
-    $assert.isNumberOptional(this._throttleInterval, "Invalid throttle interval");
+    $assert.isNumber(this._throttleInterval, "Invalid throttle interval");
 
     this.elevateMethods(
         'onTimerTick',
         'onTimerCancel');
-
-    /**
-     * @member {number} $utils.Throttler#_throttleInterval
-     * @private
-     * @todo Rename
-     */
-    this._throttleInterval = this._throttleInterval || 0;
-
-    /**
-     * @member {number[]} $utils.Throttler#_throttledCallCounts
-     * @private
-     */
-    this._throttledCallCounts = [];
   },
 
   /**

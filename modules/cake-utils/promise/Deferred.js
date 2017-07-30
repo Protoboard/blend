@@ -13,7 +13,7 @@
 $utils.Deferred = $oop.getClass('$utils.Deferred')
 .define(/** @lends $utils.Deferred# */{
   /** @ignore */
-  init: function () {
+  spread: function () {
     /**
      * @member {$utils.Promise} $utils.Deferred#promise
      */

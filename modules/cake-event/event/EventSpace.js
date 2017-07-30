@@ -18,11 +18,12 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 .mix($utils.Destructible)
 .implement($oop.getClass('$event.EventTarget'))
 .define(/** @lends $event.EventSpace# */{
+  /**
+   * @member {$data.Tree} $event.EventSpace#subscription
+   */
+
   /** @ignore */
-  init: function () {
-    /**
-     * @member {$data.Tree} $event.EventSpace#subscription
-     */
+  spread: function () {
     this.subscriptions = $data.Tree.create();
   },
 

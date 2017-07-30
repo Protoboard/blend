@@ -10,15 +10,9 @@ $event.Wrapper = $oop.getClass('$event.Wrapper')
 .expect($utils.Cloneable)
 .define(/** @lends $event.Wrapper# */{
   /**
-   * @ignore
+   * Variable wrapped by the current instance.
+   * @member {*} wrapped
    */
-  init: function () {
-    /**
-     * Variable wrapped by the current instance.
-     * @type {*}
-     */
-    this.wrapped = undefined;
-  },
 
   /**
    * Clones `Wrapper` instance.

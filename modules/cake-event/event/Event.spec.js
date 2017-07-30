@@ -22,22 +22,6 @@ describe("$event", function () {
         expect(event.eventName).toBe('event1');
       });
 
-      it("should initialize causingEvent", function () {
-        expect(event.hasOwnProperty('causingEvent')).toBeTruthy();
-      });
-
-      it("should initialize sender", function () {
-        expect(event.hasOwnProperty('sender')).toBeTruthy();
-      });
-
-      it("should initialize targetPath", function () {
-        expect(event.hasOwnProperty('targetPath')).toBeTruthy();
-      });
-
-      it("should initialize currentPath", function () {
-        expect(event.hasOwnProperty('currentPath')).toBeTruthy();
-      });
-
       it("should initialize bubbles", function () {
         expect(event.bubbles).toBe(false);
       });

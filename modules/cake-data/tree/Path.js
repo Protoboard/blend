@@ -26,14 +26,14 @@ $data.Path = $oop.getClass('$data.Path')
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Path# */{
+  /**
+   * Path components.
+   * @member {string[]} $data.Path#components
+   */
+
   /** @ignore */
   init: function () {
     $assert.isArray(this.components, "Invalid component list");
-
-    /**
-     * Path components.
-     * @member {string[]} $data.Path#components
-     */
   },
 
   /**

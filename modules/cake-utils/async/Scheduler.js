@@ -6,25 +6,26 @@
  */
 $utils.Scheduler = $oop.getClass('$utils.Scheduler')
 .define(/** @lends $utils.Scheduler# */{
+  /**
+   * @member {Array} $utils.Scheduler#_scheduledArguments
+   * @private
+   */
+
+  /**
+   * @member {$utils.Timer[]} $utils.Scheduler#_scheduleTimers
+   * @private
+   */
+
+  /**
+   * Provides external control over completing or stopping the scheduled
+   * calls.
+   * @member {$utils.Deferred} $utils.Scheduler#schedulerDeferred
+   */
+
   /** @ignore */
-  init: function () {
-    /**
-     * @member {Array} $utils.Scheduler#_scheduledArguments
-     * @private
-     */
+  spread: function () {
     this._scheduledArguments = [];
-
-    /**
-     * @member {$utils.Timer[]} $utils.Scheduler#_scheduleTimers
-     * @private
-     */
     this._scheduleTimers = [];
-
-    /**
-     * Provides external control over completing or stopping the scheduled
-     * calls.
-     * @member {$utils.Deferred} $utils.Scheduler#schedulerDeferred
-     */
     this.schedulerDeferred = $utils.Deferred.create();
   },
 

@@ -11,14 +11,18 @@ $data.ObjectContainer = $oop.getClass('$data.ObjectContainer')
 .expect($oop.getClass('$data.DataContainer'))
 .implement($oop.getClass('$data.Clearable'))
 .define(/** @lends $data.ObjectContainer# */{
+  /**
+   * @member {object|Array} $data.ObjectContainer#data
+   */
+
+  /** @ignore */
+  spread: function () {
+    this.data = this.data || {};
+  },
+
   /** @ignore */
   init: function () {
-    $assert.isObjectOptional(this.data, "Invalid object buffer");
-
-    /**
-     * @member {object|Array} $data.ObjectContainer#data
-     */
-    this.data = this.data || {};
+    $assert.isObject(this.data, "Invalid object buffer");
   },
 
   /**

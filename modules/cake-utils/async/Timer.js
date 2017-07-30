@@ -17,6 +17,22 @@ $utils.Timer = $oop.getClass('$utils.Timer')
    * @member {number} $utils.Timer#timerId
    */
 
+  /**
+   * @member {$utils.Deferred} $utils.Timer#timerDeferred
+   */
+
+  /**
+   * @member {$utils.Promise} $utils.Timer#timerPromise
+   */
+
+  /** @ignore */
+  spread: function () {
+    var timerDeferred = $utils.Deferred.create();
+
+    this.timerDeferred = timerDeferred;
+    this.timerPromise = timerDeferred.promise;
+  },
+
   /** @ignore */
   init: function () {
     $assert.isNumber(this.timerId, "Invalid timer ID");
@@ -25,20 +41,7 @@ $utils.Timer = $oop.getClass('$utils.Timer')
         'onTimerPromiseResolve',
         'onTimerPromiseReject');
 
-    var timerDeferred = $utils.Deferred.create(),
-        timerPromise = timerDeferred.promise;
-
-    /**
-     * @member {$utils.Deferred} $utils.Timer#timerDeferred
-     */
-    this.timerDeferred = timerDeferred;
-
-    /**
-     * @member {$utils.Promise} $utils.Timer#timerPromise
-     */
-    this.timerPromise = timerPromise;
-
-    timerPromise.then(
+    this.timerPromise.then(
         this.onTimerPromiseResolve,
         this.onTimerPromiseReject);
   },

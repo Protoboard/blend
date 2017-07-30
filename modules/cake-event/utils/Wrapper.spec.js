@@ -18,12 +18,6 @@ describe("$event", function () {
       wrapper = Wrapper.create({eventName: 'event1'});
     });
 
-    describe("create()", function () {
-      it("should initialize wrapped", function () {
-        expect(wrapper.hasOwnProperty('wrapped')).toBeTruthy();
-      });
-    });
-
     describe("clone()", function () {
       beforeEach(function () {
         wrapper.wrapped = {};

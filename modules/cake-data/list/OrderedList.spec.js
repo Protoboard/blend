@@ -28,7 +28,7 @@ describe("$data", function () {
       });
 
       it("should set comparer", function () {
-        expect(orderedList._comparer).toBe(comparer);
+        expect(orderedList.comparer).toBe(comparer);
       });
 
       describe("on missing arguments", function () {
@@ -38,7 +38,7 @@ describe("$data", function () {
 
         it("should set default properties", function () {
           expect(orderedList.data).toEqual([]);
-          expect(orderedList._comparer)
+          expect(orderedList.comparer)
           .toBe(orderedList._defaultComparer);
         });
       });
@@ -60,8 +60,8 @@ describe("$data", function () {
         result = orderedList.clone();
       });
 
-      it("should set _comparer property", function () {
-        expect(result._comparer).toBe(orderedList._comparer);
+      it("should set comparer property", function () {
+        expect(result.comparer).toBe(orderedList.comparer);
       });
     });
 
