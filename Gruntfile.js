@@ -27,7 +27,8 @@ module.exports = function (grunt) {
         dest: ['dist', pkg.name + '.js'].join('/'),
         options: {
           banner: [
-            '/*! ' + pkg.name + ' - v' + pkg.version + ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
+            '/*! ' + pkg.name + ' - v' + pkg.version +
+            ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
             '(function(){',
             'function d(require,exports,module){',
             ''
@@ -175,7 +176,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['jshint', 'karma']);
-  grunt.registerTask('build-quick', ['clean', 'concat', 'notify:build-quick']);
+  grunt.registerTask('build-quick', ['clean:build', 'concat', 'notify:build-quick']);
   grunt.registerTask('build-full', ['clean', 'concat', 'test', 'jsdoc',
     'notify:build-full']);
   grunt.registerTask('default', ['build-quick', 'watch']);
