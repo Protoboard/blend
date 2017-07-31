@@ -18,40 +18,50 @@
 $utils.Promise = $oop.getClass('$utils.Promise')
 .implement($oop.getClass('$utils.Thenable'))
 .define(/** @lends $utils.Promise# */{
+  /**
+   * Current state of the promise. Possible values: "pending",
+   * "fulfilled", or "rejected".
+   * @member {string} $utils.Promise#promiseState
+   */
+
+  /**
+   * Argument list passed to the `resolve` or `reject` of the corresponding
+   * `Deferred`.
+   * @member {Array} $utils.Promise#deferredArguments
+   */
+
+  /**
+   * Argument list passed to the `notify` of the corresponding `Deferred`.
+   * @member {Arguments[]} $utils.Promise#notificationArguments
+   */
+
+  /**
+   * List of callbacks to be invoked on resolution.
+   * @member {function[]} $utils.Promise#successHandlers
+   */
+
+  /**
+   * List of callbacks to be invoked on rejection.
+   * @member {function[]} $utils.Promise#failureHandlers
+   */
+
+  /**
+   * List of callbacks to be invoked on notification.
+   * @member {function[]} $utils.Promise#progressHandlers
+   */
+
   /** @ignore */
   spread: function () {
-    /**
-     * @member {string} $utils.Promise#promiseState
-     */
     this.promiseState = $utils.PROMISE_STATE_PENDING;
-
-    /**
-     * @member {Array} $utils.Promise#deferredArguments
-     */
-    this.deferredArguments = undefined;
-
-    /**
-     * @member {Arguments[]} $utils.Promise#notificationArguments
-     */
     this.notificationArguments = [];
-
-    /**
-     * @member {function[]} $utils.Promise#successHandlers
-     */
     this.successHandlers = [];
-
-    /**
-     * @member {function[]} $utils.Promise#failureHandlers
-     */
     this.failureHandlers = [];
-
-    /**
-     * @member {function[]} $utils.Promise#progressHandlers
-     */
     this.progressHandlers = [];
   },
 
   /**
+   * Assigns event handlers to the `Promise`, to be called on resolution,
+   * rejection, or notification of the corresponding `Deferred`.
    * @param {function} [successHandler]
    * @param {function} [failureHandler]
    * @param {function} [progressHandler]

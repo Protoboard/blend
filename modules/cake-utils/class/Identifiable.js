@@ -9,9 +9,8 @@ $utils.Identifiable = $oop.getClass('$utils.Identifiable')
   /**
    * @memberOf $utils.Identifiable
    * @type {number}
-   * @private
    */
-  _lastInstanceId: -1,
+  lastInstanceId: -1,
 
   /** @ignore */
   spread: function () {
@@ -19,6 +18,6 @@ $utils.Identifiable = $oop.getClass('$utils.Identifiable')
      * Identifies instance globally.
      * @member {number} $utils.Identifiable#instanceId
      */
-    this.instanceId = ++$utils.Identifiable._lastInstanceId;
+    this.instanceId = ++$utils.Identifiable.lastInstanceId;
   }
 });

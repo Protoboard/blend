@@ -34,11 +34,11 @@ describe("$utils", function () {
       });
 
       it("should add arguments to list", function () {
-        expect(debouncer._scheduledArguments).toEqual([["foo", "bar"]]);
+        expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
       });
 
       it("should add timer to list", function () {
-        expect($utils.Timeout.mixedBy(debouncer._scheduleTimers[0]))
+        expect($utils.Timeout.mixedBy(debouncer.scheduleTimers[0]))
         .toBeTruthy();
       });
 
@@ -52,11 +52,11 @@ describe("$utils", function () {
         });
 
         it("should not add to argument list", function () {
-          expect(debouncer._scheduledArguments).toEqual([["foo", "bar"]]);
+          expect(debouncer.scheduledArguments).toEqual([["foo", "bar"]]);
         });
 
         it("should not add timer to list", function () {
-          expect(debouncer._scheduleTimers[1]).toBeUndefined();
+          expect(debouncer.scheduleTimers[1]).toBeUndefined();
         });
 
         it("should restart timer", function () {
@@ -74,7 +74,7 @@ describe("$utils", function () {
         });
 
         it("should reset affected timer in registry", function () {
-          expect(debouncer._scheduleTimers).toEqual([undefined]);
+          expect(debouncer.scheduleTimers).toEqual([undefined]);
         });
 
         it("should notify promise with corresponding arguments", function () {
@@ -84,11 +84,11 @@ describe("$utils", function () {
 
       describe("when timer gets canceled by user", function () {
         beforeEach(function () {
-          debouncer._scheduleTimers[0].clearTimer();
+          debouncer.scheduleTimers[0].clearTimer();
         });
 
         it("should reset affected timer in registry", function () {
-          expect(debouncer._scheduleTimers).toEqual([undefined]);
+          expect(debouncer.scheduleTimers).toEqual([undefined]);
         });
       });
     });

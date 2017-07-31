@@ -9,7 +9,7 @@
 
 /**
  * Represents an interval ID with promise capabilities. Allows to cancel an
- * interval timer via window.clearInterval.
+ * interval timer via `window.clearInterval`.
  * @class $utils.Interval
  * @extends $utils.Timer
  */

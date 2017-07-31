@@ -11,12 +11,12 @@ describe("$utils", function () {
     });
 
     describe("create()", function () {
-      it("should initialize _scheduledArguments", function () {
-        expect(scheduler._scheduledArguments).toEqual([]);
+      it("should initialize scheduledArguments", function () {
+        expect(scheduler.scheduledArguments).toEqual([]);
       });
 
-      it("should initialize _scheduleTimers", function () {
-        expect(scheduler._scheduleTimers).toEqual([]);
+      it("should initialize scheduleTimers", function () {
+        expect(scheduler.scheduleTimers).toEqual([]);
       });
 
       it("should initialize schedulerDeferred", function () {

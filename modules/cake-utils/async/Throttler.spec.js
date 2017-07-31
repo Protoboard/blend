@@ -7,16 +7,16 @@ describe("$utils", function () {
     var throttler;
 
     beforeEach(function () {
-      throttler = $utils.Throttler.create({_throttleInterval: 50});
+      throttler = $utils.Throttler.create({throttleDelay: 50});
     });
 
     describe("create()", function () {
-      it("should set _throttleInterval", function () {
-        expect(throttler._throttleInterval).toBe(50);
+      it("should set throttleDelay", function () {
+        expect(throttler.throttleDelay).toBe(50);
       });
 
-      it("should initialize _throttledCallCounts", function () {
-        expect(throttler._throttledCallCounts).toEqual([]);
+      it("should initialize throttledCallCounts", function () {
+        expect(throttler.throttledCallCounts).toEqual([]);
       });
     });
 
@@ -38,16 +38,16 @@ describe("$utils", function () {
       });
 
       it("should add arguments to list", function () {
-        expect(throttler._scheduledArguments).toEqual([["foo", "bar"]]);
+        expect(throttler.scheduledArguments).toEqual([["foo", "bar"]]);
       });
 
       it("should add timer to list", function () {
-        expect($utils.Interval.mixedBy(throttler._scheduleTimers[0]))
+        expect($utils.Interval.mixedBy(throttler.scheduleTimers[0]))
         .toBeTruthy();
       });
 
       it("should increment call count", function () {
-        expect(throttler._throttledCallCounts[0]).toBe(1);
+        expect(throttler.throttledCallCounts[0]).toBe(1);
       });
 
       it("should start timer", function () {
@@ -60,15 +60,15 @@ describe("$utils", function () {
         });
 
         it("should not add to argument list", function () {
-          expect(throttler._scheduledArguments).toEqual([["foo", "bar"]]);
+          expect(throttler.scheduledArguments).toEqual([["foo", "bar"]]);
         });
 
         it("should not add timer to list", function () {
-          expect(throttler._scheduleTimers[1]).toBeUndefined();
+          expect(throttler.scheduleTimers[1]).toBeUndefined();
         });
 
         it("should increment call count", function () {
-          expect(throttler._throttledCallCounts[0]).toBe(2);
+          expect(throttler.throttledCallCounts[0]).toBe(2);
         });
       });
 
@@ -82,7 +82,7 @@ describe("$utils", function () {
         });
 
         it("should reset call count", function () {
-          expect(throttler._throttledCallCounts).toEqual([0]);
+          expect(throttler.throttledCallCounts).toEqual([0]);
         });
 
         it("should notify promise with corresponding arguments", function () {
@@ -92,11 +92,11 @@ describe("$utils", function () {
 
       describe("when timer gets canceled by user", function () {
         beforeEach(function () {
-          throttler._scheduleTimers[0].clearTimer();
+          throttler.scheduleTimers[0].clearTimer();
         });
 
         it("should remove affected timer in registry", function () {
-          expect(throttler._scheduleTimers).toEqual([undefined]);
+          expect(throttler.scheduleTimers).toEqual([undefined]);
         });
       });
     });

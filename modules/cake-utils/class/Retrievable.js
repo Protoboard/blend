@@ -15,14 +15,12 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
    * Global registry for instances having the Retrievable trait.
    * @memberOf $utils.Retrievable
    * @type {object}
-   * @private
-   * @todo Rename to "instances"
    */
-  _instanceRegistry: {},
+  instances: {},
 
   /** @ignore */
   init: function () {
-    this._addToInstanceRegistry();
+    this._addToInstances();
   },
 
   /**
@@ -30,8 +28,8 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
    * @returns {$utils.Retrievable}
    * @private
    */
-  _addToInstanceRegistry: function () {
-    $utils.Retrievable._instanceRegistry[this.instanceId] = this;
+  _addToInstances: function () {
+    $utils.Retrievable.instances[this.instanceId] = this;
     return this;
   },
 
@@ -40,8 +38,8 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
    * @returns {$utils.Retrievable}
    * @private
    */
-  _removeFromInstanceRegistry: function () {
-    delete $utils.Retrievable._instanceRegistry[this.instanceId];
+  _removeFromInstances: function () {
+    delete $utils.Retrievable.instances[this.instanceId];
     return this;
   },
 
@@ -49,7 +47,7 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
    * @returns {$utils.Retrievable}
    */
   destroy: function () {
-    this._removeFromInstanceRegistry();
+    this._removeFromInstances();
     return this;
   },
 
@@ -60,6 +58,6 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
    * @memberOf $utils.Retrievable
    */
   getInstanceById: function (instanceId) {
-    return $utils.Retrievable._instanceRegistry[instanceId];
+    return $utils.Retrievable.instances[instanceId];
   }
 });

@@ -8,6 +8,7 @@
  */
 
 /**
+ * Manages state for timed function calls.
  * @class $utils.Timer
  */
 $utils.Timer = $oop.getClass('$utils.Timer')
@@ -18,10 +19,14 @@ $utils.Timer = $oop.getClass('$utils.Timer')
    */
 
   /**
+   * Allows external control of the timer.
    * @member {$utils.Deferred} $utils.Timer#timerDeferred
+   * @see $utils.Timer#clearTimer
    */
 
   /**
+   * Resolves when the timer completes as planned. Rejects when the timer
+   * gets interrupted.
    * @member {$utils.Promise} $utils.Timer#timerPromise
    */
 

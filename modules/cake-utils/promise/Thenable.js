@@ -8,6 +8,8 @@
 $utils.Thenable = $oop.getClass('$utils.Thenable')
 .define(/** @lends $utils.Thenable# */{
   /**
+   * Assigns event handlers to the `Promise`, to be called on resolution,
+   * rejection, or notification of the corresponding `Deferred`.
    * @param {function} successHandler
    * @param {function} failureHandler
    * @param {function} progressHandler

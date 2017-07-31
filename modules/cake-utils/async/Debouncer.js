@@ -3,7 +3,8 @@
 /**
  * @function $utils.Debouncer.create
  * @param {Object} [properties]
- * @param {number} [properties.delay] Minimum delay between dispatched calls.
+ * @param {number} [properties.debounceDelay] Minimum time between
+ * dispatched calls in milliseconds.
  * @returns {$utils.Debouncer}
  */
 
@@ -15,8 +16,8 @@ $utils.Debouncer = $oop.getClass('$utils.Debouncer')
 .mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Debouncer# */{
   /**
+   * Minimum time between dispatched calls in milliseconds.
    * @member {number} $utils.Debouncer#debounceDelay
-   * @todo Rename
    */
 
   /** @ignore */

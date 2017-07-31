@@ -3,7 +3,8 @@
 /**
  * @function $utils.Throttler.create
  * @param {Object} [properties]
- * @param {number} [properties.interval] Time interval between dispatched calls.
+ * @param {number} [properties.throttleDelay] Exact time between dispatched
+ * calls in milliseconds.
  * @returns {$utils.Throttler}
  */
 
@@ -17,25 +18,25 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
 .mix($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Throttler# */{
   /**
-   * @member {number} $utils.Throttler#_throttleInterval
-   * @private
-   * @todo Rename
+   * Exact time between dispatched calls in milliseconds.
+   * @member {number} $utils.Throttler#throttleDelay
    */
 
   /**
-   * @member {number[]} $utils.Throttler#_throttledCallCounts
-   * @private
+   * Registry of call counts associated with corresponding argument lists in
+   * `scheduledArguments`.
+   * @member {number[]} $utils.Throttler#throttledCallCounts
    */
 
   /** @ignore */
   spread: function () {
-    this._throttleInterval = this._throttleInterval || 0;
-    this._throttledCallCounts = [];
+    this.throttleDelay = this.throttleDelay || 0;
+    this.throttledCallCounts = [];
   },
 
   /** @ignore */
   init: function () {
-    $assert.isNumber(this._throttleInterval, "Invalid throttle interval");
+    $assert.isNumber(this.throttleDelay, "Invalid throttle interval");
 
     this.elevateMethods(
         'onTimerTick',
@@ -48,7 +49,7 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
    * @protected
    */
   _addTimerForArguments: function (timer, args) {
-    this._throttledCallCounts.push(0);
+    this.throttledCallCounts.push(0);
   },
 
   /**
@@ -64,7 +65,7 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
 
     if (timerIndex === undefined) {
       timerIndex = this._getTimerCount();
-      timeoutArguments = [this._throttleInterval].concat(callbackArguments);
+      timeoutArguments = [this.throttleDelay].concat(callbackArguments);
 
       // starting timer
       timer = $utils.setInterval.apply($utils, timeoutArguments);
@@ -78,7 +79,7 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
     }
 
     // registering call
-    this._throttledCallCounts[timerIndex]++;
+    this.throttledCallCounts[timerIndex]++;
 
     return this.schedulerDeferred.promise;
   },
@@ -87,7 +88,7 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
   onTimerTick: function () {
     // checking whether a call is registered
     var timerIndex = this._getTimerIndexByArguments(arguments),
-        throttledCallCounts = this._throttledCallCounts,
+        throttledCallCounts = this.throttledCallCounts,
         callCount = throttledCallCounts[timerIndex];
 
     if (callCount > 0) {

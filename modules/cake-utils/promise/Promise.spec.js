@@ -56,10 +56,6 @@ describe("$utils", function () {
         expect(promise.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
 
-      it("should initialize deferredArguments property", function () {
-        expect(promise.hasOwnProperty('deferredArguments')).toBeTruthy();
-      });
-
       it("should initialize notificationArguments property", function () {
         expect(promise.notificationArguments).toEqual([]);
       });

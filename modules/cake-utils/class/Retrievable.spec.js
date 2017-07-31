@@ -9,8 +9,8 @@ describe("$utils", function () {
         instance;
 
     beforeEach(function () {
-      $utils.Identifiable._lastInstanceId = -1;
-      $utils.Retrievable._instanceRegistry = {};
+      $utils.Identifiable.lastInstanceId = -1;
+      $utils.Retrievable.instances = {};
       Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
       .mix($utils.Retrievable);
     });
@@ -21,7 +21,7 @@ describe("$utils", function () {
       });
 
       it("should add instance to registry", function () {
-        expect($utils.Retrievable._instanceRegistry).toEqual({
+        expect($utils.Retrievable.instances).toEqual({
           0: instance
         });
       });
@@ -48,7 +48,7 @@ describe("$utils", function () {
       var result;
 
       beforeEach(function () {
-        spyOn(Retrievable, '_removeFromInstanceRegistry');
+        spyOn(Retrievable, '_removeFromInstances');
         instance = Retrievable.create();
         result = instance.destroy();
       });
@@ -58,7 +58,7 @@ describe("$utils", function () {
       });
 
       it("should remove instance from registry", function () {
-        expect(Retrievable._removeFromInstanceRegistry).toHaveBeenCalled();
+        expect(Retrievable._removeFromInstances).toHaveBeenCalled();
       });
     });
   });

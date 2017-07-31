@@ -15,12 +15,15 @@ $utils.Deferred = $oop.getClass('$utils.Deferred')
   /** @ignore */
   spread: function () {
     /**
+     * Promise associated  with `Deferred`. Provides access to "resolve",
+     * "reject", and "progress" events.
      * @member {$utils.Promise} $utils.Deferred#promise
      */
     this.promise = $utils.Promise.create();
   },
 
   /**
+   * Resolves promise, invoking success handlers associated with `promise`.
    * @returns {$utils.Deferred}
    */
   resolve: function () {
@@ -44,6 +47,7 @@ $utils.Deferred = $oop.getClass('$utils.Deferred')
   },
 
   /**
+   * Rejects promise, invoking failure handlers associated with `promise`.
    * @returns {$utils.Deferred}
    */
   reject: function () {
@@ -67,6 +71,8 @@ $utils.Deferred = $oop.getClass('$utils.Deferred')
   },
 
   /**
+   * Notifies promise of progress, invoking progress handlers associated with
+   * `promise`.
    * @returns {$utils.Deferred}
    */
   notify: function () {

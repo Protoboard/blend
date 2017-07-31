@@ -7,25 +7,25 @@
 $utils.Scheduler = $oop.getClass('$utils.Scheduler')
 .define(/** @lends $utils.Scheduler# */{
   /**
-   * @member {Array} $utils.Scheduler#_scheduledArguments
-   * @private
+   * Registry of unique argument lists passed to the Scheduler.
+   * @member {Array} $utils.Scheduler#scheduledArguments
    */
 
   /**
-   * @member {$utils.Timer[]} $utils.Scheduler#_scheduleTimers
-   * @private
+   * Registry of `Timer` instances associated with corresponding argument
+   * lists in `scheduledArguments`.
+   * @member {$utils.Timer[]} $utils.Scheduler#scheduleTimers
    */
 
   /**
-   * Provides external control over completing or stopping the scheduled
-   * calls.
+   * Allows external control over completing or stopping scheduled calls.
    * @member {$utils.Deferred} $utils.Scheduler#schedulerDeferred
    */
 
   /** @ignore */
   spread: function () {
-    this._scheduledArguments = [];
-    this._scheduleTimers = [];
+    this.scheduledArguments = [];
+    this.scheduleTimers = [];
     this.schedulerDeferred = $utils.Deferred.create();
   },
 
@@ -34,7 +34,7 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
    * @protected
    */
   _getTimerIndexByArguments: function (args) {
-    var scheduledCallbackArguments = this._scheduledArguments,
+    var scheduledCallbackArguments = this.scheduledArguments,
         scheduledCallbackArgumentsCount = scheduledCallbackArguments.length,
         argCount = args.length,
         i, matchesArguments,
@@ -60,7 +60,7 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
    * @protected
    */
   _getTimerCount: function () {
-    return this._scheduleTimers.length;
+    return this.scheduleTimers.length;
   },
 
   /**
@@ -69,8 +69,8 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
    * @protected
    */
   _addTimerForArguments: function (timer, args) {
-    this._scheduledArguments.push(args);
-    this._scheduleTimers.push(timer);
+    this.scheduledArguments.push(args);
+    this.scheduleTimers.push(timer);
   },
 
   /**
@@ -79,7 +79,7 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
    * @protected
    */
   _setTimerAtIndex: function (timer, timerIndex) {
-    this._scheduleTimers[timerIndex] = timer;
+    this.scheduleTimers[timerIndex] = timer;
   },
 
   /**
@@ -89,7 +89,7 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
    */
   _clearTimerAtIndex: function (timerIndex) {
     // todo Investigate a good middle ground bw. cpu vs. memory footprint.
-    this._scheduleTimers[timerIndex] = undefined;
+    this.scheduleTimers[timerIndex] = undefined;
   }
 
   /**
