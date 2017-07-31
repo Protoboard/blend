@@ -154,7 +154,7 @@ describe("$data", function () {
         });
 
         it("should set matchesAnyKey property", function () {
-          expect(QueryComponent.create().matchesAnyKey).toBeFalsy();
+          expect(QueryComponent.create().matchesAnyKey).toBeTruthy();
           expect(QueryComponent.create({
             keyOptions: ['foo', 'bar']
           }).matchesAnyKey).toBeFalsy();
@@ -168,7 +168,7 @@ describe("$data", function () {
         });
 
         it("should set matchesAnyValue property", function () {
-          expect(QueryComponent.create().matchesAnyValue).toBeFalsy();
+          expect(QueryComponent.create().matchesAnyValue).toBeTruthy();
           expect(QueryComponent.create({
             valueOptions: ['foo', 'bar']
           }).matchesAnyValue).toBeFalsy();
@@ -179,6 +179,20 @@ describe("$data", function () {
           expect(QueryComponent.create({
             matchesAnyValue: true
           }).matchesAnyValue).toBeTruthy();
+        });
+
+        it("should set matchesPrimitiveValues property", function () {
+          expect(QueryComponent.create().matchesPrimitiveValues).toBeFalsy();
+          expect(QueryComponent.create({
+            valueOptions: ['foo', 'bar']
+          }).matchesPrimitiveValues).toBeFalsy();
+          expect(QueryComponent.create({
+            valueOptions: ['foo', 'bar'],
+            matchesPrimitiveValues: true
+          }).matchesPrimitiveValues).toBeFalsy();
+          expect(QueryComponent.create({
+            matchesPrimitiveValues: true
+          }).matchesPrimitiveValues).toBeTruthy();
         });
       });
     });

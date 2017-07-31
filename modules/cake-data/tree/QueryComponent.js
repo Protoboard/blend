@@ -124,6 +124,14 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     if (this.valueOptions) {
       this._spreadValueOptions();
     }
+
+    // by default, matching all keys & values
+    if (this.matchesAnyKey === undefined) {
+      this.matchesAnyKey = true;
+    }
+    if (this.matchesAnyValue === undefined) {
+      this.matchesAnyValue = true;
+    }
   },
 
   /**
@@ -192,10 +200,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     }
   },
 
-  /**
-   * @returns {$data.QueryComponent}
-   * @private
-   */
+  /** @private */
   _spreadKeyOptions: function () {
     var keyOptionLookup = this._arrayToLookup(this.keyOptions);
     this.keyOptions = Object.keys(keyOptionLookup);
@@ -210,6 +215,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    */
   _spreadValueOptions: function () {
     this.matchesAnyValue = false;
+    this.matchesPrimitiveValues = false;
     return this;
   },
 
