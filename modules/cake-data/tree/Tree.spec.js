@@ -224,10 +224,8 @@ describe("$data", function () {
             ["data.0.id".toPath(), "X999_Y999"],
             ["data.0.message".toPath(), "Looking forward to 2010!"],
             ["data.0.type".toPath(), "status"],
-            ["data.0.created_time".toPath(),
-              "2010-08-02T21:27:44+0000"],
-            ["data.0.updated_time".toPath(),
-              "2010-08-02T21:27:44+0000"]
+            ["data.0.created_time".toPath(), "2010-08-02T21:27:44+0000"],
+            ["data.0.updated_time".toPath(), "2010-08-02T21:27:44+0000"]
           ]);
         });
       });
@@ -267,8 +265,7 @@ describe("$data", function () {
             ["data.0.id".toPath(), "X999_Y999"],
             ["data.0.from.name".toPath(), "Tom Brady"],
             ["data.0.from.id".toPath(), "X12"],
-            ["data.0.message".toPath(),
-              "Looking forward to 2010!"],
+            ["data.0.message".toPath(), "Looking forward to 2010!"],
             ["data.0.actions.0.name".toPath(), "Comment"],
             ["data.0.actions.0.link".toPath(),
               "http://www.facebook.com/X999/posts/Y999"],
@@ -276,10 +273,8 @@ describe("$data", function () {
             ["data.0.actions.1.link".toPath(),
               "http://www.facebook.com/X999/posts/Y999"],
             ["data.0.type".toPath(), "status"],
-            ["data.0.created_time".toPath(),
-              "2010-08-02T21:27:44+0000"],
-            ["data.0.updated_time".toPath(),
-              "2010-08-02T21:27:44+0000"],
+            ["data.0.created_time".toPath(), "2010-08-02T21:27:44+0000"],
+            ["data.0.updated_time".toPath(), "2010-08-02T21:27:44+0000"],
             ["data.1.id".toPath(), "X998_Y998"],
             ["data.1.from.name".toPath(), "Peyton Manning"],
             ["data.1.from.id".toPath(), "X18"],
@@ -291,10 +286,8 @@ describe("$data", function () {
             ["data.1.actions.1.link".toPath(),
               "http://www.facebook.com/X998/posts/Y998"],
             ["data.1.type".toPath(), "status"],
-            ["data.1.created_time".toPath(),
-              "2010-08-02T21:27:44+0000"],
-            ["data.1.updated_time".toPath(),
-              "2010-08-02T21:27:44+0000"]
+            ["data.1.created_time".toPath(), "2010-08-02T21:27:44+0000"],
+            ["data.1.updated_time".toPath(), "2010-08-02T21:27:44+0000"]
           ]);
         });
       });
