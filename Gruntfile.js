@@ -21,7 +21,10 @@ module.exports = function (grunt) {
           pkg = packages[i];
 
       config[moduleName] = {
-        src: assets.js.map(function (relativePath) {
+        src: grunt.file.expand({
+          cwd: ['modules', moduleName].join('/')
+        }, assets.js)
+        .map(function (relativePath) {
           return ['modules', moduleName, relativePath].join('/');
         }),
         dest: ['dist', pkg.name + '.js'].join('/'),
@@ -176,7 +179,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['jshint', 'karma']);
-  grunt.registerTask('build-quick', ['clean:build', 'concat', 'notify:build-quick']);
+  grunt.registerTask('build-quick', ['clean:build', 'concat',
+    'notify:build-quick']);
   grunt.registerTask('build-full', ['clean', 'concat', 'test', 'jsdoc',
     'notify:build-full']);
   grunt.registerTask('default', ['build-quick', 'watch']);

@@ -2,40 +2,8 @@
   "assets": {
     "js": [
       "globals.js",
-      "chain/Chain.js",
-      "chain/Link.js",
-      "chain/MasterLink.js",
-      "container/ArrayContainer.js",
-      "container/DataContainer.js",
-      "container/ItemContainer.js",
-      "container/ObjectContainer.js",
-      "container/SetContainer.js",
-      "key-value/Collection.js",
-      "key-value/Dictionary.js",
-      "key-value/KeyValueContainer-utils.js",
-      "key-value/KeyValueContainer.js",
-      "key-value/PairList.js",
-      "key-value/StringCollection.js",
-      "key-value/StringDictionary.js",
-      "key-value/StringKeyHost.js",
-      "key-value/StringPairList.js",
-      "key-value/StringValueHost.js",
-      "list/Comparer.js",
-      "list/OrderedList.js",
-      "list/OrderedStringList.js",
-      "set/StringSet.js",
-      "tree/Path.js",
-      "tree/Query.js",
-      "tree/Queryable.js",
-      "tree/QueryComponent.js",
-      "tree/Tree.js",
-      "utils/Clearable.js",
-      "utils/Comparable.js",
-      "utils/data-utils.js",
-      "utils/Filterable.js",
-      "utils/Matchable.js",
-      "utils/Reducible.js",
-      "utils/Stackable.js"
+      "**/*.js",
+      "!**/*.*.js"
     ]
   }
 }

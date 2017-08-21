@@ -2,22 +2,8 @@
   "assets": {
     "js": [
       "globals.js",
-      "async/async-utils.js",
-      "async/Debouncer.js",
-      "async/Interval.js",
-      "async/Scheduler.js",
-      "async/Throttler.js",
-      "async/Timeout.js",
-      "async/Timer.js",
-      "class/Cloneable.js",
-      "class/Destructible.js",
-      "class/Identifiable.js",
-      "class/Retrievable.js",
-      "promise/Deferred.js",
-      "promise/Promise.js",
-      "promise/Thenable.js",
-      "string/string-utils.js",
-      "string/Stringifiable.js"
+      "**/*.js",
+      "!**/*.*.js"
     ]
   }
 }
