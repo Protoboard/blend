@@ -120,6 +120,16 @@ module.exports = function (grunt) {
       }
     }),
 
+    'string-replace': {
+      dist: {
+        files: [{
+          src: 'templates/index.html',
+          dest: 'public/index.html'
+        }],
+        replacements: []
+      }
+    },
+
     jshint: {
       options: {
         jshintrc: true
@@ -171,6 +181,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-string-replace');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -179,9 +190,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['jshint', 'karma']);
-  grunt.registerTask('build-quick', ['clean:build', 'concat',
+  grunt.registerTask('build-quick', ['clean:build', 'string-replace', 'concat',
     'notify:build-quick']);
-  grunt.registerTask('build-full', ['clean', 'concat', 'test', 'jsdoc',
-    'notify:build-full']);
+  grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'test',
+    'jsdoc', 'notify:build-full']);
   grunt.registerTask('default', ['build-quick', 'watch']);
 };
