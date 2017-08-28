@@ -36,7 +36,7 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
 
   /** @ignore */
   init: function () {
-    $assert.isNumber(this.throttleDelay, "Invalid throttle interval");
+    $assert.isNumber(this.throttleDelay, "Invalid throttle delay");
 
     this.elevateMethods(
         'onTimerTick',
