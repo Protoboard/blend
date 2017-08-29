@@ -11,12 +11,10 @@
  * Traversed by events. Allows subscribing and unsubscribing to/from events.
  * @class $event.EventSpace
  * @extends $utils.Destructible
- * @implements $event.EventTarget
  */
 $event.EventSpace = $oop.getClass('$event.EventSpace')
 .mix($oop.Singleton)
 .mix($utils.Destructible)
-.implement($oop.getClass('$event.EventTarget'))
 .define(/** @lends $event.EventSpace# */{
   /**
    * @member {$data.Tree} $event.EventSpace#subscription
@@ -180,12 +178,12 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
    * Subscribes specified callback to the event `eventName` being triggered on
    * the path `targetPath`.
    * @param {string} eventName Identifies event type
-   * @param {function} callback Function to be invoked when event is triggered
    * @param {$data.Path} targetPath Path on which to listen to event
    * @param {string} subscriberId Identifies subscriber
+   * @param {function} callback Function to be invoked when event is triggered
    * @returns {$event.EventSpace}
    */
-  on: function (eventName, callback, targetPath, subscriberId) {
+  on: function (eventName, targetPath, subscriberId, callback) {
     var subscriptions = this.subscriptions,
         targetPathStr = targetPath.toString(),
 

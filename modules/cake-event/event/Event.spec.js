@@ -78,9 +78,9 @@ describe("$event", function () {
 
         $event.EventSpace.create()
         .destroy()
-        .on('event1', callback1, 'foo.bar.baz'.toPath(), '1')
-        .on('event1', callback2, 'foo.bar.baz'.toPath(), '2')
-        .on('event1', callback3, 'foo'.toPath(), '3');
+        .on('event1', 'foo.bar.baz'.toPath(), '1', callback1)
+        .on('event1', 'foo.bar.baz'.toPath(), '2', callback2)
+        .on('event1', 'foo'.toPath(), '3', callback3);
 
         event
         .setSender({})
@@ -197,10 +197,10 @@ describe("$event", function () {
 
         $event.EventSpace.create()
         .destroy()
-        .on('event1', callback1, 'foo.bar.baz.quux'.toPath(), '1')
-        .on('event1', callback2, 'foo.bar.baz.quux'.toPath(), '2')
-        .on('event1', callback3, 'foo.bar'.toPath(), '3')
-        .on('event1', callback4, 'foo'.toPath(), '4');
+        .on('event1', 'foo.bar.baz.quux'.toPath(), '1', callback1)
+        .on('event1', 'foo.bar.baz.quux'.toPath(), '2', callback2)
+        .on('event1', 'foo.bar'.toPath(), '3', callback3)
+        .on('event1', 'foo'.toPath(), '4', callback4);
 
         event
         .setCausingEvent(Event.create({eventName: 'event1'}))

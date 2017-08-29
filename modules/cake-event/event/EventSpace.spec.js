@@ -50,13 +50,13 @@ describe("$event", function () {
       });
 
       it("should return self", function () {
-        result = eventSpace.on('eventName', callback, 'foo.bar'.toPath(), 'foo');
+        result = eventSpace.on('eventName', 'foo.bar'.toPath(), 'foo', callback);
         expect(result).toBe(eventSpace);
       });
 
       describe("with subscriptionId", function () {
         beforeEach(function () {
-          result = eventSpace.on('eventName', callback, 'foo.bar'.toPath(), 'foo');
+          result = eventSpace.on('eventName', 'foo.bar'.toPath(), 'foo', callback);
         });
 
         it("should add to subscriptions", function () {
@@ -87,7 +87,7 @@ describe("$event", function () {
 
         describe("then subscribing again", function () {
           it("should not change subscriptions", function () {
-            eventSpace.on('eventName', callback, 'foo.bar'.toPath(), 'foo');
+            eventSpace.on('eventName', 'foo.bar'.toPath(), 'foo', callback);
             expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {
@@ -125,10 +125,10 @@ describe("$event", function () {
         callback3 = function () {};
         callback4 = function () {};
         result = eventSpace
-        .on('event1', callback4, 'foo.bar'.toPath(), 'subscriber3')
-        .on('event1', callback1, 'foo.bar.baz'.toPath(), 'subscriber1')
-        .on('event1', callback2, 'foo.bar.quux'.toPath(), 'subscriber2')
-        .on('event2', callback3, 'foo.baz'.toPath(), 'subscriber1');
+        .on('event1', 'foo.bar'.toPath(), 'subscriber3', callback4)
+        .on('event1', 'foo.bar.baz'.toPath(), 'subscriber1', callback1)
+        .on('event1', 'foo.bar.quux'.toPath(), 'subscriber2', callback2)
+        .on('event2', 'foo.baz'.toPath(), 'subscriber1', callback3);
       });
 
       it("should return self", function () {
