@@ -69,6 +69,46 @@ describe("$data", function () {
       });
     });
 
+    describe("fromComponents()", function () {
+      var query,
+          components;
+
+      beforeEach(function () {
+        query = {};
+        components = ['foo', 'bar', 'baz'];
+        spyOn(Query, 'create').and.returnValue(query);
+        result = Query.fromComponents(components);
+      });
+
+      it("should pass components to create()", function () {
+        expect(Query.create).toHaveBeenCalledWith({components: components});
+      });
+
+      it("should return created instance", function () {
+        expect(result).toBe(query);
+      });
+    });
+
+    describe("fromString()", function () {
+      var query;
+
+      beforeEach(function () {
+        query = {};
+        spyOn(Query, 'create').and.returnValue(query);
+        result = Query.fromString('foo.*.bar:!baz');
+      });
+
+      it("should create a Query instance", function () {
+        expect(Query.create).toHaveBeenCalledWith({
+          components: ['foo', '*', 'bar:!baz']
+        });
+      });
+
+      it("should return created instance", function () {
+        expect(result).toBe(query);
+      });
+    });
+
     describe("clone()", function () {
       beforeEach(function () {
         result = query.clone();
@@ -134,26 +174,6 @@ describe("$data", function () {
           expect('**!foo.baz'.toQuery()
           .matches('bar.foo.baz'.toPath())).toBeFalsy();
         });
-      });
-    });
-
-    describe("fromString()", function () {
-      var query;
-
-      beforeEach(function () {
-        query = $data.Query.create({components: []});
-        spyOn($data.Query, 'create').and.returnValue(query);
-        result = $data.Query.fromString('foo.*.bar:!baz');
-      });
-
-      it("should create a Query instance", function () {
-        expect($data.Query.create.calls.allArgs()).toEqual([
-          [{components: ['foo', '*', 'bar:!baz']}]
-        ]);
-      });
-
-      it("should return created instance", function () {
-        expect(result).toBe(query);
       });
     });
   });

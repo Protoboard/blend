@@ -66,10 +66,8 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     var subscriptions = this.subscriptions,
         eventNameQc = eventName !== undefined ?
             $data.escapeQueryComponent(eventName) : '*',
-        callbacksQuery = $data.Query.create({
-          components: [
-            'callbacks', 'bySubscriber', subscriberId, eventNameQc, '*']
-        }),
+        callbacksQuery = $data.Query.fromComponents([
+          'callbacks', 'bySubscriber', subscriberId, eventNameQc, '*']),
         callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 
     // removing callbacks from 'bySubscriber' branch
@@ -116,10 +114,8 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
         targetPathPc = targetPath && targetPath.toString(),
         targetPathQc = targetPath ?
             $data.escapeQueryComponent(targetPathPc) : '*',
-        callbacksQuery = $data.Query.create({
-          components: [
-            'callbacks', 'bySubscription', eventName, targetPathQc, '*']
-        }),
+        callbacksQuery = $data.Query.fromComponents([
+          'callbacks', 'bySubscription', eventName, targetPathQc, '*']),
         callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 
     // removing callbacks from 'bySubscription' branch &

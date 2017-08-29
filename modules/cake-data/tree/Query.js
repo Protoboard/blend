@@ -26,16 +26,39 @@ $data.Query = $oop.getClass('$data.Query')
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.Query# */{
+  /**
+   * Query components.
+   * @member {Array.<$data.QueryComponent>} $data.Query#components
+   */
+
+  /**
+   * Creates a `Query` instance based on the specified component array.
+   * @memberOf $data.Query
+   * @param {Array.<$data.QueryComponent|string>} components
+   * @returns {$data.Query}
+   */
+  fromComponents: function (components) {
+    return this.create({components: components});
+  },
+
+  /**
+   * Creates a `Query` instance based on the specified string.
+   * @memberOf $data.Query
+   * @param {string} queryStr
+   * @returns {$data.Query}
+   */
+  fromString: function (queryStr) {
+    var components = $utils.safeSplit(queryStr, $data.PATH_COMPONENT_SEPARATOR);
+    return this.create({components: components});
+  },
+
   /** @ignore */
   init: function () {
     $assert.isArray(this.components, "Invalid component list");
 
     var QueryComponent = $data.QueryComponent;
 
-    /**
-     * Query components.
-     * @member {QueryComponent[]} $data.Query#components
-     */
+    // making sure all components are actually instances of $data.QueryComponent
     this.components = this.components
     .map(function (component) {
       return QueryComponent.mixedBy(component) ?
@@ -120,17 +143,6 @@ $data.Query = $oop.getClass('$data.Query')
     // reached end of query
     // if we also reached the end of the path, it's a match
     return j === pathComponentCount;
-  },
-
-  /**
-   * Creates a `Query` instance based on the specified string.
-   * @memberOf $data.Query
-   * @param {string} queryStr
-   * @returns {$data.Query}
-   */
-  fromString: function (queryStr) {
-    var components = $utils.safeSplit(queryStr, $data.PATH_COMPONENT_SEPARATOR);
-    return $data.Query.create({components: components});
   }
 });
 

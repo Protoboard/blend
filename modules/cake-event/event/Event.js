@@ -91,7 +91,7 @@ $event.Event = $oop.getClass('$event.Event')
         eventName = this.eventName,
         targetPath = this.targetPath,
         callbacksPath = $data.Path.fromComponents([
-            'callbacks', 'bySubscription', eventName, targetPath.toString()]),
+          'callbacks', 'bySubscription', eventName, targetPath.toString()]),
         callbacks = eventSpace.subscriptions.getNode(callbacksPath),
         subscriberIds = callbacks && Object.keys(callbacks),
         callbackCount = subscriberIds && subscriberIds.length || 0,
@@ -162,9 +162,8 @@ $event.Event = $oop.getClass('$event.Event')
         .getRangeByPrefixWrapped(targetPath.toString(), 1)
             .data,
         pathsQc = $data.QueryComponent.create({keyOptions: keyOptions}),
-        callbacksQuery = $data.Query.create({
-          components: ['callbacks', 'bySubscription', eventName, pathsQc, '*']
-        }),
+        callbacksQuery = $data.Query.fromComponents([
+          'callbacks', 'bySubscription', eventName, pathsQc, '*']),
         results = [];
 
     // invoking callbacks
