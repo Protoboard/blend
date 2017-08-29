@@ -71,6 +71,45 @@ describe("$data", function () {
       });
     });
 
+    describe("fromComponents()", function () {
+      var path,
+          components;
+
+      beforeEach(function () {
+        path = {};
+        components = ['foo', 'bar', 'baz'];
+        spyOn(Path, 'create').and.returnValue(path);
+        result = Path.fromComponents(components);
+      });
+
+      it("should pass components to create()", function () {
+        expect(Path.create).toHaveBeenCalledWith({components: components});
+      });
+
+      it("should return a created instance", function () {
+        expect(result).toBe(path);
+      });
+    });
+
+    describe("fromString()", function () {
+      var string = 'foo\\.bar.baz\\\\quux';
+
+      beforeEach(function () {
+        result = $data.Path.fromString(string);
+      });
+
+      it("should return a Path instance", function () {
+        expect($data.Path.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should set components property with unescaped components", function () {
+        expect(result.components).toEqual([
+          'foo.bar',
+          'baz\\quux'
+        ]);
+      });
+    });
+
     describe("clone()", function () {
       beforeEach(function () {
         result = path.clone();
@@ -234,25 +273,6 @@ describe("$data", function () {
 
       it("should escape special characters", function () {
         expect(result).toBe("foo\\.bar.baz\\\\quux");
-      });
-    });
-
-    describe("fromString()", function () {
-      var string = 'foo\\.bar.baz\\\\quux';
-
-      beforeEach(function () {
-        result = $data.Path.fromString(string);
-      });
-
-      it("should return a Path instance", function () {
-        expect($data.Path.mixedBy(result)).toBeTruthy();
-      });
-
-      it("should set components property with unescaped components", function () {
-        expect(result.components).toEqual([
-          'foo.bar',
-          'baz\\quux'
-        ]);
       });
     });
   });

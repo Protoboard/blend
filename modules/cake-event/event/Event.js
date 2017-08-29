@@ -90,10 +90,8 @@ $event.Event = $oop.getClass('$event.Event')
     var eventSpace = $event.EventSpace.create(),
         eventName = this.eventName,
         targetPath = this.targetPath,
-        callbacksPath = $data.Path.create({
-          components: [
-            'callbacks', 'bySubscription', eventName, targetPath.toString()]
-        }),
+        callbacksPath = $data.Path.fromComponents([
+            'callbacks', 'bySubscription', eventName, targetPath.toString()]),
         callbacks = eventSpace.subscriptions.getNode(callbacksPath),
         subscriberIds = callbacks && Object.keys(callbacks),
         callbackCount = subscriberIds && subscriberIds.length || 0,
@@ -122,9 +120,8 @@ $event.Event = $oop.getClass('$event.Event')
         eventName = event.eventName,
         targetPath = event.targetPath,
         currentPath = event.currentPath = targetPath.clone(),
-        callbacksPath = $data.Path.create({
-          components: ['callbacks', 'bySubscription', eventName, null]
-        }),
+        callbacksPath = $data.Path.fromComponents(
+            ['callbacks', 'bySubscription', eventName, null]),
         callbacks, subscriberIds, callbackCount,
         i,
         results = [];

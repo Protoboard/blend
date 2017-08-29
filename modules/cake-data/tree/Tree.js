@@ -37,7 +37,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     if (i === components.length) {
       // reached end of query
       // invoking callback with whatever path & node we're at
-      callback($data.Path.create({components: path}), node);
+      callback($data.Path.fromComponents(path), node);
       return;
     } else if (!(node instanceof Object)) {
       // reached leaf node mid-query
@@ -46,7 +46,7 @@ $data.Tree = $oop.getClass('$data.Tree')
       ) {
         // current q.c. is a trailing skipper
         // invoking callback w/ leaf node
-        callback($data.Path.create({components: path}), node);
+        callback($data.Path.fromComponents(path), node);
       }
       return;
     }
@@ -169,7 +169,7 @@ $data.Tree = $oop.getClass('$data.Tree')
       parentNode = childNode;
     }
 
-    return $data.Path.create({components: result});
+    return $data.Path.fromComponents(result);
   },
 
   /**
@@ -209,9 +209,8 @@ $data.Tree = $oop.getClass('$data.Tree')
       }
     }
 
-    return $data.Path.create({
-      components: pathComponents.slice(0, parentNodeCount - i)
-    });
+    return $data.Path.fromComponents(
+        pathComponents.slice(0, parentNodeCount - i));
   },
 
   /**

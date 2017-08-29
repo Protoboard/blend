@@ -28,8 +28,30 @@ $data.Path = $oop.getClass('$data.Path')
 .define(/** @lends $data.Path# */{
   /**
    * Path components.
-   * @member {string[]} $data.Path#components
+   * @member {Array.<string>} $data.Path#components
    */
+
+  /**
+   * Creates a `Path` instance based on the specified component array.
+   * @memberOf $data.Path
+   * @param {Array.<string>} components
+   * @returns {$data.Path}
+   */
+  fromComponents: function (components) {
+    return this.create({components: components});
+  },
+
+  /**
+   * Creates a `Path` instance based on the specified string.
+   * @memberOf $data.Path
+   * @param {string} pathStr
+   * @returns {$data.Path}
+   */
+  fromString: function (pathStr) {
+    var components = $utils.safeSplit(pathStr, $data.PATH_COMPONENT_SEPARATOR)
+    .map($data.unescapePathComponent);
+    return $data.Path.create({components: components});
+  },
 
   /** @ignore */
   init: function () {
@@ -160,18 +182,6 @@ $data.Path = $oop.getClass('$data.Path')
   toString: function () {
     return this.components.map($data.escapePathComponent)
     .join($data.PATH_COMPONENT_SEPARATOR);
-  },
-
-  /**
-   * Creates a `Path` instance based on the specified string.
-   * @memberOf $data.Path
-   * @param {string} pathStr
-   * @returns {$data.Path}
-   */
-  fromString: function (pathStr) {
-    var components = $utils.safeSplit(pathStr, $data.PATH_COMPONENT_SEPARATOR)
-    .map($data.unescapePathComponent);
-    return $data.Path.create({components: components});
   }
 });
 
