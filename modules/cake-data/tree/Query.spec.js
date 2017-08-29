@@ -54,7 +54,7 @@ describe("$data", function () {
         components: [
           'foo',
           'bar',
-          $data.QueryComponent.create({componentString: '*'})
+          $data.QueryComponent.fromString('*')
         ]
       });
     });
@@ -62,9 +62,9 @@ describe("$data", function () {
     describe("create()", function () {
       it("should initialize components property", function () {
         expect(query.components).toEqual([
-          $data.QueryComponent.create({componentString: 'foo'}),
-          $data.QueryComponent.create({componentString: 'bar'}),
-          $data.QueryComponent.create({componentString: '*'})
+          $data.QueryComponent.fromString('foo'),
+          $data.QueryComponent.fromString('bar'),
+          $data.QueryComponent.fromString('*')
         ]);
       });
     });

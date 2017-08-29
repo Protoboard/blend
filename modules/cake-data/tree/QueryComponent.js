@@ -35,9 +35,9 @@
  * @implements $data.Matchable
  * @todo Add return marker.
  * @example
- * $data.QueryComponent.create({componentString: "foo:bar"})
+ * $data.QueryComponent.fromString("foo:bar")
  * // matches a specific pair
- * $data.QueryComponent.create({componentString: "*:bar"})
+ * $data.QueryComponent.fromString("*:bar")
  * // matches pair where value is "bar"
  */
 $data.QueryComponent = $oop.getClass('$data.QueryComponent')
@@ -110,6 +110,16 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    * @member {Array} $data.QueryComponent#valueOptions
    * @constant
    */
+
+  /**
+   * Creates a `QueryComponent` instance based on the specified string.
+   * @memberOf $data.QueryComponent
+   * @param {string} componentString
+   * @returns {$data.QueryComponent}
+   */
+  fromString: function (componentString) {
+    return this.create({componentString: componentString});
+  },
 
   /** @ignore */
   spread: function () {
@@ -272,9 +282,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    * @param {*} [value] Value to be matched
    * @returns {boolean}
    * @example
-   * $data.QueryComponent.create({componentString: '*:foo'})
+   * $data.QueryComponent.fromString('*:foo')
    * .matches('bar', 'foo') // true
-   * $data.QueryComponent.create({componentString: '*:!foo'})
+   * $data.QueryComponent.fromString('*:!foo')
    * .matches('bar', 'foo') // false
    */
   matches: function (key, value) {

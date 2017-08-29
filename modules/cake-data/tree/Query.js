@@ -63,7 +63,7 @@ $data.Query = $oop.getClass('$data.Query')
     .map(function (component) {
       return QueryComponent.mixedBy(component) ?
           component :
-          QueryComponent.create({componentString: component});
+          QueryComponent.fromString(component);
     });
   },
 
