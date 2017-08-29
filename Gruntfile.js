@@ -109,7 +109,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     clean: {
-      build: ['dist'],
+      build: ['dist', 'public'],
       doc: ['doc']
     },
 
@@ -142,6 +142,10 @@ module.exports = function (grunt) {
     watch: buildWatchConfig({
       gruntfile: {
         files: ['Gruntfile.js'],
+        tasks: ['build-quick']
+      },
+      templates: {
+        files: ['templates/**/*.*'],
         tasks: ['build-quick']
       }
     }),
