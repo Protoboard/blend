@@ -71,6 +71,16 @@ $event.Event = $oop.getClass('$event.Event')
    * @default true
    */
 
+  /**
+   * Creates a `Event` instance based on the specified event name.
+   * @memberOf $event.Event
+   * @param {string} eventName
+   * @returns {$event.Event}
+   */
+  fromEventName: function (eventName) {
+    return this.create({eventName: eventName});
+  },
+
   /** @ignore */
   spread: function () {
     this.bubbles = false;
@@ -79,6 +89,7 @@ $event.Event = $oop.getClass('$event.Event')
 
   /** @ignore */
   init: function () {
+    $assert.isString(this.eventName, "Invalid eventName.");
     this.elevateMethods('unlink');
   },
 

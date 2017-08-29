@@ -33,6 +33,34 @@ describe("$event", function () {
       it("should elevate unlink()", function () {
         expect(event.hasOwnProperty('unlink')).toBeTruthy();
       });
+
+      describe("on invalid arguments", function () {
+        it("should throw", function () {
+          expect(function () {
+            Event.create({});
+          }).toThrow();
+        });
+      });
+    });
+
+    describe("fromEventName()", function () {
+      var event;
+
+      beforeEach(function () {
+        event = {};
+        spyOn(Event, 'create').and.returnValue(event);
+        result = Event.fromEventName('event1');
+      });
+
+      it("should pass eventName to create", function () {
+        expect(Event.create).toHaveBeenCalledWith({
+          eventName: 'event1'
+        });
+      });
+
+      it("should return created instance", function () {
+        expect(result).toBe(event);
+      });
     });
 
     describe("clone()", function () {
