@@ -35,28 +35,27 @@ $event.Subscriber = $oop.getClass('$event.Subscriber')
 
   /**
    * Subscribes specified callback to the event `eventName` being triggered on
-   * the path associated with the current instance.
-   * @param {$event.Evented} evented
+   * `eventPath`.
    * @param {string} eventName
-   * @param {string} callback
+   * @param {$data.Path} eventPath
+   * @param {function} callback
    * @returns {$event.Subscriber}
    */
-  subscribeTo: function (evented, eventName, callback) {
+  subscribeTo: function (eventName, eventPath, callback) {
     var eventSpace = $event.EventSpace.create();
-    eventSpace.on(eventName, evented.eventPath, this.subscriberId, callback);
+    eventSpace.on(eventName, eventPath, this.subscriberId, callback);
     return this;
   },
 
   /**
-   * Unsubscribes the specified subscriber from the event `eventName` on the
-   * path associated with the current instance.
-   * @param {$event.Evented} [evented]
+   * Unsubscribes the callback delegated by the current subscriber from the
+   * event `eventName` on the path `eventPath`.
    * @param {string} [eventName]
+   * @param {$data.Path} [eventPath]
    * @returns {$event.Subscriber}
    */
-  unsubscribeFrom: function (evented, eventName) {
-    var eventSpace = $event.EventSpace.create(),
-        eventPath = evented && evented.eventPath;
+  unsubscribeFrom: function (eventName, eventPath) {
+    var eventSpace = $event.EventSpace.create();
     eventSpace.off(eventName, eventPath, this.subscriberId);
     return this;
   }
