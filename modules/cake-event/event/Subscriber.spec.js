@@ -43,7 +43,7 @@ describe("$event", function () {
       });
     });
 
-    describe("subscribeTo()", function () {
+    describe("subscribe()", function () {
       var eventSpace,
           eventPath,
           eventName,
@@ -56,7 +56,7 @@ describe("$event", function () {
         callback = function () {};
         spyOn(eventSpace, 'on');
 
-        result = subscriber.subscribeTo(eventName, eventPath, callback);
+        result = subscriber.subscribe(eventName, eventPath, callback);
       });
 
       it("should return self", function () {
@@ -69,7 +69,7 @@ describe("$event", function () {
       });
     });
 
-    describe("unsubscribeFrom()", function () {
+    describe("unsubscribe()", function () {
       var eventSpace,
           eventPath,
           eventName;
@@ -80,7 +80,7 @@ describe("$event", function () {
         eventName = 'event1';
         spyOn(eventSpace, 'off');
 
-        result = subscriber.unsubscribeFrom(eventName, eventPath);
+        result = subscriber.unsubscribe(eventName, eventPath);
       });
 
       it("should return self", function () {

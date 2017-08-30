@@ -41,7 +41,7 @@ $event.Subscriber = $oop.getClass('$event.Subscriber')
    * @param {function} callback
    * @returns {$event.Subscriber}
    */
-  subscribeTo: function (eventName, eventPath, callback) {
+  subscribe: function (eventName, eventPath, callback) {
     var eventSpace = $event.EventSpace.create();
     eventSpace.on(eventName, eventPath, this.subscriberId, callback);
     return this;
@@ -54,7 +54,7 @@ $event.Subscriber = $oop.getClass('$event.Subscriber')
    * @param {$data.Path} [eventPath]
    * @returns {$event.Subscriber}
    */
-  unsubscribeFrom: function (eventName, eventPath) {
+  unsubscribe: function (eventName, eventPath) {
     var eventSpace = $event.EventSpace.create();
     eventSpace.off(eventName, eventPath, this.subscriberId);
     return this;
