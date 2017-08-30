@@ -2,11 +2,11 @@
 
 /**
  * Describes a class that subscribes to events.
+ * Host is responsible for implementing property spread and lifecycle
+ * methods. (When necessary)
  * @mixin $event.Subscriber
- * @extends $utils.Destructible
  */
 $event.Subscriber = $oop.getClass('$event.Subscriber')
-.mix($utils.Destructible)
 .define(/** @lends $event.Subscriber# */{
   /**
    * Identifies instance in the context of event subscriptions.
@@ -31,14 +31,6 @@ $event.Subscriber = $oop.getClass('$event.Subscriber')
         });
 
     this.elevateMethods.apply(this, eventHandlerNames);
-  },
-
-  /**
-   * @returns {$event.Subscriber}
-   */
-  destroy: function () {
-    this.unsubscribeFrom();
-    return this;
   },
 
   /**
