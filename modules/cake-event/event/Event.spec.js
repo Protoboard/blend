@@ -22,14 +22,6 @@ describe("$event", function () {
         expect(event.eventName).toBe('event1');
       });
 
-      it("should initialize bubbles", function () {
-        expect(event.bubbles).toBe(false);
-      });
-
-      it("should initialize defaultPrevented", function () {
-        expect(event.defaultPrevented).toBe(true);
-      });
-
       it("should elevate unlink()", function () {
         expect(event.hasOwnProperty('unlink')).toBeTruthy();
       });

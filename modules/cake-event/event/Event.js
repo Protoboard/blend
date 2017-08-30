@@ -15,12 +15,10 @@
  * @class $event.Event
  * @extends $utils.Cloneable
  * @extends $data.Link
- * @implements $event.EventSource
  */
 $event.Event = $oop.getClass('$event.Event')
 .mix($utils.Cloneable)
 .mix($data.Link)
-.implement($oop.getClass('$event.EventSource'))
 .define(/** @lends $event.Event# */{
   /**
    * Identifies event type.
@@ -79,12 +77,6 @@ $event.Event = $oop.getClass('$event.Event')
    */
   fromEventName: function (eventName) {
     return this.create({eventName: eventName});
-  },
-
-  /** @ignore */
-  spread: function () {
-    this.bubbles = false;
-    this.defaultPrevented = true;
   },
 
   /** @ignore */
