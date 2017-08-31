@@ -22,6 +22,10 @@ describe("$event", function () {
         expect(event.eventName).toBe('event1');
       });
 
+      it("should initialize targetPaths", function () {
+        expect(event.targetPaths instanceof Array).toBeTruthy();
+      });
+
       it("should elevate unlink()", function () {
         expect(event.hasOwnProperty('unlink')).toBeTruthy();
       });
@@ -60,9 +64,7 @@ describe("$event", function () {
         event
         .setCausingEvent(Event.create({eventName: 'event2'}))
         .setSender({})
-        .setTargetPath('foo.bar.baz'.toPath())
-        .setBubbles(true)
-        .preventDefault();
+        .addTargetPaths(['foo.bar.baz'.toPath()]);
 
         result = event.clone();
       });
@@ -75,10 +77,8 @@ describe("$event", function () {
         expect(result.eventName).toEqual(event.eventName);
         expect(result.causingEvent).toEqual(event.causingEvent);
         expect(result.sender).toEqual(event.sender);
-        expect(result.targetPath).toEqual(event.targetPath);
+        expect(result.targetPaths).toEqual(event.targetPaths);
         expect(result.currentPath).toEqual(event.currentPath);
-        expect(result.bubbles).toEqual(event.bubbles);
-        expect(result.defaultPrevented).toEqual(event.defaultPrevented);
       });
     });
 
@@ -104,7 +104,10 @@ describe("$event", function () {
 
         event
         .setSender({})
-        .setTargetPath('foo.bar.baz'.toPath());
+        .addTargetPaths([
+            'foo.bar.baz'.toPath(),
+            'foo.bar'.toPath(),
+            'foo'.toPath()]);
 
         result = event.trigger();
       });
@@ -153,174 +156,15 @@ describe("$event", function () {
 
           event
           .setSender({})
-          .setTargetPath('foo.bar.baz'.toPath())
+          .addTargetPaths([
+              'foo.bar.baz'.toPath(),
+              'foo.bar'.toPath(),
+              'foo'.toPath()])
           .trigger();
         });
 
         it("should add last event in EventTrail as causingEvent", function () {
           expect(event.causingEvent).toBe(event2);
-        });
-      });
-
-      describe("on missing targetPath", function () {
-        it("should throw", function () {
-          expect(function () {
-            Event.create({eventName: 'event1'})
-            .setSender({})
-            .setCausingEvent(Event.create({eventName: 'foo'}))
-            .trigger();
-          }).toThrow();
-        });
-      });
-
-      describe("when bubbling is off", function () {
-        it("should not invoke callbacks on parent paths", function () {
-          expect(callback1).toHaveBeenCalledTimes(1);
-          expect(callback2).toHaveBeenCalledTimes(1);
-          expect(callback3).not.toHaveBeenCalled();
-        });
-      });
-
-      describe("when bubbling is on", function () {
-        beforeEach(function () {
-          callback1.calls.reset();
-          callback2.calls.reset();
-          callback3.calls.reset();
-
-          event
-          .setBubbles(true)
-          .trigger();
-        });
-
-        it("should invoke callbacks on parent paths", function () {
-          expect(callback1).toHaveBeenCalledTimes(1);
-          expect(callback2).toHaveBeenCalledTimes(1);
-          expect(callback3).toHaveBeenCalledTimes(1);
-        });
-      });
-    });
-
-    describe("broadcast()", function () {
-      var deferred,
-          callback1, callback2, callback3, callback4,
-          eventTrail;
-
-      beforeEach(function () {
-        deferred = $utils.Deferred.create();
-
-        callback1 = jasmine.createSpy().and.returnValue(deferred.promise);
-        callback2 = jasmine.createSpy();
-        callback3 = jasmine.createSpy();
-        callback4 = jasmine.createSpy();
-
-        eventTrail = $event.EventTrail.create().clear();
-
-        $event.EventSpace.create()
-        .destroy()
-        .on('event1', 'foo.bar.baz.quux'.toPath(), '1', callback1)
-        .on('event1', 'foo.bar.baz.quux'.toPath(), '2', callback2)
-        .on('event1', 'foo.bar'.toPath(), '3', callback3)
-        .on('event1', 'foo'.toPath(), '4', callback4);
-
-        event
-        .setCausingEvent(Event.create({eventName: 'event1'}))
-        .setSender({})
-        .setTargetPath('foo.bar'.toPath());
-
-        result = event.broadcast();
-      });
-
-      it("should return pending promise", function () {
-        expect($utils.Promise.mixedBy(result)).toBeTruthy();
-        expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
-      });
-
-      it("should invoke callbacks on descendant paths", function () {
-        expect(callback1).toHaveBeenCalledTimes(1);
-        expect(callback2).toHaveBeenCalledTimes(1);
-        expect(callback3).toHaveBeenCalledTimes(1);
-      });
-
-      it("should push event to chain", function () {
-        expect(eventTrail.data.nextLink).toBe(event);
-        expect(eventTrail.getItemCount()).toBe(1);
-      });
-
-      describe("when callbacks complete", function () {
-        beforeEach(function () {
-          deferred.resolve();
-        });
-
-        it("should unlink event", function () {
-          expect(eventTrail.getItemCount()).toBe(0);
-        });
-
-        it("should resolve returned promise", function () {
-          expect(result.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
-        });
-      });
-
-      describe("on missing sender", function () {
-        it("should throw", function () {
-          expect(function () {
-            Event.create({eventName: 'event1'})
-            .setCausingEvent(Event.create({eventName: 'foo'}))
-            .setTargetPath('foo.bar'.toPath())
-            .broadcast();
-          }).toThrow();
-        });
-      });
-
-      describe("on missing causingEvent", function () {
-        var event2;
-
-        beforeEach(function () {
-          event = Event.create({eventName: 'event1'});
-          event2 = Event.create({eventName: 'event2'});
-          eventTrail.push(event2);
-
-          event
-          .setSender({})
-          .setTargetPath('foo.bar.baz'.toPath())
-          .broadcast();
-        });
-
-        it("should add last event in EventTrail as causingEvent", function () {
-          expect(event.causingEvent).toBe(event2);
-        });
-      });
-
-      describe("on missing targetPath", function () {
-        it("should throw", function () {
-          expect(function () {
-            Event.create({eventName: 'event1'})
-            .setSender({})
-            .setCausingEvent(Event.create({eventName: 'foo'}))
-            .broadcast();
-          }).toThrow();
-        });
-      });
-
-      describe("when bubbling is off", function () {
-        it("should not invoke callbacks on parent paths", function () {
-          expect(callback4).not.toHaveBeenCalled();
-        });
-      });
-
-      describe("when bubbling is on", function () {
-        beforeEach(function () {
-          callback1.calls.reset();
-          callback2.calls.reset();
-          callback3.calls.reset();
-          callback4.calls.reset();
-
-          event
-          .setBubbles(true)
-          .broadcast();
-        });
-
-        it("should invoke callbacks on parent paths", function () {
-          expect(callback4).toHaveBeenCalledTimes(1);
         });
       });
     });
@@ -359,44 +203,26 @@ describe("$event", function () {
       });
     });
 
-    describe("setTargetPath()", function () {
+    describe("addTargetPaths()", function () {
       var targetPath;
 
       beforeEach(function () {
         targetPath = 'foo.bar.baz'.toPath();
-        result = event.setTargetPath(targetPath);
+        result = event.addTargetPaths([targetPath]);
       });
 
       it("should return self", function () {
         expect(result).toBe(event);
       });
 
-      it("should set targetPath", function () {
-        expect(event.targetPath).toBe(targetPath);
-      });
-    });
-
-    describe("setBubbles()", function () {
-      var bubbles;
-
-      beforeEach(function () {
-        bubbles = true;
-        result = event.setBubbles(bubbles);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(event);
-      });
-
-      it("should set bubbles", function () {
-        expect(event.bubbles).toBe(bubbles);
+      it("should add to targetPaths", function () {
+        expect(event.targetPaths).toEqual([targetPath]);
       });
     });
 
     describe("stopPropagation()", function () {
       beforeEach(function () {
         result = event
-        .setBubbles(true)
         .stopPropagation();
       });
 
@@ -406,20 +232,6 @@ describe("$event", function () {
 
       it("should set bubbles", function () {
         expect(event.bubbles).toBeFalsy();
-      });
-    });
-
-    describe("preventDefault()", function () {
-      beforeEach(function () {
-        result = event.preventDefault();
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(event);
-      });
-
-      it("should set bubbles", function () {
-        expect(event.defaultPrevented).toBeTruthy();
       });
     });
   });

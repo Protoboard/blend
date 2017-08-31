@@ -39,34 +39,18 @@ $event.Event = $oop.getClass('$event.Event')
   /**
    * Identifies the application component (instance) that is responsible for
    * triggering the current event.
+   * @todo Should this be #publisher instead?
    * @member {*} $event.Event#sender
    */
 
   /**
-   * Original path the event was triggered on. When event was broadcast, it's
-   * the broadcast path. When the event has not been triggered (or broadcast)
-   * yet, `targetPath` is `undefined`.
-   * @member {$data.Path} $event.Event#targetPath
+   * Series of paths that the event will visit during the bubbling process.
+   * @member {Array.<$data.Path>} $event.Event#targetPaths
    */
 
   /**
-   * Path currently visited by the event in the process of bubbling or
-   * broadcasting.
+   * Path currently visited by the event. Defined only while triggered.
    * @member {$data.Path} $event.Event#currentPath
-   */
-
-  /**
-   * Whether event bubbles along parent chain.
-   * @member {boolean} $event.Event#bubbles
-   * @default false
-   * @todo Special case for 1-level bubbling?
-   */
-
-  /**
-   * Whether default behavior associated with event (if any) is going to be
-   * triggered.
-   * @member {boolean} $event.Event#defaultPrevented
-   * @default true
    */
 
   /**
@@ -80,104 +64,14 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /** @ignore */
+  spread: function () {
+      this.targetPaths = this.targetPaths || [];
+  },
+
+  /** @ignore */
   init: function () {
     $assert.isString(this.eventName, "Invalid eventName.");
     this.elevateMethods('unlink');
-  },
-
-  /**
-   * @returns {Array<$utils.Thenable|*>}
-   * @private
-   */
-  _invokeCallbacksOnTargetPath: function () {
-    var eventSpace = $event.EventSpace.create(),
-        eventName = this.eventName,
-        targetPath = this.targetPath,
-        callbacksPath = $data.Path.fromComponents([
-          'callbacks', 'bySubscription', eventName, targetPath.toString()]),
-        callbacks = eventSpace.subscriptions.getNode(callbacksPath),
-        subscriberIds = callbacks && Object.keys(callbacks),
-        callbackCount = subscriberIds && subscriberIds.length || 0,
-        i,
-        results = [];
-
-    // setting current path
-    this.currentPath = targetPath;
-
-    // invoking callbacks for eventName / targetPath
-    for (i = 0; i < callbackCount; i++) {
-      results.push(callbacks[subscriberIds[i]](this));
-    }
-
-    return results;
-  },
-
-  /**
-   * @returns {Array<$utils.Thenable|*>}
-   * @private
-   */
-  _invokeCallbacksOnParentPaths: function () {
-    var eventSpace = $event.EventSpace.create(),
-        event = this.clone(),
-        subscriptions = eventSpace.subscriptions,
-        eventName = event.eventName,
-        targetPath = event.targetPath,
-        currentPath = event.currentPath = targetPath.clone(),
-        callbacksPath = $data.Path.fromComponents(
-            ['callbacks', 'bySubscription', eventName, null]),
-        callbacks, subscriberIds, callbackCount,
-        i,
-        results = [];
-
-    do {
-      // obtaining callbacks associated with eventName / targetPath
-      callbacksPath.components[3] = currentPath.toString();
-      callbacks = subscriptions.getNode(callbacksPath);
-      if (callbacks) {
-        // invoking callbacks for eventName / targetPath
-        subscriberIds = Object.keys(callbacks);
-        callbackCount = subscriberIds.length;
-        for (i = 0; i < callbackCount; i++) {
-          results.push(callbacks[subscriberIds[i]](event));
-        }
-      }
-
-      // bubbling one level up
-      currentPath.pop();
-    } while (currentPath.components.length && event.bubbles);
-
-    return results;
-  },
-
-  /**
-   * @returns {Array<$utils.Thenable|*>}
-   * @private
-   */
-  _invokeCallbacksOnDescendantPaths: function () {
-    var eventSpace = $event.EventSpace.create(),
-        event = this.clone()
-        .setBubbles(false),
-        subscriptions = eventSpace.subscriptions,
-        eventName = event.eventName,
-        targetPath = event.targetPath,
-        keyOptions = subscriptions.getNodeWrapped(['paths', eventName].toPath())
-        .toOrderedStringList()
-        .getRangeByPrefixWrapped(targetPath.toString(), 1)
-            .data,
-        pathsQc = $data.QueryComponent.create({keyOptions: keyOptions}),
-        callbacksQuery = $data.Query.fromComponents([
-          'callbacks', 'bySubscription', eventName, pathsQc, '*']),
-        results = [];
-
-    // invoking callbacks
-    subscriptions.queryPathNodePairs(callbacksQuery)
-    .forEachItem(function (/**function*/callback, /**$data.Path*/callbackPath) {
-      var currentPathStr = callbackPath.components[3];
-      event.currentPath = $data.Path.fromString(currentPathStr);
-      results.push(callback(event));
-    });
-
-    return results;
   },
 
   /**
@@ -198,21 +92,17 @@ $event.Event = $oop.getClass('$event.Event')
 
     cloned.causingEvent = this.causingEvent;
     cloned.sender = this.sender;
-    cloned.targetPath = this.targetPath;
+    cloned.targetPaths = $data.shallowCopy(this.targetPaths);
     cloned.currentPath = this.currentPath;
-    cloned.bubbles = this.bubbles;
-    cloned.defaultPrevented = this.defaultPrevented;
 
     return cloned;
   },
 
   /**
-   * Triggers event. Invokes callbacks subscribed to `eventName`, on
-   * `targetPath`. When bubbling is allowed, the event will traverse
-   * `targetPath` up to its root, and invoke subscribed callbacks at each step.
-   * Callbacks on a certain path will be invoked in an unspecified order. The
-   * returned promise resolves when all subscribed callbacks (synchronous or
-   * otherwise) have completed.
+   * Triggers event. Invokes callbacks subscribed to `eventName`, on each of
+   * `targetPaths`. Callbacks on a certain path will be invoked in an
+   * unspecified order. The returned promise resolves when all subscribed
+   * callbacks (synchronous or otherwise) have completed.
    * @returns {$utils.Promise}
    * @see $event.EventSpace#on
    */
@@ -229,40 +119,36 @@ $event.Event = $oop.getClass('$event.Event')
 
     eventTrail.push(this);
 
-    var callbackResults = this.bubbles ?
-        this._invokeCallbacksOnParentPaths() :
-        this._invokeCallbacksOnTargetPath();
+    var eventSpace = $event.EventSpace.create(),
+        eventName = this.eventName,
+        targetPaths = this.targetPaths,
+        targetPathCount = targetPaths.length,
+        targetPath,
+        callbacksPath,
+        callbacks,
+        subscriberIds,
+        callbackCount,
+        i, j,
+        results = [];
 
-    return this._unlinkWhen(callbackResults);
-  },
+    for (i = 0; i < targetPathCount; i++) {
+      targetPath = targetPaths[i];
+      callbacksPath = $data.Path.fromComponents([
+        'callbacks', 'bySubscription', eventName, targetPath.toString()]);
+      callbacks = eventSpace.subscriptions.getNode(callbacksPath);
+      subscriberIds = callbacks && Object.keys(callbacks);
+      callbackCount = subscriberIds && subscriberIds.length || 0;
 
-  /**
-   * Broadcasts event. Invokes callbacks subscribed to `eventName`, on all
-   * paths relative to `targetPath`, in an unspecified order, then continues as
-   * {@link $event.Event#trigger}. The returned promise resolves when all
-   * subscribed callbacks (synchronous or otherwise) have completed.
-   * @returns {$utils.Promise}
-   * @see $event.EventSpace#on
-   */
-  broadcast: function () {
-    if (this.sender === undefined) {
-      $assert.fail("Event sender is not defined. Can't broadcast.");
+      // setting current path
+      this.currentPath = targetPath;
+
+      // invoking callbacks for eventName / targetPath
+      for (j = 0; j < callbackCount; j++) {
+        results.push(callbacks[subscriberIds[j]](this));
+      }
     }
 
-    var eventTrail = $event.EventTrail.create();
-
-    if (this.causingEvent === undefined && !eventTrail.isEmpty()) {
-      this.causingEvent = eventTrail.data.previousLink;
-    }
-
-    eventTrail.push(this);
-
-    var callbackResults1 = this._invokeCallbacksOnDescendantPaths(),
-        callbackResults2 = this.bubbles ?
-            this._invokeCallbacksOnParentPaths() :
-            this._invokeCallbacksOnTargetPath();
-
-    return this._unlinkWhen(callbackResults1.concat(callbackResults2));
+    return this._unlinkWhen(results);
   },
 
   /**
@@ -284,20 +170,11 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param targetPath
+   * @param targetPaths
    * @returns {$event.Event}
    */
-  setTargetPath: function (targetPath) {
-    this.targetPath = targetPath;
-    return this;
-  },
-
-  /**
-   * @param bubbles
-   * @returns {$event.Event}
-   */
-  setBubbles: function (bubbles) {
-    this.bubbles = bubbles;
+  addTargetPaths: function (targetPaths) {
+    this.targetPaths = this.targetPaths.concat(targetPaths);
     return this;
   },
 
@@ -306,14 +183,6 @@ $event.Event = $oop.getClass('$event.Event')
    */
   stopPropagation: function () {
     this.bubbles = false;
-    return this;
-  },
-
-  /**
-   * @returns {$event.Event}
-   */
-  preventDefault: function () {
-    this.defaultPrevented = true;
     return this;
   }
 });
