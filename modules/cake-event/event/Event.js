@@ -45,11 +45,6 @@ $event.Event = $oop.getClass('$event.Event')
    */
 
   /**
-   * Series of paths that the event will visit during the bubbling process.
-   * @member {Array.<$data.Path>} $event.Event#targetPaths
-   */
-
-  /**
    * Path currently visited by the event. Defined only while triggered.
    * @member {$data.Path} $event.Event#currentPath
    */
@@ -62,11 +57,6 @@ $event.Event = $oop.getClass('$event.Event')
    */
   fromEventName: function (eventName) {
     return this.create({eventName: eventName});
-  },
-
-  /** @ignore */
-  spread: function () {
-      this.targetPaths = this.targetPaths || [];
   },
 
   /** @ignore */
@@ -93,7 +83,6 @@ $event.Event = $oop.getClass('$event.Event')
 
     cloned.causingEvent = this.causingEvent;
     cloned.sender = this.sender;
-    cloned.targetPaths = $data.shallowCopy(this.targetPaths);
     cloned.currentPath = this.currentPath;
 
     return cloned;
@@ -107,7 +96,7 @@ $event.Event = $oop.getClass('$event.Event')
    * @returns {$utils.Promise}
    * @see $event.EventSpace#on
    */
-  trigger: function () {
+  trigger: function (targetPaths) {
     if (this.sender === undefined) {
       $assert.fail("Event sender is not defined. Can't trigger.");
     }
@@ -122,7 +111,6 @@ $event.Event = $oop.getClass('$event.Event')
 
     var eventSpace = $event.EventSpace.create(),
         eventName = this.eventName,
-        targetPaths = this.targetPaths,
         targetPathCount = targetPaths.length,
         targetPath,
         callbacksPath,
@@ -168,15 +156,6 @@ $event.Event = $oop.getClass('$event.Event')
    */
   setSender: function (sender) {
     this.sender = sender;
-    return this;
-  },
-
-  /**
-   * @param targetPaths
-   * @returns {$event.Event}
-   */
-  addTargetPaths: function (targetPaths) {
-    this.targetPaths = this.targetPaths.concat(targetPaths);
     return this;
   },
 

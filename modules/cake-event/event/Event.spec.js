@@ -22,10 +22,6 @@ describe("$event", function () {
         expect(event.eventName).toBe('event1');
       });
 
-      it("should initialize targetPaths", function () {
-        expect(event.targetPaths instanceof Array).toBeTruthy();
-      });
-
       it("should elevate unlink()", function () {
         expect(event.hasOwnProperty('unlink')).toBeTruthy();
       });
@@ -63,8 +59,7 @@ describe("$event", function () {
       beforeEach(function () {
         event
         .setCausingEvent(Event.create({eventName: 'event2'}))
-        .setSender({})
-        .addTargetPaths(['foo.bar.baz'.toPath()]);
+        .setSender({});
 
         result = event.clone();
       });
@@ -77,7 +72,6 @@ describe("$event", function () {
         expect(result.eventName).toEqual(event.eventName);
         expect(result.causingEvent).toEqual(event.causingEvent);
         expect(result.sender).toEqual(event.sender);
-        expect(result.targetPaths).toEqual(event.targetPaths);
         expect(result.currentPath).toEqual(event.currentPath);
       });
     });
@@ -103,13 +97,12 @@ describe("$event", function () {
         .on('event1', 'foo'.toPath(), '3', callback3);
 
         event
-        .setSender({})
-        .addTargetPaths([
-            'foo.bar.baz'.toPath(),
-            'foo.bar'.toPath(),
-            'foo'.toPath()]);
+        .setSender({});
 
-        result = event.trigger();
+        result = event.trigger([
+          'foo.bar.baz'.toPath(),
+          'foo.bar'.toPath(),
+          'foo'.toPath()]);
       });
 
       it("should return pending promise", function () {
@@ -140,8 +133,7 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create({eventName: 'event1'})
-            .setTargetPath('foo.bar'.toPath())
-            .trigger();
+            .trigger(['foo.bar'.toPath()]);
           }).toThrow();
         });
       });
@@ -156,11 +148,10 @@ describe("$event", function () {
 
           event
           .setSender({})
-          .addTargetPaths([
-              'foo.bar.baz'.toPath(),
-              'foo.bar'.toPath(),
-              'foo'.toPath()])
-          .trigger();
+          .trigger([
+            'foo.bar.baz'.toPath(),
+            'foo.bar'.toPath(),
+            'foo'.toPath()]);
         });
 
         it("should add last event in EventTrail as causingEvent", function () {
@@ -200,23 +191,6 @@ describe("$event", function () {
 
       it("should set sender", function () {
         expect(event.sender).toBe(sender);
-      });
-    });
-
-    describe("addTargetPaths()", function () {
-      var targetPath;
-
-      beforeEach(function () {
-        targetPath = 'foo.bar.baz'.toPath();
-        result = event.addTargetPaths([targetPath]);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(event);
-      });
-
-      it("should add to targetPaths", function () {
-        expect(event.targetPaths).toEqual([targetPath]);
       });
     });
 
