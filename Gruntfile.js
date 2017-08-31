@@ -122,11 +122,13 @@ module.exports = function (grunt) {
 
     'string-replace': {
       dist: {
+        options: {
+          replacements: []
+        },
         files: [{
           src: 'templates/index.html',
           dest: 'public/index.html'
-        }],
-        replacements: []
+        }]
       }
     },
 
