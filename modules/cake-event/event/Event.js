@@ -11,7 +11,7 @@
  * Signals a change in the state of some component of the application. Carries
  * information about the affected component and the cause(s) that led to the
  * corresponding change.
- * @todo What about payload?
+ * @todo Add payload
  * @class $event.Event
  * @extends $utils.Cloneable
  * @extends $data.Link
@@ -40,6 +40,7 @@ $event.Event = $oop.getClass('$event.Event')
    * Identifies the application component (instance) that is responsible for
    * triggering the current event.
    * @todo Should this be #publisher instead?
+   * @todo Should be mandatory on instantiation?
    * @member {*} $event.Event#sender
    */
 
@@ -154,6 +155,7 @@ $event.Event = $oop.getClass('$event.Event')
   /**
    * @param causingEvent
    * @returns {$event.Event}
+   * @todo Necessary?
    */
   setCausingEvent: function (causingEvent) {
     this.causingEvent = causingEvent;
