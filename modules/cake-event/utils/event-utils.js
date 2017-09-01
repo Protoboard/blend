@@ -31,6 +31,11 @@ $oop.copyProperties($event, /** @lends $event */{
     .toOrderedStringList()
     .getRangeByPrefixWrapped(pathStr)
     .toCollection()
+    .toType($data.StringDictionary)
+    .swapKeysAndValues()
+    .toCollection()
+    .getKeysWrapped()
+    // todo Use .passEachKeyTo() Instead of .getKeysWrapped().passEachValueTo()
     .passEachValueTo($data.Path.fromString)
         .data;
   }

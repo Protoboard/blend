@@ -153,6 +153,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    * Converts current KeyValueContainer to the specified class.
    * @param {$data.KeyValueContainer} KeyValueContainer
    * @returns {$data.KeyValueContainer}
+   * @todo Change name to something like `transform`
    */
   toType: function (KeyValueContainer) {
     var result = KeyValueContainer.create();
