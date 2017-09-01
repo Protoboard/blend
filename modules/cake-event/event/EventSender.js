@@ -66,7 +66,7 @@ $event.EventSender = $oop.getClass('$event.EventSender')
   broadcast: function (eventName, bubbles) {
     var triggerPaths = this.triggerPaths;
 
-    $assert.assert(triggerPaths.length === 1, "Invalid trigger path count.");
+    $assert.isTruthy(triggerPaths.length === 1, "Invalid trigger path count.");
 
     return this.spawnEvent(eventName)
     .broadcast(triggerPaths[0], bubbles);
