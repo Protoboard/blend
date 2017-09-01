@@ -18,7 +18,9 @@ describe("$event", function () {
         bar: function () {},
         onFoo: function () {},
         onBar: function () {},
-        on: function () {}
+        on: function () {
+          return this;
+        }
       });
       subscriber = Subscriber.create({subscriberId: 'foo'});
     });
@@ -43,7 +45,7 @@ describe("$event", function () {
       });
     });
 
-    describe("subscribeTo()", function () {
+    describe("on()", function () {
       var eventSpace,
           eventListener,
           eventName,
@@ -56,20 +58,20 @@ describe("$event", function () {
         callback = function () {};
         spyOn(eventSpace, 'on');
 
-        result = subscriber.subscribeTo(eventListener, eventName, callback);
+        result = subscriber.on(eventName, eventListener, callback);
       });
 
       it("should return self", function () {
         expect(result).toBe(subscriber);
       });
 
-      it("should subscribeTo on EventSpace", function () {
+      it("should subscribe on EventSpace", function () {
         expect(eventSpace.on)
         .toHaveBeenCalledWith(eventName, eventListener.listeningPath, 'foo', callback);
       });
     });
 
-    describe("unsubscribeFrom()", function () {
+    describe("off()", function () {
       var eventSpace,
           eventListener,
           eventName;
@@ -80,14 +82,14 @@ describe("$event", function () {
         eventName = 'event1';
         spyOn(eventSpace, 'off');
 
-        result = subscriber.unsubscribeFrom(eventListener, eventName);
+        result = subscriber.off(eventName, eventListener);
       });
 
       it("should return self", function () {
         expect(result).toBe(subscriber);
       });
 
-      it("should subscribeTo on EventSpace", function () {
+      it("should unsubscribe on EventSpace", function () {
         expect(eventSpace.off)
         .toHaveBeenCalledWith(eventName, eventListener.listeningPath, 'foo');
       });

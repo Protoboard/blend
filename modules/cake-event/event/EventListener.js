@@ -14,7 +14,7 @@
 $event.EventListener = $oop.getClass('$event.EventListener')
 .define(/** @lends $event.EventListener# */{
   /**
-   * @todo Make mandatory?
+   * Path associated with instance where events will be listened to.
    * @member {$data.Path} $event.EventListener#listeningPath
    */
 
@@ -24,29 +24,6 @@ $event.EventListener = $oop.getClass('$event.EventListener')
    */
   setListeningPath: function (listeningPath) {
     this.listeningPath = listeningPath;
-    return this;
-  },
-
-  /**
-   * @param {$event.EventSubscriber} subscriber
-   * @param {string} eventName
-   * @param {function} callback
-   * @returns {$event.EventListener}
-   */
-  subscribe: function (subscriber, eventName, callback) {
-    var eventSpace = $event.EventSpace.create();
-    eventSpace.on(eventName, this.listeningPath, subscriber.subscriberId, callback);
-    return this;
-  },
-
-  /**
-   * @param {$event.EventSubscriber} subscriber
-   * @param {string} eventName
-   * @returns {$event.EventListener}
-   */
-  unsubscribe: function (subscriber, eventName) {
-    var eventSpace = $event.EventSpace.create();
-    eventSpace.off(eventName, this.listeningPath, subscriber.subscriberId);
     return this;
   }
 });

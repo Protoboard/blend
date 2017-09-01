@@ -31,56 +31,5 @@ describe("$event", function () {
         expect(eventListener.listeningPath).toBe(listeningPath);
       });
     });
-
-    describe("subscribe()", function () {
-      var subscriber,
-          eventName,
-          callback;
-
-      beforeEach(function () {
-        subscriber = {subscriberId: 'FOO'};
-        eventName = 'event1';
-        callback = function () {};
-        spyOn($event.EventSpace, 'on');
-
-        result = eventListener.subscribe(subscriber, eventName, callback);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(eventListener);
-      });
-
-      it("should invoke EventSpace#on", function () {
-        expect($event.EventSpace.on).toHaveBeenCalledWith(
-            eventName,
-            eventListener.listeningPath,
-            subscriber.subscriberId,
-            callback);
-      });
-    });
-
-    describe("unsubscribe()", function () {
-      var subscriber,
-          eventName;
-
-      beforeEach(function () {
-        subscriber = {subscriberId: 'FOO'};
-        eventName = 'event1';
-        spyOn($event.EventSpace, 'off');
-
-        result = eventListener.unsubscribe(subscriber, eventName);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(eventListener);
-      });
-
-      it("should invoke EventSpace#off", function () {
-        expect($event.EventSpace.off).toHaveBeenCalledWith(
-            eventName,
-            eventListener.listeningPath,
-            subscriber.subscriberId);
-      });
-    });
   });
 });
