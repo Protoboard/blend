@@ -2,13 +2,14 @@
 
 $oop.copyProperties($event, /** @lends $event */{
   /**
-   * Spreads specified path to its sub-paths.
+   * Spreads specified path to its sub-paths. Result will not include
+   * original path.
    * @param {$data.Path} path Path to be spread.
    * @returns {Array.<$data.Path>}
    */
   spreadPathForBubbling: function (path) {
     var components = path.components,
-        result = [path],
+        result = [],
         i;
     for (i = components.length - 1; i > 0; i--) {
       result.push($data.Path.fromComponents(components.slice(0, i)));
@@ -17,7 +18,8 @@ $oop.copyProperties($event, /** @lends $event */{
   },
 
   /**
-   * Spreads specified path to relative, subscribed paths.
+   * Spreads specified path to relative, subscribed paths. Result will not
+   * include original path.
    * @param {$data.Path} path Path to be spread.
    * @param {string} eventName Event name matching subscriptions.
    * @returns {Array.<string>}
@@ -29,7 +31,7 @@ $oop.copyProperties($event, /** @lends $event */{
     return eventSpace.subscriptions
     .getNodeWrapped(['paths', eventName].toPath())
     .toOrderedStringList()
-    .getRangeByPrefixWrapped(pathStr)
+    .getRangeByPrefixWrapped(pathStr, 1)
     .toCollection()
     .toType($data.StringDictionary)
     .swapKeysAndValues()

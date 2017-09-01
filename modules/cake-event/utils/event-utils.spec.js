@@ -13,7 +13,6 @@ describe("$event", function () {
 
     it("should break down path to subpaths", function () {
       expect($event.spreadPathForBubbling('foo.bar.baz'.toPath())).toEqual([
-        'foo.bar.baz'.toPath(),
         'foo.bar'.toPath(),
         'foo'.toPath()
       ]);
@@ -38,7 +37,6 @@ describe("$event", function () {
 
     it("should retrieve all relative paths", function () {
       expect($event.spreadPathForBroadcast('foo'.toPath(), 'event1')).toEqual([
-        'foo'.toPath(),
         'foo.bar.baz'.toPath(),
         'foo.baz'.toPath()
       ]);
