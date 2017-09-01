@@ -4,13 +4,13 @@
  * Describes a class that subscribes to events.
  * Host is responsible for implementing property spread and lifecycle
  * methods. (When necessary)
- * @mixin $event.Subscriber
+ * @mixin $event.EventSubscriber
  */
-$event.Subscriber = $oop.getClass('$event.Subscriber')
-.define(/** @lends $event.Subscriber# */{
+$event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
+.define(/** @lends $event.EventSubscriber# */{
   /**
    * Identifies instance in the context of event subscriptions.
-   * @member {string} $event.Subscriber#subscriberId
+   * @member {string} $event.EventSubscriber#subscriberId
    */
 
   /** @ignore */
@@ -39,9 +39,10 @@ $event.Subscriber = $oop.getClass('$event.Subscriber')
    * @param {string} eventName
    * @param {$data.Path} eventPath
    * @param {function} callback
-   * @returns {$event.Subscriber}
+   * @returns {$event.EventSubscriber}
+   * @todo Replace eventPath w/ eventListener
    */
-  subscribe: function (eventName, eventPath, callback) {
+  subscribeTo: function (eventName, eventPath, callback) {
     var eventSpace = $event.EventSpace.create();
     eventSpace.on(eventName, eventPath, this.subscriberId, callback);
     return this;
@@ -52,9 +53,10 @@ $event.Subscriber = $oop.getClass('$event.Subscriber')
    * event `eventName` on the path `eventPath`.
    * @param {string} [eventName]
    * @param {$data.Path} [eventPath]
-   * @returns {$event.Subscriber}
+   * @returns {$event.EventSubscriber}
+   * @todo Replace eventPath w/ eventListener
    */
-  unsubscribe: function (eventName, eventPath) {
+  unsubscribeFrom: function (eventName, eventPath) {
     var eventSpace = $event.EventSpace.create();
     eventSpace.off(eventName, eventPath, this.subscriberId);
     return this;

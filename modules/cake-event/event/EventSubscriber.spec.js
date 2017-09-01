@@ -4,15 +4,15 @@ var $oop = window['cake-oop'],
     $event = window['cake-event'];
 
 describe("$event", function () {
-  describe("Subscriber", function () {
+  describe("EventSubscriber", function () {
     var Subscriber,
         subscriber,
         result;
 
     beforeEach(function () {
       $event.EventSpace.__instanceLookup = {};
-      Subscriber = $oop.getClass('test.$event.Subscriber.Subscriber')
-      .mix($event.Subscriber)
+      Subscriber = $oop.getClass('test.$event.EventSubscriber.Subscriber')
+      .mix($event.EventSubscriber)
       .define({
         foo: function () {},
         bar: function () {},
@@ -43,7 +43,7 @@ describe("$event", function () {
       });
     });
 
-    describe("subscribe()", function () {
+    describe("subscribeTo()", function () {
       var eventSpace,
           eventPath,
           eventName,
@@ -56,20 +56,20 @@ describe("$event", function () {
         callback = function () {};
         spyOn(eventSpace, 'on');
 
-        result = subscriber.subscribe(eventName, eventPath, callback);
+        result = subscriber.subscribeTo(eventName, eventPath, callback);
       });
 
       it("should return self", function () {
         expect(result).toBe(subscriber);
       });
 
-      it("should subscribe on EventSpace", function () {
+      it("should subscribeTo on EventSpace", function () {
         expect(eventSpace.on)
         .toHaveBeenCalledWith(eventName, eventPath, 'foo', callback);
       });
     });
 
-    describe("unsubscribe()", function () {
+    describe("unsubscribeFrom()", function () {
       var eventSpace,
           eventPath,
           eventName;
@@ -80,14 +80,14 @@ describe("$event", function () {
         eventName = 'event1';
         spyOn(eventSpace, 'off');
 
-        result = subscriber.unsubscribe(eventName, eventPath);
+        result = subscriber.unsubscribeFrom(eventName, eventPath);
       });
 
       it("should return self", function () {
         expect(result).toBe(subscriber);
       });
 
-      it("should subscribe on EventSpace", function () {
+      it("should subscribeTo on EventSpace", function () {
         expect(eventSpace.off)
         .toHaveBeenCalledWith(eventName, eventPath, 'foo');
       });
