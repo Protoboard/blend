@@ -35,30 +35,30 @@ $event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
 
   /**
    * Subscribes specified callback to the event `eventName` being triggered on
-   * `eventPath`.
+   * the path associated with `eventListener`.
+   * @param {$event.EventListener} eventListener
    * @param {string} eventName
-   * @param {$data.Path} eventPath
    * @param {function} callback
    * @returns {$event.EventSubscriber}
-   * @todo Replace eventPath w/ eventListener
    */
-  subscribeTo: function (eventName, eventPath, callback) {
-    var eventSpace = $event.EventSpace.create();
-    eventSpace.on(eventName, eventPath, this.subscriberId, callback);
+  subscribeTo: function (eventListener, eventName, callback) {
+    var eventSpace = $event.EventSpace.create(),
+        listeningPath = eventListener.listeningPath;
+    eventSpace.on(eventName, listeningPath, this.subscriberId, callback);
     return this;
   },
 
   /**
    * Unsubscribes the callback delegated by the current subscriber from the
-   * event `eventName` on the path `eventPath`.
+   * event `eventName` on the path associated with `eventListener`.
+   * @param {$event.EventListener} eventListener
    * @param {string} [eventName]
-   * @param {$data.Path} [eventPath]
    * @returns {$event.EventSubscriber}
-   * @todo Replace eventPath w/ eventListener
    */
-  unsubscribeFrom: function (eventName, eventPath) {
-    var eventSpace = $event.EventSpace.create();
-    eventSpace.off(eventName, eventPath, this.subscriberId);
+  unsubscribeFrom: function (eventListener, eventName) {
+    var eventSpace = $event.EventSpace.create(),
+        listeningPath = eventListener.listeningPath;
+    eventSpace.off(eventName, listeningPath, this.subscriberId);
     return this;
   }
 });
