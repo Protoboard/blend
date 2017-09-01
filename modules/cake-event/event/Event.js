@@ -26,6 +26,13 @@ $event.Event = $oop.getClass('$event.Event')
    */
 
   /**
+   * Identifies the application component (instance) that is responsible for
+   * triggering the current event.
+   * @todo Should be mandatory on instantiation?
+   * @member {*} $event.Event#sender
+   */
+
+  /**
    * Event instance the current event is the effect of. In other words, the
    * triggering of which led to the triggering of the current event. A chain
    * of causing events usually leads back to user interaction, or scheduled
@@ -37,16 +44,13 @@ $event.Event = $oop.getClass('$event.Event')
    */
 
   /**
-   * Identifies the application component (instance) that is responsible for
-   * triggering the current event.
-   * @todo Should this be #publisher instead?
-   * @todo Should be mandatory on instantiation?
-   * @member {*} $event.Event#sender
+   * Path currently visited by the event. Defined only while triggered.
+   * @member {$data.Path} $event.Event#currentPath
    */
 
   /**
-   * Path currently visited by the event. Defined only while triggered.
-   * @member {$data.Path} $event.Event#currentPath
+   * Whether the event propagates.
+   * @member {boolean} $event.Event#propagates
    */
 
   /**
@@ -57,6 +61,13 @@ $event.Event = $oop.getClass('$event.Event')
    */
   fromEventName: function (eventName) {
     return this.create({eventName: eventName});
+  },
+
+  /** @ignore */
+  spread: function () {
+    if (this.propagates === undefined) {
+      this.propagates = true;
+    }
   },
 
   /** @ignore */
@@ -89,16 +100,17 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * Triggers event. Invokes callbacks subscribed to `eventName`, on each of
+   * Invokes callbacks subscribed to `eventName`, on each of
    * `targetPaths`. Callbacks on a certain path will be invoked in an
    * unspecified order. The returned promise resolves when all subscribed
    * callbacks (synchronous or otherwise) have completed.
    * @returns {$utils.Promise}
    * @see $event.EventSpace#on
+   * @todo Refactor / simplify
    */
-  trigger: function (targetPaths) {
+  traverse: function (targetPaths) {
     if (this.sender === undefined) {
-      $assert.fail("Event sender is not defined. Can't trigger.");
+      $assert.fail("Event sender is not defined. Can't traverse.");
     }
 
     var eventTrail = $event.EventTrail.create();
@@ -120,28 +132,73 @@ $event.Event = $oop.getClass('$event.Event')
         i, j,
         results = [];
 
-    for (i = 0; i < targetPathCount; i++) {
-      targetPath = targetPaths[i];
-      callbacksPath = $data.Path.fromComponents([
-        'callbacks', 'bySubscription', eventName, targetPath.toString()]);
-      callbacks = eventSpace.subscriptions.getNode(callbacksPath);
-      subscriberIds = callbacks && Object.keys(callbacks);
-      callbackCount = subscriberIds && subscriberIds.length || 0;
+    traversal:
+        for (i = 0; i < targetPathCount; i++) {
+          targetPath = targetPaths[i];
+          callbacksPath = $data.Path.fromComponents([
+            'callbacks', 'bySubscription', eventName, targetPath.toString()]);
+          callbacks = eventSpace.subscriptions.getNode(callbacksPath);
+          subscriberIds = callbacks && Object.keys(callbacks);
+          callbackCount = subscriberIds && subscriberIds.length || 0;
 
-      // setting current path
-      this.currentPath = targetPath;
+          // setting current path
+          this.currentPath = targetPath;
 
-      // invoking callbacks for eventName / targetPath
-      for (j = 0; j < callbackCount; j++) {
-        results.push(callbacks[subscriberIds[j]](this));
-      }
-    }
+          // invoking callbacks for eventName / targetPath
+          for (j = 0; j < callbackCount; j++) {
+            results.push(callbacks[subscriberIds[j]](this));
+            if (!this.propagates) {
+              // todo Test stopping propagation
+              break traversal;
+            }
+          }
+        }
 
     return this._unlinkWhen(results);
   },
 
   /**
-   * @param causingEvent
+   * Invokes callbacks subscribed to `eventName`, on the specified path and,
+   * when bubbling is enabled, all its parent paths; from `targetPath` towards
+   * the root.
+   * @param {$data.Path} targetPath
+   * @param {boolean} [bubbles=false]
+   * @returns {$utils.Promise}
+   */
+  trigger: function (targetPath, bubbles) {
+    var targetPaths = bubbles ?
+        [targetPath].concat($event.spreadPathForBubbling(targetPath)) :
+        [targetPath];
+    return this.traverse(targetPaths);
+  },
+
+  /**
+   * Invokes callbacks subscribed to `eventName`, on all paths relative to
+   * the specified path, and, if bubbling is enabled, all parent paths too,
+   * from `targetPath` towards the root.
+   * @param {$data.Path} targetPath
+   * @param {boolean} [bubbles=false]
+   * @returns {$utils.Promise}
+   */
+  broadcast: function (targetPath, bubbles) {
+    var broadcastPaths = $event.spreadPathForBroadcast(targetPath, this.eventName),
+        bubblingPaths = bubbles ?
+            [targetPath].concat($event.spreadPathForBubbling(targetPath)) :
+            [targetPath];
+    return this.traverse(broadcastPaths.concat(bubblingPaths));
+  },
+
+  /**
+   * @param {*} sender
+   * @returns {$event.Event}
+   */
+  setSender: function (sender) {
+    this.sender = sender;
+    return this;
+  },
+
+  /**
+   * @param {$event.Event} causingEvent
    * @returns {$event.Event}
    * @todo Necessary?
    */
@@ -151,11 +208,11 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param sender
+   * @param {boolean} propagates
    * @returns {$event.Event}
    */
-  setSender: function (sender) {
-    this.sender = sender;
+  setPropagates: function (propagates) {
+    this.propagates = propagates;
     return this;
   },
 
@@ -163,7 +220,7 @@ $event.Event = $oop.getClass('$event.Event')
    * @returns {$event.Event}
    */
   stopPropagation: function () {
-    this.bubbles = false;
+    this.propagates = false;
     return this;
   }
 });
