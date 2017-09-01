@@ -9,7 +9,6 @@ $assert.fail = function (message) {
 };
 
 /**
- * @function $assert#isDefined
  * @param {*} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -19,7 +18,6 @@ $assert.isDefined = function (expr, message) {
 };
 
 /**
- * @function $assert#isUndefined
  * @param {*} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -29,7 +27,6 @@ $assert.isUndefined = function (expr, message) {
 };
 
 /**
- * @function $assert#isTruthy
  * @param {*} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -39,7 +36,6 @@ $assert.isTruthy = function (expr, message) {
 };
 
 /**
- * @function $assert#isFalsy
  * @param {*} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -49,7 +45,6 @@ $assert.isFalsy = function (expr, message) {
 };
 
 /**
- * @function $assert#isString
  * @param {string} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -60,7 +55,6 @@ $assert.isString = function (expr, message) {
 };
 
 /**
- * @function $assert#isStringOptional
  * @param {string} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -72,7 +66,6 @@ $assert.isStringOptional = function (expr, message) {
 };
 
 /**
- * @function $assert#isBoolean
  * @param {boolean} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -83,7 +76,6 @@ $assert.isBoolean = function (expr, message) {
 };
 
 /**
- * @function $assert#isBooleanOptional
  * @param {boolean} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -95,7 +87,6 @@ $assert.isBooleanOptional = function (expr, message) {
 };
 
 /**
- * @function $assert#isNumber
  * @param {number} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -106,7 +97,6 @@ $assert.isNumber = function (expr, message) {
 };
 
 /**
- * @function $assert#isNumberOptional
  * @param {number} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -118,7 +108,6 @@ $assert.isNumberOptional = function (expr, message) {
 };
 
 /**
- * @function $assert#isFunction
  * @param {function} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -128,7 +117,6 @@ $assert.isFunction = function (expr, message) {
 };
 
 /**
- * @function $assert#isFunctionOptional
  * @param {function} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -139,7 +127,6 @@ $assert.isFunctionOptional = function (expr, message) {
 };
 
 /**
- * @function $assert#isObject
  * @param {object} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -149,7 +136,6 @@ $assert.isObject = function (expr, message) {
 };
 
 /**
- * @function $assert#isObjectOptional
  * @param {object} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -160,7 +146,6 @@ $assert.isObjectOptional = function (expr, message) {
 };
 
 /**
- * @function $assert#isArray
  * @param {Array} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -170,7 +155,6 @@ $assert.isArray = function (expr, message) {
 };
 
 /**
- * @function $assert#isArrayOptional
  * @param {Array} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -181,7 +165,6 @@ $assert.isArrayOptional = function (expr, message) {
 };
 
 /**
- * @function $assert#isRegExp
  * @param {RegExp} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -191,7 +174,6 @@ $assert.isRegExp = function (expr, message) {
 };
 
 /**
- * @function $assert#isRegExpOptional
  * @param {RegExp} [expr]
  * @param {string} [message]
  * @returns {$assert}
@@ -202,7 +184,6 @@ $assert.isRegExpOptional = function (expr, message) {
 };
 
 /**
- * @function $assert#isDate
  * @param {Date} expr
  * @param {string} [message]
  * @returns {$assert}
@@ -212,7 +193,6 @@ $assert.isDate = function (expr, message) {
 };
 
 /**
- * @function $assert#isDateOptional
  * @param {Date} [expr]
  * @param {string} [message]
  * @returns {$assert}
