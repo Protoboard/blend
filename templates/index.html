@@ -5,23 +5,25 @@
     <title>Title</title>
     <script src="../node_modules/requirejs/require.js"></script>
     <script>
-        require.config({
-            baseUrl: "../dist"
-        });
-        // todo Require cake-routing only as soon as ready.
-        require([
-            'cake-assert',
-            'cake-oop',
-            'cake-utils',
-            'cake-data',
-            'cake-event'
-        ], function (assert, oop, utils, data, event) {
-            $assert = assert;
-            $oop = oop;
-            $utils = utils;
-            $data = data;
-            $event = event;
-        });
+      require.config({
+        baseUrl: "../dist"
+      });
+      // todo Require cake-routing only as soon as ready.
+      require([
+        'cake-assert',
+        'cake-oop',
+        'cake-utils',
+        'cake-data',
+        'cake-event',
+        'cake-entity'
+      ], function (assert, oop, utils, data, event, entity) {
+        $assert = assert;
+        $oop = oop;
+        $utils = utils;
+        $data = data;
+        $event = event;
+        $entity = entity;
+      });
     </script>
 </head>
 <body>
