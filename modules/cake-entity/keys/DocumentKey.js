@@ -2,6 +2,9 @@
 
 /**
  * @function $entity.DocumentKey.create
+ * @param {Object} properties
+ * @param {string} properties.documentType
+ * @param {string} properties.documentId
  * @returns {$entity.DocumentKey}
  */
 
@@ -49,6 +52,19 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
       documentType: components[0],
       documentId: components[1]
     });
+  },
+
+  /** @ignore */
+  spread: function () {
+    var eventPath = this.getEntityPath().unshift('entity');
+    this.listeningPath = eventPath;
+
+    this.triggerPaths = [
+      eventPath, // signals that the document has changed
+      // todo Should come from a cached meta key of sorts.
+      $data.Path.fromComponents(['entity-meta', 'document', this.documentType]),
+      $data.Path.fromComponents(['entity-meta', 'document'])
+    ];
   },
 
   /**
