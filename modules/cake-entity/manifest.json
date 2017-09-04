@@ -2,6 +2,7 @@
   "assets": {
     "js": [
       "globals.js",
+      "containers/*.js",
       "**/*.js",
       "!**/*.*.js"
     ]
