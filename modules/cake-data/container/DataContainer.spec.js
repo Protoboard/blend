@@ -15,6 +15,22 @@ describe("$data", function () {
       container = DataContainer.create({data: null});
     });
 
+    describe("fromData()", function () {
+      var data = {};
+      beforeEach(function () {
+        spyOn(DataContainer, 'create').and.returnValue(container);
+        result = DataContainer.fromData(data);
+      });
+
+      it("should pass data to create()", function () {
+        expect(DataContainer.create).toHaveBeenCalledWith({data: data});
+      });
+
+      it("should return result of create()", function () {
+        expect(result).toBe(container);
+      });
+    });
+
     describe("create()", function () {
       it("should set data property", function () {
         expect(container.data).toBe(null);

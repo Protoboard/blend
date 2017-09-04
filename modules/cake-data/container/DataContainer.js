@@ -25,6 +25,16 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
    */
 
   /**
+   * Creates a `DataContainer` based with the data provided.
+   * @memberOf $data.DataContainer
+   * @param {*} data
+   * @returns {$data.DataContainer}
+   */
+  fromData: function (data) {
+    return this.create({data: data});
+  },
+
+  /**
    * @inheritDoc
    * @returns {$data.DataContainer}
    */
