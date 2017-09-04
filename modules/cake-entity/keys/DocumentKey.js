@@ -43,7 +43,7 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
 
   /**
    * @memberOf $entity.DocumentKey
-   * @param documentRef
+   * @param {string} documentRef
    * @returns {$entity.DocumentKey}
    */
   fromString: function (documentRef) {
@@ -96,17 +96,17 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
       String(this.documentId)]);
   },
 
-  ///**
-  // * @param {string} fieldName
-  // * @returns {$entity.FieldKey}
-  // */
-  //getFieldKey: function (fieldName) {
-  //  return $entity.FieldKey.create(
-  //      this.documentType,
-  //      this.documentId,
-  //      fieldName
-  //  );
-  //},
+  /**
+   * @param {string} fieldName
+   * @returns {$entity.FieldKey}
+   */
+  getFieldKey: function (fieldName) {
+    return $entity.FieldKey.fromComponents(
+        this.documentType,
+        this.documentId,
+        fieldName
+    );
+  },
 
   /**
    * Serializes current document key.

@@ -113,6 +113,20 @@ describe("$entity", function () {
       });
     });
 
+    describe("getFieldKey()", function () {
+      beforeEach(function () {
+        result = documentKey.getFieldKey('baz');
+      });
+
+      it("should return a FieldKey", function () {
+        expect($entity.FieldKey.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should return field in document", function () {
+        expect(result).toEqual('foo/bar/baz'.toFieldKey());
+      });
+    });
+
     describe("toString()", function () {
       it("should return string representation", function () {
         expect(documentKey.toString()).toBe('foo/bar');
@@ -133,7 +147,7 @@ describe("String", function () {
     var documentKey;
 
     beforeEach(function () {
-      documentKey = 'foo/bar'.toDocumentKey();
+      documentKey = $entity.DocumentKey.fromString('foo/bar');
       spyOn($entity.DocumentKey, 'create').and.returnValue(documentKey);
       result = 'foo/bar'.toDocumentKey();
     });
