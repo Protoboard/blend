@@ -94,7 +94,7 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
 
   /**
    * Schedules a call passing the specified arguments.
-   * @method $utils.Scheduler#schedule
+   * @function $utils.Scheduler#schedule
    * @param {...*} arg
    * @returns {$utils.Promise}
    * @abstract

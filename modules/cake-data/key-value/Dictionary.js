@@ -134,7 +134,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+$oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.Dictionary}
    */

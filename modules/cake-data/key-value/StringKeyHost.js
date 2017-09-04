@@ -14,7 +14,7 @@ $data.StringKeyHost = $oop.getClass('$data.StringKeyHost')
   keyType: $data.KEY_TYPE_STRING,
 
   /**
-   * @method $data.StringKeyHost#getValuesForKey
+   * @function $data.StringKeyHost#getValuesForKey
    * @param {string} key
    * @returns {Array}
    */

@@ -169,7 +169,7 @@ $oop.copyProperties($assert, /** @lends $assert# */{
   }
 });
 
-$oop.copyProperties(String.prototype, /** @lends external:String# */{
+$oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$data.Query}
    */
@@ -178,7 +178,7 @@ $oop.copyProperties(String.prototype, /** @lends external:String# */{
   }
 });
 
-$oop.copyProperties(Array.prototype, /** @lends external:Array# */{
+$oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.Query}
    */
