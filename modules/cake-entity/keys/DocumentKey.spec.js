@@ -1,8 +1,48 @@
 "use strict";
 
-var $oop = window['cake-oop'],
+var $assert = window['cake-assert'],
+    $oop = window['cake-oop'],
     $data = window['cake-data'],
     $entity = window['cake-entity'];
+
+describe("$assert", function () {
+  var documentKey;
+
+  beforeEach(function () {
+    documentKey = $entity.DocumentKey.fromComponents('foo', 'bar');
+    spyOn($assert, 'assert').and.callThrough();
+  });
+
+  describe("isDocumentKey()", function () {
+    it("should pass message to assert", function () {
+      $assert.isDocumentKey(documentKey, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-DocumentKey", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isDocumentKey({});
+        }).toThrow();
+      });
+    });
+  });
+
+  describe("isDocumentKeyOptional()", function () {
+    it("should pass message to assert", function () {
+      $assert.isDocumentKeyOptional(documentKey, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-DocumentKey", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isDocumentKeyOptional({});
+        }).toThrow();
+      });
+    });
+  });
+});
 
 describe("$entity", function () {
   describe("DocumentKey", function () {

@@ -4,6 +4,45 @@ var $oop = window['cake-oop'],
     $data = window['cake-data'],
     $entity = window['cake-entity'];
 
+describe("$assert", function () {
+  var documentKey;
+
+  beforeEach(function () {
+    documentKey = $entity.FieldKey.fromComponents('foo', 'bar', 'baz');
+    spyOn($assert, 'assert').and.callThrough();
+  });
+
+  describe("isFieldKey()", function () {
+    it("should pass message to assert", function () {
+      $assert.isFieldKey(documentKey, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-FieldKey", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isFieldKey({});
+        }).toThrow();
+      });
+    });
+  });
+
+  describe("isFieldKeyOptional()", function () {
+    it("should pass message to assert", function () {
+      $assert.isFieldKeyOptional(documentKey, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-chain", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isFieldKeyOptional({});
+        }).toThrow();
+      });
+    });
+  });
+});
+
 describe("$entity", function () {
   describe("FieldKey", function () {
     var FieldKey,
