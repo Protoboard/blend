@@ -4,13 +4,9 @@
  * Common functionality for entity keys.
  * @class $entity.EntityKey
  * @extends $data.Comparable
- * @extends $event.EventSender
- * @extends $event.EventListener
  */
 $entity.EntityKey = $oop.getClass('$entity.EntityKey')
-.mix($data.Comparable)
-.mix($event.EventSender)
-.mix($event.EventListener);
+.mix($data.Comparable);
 
 /**
  * Retrieves a key to the metadata associated with the entity class.

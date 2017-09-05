@@ -59,22 +59,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
-      it("should initialize listeningPath", function () {
-        expect(documentKey.listeningPath)
-        .toEqual('entity.document.foo.bar'.toPath());
-      });
-
-      it("should initialize triggerPaths", function () {
-        expect(documentKey.triggerPaths)
-        .toEqual([
-          'entity.document.foo.bar'.toPath(),
-          'entity-meta.document.foo'.toPath(),
-          'entity-meta.document'.toPath()
-        ]);
-      });
-    });
-
     describe("fromComponents()", function () {
       beforeEach(function () {
         documentKey = DocumentKey.fromComponents('foo', 'bar');
@@ -135,7 +119,7 @@ describe("$entity", function () {
       });
 
       it("should return meta key to the document type", function () {
-        expect(result.equals($entity.MetaKey.fromString('document/foo')))
+        expect(result.equals($entity.MetaKey.fromString('__document/foo')))
         .toBeTruthy();
       });
     });

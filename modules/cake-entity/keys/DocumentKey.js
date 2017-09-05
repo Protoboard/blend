@@ -57,19 +57,6 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
     });
   },
 
-  /** @ignore */
-  spread: function () {
-    var eventPath = this.getEntityPath().unshift('entity');
-    this.listeningPath = eventPath;
-
-    this.triggerPaths = [
-      eventPath, // signals that the document has changed
-      // todo Should come from a cached meta key of sorts.
-      $data.Path.fromComponents(['entity-meta', 'document', this.documentType]),
-      $data.Path.fromComponents(['entity-meta', 'document'])
-    ];
-  },
-
   /**
    * @param {$entity.DocumentKey} documentKey
    * @returns {boolean}
@@ -85,7 +72,7 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
    * @returns {$entity.DocumentKey}
    */
   getMetaKey: function () {
-    return $entity.MetaKey.fromMetaComponents('document', [this.documentType]);
+    return $entity.MetaKey.fromMetaComponents('__document', [this.documentType]);
   },
 
   /**

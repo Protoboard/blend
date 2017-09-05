@@ -59,25 +59,6 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
     });
   },
 
-  /** @ignore */
-  spread: function () {
-    var eventPath = this.getEntityPath().unshift('entity'),
-        documentKey = this.documentKey;
-
-    this.listeningPath = eventPath;
-
-    // todo This could be the id of a meta document key
-    var metaId = $utils.escape(documentKey.documentType, '/') + '/' +
-        $utils.escape(this.fieldName, '/');
-
-    this.triggerPaths = [
-      eventPath, // signals that the field has changed
-      // todo Should come from a cached meta key of sorts.
-      $data.Path.fromComponents(['entity-meta', 'field', metaId]),
-      $data.Path.fromComponents(['entity-meta', 'field'])
-    ];
-  },
-
   /**
    * @param {$entity.FieldKey} fieldKey
    * @returns {boolean}
@@ -93,7 +74,7 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    * @returns {$entity.DocumentKey}
    */
   getMetaKey: function () {
-    return $entity.MetaKey.fromMetaComponents('field', [
+    return $entity.MetaKey.fromMetaComponents('__field', [
       this.documentKey.documentType,
       this.fieldName
     ]);

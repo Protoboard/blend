@@ -58,22 +58,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
-      it("should initialize listeningPath", function () {
-        expect(fieldKey.listeningPath)
-        .toEqual('entity.document.foo.bar.baz'.toPath());
-      });
-
-      it("should initialize triggerPaths", function () {
-        expect(fieldKey.triggerPaths)
-        .toEqual([
-          'entity.document.foo.bar.baz'.toPath(),
-          'entity-meta.field.foo/baz'.toPath(),
-          'entity-meta.field'.toPath()
-        ]);
-      });
-    });
-
     describe("fromComponents()", function () {
       beforeEach(function () {
         fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
@@ -132,7 +116,7 @@ describe("$entity", function () {
       });
 
       it("should return meta key to the field", function () {
-        expect(result.equals($entity.MetaKey.fromString('field/foo\\/baz')))
+        expect(result.equals($entity.MetaKey.fromString('__field/foo\\/baz')))
         .toBeTruthy();
       });
     });
