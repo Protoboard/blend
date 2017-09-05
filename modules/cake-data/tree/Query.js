@@ -146,7 +146,7 @@ $data.Query = $oop.getClass('$data.Query')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert# */{
+$oop.copyProperties($assert, /** @lends $assert */{
   /**
    * @param {$data.Query} expr
    * @param {string} [message]

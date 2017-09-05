@@ -1231,7 +1231,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert# */{
+$oop.copyProperties($assert, /** @lends $assert */{
   /**
    * @param {$oop.Class} expr
    * @param {string} [message]

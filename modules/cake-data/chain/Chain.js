@@ -159,7 +159,7 @@ $data.Chain = $oop.getClass('$data.Chain')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert# */{
+$oop.copyProperties($assert, /** @lends $assert */{
   /**
    * @param {$data.Chain} expr
    * @param {string} [message]

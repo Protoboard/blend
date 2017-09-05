@@ -185,7 +185,7 @@ $data.Path = $oop.getClass('$data.Path')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert# */{
+$oop.copyProperties($assert, /** @lends $assert */{
   /**
    * @param {$data.Path} expr
    * @param {string} [message]

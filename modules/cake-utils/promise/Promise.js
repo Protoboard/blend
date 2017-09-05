@@ -160,7 +160,7 @@ $oop.copyProperties($utils, /** @lends $utils */{
   PROMISE_STATE_REJECTED: 'rejected'
 });
 
-$oop.copyProperties($assert, /** @lends $assert# */{
+$oop.copyProperties($assert, /** @lends $assert */{
   /**
    * @param {$utils.Promise} expr
    * @param {string} [message]
