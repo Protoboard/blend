@@ -47,7 +47,10 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
    * @returns {$entity.DocumentKey}
    */
   fromString: function (documentRef) {
-    var components = $utils.safeSplit(documentRef, '/');
+    var components = $utils.safeSplit(documentRef, '/')
+    .map(function (component) {
+      return $utils.unescape(component, '/');
+    });
     return this.create({
       documentType: components[0],
       documentId: components[1]
@@ -81,8 +84,8 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
    * @inheritDoc
    * @returns {$entity.DocumentKey}
    */
-  getConfigKey: function () {
-    return $entity.DocumentKey.fromComponents('document', this.documentType);
+  getMetaKey: function () {
+    return $entity.MetaKey.fromMetaComponents('document', [this.documentType]);
   },
 
   /**

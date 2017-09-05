@@ -49,11 +49,33 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    * @returns {$entity.FieldKey}
    */
   fromString: function (fieldRef) {
-    var components = $utils.safeSplit(fieldRef, '/');
+    var components = $utils.safeSplit(fieldRef, '/')
+    .map(function (component) {
+      return $utils.unescape(component, '/');
+    });
     return this.create({
       documentKey: $entity.DocumentKey.fromComponents(components[0], components[1]),
       fieldName: components[2]
     });
+  },
+
+  /** @ignore */
+  spread: function () {
+    var eventPath = this.getEntityPath().unshift('entity'),
+        documentKey = this.documentKey;
+
+    this.listeningPath = eventPath;
+
+    // todo This could be the id of a meta document key
+    var metaId = $utils.escape(documentKey.documentType, '/') + '/' +
+        $utils.escape(this.fieldName, '/');
+
+    this.triggerPaths = [
+      eventPath, // signals that the field has changed
+      // todo Should come from a cached meta key of sorts.
+      $data.Path.fromComponents(['entity-meta', 'field', metaId]),
+      $data.Path.fromComponents(['entity-meta', 'field'])
+    ];
   },
 
   /**
@@ -70,11 +92,11 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    * @inheritDoc
    * @returns {$entity.DocumentKey}
    */
-  getConfigKey: function () {
-    // todo This could be the id of a meta document key
-    var metaId = $utils.escape(this.documentKey.documentType, '/') + '/' +
-        $utils.escape(this.fieldName, '/');
-    return $entity.DocumentKey.fromComponents('field', metaId);
+  getMetaKey: function () {
+    return $entity.MetaKey.fromMetaComponents('field', [
+      this.documentKey.documentType,
+      this.fieldName
+    ]);
   },
 
   /**
@@ -82,10 +104,11 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    * @returns {$data.Path}
    */
   getEntityPath: function () {
+    var documentKey = this.documentKey;
     return $data.Path.fromComponents([
       'document',
-      String(this.documentType),
-      String(this.documentId),
+      String(documentKey.documentType),
+      String(documentKey.documentId),
       String(this.fieldName)]);
   },
 

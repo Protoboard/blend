@@ -19,21 +19,21 @@ describe("$entity", function () {
       });
     });
 
-    //describe("create()", function () {
-    //  it("should initialize listeningPath", function () {
-    //    expect(fieldKey.listeningPath)
-    //    .toEqual('entity.document.foo.bar'.toPath());
-    //  });
-    //
-    //  it("should initialize triggerPaths", function () {
-    //    expect(fieldKey.triggerPaths)
-    //    .toEqual([
-    //      'entity.document.foo.bar'.toPath(),
-    //      'entity-meta.document.foo'.toPath(),
-    //      'entity-meta.document'.toPath()
-    //    ]);
-    //  });
-    //});
+    describe("create()", function () {
+      it("should initialize listeningPath", function () {
+        expect(fieldKey.listeningPath)
+        .toEqual('entity.document.foo.bar.baz'.toPath());
+      });
+
+      it("should initialize triggerPaths", function () {
+        expect(fieldKey.triggerPaths)
+        .toEqual([
+          'entity.document.foo.bar.baz'.toPath(),
+          'entity-meta.field.foo/baz'.toPath(),
+          'entity-meta.field'.toPath()
+        ]);
+      });
+    });
 
     describe("fromComponents()", function () {
       beforeEach(function () {
@@ -61,7 +61,7 @@ describe("$entity", function () {
 
       it("should set documentKey & fieldName properties", function () {
         expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
-        expect(fieldKey.fieldName).toBe('\\/baz');
+        expect(fieldKey.fieldName).toBe('/baz');
       });
     });
 
@@ -83,17 +83,18 @@ describe("$entity", function () {
       });
     });
 
-    describe("getConfigKey()", function () {
+    describe("getMetaKey()", function () {
       beforeEach(function () {
-        result = fieldKey.getConfigKey();
+        result = fieldKey.getMetaKey();
       });
 
-      it("should return a DocumentKey", function () {
-        expect($entity.DocumentKey.mixedBy(result)).toBeTruthy();
+      it("should return a MetaKey", function () {
+        expect($entity.MetaKey.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return config key to the document type", function () {
-        expect(result.equals('document/foo\\/bar'.toFieldKey()));
+      it("should return meta key to the field", function () {
+        expect(result.equals($entity.MetaKey.fromString('field/foo\\/baz')))
+        .toBeTruthy();
       });
     });
 
@@ -107,7 +108,7 @@ describe("$entity", function () {
       });
 
       it("should return config key to the document type", function () {
-        expect(result.equals('document.foo.bar'.toPath()));
+        expect(result.equals('document.foo.bar.baz'.toPath()));
       });
     });
 

@@ -60,7 +60,7 @@ describe("$entity", function () {
       });
 
       it("should set documentType & documentId properties", function () {
-        expect(documentKey.documentType).toBe('\\/bar');
+        expect(documentKey.documentType).toBe('/bar');
         expect(documentKey.documentId).toBe('baz');
       });
     });
@@ -85,17 +85,18 @@ describe("$entity", function () {
       });
     });
 
-    describe("getConfigKey()", function () {
+    describe("getMetaKey()", function () {
       beforeEach(function () {
-        result = documentKey.getConfigKey();
+        result = documentKey.getMetaKey();
       });
 
-      it("should return a DocumentKey", function () {
-        expect($entity.DocumentKey.mixedBy(result)).toBeTruthy();
+      it("should return a MetaKey", function () {
+        expect($entity.MetaKey.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return config key to the document type", function () {
-        expect(result.equals('document/foo'.toDocumentKey()));
+      it("should return meta key to the document type", function () {
+        expect(result.equals($entity.MetaKey.fromString('document/foo')))
+        .toBeTruthy();
       });
     });
 

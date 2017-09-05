@@ -14,7 +14,7 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
 
 /**
  * Retrieves a key to the metadata associated with the entity class.
- * @function $entity.EntityKey#getConfigKey
+ * @function $entity.EntityKey#getMetaKey
  * @returns {$entity.DocumentKey}
  * @abstract
  */
