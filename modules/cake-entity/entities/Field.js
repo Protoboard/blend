@@ -90,6 +90,6 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
    * @returns {$entity.Field}
    */
   toField: function () {
-    return $entity.Field.fromComponents(this[0], this[1]);
+    return $entity.Field.fromComponents(this[0], this[1], this[2]);
   }
 });

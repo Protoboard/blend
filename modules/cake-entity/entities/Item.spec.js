@@ -13,7 +13,7 @@ describe("$entity", function () {
       .mix($entity.Item);
       item = Item.fromEntityKey('foo/bar/baz/quux'.toItemKey());
     });
-    
+
     describe("fromComponents()", function () {
       beforeEach(function () {
         item = Item.fromComponents('foo', 'bar', 'baz', 'quux');
@@ -95,4 +95,52 @@ describe("$entity", function () {
   });
 });
 
-// todo Add Array & String tests
+describe("String", function () {
+  var result;
+
+  describe("toItem()", function () {
+    var item;
+
+    beforeEach(function () {
+      item = $entity.Item.fromString('foo/bar/baz/quux');
+      spyOn($entity.Item, 'create').and.returnValue(item);
+      result = 'foo/bar/baz/quux'.toItem();
+    });
+
+    it("should create a Item instance", function () {
+      expect($entity.Item.create).toHaveBeenCalledWith({
+        entityKey: 'foo/bar/baz/quux'.toItemKey()
+      });
+    });
+
+    it("should return created instance", function () {
+      expect(result).toBe(item);
+    });
+  });
+});
+
+describe("Array", function () {
+  var result;
+
+  describe("toItem()", function () {
+    var components,
+        item;
+
+    beforeEach(function () {
+      components = ['foo', 'bar', 'baz', 'quux'];
+      item = $entity.Item.fromComponents('foo', 'bar', 'baz', 'quux');
+      spyOn($entity.Item, 'create').and.returnValue(item);
+      result = components.toItem();
+    });
+
+    it("should create a Item instance", function () {
+      expect($entity.Item.create).toHaveBeenCalledWith({
+        entityKey: 'foo/bar/baz/quux'.toItemKey()
+      });
+    });
+
+    it("should return created instance", function () {
+      expect(result).toBe(item);
+    });
+  });
+});

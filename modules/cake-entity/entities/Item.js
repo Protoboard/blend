@@ -87,6 +87,6 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
    * @returns {$entity.Item}
    */
   toItem: function () {
-    return $entity.Item.fromComponents(this[0], this[1]);
+    return $entity.Item.fromComponents(this[0], this[1], this[2], this[3]);
   }
 });

@@ -96,4 +96,52 @@ describe("$entity", function () {
   });
 });
 
-// todo Add Array & String tests
+describe("String", function () {
+  var result;
+
+  describe("toField()", function () {
+    var field;
+
+    beforeEach(function () {
+      field = $entity.Field.fromString('foo/bar/baz');
+      spyOn($entity.Field, 'create').and.returnValue(field);
+      result = 'foo/bar/baz'.toField();
+    });
+
+    it("should create a Field instance", function () {
+      expect($entity.Field.create).toHaveBeenCalledWith({
+        entityKey: 'foo/bar/baz'.toFieldKey()
+      });
+    });
+
+    it("should return created instance", function () {
+      expect(result).toBe(field);
+    });
+  });
+});
+
+describe("Array", function () {
+  var result;
+
+  describe("toField()", function () {
+    var components,
+        field;
+
+    beforeEach(function () {
+      components = ['foo', 'bar', 'baz'];
+      field = $entity.Field.fromComponents('foo', 'bar', 'baz');
+      spyOn($entity.Field, 'create').and.returnValue(field);
+      result = components.toField();
+    });
+
+    it("should create a Field instance", function () {
+      expect($entity.Field.create).toHaveBeenCalledWith({
+        entityKey: 'foo/bar/baz'.toFieldKey()
+      });
+    });
+
+    it("should return created instance", function () {
+      expect(result).toBe(field);
+    });
+  });
+});
