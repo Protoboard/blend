@@ -23,8 +23,9 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    */
 
   /**
+   * @memberOf $entity.Entity
    * @param {$entity.EntityKey} entityKey
-   * @returns {$entity.EntityKey}
+   * @returns {$entity.Entity}
    */
   fromEntityKey: function (entityKey) {
     return this.create({
