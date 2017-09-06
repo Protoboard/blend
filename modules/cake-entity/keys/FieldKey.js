@@ -108,9 +108,10 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   //},
 
   /**
-   * Serializes current document key.
+   * Serializes current field key.
    * @example
-   * $entity.FieldKey.create('user', '1234').toString() // "user/1234"
+   * $entity.FieldKey.create('user', '1234', 'name').toString()
+   * // "user/1234/name"
    * @returns {string}
    */
   toString: function () {
