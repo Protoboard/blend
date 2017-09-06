@@ -11,7 +11,7 @@ $event.Wrapper = $oop.getClass('$event.Wrapper')
 .define(/** @lends $event.Wrapper# */{
   /**
    * Variable wrapped by the current instance.
-   * @member {*} wrapped
+   * @member {*} $event.Wrapper#wrapped
    */
 
   /**
