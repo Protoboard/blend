@@ -17,6 +17,28 @@ $entity.Field = $oop.getClass('$entity.Field')
    * @member {$entity.FieldKey} $entity.Field#entityKey
    */
 
+  /**
+   * @param {string} documentType
+   * @param {string} documentId
+   * @param {string} fieldName
+   * @returns {$entity.Field}
+   */
+  fromComponents: function (documentType, documentId, fieldName) {
+    return this.create({
+      entityKey: $entity.FieldKey.fromComponents(documentType, documentId, fieldName)
+    });
+  },
+
+  /**
+   * @param {string} fieldRef
+   * @returns {$entity.Field}
+   */
+  fromString: function (fieldRef) {
+    return this.create({
+      entityKey: $entity.FieldKey.fromString(fieldRef)
+    });
+  },
+
   /** @ignore */
   spread: function () {
     var fieldKey = this.entityKey,
@@ -37,4 +59,37 @@ $entity.Field = $oop.getClass('$entity.Field')
   //getItem: function (itemId) {
   //  $entity.Item.fromEntityKey(this.entityKey.getItemKey(itemId));
   //}
+});
+
+$oop.getClass('$entity.Entity')
+.forward($oop.getClass('$entity.Field'), function (properties) {
+  return $entity.FieldKey.mixedBy(properties.entityKey);
+});
+
+$oop.getClass('$entity.FieldKey')
+.delegate(/** @lends $entity.FieldKey# */{
+  /**
+   * @returns {$entity.Field}
+   */
+  toField: function () {
+    return $entity.Field.fromEntityKey(this);
+  }
+});
+
+$oop.copyProperties(String.prototype, /** @lends String# */{
+  /**
+   * @returns {$entity.Field}
+   */
+  toField: function () {
+    return $entity.Field.fromString(this.valueOf());
+  }
+});
+
+$oop.copyProperties(Array.prototype, /** @lends Array# */{
+  /**
+   * @returns {$entity.Field}
+   */
+  toField: function () {
+    return $entity.Field.fromComponents(this[0], this[1]);
+  }
 });
