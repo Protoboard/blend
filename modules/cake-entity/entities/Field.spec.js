@@ -95,3 +95,5 @@ describe("$entity", function () {
     });
   });
 });
+
+// todo Add Array & String tests
