@@ -19,6 +19,22 @@ $data.StringSet = $oop.getClass('$data.StringSet')
 .mix($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.StringSet# */{
   /**
+   * @memberOf $data.StringSet
+   * @param {Array.<string>} array
+   * @returns {$data.StringSet}
+   */
+  fromArray: function (array) {
+    // iterating directly for performance reasons
+    var itemCount = array.length,
+        data = {},
+        i;
+    for (i = 0; i < itemCount; i++) {
+      data[array[i]] = 1;
+    }
+    return this.create({data: data});
+  },
+
+  /**
    * @param {string} item
    * @returns {$data.StringSet}
    */
@@ -181,6 +197,6 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
    * @returns {$data.StringSet}
    */
   toStringSet: function () {
-    return $data.StringSet.create({data: this});
+    return $data.StringSet.fromArray(this);
   }
 });

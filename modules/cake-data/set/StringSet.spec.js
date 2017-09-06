@@ -275,7 +275,11 @@ describe("Array", function () {
     });
 
     it("should set data set", function () {
-      expect(result.data).toBe(array);
+      expect(result.data).toEqual({
+        1: 1,
+        2: 1,
+        3: 1
+      });
     });
   });
 });
