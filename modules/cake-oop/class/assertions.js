@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * @function $assert#hasOnlyConverters
+ * @function $assert.hasOnlyConverters
  * @param {object} expr
  * @param {string} message
  * @returns {$assert}
