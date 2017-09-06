@@ -139,7 +139,12 @@ module.exports = function (grunt) {
       dist: ['Gruntfile.js', 'modules/**/*.js']
     },
 
-    karma: buildKarmaConfig(),
+    karma: buildKarmaConfig({
+      coverage: {
+        configFile: './karma.conf.js',
+        reporters: 'coverage'
+      }
+    }),
 
     watch: buildWatchConfig({
       gruntfile: {
@@ -196,6 +201,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['jshint', 'karma']);
+  grunt.registerTask('coverage', ['karma:coverage']);
   grunt.registerTask('build-quick', ['clean:build', 'string-replace', 'concat',
     'notify:build-quick']);
   grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'test',
