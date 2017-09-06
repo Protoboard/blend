@@ -95,19 +95,19 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
       String(this.fieldName)]);
   },
 
-  ///**
-  // * @param {string} itemId
-  // * @returns {$entity.ItemKey}
-  // */
-  //getItemKey: function (itemId) {
-  //  var documentKey = this.documentKey;
-  //  return $entity.ItemKey.create(
-  //      documentKey.documentType,
-  //      documentKey.documentId,
-  //      this.fieldName,
-  //      itemId
-  //  );
-  //},
+  /**
+   * @param {string} itemId
+   * @returns {$entity.ItemKey}
+   */
+  getItemKey: function (itemId) {
+    var documentKey = this.documentKey;
+    return $entity.ItemKey.fromComponents(
+        documentKey.documentType,
+        documentKey.documentId,
+        this.fieldName,
+        itemId
+    );
+  },
 
   /**
    * Serializes current field key.

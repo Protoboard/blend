@@ -135,6 +135,20 @@ describe("$entity", function () {
       });
     });
 
+    describe("getItemKey()", function () {
+      beforeEach(function () {
+        result = fieldKey.getItemKey('quux');
+      });
+
+      it("should return an ItemKey", function () {
+        expect($entity.ItemKey.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should return item in collection", function () {
+        expect(result).toEqual('foo/bar/baz/quux'.toItemKey());
+      });
+    });
+
     describe("toString()", function () {
       it("should return string representation", function () {
         expect(fieldKey.toString()).toBe('foo/bar/baz');
