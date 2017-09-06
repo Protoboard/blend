@@ -55,7 +55,7 @@ $oop.getClass('$data.DataContainer')
   /**
    * @returns {$data.OrderedStringList}
    */
-  toOrderedStringList: function () {
+  asOrderedStringList: function () {
     return $data.OrderedStringList.create({data: this.data});
   }
 });
@@ -64,7 +64,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.OrderedStringList}
    */
-  toOrderedStringList: function () {
+  asOrderedStringList: function () {
     return $data.OrderedStringList.create({data: this});
   }
 });

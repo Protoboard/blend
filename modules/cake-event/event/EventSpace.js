@@ -53,7 +53,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
     subscriptions
     .getNodeWrapped($data.Path.fromComponents(['paths', eventName]))
-    .toOrderedStringList()
+    .asOrderedStringList()
     .deleteItem(targetPathPc);
   },
 
@@ -99,7 +99,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
       subscriptions.getNodeWrapped(
           $data.Path.fromComponents(['paths', eventName]))
-      .toOrderedStringList()
+      .asOrderedStringList()
       .deleteItem(targetPathStr);
     });
   },
@@ -127,7 +127,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
       subscriptions
       .getNodeWrapped($data.Path.fromComponents(['paths', eventName]))
-      .toOrderedStringList()
+      .asOrderedStringList()
       .deleteItem(targetPathPc);
     } else {
       subscriptions
@@ -196,7 +196,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       // initializing ordered path list
       subscriptions
       .getInitializedNodeWrapped(pathsPath, this._pathsInitializer)
-      .toOrderedStringList()
+      .asOrderedStringList()
       .setItem(targetPathStr);
     }
 

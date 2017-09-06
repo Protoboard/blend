@@ -23,7 +23,7 @@ $oop.getClass('$data.DataContainer')
   /**
    * @returns {$data.StringCollection}
    */
-  toStringCollection: function () {
+  asStringCollection: function () {
     return $data.StringCollection.create({data: this.data});
   }
 });
@@ -32,7 +32,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.StringCollection}
    */
-  toStringCollection: function () {
+  asStringCollection: function () {
     return $data.StringCollection.create({data: this});
   }
 });

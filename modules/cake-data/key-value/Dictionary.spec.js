@@ -171,11 +171,11 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("toDictionary()", function () {
+    describe("asDictionary()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = container.toDictionary();
+        result = container.asDictionary();
       });
 
       it("should return a Dictionary instance", function () {
@@ -192,11 +192,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toDictionary()", function () {
+  describe("asDictionary()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {
-      result = array.toDictionary();
+      result = array.asDictionary();
     });
 
     it("should return a Dictionary instance", function () {

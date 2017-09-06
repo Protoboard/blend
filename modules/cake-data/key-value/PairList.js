@@ -74,7 +74,7 @@ $oop.getClass('$data.DataContainer')
   /**
    * @returns {$data.PairList}
    */
-  toPairList: function () {
+  asPairList: function () {
     return $data.PairList.create({data: this.data});
   }
 });
@@ -83,7 +83,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.PairList}
    */
-  toPairList: function () {
+  asPairList: function () {
     return $data.PairList.create({data: this});
   }
 });

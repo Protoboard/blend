@@ -8,11 +8,11 @@ describe("$data", function () {
       result;
 
   describe("DataContainer", function () {
-    describe("toStringPairList()", function () {
+    describe("asStringPairList()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = container.toStringPairList();
+        result = container.asStringPairList();
       });
 
       it("should return a StringPairList instance", function () {
@@ -30,11 +30,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toStringPairList()", function () {
+  describe("asStringPairList()", function () {
     var array = ['a', 'b', 'c'];
 
     beforeEach(function () {
-      result = array.toStringPairList();
+      result = array.asStringPairList();
     });
 
     it("should return a StringPairList instance", function () {

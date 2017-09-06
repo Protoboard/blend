@@ -242,11 +242,11 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("toStringSet()", function () {
+    describe("asStringSet()", function () {
       var buffer = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = buffer.toStringSet();
+        result = buffer.asStringSet();
       });
 
       it("should return a StringSet instance", function () {

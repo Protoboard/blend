@@ -65,11 +65,11 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("toOrderedStringList()", function () {
+    describe("asOrderedStringList()", function () {
       var buffer = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = buffer.toOrderedStringList();
+        result = buffer.asOrderedStringList();
       });
 
       it("should return a OrderedStringList instance", function () {
@@ -86,11 +86,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toOrderedStringList()", function () {
+  describe("asOrderedStringList()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {
-      result = array.toOrderedStringList();
+      result = array.asOrderedStringList();
     });
 
     it("should return a OrderedStringList instance", function () {

@@ -122,7 +122,7 @@ $oop.getClass('$data.DataContainer')
   /**
    * @returns {$data.Collection}
    */
-  toCollection: function () {
+  asCollection: function () {
     return $data.Collection.create({data: this.data});
   }
 });
@@ -131,7 +131,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.Collection}
    */
-  toCollection: function () {
+  asCollection: function () {
     return $data.Collection.create({data: this});
   }
 });

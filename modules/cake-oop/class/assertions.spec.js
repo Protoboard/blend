@@ -19,7 +19,7 @@ describe("$assert", function () {
           $assert.hasOnlyConverters({
             toFoo: function () {
             },
-            toBar: function () {
+            asBar: function () {
             }
           });
         }).not.toThrow();

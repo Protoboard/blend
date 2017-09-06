@@ -8,11 +8,11 @@ describe("$data", function () {
       result;
 
   describe("DataContainer", function () {
-    describe("toStringCollection()", function () {
+    describe("asStringCollection()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = container.toStringCollection();
+        result = container.asStringCollection();
       });
 
       it("should return a StringCollection instance", function () {
@@ -30,11 +30,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toStringCollection()", function () {
+  describe("asStringCollection()", function () {
     var array = ['a', 'b', 'c'];
 
     beforeEach(function () {
-      result = array.toStringCollection();
+      result = array.asStringCollection();
     });
 
     it("should return a StringCollection instance", function () {

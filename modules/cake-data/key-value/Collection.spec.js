@@ -154,11 +154,11 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("toCollection()", function () {
+    describe("asCollection()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = container.toCollection();
+        result = container.asCollection();
       });
 
       it("should return a Collection instance", function () {
@@ -175,11 +175,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toCollection()", function () {
+  describe("asCollection()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {
-      result = array.toCollection();
+      result = array.asCollection();
     });
 
     it("should return a Collection instance", function () {

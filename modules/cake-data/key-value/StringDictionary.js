@@ -130,7 +130,7 @@ $oop.getClass('$data.DataContainer')
   /**
    * @returns {$data.StringDictionary}
    */
-  toStringDictionary: function () {
+  asStringDictionary: function () {
     return $data.StringDictionary.create({data: this.data});
   }
 });
@@ -139,7 +139,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.StringDictionary}
    */
-  toStringDictionary: function () {
+  asStringDictionary: function () {
     return $data.StringDictionary.create({data: this});
   }
 });

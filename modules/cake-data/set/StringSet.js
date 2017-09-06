@@ -187,7 +187,7 @@ $oop.getClass('$data.DataContainer')
   /**
    * @returns {$data.StringSet}
    */
-  toStringSet: function () {
+  asStringSet: function () {
     return $data.StringSet.create({data: this.data});
   }
 });

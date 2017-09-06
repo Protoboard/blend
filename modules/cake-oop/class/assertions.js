@@ -11,8 +11,9 @@ $assert.hasOnlyConverters = function (expr, message) {
       expr instanceof Object &&
       !Object.getOwnPropertyNames(expr)
       .filter(function (propertyName) {
+        var prefix = propertyName.slice(0, 2);
         return typeof expr[propertyName] !== 'function' ||
-            propertyName.slice(0, 2) !== 'to';
+            (prefix !== 'to' && prefix !== 'as');
       })
           .length,
       message);

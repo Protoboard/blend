@@ -30,12 +30,12 @@ $oop.copyProperties($event, /** @lends $event */{
 
     return eventSpace.subscriptions
     .getNodeWrapped(['paths', eventName].toPath())
-    .toOrderedStringList()
+    .asOrderedStringList()
     .getRangeByPrefixWrapped(pathStr, 1)
-    .toCollection()
+    .asCollection()
     .toType($data.StringDictionary)
     .swapKeysAndValues()
-    .toCollection()
+    .asCollection()
     .getKeysWrapped()
     // todo Use .passEachKeyTo() Instead of .getKeysWrapped().passEachValueTo()
     .passEachValueTo($data.Path.fromString)

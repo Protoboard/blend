@@ -100,11 +100,11 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("toPairList()", function () {
+    describe("asPairList()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = container.toPairList();
+        result = container.asPairList();
       });
 
       it("should return a PairList instance", function () {
@@ -121,11 +121,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toPairList()", function () {
+  describe("asPairList()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {
-      result = array.toPairList();
+      result = array.asPairList();
     });
 
     it("should return a PairList instance", function () {

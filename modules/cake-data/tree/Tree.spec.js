@@ -971,11 +971,11 @@ describe("$data", function () {
   describe("DataContainer", function () {
     var result;
 
-    describe("toTree()", function () {
+    describe("asTree()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = container.toTree();
+        result = container.asTree();
       });
 
       it("should return a Tree instance", function () {
@@ -992,11 +992,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toTree()", function () {
+  describe("asTree()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {
-      result = array.toTree();
+      result = array.asTree();
     });
 
     it("should return a Tree instance", function () {

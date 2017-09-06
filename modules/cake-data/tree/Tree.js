@@ -508,7 +508,7 @@ $oop.getClass('$data.DataContainer')
   /**
    * @returns {$data.Tree}
    */
-  toTree: function () {
+  asTree: function () {
     return $data.Tree.create({data: this.data});
   }
 });
@@ -540,7 +540,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.Tree}
    */
-  toTree: function () {
+  asTree: function () {
     return $data.Tree.create({data: this});
   }
 });

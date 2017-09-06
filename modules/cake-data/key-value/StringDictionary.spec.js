@@ -171,11 +171,11 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("toStringDictionary()", function () {
+    describe("asStringDictionary()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
-        result = container.toStringDictionary();
+        result = container.asStringDictionary();
       });
 
       it("should return a StringDictionary instance", function () {
@@ -192,11 +192,11 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toStringDictionary()", function () {
+  describe("asStringDictionary()", function () {
     var array = ['a', 'b', 'c'];
 
     beforeEach(function () {
-      result = array.toStringDictionary();
+      result = array.asStringDictionary();
     });
 
     it("should return a StringDictionary instance", function () {
