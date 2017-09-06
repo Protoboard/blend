@@ -13,10 +13,12 @@
  * Identifies a field entity.
  * @class $entity.FieldKey
  * @extends $entity.EntityKey
+ * @mixes $entity.ValueKey
  * @implements $utils.Stringifiable
  */
 $entity.FieldKey = $oop.getClass('$entity.FieldKey')
 .mix($oop.getClass('$entity.EntityKey'))
+.mix($oop.getClass('$entity.ValueKey'))
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.FieldKey# */{
   /**
@@ -110,7 +112,7 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   /**
    * Serializes current field key.
    * @example
-   * $entity.FieldKey.create('user', '1234', 'name').toString()
+   * $entity.FieldKey.fromComponents('user', '1234', 'name').toString()
    * // "user/1234/name"
    * @returns {string}
    */
