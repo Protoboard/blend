@@ -5,12 +5,18 @@ var $assert = window['cake-assert'],
 
 describe("$oop", function () {
   describe("Class", function () {
-    var Class,
+    var classByClassId,
+        Class,
         result;
 
     beforeEach(function () {
+      classByClassId = $oop.Class.classByClassId;
       $oop.Class.classByClassId = {};
       Class = $oop.Class.getClass('Class');
+    });
+
+    afterEach(function () {
+      $oop.Class.classByClassId = classByClassId;
     });
 
     describe("getClass()", function () {
@@ -1395,11 +1401,17 @@ describe("$oop", function () {
 });
 
 describe("$assert", function () {
-  var Class;
+  var classByClassId,
+      Class;
 
   beforeEach(function () {
+    classByClassId = $oop.Class.classByClassId;
     $oop.Class.classByClassId = {};
     Class = $oop.Class.getClass('Class');
+  });
+
+  afterEach(function () {
+    $oop.Class.classByClassId = classByClassId;
   });
 
   describe("isClass()", function () {
