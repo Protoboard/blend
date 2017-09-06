@@ -14,7 +14,7 @@ describe("$entity", function () {
       .mix($entity.Field);
       field = Field.fromEntityKey('foo/bar/baz'.toFieldKey());
     });
-    
+
     describe("fromComponents()", function () {
       beforeEach(function () {
         field = Field.fromComponents('foo', 'bar', 'baz');
@@ -58,7 +58,6 @@ describe("$entity", function () {
       });
     });
   });
-
 
   describe("FieldKey", function () {
     var fieldKey,
