@@ -4,8 +4,7 @@ var $assert = window['cake-assert'],
     $data = window['cake-data'];
 
 describe("$data", function () {
-  var data,
-      result;
+  var result;
 
   describe("DataContainer", function () {
     describe("asStringCollection()", function () {
@@ -22,6 +21,50 @@ describe("$data", function () {
 
       it("should set data buffer", function () {
         expect(result.data).toBe(container.data);
+      });
+    });
+  });
+
+  describe("SetContainer", function () {
+    describe("toStringCollection()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.StringSet.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toStringCollection();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.StringCollection);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+  });
+
+  describe("KeyValueContainer", function () {
+    describe("toStringCollection()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.StringCollection.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toStringCollection();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.StringCollection);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
       });
     });
   });

@@ -169,7 +169,17 @@ $oop.getClass('$data.SetContainer')
    * @returns {$data.Chain}
    */
   toChain: function () {
-    return $data.Chain.fromSetContainer(this);
+    return this.to($data.Chain);
+  }
+});
+
+$oop.getClass('$data.KeyValueContainer')
+.delegate(/** @lends $data.KeyValueContainer# */{
+  /**
+   * @returns {$data.Chain}
+   */
+  toChain: function () {
+    return this.to($data.Chain);
   }
 });
 

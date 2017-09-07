@@ -79,6 +79,26 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
+$oop.getClass('$data.SetContainer')
+.delegate(/** @lends $data.SetContainer# */{
+  /**
+   * @returns {$data.PairList}
+   */
+  toPairList: function () {
+    return this.to($data.PairList);
+  }
+});
+
+$oop.getClass('$data.KeyValueContainer')
+.delegate(/** @lends $data.KeyValueContainer# */{
+  /**
+   * @returns {$data.PairList}
+   */
+  toPairList: function () {
+    return this.to($data.PairList);
+  }
+});
+
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.PairList}

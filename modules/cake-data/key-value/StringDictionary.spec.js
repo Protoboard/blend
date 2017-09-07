@@ -187,6 +187,50 @@ describe("$data", function () {
       });
     });
   });
+
+  describe("SetContainer", function () {
+    describe("toStringDictionary()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.StringSet.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toStringDictionary();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.StringDictionary);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+  });
+
+  describe("KeyValueContainer", function () {
+    describe("toStringDictionary()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.StringDictionary.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toStringDictionary();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.StringDictionary);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+  });
 });
 
 describe("Array", function () {

@@ -33,6 +33,26 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
+$oop.getClass('$data.SetContainer')
+.delegate(/** @lends $data.SetContainer# */{
+  /**
+   * @returns {$data.StringPairList}
+   */
+  toStringPairList: function () {
+    return this.to($data.StringPairList);
+  }
+});
+
+$oop.getClass('$data.KeyValueContainer')
+.delegate(/** @lends $data.KeyValueContainer# */{
+  /**
+   * @returns {$data.StringPairList}
+   */
+  toStringPairList: function () {
+    return this.to($data.StringPairList);
+  }
+});
+
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.StringPairList}

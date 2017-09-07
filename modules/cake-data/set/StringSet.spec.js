@@ -6,11 +6,12 @@ var $assert = window['cake-assert'],
     $data = window['cake-data'];
 
 describe("$data", function () {
+  var result;
+
   describe("StringSet", function () {
     var data,
         StringSet,
-        set, set2,
-        result;
+        set, set2;
 
     beforeEach(function () {
       data = {
@@ -263,42 +264,45 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    var SetContainer,
-        setContainer,
-        result;
-
-    beforeEach(function () {
-      SetContainer = $oop.getClass('test.$data.StringSet.SetContainer')
-      .mix($data.DataContainer)
-      .mix($data.ArrayContainer)
-      .mix($data.SetContainer)
-      .define({
-        setItem: function (item) {
-          this.data.push(item);
-        },
-        forEachItem: function (callback, context) {
-          callback = context ? callback.bind(context) : callback;
-          this.data.forEach(callback);
-        }
-      });
-      setContainer = SetContainer.create({data: [1, 2, 3]});
-    });
-
     describe("toStringSet()", function () {
+      var container,
+          transformed;
+
       beforeEach(function () {
-        result = setContainer.toStringSet();
+        container = $data.StringSet.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toStringSet();
       });
 
-      it("should return a StringSet instance", function () {
-        expect($data.StringSet.mixedBy(result)).toBeTruthy();
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.StringSet);
       });
 
-      it("should set data set", function () {
-        expect(result.data).toEqual({
-          1: 1,
-          2: 1,
-          3: 1
-        });
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+  });
+
+  describe("KeyValueContainer", function () {
+    describe("toStringSet()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.StringSet.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toStringSet();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.StringSet);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
       });
     });
   });

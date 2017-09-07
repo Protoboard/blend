@@ -297,6 +297,50 @@ describe("$data", function () {
       });
     });
   });
+
+  describe("SetContainer", function () {
+    describe("toOrderedList()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.StringSet.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toOrderedList();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.OrderedList);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+  });
+
+  describe("KeyValueContainer", function () {
+    describe("toOrderedList()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.OrderedList.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toOrderedList();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.OrderedList);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+  });
 });
 
 describe("Array", function () {

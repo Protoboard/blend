@@ -182,7 +182,17 @@ $oop.getClass('$data.SetContainer')
    * @returns {$data.StringSet}
    */
   toStringSet: function () {
-    return $data.StringSet.fromSetContainer(this);
+    return this.to($data.StringSet);
+  }
+});
+
+$oop.getClass('$data.KeyValueContainer')
+.delegate(/** @lends $data.KeyValueContainer# */{
+  /**
+   * @returns {$data.StringSet}
+   */
+  toStringSet: function () {
+    return this.to($data.StringSet);
   }
 });
 

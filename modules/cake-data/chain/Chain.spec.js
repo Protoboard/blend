@@ -43,11 +43,12 @@ describe("$assert", function () {
 });
 
 describe("$data", function () {
+  var result;
+
   describe("Chain", function () {
     var Chain,
         chain,
-        link,
-        result;
+        link;
 
     beforeEach(function () {
       Chain = $oop.getClass('test.$data.Chain.Chain')
@@ -339,49 +340,47 @@ describe("$data", function () {
     });
   });
 
+
   describe("SetContainer", function () {
-    var SetContainer,
-        setContainer,
-        array,
-        result;
-
-    beforeEach(function () {
-      SetContainer = $oop.getClass('test.$data.Chain.SetContainer')
-      .mix($data.DataContainer)
-      .mix($data.ArrayContainer)
-      .mix($data.SetContainer)
-      .define({
-        setItem: function (item) {
-          this.data.push(item);
-        },
-        forEachItem: function (callback, context) {
-          callback = context ? callback.bind(context) : callback;
-          this.data.forEach(callback);
-        }
-      });
-
-      array = [
-        $data.Link.create(),
-        $data.Link.create(),
-        $data.Link.create()
-      ];
-      setContainer = SetContainer.create({data: array});
-    });
-
-    // todo Revisit once Link payload is supported
     describe("toChain()", function () {
+      var container,
+          transformed;
+
       beforeEach(function () {
-        result = setContainer.toChain();
+        container = $data.Chain.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toChain();
       });
 
-      it("should return a Chain instance", function () {
-        expect($data.Chain.mixedBy(result)).toBeTruthy();
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.Chain);
       });
 
       it("should initialize data buffer", function () {
-        expect(result.data.nextLink).toEqual(array[0]);
-        expect(result.data.nextLink.nextLink).toEqual(array[1]);
-        expect(result.data.nextLink.nextLink.nextLink).toEqual(array[2]);
+        expect(result).toBe(transformed);
+      });
+    });
+  });
+
+  describe("KeyValueContainer", function () {
+    describe("toChain()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.Chain.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toChain();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.Chain);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
       });
     });
   });

@@ -60,6 +60,26 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
+$oop.getClass('$data.SetContainer')
+.delegate(/** @lends $data.SetContainer# */{
+  /**
+   * @returns {$data.OrderedStringList}
+   */
+  toOrderedStringList: function () {
+    return this.to($data.OrderedStringList);
+  }
+});
+
+$oop.getClass('$data.KeyValueContainer')
+.delegate(/** @lends $data.KeyValueContainer# */{
+  /**
+   * @returns {$data.OrderedStringList}
+   */
+  toOrderedStringList: function () {
+    return this.to($data.OrderedStringList);
+  }
+});
+
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.OrderedStringList}

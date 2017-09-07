@@ -135,6 +135,26 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
+$oop.getClass('$data.SetContainer')
+.delegate(/** @lends $data.SetContainer# */{
+  /**
+   * @returns {$data.StringDictionary}
+   */
+  toStringDictionary: function () {
+    return this.to($data.StringDictionary);
+  }
+});
+
+$oop.getClass('$data.KeyValueContainer')
+.delegate(/** @lends $data.KeyValueContainer# */{
+  /**
+   * @returns {$data.StringDictionary}
+   */
+  toStringDictionary: function () {
+    return this.to($data.StringDictionary);
+  }
+});
+
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.StringDictionary}

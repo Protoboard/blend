@@ -10,8 +10,6 @@ describe("$data", function () {
       result;
 
   describe("OrderedStringList", function () {
-    var comparer;
-
     beforeEach(function () {
       data = ['bar', 'foo'];
       OrderedStringList = $oop.getClass("test.$data.OrderedStringList.OrderedStringList")
@@ -78,6 +76,50 @@ describe("$data", function () {
 
       it("should set data set", function () {
         expect(result.data).toBe(buffer.data);
+      });
+    });
+  });
+
+  describe("SetContainer", function () {
+    describe("toOrderedStringList()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.StringSet.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toOrderedStringList();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.OrderedStringList);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+  });
+
+  describe("KeyValueContainer", function () {
+    describe("toOrderedStringList()", function () {
+      var container,
+          transformed;
+
+      beforeEach(function () {
+        container = $data.OrderedStringList.create();
+        transformed = {};
+        spyOn(container, 'to').and.returnValue(transformed);
+        result = container.toOrderedStringList();
+      });
+
+      it("should invoke to() on container", function () {
+        expect(container.to).toHaveBeenCalledWith($data.OrderedStringList);
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result).toBe(transformed);
       });
     });
   });

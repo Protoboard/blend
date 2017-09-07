@@ -28,6 +28,26 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
+$oop.getClass('$data.SetContainer')
+.delegate(/** @lends $data.SetContainer# */{
+  /**
+   * @returns {$data.StringCollection}
+   */
+  toStringCollection: function () {
+    return this.to($data.StringCollection);
+  }
+});
+
+$oop.getClass('$data.KeyValueContainer')
+.delegate(/** @lends $data.KeyValueContainer# */{
+  /**
+   * @returns {$data.StringCollection}
+   */
+  toStringCollection: function () {
+    return this.to($data.StringCollection);
+  }
+});
+
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.StringCollection}
