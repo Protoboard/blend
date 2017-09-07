@@ -29,7 +29,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.StringPairList}
    */
   asStringPairList: function () {
-    return $data.StringPairList.create({data: this.data});
+    return this.as($data.StringPairList);
   }
 });
 

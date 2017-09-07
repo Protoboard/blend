@@ -75,7 +75,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.PairList}
    */
   asPairList: function () {
-    return $data.PairList.create({data: this.data});
+    return this.as($data.PairList);
   }
 });
 

@@ -131,7 +131,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.StringDictionary}
    */
   asStringDictionary: function () {
-    return $data.StringDictionary.create({data: this.data});
+    return this.as($data.StringDictionary);
   }
 });
 

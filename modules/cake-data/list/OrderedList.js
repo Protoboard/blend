@@ -194,7 +194,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.OrderedList}
    */
   asOrderedList: function () {
-    return $data.OrderedList.create({data: this.data});
+    return this.as($data.OrderedList);
   }
 });
 

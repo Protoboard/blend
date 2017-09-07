@@ -123,7 +123,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.Collection}
    */
   asCollection: function () {
-    return $data.Collection.create({data: this.data});
+    return this.as($data.Collection);
   }
 });
 

@@ -509,7 +509,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.Tree}
    */
   asTree: function () {
-    return $data.Tree.create({data: this.data});
+    return this.as($data.Tree);
   }
 });
 

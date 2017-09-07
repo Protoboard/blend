@@ -172,7 +172,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.StringSet}
    */
   asStringSet: function () {
-    return $data.StringSet.create({data: this.data});
+    return this.as($data.StringSet);
   }
 });
 

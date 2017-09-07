@@ -56,7 +56,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.OrderedStringList}
    */
   asOrderedStringList: function () {
-    return $data.OrderedStringList.create({data: this.data});
+    return this.as($data.OrderedStringList);
   }
 });
 

@@ -24,7 +24,7 @@ $oop.getClass('$data.DataContainer')
    * @returns {$data.StringCollection}
    */
   asStringCollection: function () {
-    return $data.StringCollection.create({data: this.data});
+    return this.as($data.StringCollection);
   }
 });
 
