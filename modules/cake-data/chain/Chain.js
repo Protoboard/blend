@@ -163,13 +163,13 @@ $data.Chain = $oop.getClass('$data.Chain')
   }
 });
 
-$oop.getClass('$data.ArrayContainer')
-.delegate(/** @lends $data.ArrayContainer# */{
+$oop.getClass('$data.SetContainer')
+.delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.Chain}
    */
   toChain: function () {
-    return $data.Chain.fromArray(this.data);
+    return $data.Chain.fromSetContainer(this);
   }
 });
 

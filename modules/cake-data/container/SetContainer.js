@@ -28,6 +28,35 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
   },
 
   /**
+   * Transforms a `SetContainer` to the current `SetContainer` class.
+   * @param {$data.SetContainer} setContainer
+   * @returns {$data.SetContainer}
+   */
+  fromSetContainer: function (setContainer) {
+    var result = this.create();
+    setContainer.forEachItem(function (item) {
+      result.setItem(item);
+    });
+    return result;
+  },
+
+  /**
+   * Transforms a `KeyValueContainer` to the current `SetContainer` class,
+   * using values from key-value pairs as items. Loses keys.
+   * @param {$data.KeyValueContainer} keyValueContainer
+   * @returns {$data.SetContainer}
+   * @todo Might be a good idea to add separate key/value versions
+   * @todo Move to separate file & delegate?
+   */
+  fromKeyValueContainer: function (keyValueContainer) {
+    var result = this.create();
+    keyValueContainer.forEachItem(function (value) {
+      result.setItem(value);
+    });
+    return result;
+  },
+
+  /**
    * @returns {$data.SetContainer}
    */
   clone: function clone() {

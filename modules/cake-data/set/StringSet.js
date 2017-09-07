@@ -176,13 +176,13 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.ArrayContainer')
-.delegate(/** @lends $data.ArrayContainer# */{
+$oop.getClass('$data.SetContainer')
+.delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.StringSet}
    */
   toStringSet: function () {
-    return $data.StringSet.fromArray(this.data);
+    return $data.StringSet.fromSetContainer(this);
   }
 });
 

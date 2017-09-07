@@ -18,8 +18,8 @@ describe("$data", function () {
       .mix($data.ArrayContainer)
       .mix($data.SetContainer)
       .define({
-        setItem: function (value) {
-          this.data.push(value);
+        setItem: function (item) {
+          this.data.push(item);
         },
         forEachItem: function (callback, context) {
           this.data.forEach(callback, context);
@@ -44,6 +44,78 @@ describe("$data", function () {
       it("should initialize data buffer", function () {
         expect(result.data).not.toBe(array);
         expect(result.data).toEqual([1, 2, 3]);
+      });
+    });
+
+    describe("fromSetContainer()", function () {
+      var SetContainer2,
+          setContainer2;
+
+      beforeEach(function () {
+        SetContainer2 = $oop.getClass('test.$data.SetContainer.SetContainer2')
+        .mix($data.DataContainer)
+        .mix($data.ObjectContainer)
+        .mix($data.SetContainer)
+        .define({
+          setItem: function (item) {
+            this.data[item] = 1;
+          },
+          forEachItem: function (callback, context) {
+            callback = context ? callback.bind(context) : callback;
+            Object.keys(this.data).forEach(callback);
+          }
+        });
+        setContainer2 = SetContainer2.fromData({
+          "foo": 1,
+          "bar": 1
+        });
+
+        result = SetContainer.fromSetContainer(setContainer2);
+      });
+
+      it("should return instance of appropriate class", function () {
+        expect(SetContainer.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should transfer data", function () {
+        expect(result.data).toEqual(["foo", "bar"]);
+      });
+    });
+
+    describe("fromKeyValueContainer", function () {
+      var KeyValueContainer,
+          keyValueContainer;
+
+      beforeEach(function () {
+        KeyValueContainer = $oop.getClass('test.$data.SetContainer.KeyValueContainer')
+        .mix($data.DataContainer)
+        .mix($data.ArrayContainer)
+        .mix($data.KeyValueContainer)
+        .define({
+          setItem: function (key, value) {
+            this.data.push([key, value]);
+          },
+          forEachItem: function (callback, context) {
+            callback = context ? callback.bind(context) : callback;
+            this.data.forEach(function (item, i) {
+              callback(item[1], i);
+            });
+          }
+        });
+        keyValueContainer = KeyValueContainer.fromData([
+          [1, "foo"],
+          [2, "bar"]
+        ]);
+
+        result = SetContainer.fromKeyValueContainer(keyValueContainer);
+      });
+
+      it("should return instance of appropriate class", function () {
+        expect(SetContainer.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should transfer data", function () {
+        expect(result.data).toEqual(["foo", "bar"]);
       });
     });
 

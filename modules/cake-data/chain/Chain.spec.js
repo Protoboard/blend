@@ -339,28 +339,39 @@ describe("$data", function () {
     });
   });
 
-  describe("ArrayContainer", function () {
-    var ArrayContainer,
-        arrayContainer,
+  describe("SetContainer", function () {
+    var SetContainer,
+        setContainer,
         array,
         result;
 
     beforeEach(function () {
-      ArrayContainer = $oop.getClass('test.$data.Chain.ArrayContainer')
+      SetContainer = $oop.getClass('test.$data.Chain.SetContainer')
       .mix($data.DataContainer)
-      .mix($data.ArrayContainer);
+      .mix($data.ArrayContainer)
+      .mix($data.SetContainer)
+      .define({
+        setItem: function (item) {
+          this.data.push(item);
+        },
+        forEachItem: function (callback, context) {
+          callback = context ? callback.bind(context) : callback;
+          this.data.forEach(callback);
+        }
+      });
+
       array = [
         $data.Link.create(),
         $data.Link.create(),
         $data.Link.create()
       ];
-      arrayContainer = ArrayContainer.create({data: array});
+      setContainer = SetContainer.create({data: array});
     });
 
     // todo Revisit once Link payload is supported
     describe("toChain()", function () {
       beforeEach(function () {
-        result = arrayContainer.toChain();
+        result = setContainer.toChain();
       });
 
       it("should return a Chain instance", function () {

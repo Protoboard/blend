@@ -262,21 +262,31 @@ describe("$data", function () {
     });
   });
 
-  describe("ArrayContainer", function () {
-    var ArrayContainer,
-        arrayContainer,
+  describe("SetContainer", function () {
+    var SetContainer,
+        setContainer,
         result;
 
     beforeEach(function () {
-      ArrayContainer = $oop.getClass('test.$data.StringSet.ArrayContainer')
+      SetContainer = $oop.getClass('test.$data.StringSet.SetContainer')
       .mix($data.DataContainer)
-      .mix($data.ArrayContainer);
-      arrayContainer = ArrayContainer.create({data: [1, 2, 3]});
+      .mix($data.ArrayContainer)
+      .mix($data.SetContainer)
+      .define({
+        setItem: function (item) {
+          this.data.push(item);
+        },
+        forEachItem: function (callback, context) {
+          callback = context ? callback.bind(context) : callback;
+          this.data.forEach(callback);
+        }
+      });
+      setContainer = SetContainer.create({data: [1, 2, 3]});
     });
 
     describe("toStringSet()", function () {
       beforeEach(function () {
-        result = arrayContainer.toStringSet();
+        result = setContainer.toStringSet();
       });
 
       it("should return a StringSet instance", function () {
