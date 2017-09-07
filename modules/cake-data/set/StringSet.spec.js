@@ -6,12 +6,12 @@ var $assert = window['cake-assert'],
     $data = window['cake-data'];
 
 describe("$data", function () {
-  var data,
-      StringSet,
-      set, set2,
-      result;
-
   describe("StringSet", function () {
+    var data,
+        StringSet,
+        set, set2,
+        result;
+
     beforeEach(function () {
       data = {
         foo: 1,
@@ -242,10 +242,13 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
+    var result;
+
     describe("asStringSet()", function () {
-      var buffer = $data.DataContainer.create({data: [1, 2, 3]});
+      var buffer;
 
       beforeEach(function () {
+        buffer = $data.DataContainer.create({data: [1, 2, 3]});
         result = buffer.asStringSet();
       });
 
@@ -255,6 +258,37 @@ describe("$data", function () {
 
       it("should set data set", function () {
         expect(result.data).toBe(buffer.data);
+      });
+    });
+  });
+
+  describe("ArrayContainer", function () {
+    var ArrayContainer,
+        arrayContainer,
+        result;
+
+    beforeEach(function () {
+      ArrayContainer = $oop.getClass('test.$data.StringSet.ArrayContainer')
+      .mix($data.DataContainer)
+      .mix($data.ArrayContainer);
+      arrayContainer = ArrayContainer.create({data: [1, 2, 3]});
+    });
+
+    describe("toStringSet()", function () {
+      beforeEach(function () {
+        result = arrayContainer.toStringSet();
+      });
+
+      it("should return a StringSet instance", function () {
+        expect($data.StringSet.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should set data set", function () {
+        expect(result.data).toEqual({
+          1: 1,
+          2: 1,
+          3: 1
+        });
       });
     });
   });

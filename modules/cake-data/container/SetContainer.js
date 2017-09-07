@@ -14,6 +14,20 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
 .implement($oop.getClass('$data.Reducible'))
 .define(/** @lends $data.SetContainer# */{
   /**
+   * @memberOf $data.SetContainer
+   * @param {Array.<string>} array
+   * @returns {$data.SetContainer}
+   * @todo Optimize in StringSet & Chain once optimize() is available.
+   */
+  fromArray: function (array) {
+    var result = this.create();
+    array.forEach(function (item) {
+      result.setItem(item);
+    });
+    return result;
+  },
+
+  /**
    * @returns {$data.SetContainer}
    */
   clone: function clone() {

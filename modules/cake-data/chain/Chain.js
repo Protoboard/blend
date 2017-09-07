@@ -60,6 +60,7 @@ $data.Chain = $oop.getClass('$data.Chain')
   /**
    * @param {$data.Link} item
    * @returns {$data.Chain}
+   * @todo Should accept any value
    */
   setItem: function (item) {
     this.push(item);
@@ -69,6 +70,7 @@ $data.Chain = $oop.getClass('$data.Chain')
   /**
    * @param {$data.Link} item
    * @returns {$data.Chain}
+   * @todo Should accept any value
    */
   deleteItem: function (item) {
     item.unlink();
@@ -78,6 +80,7 @@ $data.Chain = $oop.getClass('$data.Chain')
   /**
    * @param {$data.Link} item
    * @returns {boolean}
+   * @todo Should accept any value
    */
   hasItem: function (item) {
     return item.chain === this;
@@ -87,6 +90,7 @@ $data.Chain = $oop.getClass('$data.Chain')
    * @param {function} callback
    * @param {Object} [context]
    * @returns {$data.Chain}
+   * @todo Call callback with link payload
    */
   forEachItem: function (callback, context) {
     var link = this.data.nextLink;
@@ -156,6 +160,16 @@ $data.Chain = $oop.getClass('$data.Chain')
       result.push(link.clone());
     });
     return result;
+  }
+});
+
+$oop.getClass('$data.ArrayContainer')
+.delegate(/** @lends $data.ArrayContainer# */{
+  /**
+   * @returns {$data.Chain}
+   */
+  toChain: function () {
+    return $data.Chain.fromArray(this.data);
   }
 });
 

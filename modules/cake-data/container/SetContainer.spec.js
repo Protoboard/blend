@@ -7,7 +7,7 @@ describe("$data", function () {
   describe("SetContainer", function () {
     var data,
         SetContainer,
-        scalarContainer,
+        setContainer,
         result;
 
     beforeEach(function () {
@@ -26,21 +26,39 @@ describe("$data", function () {
         }
       });
 
-      scalarContainer = SetContainer.create({data: data});
+      setContainer = SetContainer.create({data: data});
+    });
+
+    describe("fromArray()", function () {
+      var array;
+
+      beforeEach(function () {
+        array = [1, 2, 3];
+        result = SetContainer.fromArray(array);
+      });
+
+      it("should return a SetContainer instance", function () {
+        expect(SetContainer.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result.data).not.toBe(array);
+        expect(result.data).toEqual([1, 2, 3]);
+      });
     });
 
     describe("clone()", function () {
       beforeEach(function () {
-        result = scalarContainer.clone();
+        result = setContainer.clone();
       });
 
       it("should return cloned instance", function () {
-        expect(result).not.toBe(scalarContainer);
+        expect(result).not.toBe(setContainer);
       });
 
       it("should set data", function () {
-        expect(result.data).not.toBe(scalarContainer.data);
-        expect(result.data).toEqual(scalarContainer.data);
+        expect(result.data).not.toBe(setContainer.data);
+        expect(result.data).toEqual(setContainer.data);
       });
     });
 
@@ -52,7 +70,7 @@ describe("$data", function () {
         .callFake(function (value) {
           return value[0] === 'f';
         });
-        result = scalarContainer.filter(callback);
+        result = setContainer.filter(callback);
       });
 
       it("should return instance of correct class", function () {
@@ -67,7 +85,7 @@ describe("$data", function () {
       });
 
       it("should return filtered collection", function () {
-        expect(result).not.toBe(scalarContainer);
+        expect(result).not.toBe(setContainer);
         expect(result.data).toEqual(['foo']);
       });
     });
@@ -80,7 +98,7 @@ describe("$data", function () {
             function (reduced, value) {
               return reduced + value;
             });
-        result = scalarContainer.reduce(callback, '');
+        result = setContainer.reduce(callback, '');
       });
 
       it("should pass item values & keys to callback", function () {

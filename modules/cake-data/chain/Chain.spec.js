@@ -338,4 +338,40 @@ describe("$data", function () {
       });
     });
   });
+
+  describe("ArrayContainer", function () {
+    var ArrayContainer,
+        arrayContainer,
+        array,
+        result;
+
+    beforeEach(function () {
+      ArrayContainer = $oop.getClass('test.$data.Chain.ArrayContainer')
+      .mix($data.DataContainer)
+      .mix($data.ArrayContainer);
+      array = [
+        $data.Link.create(),
+        $data.Link.create(),
+        $data.Link.create()
+      ];
+      arrayContainer = ArrayContainer.create({data: array});
+    });
+
+    // todo Revisit once Link payload is supported
+    describe("toChain()", function () {
+      beforeEach(function () {
+        result = arrayContainer.toChain();
+      });
+
+      it("should return a Chain instance", function () {
+        expect($data.Chain.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should initialize data buffer", function () {
+        expect(result.data.nextLink).toEqual(array[0]);
+        expect(result.data.nextLink.nextLink).toEqual(array[1]);
+        expect(result.data.nextLink.nextLink.nextLink).toEqual(array[2]);
+      });
+    });
+  });
 });
