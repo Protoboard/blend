@@ -27,13 +27,11 @@ describe("$data", function () {
           this.data[key] = value;
         },
         forEachItem: function (callback, context) {
-          var data = this.data,
-              keys = Object.keys(this.data),
-              i, key;
-          for (i = 0; i < keys.length; i++) {
-            key = keys[i];
-            callback.call(context || this, data[key], key);
-          }
+          callback = context ? callback.bind(context) : callback;
+          var data = this.data;
+          Object.keys(this.data).forEach(function (key) {
+            callback(data[key], key);
+          });
         }
       });
 
@@ -47,6 +45,83 @@ describe("$data", function () {
       });
 
       keyValueContainer = KeyValueContainer.create({data: data});
+    });
+
+    describe("fromKeyValueContainer()", function () {
+      var KeyValueContainer2,
+          keyValueContainer2;
+
+      beforeEach(function () {
+        KeyValueContainer2 = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer2')
+        .mix($data.DataContainer)
+        .mix($data.ArrayContainer)
+        .mix($data.KeyValueContainer)
+        .define({
+          setItem: function (key, value) {
+            this.data.push([key, value]);
+          },
+          forEachItem: function (callback, context) {
+            callback = context ? callback.bind(context) : callback;
+            this.data.forEach(function (pair) {
+              callback(pair[1], pair[0]);
+            });
+          }
+        });
+        keyValueContainer2 = KeyValueContainer2.fromData([
+          [1, "foo"],
+          [2, "bar"]
+        ]);
+
+        result = KeyValueContainer.fromKeyValueContainer(keyValueContainer2);
+      });
+
+      it("should return instance of appropriate class", function () {
+        expect(KeyValueContainer.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should transfer data", function () {
+        expect(result.data).toEqual({
+          1: "foo",
+          2: "bar"
+        });
+      });
+    });
+
+    describe("fromSetContainer()", function () {
+      var SetContainer,
+          setContainer;
+
+      beforeEach(function () {
+        SetContainer = $oop.getClass('test.$data.KeyValueContainer.SetContainer')
+        .mix($data.DataContainer)
+        .mix($data.ArrayContainer)
+        .mix($data.SetContainer)
+        .define({
+          setItem: function (item) {
+            this.data.push(item);
+          },
+          forEachItem: function (callback, context) {
+            callback = context ? callback.bind(context) : callback;
+            this.data.forEach(callback);
+          }
+        });
+        setContainer = SetContainer.fromData([1, 2, 3, 4]);
+
+        result = KeyValueContainer.fromSetContainer(setContainer);
+      });
+
+      it("should return instance of appropriate class", function () {
+        expect(KeyValueContainer.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should transfer data", function () {
+        expect(result.data).toEqual({
+          0: 1,
+          1: 2,
+          2: 3,
+          3: 4
+        });
+      });
     });
 
     describe("clone()", function () {

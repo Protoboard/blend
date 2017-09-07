@@ -33,6 +33,38 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
   keyMultiplicity: $data.KEY_MUL_ANY,
 
   /**
+   * Transforms a `KeyValueContainer` to the current `KeyValueContainer` class.
+   * @memberOf $data.KeyValueContainer
+   * @param {$data.KeyValueContainer} keyValueContainer
+   * @returns {$data.KeyValueContainer}
+   */
+  fromKeyValueContainer: function (keyValueContainer) {
+    var result = this.create();
+    keyValueContainer.forEachItem(function (value, key) {
+      result.setItem(key, value);
+    });
+    return result;
+  },
+
+  /**
+   * Transforms a `SetContainer` to the current `KeyValueContainer` class,
+   * using items in the set as values.
+   * @memberOf $data.KeyValueContainer
+   * @param {$data.SetContainer} setContainer
+   * @returns {$data.KeyValueContainer}
+   * @todo Might be a good idea to add separate key/value versions
+   * @todo Move to separate file & delegate?
+   */
+  fromSetContainer: function (setContainer) {
+    var result = this.create(),
+        i = 0;
+    setContainer.forEachItem(function (item) {
+      result.setItem(i++, item);
+    });
+    return result;
+  },
+
+  /**
    * @returns {$data.SetContainer}
    */
   clone: function clone() {
@@ -153,7 +185,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    * Converts current KeyValueContainer to the specified class.
    * @param {$data.KeyValueContainer} KeyValueContainer
    * @returns {$data.KeyValueContainer}
-   * @todo Change name to something like `transform`
+   * @deprecated
    */
   toType: function (KeyValueContainer) {
     var result = KeyValueContainer.create();
