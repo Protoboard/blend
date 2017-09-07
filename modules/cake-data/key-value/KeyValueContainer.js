@@ -5,14 +5,20 @@
  * value types. Hosts are expected to implement storage-specific behavior and
  * features.
  * @mixin $data.KeyValueContainer
+ * @extends $data.ItemContainer
  * @implements $data.Filterable
  * @implements $data.Reducible
- * @extends $data.ItemContainer
+ * @implements $data.SetConvertible
+ * @implements $data.KeyValueConvertible
+ * @implements $data.Transformable
  */
 $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
 .mix($oop.getClass('$data.ItemContainer'))
 .implement($oop.getClass('$data.Filterable'))
 .implement($oop.getClass('$data.Reducible'))
+.implement($oop.getClass('$data.SetConvertible'))
+.implement($oop.getClass('$data.KeyValueConvertible'))
+.implement($oop.getClass('$data.Transformable'))
 .define(/** @lends $data.KeyValueContainer# */{
   /**
    * @type {string}
@@ -118,6 +124,16 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
   },
 
   /**
+   * Transforms current `KeyValueContainer` to the specified `DataContainer`
+   * class.
+   * @param {$data.KeyValueConvertible} KeyValueConvertible
+   * @returns {$data.DataContainer}
+   */
+  to: function (KeyValueConvertible) {
+    return KeyValueConvertible.fromKeyValueContainer(this);
+  },
+
+  /**
    * Retrieves a list of all keys in the container. Result might contain
    * duplicates, depending on host class.
    * @returns {Array}
@@ -177,20 +193,6 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     this.forEachItem(function (value) {
       result = value;
       return false;
-    });
-    return result;
-  },
-
-  /**
-   * Converts current KeyValueContainer to the specified class.
-   * @param {$data.KeyValueContainer} KeyValueContainer
-   * @returns {$data.KeyValueContainer}
-   * @deprecated
-   */
-  toType: function (KeyValueContainer) {
-    var result = KeyValueContainer.create();
-    this.forEachItem(function (value, key) {
-      result.setItem(key, value);
     });
     return result;
   },

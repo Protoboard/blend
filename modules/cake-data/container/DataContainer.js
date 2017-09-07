@@ -11,14 +11,16 @@
  * Maintains data and provides access to it. Supports life cycle, clearing and
  * cloning.
  * @class $data.DataContainer
+ * @extends $utils.Cloneable
  * @implements $utils.Destructible
  * @implements $data.Clearable
- * @extends $utils.Cloneable
+ * @implements $data.Reinterpretable
  */
 $data.DataContainer = $oop.getClass('$data.DataContainer')
 .mix($utils.Cloneable)
 .implement($utils.Destructible)
 .implement($oop.getClass('$data.Clearable'))
+.implement($oop.getClass('$data.Reinterpretable'))
 .define(/** @lends $data.DataContainer# */{
   /**
    * @member {*} $data.DataContainer#data
@@ -32,6 +34,15 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
    */
   fromData: function (data) {
     return this.create({data: data});
+  },
+
+  /**
+   * Reinterprets data as the specified `DataContainer` class.
+   * @param {$data.DataContainer} DataContainer
+   * @returns {$data.DataContainer}
+   */
+  as: function (DataContainer) {
+    return DataContainer.create({data: this.data});
   },
 
   /**

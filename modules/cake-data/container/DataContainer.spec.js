@@ -31,6 +31,24 @@ describe("$data", function () {
       });
     });
 
+    describe("as()", function () {
+      var DataContainer2;
+
+      beforeEach(function () {
+        DataContainer2 = $oop.getClass("test.$data.DataContainer.DataContainer2")
+        .mix($data.DataContainer);
+        result = container.as(DataContainer2);
+      });
+
+      it("should return instance of specified class", function () {
+        expect(DataContainer2.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should set data property", function () {
+        expect(result.data).toBe(null);
+      });
+    });
+
     describe("create()", function () {
       it("should set data property", function () {
         expect(container.data).toBe(null);

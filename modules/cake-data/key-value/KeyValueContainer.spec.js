@@ -207,6 +207,32 @@ describe("$data", function () {
       });
     });
 
+    describe("to()", function () {
+      var KeyValueConvertible,
+          transformed;
+
+      beforeEach(function () {
+        KeyValueConvertible = $oop.getClass('test.$data.KeyValueContainer.KeyValueConvertible')
+        .mix($data.DataContainer)
+        .mix($data.KeyValueConvertible);
+        transformed = {};
+
+        spyOn(KeyValueConvertible, 'fromKeyValueContainer').and
+        .returnValue(transformed);
+
+        result = keyValueContainer.to(KeyValueConvertible);
+      });
+
+      it("should invoke fromKeyValueContainer() on target class", function () {
+        expect(KeyValueConvertible.fromKeyValueContainer)
+        .toHaveBeenCalledWith(keyValueContainer);
+      });
+
+      it("should return conversion result", function () {
+        expect(result).toBe(transformed);
+      });
+    });
+
     describe("getKeys()", function () {
       beforeEach(function () {
         result = keyValueContainer.getKeys();
@@ -288,37 +314,6 @@ describe("$data", function () {
 
       it("should return one of the values", function () {
         expect(result === "FOO" || result === "BAR").toBeTruthy();
-      });
-    });
-
-    describe("toType()", function () {
-      var KeyValueContainer1;
-
-      beforeEach(function () {
-        KeyValueContainer1 = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer1')
-        .mix($data.DataContainer)
-        .define({
-          spread: function () {
-            this.data = this.data || [];
-          },
-
-          setItem: function (key, value) {
-            this.data.push([key, value]);
-          }
-        });
-
-        result = keyValueContainer.toType(KeyValueContainer1);
-      });
-
-      it("should return instance of specified class", function () {
-        expect(KeyValueContainer1.mixedBy(result)).toBeTruthy();
-      });
-
-      it("should set contents", function () {
-        expect(result.data).toEqual([
-          ['foo', 'FOO'],
-          ['bar', 'BAR']
-        ]);
       });
     });
 

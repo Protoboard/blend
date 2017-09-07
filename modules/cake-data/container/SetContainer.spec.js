@@ -184,5 +184,30 @@ describe("$data", function () {
         expect(result).toBe("foobar");
       });
     });
+
+    describe("to()", function () {
+      var SetConvertible,
+          transformed;
+
+      beforeEach(function () {
+        SetConvertible = $oop.getClass('test.$data.SetContainer.SetConvertible')
+        .mix($data.DataContainer)
+        .mix($data.SetConvertible);
+        transformed = {};
+
+        spyOn(SetConvertible, 'fromSetContainer').and.returnValue(transformed);
+
+        result = setContainer.to(SetConvertible);
+      });
+
+      it("should invoke fromKeyValueContainer() on target class", function () {
+        expect(SetConvertible.fromSetContainer)
+        .toHaveBeenCalledWith(setContainer);
+      });
+
+      it("should return conversion result", function () {
+        expect(result).toBe(transformed);
+      });
+    });
   });
 });

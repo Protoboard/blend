@@ -33,7 +33,7 @@ $oop.copyProperties($event, /** @lends $event */{
     .asOrderedStringList()
     .getRangeByPrefixWrapped(pathStr, 1)
     .asCollection()
-    .toType($data.StringDictionary)
+    .to($data.StringDictionary)
     .swapKeysAndValues()
     .asCollection()
     .getKeysWrapped()

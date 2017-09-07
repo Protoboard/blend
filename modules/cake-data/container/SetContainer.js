@@ -4,14 +4,20 @@
  * Maintains a set of singular values. Agnostic about value storage and types.
  * Hosts are expected to implement storage-specific behavior and features.
  * @mixin $data.SetContainer
+ * @extends $data.ItemContainer
  * @implements $data.Filterable
  * @implements $data.Reducible
- * @extends $data.ItemContainer
+ * @implements $data.SetConvertible
+ * @implements $data.KeyValueConvertible
+ * @implements $data.Transformable
  */
 $data.SetContainer = $oop.getClass('$data.SetContainer')
 .mix($oop.getClass('$data.ItemContainer'))
 .implement($oop.getClass('$data.Filterable'))
 .implement($oop.getClass('$data.Reducible'))
+.implement($oop.getClass('$data.SetConvertible'))
+.implement($oop.getClass('$data.KeyValueConvertible'))
+.implement($oop.getClass('$data.Transformable'))
 .define(/** @lends $data.SetContainer# */{
   /**
    * @memberOf $data.SetContainer
@@ -29,6 +35,7 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
 
   /**
    * Transforms a `SetContainer` to the current `SetContainer` class.
+   * @memberOf $data.SetContainer
    * @param {$data.SetContainer} setContainer
    * @returns {$data.SetContainer}
    */
@@ -43,6 +50,7 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
   /**
    * Transforms a `KeyValueContainer` to the current `SetContainer` class,
    * using values from key-value pairs as items. Loses keys.
+   * @memberOf $data.SetContainer
    * @param {$data.KeyValueContainer} keyValueContainer
    * @returns {$data.SetContainer}
    * @todo Might be a good idea to add separate key/value versions
@@ -105,5 +113,14 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
     }, context);
 
     return result;
+  },
+
+  /**
+   * Transforms current `SetContainer` to the specified `DataContainer` class.
+   * @param {$data.SetConvertible} SetConvertible
+   * @returns {$data.DataContainer}
+   */
+  to: function (SetConvertible) {
+    return SetConvertible.fromSetContainer(this);
   }
 });
