@@ -371,8 +371,8 @@ describe("$data", function () {
 
       beforeEach(function () {
         callback = jasmine.createSpy().and
-        .callFake(function (value) {
-          return value.toUpperCase();
+        .callFake(function (value, key) {
+          return '_' + key;
         });
 
         spyOn($data, 'getMapResultClass').and.returnValue(Settable);
@@ -394,8 +394,8 @@ describe("$data", function () {
       it("should return mapped collection", function () {
         expect(result).not.toBe(keyValueContainer);
         expect(result.data).toEqual({
-          FOO: "FOO",
-          BAR: "BAR"
+          _foo: "FOO",
+          _bar: "BAR"
         });
       });
     });

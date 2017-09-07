@@ -200,7 +200,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
   /**
    * Maps collection values using the specified callback and returns mapped
    * key-value pairs as a new collection.
-   * @todo Pass in result value type?
+   * @todo Pass in result value type
    * @param {function} callback Returns new value based on current item
    * @param {Object} [context] Context for callback
    * @returns {$data.Collection} Mapped collection
@@ -221,7 +221,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
   /**
    * Maps collection keys using the specified callback and returns mapped
    * key-value pairs as a new collection.
-   * @todo Pass in result value type?
+   * @todo Pass in result value type
    * @param {function} callback Returns new value based on current item
    * @param {Object} [context] Context for callback
    * @returns {$data.Collection} Mapped collection
@@ -232,7 +232,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
 
     this.forEachItem(function (value, key) {
       key = callback.call(this, value, key);
-      result.setItem(value, key);
+      result.setItem(key, value);
     }, context);
 
     return result;
