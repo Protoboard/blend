@@ -87,19 +87,6 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @returns {$event.Event}
-   */
-  clone: function clone() {
-    var cloned = clone.returned;
-
-    cloned.causingEvent = this.causingEvent;
-    cloned.sender = this.sender;
-    cloned.currentPath = this.currentPath;
-
-    return cloned;
-  },
-
-  /**
    * Invokes callbacks subscribed to `eventName`, on each of
    * `targetPaths`. Callbacks on a certain path will be invoked in an
    * unspecified order. The returned promise resolves when all subscribed

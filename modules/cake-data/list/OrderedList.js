@@ -86,15 +86,6 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
   },
 
   /**
-   * @returns {$data.OrderedList}
-   */
-  clone: function clone() {
-    var cloned = clone.returned;
-    cloned.comparer = this.comparer;
-    return cloned;
-  },
-
-  /**
    * @param {*} item
    * @returns {$data.OrderedList}
    */

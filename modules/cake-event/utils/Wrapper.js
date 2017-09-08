@@ -15,16 +15,6 @@ $event.Wrapper = $oop.getClass('$event.Wrapper')
    */
 
   /**
-   * Clones `Wrapper` instance.
-   * @returns {$event.Wrapper}
-   */
-  clone: function clone() {
-    var cloned = clone.returned;
-    cloned.wrapped = this.wrapped;
-    return cloned;
-  },
-
-  /**
    * Wraps specified variable.
    * @param {*} wrapped
    * @returns {$event.Wrapper}

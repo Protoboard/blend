@@ -9,22 +9,15 @@
 $data.ItemContainer = $oop.getClass('$data.ItemContainer')
 .expect($oop.getClass('$data.DataContainer'))
 .define(/** @lends $data.ItemContainer# */{
+  /**
+   * Keeps track of number of items in the container.
+   * @member {number} $data.ItemContainer#_itemCount
+   * @private
+   */
+
   /** @ignore */
   spread: function () {
-    /**
-     * @type {number}
-     */
-    this._itemCount = this.data ? undefined : 0;
-  },
-
-  /**
-   * Clones current container instance.
-   * @returns {$data.ItemContainer}
-   */
-  clone: function clone() {
-    var cloned = clone.returned;
-    cloned._itemCount = this._itemCount;
-    return cloned;
+    this._itemCount = this._itemCount || (this.data ? undefined : 0);
   },
 
   /**

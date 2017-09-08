@@ -50,19 +50,19 @@ describe("$data", function () {
     });
 
     describe("clone()", function () {
-      var clonedIterable;
+      var clonedContainer;
 
       beforeEach(function () {
         itemContainer._itemCount = 2;
-        clonedIterable = itemContainer.clone();
+        clonedContainer = itemContainer.clone();
       });
 
       it("should return cloned instance", function () {
-        expect(clonedIterable).not.toBe(itemContainer);
+        expect(clonedContainer).not.toBe(itemContainer);
       });
 
       it("should set _itemCount", function () {
-        expect(clonedIterable._itemCount).toBe(2);
+        expect(clonedContainer._itemCount).toBe(2);
       });
     });
 

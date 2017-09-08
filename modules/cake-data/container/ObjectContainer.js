@@ -6,6 +6,7 @@
  * @mixin $data.ObjectContainer
  * @augments $data.DataContainer
  * @implements $data.Clearable
+ * @todo Add clone() w/ shallow copy?
  */
 $data.ObjectContainer = $oop.getClass('$data.ObjectContainer')
 .expect($oop.getClass('$data.DataContainer'))

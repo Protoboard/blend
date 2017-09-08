@@ -55,16 +55,6 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
   },
 
   /**
-   * @inheritDoc
-   * @returns {$data.DataContainer}
-   */
-  clone: function clone() {
-    var cloned = clone.returned;
-    cloned.data = this.data;
-    return cloned;
-  },
-
-  /**
    * Clears container.
    * @returns {$data.DataContainer}
    */

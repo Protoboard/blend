@@ -235,14 +235,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    */
   clone: function clone() {
     var cloned = clone.returned;
-    // properties alterable through methods
     cloned.keyOptions = slice.call(this.keyOptions);
     cloned.keyOptionLookup = $data.shallowCopy(this.keyOptionLookup);
-    cloned.matchesAnyKey = this.matchesAnyKey;
-    cloned.isKeyExcluded = this.isKeyExcluded;
     cloned.valueOptions = slice.call(this.valueOptions);
-    cloned.matchesAnyValue = this.matchesAnyValue;
-    cloned.isValueExcluded = this.isValueExcluded;
     return cloned;
   },
 
