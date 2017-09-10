@@ -74,8 +74,10 @@ describe("$entity", function () {
     });
 
     describe("fromEntityPath()", function () {
+      var entityPath = 'document.foo.bar.baz.quux'.toPath();
+
       beforeEach(function () {
-        itemKey = ItemKey.fromEntityPath('document.foo.bar.baz.quux'.toPath());
+        itemKey = ItemKey.fromEntityPath(entityPath);
       });
 
       it("should return a ItemKey instance", function () {
@@ -85,6 +87,10 @@ describe("$entity", function () {
       it("should set fieldKey & itemId properties", function () {
         expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
         expect(itemKey.itemId).toBe('quux');
+      });
+
+      it("should set _entityPath property", function () {
+        expect(itemKey._entityPath).toBe(entityPath);
       });
     });
 
@@ -143,8 +149,12 @@ describe("$entity", function () {
         expect($data.Path.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return config key to the document type", function () {
+      it("should return entity path to the item", function () {
         expect(result.equals('document.foo.bar.baz.quux'.toPath()));
+      });
+
+      it("should set _entityPath property", function () {
+        expect(itemKey._entityPath).toBe(result);
       });
     });
 

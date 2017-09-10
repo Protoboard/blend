@@ -9,6 +9,12 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
 .mix($data.Comparable);
 
 /**
+ * Identifies the entity's data node in the entity store.
+ * @member {$data.Path} $entity.EntityKey#_entityPath
+ * @protected
+ */
+
+/**
  * Retrieves a key to the metadata associated with the entity class.
  * @function $entity.EntityKey#getMetaKey
  * @returns {$entity.DocumentKey}
@@ -16,7 +22,8 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
  */
 
 /**
- * Retrieves a `Path` identifying the entity's data node in the entity store.
+ * Retrieves a `Path` instance identifying the entity's data node in the entity
+ * store.
  * @function $entity.EntityKey#getEntityPath
  * @returns {$data.Path}
  * @abstract

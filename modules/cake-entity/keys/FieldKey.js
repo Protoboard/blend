@@ -46,14 +46,15 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
 
   /**
    * @memberOf $entity.FieldKey
-   * @param {$data.Path} path
+   * @param {$data.Path} entityPath
    * @returns {$entity.FieldKey}
    */
-  fromEntityPath: function (path) {
-    var components = path.components;
+  fromEntityPath: function (entityPath) {
+    var components = entityPath.components;
     return this.create({
       documentKey: $entity.DocumentKey.fromComponents(components[1], components[2]),
-      fieldName: components[3]
+      fieldName: components[3],
+      _entityPath: entityPath
     });
   },
 
@@ -100,11 +101,14 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    */
   getEntityPath: function () {
     var documentKey = this.documentKey;
-    return $data.Path.fromComponents([
-      'document',
-      String(documentKey.documentType),
-      String(documentKey.documentId),
-      String(this.fieldName)]);
+    if (!hOP.call(this, '_entityPath')) {
+      this._entityPath = $data.Path.fromComponents([
+        'document',
+        String(documentKey.documentType),
+        String(documentKey.documentId),
+        String(this.fieldName)]);
+    }
+    return this._entityPath;
   },
 
   /**

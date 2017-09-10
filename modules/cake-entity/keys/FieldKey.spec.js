@@ -74,8 +74,10 @@ describe("$entity", function () {
     });
 
     describe("fromEntityPath()", function () {
+      var entityPath = 'document.foo.bar.baz'.toPath();
+
       beforeEach(function () {
-        fieldKey = FieldKey.fromEntityPath('document.foo.bar.baz'.toPath());
+        fieldKey = FieldKey.fromEntityPath(entityPath);
       });
 
       it("should return a FieldKey instance", function () {
@@ -85,6 +87,10 @@ describe("$entity", function () {
       it("should set documentKey & fieldName properties", function () {
         expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
         expect(fieldKey.fieldName).toBe('baz');
+      });
+
+      it("should set _entityPath property", function () {
+        expect(fieldKey._entityPath).toBe(entityPath);
       });
     });
 
@@ -145,8 +151,12 @@ describe("$entity", function () {
         expect($data.Path.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return config key to the document type", function () {
+      it("should return entity path to the field", function () {
         expect(result.equals('document.foo.bar.baz'.toPath()));
+      });
+
+      it("should set _entityPath property", function () {
+        expect(fieldKey._entityPath).toBe(result);
       });
     });
 

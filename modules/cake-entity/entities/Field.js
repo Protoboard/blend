@@ -43,8 +43,8 @@ $entity.Field = $oop.getClass('$entity.Field')
   spread: function () {
     var fieldKey = this.entityKey,
         metaKey = fieldKey.getMetaKey(),
-        fieldEventPath = fieldKey.getEntityPath().unshift('entity'),
-        metaEventPath = metaKey.getEntityPath().unshift('entity');
+        fieldEventPath = fieldKey.getEntityPath().clone().unshift('entity'),
+        metaEventPath = metaKey.getEntityPath().clone().unshift('entity');
 
     this.listeningPath = fieldEventPath;
 
