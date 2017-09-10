@@ -1118,6 +1118,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @param {function} filter
    * @returns {$oop.Class}
+   * @todo Rename to forwardTo()
    */
   forward: function (Class, filter) {
     $assert.isClass(Class, "Class#forward expects type Class.");
