@@ -89,6 +89,16 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   }
 });
 
+$oop.getClass('$entity.EntityKey')
+.delegate(/** @lends $entity.EntityKey# */{
+  /**
+   * @returns {$entity.Entity}
+   */
+  toEntity: function () {
+    return $entity.Entity.fromEntityKey(this);
+  }
+});
+
 // todo Might need to move these to globals.js
 $oop.copyProperties($entity, /** @lends $entity */{
   /**

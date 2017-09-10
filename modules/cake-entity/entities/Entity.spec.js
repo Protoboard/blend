@@ -155,4 +155,30 @@ describe("$entity", function () {
     describe("unsetNode()", function () {
     });
   });
+
+  describe("EntityKey", function () {
+    var EntityKey,
+        entityKey,
+        result;
+
+    beforeEach(function () {
+      EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
+      .mix($entity.EntityKey);
+      entityKey = 'foo/bar'.toDocumentKey();
+    });
+
+    describe("toEntity()", function () {
+      beforeEach(function () {
+        result = entityKey.toEntity();
+      });
+
+      it("should return Entity instance", function () {
+        expect($entity.Entity.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should set entityKey property", function () {
+        expect(result.entityKey.equals('foo/bar'.toDocumentKey())).toBeTruthy();
+      });
+    });
+  });
 });
