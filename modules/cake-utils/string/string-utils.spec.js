@@ -94,4 +94,17 @@ describe("$utils", function () {
       .toEqual(['foo\\.bar', 'baz\\.quux']);
     });
   });
+
+  describe("matchesPrefix()", function () {
+    describe("on matching string", function () {
+      it("should return truthy", function () {
+        expect($utils.matchesPrefix('Hello World', 'He')).toBeTruthy();
+      });
+    });
+    describe("on non-matching string", function () {
+      it("should return falsy", function () {
+        expect($utils.matchesPrefix('Hello World', 'hel')).toBeFalsy();
+      });
+    });
+  });
 });

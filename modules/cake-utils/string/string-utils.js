@@ -123,5 +123,15 @@ $oop.copyProperties($utils, /** @lends $utils */{
     result.push(component);
 
     return result;
+  },
+
+  /**
+   * Tests whether the specified string matches the specified prefix.
+   * @param {string} string
+   * @param {string} prefix
+   * @returns {boolean}
+   */
+  matchesPrefix: function (string, prefix) {
+    return string && string.substr(0, prefix.length) === prefix;
   }
 });
