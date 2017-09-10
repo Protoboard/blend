@@ -22,13 +22,16 @@ $event.EventSender = $oop.getClass('$event.EventSender')
   },
 
   /**
-   * Spawns an `Event` instance
-   * @param {string} eventName
+   * Spawns an `Event` instance that is specific to the current
+   * `EventSender` instance. Sets `sender` and `targetPaths` properties on
+   * event. (Both overridable.)
+   * @param {Object} properties
    * @returns {$event.Event}
    */
-  spawnEvent: function (eventName) {
-    return $event.Event.fromEventName(eventName)
-    .setSender(this);
+  spawnEvent: function (properties) {
+    properties.sender = properties.sender || this;
+    properties.targetPaths = properties.targetPaths || this.triggerPaths;
+    return $event.Event.create(properties);
   },
 
   /**
@@ -54,21 +57,9 @@ $event.EventSender = $oop.getClass('$event.EventSender')
    * @returns {$utils.Promise}
    */
   trigger: function (eventName) {
-    return this.spawnEvent(eventName)
-    .traverse(this.triggerPaths);
-  },
-
-  /**
-   * @param {string} eventName
-   * @param {boolean} [bubbles=false]
-   * @returns {$utils.Promise}
-   */
-  broadcast: function (eventName, bubbles) {
-    var triggerPaths = this.triggerPaths;
-
-    $assert.isTruthy(triggerPaths.length === 1, "Invalid trigger path count.");
-
-    return this.spawnEvent(eventName)
-    .broadcast(triggerPaths[0], bubbles);
+    return this.spawnEvent({
+      eventName: eventName
+    })
+    .trigger();
   }
 });

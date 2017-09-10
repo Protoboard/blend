@@ -26,7 +26,9 @@ describe("$event", function () {
 
       beforeEach(function () {
         eventName = 'event1';
-        result = eventSender.spawnEvent(eventName);
+        result = eventSender.spawnEvent({
+          eventName: eventName
+        });
       });
 
       it("should return an Event instance", function () {
@@ -79,72 +81,31 @@ describe("$event", function () {
     });
 
     describe("trigger()", function () {
-      var promise,
+      var event,
+          promise,
           eventName;
 
       beforeEach(function () {
+        event = $event.Event.fromEventName('event1');
         promise = {};
-        spyOn($event.Event, 'traverse').and.returnValue(promise);
+        spyOn(eventSender, 'spawnEvent').and.returnValue(event);
+        spyOn(event, 'trigger').and.returnValue(promise);
         eventName = 'event1';
         result = eventSender.trigger(eventName);
       });
 
-      it("should return promise from Event#traverse", function () {
+      it("should return promise from Event#trigger", function () {
         expect(result).toBe(promise);
       });
 
-      it("should pass triggerPaths to Event#traverse", function () {
-        expect($event.Event.traverse)
-        .toHaveBeenCalledWith(eventSender.triggerPaths);
-      });
-    });
-
-    describe("broadcast()", function () {
-      var promise,
-          eventName,
-          bubbles,
-          triggerPath;
-
-      beforeEach(function () {
-        promise = {};
-        eventName = 'event1';
-        bubbles = true;
-        triggerPath = 'foo.bar'.toPath();
-        spyOn($event.Event, 'broadcast').and.returnValue(promise);
-
-        eventSender.addTriggerPath(triggerPath);
-
-        result = eventSender.broadcast(eventName, bubbles);
-      });
-
-      it("should return promise from Event#broadcast", function () {
-        expect(result).toBe(promise);
-      });
-
-      it("should pass triggerPaths to Event#traverse", function () {
-        expect($event.Event.broadcast)
-        .toHaveBeenCalledWith(triggerPath, bubbles);
-      });
-
-      describe("when triggerPaths are too few", function () {
-        it("should throw", function () {
-          eventSender = EventSender.create();
-          expect(function () {
-            eventSender.broadcast(eventName, bubbles);
-          }).toThrow();
+      it("should spawn event", function () {
+        expect(eventSender.spawnEvent).toHaveBeenCalledWith({
+          eventName: eventName
         });
       });
 
-      describe("when triggerPaths are too many", function () {
-        it("should throw", function () {
-          eventSender = EventSender.create()
-          .addTriggerPaths([
-            'foo'.toPath(),
-            'foo.bar'.toPath()]);
-          expect(function () {
-            eventSender.broadcast(eventName, bubbles);
-          }).toThrow();
-        });
+      it("should invoke trigger on spawned event", function () {
+        expect(event.trigger).toHaveBeenCalled();
       });
     });
   });

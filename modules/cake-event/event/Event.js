@@ -37,10 +37,12 @@ $event.Event = $oop.getClass('$event.Event')
    * triggering of which led to the triggering of the current event. A chain
    * of causing events usually leads back to user interaction, or scheduled
    * operations.
-   * It is possible to set this property using
-   * {@link $event.Event#setCausingEvent}, but most of the time it's set
-   * by the event mechanism once the event is triggered.
    * @member {$event.Event} $event.Event#causingEvent
+   */
+
+  /**
+   * List of paths the event will trigger when triggered.
+   * @member {Array.<$data.Path>} $event.Event#targetPaths
    */
 
   /**
@@ -65,6 +67,8 @@ $event.Event = $oop.getClass('$event.Event')
 
   /** @ignore */
   spread: function () {
+    this.targetPaths = this.targetPaths || [];
+
     if (this.propagates === undefined) {
       this.propagates = true;
     }
@@ -95,9 +99,9 @@ $event.Event = $oop.getClass('$event.Event')
    * @see $event.EventSpace#on
    * @todo Refactor / simplify
    */
-  traverse: function (targetPaths) {
+  trigger: function () {
     if (this.sender === undefined) {
-      $assert.fail("Event sender is not defined. Can't traverse.");
+      $assert.fail("Event sender is not defined. Can't trigger.");
     }
 
     var eventTrail = $event.EventTrail.create();
@@ -110,6 +114,7 @@ $event.Event = $oop.getClass('$event.Event')
 
     var eventSpace = $event.EventSpace.create(),
         eventName = this.eventName,
+        targetPaths = this.targetPaths,
         targetPathCount = targetPaths.length,
         targetPath,
         callbacksPath,
@@ -145,37 +150,6 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * Invokes callbacks subscribed to `eventName`, on the specified path and,
-   * when bubbling is enabled, all its parent paths; from `targetPath` towards
-   * the root.
-   * @param {$data.Path} targetPath
-   * @param {boolean} [bubbles=false]
-   * @returns {$utils.Promise}
-   */
-  trigger: function (targetPath, bubbles) {
-    var targetPaths = bubbles ?
-        [targetPath].concat($event.spreadPathForBubbling(targetPath)) :
-        [targetPath];
-    return this.traverse(targetPaths);
-  },
-
-  /**
-   * Invokes callbacks subscribed to `eventName`, on all paths relative to
-   * the specified path, and, if bubbling is enabled, all parent paths too,
-   * from `targetPath` towards the root.
-   * @param {$data.Path} targetPath
-   * @param {boolean} [bubbles=false]
-   * @returns {$utils.Promise}
-   */
-  broadcast: function (targetPath, bubbles) {
-    var broadcastPaths = $event.spreadPathForBroadcast(targetPath, this.eventName),
-        bubblingPaths = bubbles ?
-            [targetPath].concat($event.spreadPathForBubbling(targetPath)) :
-            [targetPath];
-    return this.traverse(broadcastPaths.concat(bubblingPaths));
-  },
-
-  /**
    * @param {*} sender
    * @returns {$event.Event}
    */
@@ -185,12 +159,38 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param {$event.Event} causingEvent
+   * @param {Array.<$data.Path>} targetPaths
    * @returns {$event.Event}
-   * @todo Necessary?
    */
-  setCausingEvent: function (causingEvent) {
-    this.causingEvent = causingEvent;
+  addTargetPaths: function (targetPaths) {
+    this.targetPaths = this.targetPaths.concat(targetPaths);
+    return this;
+  },
+
+  /**
+   * @param {$data.Path} targetPath
+   * @returns {$event.Event}
+   */
+  addTargetPath: function (targetPath) {
+    this.targetPaths.push(targetPath);
+    return this;
+  },
+
+  /**
+   * @param {$data.Path} targetPath
+   * @returns {$event.Event}
+   */
+  addBubblingPath: function (targetPath) {
+    this.addTargetPaths($event.spreadPathForBubbling(targetPath));
+    return this;
+  },
+
+  /**
+   * @param {$data.Path} targetPath
+   * @returns {$event.Event}
+   */
+  addBroadcastPath: function (targetPath) {
+    this.addTargetPaths($event.spreadPathForBroadcast(targetPath, this.eventName));
     return this;
   },
 

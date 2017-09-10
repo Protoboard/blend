@@ -30,6 +30,10 @@ describe("$event", function () {
         expect(event.propagates).toBe(true);
       });
 
+      it("should initialize targetPaths array", function () {
+        expect(event.targetPaths).toEqual([]);
+      });
+
       describe("on invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
@@ -61,8 +65,8 @@ describe("$event", function () {
 
     describe("clone()", function () {
       beforeEach(function () {
+        event.causingEvent = Event.create({eventName: 'event2'});
         event
-        .setCausingEvent(Event.create({eventName: 'event2'}))
         .setSender({});
 
         result = event.clone();
@@ -80,7 +84,7 @@ describe("$event", function () {
       });
     });
 
-    describe("traverse()", function () {
+    describe("trigger()", function () {
       var deferred,
           callback1, callback2, callback3,
           eventTrail;
@@ -101,12 +105,13 @@ describe("$event", function () {
         .on('event1', 'foo'.toPath(), '3', callback3);
 
         event
-        .setSender({});
-
-        result = event.traverse([
+        .addTargetPaths([
           'foo.bar.baz'.toPath(),
           'foo.bar'.toPath(),
-          'foo'.toPath()]);
+          'foo'.toPath()])
+        .setSender({});
+
+        result = event.trigger();
       });
 
       it("should return pending promise", function () {
@@ -137,7 +142,8 @@ describe("$event", function () {
         it("should throw", function () {
           expect(function () {
             Event.create({eventName: 'event1'})
-            .traverse(['foo.bar'.toPath()]);
+            .addTargetPath('foo.bar'.toPath())
+            .trigger();
           }).toThrow();
         });
       });
@@ -152,102 +158,15 @@ describe("$event", function () {
 
           event
           .setSender({})
-          .traverse([
+          .addTargetPaths([
             'foo.bar.baz'.toPath(),
             'foo.bar'.toPath(),
-            'foo'.toPath()]);
+            'foo'.toPath()])
+          .trigger();
         });
 
         it("should add last event in EventTrail as causingEvent", function () {
           expect(event.causingEvent).toBe(event2);
-        });
-      });
-    });
-
-    describe("trigger()", function () {
-      var promise;
-
-      beforeEach(function () {
-        promise = {};
-        spyOn(event, 'traverse').and.returnValue(promise);
-        event.setSender({});
-      });
-
-      it("should return promise", function () {
-        result = event.trigger('foo.bar.baz'.toPath());
-        expect(result).toBe(promise);
-      });
-
-      describe("when bubbles", function () {
-        beforeEach(function () {
-          event.trigger('foo.bar.baz'.toPath(), true);
-        });
-
-        it("should pass spread targetPath to traverse()", function () {
-          expect(event.traverse).toHaveBeenCalledWith([
-            'foo.bar.baz'.toPath(),
-            'foo.bar'.toPath(),
-            'foo'.toPath()
-          ]);
-        });
-      });
-
-      describe("when doesn't bubble", function () {
-        beforeEach(function () {
-          event.trigger('foo.bar.baz'.toPath(), false);
-        });
-
-        it("should pass unspread targetPath to traverse()", function () {
-          expect(event.traverse).toHaveBeenCalledWith(['foo.bar.baz'.toPath()]);
-        });
-      });
-    });
-
-    describe("broadcast()", function () {
-      var promise;
-
-      beforeEach(function () {
-        promise = {};
-        spyOn(event, 'traverse').and.returnValue(promise);
-        event.setSender({});
-
-        $event.EventSpace.create()
-        .destroy()
-        .on('event1', 'foo.bar.baz.quux'.toPath(), '1', function () {})
-        .on('event1', 'foo.bar.baz.quux'.toPath(), '2', function () {})
-        .on('event1', 'foo.bar'.toPath(), '3', function () {})
-        .on('event1', 'foo'.toPath(), '4', function () {});
-      });
-
-      it("should return promise", function () {
-        result = event.broadcast('foo'.toPath());
-        expect(result).toBe(promise);
-      });
-
-      describe("when bubbles", function () {
-        beforeEach(function () {
-          event.broadcast('foo.bar'.toPath(), true);
-        });
-
-        it("should pass spread targetPath to traverse()", function () {
-          expect(event.traverse).toHaveBeenCalledWith([
-            'foo.bar.baz.quux'.toPath(),
-            'foo.bar'.toPath(),
-            'foo'.toPath()
-          ]);
-        });
-      });
-
-      describe("when doesn't bubble", function () {
-        beforeEach(function () {
-          event.broadcast('foo.bar'.toPath(), false);
-        });
-
-        it("should pass spread targetPath to traverse()", function () {
-          expect(event.traverse).toHaveBeenCalledWith([
-            'foo.bar.baz.quux'.toPath(),
-            'foo.bar'.toPath()
-          ]);
         });
       });
     });
@@ -269,20 +188,90 @@ describe("$event", function () {
       });
     });
 
-    describe("setCausingEvent()", function () {
-      var causingEvent;
+    describe("addTargetPaths()", function () {
+      var targetPaths;
 
       beforeEach(function () {
-        causingEvent = Event.create({eventName: 'event2'});
-        result = event.setCausingEvent(causingEvent);
+        targetPaths = [
+          'foo.bar'.toPath(),
+          'baz.quux'.toPath()
+        ];
+        result = event.addTargetPaths(targetPaths);
       });
 
       it("should return self", function () {
         expect(result).toBe(event);
       });
 
-      it("should set causingEvent", function () {
-        expect(event.causingEvent).toBe(causingEvent);
+      it("should add paths to targetPaths", function () {
+        expect(event.targetPaths).toEqual([
+          'foo.bar'.toPath(),
+          'baz.quux'.toPath()
+        ]);
+      });
+    });
+
+    describe("addTargetPath()", function () {
+      var targetPath;
+
+      beforeEach(function () {
+        targetPath = 'foo.bar'.toPath();
+        result = event.addTargetPath(targetPath);
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(event);
+      });
+
+      it("should add path to targetPaths", function () {
+        expect(event.targetPaths).toEqual([
+          'foo.bar'.toPath()
+        ]);
+      });
+    });
+
+    describe("addBubblingPath()", function () {
+      var bubblingPath;
+
+      beforeEach(function () {
+        bubblingPath = 'foo.bar.baz'.toPath();
+        result = event.addBubblingPath(bubblingPath);
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(event);
+      });
+
+      it("should add bubble paths to targetPaths", function () {
+        expect(event.targetPaths).toEqual([
+          'foo.bar'.toPath(),
+          'foo'.toPath()
+        ]);
+      });
+    });
+
+    describe("addBroadcastPath()", function () {
+      var broadcastPath;
+
+      beforeEach(function () {
+        broadcastPath = 'foo.bar'.toPath();
+        $event.EventSpace.create()
+        .destroy()
+        .on('event1', 'foo.bar.baz.quux'.toPath(), '1', function () {})
+        .on('event1', 'foo.bar.baz.quux'.toPath(), '2', function () {})
+        .on('event1', 'foo.bar'.toPath(), '3', function () {})
+        .on('event1', 'foo'.toPath(), '4', function () {});
+        result = event.addBroadcastPath(broadcastPath);
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(event);
+      });
+
+      it("should add broadcast paths to targetPaths", function () {
+        expect(event.targetPaths).toEqual([
+          'foo.bar.baz.quux'.toPath()
+        ]);
       });
     });
 
