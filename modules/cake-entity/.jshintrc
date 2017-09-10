@@ -9,6 +9,7 @@
     "$utils": true,
     "$data": true,
     "$event": true,
-    "$entity": true
+    "$entity": true,
+    "hOP": true
   }
 }

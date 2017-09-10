@@ -5,7 +5,8 @@ var $assert = require('cake-assert'),
     $utils = require('cake-utils'),
     $data = require('cake-data'),
     $event = require('cake-event'),
-    $entity = exports;
+    $entity = exports,
+    hOP = Object.prototype.hasOwnProperty;
 
 /**
  * @namespace $entity
