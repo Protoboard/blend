@@ -35,10 +35,18 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    */
 
   /**
-   * Retrieves a `Path` instance identifying the entity's data node in the entity
-   * store.
+   * Retrieves a `Path` instance identifying the entity's data node in the
+   * entity store.
    * @function $entity.EntityKey#getEntityPath
    * @returns {$data.Path}
    * @abstract
    */
+});
+
+$oop.getClass('$data.Path')
+.delegate(/** @lends $data.Path# */{
+  /** @returns {$entity.EntityKey} */
+  toEntityKey: function () {
+    return $entity.EntityKey.fromEntityPath(this);
+  }
 });

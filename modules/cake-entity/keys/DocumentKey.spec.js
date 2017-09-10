@@ -182,6 +182,30 @@ describe("$entity", function () {
       });
     });
   });
+
+  describe("EntityKey", function () {
+    var EntityKey,
+        result;
+
+    beforeEach(function () {
+      EntityKey = $oop.getClass('test.$entity.DocumentKey.EntityKey')
+      .mix($entity.EntityKey);
+    });
+
+    describe("create()", function () {
+      describe("when passing document entity path", function () {
+        beforeEach(function () {
+          result = EntityKey.create({
+            _entityPath: 'document.foo.bar'.toPath()
+          });
+        });
+
+        it("should return DocumentKey instance", function () {
+          expect($entity.DocumentKey.mixedBy(result));
+        });
+      });
+    });
+  });
 });
 
 describe("String", function () {

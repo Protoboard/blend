@@ -141,6 +141,15 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   }
 });
 
+$oop.getClass('$entity.EntityKey')
+.forward($entity.ItemKey, function (properties) {
+  var entityPath = properties._entityPath,
+      components = entityPath && entityPath.components;
+  return components &&
+      components.length === 5 &&
+      components[0] === 'document';
+});
+
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$entity.ItemKey}

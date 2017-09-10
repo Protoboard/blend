@@ -143,6 +143,15 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   }
 });
 
+$oop.getClass('$entity.EntityKey')
+.forward($entity.FieldKey, function (properties) {
+  var entityPath = properties._entityPath,
+      components = entityPath && entityPath.components;
+  return components &&
+      components.length === 4 &&
+      components[0] === 'document';
+});
+
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$entity.FieldKey}

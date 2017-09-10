@@ -163,6 +163,30 @@ describe("$entity", function () {
       });
     });
   });
+
+  describe("EntityKey", function () {
+    var EntityKey,
+        result;
+
+    beforeEach(function () {
+      EntityKey = $oop.getClass('test.$entity.ItemKey.EntityKey')
+      .mix($entity.EntityKey);
+    });
+
+    describe("create()", function () {
+      describe("when passing field entity path", function () {
+        beforeEach(function () {
+          result = EntityKey.create({
+            _entityPath: 'document.foo.bar.baz.quux'.toPath()
+          });
+        });
+
+        it("should return ItemKey instance", function () {
+          expect($entity.ItemKey.mixedBy(result));
+        });
+      });
+    });
+  });
 });
 
 describe("String", function () {

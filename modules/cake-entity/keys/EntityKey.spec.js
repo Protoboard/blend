@@ -1,6 +1,7 @@
 "use strict";
 
 var $oop = window['cake-oop'],
+    $data = window['cake-data'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
@@ -32,6 +33,30 @@ describe("$entity", function () {
 
       it("should return the created instance", function () {
         expect(result).toBe(entityKey);
+      });
+    });
+  });
+});
+
+describe("$data", function () {
+  describe("Path", function () {
+    var Path,
+        path,
+        result;
+
+    beforeEach(function () {
+      Path = $oop.getClass('test.$entity.EntityKey.Path')
+      .mix($data.Path);
+      path = Path.fromComponents(['document', 'foo', 'bar']);
+    });
+
+    describe("toEntityKey()", function () {
+      beforeEach(function () {
+        result = path.toEntityKey();
+      });
+
+      it("should return EntityKey instance", function () {
+        expect($entity.EntityKey.mixedBy(result)).toBeTruthy();
       });
     });
   });

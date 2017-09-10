@@ -128,6 +128,15 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
   }
 });
 
+$oop.getClass('$entity.EntityKey')
+.forward($entity.DocumentKey, function (properties) {
+  var entityPath = properties._entityPath,
+      components = entityPath && entityPath.components;
+  return components &&
+      components.length === 3 &&
+      components[0] === 'document';
+});
+
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$entity.DocumentKey}
