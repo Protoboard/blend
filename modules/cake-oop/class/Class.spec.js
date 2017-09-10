@@ -641,9 +641,9 @@ describe("$oop", function () {
           B = $oop.getClass('B');
           C = $oop.getClass('C');
           D = $oop.getClass('D');
-          D.forward(A, function () {});
-          D.forward(B, function () {});
-          D.forward(C, function () {});
+          D.forwardTo(A, function () {});
+          D.forwardTo(B, function () {});
+          D.forwardTo(C, function () {});
         });
 
         describe("short paths first", function () {
@@ -951,19 +951,19 @@ describe("$oop", function () {
       });
     });
 
-    describe("forward()", function () {
+    describe("forwardTo()", function () {
       var filter, Class1;
 
       beforeEach(function () {
         filter = function () {
         };
-        Class.forward(Class1 = $oop.Class.getClass('Class1'), filter);
+        Class.forwardTo(Class1 = $oop.Class.getClass('Class1'), filter);
       });
 
       describe("when passing invalid argument", function () {
         it("should throw", function () {
           expect(function () {
-            Class.forward(null, filter, 1);
+            Class.forwardTo(null, filter, 1);
           }).toThrow();
         });
       });
@@ -989,8 +989,8 @@ describe("$oop", function () {
           .mixOnly(Class);
           filter3 = function () {
           };
-          Class.forward(Class3, filter3);
-          Class.forward(Class2, filter2);
+          Class.forwardTo(Class3, filter3);
+          Class.forwardTo(Class2, filter2);
         });
 
         it("should sort descriptors by class distance", function () {
@@ -1293,7 +1293,7 @@ describe("$oop", function () {
           .mixOnly(Class);
 
           $oop.Class.getClass('Class')
-          .forward(Forward, function (args) {
+          .forwardTo(Forward, function (args) {
             return args.foo === 1;
           });
         });
@@ -1325,7 +1325,7 @@ describe("$oop", function () {
             .mixOnly(Class);
 
             $oop.Class.getClass('Class')
-            .forward(Forward2, function (args) {
+            .forwardTo(Forward2, function (args) {
               return args.foo === 2;
             });
           });

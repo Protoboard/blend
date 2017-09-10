@@ -59,7 +59,7 @@ $entity.Item = $oop.getClass('$entity.Item')
 });
 
 $oop.getClass('$entity.Entity')
-.forward($oop.getClass('$entity.Item'), function (properties) {
+.forwardTo($oop.getClass('$entity.Item'), function (properties) {
   return $entity.ItemKey.mixedBy(properties.entityKey);
 });
 

@@ -142,7 +142,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
 });
 
 $oop.getClass('$entity.EntityKey')
-.forward($entity.ItemKey, function (properties) {
+.forwardTo($entity.ItemKey, function (properties) {
   var entityPath = properties._entityPath,
       components = entityPath && entityPath.components;
   return components &&

@@ -129,7 +129,7 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
 });
 
 $oop.getClass('$entity.EntityKey')
-.forward($entity.DocumentKey, function (properties) {
+.forwardTo($entity.DocumentKey, function (properties) {
   var entityPath = properties._entityPath,
       components = entityPath && entityPath.components;
   return components &&
