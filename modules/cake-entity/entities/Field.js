@@ -53,12 +53,12 @@ $entity.Field = $oop.getClass('$entity.Field')
       // todo We'll need field type path here
       metaEventPath
     ];
-  }
+  },
 
-  ///** @ignore */
-  //getItem: function (itemId) {
-  //  $entity.Item.fromEntityKey(this.entityKey.getItemKey(itemId));
-  //}
+  /** @ignore */
+  getItem: function (itemId) {
+    return $entity.Item.fromEntityKey(this.entityKey.getItemKey(itemId));
+  }
 });
 
 $oop.getClass('$entity.Entity')
