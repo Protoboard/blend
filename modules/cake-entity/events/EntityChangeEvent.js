@@ -125,6 +125,8 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
   },
 
   /**
+   * Retrieves the before state of the node associated with the sending
+   * entity, wrapped in a `DataContainer` instance.
    * @returns {$data.DataContainer}
    */
   getNodeBeforeWrapped: function () {
@@ -147,6 +149,8 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
   },
 
   /**
+   * Retrieves the after state of the node associated with the sending
+   * entity, wrapped in a `DataContainer` instance.
    * @returns {$data.DataContainer}
    */
   getNodeAfterWrapped: function () {
