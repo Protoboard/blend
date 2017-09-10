@@ -73,27 +73,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromEntityPath()", function () {
-      var entityPath = 'document.foo.bar.baz.quux'.toPath();
-
-      beforeEach(function () {
-        itemKey = ItemKey.fromEntityPath(entityPath);
-      });
-
-      it("should return a ItemKey instance", function () {
-        expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
-      });
-
-      it("should set fieldKey & itemId properties", function () {
-        expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
-        expect(itemKey.itemId).toBe('quux');
-      });
-
-      it("should set _entityPath property", function () {
-        expect(itemKey._entityPath).toBe(entityPath);
-      });
-    });
-
     describe("fromString()", function () {
       beforeEach(function () {
         itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
@@ -106,6 +85,21 @@ describe("$entity", function () {
       it("should set fieldKey & itemId properties", function () {
         expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
         expect(itemKey.itemId).toBe('/quux');
+      });
+    });
+
+    describe("create()", function () {
+      describe("from _entityPath", function () {
+        beforeEach(function () {
+          itemKey = ItemKey.create({
+            _entityPath: 'document.foo.bar.baz.quux'.toPath()
+          });
+        });
+
+        it("should set fieldKey & itemId properties", function () {
+          expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
+          expect(itemKey.itemId).toBe('quux');
+        });
       });
     });
 

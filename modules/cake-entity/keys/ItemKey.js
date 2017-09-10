@@ -49,21 +49,6 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
 
   /**
    * @memberOf $entity.ItemKey
-   * @param {$data.Path} entityPath
-   * @returns {$entity.ItemKey}
-   */
-  fromEntityPath: function (entityPath) {
-    var components = entityPath.components;
-    return this.create({
-      fieldKey: $entity.FieldKey.fromComponents(
-          components[1], components[2], components[3]),
-      itemId: components[4],
-      _entityPath: entityPath
-    });
-  },
-
-  /**
-   * @memberOf $entity.ItemKey
    * @param {string} itemRef
    * @returns {$entity.ItemKey}
    */
@@ -77,6 +62,22 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
           components[0], components[1], components[2]),
       itemId: components[3]
     });
+  },
+
+  /** @ignore */
+  spread: function () {
+    var entityPath = this._entityPath,
+        components;
+
+    if (entityPath &&
+        (!this.fieldKey || this.itemId === undefined)
+    ) {
+      // we have entity path but not all key components
+      components = entityPath.components;
+      this.fieldKey = $entity.FieldKey.fromComponents(
+          components[1], components[2], components[3]);
+      this.itemId = components[4];
+    }
   },
 
   /**

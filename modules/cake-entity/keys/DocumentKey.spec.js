@@ -74,27 +74,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromEntityPath()", function () {
-      var entityPath = 'document.foo.bar'.toPath();
-
-      beforeEach(function () {
-        documentKey = DocumentKey.fromEntityPath(entityPath);
-      });
-
-      it("should return a DocumentKey instance", function () {
-        expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
-      });
-
-      it("should set documentType & documentId properties", function () {
-        expect(documentKey.documentType).toBe('foo');
-        expect(documentKey.documentId).toBe('bar');
-      });
-
-      it("should set _entityPath property", function () {
-        expect(documentKey._entityPath).toBe(entityPath);
-      });
-    });
-
     describe("fromString()", function () {
       beforeEach(function () {
         documentKey = DocumentKey.fromString('\\/bar/baz');
@@ -107,6 +86,21 @@ describe("$entity", function () {
       it("should set documentType & documentId properties", function () {
         expect(documentKey.documentType).toBe('/bar');
         expect(documentKey.documentId).toBe('baz');
+      });
+    });
+
+    describe("create()", function () {
+      describe("from _entityPath", function () {
+        beforeEach(function () {
+          documentKey = DocumentKey.create({
+            _entityPath: 'document.foo.bar'.toPath()
+          });
+        });
+
+        it("should set documentType & documentId properties", function () {
+          expect(documentKey.documentType).toBe('foo');
+          expect(documentKey.documentId).toBe('bar');
+        });
       });
     });
 

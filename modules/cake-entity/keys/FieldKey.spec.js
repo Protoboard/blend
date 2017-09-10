@@ -73,27 +73,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromEntityPath()", function () {
-      var entityPath = 'document.foo.bar.baz'.toPath();
-
-      beforeEach(function () {
-        fieldKey = FieldKey.fromEntityPath(entityPath);
-      });
-
-      it("should return a FieldKey instance", function () {
-        expect(FieldKey.mixedBy(fieldKey)).toBeTruthy();
-      });
-
-      it("should set documentKey & fieldName properties", function () {
-        expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
-        expect(fieldKey.fieldName).toBe('baz');
-      });
-
-      it("should set _entityPath property", function () {
-        expect(fieldKey._entityPath).toBe(entityPath);
-      });
-    });
-
     describe("fromString()", function () {
       beforeEach(function () {
         fieldKey = FieldKey.fromString('foo/bar/\\/baz');
@@ -106,6 +85,21 @@ describe("$entity", function () {
       it("should set documentKey & fieldName properties", function () {
         expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
         expect(fieldKey.fieldName).toBe('/baz');
+      });
+    });
+
+    describe("create()", function () {
+      describe("from _entityPath", function () {
+        beforeEach(function () {
+          fieldKey = FieldKey.create({
+            _entityPath: 'document.foo.bar.baz'.toPath()
+          });
+        });
+
+        it("should set documentKey & fieldName properties", function () {
+          expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
+          expect(fieldKey.fieldName).toBe('baz');
+        });
       });
     });
 
