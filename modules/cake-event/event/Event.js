@@ -91,65 +91,6 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * Invokes callbacks subscribed to `eventName`, on each of
-   * `targetPaths`. Callbacks on a certain path will be invoked in an
-   * unspecified order. The returned promise resolves when all subscribed
-   * callbacks (synchronous or otherwise) have completed.
-   * @returns {$utils.Promise}
-   * @see $event.EventSpace#on
-   * @todo Refactor / simplify
-   */
-  trigger: function () {
-    if (this.sender === undefined) {
-      $assert.fail("Event sender is not defined. Can't trigger.");
-    }
-
-    var eventTrail = $event.EventTrail.create();
-
-    if (this.causingEvent === undefined && !eventTrail.isEmpty()) {
-      this.causingEvent = eventTrail.data.previousLink;
-    }
-
-    eventTrail.push(this);
-
-    var eventSpace = $event.EventSpace.create(),
-        eventName = this.eventName,
-        targetPaths = this.targetPaths,
-        targetPathCount = targetPaths.length,
-        targetPath,
-        callbacksPath,
-        callbacks,
-        subscriberIds,
-        callbackCount,
-        i, j,
-        results = [];
-
-    traversal:
-        for (i = 0; i < targetPathCount; i++) {
-          targetPath = targetPaths[i];
-          callbacksPath = $data.Path.fromComponents([
-            'callbacks', 'bySubscription', eventName, targetPath.toString()]);
-          callbacks = eventSpace.subscriptions.getNode(callbacksPath);
-          subscriberIds = callbacks && Object.keys(callbacks);
-          callbackCount = subscriberIds && subscriberIds.length || 0;
-
-          // setting current path
-          this.currentPath = targetPath;
-
-          // invoking callbacks for eventName / targetPath
-          for (j = 0; j < callbackCount; j++) {
-            results.push(callbacks[subscriberIds[j]](this));
-            if (!this.propagates) {
-              // todo Test stopping propagation
-              break traversal;
-            }
-          }
-        }
-
-    return this._unlinkWhen(results);
-  },
-
-  /**
    * @param {*} sender
    * @returns {$event.Event}
    */
@@ -209,5 +150,64 @@ $event.Event = $oop.getClass('$event.Event')
   stopPropagation: function () {
     this.propagates = false;
     return this;
+  },
+
+  /**
+   * Invokes callbacks subscribed to `eventName`, on each of
+   * `targetPaths`. Callbacks on a certain path will be invoked in an
+   * unspecified order. The returned promise resolves when all subscribed
+   * callbacks (synchronous or otherwise) have completed.
+   * @returns {$utils.Promise}
+   * @see $event.EventSpace#on
+   * @todo Refactor / simplify
+   */
+  trigger: function () {
+    if (this.sender === undefined) {
+      $assert.fail("Event sender is not defined. Can't trigger.");
+    }
+
+    var eventTrail = $event.EventTrail.create();
+
+    if (this.causingEvent === undefined && !eventTrail.isEmpty()) {
+      this.causingEvent = eventTrail.data.previousLink;
+    }
+
+    eventTrail.push(this);
+
+    var eventSpace = $event.EventSpace.create(),
+        eventName = this.eventName,
+        targetPaths = this.targetPaths,
+        targetPathCount = targetPaths.length,
+        targetPath,
+        callbacksPath,
+        callbacks,
+        subscriberIds,
+        callbackCount,
+        i, j,
+        results = [];
+
+    traversal:
+        for (i = 0; i < targetPathCount; i++) {
+          targetPath = targetPaths[i];
+          callbacksPath = $data.Path.fromComponents([
+            'callbacks', 'bySubscription', eventName, targetPath.toString()]);
+          callbacks = eventSpace.subscriptions.getNode(callbacksPath);
+          subscriberIds = callbacks && Object.keys(callbacks);
+          callbackCount = subscriberIds && subscriberIds.length || 0;
+
+          // setting current path
+          this.currentPath = targetPath;
+
+          // invoking callbacks for eventName / targetPath
+          for (j = 0; j < callbackCount; j++) {
+            results.push(callbacks[subscriberIds[j]](this));
+            if (!this.propagates) {
+              // todo Test stopping propagation
+              break traversal;
+            }
+          }
+        }
+
+    return this._unlinkWhen(results);
   }
 });

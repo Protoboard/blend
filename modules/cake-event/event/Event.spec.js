@@ -84,93 +84,6 @@ describe("$event", function () {
       });
     });
 
-    describe("trigger()", function () {
-      var deferred,
-          callback1, callback2, callback3,
-          eventTrail;
-
-      beforeEach(function () {
-        deferred = $utils.Deferred.create();
-
-        callback1 = jasmine.createSpy().and.returnValue(deferred.promise);
-        callback2 = jasmine.createSpy();
-        callback3 = jasmine.createSpy();
-
-        eventTrail = $event.EventTrail.create().clear();
-
-        $event.EventSpace.create()
-        .destroy()
-        .on('event1', 'foo.bar.baz'.toPath(), '1', callback1)
-        .on('event1', 'foo.bar.baz'.toPath(), '2', callback2)
-        .on('event1', 'foo'.toPath(), '3', callback3);
-
-        event
-        .addTargetPaths([
-          'foo.bar.baz'.toPath(),
-          'foo.bar'.toPath(),
-          'foo'.toPath()])
-        .setSender({});
-
-        result = event.trigger();
-      });
-
-      it("should return pending promise", function () {
-        expect($utils.Promise.mixedBy(result)).toBeTruthy();
-        expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
-      });
-
-      it("should push event to chain", function () {
-        expect(eventTrail.data.nextLink).toBe(event);
-        expect(eventTrail.getItemCount()).toBe(1);
-      });
-
-      describe("when callbacks complete", function () {
-        beforeEach(function () {
-          deferred.resolve();
-        });
-
-        it("should unlink event", function () {
-          expect(eventTrail.getItemCount()).toBe(0);
-        });
-
-        it("should resolve returned promise", function () {
-          expect(result.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
-        });
-      });
-
-      describe("on missing sender", function () {
-        it("should throw", function () {
-          expect(function () {
-            Event.create({eventName: 'event1'})
-            .addTargetPath('foo.bar'.toPath())
-            .trigger();
-          }).toThrow();
-        });
-      });
-
-      describe("on missing causingEvent", function () {
-        var event2;
-
-        beforeEach(function () {
-          event = Event.create({eventName: 'event1'});
-          event2 = Event.create({eventName: 'event2'});
-          eventTrail.push(event2);
-
-          event
-          .setSender({})
-          .addTargetPaths([
-            'foo.bar.baz'.toPath(),
-            'foo.bar'.toPath(),
-            'foo'.toPath()])
-          .trigger();
-        });
-
-        it("should add last event in EventTrail as causingEvent", function () {
-          expect(event.causingEvent).toBe(event2);
-        });
-      });
-    });
-
     describe("setSender()", function () {
       var sender;
 
@@ -301,6 +214,93 @@ describe("$event", function () {
 
       it("should set bubbles", function () {
         expect(event.bubbles).toBeFalsy();
+      });
+    });
+
+    describe("trigger()", function () {
+      var deferred,
+          callback1, callback2, callback3,
+          eventTrail;
+
+      beforeEach(function () {
+        deferred = $utils.Deferred.create();
+
+        callback1 = jasmine.createSpy().and.returnValue(deferred.promise);
+        callback2 = jasmine.createSpy();
+        callback3 = jasmine.createSpy();
+
+        eventTrail = $event.EventTrail.create().clear();
+
+        $event.EventSpace.create()
+        .destroy()
+        .on('event1', 'foo.bar.baz'.toPath(), '1', callback1)
+        .on('event1', 'foo.bar.baz'.toPath(), '2', callback2)
+        .on('event1', 'foo'.toPath(), '3', callback3);
+
+        event
+        .addTargetPaths([
+          'foo.bar.baz'.toPath(),
+          'foo.bar'.toPath(),
+          'foo'.toPath()])
+        .setSender({});
+
+        result = event.trigger();
+      });
+
+      it("should return pending promise", function () {
+        expect($utils.Promise.mixedBy(result)).toBeTruthy();
+        expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
+      });
+
+      it("should push event to chain", function () {
+        expect(eventTrail.data.nextLink).toBe(event);
+        expect(eventTrail.getItemCount()).toBe(1);
+      });
+
+      describe("when callbacks complete", function () {
+        beforeEach(function () {
+          deferred.resolve();
+        });
+
+        it("should unlink event", function () {
+          expect(eventTrail.getItemCount()).toBe(0);
+        });
+
+        it("should resolve returned promise", function () {
+          expect(result.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
+        });
+      });
+
+      describe("on missing sender", function () {
+        it("should throw", function () {
+          expect(function () {
+            Event.create({eventName: 'event1'})
+            .addTargetPath('foo.bar'.toPath())
+            .trigger();
+          }).toThrow();
+        });
+      });
+
+      describe("on missing causingEvent", function () {
+        var event2;
+
+        beforeEach(function () {
+          event = Event.create({eventName: 'event1'});
+          event2 = Event.create({eventName: 'event2'});
+          eventTrail.push(event2);
+
+          event
+          .setSender({})
+          .addTargetPaths([
+            'foo.bar.baz'.toPath(),
+            'foo.bar'.toPath(),
+            'foo'.toPath()])
+          .trigger();
+        });
+
+        it("should add last event in EventTrail as causingEvent", function () {
+          expect(event.causingEvent).toBe(event2);
+        });
       });
     });
   });
