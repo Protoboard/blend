@@ -181,24 +181,18 @@ describe("$entity", function () {
   });
 
   describe("EntityKey", function () {
-    var EntityKey,
-        result;
-
-    beforeEach(function () {
-      EntityKey = $oop.getClass('test.$entity.FieldKey.EntityKey')
-      .mix($entity.EntityKey);
-    });
+    var result;
 
     describe("create()", function () {
       describe("when passing field entity path", function () {
         beforeEach(function () {
-          result = EntityKey.create({
+          result = $entity.EntityKey.create({
             _entityPath: 'document.foo.bar.baz'.toPath()
           });
         });
 
         it("should return FieldKey instance", function () {
-          expect($entity.FieldKey.mixedBy(result));
+          expect($entity.FieldKey.mixedBy(result)).toBeTruthy();
         });
       });
     });
