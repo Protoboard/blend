@@ -43,6 +43,19 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
 
   /**
    * @memberOf $entity.DocumentKey
+   * @param {$data.Path} path
+   * @returns {$entity.DocumentKey}
+   */
+  fromEntityPath: function (path) {
+    var components = path.components;
+    return this.create({
+      documentType: components[1],
+      documentId: components[2]
+    });
+  },
+
+  /**
+   * @memberOf $entity.DocumentKey
    * @param {string} documentRef
    * @returns {$entity.DocumentKey}
    */

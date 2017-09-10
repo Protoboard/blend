@@ -3,8 +3,7 @@
 /**
  * @function $entity.FieldKey.create
  * @param {Object} properties
- * @param {string} properties.documentType
- * @param {string} properties.documentId
+ * @param {$entity.DocumentKey} properties.documentKey
  * @param {string} properties.fieldName
  * @returns {$entity.FieldKey}
  */
@@ -42,6 +41,19 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
     return this.create({
       documentKey: $entity.DocumentKey.fromComponents(documentType, documentId),
       fieldName: fieldName
+    });
+  },
+
+  /**
+   * @memberOf $entity.FieldKey
+   * @param {$data.Path} path
+   * @returns {$entity.FieldKey}
+   */
+  fromEntityPath: function (path) {
+    var components = path.components;
+    return this.create({
+      documentKey: $entity.DocumentKey.fromComponents(components[1], components[2]),
+      fieldName: components[3]
     });
   },
 

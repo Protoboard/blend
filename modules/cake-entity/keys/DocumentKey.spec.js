@@ -74,6 +74,21 @@ describe("$entity", function () {
       });
     });
 
+    describe("fromEntityPath()", function () {
+      beforeEach(function () {
+        documentKey = DocumentKey.fromEntityPath('document.foo.bar'.toPath());
+      });
+
+      it("should return a DocumentKey instance", function () {
+        expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
+      });
+
+      it("should set documentType & documentId properties", function () {
+        expect(documentKey.documentType).toBe('foo');
+        expect(documentKey.documentId).toBe('bar');
+      });
+    });
+
     describe("fromString()", function () {
       beforeEach(function () {
         documentKey = DocumentKey.fromString('\\/bar/baz');

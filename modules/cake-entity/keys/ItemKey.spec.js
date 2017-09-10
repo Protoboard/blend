@@ -73,6 +73,21 @@ describe("$entity", function () {
       });
     });
 
+    describe("fromEntityPath()", function () {
+      beforeEach(function () {
+        itemKey = ItemKey.fromEntityPath('document.foo.bar.baz.quux'.toPath());
+      });
+
+      it("should return a ItemKey instance", function () {
+        expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
+      });
+
+      it("should set fieldKey & itemId properties", function () {
+        expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
+        expect(itemKey.itemId).toBe('quux');
+      });
+    });
+
     describe("fromString()", function () {
       beforeEach(function () {
         itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
