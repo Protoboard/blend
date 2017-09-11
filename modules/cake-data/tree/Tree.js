@@ -14,6 +14,7 @@
  * @extends $data.DataContainer
  * @extends $data.ObjectContainer
  * @implements $data.Queryable
+ * @todo Make Filterable and implement filtering by query.
  */
 $data.Tree = $oop.getClass('$data.Tree')
 .mix($oop.getClass('$data.DataContainer'))
