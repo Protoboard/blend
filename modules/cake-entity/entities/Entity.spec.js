@@ -186,104 +186,188 @@ describe("$entity", function () {
     });
 
     describe("setNode()", function () {
-      var documentKey,
-          documentPath,
-          triggeredEvents,
-          nodeBefore,
-          nodeAfter;
+      describe("when before/after are both objects", function () {
+        var documentKey,
+            documentPath,
+            triggeredEvents,
+            nodeBefore,
+            nodeAfter;
 
-      beforeEach(function () {
-        documentKey = 'foo/bar'.toDocumentKey();
-        documentPath = documentKey.getEntityPath();
-        triggeredEvents = [];
-        nodeBefore = {
-          "id": "X999_Y999",
-          "from": "user/X12",
-          "message": "Looking forward to 2010!",
-          "actions": {
+        beforeEach(function () {
+          documentKey = 'foo/bar'.toDocumentKey();
+          documentPath = documentKey.getEntityPath();
+          triggeredEvents = [];
+          nodeBefore = {
+            "id": "X999_Y999",
+            "from": "user/X12",
+            "message": "Looking forward to 2010!",
+            "actions": {
+              "comment/0": 0,
+              "like/0": 1,
+              "like/1": 2,
+              "like/2": 3
+            },
+            "type": "status",
+            "created_time": "2010-08-02T21:27:44+0000"
+          };
+          nodeAfter = {
+            "id": "X999_Y999",
+            "from": "user/X12",
+            "message": "Looking forward to 2011!",
+            "actions": {
+              "comment/0": 0,
+              "like/0": 1,
+              "like/3": 2
+            },
+            "type": "status",
+            "created_time": "2010-08-02T21:27:44+0000",
+            "updated_time": "2010-08-02T22:00:00+0000"
+          };
+
+          spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
+            triggeredEvents.push(this);
+            return $utils.Deferred.create().promise;
+          });
+          $entity.entities.setNode(documentPath, nodeBefore);
+
+          result = entity.setNode(nodeAfter);
+        });
+
+        afterEach(function () {
+          $entity.entities.deletePath(documentKey.getEntityPath());
+        });
+
+        it("should return self", function () {
+          expect(result).toBe(entity);
+        });
+
+        it("should set node in container", function () {
+          expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+        });
+
+        it("should trigger change events", function () {
+          var document = documentKey.toDocument();
+
+          expect(triggeredEvents[0].eventName)
+          .toEqual($entity.EVENT_ENTITY_CHANGE);
+          expect(triggeredEvents[0].sender)
+          .toEqual(document.getField('actions'));
+          expect(triggeredEvents[0].getNodeBefore()).toEqual({
             "comment/0": 0,
             "like/0": 1,
             "like/1": 2,
             "like/2": 3
-          },
-          "type": "status",
-          "created_time": "2010-08-02T21:27:44+0000"
-        };
-        nodeAfter = {
-          "id": "X999_Y999",
-          "from": "user/X12",
-          "message": "Looking forward to 2011!",
-          "actions": {
+          });
+          expect(triggeredEvents[0].getNodeAfter()).toEqual({
             "comment/0": 0,
             "like/0": 1,
             "like/3": 2
-          },
-          "type": "status",
-          "created_time": "2010-08-02T21:27:44+0000",
-          "updated_time": "2010-08-02T22:00:00+0000"
-        };
+          });
+          expect(triggeredEvents[0].propertiesAdded).toEqual(["like/3"]);
+          expect(triggeredEvents[0].propertiesRemoved)
+          .toEqual(["like/1", "like/2"]);
 
-        spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
-          triggeredEvents.push(this);
-          return $utils.Deferred.create().promise;
+          expect(triggeredEvents[1].eventName)
+          .toEqual($entity.EVENT_ENTITY_CHANGE);
+          expect(triggeredEvents[1].sender).toEqual(document);
+          expect(triggeredEvents[1].getNodeBefore()).toBe(nodeBefore);
+          expect(triggeredEvents[1].getNodeAfter()).toBe(nodeAfter);
+          expect(triggeredEvents[1].propertiesAdded).toEqual(["updated_time"]);
+
+          expect(triggeredEvents[2].eventName)
+          .toEqual($entity.EVENT_ENTITY_CHANGE);
+          expect(triggeredEvents[2].sender)
+          .toEqual(document.getField('message'));
+          expect(triggeredEvents[2].getNodeBefore())
+          .toEqual("Looking forward to 2010!");
+          expect(triggeredEvents[2].getNodeAfter())
+          .toEqual("Looking forward to 2011!");
         });
-        $entity.entities.setNode(documentPath, nodeBefore);
-
-        result = entity.setNode(nodeAfter);
       });
 
-      afterEach(function () {
-        $entity.entities.deletePath(documentKey.getEntityPath());
-      });
+      describe("when before/after are object/primitive", function () {
+        var documentKey,
+            documentPath,
+            triggeredEvents,
+            nodeBefore,
+            nodeAfter;
 
-      it("should return self", function () {
-        expect(result).toBe(entity);
-      });
+        beforeEach(function () {
+          documentKey = 'foo/bar'.toDocumentKey();
+          documentPath = documentKey.getEntityPath();
+          triggeredEvents = [];
+          nodeBefore = undefined;
+          nodeAfter = {
+            "id": "X999_Y999",
+            "from": "user/X12",
+            "message": "Looking forward to 2011!",
+            "actions": {
+              "comment/0": 0,
+              "like/0": 1,
+              "like/3": 2
+            },
+            "type": "status",
+            "created_time": "2010-08-02T21:27:44+0000",
+            "updated_time": "2010-08-02T22:00:00+0000"
+          };
 
-      it("should set node in container", function () {
-        expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
-      });
+          spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
+            triggeredEvents.push(this);
+            return $utils.Deferred.create().promise;
+          });
+          $entity.entities.setNode(documentPath, nodeBefore);
 
-      it("should trigger change events", function () {
-        var document = documentKey.toDocument(),
-            entitiesBefore = $data.Tree.create()
-            .setNode(documentPath, nodeBefore),
-            entitiesAfter = $data.Tree.create()
-            .setNode(documentPath, nodeAfter);
-
-        // can't test equality on Event instances b/c elevated `unlink`
-        expect(triggeredEvents[0].eventName)
-        .toEqual($entity.EVENT_ENTITY_CHANGE);
-        expect(triggeredEvents[0].sender).toEqual(document.getField('actions'));
-        expect(triggeredEvents[0].getNodeBefore()).toEqual({
-          "comment/0": 0,
-          "like/0": 1,
-          "like/1": 2,
-          "like/2": 3
+          result = entity.setNode(nodeAfter);
         });
-        expect(triggeredEvents[0].getNodeAfter()).toEqual({
-          "comment/0": 0,
-          "like/0": 1,
-          "like/3": 2
+
+        afterEach(function () {
+          $entity.entities.deletePath(documentKey.getEntityPath());
         });
-        expect(triggeredEvents[0].propertiesAdded).toEqual(["like/3"]);
-        expect(triggeredEvents[0].propertiesRemoved)
-        .toEqual(["like/1", "like/2"]);
 
-        expect(triggeredEvents[1].eventName)
-        .toEqual($entity.EVENT_ENTITY_CHANGE);
-        expect(triggeredEvents[1].sender).toEqual(document);
-        expect(triggeredEvents[1].getNodeBefore()).toBe(nodeBefore);
-        expect(triggeredEvents[1].getNodeAfter()).toBe(nodeAfter);
-        expect(triggeredEvents[1].propertiesAdded).toEqual(["updated_time"]);
+        it("should return self", function () {
+          expect(result).toBe(entity);
+        });
 
-        expect(triggeredEvents[2].eventName)
-        .toEqual($entity.EVENT_ENTITY_CHANGE);
-        expect(triggeredEvents[2].sender).toEqual(document.getField('message'));
-        expect(triggeredEvents[2].getNodeBefore())
-        .toEqual("Looking forward to 2010!");
-        expect(triggeredEvents[2].getNodeAfter())
-        .toEqual("Looking forward to 2011!");
+        it("should set node in container", function () {
+          expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+        });
+
+        it("should trigger change events", function () {
+          var document = documentKey.toDocument();
+
+          expect(triggeredEvents[0].eventName)
+          .toEqual($entity.EVENT_ENTITY_CHANGE);
+          expect(triggeredEvents[0].sender)
+          .toEqual(document);
+          expect(triggeredEvents[0].getNodeBefore()).toBeUndefined();
+          expect(triggeredEvents[0].getNodeAfter()).toEqual(nodeAfter);
+          expect(triggeredEvents[0].propertiesAdded).toEqual([
+            'id', 'from', 'message', 'type', 'created_time', 'updated_time']);
+
+          expect(triggeredEvents[1].eventName)
+          .toEqual($entity.EVENT_ENTITY_CHANGE);
+          expect(triggeredEvents[1].sender)
+          .toEqual(document.getField('actions'));
+          expect(triggeredEvents[1].getNodeBefore()).toBeUndefined();
+          expect(triggeredEvents[1].getNodeAfter()).toEqual({
+            "comment/0": 0,
+            "like/0": 1,
+            "like/3": 2
+          });
+          expect(triggeredEvents[1].propertiesAdded).toEqual([
+            'comment/0', 'like/0', 'like/3']);
+
+          expect(triggeredEvents[2].eventName)
+          .toEqual($entity.EVENT_ENTITY_CHANGE);
+          expect(triggeredEvents[2].sender)
+          .toEqual('document.foo'.toPath().toEntityKey().toEntity());
+          expect(triggeredEvents[2].getNodeBefore()).toEqual({
+            bar: undefined
+          });
+          expect(triggeredEvents[2].getNodeAfter()).toEqual({
+            bar: nodeAfter
+          });
+        });
       });
     });
 
