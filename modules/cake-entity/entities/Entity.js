@@ -158,6 +158,50 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
+   * Triggers event on current entity.
+   * @param {*} nodeBefore
+   * @param {*} nodeAfter
+   * @returns {$utils.Promise}
+   * @private
+   */
+  _triggerEntityChangeEvent: function (nodeBefore, nodeAfter) {
+    return this.spawnEvent({
+      eventName: $entity.EVENT_ENTITY_CHANGE,
+      _nodeBefore: nodeBefore,
+      _nodeAfter: nodeAfter
+    })
+    .trigger();
+  },
+
+  /**
+   * Triggers events on all entities affected by the change.
+   * @param {Object|*} nodeBefore
+   * @param {Object|*} nodeAfter
+   * @returns {$utils.Promise}
+   * @private
+   */
+  _triggerEntityChangeEvents: function (nodeBefore, nodeAfter) {
+    var entityPath = this.entityKey.getEntityPath(),
+        entitiesBefore = $data.Tree.create().setNode(entityPath, nodeBefore),
+        entitiesAfter = $data.Tree.create().setNode(entityPath, nodeAfter),
+        leafNodeQuery = $data.Query.fromComponents(
+            entityPath.clone().push('**').components),
+        pathLookupBefore = this._extractPathLookup(entitiesBefore, leafNodeQuery),
+        pathLookupAfter = this._extractPathLookup(entitiesAfter, leafNodeQuery),
+        pathGroups = this._groupPathsByChange(
+            pathLookupBefore, pathLookupAfter, entitiesBefore, entitiesAfter),
+        propertiesRemoved = this._groupPropertiesByParent(
+            pathGroups.pathsRemoved, pathLookupBefore),
+        propertiesAdded = this._groupPropertiesByParent(
+            pathGroups.pathsAdded, pathLookupAfter),
+        eventPropertyTree = this._buildEventPropertyTree(propertiesAdded,
+            propertiesRemoved, pathGroups.pathsChanged, entitiesBefore,
+            entitiesAfter);
+
+    return this._triggerEvents(eventPropertyTree);
+  },
+
+  /**
    * Retrieves data node associated with the current entity.
    * @returns {*}
    */
@@ -224,13 +268,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
 
     if (node !== nodeBefore) {
       $entity.entities.setNode(this.entityKey.getEntityPath(), node);
-
-      this.spawnEvent({
-        eventName: $entity.EVENT_ENTITY_CHANGE,
-        _nodeBefore: nodeBefore,
-        _nodeAfter: node
-      })
-      .trigger();
+      this._triggerEntityChangeEvent(nodeBefore, node);
     }
 
     return this;
@@ -249,32 +287,11 @@ $entity.Entity = $oop.getClass('$entity.Entity')
       $entity.entities.setNode(this.entityKey.getEntityPath(), node);
 
       if (node instanceof Object || nodeBefore instanceof Object) {
-        var entityPath = this.entityKey.getEntityPath(),
-            entitiesBefore = $data.Tree.create()
-            .setNode(entityPath, nodeBefore),
-            entitiesAfter = $data.Tree.create().setNode(entityPath, node),
-            leafNodeQuery = $data.Query.fromComponents(
-                entityPath.clone().push('**').components),
-            pathLookupBefore = this._extractPathLookup(entitiesBefore, leafNodeQuery),
-            pathLookupAfter = this._extractPathLookup(entitiesAfter, leafNodeQuery),
-            pathGroups = this._groupPathsByChange(
-                pathLookupBefore, pathLookupAfter, entitiesBefore, entitiesAfter),
-            propertiesRemoved = this._groupPropertiesByParent(
-                pathGroups.pathsRemoved, pathLookupBefore),
-            propertiesAdded = this._groupPropertiesByParent(
-                pathGroups.pathsAdded, pathLookupAfter),
-            eventPropertyTree = this._buildEventPropertyTree(propertiesAdded,
-                propertiesRemoved, pathGroups.pathsChanged, entitiesBefore,
-                entitiesAfter);
-
-        this._triggerEvents(eventPropertyTree);
+        // triggering events on all affected entities
+        this._triggerEntityChangeEvents(nodeBefore, node);
       } else {
-        this.spawnEvent({
-          eventName: $entity.EVENT_ENTITY_CHANGE,
-          _nodeBefore: nodeBefore,
-          _nodeAfter: node
-        })
-        .trigger();
+        // triggering event on current entity only
+        this._triggerEntityChangeEvent(nodeBefore, node);
       }
     }
 
