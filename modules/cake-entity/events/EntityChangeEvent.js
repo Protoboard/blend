@@ -114,11 +114,11 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
    * @returns {*}
    */
   getNodeBefore: function () {
-    var entityKey;
+    var entityPath;
 
     if (!hOP.call(this, '_nodeBefore')) {
-      entityKey = this.sender;
-      this._nodeBefore = this.entitiesBefore.getNode(entityKey.getEntityPath());
+      entityPath = this.sender.entityKey.getEntityPath();
+      this._nodeBefore = this.entitiesBefore.getNode(entityPath);
     }
 
     return this._nodeBefore;
@@ -138,11 +138,11 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
    * @returns {*}
    */
   getNodeAfter: function () {
-    var entityKey;
+    var entityPath;
 
     if (!hOP.call(this, '_nodeAfter')) {
-      entityKey = this.sender;
-      this._nodeAfter = this.entitiesAfter.getNode(entityKey.getEntityPath());
+      entityPath = this.sender.entityKey.getEntityPath();
+      this._nodeAfter = this.entitiesAfter.getNode(entityPath);
     }
 
     return this._nodeAfter;

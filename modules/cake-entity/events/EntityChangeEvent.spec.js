@@ -140,7 +140,7 @@ describe("$entity", function () {
         spyOn(entitiesBefore, 'getNode').and.callThrough();
 
         entityChangeEvent
-        .setSender('foo/bar'.toDocumentKey())
+        .setSender('foo/bar'.toDocument())
         .setEntitiesBefore(entitiesBefore);
 
         result = entityChangeEvent.getNodeBefore();
@@ -208,7 +208,7 @@ describe("$entity", function () {
         spyOn(entitiesAfter, 'getNode').and.callThrough();
 
         entityChangeEvent
-        .setSender('foo/bar'.toDocumentKey())
+        .setSender('foo/bar'.toDocument())
         .setEntitiesAfter(entitiesAfter);
 
         result = entityChangeEvent.getNodeAfter();
