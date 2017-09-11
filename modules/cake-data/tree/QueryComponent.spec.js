@@ -13,6 +13,48 @@ describe("$data", function () {
       .mix($data.QueryComponent);
     });
 
+    describe("fromString()", function () {
+      var queryComponent,
+          componentString;
+
+      beforeEach(function () {
+        queryComponent = {};
+        componentString = 'foo';
+        spyOn(QueryComponent, 'create').and.returnValue(queryComponent);
+        result = QueryComponent.fromString(componentString);
+      });
+
+      it("should pass string to create()", function () {
+        expect(QueryComponent.create)
+        .toHaveBeenCalledWith({componentString: componentString});
+      });
+
+      it("should return created instance", function () {
+        expect(result).toBe(queryComponent);
+      });
+    });
+
+    describe("fromKeyOptions()", function () {
+      var queryComponent,
+          keyOptions;
+
+      beforeEach(function () {
+        queryComponent = {};
+        keyOptions = ['foo', 'bar', 'baz'];
+        spyOn(QueryComponent, 'create').and.returnValue(queryComponent);
+        result = QueryComponent.fromKeyOptions(keyOptions);
+      });
+
+      it("should pass string to create()", function () {
+        expect(QueryComponent.create)
+        .toHaveBeenCalledWith({keyOptions: keyOptions});
+      });
+
+      it("should return created instance", function () {
+        expect(result).toBe(queryComponent);
+      });
+    });
+
     describe("create()", function () {
       describe("from string", function () {
         it("should set isSkipper property", function () {
@@ -166,27 +208,6 @@ describe("$data", function () {
             matchesPrimitiveValues: true
           }).matchesPrimitiveValues).toBeTruthy();
         });
-      });
-    });
-
-    describe("fromString()", function () {
-      var queryComponent,
-          componentString;
-
-      beforeEach(function () {
-        queryComponent = {};
-        componentString = 'foo';
-        spyOn(QueryComponent, 'create').and.returnValue(queryComponent);
-        result = QueryComponent.fromString(componentString);
-      });
-
-      it("should pass string to create()", function () {
-        expect(QueryComponent.create)
-        .toHaveBeenCalledWith({componentString: componentString});
-      });
-
-      it("should return created instance", function () {
-        expect(result).toBe(queryComponent);
       });
     });
 

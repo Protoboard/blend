@@ -121,6 +121,16 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     return this.create({componentString: componentString});
   },
 
+  /**
+   * Creates a `QueryComponent` instance based on the specified key options.
+   * @memberOf $data.QueryComponent
+   * @param {Array.<string>} keyOptions
+   * @returns {$data.QueryComponent}
+   */
+  fromKeyOptions: function (keyOptions) {
+    return this.create({keyOptions: keyOptions});
+  },
+
   /** @ignore */
   spread: function () {
     if (this.componentString !== undefined) {
