@@ -157,3 +157,8 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
     return $data.DataContainer.fromData(this.getNodeAfter());
   }
 });
+
+$oop.getClass('$event.Event')
+.forwardTo($entity.EntityChangeEvent, function (properties) {
+  return $utils.matchesPrefix(properties.eventName, 'entity.change');
+});

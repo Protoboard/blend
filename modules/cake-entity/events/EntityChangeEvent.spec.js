@@ -2,6 +2,7 @@
 
 var $oop = window['cake-oop'],
     $data = window['cake-data'],
+    $event = window['cake-event'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
@@ -257,6 +258,24 @@ describe("$entity", function () {
 
       it("should set data buffer to result of getNodeAfter()", function () {
         expect(result.data).toBe(nodeAfter);
+      });
+    });
+  });
+});
+
+describe("$event", function () {
+  describe("Event", function () {
+    var result;
+
+    describe("create()", function () {
+      describe("when event name is EVENT_ENTITY_CHANGE", function () {
+        beforeEach(function () {
+          result = $event.Event.fromEventName('entity.change.foo.bar');
+        });
+
+        it("should return an EntityChangeEvent instance", function () {
+          expect($entity.EntityChangeEvent.mixedBy(result)).toBeTruthy();
+        });
       });
     });
   });
