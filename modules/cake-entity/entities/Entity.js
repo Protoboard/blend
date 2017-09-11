@@ -325,7 +325,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    * Appends properties of the specified node to those of the current
    * entity, and triggers change events for all affected child entities.
    * Second degree children and beyond will be overwritten just like in
-   * $entity.Entity#setNode.
+   * {@link $entity.Entity#setNode}.
    * @param {Object} node
    * @returns {$entity.Entity}
    * @todo Return promise?
