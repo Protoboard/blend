@@ -218,9 +218,8 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    * but will not notify affected child entities.
    * @param {*} node
    * @returns {$entity.Entity}
-   * @todo Find a better name
    */
-  setNodeLight: function (node) {
+  setPrimitiveNode: function (node) {
     var nodeBefore = this.getSilentNode();
 
     if (node !== nodeBefore) {
@@ -242,7 +241,6 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    * affected child entities.
    * @param {*} node
    * @returns {$entity.Entity}
-   * @todo Separate branch for primitive before/after values
    */
   setNode: function (node) {
     var nodeBefore = this.getSilentNode();
@@ -250,24 +248,34 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     if (node !== nodeBefore) {
       $entity.entities.setNode(this.entityKey.getEntityPath(), node);
 
-      var entityPath = this.entityKey.getEntityPath(),
-          entitiesBefore = $data.Tree.create().setNode(entityPath, nodeBefore),
-          entitiesAfter = $data.Tree.create().setNode(entityPath, node),
-          leafNodeQuery = $data.Query.fromComponents(
-              entityPath.clone().push('**').components),
-          pathLookupBefore = this._extractPathLookup(entitiesBefore, leafNodeQuery),
-          pathLookupAfter = this._extractPathLookup(entitiesAfter, leafNodeQuery),
-          pathGroups = this._groupPathsByChange(
-              pathLookupBefore, pathLookupAfter, entitiesBefore, entitiesAfter),
-          propertiesRemoved = this._groupPropertiesByParent(
-              pathGroups.pathsRemoved, pathLookupBefore),
-          propertiesAdded = this._groupPropertiesByParent(
-              pathGroups.pathsAdded, pathLookupAfter),
-          eventPropertyTree = this._buildEventPropertyTree(propertiesAdded,
-              propertiesRemoved, pathGroups.pathsChanged, entitiesBefore,
-              entitiesAfter);
+      if (node instanceof Object || nodeBefore instanceof Object) {
+        var entityPath = this.entityKey.getEntityPath(),
+            entitiesBefore = $data.Tree.create()
+            .setNode(entityPath, nodeBefore),
+            entitiesAfter = $data.Tree.create().setNode(entityPath, node),
+            leafNodeQuery = $data.Query.fromComponents(
+                entityPath.clone().push('**').components),
+            pathLookupBefore = this._extractPathLookup(entitiesBefore, leafNodeQuery),
+            pathLookupAfter = this._extractPathLookup(entitiesAfter, leafNodeQuery),
+            pathGroups = this._groupPathsByChange(
+                pathLookupBefore, pathLookupAfter, entitiesBefore, entitiesAfter),
+            propertiesRemoved = this._groupPropertiesByParent(
+                pathGroups.pathsRemoved, pathLookupBefore),
+            propertiesAdded = this._groupPropertiesByParent(
+                pathGroups.pathsAdded, pathLookupAfter),
+            eventPropertyTree = this._buildEventPropertyTree(propertiesAdded,
+                propertiesRemoved, pathGroups.pathsChanged, entitiesBefore,
+                entitiesAfter);
 
-      this._triggerEvents(eventPropertyTree);
+        this._triggerEvents(eventPropertyTree);
+      } else {
+        this.spawnEvent({
+          eventName: $entity.EVENT_ENTITY_CHANGE,
+          _nodeBefore: nodeBefore,
+          _nodeAfter: node
+        })
+        .trigger();
+      }
     }
 
     return this;

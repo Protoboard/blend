@@ -147,7 +147,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("setNodeLight", function () {
+    describe("setPrimitiveNode", function () {
       var documentKey,
           documentPath,
           triggeredEvent,
@@ -166,7 +166,7 @@ describe("$entity", function () {
         });
         $entity.entities.setNode(documentPath, nodeBefore);
 
-        result = entity.setNodeLight(nodeAfter);
+        result = entity.setPrimitiveNode(nodeAfter);
       });
 
       it("should return self", function () {
@@ -367,6 +367,49 @@ describe("$entity", function () {
           expect(triggeredEvents[2].getNodeAfter()).toEqual({
             bar: nodeAfter
           });
+        });
+      });
+
+      describe("when before/after are both primitives", function () {
+        var documentKey,
+            documentPath,
+            triggeredEvent,
+            nodeBefore,
+            nodeAfter;
+
+        beforeEach(function () {
+          documentKey = 'foo/bar'.toDocumentKey();
+          documentPath = documentKey.getEntityPath();
+          triggeredEvent = [];
+          nodeBefore = "foo";
+          nodeAfter = "bar";
+
+          spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
+            triggeredEvent = this;
+            return $utils.Deferred.create().promise;
+          });
+          $entity.entities.setNode(documentPath, nodeBefore);
+
+          result = entity.setNode(nodeAfter);
+        });
+
+        afterEach(function () {
+          $entity.entities.deletePath(documentKey.getEntityPath());
+        });
+
+        it("should return self", function () {
+          expect(result).toBe(entity);
+        });
+
+        it("should set node in container", function () {
+          expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+        });
+
+        it("should trigger change event", function () {
+          expect(triggeredEvent.eventName).toEqual($entity.EVENT_ENTITY_CHANGE);
+          expect(triggeredEvent.sender).toEqual(entity);
+          expect(triggeredEvent.getNodeBefore()).toBe("foo");
+          expect(triggeredEvent.getNodeAfter()).toBe("bar");
         });
       });
     });
