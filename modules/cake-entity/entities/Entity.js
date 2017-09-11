@@ -185,7 +185,8 @@ $entity.Entity = $oop.getClass('$entity.Entity')
         entitiesBefore = $data.Tree.create().setNode(entityPath, nodeBefore),
         entitiesAfter = $data.Tree.create().setNode(entityPath, nodeAfter),
         leafNodeQuery = $data.Query.fromComponents(
-            entityPath.clone().push('**').components),
+            entityPath.clone().push('**')
+                .components),
         pathLookupBefore = this._extractPathLookup(entitiesBefore, leafNodeQuery),
         pathLookupAfter = this._extractPathLookup(entitiesAfter, leafNodeQuery),
         pathGroups = this._groupPathsByChange(
@@ -279,6 +280,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    * affected child entities.
    * @param {*} node
    * @returns {$entity.Entity}
+   * @todo Return promise?
    */
   setNode: function (node) {
     var nodeBefore = this.getSilentNode();
@@ -294,6 +296,31 @@ $entity.Entity = $oop.getClass('$entity.Entity')
         this._triggerEntityChangeEvent(nodeBefore, node);
       }
     }
+
+    return this;
+  },
+
+  /**
+   * @param {Object} node
+   * @returns {$entity.Entity}
+   * @todo Return promise?
+   * @todo Removal counterpart?
+   */
+  appendNode: function (node) {
+    var entityPath = this.entityKey.getEntityPath(),
+        affectedProperties = Object.keys(node),
+        // todo Need a faster way of filtering properties.
+        // (Collection#filterByKeys?)
+        propertiesQuery = $data.Query.fromComponents(
+            entityPath.clone()
+            .push($data.QueryComponent.fromKeyOptions(affectedProperties))
+                .components),
+        nodeBefore = $entity.entities
+        .queryKeyNodePairs(propertiesQuery)
+        .toCollection().data;
+
+    $entity.entities.appendNode(entityPath, node);
+    this._triggerEntityChangeEvents(nodeBefore, node);
 
     return this;
   }
