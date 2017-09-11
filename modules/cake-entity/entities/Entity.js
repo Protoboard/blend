@@ -34,61 +34,6 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
-   * Retrieves data node associated with the current entity.
-   * @returns {*}
-   */
-  getNode: function () {
-    var entityPath = this.entityKey.getEntityPath(),
-        node = $entity.entities.getNode(entityPath);
-
-    // todo Handling invalidated access
-
-    if (node === undefined) {
-      this.trigger($entity.EVENT_ENTITY_ABSENT);
-    }
-
-    return node;
-  },
-
-  /**
-   * Retrieves data node associated with the current entity, wrapped in a
-   * `DataContainer` instance.
-   * @returns {$data.DataContainer}
-   */
-  getNodeWrapped: function () {
-    return $data.DataContainer.create({data: this.getNode()});
-  },
-
-  /**
-   * Retrieves data node associated with the current entity, without
-   * triggering events.
-   * @returns {*}
-   */
-  getSilentNode: function () {
-    var entityPath = this.entityKey.getEntityPath();
-    return $entity.entities.getNode(entityPath);
-  },
-
-  /**
-   * Retrieves data node associated with the current entity, without
-   * triggering events, wrapped in a `DataContainer` instance.
-   * @returns {$data.DataContainer}
-   */
-  getSilentNodeWrapped: function () {
-    return $data.DataContainer.create({data: this.getSilentNode()});
-  },
-
-  /**
-   * Checks entity node and triggers appropriate events, but doesn't return
-   * the value.
-   * @returns {$entity.Entity}
-   */
-  touchNode: function () {
-    this.getNode();
-    return this;
-  },
-
-  /**
    * @param {$data.Tree} container
    * @param {$data.Query} leafNodeQuery
    * @returns {$data.Collection}
@@ -210,6 +155,61 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     .callOnEachValue('trigger');
 
     return $utils.Promise.when(promises.getValues());
+  },
+
+  /**
+   * Retrieves data node associated with the current entity.
+   * @returns {*}
+   */
+  getNode: function () {
+    var entityPath = this.entityKey.getEntityPath(),
+        node = $entity.entities.getNode(entityPath);
+
+    // todo Handling invalidated access
+
+    if (node === undefined) {
+      this.trigger($entity.EVENT_ENTITY_ABSENT);
+    }
+
+    return node;
+  },
+
+  /**
+   * Retrieves data node associated with the current entity, wrapped in a
+   * `DataContainer` instance.
+   * @returns {$data.DataContainer}
+   */
+  getNodeWrapped: function () {
+    return $data.DataContainer.create({data: this.getNode()});
+  },
+
+  /**
+   * Retrieves data node associated with the current entity, without
+   * triggering events.
+   * @returns {*}
+   */
+  getSilentNode: function () {
+    var entityPath = this.entityKey.getEntityPath();
+    return $entity.entities.getNode(entityPath);
+  },
+
+  /**
+   * Retrieves data node associated with the current entity, without
+   * triggering events, wrapped in a `DataContainer` instance.
+   * @returns {$data.DataContainer}
+   */
+  getSilentNodeWrapped: function () {
+    return $data.DataContainer.create({data: this.getSilentNode()});
+  },
+
+  /**
+   * Checks entity node and triggers appropriate events, but doesn't return
+   * the value.
+   * @returns {$entity.Entity}
+   */
+  touchNode: function () {
+    this.getNode();
+    return this;
   },
 
   /**
