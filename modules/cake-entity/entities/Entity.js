@@ -107,7 +107,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    * @returns {$data.Collection}
    * @private
    */
-  _groupPathsByParent: function (pathStrings, pathLookup) {
+  _groupPropertiesByParent: function (pathStrings, pathLookup) {
     return pathStrings.toStringCollection()
     .join(pathLookup)
     .mapValues(function (path) {
@@ -124,78 +124,123 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
-   * @param {*} node
-   * @returns {$entity.Entity}
-   * @todo Break down & compact
-   * @todo Separate branch for primitive before/after values
+   * Arranges paths into "added", "removed", and "changed" groups.
+   * @param {$data.Collection} pathLookupBefore
+   * @param {$data.Collection} pathLookupAfter
+   * @param {$data.Tree} entitiesBefore
+   * @param {$data.Tree} entitiesAfter
+   * @returns {{pathsAdded: $data.StringSet, pathsRemoved: $data.StringSet,
+   *     pathsChanged: $data.StringSet}}
+   * @private
    */
-  setNode: function (node) {
-    var nodeBefore = this.getSilentNode();
+  _groupPathsByChange: function (pathLookupBefore, pathLookupAfter, entitiesBefore, entitiesAfter) {
+    var pathsBefore = pathLookupBefore.getKeysWrapped().toStringSet(),
+        pathsAfter = pathLookupAfter.getKeysWrapped().toStringSet(),
+        pathsRemain = pathsAfter.intersectWith(pathsBefore);
 
-    if (node !== nodeBefore) {
-      var entityPath = this.entityKey.getEntityPath();
-      var entitiesBefore = $data.Tree.create().setNode(entityPath, nodeBefore);
-      var entitiesAfter = $data.Tree.create().setNode(entityPath, node);
-
-      // querying affected paths
-      var leafNodeQuery = $data.Query.fromComponents(
-          entityPath.clone().push('**').components);
-      var pathLookupBefore = this._extractPathLookup(entitiesBefore, leafNodeQuery);
-      var pathLookupAfter = this._extractPathLookup(entitiesAfter, leafNodeQuery);
-
-      // creating 3 sets: added, removed, changed
-      var pathsBefore = pathLookupBefore.getKeysWrapped().toStringSet();
-      var pathsAfter = pathLookupAfter.getKeysWrapped().toStringSet();
-      var pathsAdded = pathsAfter.subtract(pathsBefore);
-      var pathsRemoved = pathsAfter.subtractFrom(pathsBefore);
-      var pathsRemain = pathsAfter.intersectWith(pathsBefore);
-      var pathsChanged = pathsRemain.filter(function (pathString) {
+    return {
+      pathsAdded: pathsAfter.subtract(pathsBefore),
+      pathsRemoved: pathsAfter.subtractFrom(pathsBefore),
+      pathsChanged: pathsRemain.filter(function (pathString) {
         var path = pathLookupBefore.getValue(pathString) || pathLookupAfter.getValue(pathString);
         return entitiesBefore.getNode(path) !== entitiesAfter.getNode(path);
-      });
-      var propertiesRemoved = this._groupPathsByParent(pathsRemoved, pathLookupBefore);
-      var propertiesAdded = this._groupPathsByParent(pathsAdded, pathLookupAfter);
+      })
+    };
+  },
 
-      // setting node
-      $entity.entities.setNode(entityPath, node);
-
-      // building event property tree for triggering
-      // todo Add recurring properties separately
-      var eventProperties = $data.Tree.create();
+  /**
+   * Builds property sets for events to be triggered.
+   * @param {$data.Collection} [propertiesAdded]
+   * @param {$data.Collection} [propertiesRemoved]
+   * @param {$data.StringSet} [pathsChanged]
+   * @param {$data.Tree} entitiesBefore
+   * @param {$data.Tree} entitiesAfter
+   * @returns {$data.Tree}
+   * @private
+   */
+  _buildEventPropertyTree: function (propertiesAdded, propertiesRemoved, pathsChanged, entitiesBefore, entitiesAfter) {
+    var result = $data.Tree.create();
+    if (propertiesAdded) {
       propertiesAdded.forEachItem(function (propertiesAdded, pathString) {
-        eventProperties.appendNode($data.Path.fromComponents([pathString]), {
+        result.appendNode($data.Path.fromComponents([pathString]), {
           eventName: $entity.EVENT_ENTITY_CHANGE,
           entitiesBefore: entitiesBefore,
           entitiesAfter: entitiesAfter,
           propertiesAdded: propertiesAdded
         });
       });
+    }
+    if (propertiesRemoved) {
       propertiesRemoved.forEachItem(function (propertiesRemoved, pathString) {
-        eventProperties.appendNode($data.Path.fromComponents([pathString]), {
+        result.appendNode($data.Path.fromComponents([pathString]), {
           eventName: $entity.EVENT_ENTITY_CHANGE,
           entitiesBefore: entitiesBefore,
           entitiesAfter: entitiesAfter,
           propertiesRemoved: propertiesRemoved
         });
       });
+    }
+    if (pathsChanged) {
       pathsChanged.forEachItem(function (pathString) {
-        eventProperties.appendNode($data.Path.fromComponents([pathString]), {
+        result.appendNode($data.Path.fromComponents([pathString]), {
           eventName: $entity.EVENT_ENTITY_CHANGE,
           entitiesBefore: entitiesBefore,
           entitiesAfter: entitiesAfter
         });
       });
+    }
+    return result;
+  },
 
-      // triggering events
-      // todo Collect & aggregate promises
-      eventProperties.asCollection()
-      .forEachItem(function (eventProperties, pathString) {
-        $data.Path.fromString(pathString)
-        .toEntityKey()
-        .toEntity()
-        .spawnEvent(eventProperties)
-        .trigger();
-      });
+  /**
+   * Spawns and triggers events based on specified event properties.
+   * @param {$data.Tree} eventPropertyTree
+   * @returns {$utils.Promise}
+   * @private
+   */
+  _triggerEvents: function (eventPropertyTree) {
+    var promises = eventPropertyTree
+    .asCollection()
+    .mapValues(function (eventProperties, pathString) {
+      return $data.Path.fromString(pathString)
+      .toEntityKey()
+      .toEntity()
+      .spawnEvent(eventProperties);
+    })
+    .callOnEachValue('trigger');
+
+    return $utils.Promise.when(promises.getValues());
+  },
+
+  /**
+   * @param {*} node
+   * @returns {$entity.Entity}
+   * @todo Separate branch for primitive before/after values
+   */
+  setNode: function (node) {
+    var nodeBefore = this.getSilentNode();
+
+    if (node !== nodeBefore) {
+      $entity.entities.setNode(this.entityKey.getEntityPath(), node);
+
+      var entityPath = this.entityKey.getEntityPath(),
+          entitiesBefore = $data.Tree.create().setNode(entityPath, nodeBefore),
+          entitiesAfter = $data.Tree.create().setNode(entityPath, node),
+          leafNodeQuery = $data.Query.fromComponents(
+              entityPath.clone().push('**').components),
+          pathLookupBefore = this._extractPathLookup(entitiesBefore, leafNodeQuery),
+          pathLookupAfter = this._extractPathLookup(entitiesAfter, leafNodeQuery),
+          pathGroups = this._groupPathsByChange(
+              pathLookupBefore, pathLookupAfter, entitiesBefore, entitiesAfter),
+          propertiesRemoved = this._groupPropertiesByParent(
+              pathGroups.pathsRemoved, pathLookupBefore),
+          propertiesAdded = this._groupPropertiesByParent(
+              pathGroups.pathsAdded, pathLookupAfter),
+          eventPropertyTree = this._buildEventPropertyTree(propertiesAdded,
+              propertiesRemoved, pathGroups.pathsChanged, entitiesBefore,
+              entitiesAfter);
+
+      this._triggerEvents(eventPropertyTree);
     }
 
     return this;
@@ -210,20 +255,4 @@ $oop.getClass('$entity.EntityKey')
   toEntity: function () {
     return $entity.Entity.fromEntityKey(this);
   }
-});
-
-// todo Might need to move these to globals.js
-$oop.copyProperties($entity, /** @lends $entity */{
-  /**
-   * Signals a failed attempt to access the entity in the entity store.
-   * (Node was not there.)
-   * @constant
-   */
-  EVENT_ENTITY_ABSENT: 'entity.absent',
-
-  /**
-   * Signals changing the entity node.
-   * @constant
-   */
-  EVENT_ENTITY_CHANGE: 'entity.change'
 });

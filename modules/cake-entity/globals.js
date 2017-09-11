@@ -19,3 +19,18 @@ var $assert = require('cake-assert'),
 /**
  * @external String
  */
+
+$oop.copyProperties($entity, /** @lends $entity */{
+  /**
+   * Signals a failed attempt to access the entity in the entity store.
+   * (Node was not there.)
+   * @constant
+   */
+  EVENT_ENTITY_ABSENT: 'entity.absent',
+
+  /**
+   * Signals a change to the entity node.
+   * @constant
+   */
+  EVENT_ENTITY_CHANGE: 'entity.change'
+});
