@@ -35,6 +35,22 @@ describe("$entity", function () {
         expect(result).toBe(entityKey);
       });
     });
+
+    describe("getEntityKey()", function () {
+      describe("when created from Path", function () {
+        var entityPath;
+
+        beforeEach(function () {
+          entityPath = 'foo.bar'.toPath();
+          entityKey = EntityKey.fromEntityPath(entityPath);
+          result = entityKey.getEntityPath();
+        });
+
+        it("should return _entityPath", function () {
+          expect(result).toBe(entityPath);
+        });
+      });
+    });
   });
 });
 

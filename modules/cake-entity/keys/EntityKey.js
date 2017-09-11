@@ -25,20 +25,21 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
     return this.create({
       _entityPath: entityPath
     });
+  },
+
+  /**
+   * Retrieves a `Path` instance identifying the entity's data node in the
+   * entity store.
+   * @returns {$data.Path}
+   */
+  getEntityPath: function () {
+    return this._entityPath;
   }
 
   /**
    * Retrieves a key to the metadata associated with the entity class.
    * @function $entity.EntityKey#getMetaKey
    * @returns {$entity.DocumentKey}
-   * @abstract
-   */
-
-  /**
-   * Retrieves a `Path` instance identifying the entity's data node in the
-   * entity store.
-   * @function $entity.EntityKey#getEntityPath
-   * @returns {$data.Path}
    * @abstract
    */
 });
