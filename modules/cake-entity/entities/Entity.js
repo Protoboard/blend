@@ -106,5 +106,5 @@ $oop.copyProperties($entity, /** @lends $entity */{
    * (Node was not there.)
    * @constant
    */
-  EVENT_ENTITY_ABSENT: 'EVENT_ENTITY_ABSENT'
+  EVENT_ENTITY_ABSENT: 'entity.absent'
 });
