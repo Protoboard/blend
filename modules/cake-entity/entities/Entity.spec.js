@@ -58,7 +58,7 @@ describe("$entity", function () {
         });
 
         it("should trigger event", function () {
-          expect(entity.trigger).toHaveBeenCalledWith('EVENT_ENTITY_ABSENT');
+          expect(entity.trigger).toHaveBeenCalledWith('entity.absent');
         });
       });
     });
@@ -142,7 +142,7 @@ describe("$entity", function () {
         });
 
         it("should trigger event", function () {
-          expect(entity.trigger).toHaveBeenCalledWith('EVENT_ENTITY_ABSENT');
+          expect(entity.trigger).toHaveBeenCalledWith('entity.absent');
         });
       });
     });
@@ -196,6 +196,10 @@ describe("$entity", function () {
 
       afterEach(function () {
         $entity.entities.deletePath(documentKey.getEntityPath());
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(entity);
       });
 
       it("should set node in container", function () {
