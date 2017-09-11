@@ -28,7 +28,6 @@ $event.Event = $oop.getClass('$event.Event')
   /**
    * Identifies the application component (instance) that is responsible for
    * triggering the current event.
-   * @todo Should be mandatory on instantiation?
    * @member {*} $event.Event#sender
    */
 
@@ -159,32 +158,26 @@ $event.Event = $oop.getClass('$event.Event')
    * callbacks (synchronous or otherwise) have completed.
    * @returns {$utils.Promise}
    * @see $event.EventSpace#on
-   * @todo Refactor / simplify
    */
   trigger: function () {
-    if (this.sender === undefined) {
-      $assert.fail("Event sender is not defined. Can't trigger.");
-    }
-
-    var eventTrail = $event.EventTrail.create();
-
-    if (this.causingEvent === undefined && !eventTrail.isEmpty()) {
-      this.causingEvent = eventTrail.data.previousLink;
-    }
-
-    eventTrail.push(this);
-
-    var eventSpace = $event.EventSpace.create(),
+    var eventTrail = $event.EventTrail.create(),
+        eventSpace = $event.EventSpace.create(),
         eventName = this.eventName,
         targetPaths = this.targetPaths,
         targetPathCount = targetPaths.length,
-        targetPath,
+        i, targetPath,
         callbacksPath,
         callbacks,
         subscriberIds,
         callbackCount,
-        i, j,
+        j,
         results = [];
+
+    this.causingEvent = eventTrail.isEmpty() ?
+        undefined :
+        eventTrail.data.previousLink;
+
+    eventTrail.push(this);
 
     traversal:
         for (i = 0; i < targetPathCount; i++) {
