@@ -34,6 +34,27 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
+   * Extracts a node of affected properties reflecting the entity's current
+   * state.
+   * @param {Object} nodeAfter
+   * @returns {Object}
+   * @private
+   * @todo Need a faster way of filtering properties. (Collection#filterByKeys?)
+   */
+  _extractNodeBeforeForAppend: function (nodeAfter) {
+    var entityPath = this.entityKey.getEntityPath(),
+        affectedProperties = Object.keys(nodeAfter),
+        propertiesQuery = $data.Query.fromComponents(
+            entityPath.clone()
+            .push($data.QueryComponent.fromKeyOptions(affectedProperties))
+                .components);
+
+    return $entity.entities.queryKeyNodePairs(propertiesQuery)
+    .toCollection()
+        .data;
+  },
+
+  /**
    * @param {$data.Tree} container
    * @param {$data.Query} leafNodeQuery
    * @returns {$data.Collection}
@@ -258,9 +279,9 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
-   * Sets entity node in the container and triggers change event only for
-   * the current entity. Significantly faster than $entity.Entity#setNode,
-   * but will not notify affected child entities.
+   * Sets specified *primitive* node as new value for the current entity,
+   * and triggers change event for the current entity only. Primitive nodes
+   * are considered *non-object* nodes.
    * @param {*} node
    * @returns {$entity.Entity}
    */
@@ -276,8 +297,8 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
-   * Sets entity node in the container and triggers change events for all
-   * affected child entities.
+   * Sets specified node as new value for the current entity, and
+   * triggers change events for all affected child entities.
    * @param {*} node
    * @returns {$entity.Entity}
    * @todo Return promise?
@@ -301,6 +322,10 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
+   * Appends properties of the specified node to those of the current
+   * entity, and triggers change events for all affected child entities.
+   * Second degree children and beyond will be overwritten just like in
+   * $entity.Entity#setNode.
    * @param {Object} node
    * @returns {$entity.Entity}
    * @todo Return promise?
@@ -308,16 +333,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    */
   appendNode: function (node) {
     var entityPath = this.entityKey.getEntityPath(),
-        affectedProperties = Object.keys(node),
-        // todo Need a faster way of filtering properties.
-        // (Collection#filterByKeys?)
-        propertiesQuery = $data.Query.fromComponents(
-            entityPath.clone()
-            .push($data.QueryComponent.fromKeyOptions(affectedProperties))
-                .components),
-        nodeBefore = $entity.entities
-        .queryKeyNodePairs(propertiesQuery)
-        .toCollection().data;
+        nodeBefore = this._extractNodeBeforeForAppend(node);
 
     $entity.entities.appendNode(entityPath, node);
     this._triggerEntityChangeEvents(nodeBefore, node);
