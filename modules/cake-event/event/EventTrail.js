@@ -1,8 +1,7 @@
 "use strict";
 
 /**
- * @function $event.EventTrail#create
- * @param {string} eventName
+ * @function $event.EventTrail.create
  * @returns {$event.EventTrail}
  */
 
@@ -11,6 +10,7 @@
  * internally, except when handling outside events. (Events not based on
  * `$event.Event`.) For an example, see {@link $event.WrapperEvent}.
  * @class $event.EventTrail
+ * @mixes $oop.Singleton
  * @extends $data.Chain
  */
 $event.EventTrail = $oop.getClass('$event.EventTrail')
