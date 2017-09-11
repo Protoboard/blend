@@ -213,6 +213,33 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
+   * Sets entity node in the container and triggers change event only for
+   * the current entity. Significantly faster than $entity.Entity#setNode,
+   * but will not notify affected child entities.
+   * @param {*} node
+   * @returns {$entity.Entity}
+   * @todo Find a better name
+   */
+  setNodeLight: function (node) {
+    var nodeBefore = this.getSilentNode();
+
+    if (node !== nodeBefore) {
+      $entity.entities.setNode(this.entityKey.getEntityPath(), node);
+
+      this.spawnEvent({
+        eventName: $entity.EVENT_ENTITY_CHANGE,
+        _nodeBefore: nodeBefore,
+        _nodeAfter: node
+      })
+      .trigger();
+    }
+
+    return this;
+  },
+
+  /**
+   * Sets entity node in the container and triggers change events for all
+   * affected child entities.
    * @param {*} node
    * @returns {$entity.Entity}
    * @todo Separate branch for primitive before/after values

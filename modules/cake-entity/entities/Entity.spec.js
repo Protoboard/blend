@@ -147,6 +147,44 @@ describe("$entity", function () {
       });
     });
 
+    describe("setNodeLight", function () {
+      var documentKey,
+          documentPath,
+          triggeredEvent,
+          nodeBefore,
+          nodeAfter;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        documentPath = documentKey.getEntityPath();
+        nodeBefore = {};
+        nodeAfter = {};
+
+        spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
+          triggeredEvent = this;
+          return $utils.Deferred.create().promise;
+        });
+        $entity.entities.setNode(documentPath, nodeBefore);
+
+        result = entity.setNodeLight(nodeAfter);
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(entity);
+      });
+
+      it("should set node in container", function () {
+        expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+      });
+
+      it("should trigger change event", function () {
+        expect(triggeredEvent.eventName).toEqual($entity.EVENT_ENTITY_CHANGE);
+        expect(triggeredEvent.sender).toEqual(entity);
+        expect(triggeredEvent.getNodeBefore()).toBe(nodeBefore);
+        expect(triggeredEvent.getNodeAfter()).toBe(nodeAfter);
+      });
+    });
+
     describe("setNode()", function () {
       var documentKey,
           documentPath,
@@ -189,7 +227,7 @@ describe("$entity", function () {
           triggeredEvents.push(this);
           return $utils.Deferred.create().promise;
         });
-        $entity.entities.setNode(documentKey.getEntityPath(), nodeBefore);
+        $entity.entities.setNode(documentPath, nodeBefore);
 
         result = entity.setNode(nodeAfter);
       });
@@ -203,19 +241,7 @@ describe("$entity", function () {
       });
 
       it("should set node in container", function () {
-        expect($entity.entities.getNode(documentPath)).toEqual({
-          "id": "X999_Y999",
-          "from": "user/X12",
-          "message": "Looking forward to 2011!",
-          "actions": {
-            "comment/0": 0,
-            "like/0": 1,
-            "like/3": 2
-          },
-          "type": "status",
-          "created_time": "2010-08-02T21:27:44+0000",
-          "updated_time": "2010-08-02T22:00:00+0000"
-        });
+        expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
       });
 
       it("should trigger change events", function () {
@@ -229,8 +255,17 @@ describe("$entity", function () {
         expect(triggeredEvents[0].eventName)
         .toEqual($entity.EVENT_ENTITY_CHANGE);
         expect(triggeredEvents[0].sender).toEqual(document.getField('actions'));
-        expect(triggeredEvents[0].entitiesBefore).toEqual(entitiesBefore);
-        expect(triggeredEvents[0].entitiesAfter).toEqual(entitiesAfter);
+        expect(triggeredEvents[0].getNodeBefore()).toEqual({
+          "comment/0": 0,
+          "like/0": 1,
+          "like/1": 2,
+          "like/2": 3
+        });
+        expect(triggeredEvents[0].getNodeAfter()).toEqual({
+          "comment/0": 0,
+          "like/0": 1,
+          "like/3": 2
+        });
         expect(triggeredEvents[0].propertiesAdded).toEqual(["like/3"]);
         expect(triggeredEvents[0].propertiesRemoved)
         .toEqual(["like/1", "like/2"]);
@@ -238,22 +273,24 @@ describe("$entity", function () {
         expect(triggeredEvents[1].eventName)
         .toEqual($entity.EVENT_ENTITY_CHANGE);
         expect(triggeredEvents[1].sender).toEqual(document);
-        expect(triggeredEvents[1].entitiesBefore).toEqual(entitiesBefore);
-        expect(triggeredEvents[1].entitiesAfter).toEqual(entitiesAfter);
+        expect(triggeredEvents[1].getNodeBefore()).toBe(nodeBefore);
+        expect(triggeredEvents[1].getNodeAfter()).toBe(nodeAfter);
         expect(triggeredEvents[1].propertiesAdded).toEqual(["updated_time"]);
 
         expect(triggeredEvents[2].eventName)
         .toEqual($entity.EVENT_ENTITY_CHANGE);
         expect(triggeredEvents[2].sender).toEqual(document.getField('message'));
-        expect(triggeredEvents[2].entitiesBefore).toEqual(entitiesBefore);
-        expect(triggeredEvents[2].entitiesAfter).toEqual(entitiesAfter);
+        expect(triggeredEvents[2].getNodeBefore())
+        .toEqual("Looking forward to 2010!");
+        expect(triggeredEvents[2].getNodeAfter())
+        .toEqual("Looking forward to 2011!");
       });
     });
 
     describe("appendNode()", function () {
     });
 
-    describe("unsetNode()", function () {
+    describe("deleteNode()", function () {
     });
   });
 
