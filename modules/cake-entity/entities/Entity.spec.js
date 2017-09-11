@@ -532,6 +532,90 @@ describe("$entity", function () {
     });
 
     describe("deleteNode()", function () {
+      var documentKey,
+          documentPath,
+          triggeredEvents,
+          nodeBefore,
+          nodeToAppend;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        documentPath = documentKey.getEntityPath();
+        triggeredEvents = [];
+        nodeBefore = {
+          "id": "X999_Y999",
+          "from": "user/X12",
+          "message": "Looking forward to 2010!",
+          "actions": {
+            "comment/0": 0,
+            "like/0": 1,
+            "like/1": 2,
+            "like/2": 3
+          },
+          "type": "status",
+          "created_time": "2010-08-02T21:27:44+0000"
+        };
+
+        spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
+          triggeredEvents.push(this);
+          return $utils.Deferred.create().promise;
+        });
+        $entity.entities.setNode(documentPath, nodeBefore);
+
+        result = entity.deleteNode();
+      });
+
+      afterEach(function () {
+        $entity.entities.deletePath(documentKey.getEntityPath());
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(entity);
+      });
+
+      it("should delete node in container", function () {
+        expect($entity.entities.getNode(documentPath)).toBeUndefined();
+      });
+
+      it("should trigger change events", function () {
+        var document = documentKey.toDocument();
+
+        // todo Does this make sense? Revisit Object <-> primitive changes.
+        expect(triggeredEvents[0].eventName)
+        .toEqual($entity.EVENT_ENTITY_CHANGE);
+        expect(triggeredEvents[0].sender)
+        .toEqual('document.foo'.toPath().toEntityKey().toEntity());
+        expect(triggeredEvents[0].getNodeBefore()).toEqual({
+          bar: nodeBefore
+        });
+        expect(triggeredEvents[0].getNodeAfter()).toEqual({
+          bar: undefined
+        });
+        expect(triggeredEvents[0].propertiesAdded).toEqual(["bar"]);
+
+        expect(triggeredEvents[1].eventName)
+        .toEqual($entity.EVENT_ENTITY_CHANGE);
+        expect(triggeredEvents[1].sender).toEqual(document);
+        expect(triggeredEvents[1].getNodeBefore()).toBe(nodeBefore);
+        expect(triggeredEvents[1].getNodeAfter()).toBeUndefined();
+        expect(triggeredEvents[1].propertiesRemoved).toEqual([
+          'id', 'from', 'message', 'type', 'created_time']);
+
+        expect(triggeredEvents[2].eventName)
+        .toEqual($entity.EVENT_ENTITY_CHANGE);
+        expect(triggeredEvents[2].sender)
+        .toEqual(document.getField('actions'));
+        expect(triggeredEvents[2].getNodeBefore())
+        .toEqual({
+          "comment/0": 0,
+          "like/0": 1,
+          "like/1": 2,
+          "like/2": 3
+        });
+        expect(triggeredEvents[2].getNodeAfter()).toBeUndefined();
+        expect(triggeredEvents[2].propertiesRemoved).toEqual([
+          'comment/0', 'like/0', 'like/1', 'like/2']);
+      });
     });
   });
 

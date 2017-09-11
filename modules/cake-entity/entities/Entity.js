@@ -339,6 +339,21 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     this._triggerEntityChangeEvents(nodeBefore, node);
 
     return this;
+  },
+
+  /**
+   * @returns {$entity.Entity}
+   * @todo Return promise?
+   */
+  deleteNode: function () {
+    var nodeBefore = this.getSilentNode();
+
+    if (nodeBefore !== undefined) {
+      $entity.entities.deleteNode(this.entityKey.getEntityPath());
+      this._triggerEntityChangeEvents(nodeBefore, undefined);
+    }
+
+    return this;
   }
 });
 
