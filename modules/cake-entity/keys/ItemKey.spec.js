@@ -126,12 +126,12 @@ describe("$entity", function () {
         result = itemKey.getMetaKey();
       });
 
-      it("should return a MetaKey", function () {
-        expect($entity.MetaKey.mixedBy(result)).toBeTruthy();
+      it("should return an AttributeDocumentKey", function () {
+        expect($entity.AttributeDocumentKey.mixedBy(result)).toBeTruthy();
       });
 
       it("should return meta key to the item", function () {
-        expect(result.equals($entity.MetaKey.fromString('__item/foo\\/baz')))
+        expect(result.equals($entity.DocumentKey.fromString('__item/foo\\/baz')))
         .toBeTruthy();
       });
     });
@@ -158,7 +158,7 @@ describe("$entity", function () {
       var metaKey;
 
       beforeEach(function () {
-        metaKey = $entity.MetaKey.fromMetaComponents(
+        metaKey = $entity.AttributeDocumentKey.fromMetaComponents(
             '__item', ['user', 'friends']);
         $entity.entities.setNode(metaKey.getEntityPath(), {
           itemType: 'foo',
@@ -181,7 +181,7 @@ describe("$entity", function () {
       var metaKey;
 
       beforeEach(function () {
-        metaKey = $entity.MetaKey.fromMetaComponents(
+        metaKey = $entity.AttributeDocumentKey.fromMetaComponents(
             '__item', ['user', 'friends']);
         $entity.entities.setNode(metaKey.getEntityPath(), {
           itemType: 'foo',
