@@ -111,7 +111,7 @@ describe("$entity", function () {
         });
 
         it("should mix CachedStringifiable into instance", function () {
-          expect($entity.CachedStringifiable.mixedBy(itemKey)).toBeTruthy();
+          expect($utils.CachedStringifiable.mixedBy(itemKey)).toBeTruthy();
         });
       });
     });

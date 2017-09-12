@@ -1,18 +1,18 @@
 "use strict";
 
 var $oop = window['cake-oop'],
-    $entity = window['cake-entity'];
+    $utils = window['cake-entity'];
 
-describe("$entity", function () {
+describe("$utils", function () {
   describe("CachedStringifiable", function () {
     var MetaKey,
         metaKey,
         result;
 
     beforeEach(function () {
-      MetaKey = $oop.getClass('test.$entity.CachedStringifiable.CachedStringifiable')
+      MetaKey = $oop.getClass('test.$utils.CachedStringifiable.CachedStringifiable')
       .implement($utils.Stringifiable)
-      .mix($entity.CachedStringifiable)
+      .mix($utils.CachedStringifiable)
       .define({
         toString: function () {
           return this.foo;
