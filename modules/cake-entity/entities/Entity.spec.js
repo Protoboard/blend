@@ -535,8 +535,7 @@ describe("$entity", function () {
       var documentKey,
           documentPath,
           triggeredEvents,
-          nodeBefore,
-          nodeToAppend;
+          nodeBefore;
 
       beforeEach(function () {
         documentKey = 'foo/bar'.toDocumentKey();
