@@ -12,16 +12,13 @@
  * @class $entity.Entity
  * @extends $event.EventSender
  * @extends $event.EventListener
+ * @extends $entity.EntityKeyHost
  */
 $entity.Entity = $oop.getClass('$entity.Entity')
 .mix($event.EventSender)
 .mix($event.EventListener)
+.mix($oop.getClass('$entity.EntityKeyHost'))
 .define(/** @lends $entity.Entity# */{
-  /**
-   * Identifies entity in the entity store.
-   * @member {$entity.EntityKey} $entity.Entity#entityKey
-   */
-
   /**
    * @memberOf $entity.Entity
    * @param {$entity.EntityKey} entityKey
