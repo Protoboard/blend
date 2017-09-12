@@ -13,9 +13,9 @@ describe("$entity", function () {
       .mix($entity.AttributeDocumentKey);
     });
 
-    describe("fromMetaComponents()", function () {
+    describe("fromDocumentIdComponents()", function () {
       it("should join documentId components", function () {
-        expect(AttributeDocumentKey.fromMetaComponents('foo', ['bar', 'baz',
+        expect(AttributeDocumentKey.fromDocumentIdComponents('foo', ['bar', 'baz',
           'quux']))
         .toEqual(['foo', 'bar/baz/quux'].toDocumentKey());
       });

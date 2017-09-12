@@ -87,7 +87,7 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
    * @returns {$entity.DocumentKey}
    */
   getMetaKey: function () {
-    return $entity.AttributeDocumentKey.fromMetaComponents(
+    return $entity.AttributeDocumentKey.fromDocumentIdComponents(
         '__document', [this.documentType]);
   },
 

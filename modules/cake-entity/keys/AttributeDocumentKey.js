@@ -23,9 +23,8 @@ $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
    * @param {string} documentType
    * @param {Array.<string>} components
    * @returns {$entity.AttributeDocumentKey}
-   * @todo Rename to someting like 'fromDocumentIdComponents'
    */
-  fromMetaComponents: function (documentType, components) {
+  fromDocumentIdComponents: function (documentType, components) {
     return this.create({
       documentType: documentType,
       documentId: components

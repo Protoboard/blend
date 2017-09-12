@@ -98,7 +98,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
     // todo Revisit whether separate meta document for item is a good idea.
     // (Vs. going together with field)
     var fieldKey = this.fieldKey;
-    return $entity.AttributeDocumentKey.fromMetaComponents('__item', [
+    return $entity.AttributeDocumentKey.fromDocumentIdComponents('__item', [
       fieldKey.documentKey.documentType,
       fieldKey.fieldName
     ]);

@@ -56,7 +56,7 @@ describe("$entity", function () {
       var metaFieldKey;
 
       beforeEach(function () {
-        metaFieldKey = $entity.AttributeDocumentKey.fromMetaComponents(
+        metaFieldKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__field', ['user', 'name']).getFieldKey('foo');
         $entity.entities.setNode(metaFieldKey.getEntityPath(), 'bar');
 

@@ -90,7 +90,7 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    * @returns {$entity.DocumentKey}
    */
   getMetaKey: function () {
-    return $entity.AttributeDocumentKey.fromMetaComponents('__field', [
+    return $entity.AttributeDocumentKey.fromDocumentIdComponents('__field', [
       this.documentKey.documentType,
       this.fieldName
     ]);

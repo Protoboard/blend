@@ -171,7 +171,7 @@ describe("$entity", function () {
       var metaKey;
 
       beforeEach(function () {
-        metaKey = $entity.AttributeDocumentKey.fromMetaComponents(
+        metaKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__item', ['user', 'friends']);
         $entity.entities.setNode(metaKey.getEntityPath(), {
           itemType: 'foo',
@@ -194,7 +194,7 @@ describe("$entity", function () {
       var metaKey;
 
       beforeEach(function () {
-        metaKey = $entity.AttributeDocumentKey.fromMetaComponents(
+        metaKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__item', ['user', 'friends']);
         $entity.entities.setNode(metaKey.getEntityPath(), {
           itemType: 'foo',
