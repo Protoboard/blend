@@ -12,17 +12,17 @@
  * Identifies an attribute document entity.
  * @class $entity.AttributeDocumentKey
  * @extends $entity.DocumentKey
- * @mixes $entity.MetaKey
+ * @mixes $entity.CachedStringifiable
  */
 $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
 .mix($oop.getClass('$entity.DocumentKey'))
-.mix($oop.getClass('$entity.MetaKey'))
+.mix($oop.getClass('$entity.CachedStringifiable'))
 .define(/** @lends $entity.AttributeDocumentKey# */{
   /**
    * @memberOf $entity.AttributeDocumentKey
    * @param {string} documentType
    * @param {Array.<string>} components
-   * @returns {$entity.MetaKey}
+   * @returns {$entity.CachedStringifiable}
    */
   fromMetaComponents: function (documentType, components) {
     return this.create({

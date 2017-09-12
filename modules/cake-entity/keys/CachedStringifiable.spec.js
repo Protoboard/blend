@@ -4,15 +4,15 @@ var $oop = window['cake-oop'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
-  describe("MetaKey", function () {
+  describe("CachedStringifiable", function () {
     var MetaKey,
         metaKey,
         result;
 
     beforeEach(function () {
-      MetaKey = $oop.getClass('test.$entity.MetaKey.MetaKey')
-      .mix($entity.EntityKey)
-      .mix($entity.MetaKey)
+      MetaKey = $oop.getClass('test.$entity.CachedStringifiable.CachedStringifiable')
+      .implement($utils.Stringifiable)
+      .mix($entity.CachedStringifiable)
       .define({
         toString: function () {
           return this.foo;

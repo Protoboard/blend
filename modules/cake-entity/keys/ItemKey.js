@@ -158,8 +158,8 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
 });
 
 $entity.ItemKey
-.forwardTo($oop.mixClass($entity.ItemKey, $oop.getClass('$entity.MetaKey')), function (properties) {
-  return $entity.MetaKey.mixedBy(properties.fieldKey);
+.forwardTo($oop.mixClass($entity.ItemKey, $oop.getClass('$entity.CachedStringifiable')), function (properties) {
+  return $entity.CachedStringifiable.mixedBy(properties.fieldKey);
 });
 
 $oop.getClass('$entity.EntityKey')

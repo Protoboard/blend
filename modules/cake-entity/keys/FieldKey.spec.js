@@ -110,8 +110,8 @@ describe("$entity", function () {
           });
         });
 
-        it("should mix MetaKey into instance", function () {
-          expect($entity.MetaKey.mixedBy(fieldKey)).toBeTruthy();
+        it("should mix CachedStringifiable into instance", function () {
+          expect($entity.CachedStringifiable.mixedBy(fieldKey)).toBeTruthy();
         });
       });
     });
