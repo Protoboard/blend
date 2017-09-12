@@ -152,8 +152,8 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
 });
 
 $entity.FieldKey
-.forwardTo($oop.mixClass($entity.FieldKey, $oop.getClass('$utils.CachedStringifiable')), function (properties) {
-  return $utils.CachedStringifiable.mixedBy(properties.documentKey);
+.forwardTo($oop.mixClass($entity.FieldKey, $oop.getClass('$utils.StringifyCached')), function (properties) {
+  return $utils.StringifyCached.mixedBy(properties.documentKey);
 });
 
 $oop.getClass('$entity.EntityKey')

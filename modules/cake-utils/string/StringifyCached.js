@@ -3,10 +3,9 @@
 /**
  * Caches the host class' instances by their stringified versions. Host must
  * implement {@link $utils.Stringifiable}.
- * @mixin $utils.CachedStringifiable
- * @todo Rename to StringifyCached
+ * @mixin $utils.StringifyCached
  */
-$utils.CachedStringifiable = $oop.getClass('$utils.CachedStringifiable')
+$utils.StringifyCached = $oop.getClass('$utils.StringifyCached')
 .cache(function (properties) {
   return this.toString.call(properties);
 });

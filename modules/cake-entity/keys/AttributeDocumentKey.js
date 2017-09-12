@@ -12,11 +12,11 @@
  * Identifies an attribute document entity.
  * @class $entity.AttributeDocumentKey
  * @extends $entity.DocumentKey
- * @mixes $utils.CachedStringifiable
+ * @mixes $utils.StringifyCached
  */
 $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
 .mix($oop.getClass('$entity.DocumentKey'))
-.mix($oop.getClass('$utils.CachedStringifiable'))
+.mix($oop.getClass('$utils.StringifyCached'))
 .define(/** @lends $entity.AttributeDocumentKey# */{
   /**
    * @memberOf $entity.AttributeDocumentKey

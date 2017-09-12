@@ -4,15 +4,15 @@ var $oop = window['cake-oop'],
     $utils = window['cake-utils'];
 
 describe("$utils", function () {
-  describe("CachedStringifiable", function () {
+  describe("StringifyCached", function () {
     var CachedStringifiable,
         cachedStringifiable,
         result;
 
     beforeEach(function () {
-      CachedStringifiable = $oop.getClass('test.$utils.CachedStringifiable.CachedStringifiable')
+      CachedStringifiable = $oop.getClass('test.$utils.StringifyCached.StringifyCached')
       .implement($utils.Stringifiable)
-      .mix($utils.CachedStringifiable)
+      .mix($utils.StringifyCached)
       .define({
         toString: function () {
           return this.foo;
