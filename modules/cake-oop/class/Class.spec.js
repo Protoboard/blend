@@ -1249,11 +1249,19 @@ describe("$oop", function () {
       });
 
       describe("of cached class", function () {
+        var context;
+
         beforeEach(function () {
           Class.cache(function (args) {
+            context = this;
             return args.foo && // return undefined when args.foo is undefined
                 '_' + args.foo; // otherwise a prefixed version of it
           });
+        });
+
+        it("should pass class to mapper as context", function () {
+          instance = Class.create({foo: 'foo'});
+          expect(context).toBe(Class);
         });
 
         describe("when instance is not cached yet", function () {

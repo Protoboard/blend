@@ -843,7 +843,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         instanceId, instance;
     if (mapper) {
       instances = that.__instanceLookup;
-      instanceId = mapper(properties);
+      instanceId = mapper.call(that, properties);
       instance = instances[instanceId];
       if (instance) {
         // instance found in cache
