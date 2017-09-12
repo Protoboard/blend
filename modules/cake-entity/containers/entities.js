@@ -13,15 +13,51 @@
  */
 $entity.entities = $data.Tree.fromData({
   document: {
-    /** Document-descriptor metadata documents. */
+    /** Document attribute documents. */
     __document: {
       //user: {
       //  documentType: 'user'
       //}
     },
 
-    /** Field-descriptor metadata documents. */
+    /** Field attribute documents. */
     __field: {
+      '__document/documentType': {
+        fieldType: 'primitive'
+      },
+
+      '__field/fieldType': {
+        fieldType: 'primitive',
+        options: {
+          primitive: 1, // default
+          reference: 1,
+          collection: 1
+        }
+      },
+      '__field/options': {
+        fieldType: 'collection'
+      },
+
+      '__item/itemType': {
+        fieldType: 'primitive',
+        options: {
+          primitive: 1, // default
+          reference: 1,
+          order: 1
+        }
+      },
+      '__item/itemIdType': {
+        fieldType: 'primitive',
+        options: {
+          primitive: 1, // default
+          reference: 1,
+          order: 1
+        }
+      },
+      '__item/options': {
+        fieldType: 'collection'
+      }
+
       //'user/name': {
       //  /** Field contains string */
       //  fieldType: 'string'
@@ -36,7 +72,7 @@ $entity.entities = $data.Tree.fromData({
       //}
     },
 
-    /** Item-descriptor metadata documents. */
+    /** Item attribute documents. */
     __item: {
       //'user/emails': {
       //  /** Items are strings */
