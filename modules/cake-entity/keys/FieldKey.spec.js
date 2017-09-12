@@ -101,6 +101,19 @@ describe("$entity", function () {
           expect(fieldKey.fieldName).toBe('baz');
         });
       });
+
+      describe("when documentType is static", function () {
+        beforeEach(function () {
+          fieldKey = $entity.FieldKey.create({
+            documentKey: '__foo/bar'.toDocumentKey(),
+            fieldName: 'baz'
+          });
+        });
+
+        it("should mix MetaKey into instance", function () {
+          expect($entity.MetaKey.mixedBy(fieldKey)).toBeTruthy();
+        });
+      });
     });
 
     describe("equals()", function () {

@@ -157,6 +157,11 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   }
 });
 
+$entity.ItemKey
+.forwardTo($oop.mixClass($entity.ItemKey, $oop.getClass('$entity.MetaKey')), function (properties) {
+  return $entity.MetaKey.mixedBy(properties.fieldKey);
+});
+
 $oop.getClass('$entity.EntityKey')
 .forwardTo($entity.ItemKey, function (properties) {
   var entityPath = properties._entityPath,

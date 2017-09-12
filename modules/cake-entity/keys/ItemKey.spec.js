@@ -101,6 +101,19 @@ describe("$entity", function () {
           expect(itemKey.itemId).toBe('quux');
         });
       });
+
+      describe("when documentType is static", function () {
+        beforeEach(function () {
+          itemKey = $entity.ItemKey.create({
+            fieldKey: '__foo/bar/baz'.toFieldKey(),
+            itemId: 'quux'
+          });
+        });
+
+        it("should mix MetaKey into instance", function () {
+          expect($entity.MetaKey.mixedBy(itemKey)).toBeTruthy();
+        });
+      });
     });
 
     describe("equals()", function () {

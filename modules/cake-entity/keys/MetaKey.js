@@ -8,7 +8,7 @@
 /**
  * @mixin $entity.MetaKey
  * @augments $entity.EntityKey
- * @todo Rename to StaticKey / StaticEntityKey
+ * @todo Remove EntityKey dependency, rename to StringCached and move to $utils
  */
 $entity.MetaKey = $oop.getClass('$entity.MetaKey')
 .cache(function (properties) {
