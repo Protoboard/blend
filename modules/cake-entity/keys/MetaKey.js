@@ -8,6 +8,7 @@
 /**
  * @class $entity.MetaKey
  * @extends $entity.DocumentKey
+ * @todo Convert into mixin, add to meta versions of all keys
  */
 $entity.MetaKey = $oop.getClass('$entity.MetaKey')
 .cache(function (properties) {

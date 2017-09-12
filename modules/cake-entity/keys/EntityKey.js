@@ -34,6 +34,16 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    */
   getEntityPath: function () {
     return this._entityPath;
+  },
+
+  /**
+   * Retrieves a static attribute associated with the current entity.
+   * @param {string} propertyName
+   * @returns {string}
+   */
+  getAttribute: function (propertyName) {
+    var metaFieldKey = this.getMetaKey().getFieldKey(propertyName);
+    return $entity.entities.getNode(metaFieldKey.getEntityPath());
   }
 
   /**

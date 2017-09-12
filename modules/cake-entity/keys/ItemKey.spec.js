@@ -106,14 +106,16 @@ describe("$entity", function () {
     describe("equals()", function () {
       describe("for matching keys", function () {
         it("should return true", function () {
-          expect('foo/bar/baz/quux'.toItemKey().equals('foo/bar/baz/quux'.toItemKey()))
+          expect('foo/bar/baz/quux'.toItemKey()
+          .equals('foo/bar/baz/quux'.toItemKey()))
           .toBe(true);
         });
       });
 
       describe("for non-matching keys", function () {
         it("should return false", function () {
-          expect('foo/bar/baz/quux'.toItemKey().equals('bar/baz/quux/foo'.toItemKey()))
+          expect('foo/bar/baz/quux'.toItemKey()
+          .equals('bar/baz/quux/foo'.toItemKey()))
           .toBe(false);
         });
       });
@@ -149,6 +151,52 @@ describe("$entity", function () {
 
       it("should set _entityPath property", function () {
         expect(itemKey._entityPath).toBe(result);
+      });
+    });
+
+    describe("getItemType()", function () {
+      var metaKey;
+
+      beforeEach(function () {
+        metaKey = $entity.MetaKey.fromMetaComponents(
+            '__item', ['user', 'friends']);
+        $entity.entities.setNode(metaKey.getEntityPath(), {
+          itemType: 'foo',
+          itemIdType: 'bar'
+        });
+
+        result = 'user/1/friends/Joe'.toItemKey().getItemType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(metaKey.getEntityPath());
+      });
+
+      it("should retrieve itemType metadata", function () {
+        expect(result).toBe('foo');
+      });
+    });
+
+    describe("getItemIdType()", function () {
+      var metaKey;
+
+      beforeEach(function () {
+        metaKey = $entity.MetaKey.fromMetaComponents(
+            '__item', ['user', 'friends']);
+        $entity.entities.setNode(metaKey.getEntityPath(), {
+          itemType: 'foo',
+          itemIdType: 'bar'
+        });
+
+        result = 'user/1/friends/Joe'.toItemKey().getItemIdType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(metaKey.getEntityPath());
+      });
+
+      it("should retrieve itemType metadata", function () {
+        expect(result).toBe('bar');
       });
     });
 

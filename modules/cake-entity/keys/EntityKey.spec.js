@@ -36,7 +36,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getEntityKey()", function () {
+    describe("getEntityPath()", function () {
       describe("when created from Path", function () {
         var entityPath;
 
@@ -49,6 +49,26 @@ describe("$entity", function () {
         it("should return _entityPath", function () {
           expect(result).toBe(entityPath);
         });
+      });
+    });
+
+    describe("getAttribute()", function () {
+      var metaFieldKey;
+
+      beforeEach(function () {
+        metaFieldKey = $entity.MetaKey.fromMetaComponents(
+            '__field', ['user', 'name']).getFieldKey('foo');
+        $entity.entities.setNode(metaFieldKey.getEntityPath(), 'bar');
+
+        result = 'user/1/name'.toFieldKey().getAttribute('foo');
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(metaFieldKey.getEntityPath());
+      });
+
+      it("should retrieve fieldType metadata", function () {
+        expect(result).toBe('bar');
       });
     });
   });

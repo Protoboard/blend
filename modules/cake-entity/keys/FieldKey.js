@@ -127,6 +127,14 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   },
 
   /**
+   * Retrieves *value type* attribute for the current field entity.
+   * @returns {string}
+   */
+  getFieldType: function () {
+    return this.getAttribute('fieldType');
+  },
+
+  /**
    * Serializes current field key.
    * @example
    * $entity.FieldKey.fromComponents('user', '1234', 'name').toString()

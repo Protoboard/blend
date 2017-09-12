@@ -123,6 +123,22 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   },
 
   /**
+   * Retrieves *value type* attribute for the current item entity.
+   * @returns {string}
+   */
+  getItemType: function () {
+    return this.getAttribute('itemType');
+  },
+
+  /**
+   * Retrieves *key type* attribute for the current item entity.
+   * @returns {string}
+   */
+  getItemIdType: function () {
+    return this.getAttribute('itemIdType');
+  },
+
+  /**
    * Serializes current field key.
    * @example
    * $entity.ItemKey.fromComponents('user', '1234', 'name').toString()

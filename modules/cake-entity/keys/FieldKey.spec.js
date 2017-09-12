@@ -168,6 +168,26 @@ describe("$entity", function () {
       });
     });
 
+    describe("getFieldType()", function () {
+      var metaKey;
+
+      beforeEach(function () {
+        metaKey = $entity.MetaKey.fromMetaComponents(
+            '__field', ['user', 'name']).getFieldKey('fieldType');
+        $entity.entities.setNode(metaKey.getEntityPath(), 'foo');
+
+        result = 'user/1/name'.toFieldKey().getFieldType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(metaKey.getEntityPath());
+      });
+
+      it("should retrieve fieldType metadata", function () {
+        expect(result).toBe('foo');
+      });
+    });
+
     describe("toString()", function () {
       it("should return string representation", function () {
         expect(fieldKey.toString()).toBe('foo/bar/baz');
