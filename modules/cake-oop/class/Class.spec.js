@@ -1251,7 +1251,8 @@ describe("$oop", function () {
       describe("of cached class", function () {
         beforeEach(function () {
           Class.cache(function (args) {
-            return '_' + args.foo;
+            return args.foo && // return undefined when args.foo is undefined
+                '_' + args.foo; // otherwise a prefixed version of it
           });
         });
 
@@ -1261,6 +1262,13 @@ describe("$oop", function () {
             expect(Class.__instanceLookup).toEqual({
               '_foo': instance
             });
+          });
+        });
+
+        describe("when instance does not satisfy mapper", function () {
+          it("should not store new instance in cache", function () {
+            instance = Class.create({foo: undefined});
+            expect(Class.__instanceLookup).toEqual({});
           });
         });
 

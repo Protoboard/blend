@@ -914,7 +914,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     }
 
     // caching instance (if necessary)
-    if (mapper) {
+    if (instanceId !== undefined) {
       instances[instanceId] = instance;
     }
 
