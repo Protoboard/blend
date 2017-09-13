@@ -10,7 +10,7 @@
  *     $entity.AttributeDocumentKey.fromDocumentIdComponents('__field',
  *     ['user', 'gender']);
  * $entity.entities.appendNode(attributeDocumentKey.getEntityPath(), {
- *   fieldType: 'string'
+ *   fieldType: 'primitive'
  * });
  */
 $entity.entities = $data.Tree.fromData({
@@ -61,8 +61,8 @@ $entity.entities = $data.Tree.fromData({
       }
 
       //'user/name': {
-      //  /** Field contains string */
-      //  fieldType: 'string'
+      //  /** Field contains primitive */
+      //  fieldType: 'primitive'
       //},
       //'user/emails': {
       //  /** Field contains collection */
@@ -78,7 +78,7 @@ $entity.entities = $data.Tree.fromData({
     __item: {
       //'user/emails': {
       //  /** Items are strings */
-      //  itemType: 'string'
+      //  itemType: 'primitive'
       //},
       //'user/friends': {
       //  /** Items are booleans */
