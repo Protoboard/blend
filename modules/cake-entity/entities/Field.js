@@ -42,17 +42,19 @@ $entity.Field = $oop.getClass('$entity.Field')
   /** @ignore */
   spread: function () {
     var fieldKey = this.entityKey,
-        attributeDocumentKey = fieldKey.getAttributeDocumentKey(),
         fieldEventPath = fieldKey.getEntityPath().clone().unshift('entity'),
+        attributeDocumentKey = fieldKey.getAttributeDocumentKey(),
         attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
-        .clone().unshift('entity');
+        .clone().unshift('entity'),
+        fieldTypeKey = fieldKey.getFieldTypeKey(),
+        fieldTypePath = fieldTypeKey.getEntityPath().clone().unshift('entity');
 
     this.listeningPath = fieldEventPath;
 
     this.triggerPaths = [
       fieldEventPath,
-      attributeDocumentEventPath
-      // todo We'll need field type path here
+      attributeDocumentEventPath,
+      fieldTypePath
     ];
   },
 

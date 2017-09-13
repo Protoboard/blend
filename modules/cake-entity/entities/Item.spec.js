@@ -53,7 +53,9 @@ describe("$entity", function () {
         expect(item.triggerPaths)
         .toEqual([
           'entity.document.foo.bar.baz.quux'.toPath(),
-          'entity.document.__item.foo\/baz'.toPath()
+          'entity.document.__item.foo/baz'.toPath(),
+          "entity.document.__field.__item/itemType.options.primitive".toPath(),
+          "entity.document.__field.__item/itemIdType.options.primitive".toPath()
         ]);
       });
 

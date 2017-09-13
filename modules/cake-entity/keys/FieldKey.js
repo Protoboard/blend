@@ -14,6 +14,7 @@
  * @extends $entity.EntityKey
  * @mixes $entity.ValueKey
  * @implements $utils.Stringifiable
+ * @todo Cache attributeDocumentKey, fieldType, fieldTypeKey
  */
 $entity.FieldKey = $oop.getClass('$entity.FieldKey')
 .mix($oop.getClass('$entity.EntityKey'))
@@ -131,7 +132,21 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    * @returns {string}
    */
   getFieldType: function () {
-    return this.getAttribute('fieldType');
+    return this.getAttribute('fieldType') || 'primitive';
+  },
+
+  /**
+   * Retrieves an attribute entity key identifying the *value type* attribute
+   * for the current field entity in the entity store.
+   * @returns {$entity.ItemKey}
+   */
+  getFieldTypeKey: function () {
+    var fieldType = this.getFieldType();
+    return this.getAttributeDocumentKey()
+    .getFieldKey('fieldType')
+    .getAttributeDocumentKey()
+    .getFieldKey('options')
+    .getItemKey(fieldType);
   },
 
   /**

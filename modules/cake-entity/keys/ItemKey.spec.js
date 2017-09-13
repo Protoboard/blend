@@ -188,6 +188,29 @@ describe("$entity", function () {
       it("should retrieve itemType attribute", function () {
         expect(result).toBe('foo');
       });
+
+      describe("when no itemType is set for item", function () {
+        beforeEach(function () {
+          $entity.entities.deleteNode(attributeKey.getEntityPath());
+          result = 'user/1/friends/Joe'.toItemKey().getItemType();
+        });
+
+        it("should return default", function () {
+          expect(result).toBe('primitive');
+        });
+      });
+    });
+
+    describe("getItemTypeKey()", function () {
+      beforeEach(function () {
+        spyOn(itemKey, 'getItemType').and.returnValue('FOO');
+        result = itemKey.getItemTypeKey();
+      });
+
+      it("should return key to itemType", function () {
+        expect(result)
+        .toEqual("__field/__item\\/itemType/options/FOO".toItemKey());
+      });
     });
 
     describe("getItemIdType()", function () {
@@ -210,6 +233,29 @@ describe("$entity", function () {
 
       it("should retrieve itemType attribute", function () {
         expect(result).toBe('bar');
+      });
+
+      describe("when no itemIdType is set for item", function () {
+        beforeEach(function () {
+          $entity.entities.deleteNode(attributeKey.getEntityPath());
+          result = 'user/1/friends/Joe'.toItemKey().getItemIdType();
+        });
+
+        it("should return default", function () {
+          expect(result).toBe('primitive');
+        });
+      });
+    });
+
+    describe("getItemIdTypeKey()", function () {
+      beforeEach(function () {
+        spyOn(itemKey, 'getItemIdType').and.returnValue('FOO');
+        result = itemKey.getItemIdTypeKey();
+      });
+
+      it("should return key to itemIdType", function () {
+        expect(result)
+        .toEqual("__field/__item\\/itemIdType/options/FOO".toItemKey());
       });
     });
 

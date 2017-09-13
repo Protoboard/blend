@@ -47,14 +47,21 @@ $entity.Item = $oop.getClass('$entity.Item')
         attributeDocumentKey = itemKey.getAttributeDocumentKey(),
         itemEventPath = itemKey.getEntityPath().clone().unshift('entity'),
         attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
-        .clone().unshift('entity');
+        .clone().unshift('entity'),
+        itemTypeKey = itemKey.getItemTypeKey(),
+        itemTypePath = itemTypeKey.getEntityPath().clone().unshift('entity'),
+        itemIdTypeKey = itemKey.getItemIdTypeKey(),
+        itemIdTypePath = itemIdTypeKey.getEntityPath().clone()
+        .unshift('entity');
 
     this.listeningPath = itemEventPath;
 
     this.triggerPaths = [
       itemEventPath,
-      attributeDocumentEventPath
-      // todo We'll need itemId and item value type path here
+      attributeDocumentEventPath,
+      itemTypePath,
+      // todo Might only need itemType only, as only value is affected.
+      itemIdTypePath
     ];
   }
 });

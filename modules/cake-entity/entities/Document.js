@@ -52,7 +52,6 @@ $entity.Document = $oop.getClass('$entity.Document')
     this.triggerPaths = [
       documentEventPath,
       attributeDocumentEventPath
-      // todo We'll need document type attribute field's path here
     ];
   },
 

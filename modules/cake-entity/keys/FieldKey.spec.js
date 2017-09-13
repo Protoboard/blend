@@ -199,6 +199,29 @@ describe("$entity", function () {
       it("should retrieve fieldType attribute", function () {
         expect(result).toBe('foo');
       });
+
+      describe("when no fieldType is set for field", function () {
+        beforeEach(function () {
+          $entity.entities.deleteNode(attributeKey.getEntityPath());
+          result = 'user/1/name'.toFieldKey().getFieldType();
+        });
+
+        it("should return default", function () {
+          expect(result).toBe('primitive');
+        });
+      });
+    });
+
+    describe("getFieldTypeKey()", function () {
+      beforeEach(function () {
+        spyOn(fieldKey, 'getFieldType').and.returnValue('FOO');
+        result = fieldKey.getFieldTypeKey();
+      });
+
+      it("should return key to fieldType", function () {
+        expect(result)
+        .toEqual("__field/__field\\/fieldType/options/FOO".toItemKey());
+      });
     });
 
     describe("toString()", function () {

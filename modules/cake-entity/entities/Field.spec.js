@@ -54,7 +54,8 @@ describe("$entity", function () {
         expect(field.triggerPaths)
         .toEqual([
           'entity.document.foo.bar.baz'.toPath(),
-          'entity.document.__field.foo\/baz'.toPath()
+          'entity.document.__field.foo/baz'.toPath(),
+          "entity.document.__field.__field/fieldType.options.primitive".toPath()
         ]);
       });
 

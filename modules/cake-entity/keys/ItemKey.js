@@ -125,17 +125,49 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   /**
    * Retrieves *value type* attribute for the current item entity.
    * @returns {string}
+   * @todo Move to CollectionFieldKey?
    */
   getItemType: function () {
-    return this.getAttribute('itemType');
+    return this.getAttribute('itemType') || 'primitive';
+  },
+
+  /**
+   * Retrieves an attribute entity key identifying the *value type* attribute
+   * for the current item entity in the entity store.
+   * @returns {$entity.ItemKey}
+   * @todo Move to CollectionFieldKey?
+   */
+  getItemTypeKey: function () {
+    var itemType = this.getItemType();
+    return this.getAttributeDocumentKey()
+    .getFieldKey('itemType')
+    .getAttributeDocumentKey()
+    .getFieldKey('options')
+    .getItemKey(itemType);
   },
 
   /**
    * Retrieves *key type* attribute for the current item entity.
    * @returns {string}
+   * @todo Move to CollectionFieldKey?
    */
   getItemIdType: function () {
-    return this.getAttribute('itemIdType');
+    return this.getAttribute('itemIdType') || 'primitive';
+  },
+
+  /**
+   * Retrieves an attribute entity key identifying the *key type* attribute
+   * for the current item entity in the entity store.
+   * @returns {$entity.ItemKey}
+   * @todo Move to CollectionFieldKey?
+   */
+  getItemIdTypeKey: function () {
+    var itemIdType = this.getItemIdType();
+    return this.getAttributeDocumentKey()
+    .getFieldKey('itemIdType')
+    .getAttributeDocumentKey()
+    .getFieldKey('options')
+    .getItemKey(itemIdType);
   },
 
   /**
