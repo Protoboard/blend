@@ -354,6 +354,15 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   }
 });
 
+// caching Entity if key is cached
+// todo Replace w/ forwardMix when available
+$entity.Entity.forwardTo(
+    $oop.mixClass($entity.Entity, $oop.getClass('$entity.EntityKeyCached')),
+    function (properties) {
+      var entityKey = properties.entityKey;
+      return $utils.StringifyCached.mixedBy(entityKey);
+    });
+
 $oop.getClass('$entity.EntityKey')
 .delegate(/** @lends $entity.EntityKey# */{
   /**

@@ -29,6 +29,34 @@ describe("$entity", function () {
       });
     });
 
+    describe("create()", function () {
+      describe("when entityKey is cached", function () {
+        var EntityKey,
+            entityKey,
+            entity,
+            result;
+
+        beforeEach(function () {
+          EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
+          .mix($entity.EntityKey)
+          .mix($utils.StringifyCached)
+          .define({
+            toString: function () {
+              return this.foo;
+            }
+          });
+          entityKey = EntityKey.create({foo: 'bar'});
+          entity = $entity.Entity.fromEntityKey(entityKey);
+
+          result = $entity.Entity.fromEntityKey(entityKey);
+        });
+
+        it("should retrieve cached instance", function () {
+          expect(result).toBe(entity);
+        });
+      });
+    });
+
     describe("getNode()", function () {
       var node;
 

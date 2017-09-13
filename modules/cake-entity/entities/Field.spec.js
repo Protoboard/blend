@@ -1,6 +1,7 @@
 "use strict";
 
 var $oop = window['cake-oop'],
+    $utils = window['cake-utils'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
@@ -55,6 +56,27 @@ describe("$entity", function () {
           'entity.document.foo.bar.baz'.toPath(),
           'entity.document.__field.foo\/baz'.toPath()
         ]);
+      });
+
+      describe("when entityKey is cached", function () {
+        var FieldKey,
+            fieldKey,
+            field,
+            result;
+
+        beforeEach(function () {
+          FieldKey = $oop.getClass('test.$entity.Field.FieldKey')
+          .mix($entity.FieldKey)
+          .mix($utils.StringifyCached);
+          fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
+          field = $entity.Field.fromEntityKey(fieldKey);
+
+          result = $entity.Field.fromEntityKey(fieldKey);
+        });
+
+        it("should retrieve cached instance", function () {
+          expect(result).toBe(field);
+        });
       });
     });
 

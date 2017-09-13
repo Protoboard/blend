@@ -1,6 +1,7 @@
 "use strict";
 
 var $oop = window['cake-oop'],
+    $utils = window['cake-utils'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
@@ -55,6 +56,27 @@ describe("$entity", function () {
           'entity.document.foo.bar'.toPath(),
           'entity.document.__document.foo'.toPath()
         ]);
+      });
+
+      describe("when entityKey is cached", function () {
+        var DocumentKey,
+            documentKey,
+            document,
+            result;
+
+        beforeEach(function () {
+          DocumentKey = $oop.getClass('test.$entity.Document.DocumentKey')
+          .mix($entity.DocumentKey)
+          .mix($utils.StringifyCached);
+          documentKey = DocumentKey.fromComponents('foo', 'bar');
+          document = $entity.Document.fromEntityKey(documentKey);
+
+          result = $entity.Document.fromEntityKey(documentKey);
+        });
+
+        it("should retrieve cached instance", function () {
+          expect(result).toBe(document);
+        });
       });
     });
 

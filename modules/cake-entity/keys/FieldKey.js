@@ -151,10 +151,11 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   }
 });
 
-$entity.FieldKey
-.forwardTo($oop.mixClass($entity.FieldKey, $oop.getClass('$utils.StringifyCached')), function (properties) {
-  return $utils.StringifyCached.mixedBy(properties.documentKey);
-});
+$entity.FieldKey.forwardTo(
+    $oop.mixClass($entity.FieldKey, $oop.getClass('$utils.StringifyCached')),
+    function (properties) {
+      return $utils.StringifyCached.mixedBy(properties.documentKey);
+    });
 
 $oop.getClass('$entity.EntityKey')
 .forwardTo($entity.FieldKey, function (properties) {

@@ -61,6 +61,15 @@ $entity.Field = $oop.getClass('$entity.Field')
   }
 });
 
+// caching Field if key is cached
+// todo Remove as soon as forwards propagate
+$entity.Field.forwardTo(
+    $oop.mixClass($entity.Field, $oop.getClass('$entity.EntityKeyCached')),
+    function (properties) {
+      var entityKey = properties.entityKey;
+      return $utils.StringifyCached.mixedBy(entityKey);
+    });
+
 $oop.getClass('$entity.Entity')
 .forwardTo($entity.Field, function (properties) {
   return $entity.FieldKey.mixedBy(properties.entityKey);
