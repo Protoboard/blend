@@ -53,21 +53,21 @@ describe("$entity", function () {
     });
 
     describe("getAttribute()", function () {
-      var metaFieldKey;
+      var attributeKey;
 
       beforeEach(function () {
-        metaFieldKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
+        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__field', ['user', 'name']).getFieldKey('foo');
-        $entity.entities.setNode(metaFieldKey.getEntityPath(), 'bar');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'bar');
 
         result = 'user/1/name'.toFieldKey().getAttribute('foo');
       });
 
       afterEach(function () {
-        $entity.entities.deleteNode(metaFieldKey.getEntityPath());
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
       });
 
-      it("should retrieve fieldType metadata", function () {
+      it("should retrieve fieldType attribute", function () {
         expect(result).toBe('bar');
       });
     });

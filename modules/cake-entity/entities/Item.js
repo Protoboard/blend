@@ -44,16 +44,17 @@ $entity.Item = $oop.getClass('$entity.Item')
   /** @ignore */
   spread: function () {
     var itemKey = this.entityKey,
-        metaKey = itemKey.getMetaKey(),
+        attributeDocumentKey = itemKey.getAttributeDocumentKey(),
         itemEventPath = itemKey.getEntityPath().clone().unshift('entity'),
-        metaEventPath = metaKey.getEntityPath().clone().unshift('entity');
+        attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
+        .clone().unshift('entity');
 
     this.listeningPath = itemEventPath;
 
     this.triggerPaths = [
       itemEventPath,
+      attributeDocumentEventPath
       // todo We'll need itemId and item value type path here
-      metaEventPath
     ];
   }
 });

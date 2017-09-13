@@ -134,16 +134,16 @@ describe("$entity", function () {
       });
     });
 
-    describe("getMetaKey()", function () {
+    describe("getAttributeDocumentKey()", function () {
       beforeEach(function () {
-        result = itemKey.getMetaKey();
+        result = itemKey.getAttributeDocumentKey();
       });
 
       it("should return an AttributeDocumentKey", function () {
         expect($entity.AttributeDocumentKey.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return meta key to the item", function () {
+      it("should return attribute document key to the item", function () {
         expect(result.equals($entity.DocumentKey.fromString('__item/foo\\/baz')))
         .toBeTruthy();
       });
@@ -168,12 +168,12 @@ describe("$entity", function () {
     });
 
     describe("getItemType()", function () {
-      var metaKey;
+      var attributeKey;
 
       beforeEach(function () {
-        metaKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
+        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__item', ['user', 'friends']);
-        $entity.entities.setNode(metaKey.getEntityPath(), {
+        $entity.entities.setNode(attributeKey.getEntityPath(), {
           itemType: 'foo',
           itemIdType: 'bar'
         });
@@ -182,21 +182,21 @@ describe("$entity", function () {
       });
 
       afterEach(function () {
-        $entity.entities.deleteNode(metaKey.getEntityPath());
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
       });
 
-      it("should retrieve itemType metadata", function () {
+      it("should retrieve itemType attribute", function () {
         expect(result).toBe('foo');
       });
     });
 
     describe("getItemIdType()", function () {
-      var metaKey;
+      var attributeKey;
 
       beforeEach(function () {
-        metaKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
+        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__item', ['user', 'friends']);
-        $entity.entities.setNode(metaKey.getEntityPath(), {
+        $entity.entities.setNode(attributeKey.getEntityPath(), {
           itemType: 'foo',
           itemIdType: 'bar'
         });
@@ -205,10 +205,10 @@ describe("$entity", function () {
       });
 
       afterEach(function () {
-        $entity.entities.deleteNode(metaKey.getEntityPath());
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
       });
 
-      it("should retrieve itemType metadata", function () {
+      it("should retrieve itemType attribute", function () {
         expect(result).toBe('bar');
       });
     });

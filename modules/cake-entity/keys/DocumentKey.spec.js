@@ -124,16 +124,16 @@ describe("$entity", function () {
       });
     });
 
-    describe("getMetaKey()", function () {
+    describe("getAttributeDocumentKey()", function () {
       beforeEach(function () {
-        result = documentKey.getMetaKey();
+        result = documentKey.getAttributeDocumentKey();
       });
 
       it("should return an AttributeDocumentKey", function () {
         expect($entity.AttributeDocumentKey.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return meta key to the document type", function () {
+      it("should return attribute document key to the document type", function () {
         expect(result.equals($entity.DocumentKey.fromString('__document/foo')))
         .toBeTruthy();
       });

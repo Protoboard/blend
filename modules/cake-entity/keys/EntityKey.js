@@ -38,17 +38,18 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
 
   /**
    * Retrieves a static attribute associated with the current entity.
-   * @param {string} propertyName
+   * @param {string} attributeName
    * @returns {string}
    */
-  getAttribute: function (propertyName) {
-    var metaFieldKey = this.getMetaKey().getFieldKey(propertyName);
-    return $entity.entities.getNode(metaFieldKey.getEntityPath());
+  getAttribute: function (attributeName) {
+    var attributeKey = this.getAttributeDocumentKey()
+    .getFieldKey(attributeName);
+    return $entity.entities.getNode(attributeKey.getEntityPath());
   }
 
   /**
-   * Retrieves a key to the metadata associated with the entity class.
-   * @function $entity.EntityKey#getMetaKey
+   * Retrieves a key to the attributes associated with the entity class.
+   * @function $entity.EntityKey#getAttributeDocumentKey
    * @returns {$entity.DocumentKey}
    * @abstract
    */

@@ -134,16 +134,16 @@ describe("$entity", function () {
       });
     });
 
-    describe("getMetaKey()", function () {
+    describe("getAttributeDocumentKey()", function () {
       beforeEach(function () {
-        result = fieldKey.getMetaKey();
+        result = fieldKey.getAttributeDocumentKey();
       });
 
       it("should return an AttributeDocumentKey", function () {
         expect($entity.AttributeDocumentKey.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return meta key to the field", function () {
+      it("should return attribute document key to the field", function () {
         expect(result.equals($entity.DocumentKey.fromString('__field/foo\\/baz')))
         .toBeTruthy();
       });
@@ -182,21 +182,21 @@ describe("$entity", function () {
     });
 
     describe("getFieldType()", function () {
-      var metaKey;
+      var attributeKey;
 
       beforeEach(function () {
-        metaKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
+        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__field', ['user', 'name']).getFieldKey('fieldType');
-        $entity.entities.setNode(metaKey.getEntityPath(), 'foo');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'foo');
 
         result = 'user/1/name'.toFieldKey().getFieldType();
       });
 
       afterEach(function () {
-        $entity.entities.deleteNode(metaKey.getEntityPath());
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
       });
 
-      it("should retrieve fieldType metadata", function () {
+      it("should retrieve fieldType attribute", function () {
         expect(result).toBe('foo');
       });
     });

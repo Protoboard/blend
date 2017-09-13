@@ -1,13 +1,15 @@
 "use strict";
 
 /**
- * Stores entities. When extending meta documents, always append to avoid
+ * Stores entities. When extending attribute documents, always append to avoid
  * removing existing content.
  * @memberOf $entity
  * @type {$data.Tree}
  * @example
- * var metaKey = $entity.DocumentKey.fromComponents('__field', 'user/gender');
- * $entity.entities.appendNode(metaKey.getEntityPath(), {
+ * var attributeDocumentKey =
+ *     $entity.AttributeDocumentKey.fromDocumentIdComponents('__field',
+ *     ['user', 'gender']);
+ * $entity.entities.appendNode(attributeDocumentKey.getEntityPath(), {
  *   fieldType: 'string'
  * });
  */

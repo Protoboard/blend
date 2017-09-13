@@ -94,8 +94,8 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
    * @inheritDoc
    * @returns {$entity.DocumentKey}
    */
-  getMetaKey: function () {
-    // todo Revisit whether separate meta document for item is a good idea.
+  getAttributeDocumentKey: function () {
+    // todo Revisit whether separate attribute document for item is a good idea.
     // (Vs. going together with field)
     var fieldKey = this.fieldKey;
     return $entity.AttributeDocumentKey.fromDocumentIdComponents('__item', [
