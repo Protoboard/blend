@@ -17,14 +17,33 @@ $entity.entities = $data.Tree.fromData({
   document: {
     /** Document attribute documents. */
     __document: {
+      __document: {
+        fields: [
+          'fields'
+        ]
+      },
+      __field: {
+        fields: [
+          'fieldType',
+          'options'
+        ]
+      },
+      __item: {
+        fields: [
+          'itemType',
+          'itemIdType'
+        ]
+      }
+
+      // Sample document type
       //user: {
-      //  documentType: 'user'
+      //  fields: ['name', 'emails', 'friends']
       //}
     },
 
     /** Field attribute documents. */
     __field: {
-      '__document/documentType': {
+      '__document/fields': {
         fieldType: 'primitive'
       },
 
@@ -60,6 +79,7 @@ $entity.entities = $data.Tree.fromData({
         fieldType: 'collection'
       }
 
+      // Sample fields
       //'user/name': {
       //  /** Field contains primitive */
       //  fieldType: 'primitive'
@@ -76,6 +96,7 @@ $entity.entities = $data.Tree.fromData({
 
     /** Item attribute documents. */
     __item: {
+      // Sample collection items
       //'user/emails': {
       //  /** Items are strings */
       //  itemType: 'primitive'
