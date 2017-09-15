@@ -174,6 +174,106 @@ describe("$entity", function () {
         });
       });
     });
+
+    describe("setPrimitiveNode", function () {
+      var documentKey,
+          documentPath,
+          triggeredEvent,
+          nodeBefore,
+          nodeAfter;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        documentPath = documentKey.getEntityPath();
+        nodeBefore = {};
+        nodeAfter = {};
+
+        spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
+          triggeredEvent = this;
+          return $utils.Deferred.create().promise;
+        });
+        $entity.entities.setNode(documentPath, nodeBefore);
+
+        result = entity.setPrimitiveNode(nodeAfter);
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(entity);
+      });
+
+      it("should set node in container", function () {
+        expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+      });
+
+      it("should trigger change event", function () {
+        expect(triggeredEvent.eventName).toEqual($entity.EVENT_ENTITY_CHANGE);
+        expect(triggeredEvent.sender).toEqual(entity);
+        expect(triggeredEvent.getNodeBefore()).toBe(nodeBefore);
+        expect(triggeredEvent.getNodeAfter()).toBe(nodeAfter);
+      });
+    });
+
+    describe("setNode", function () {
+      var documentKey,
+          documentPath,
+          eventsToBeTriggered,
+          triggeredEvents,
+          nodeBefore,
+          nodeAfter;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        documentPath = documentKey.getEntityPath();
+        eventsToBeTriggered = [
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE)
+        ];
+        triggeredEvents = [];
+        nodeBefore = {};
+        nodeAfter = {};
+
+        spyOn(entity, 'spawnEntityChangeEvents').and
+        .returnValue(eventsToBeTriggered);
+        spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
+          triggeredEvents.push(this);
+          return $utils.Deferred.create().promise;
+        });
+        $entity.entities.setNode(documentPath, nodeBefore);
+
+        result = entity.setNode(nodeAfter);
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(entity);
+      });
+
+      it("should set node in container", function () {
+        expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+      });
+
+      it("should spawn events", function () {
+        expect(entity.spawnEntityChangeEvents).toHaveBeenCalledWith(
+            $data.Tree.fromData({
+              document: {
+                foo: {
+                  bar: nodeBefore
+                }
+              }
+            }),
+            $data.Tree.fromData({
+              document: {
+                foo: {
+                  bar: nodeAfter
+                }
+              }
+            }));
+      });
+
+      it("should trigger spawned events", function () {
+        expect(triggeredEvents).toEqual(eventsToBeTriggered);
+      });
+    });
   });
 
   describe("EntityKey", function () {

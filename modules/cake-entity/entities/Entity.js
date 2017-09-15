@@ -83,6 +83,66 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   touchNode: function () {
     this.getNode();
     return this;
+  },
+
+  /**
+   * Spawns events for all changes affected by the change specified by
+   * `entitiesBefore` and `entitiesAfter`
+   * @param {$data.Tree} entitiesBefore
+   * @param {$data.Tree} entitiesAfter
+   * @returns {Array}
+   * @returns {Array.<$entity.EntityChangeEvent>}
+   */
+  spawnEntityChangeEvents: function (entitiesBefore, entitiesAfter) {
+    return [];
+  },
+
+  /**
+   * Sets specified *primitive* node as new value for the current entity,
+   * and triggers change event for the current entity only. Primitive nodes
+   * are considered *non-object* nodes.
+   * @param {*} node
+   * @returns {$entity.Entity}
+   */
+  setPrimitiveNode: function (node) {
+    var nodeBefore = this.getSilentNode(),
+        entityPath = this.entityKey.getEntityPath();
+
+    if (node !== nodeBefore) {
+      $entity.entities.setNode(entityPath, node);
+      this.spawnEvent({
+        eventName: $entity.EVENT_ENTITY_CHANGE,
+        _nodeBefore: nodeBefore,
+        _nodeAfter: node
+      })
+      .trigger();
+    }
+
+    return this;
+  },
+
+  /**
+   * Sets specified node as new value for the current entity, and
+   * triggers change events for all affected child entities.
+   * @param {*} node
+   * @returns {$entity.Entity}
+   */
+  setNode: function (node) {
+    var nodeBefore = this.getSilentNode(),
+        entityPath = this.entityKey.getEntityPath(),
+        entitiesBefore = $data.Tree.create().setNode(entityPath, nodeBefore),
+        entitiesAfter = $data.Tree.create().setNode(entityPath, node),
+        events;
+
+    if (node !== nodeBefore) {
+      $entity.entities.setNode(entityPath, node);
+
+      events = this.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+      $data.Collection.fromData(events)
+      .callOnEachValue('trigger');
+    }
+
+    return this;
   }
 });
 
