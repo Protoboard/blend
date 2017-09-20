@@ -24,14 +24,16 @@ $entity.entities = $data.Tree.fromData({
       },
       __field: {
         fields: [
-          'fieldType',
+          'composite',
+          'valueType',
+          'keyType',
           'options'
         ]
       },
       __item: {
         fields: [
-          'itemType',
-          'itemIdType'
+          'valueType',
+          'keyType'
         ]
       }
 
@@ -44,53 +46,65 @@ $entity.entities = $data.Tree.fromData({
     /** Field attribute documents. */
     __field: {
       '__document/fields': {
-        fieldType: 'primitive'
+        valueType: 'collection'
       },
 
-      '__field/fieldType': {
-        fieldType: 'primitive',
+      '__field/composite': {
+        valueType: 'boolean' // default: false
+      },
+      '__field/keyType': {
+        valueType: 'string',
         options: {
-          primitive: 1, // default
+          string: 1 // default
+        }
+      },
+      '__field/valueType': {
+        valueType: 'string',
+        options: {
+          string: 1, // default
+          number: 1,
+          boolean: 1,
           reference: 1,
           collection: 1
         }
       },
       '__field/options': {
-        fieldType: 'collection'
+        composite: true
       },
 
-      '__item/itemType': {
-        fieldType: 'primitive',
+      '__item/valueType': {
+        valueType: 'string',
         options: {
-          primitive: 1, // default
           reference: 1,
           order: 1
         }
       },
-      '__item/itemIdType': {
-        fieldType: 'primitive',
+      '__item/keyType': {
+        valueType: 'string',
         options: {
-          primitive: 1, // default
           reference: 1,
           order: 1
         }
       },
       '__item/options': {
-        fieldType: 'collection'
+        composite: true,
+        valueType: 'collection'
       }
 
       // Sample fields
       //'user/name': {
       //  /** Field contains primitive */
-      //  fieldType: 'primitive'
+      //  valueType: 'string'
       //},
       //'user/emails': {
       //  /** Field contains collection */
-      //  fieldType: 'collection'
+      //  composite: true,
+      //  valueType: 'collection'
       //},
       //'user/friends': {
       //  /** Field contains collection */
-      //  fieldType: 'collection'
+      //  composite: true,
+      //  valueType: 'collection'
       //}
     },
 
@@ -99,13 +113,13 @@ $entity.entities = $data.Tree.fromData({
       // Sample collection items
       //'user/emails': {
       //  /** Items are strings */
-      //  itemType: 'primitive'
+      //  valueType: 'email'
       //},
       //'user/friends': {
       //  /** Items are booleans */
-      //  itemType: 'boolean',
+      //  valueType: 'boolean',
       //  /** Item IDs are references */
-      //  itemIdType: 'reference'
+      //  keyType: 'reference'
       //}
     }
   }
