@@ -24,44 +24,80 @@ describe("$entity", function () {
     });
 
     describe("create()", function () {
-      it("should add field type entries", function () {
-        expect($entity.index.data.__fieldType.__field).toEqual({
+      it("should add fieldRef entries", function () {
+        expect($entity.index.data.__fieldRef.byFieldType).toEqual({
           "composite": {
-            "__field/options": 1
-          },
-          "primitive": {
-            "__field/fieldType": 1,
-            "__field/keyType": 1,
-            "__field/valueType": 1
-          }
-        });
-        expect($entity.index.data.__fieldType.__item).toEqual({
-          "composite": {
+            "__field/options": 1,
             "__item/options": 1
           },
           "primitive": {
+            "__document/fields": 1,
+            "__field/fieldType": 1,
+            "__field/keyType": 1,
+            "__field/valueType": 1,
             "__item/valueType": 1,
             "__item/keyType": 1
           }
         });
-        expect($entity.index.data.__fieldType.__document).toEqual({
+      });
+
+      it("should add fieldName entries", function () {
+        expect($entity.index.data.__fieldName.byFieldType).toEqual({
+          "composite": {
+            "__field": {
+              "options": 1
+            },
+            "__item": {
+              "options": 1
+            }
+          },
           "primitive": {
-            "__document/fields": 1
+            "__document": {
+              "fields": 1
+            },
+            "__field": {
+              "fieldType": 1,
+              "keyType": 1,
+              "valueType": 1
+            },
+            "__item": {
+              "valueType": 1,
+              "keyType": 1
+            }
           }
         });
       });
     });
 
-    describe("getFieldRefsByType()", function () {
+    describe("getFieldRefsByFieldType()", function () {
       beforeEach(function () {
-        result = $entity.FieldTypeIndex.create().getFieldRefsByType('__field', 'primitive');
+        result = $entity.FieldTypeIndex.create()
+        .getFieldRefsByFieldType('primitive');
       });
 
       it("should return field references", function () {
         expect(result).toEqual([
-          '__field/fieldType',
-          '__field/keyType',
-          '__field/valueType'
+          "__document/fields",
+          "__field/fieldType",
+          "__field/keyType",
+          "__field/valueType",
+          "__item/valueType",
+          "__item/keyType"
+        ]);
+      });
+    });
+
+    describe("getFieldNamesByFieldType()", function () {
+      beforeEach(function () {
+        result = $entity.FieldTypeIndex.create()
+        .getFieldNamesByFieldType('__field', 'primitive');
+      });
+
+      it("should return field references", function () {
+        expect(result).toEqual([
+          "fieldType",
+          "keyType",
+          "valueType"
         ]);
       });
     });

@@ -8,6 +8,7 @@
 /**
  * Maintains a lookup of field references by document type and field type.
  * @class $entity.FieldTypeIndex
+ * @todo Create fieldType enum for documentation.
  */
 $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
 .mix($oop.Singleton)
@@ -23,50 +24,90 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
     var that = this,
         allFieldsQuery = $data.Query.fromString('document.__field.*'),
         compositeFieldQuery = $data.Query.fromString('document.__field.*.fieldType:composite'),
-        allFieldPaths = $entity.entities.queryPathsWrapped(allFieldsQuery)
+
+        fieldAttributeKeys = $entity.entities.queryPathsWrapped(allFieldsQuery)
         .mapKeys(String)
-        .toCollection(),
-        compositeFieldPaths = $entity.entities.queryPathsWrapped(compositeFieldQuery)
-        .mapKeys(function (path) {
-          path = path.clone();
-          path.pop();
-          return path.toString();
+        .mapValues(function (path) {
+          return path.components[2];
         })
-        .toCollection();
+        .mapKeys(function (fieldAttributeRef) {
+          return fieldAttributeRef;
+        })
+        .passEachValueTo($entity.DocumentKey.fromString, $entity.DocumentKey)
+        .toCollection(),
+
+        compositeFieldRefs = $entity.entities.queryPathsWrapped(compositeFieldQuery)
+        .mapValues(function (path) {
+          return path.components[2];
+        })
+        .mapKeys(function (fieldAttributeRef) {
+          return fieldAttributeRef;
+        })
+        .toStringCollection();
 
     // processing field types
     // a) adding composite fields
-    compositeFieldPaths.forEachItem(function (path, key) {
-      var fieldRef = path.components[2],
-          documentType = $entity.DocumentKey.fromString(fieldRef).documentType;
-      that._addFieldRef(documentType, 'composite', fieldRef);
+    compositeFieldRefs
+    .join(fieldAttributeKeys)
+    .forEachItem(function (fieldAttributeKey, fieldAttributeRef) {
+      var documentType = fieldAttributeKey.documentType,
+          fieldName = fieldAttributeKey.documentId;
 
-      // removing composite field from list of primitive fields
-      allFieldPaths.deleteItem(key);
+      that._addFieldRef('composite', fieldAttributeRef);
+      that._addFieldName('composite', documentType, fieldName);
+
+      // removing composite field from list of all fields
+      fieldAttributeKeys.deleteItem(fieldAttributeRef);
     });
 
     // b) adding primitive fields (remaining)
-    allFieldPaths.forEachItem(function (path) {
-      var fieldRef = path.components[2],
-          documentType = $entity.DocumentKey.fromString(fieldRef).documentType;
-      that._addFieldRef(documentType, 'primitive', fieldRef);
+    fieldAttributeKeys
+    .forEachItem(function (fieldAttributeKey, fieldAttributeRef) {
+      var documentType = fieldAttributeKey.documentType,
+          fieldName = fieldAttributeKey.documentId;
+      that._addFieldRef('primitive', fieldAttributeRef);
+      that._addFieldName('primitive', documentType, fieldName);
     });
   },
 
   /**
-   * Adds a fieldType entry to the index. Private because this index is not
-   * expected to be updated.
-   * @param {string} documentType
    * @param {string} fieldType
    * @param {reference} fieldRef
    * @returns {$entity.FieldTypeIndex}
    * @private
    */
-  _addFieldRef: function (documentType, fieldType, fieldRef) {
+  _addFieldRef: function (fieldType, fieldRef) {
     var indexPath = $data.Path.fromComponents([
-      '__fieldType', documentType, fieldType, fieldRef]);
+      '__fieldRef', 'byFieldType', fieldType, fieldRef]);
     $entity.index.setNode(indexPath, 1);
     return this;
+  },
+
+  /**
+   * @param {string} fieldType
+   * @param {string} documentType
+   * @param {reference} fieldName
+   * @returns {$entity.FieldTypeIndex}
+   * @private
+   */
+  _addFieldName: function (fieldType, documentType, fieldName) {
+    var indexPath = $data.Path.fromComponents([
+      '__fieldName', 'byFieldType', fieldType, documentType, fieldName]);
+    $entity.index.setNode(indexPath, 1);
+    return this;
+  },
+
+  /**
+   * Retrieves a list of field attribute references matching the specified
+   * `documentType` and `fieldType`.
+   * @param {string} fieldType Either 'primitive' or 'composite'.
+   * @returns {Array.<reference>} List of field names
+   */
+  getFieldRefsByFieldType: function (fieldType) {
+    var indexPath = $data.Path.fromComponents([
+          '__fieldRef', 'byFieldType', fieldType]),
+        fieldRefLookup = $entity.index.getNode(indexPath);
+    return fieldRefLookup && Object.keys(fieldRefLookup);
   },
 
   /**
@@ -75,12 +116,11 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
    * @param {string} documentType Document type associated with field.
    * @param {string} fieldType Either 'primitive' or 'composite'.
    * @returns {Array.<reference>} List of field names
-   * @todo Create fieldType enum for documentation.
    */
-  getFieldRefsByType: function (documentType, fieldType) {
+  getFieldNamesByFieldType: function (documentType, fieldType) {
     var indexPath = $data.Path.fromComponents([
-          '__fieldType', documentType, fieldType]),
-        fieldLookup = $entity.index.getNode(indexPath);
-    return fieldLookup && Object.keys(fieldLookup);
+          '__fieldName', 'byFieldType', fieldType, documentType]),
+        fieldRefLookup = $entity.index.getNode(indexPath);
+    return fieldRefLookup && Object.keys(fieldRefLookup);
   }
 });
