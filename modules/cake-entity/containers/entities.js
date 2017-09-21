@@ -49,8 +49,12 @@ $entity.entities = $data.Tree.fromData({
         valueType: 'collection'
       },
 
-      '__field/composite': {
-        valueType: 'boolean' // default: false
+      '__field/fieldType': {
+        valueType: 'string',
+        options: {
+          primitive: 1,
+          composite: 1
+        }
       },
       '__field/keyType': {
         valueType: 'string',
@@ -69,7 +73,7 @@ $entity.entities = $data.Tree.fromData({
         }
       },
       '__field/options': {
-        composite: true
+        fieldType: 'composite'
       },
 
       '__item/valueType': {
@@ -87,23 +91,23 @@ $entity.entities = $data.Tree.fromData({
         }
       },
       '__item/options': {
-        composite: true,
+        fieldType: 'composite',
         valueType: 'collection'
       }
 
-      // Sample fields
+      //// Sample fields
       //'user/name': {
       //  /** Field contains primitive */
       //  valueType: 'string'
       //},
       //'user/emails': {
       //  /** Field contains collection */
-      //  composite: true,
+      //  fieldType: 'composite',
       //  valueType: 'collection'
       //},
       //'user/friends': {
       //  /** Field contains collection */
-      //  composite: true,
+      //  fieldType: 'composite',
       //  valueType: 'collection'
       //}
     },
