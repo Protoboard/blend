@@ -24,16 +24,17 @@ $entity.entities = $data.Tree.fromData({
       },
       __field: {
         fields: [
-          'composite',
+          'fieldType',
           'valueType',
-          'keyType',
-          'options'
+          'keyType', // todo Remove?
+          'options' // todo Rename to valueOptions
         ]
       },
       __item: {
         fields: [
           'valueType',
-          'keyType'
+          'keyType',
+          'options' // todo Rename to valueOptions
         ]
       }
 
@@ -73,7 +74,8 @@ $entity.entities = $data.Tree.fromData({
         }
       },
       '__field/options': {
-        fieldType: 'composite'
+        fieldType: 'composite',
+        valueType: 'collection'
       },
 
       '__item/valueType': {

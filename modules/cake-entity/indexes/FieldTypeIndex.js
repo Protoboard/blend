@@ -22,21 +22,20 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
   _initFieldTypeIndex: function () {
     // querying all fieldType paths
     var that = this,
-        allFieldsQuery = $data.Query.fromString('document.__field.*'),
-        compositeFieldQuery = $data.Query.fromString('document.__field.*.fieldType:composite'),
+        fieldsQuery = $data.Query.fromString('document.__document.*.fields.*'),
+        compositeFieldsQuery = $data.Query.fromString('document.__field.*.fieldType:composite'),
 
-        fieldAttributeKeys = $entity.entities.queryPathsWrapped(allFieldsQuery)
+        // attribute ref:key lookup for all documented fields
+        fieldAttributeKeys = $entity.entities.queryPathNodePairs(fieldsQuery)
+        .mapValues(function (fieldName, path) {
+          var documentType = path.components[2];
+          return $entity.DocumentKey.fromComponents(documentType, fieldName);
+        })
         .mapKeys(String)
-        .mapValues(function (path) {
-          return path.components[2];
-        })
-        .mapKeys(function (fieldAttributeRef) {
-          return fieldAttributeRef;
-        })
-        .passEachValueTo($entity.DocumentKey.fromString, $entity.DocumentKey)
         .toCollection(),
 
-        compositeFieldRefs = $entity.entities.queryPathsWrapped(compositeFieldQuery)
+        // attribute ref:ref lookup for all fields documented as composite
+        compositeFieldRefs = $entity.entities.queryPathsWrapped(compositeFieldsQuery)
         .mapValues(function (path) {
           return path.components[2];
         })

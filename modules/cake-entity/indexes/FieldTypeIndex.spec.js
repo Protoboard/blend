@@ -10,17 +10,15 @@ describe("$entity", function () {
         result;
 
     beforeEach(function () {
-      $entity.index.deleteNode('__fieldType'.toPath());
+      $entity.index
+      .deleteNode('__fieldName.byFieldType'.toPath())
+      .deleteNode('__fieldRef.byFieldType'.toPath());
 
       delete $oop.Class.classByClassId['test.$entity.FieldTypeIndex.FieldTypeIndex'];
       FieldTypeIndex = $oop.getClass('test.$entity.FieldTypeIndex.FieldTypeIndex')
       .mix($entity.FieldTypeIndex);
 
       fieldTypeIndex = FieldTypeIndex.create();
-    });
-
-    afterEach(function () {
-      $entity.index.deleteNode('__fieldType'.toPath());
     });
 
     describe("create()", function () {
@@ -35,8 +33,8 @@ describe("$entity", function () {
             "__field/fieldType": 1,
             "__field/keyType": 1,
             "__field/valueType": 1,
-            "__item/valueType": 1,
-            "__item/keyType": 1
+            "__item/keyType": 1,
+            "__item/valueType": 1
           }
         });
       });
@@ -76,14 +74,14 @@ describe("$entity", function () {
       });
 
       it("should return field references", function () {
-        expect(result).toEqual([
+        expect(result.sort()).toEqual([
           "__document/fields",
           "__field/fieldType",
           "__field/keyType",
           "__field/valueType",
-          "__item/valueType",
-          "__item/keyType"
-        ]);
+          "__item/keyType",
+          "__item/valueType"
+        ].sort());
       });
     });
 
@@ -94,11 +92,11 @@ describe("$entity", function () {
       });
 
       it("should return field references", function () {
-        expect(result).toEqual([
+        expect(result.sort()).toEqual([
           "fieldType",
           "keyType",
           "valueType"
-        ]);
+        ].sort());
       });
     });
   });
