@@ -56,6 +56,78 @@ $entity.Document = $oop.getClass('$entity.Document')
   },
 
   /**
+   * @returns {Array.<string>}
+   * @todo Make it on demand.
+   */
+  getFieldNames: function () {
+    var documentKey = this.entityKey,
+        attributeDocument = $entity.DocumentKey
+        .fromComponents('__document', documentKey.documentType)
+        .toDocument();
+    return attributeDocument.getField('fields').getNode();
+  },
+
+  _groupFieldsByComposite: function () {
+    var fieldNames = this.getFieldNames(),
+        compositeFieldNames = [],
+        primitiveFieldNames = [];
+
+    fieldNames.forEach(function (fieldName) {
+      var composite = $entity.AttributeDocumentKey
+      .fromDocumentIdComponents('__field', [documentType, fieldName])
+      .toDocument()
+      .getField('composite')
+      .getNode();
+
+      if (composite) {
+        compositeFieldNames.push(fieldName);
+      } else {
+        primitiveFieldNames.push(fieldName);
+      }
+    });
+
+    return {
+      compositeFieldNames: compositeFieldNames,
+      primitiveFieldNames: primitiveFieldNames
+    };
+  },
+
+  /**
+   * Spawns events for document entity change.
+   * @param {$data.Tree} entitiesBefore
+   * @param {$data.Tree} entitiesAfter
+   * @returns {Array.<$entity.EntityChangeEvent>}
+   */
+  spawnEntityChangeEvents: function (entitiesBefore, entitiesAfter) {
+    var document = this,
+        documentKey = this.entityKey,
+        documentType = documentKey.documentType,
+
+        // grouping fields by type (primitive vs. composite)
+        fieldTypeIndex = $entity.FieldTypeIndex.create(),
+        primitiveFieldNames = fieldTypeIndex.getFieldNamesByFieldType(documentType, 'primitive'),
+        compositeFieldNames = fieldTypeIndex.getFieldNamesByFieldType(documentType, 'composite'),
+
+        // spawning events for all primitive changes (addition / removal / value
+        // change) on field entities
+        primitiveEvents = primitiveFieldNames
+        .map(function (fieldName) {
+          return document.getField(fieldName)
+          .spawnEvent({eventName: $entity.EVENT_ENTITY_CHANGE});
+        }),
+
+        // invoking composite field event spawners and appending to result
+        compositeEvents = compositeFieldNames
+        .reduce(function (compositeEvents, fieldName) {
+          var events = document.getField(fieldName)
+          .spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+          return compositeEvents.concat(events);
+        }, []);
+
+    return primitiveEvents.concat(compositeEvents);
+  },
+
+  /**
    * Retrieves a `Field` entity belonging to the current document, for the
    * specified `fieldName`.
    * @param {string} fieldName

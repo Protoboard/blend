@@ -54,7 +54,7 @@ $entity.entities = $data.Tree.fromData({
         valueType: 'string',
         options: {
           primitive: 1,
-          composite: 1
+          composite: 1 // todo Rename to object
         }
       },
       '__field/keyType': {

@@ -90,7 +90,6 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    * `entitiesBefore` and `entitiesAfter`
    * @param {$data.Tree} entitiesBefore
    * @param {$data.Tree} entitiesAfter
-   * @returns {Array}
    * @returns {Array.<$entity.EntityChangeEvent>}
    */
   spawnEntityChangeEvents: function (entitiesBefore, entitiesAfter) {

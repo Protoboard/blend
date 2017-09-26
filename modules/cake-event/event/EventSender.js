@@ -26,6 +26,7 @@ $event.EventSender = $oop.getClass('$event.EventSender')
    * `EventSender` instance. Sets `sender` and `targetPaths` properties on
    * event. (Both overridable.)
    * @param {Object} properties
+   * @param {string} properties.eventName
    * @returns {$event.Event}
    */
   spawnEvent: function (properties) {
