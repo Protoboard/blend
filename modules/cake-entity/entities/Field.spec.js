@@ -97,8 +97,8 @@ describe("$entity", function () {
           .deleteNode('document.__field.foo/baz'.toPath());
         });
 
-        it("should return PrimitiveField instance", function () {
-          expect($entity.PrimitiveField.mixedBy(result)).toBeTruthy();
+        it("should return SimpleEntityChangeEventSpawner instance", function () {
+          expect($entity.SimpleEntityChangeEventSpawner.mixedBy(result)).toBeTruthy();
         });
       });
     });

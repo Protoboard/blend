@@ -75,7 +75,7 @@ $entity.Field
     })
 // primitive fields
 .forwardTo(
-    $oop.mixClass($entity.Field, $oop.getClass('$entity.PrimitiveField')),
+    $oop.mixClass($entity.Field, $oop.getClass('$entity.SimpleEntityChangeEventSpawner')),
     function (properties) {
       var fieldKey = properties && properties.entityKey;
       return fieldKey && fieldKey.getFieldType() === 'primitive';

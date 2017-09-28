@@ -1,19 +1,13 @@
 "use strict";
 
 /**
- * @function $entity.PrimitiveField.create
- * @returns {$entity.PrimitiveField}
- */
-
-/**
- * Describes a primitive field.
- * @class $entity.PrimitiveField
+ * Describes an entity that triggers a single event when changed.
+ * @class $entity.SimpleEntityChangeEventSpawner
  * @augments $entity.Entity
- * @todo Needs better name (applicable to Fields & Items)
  */
-$entity.PrimitiveField = $oop.getClass('$entity.PrimitiveField')
+$entity.SimpleEntityChangeEventSpawner = $oop.getClass('$entity.SimpleEntityChangeEventSpawner')
 .expect($oop.getClass('$entity.Entity'))
-.define(/** @lends $entity.PrimitiveField# */{
+.define(/** @lends $entity.SimpleEntityChangeEventSpawner# */{
   /**
    * Spawns a single event if there is a change in node value.
    * @param {$data.Tree} entitiesBefore
@@ -21,20 +15,23 @@ $entity.PrimitiveField = $oop.getClass('$entity.PrimitiveField')
    * @returns {Array.<$entity.EntityChangeEvent>}
    * @todo nodeBefore, nodeAfter to be passed in, not fetched.
    */
-  spawnEntityChangeEvents: function (entitiesBefore, entitiesAfter) {
-    var fieldKey = this.entityKey,
+  spawnEntityChangeEvents: function spawnEntityChangeEvents(entitiesBefore,
+      entitiesAfter
+  ) {
+    var events = spawnEntityChangeEvents.returned,
+        fieldKey = this.entityKey,
         entityPath = fieldKey.getEntityPath(),
         nodeBefore = entitiesBefore.getNode(entityPath),
         nodeAfter = entitiesAfter.getNode(entityPath);
 
     if (nodeAfter !== nodeBefore) {
-      return [this.spawnEvent({
+      return events.concat([this.spawnEvent({
         eventName: $entity.EVENT_ENTITY_CHANGE,
         entitiesBefore: entitiesBefore,
         entitiesAfter: entitiesAfter
-      })];
+      })]);
     } else {
-      return [];
+      return events;
     }
   }
 });

@@ -4,15 +4,15 @@ var $oop = window['cake-oop'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
-  describe("PrimitiveField", function () {
+  describe("SimpleEntityChangeEventSpawner", function () {
     var PrimitiveField,
         primitiveField,
         result;
 
     beforeEach(function () {
-      PrimitiveField = $oop.getClass('test.$entity.PrimitiveField.PrimitiveField')
+      PrimitiveField = $oop.getClass('test.$entity.SimpleEntityChangeEventSpawner.SimpleEntityChangeEventSpawner')
       .mix($entity.Field)
-      .mix($entity.PrimitiveField);
+      .mix($entity.SimpleEntityChangeEventSpawner);
       primitiveField = PrimitiveField.fromComponents('foo', 'bar', 'baz');
     });
 
@@ -68,11 +68,4 @@ describe("$entity", function () {
       });
     });
   });
-
-  //describe("Field", function () {
-  //  var result;
-  //
-  //  describe("create()", function () {
-  //  });
-  //});
 });
