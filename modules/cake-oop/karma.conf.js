@@ -13,7 +13,7 @@ module.exports = function (config) {
     files: [
       '../../dist/cake-assert.js',
       '../../dist/cake-oop.js',
-      '../../test/jasmine-spyOnCakeMethod.js',
+      '../../test/jasmine-spyOn.js',
       '**/*.spec.js'
     ],
 

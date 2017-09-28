@@ -91,7 +91,7 @@ describe("$entity", function () {
         result = 0;
         affectedFields = [];
 
-        jasmine.spyOnCakeMethod($entity.Field, 'spawnEntityChangeEvents')
+        spyOn($entity.Field, 'spawnEntityChangeEvents')
         .and.callFake(function () {
           affectedFields.push(this);
           return result++;
