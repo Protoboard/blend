@@ -84,48 +84,23 @@ describe("$entity", function () {
       var entitiesBefore,
           entitiesAfter,
           result,
-          primitiveFields,
-          compositeFields;
+          affectedFields;
 
       beforeEach(function () {
         document = Document.fromEntityKey('user/1'.toDocumentKey());
         result = 0;
-        primitiveFields = [];
-        compositeFields = [];
+        affectedFields = [];
 
-        spyOn($entity.Field, 'spawnEntityChangeEvents').and
-        .callFake(function () {
-          compositeFields.push(this);
-          return result++;
-        });
-        spyOn($entity.Field, 'spawnEvent').and
-        .callFake(function () {
-          primitiveFields.push(this);
+        jasmine.spyOnCakeMethod($entity.Field, 'spawnEntityChangeEvents')
+        .and.callFake(function () {
+          affectedFields.push(this);
           return result++;
         });
 
         $entity.entities
         .appendNode('document.__document'.toPath(), {
           user: {
-            fields: ['name', 'emails', 'children', 'gender']
-          }
-        })
-        .appendNode('document.__field'.toPath(), {
-          'user/emails': {
-            fieldType: 'composite',
-            valueType: 'collection'
-          },
-          'user/children': {
-            fieldType: 'composite',
-            valueType: 'collection'
-          }
-        })
-        .appendNode('document.__item'.toPath(), {
-          'user/emails': {
-            keyType: 'email'
-          },
-          'user/children': {
-            keyType: 'reference'
+            fields: ['name', 'emails', 'children', 'gender', 'age']
           }
         });
 
@@ -168,39 +143,22 @@ describe("$entity", function () {
 
       afterEach(function () {
         $entity.entities
-        .deleteNode('document.__document.user'.toPath())
-        .deleteNode('document.__field.user/emails'.toPath())
-        .deleteNode('document.__field.user/children'.toPath())
-        .deleteNode('document.__item.user/emails'.toPath())
-        .deleteNode('document.__item.user/children'.toPath());
+        .deleteNode('document.__document.user'.toPath());
       });
 
-      it("should return array of event instances", function () {
-        expect(result).toEqual([0, 1, 2, 3]);
-      });
-
-      it("should spawn event for each primitive field", function () {
-        expect($entity.Field.spawnEvent.calls.allArgs()).toEqual([
-          [{eventName: $entity.EVENT_ENTITY_CHANGE}],
-          [{eventName: $entity.EVENT_ENTITY_CHANGE}]
-        ]);
-
-        expect(primitiveFields).toEqual([
-          'user/1/name'.toField(),
-          'user/1/gender'.toField()
-        ]);
-      });
-
-      it("should invoke composite field spawners", function () {
-        expect($entity.Field.spawnEntityChangeEvents.calls.allArgs()).toEqual([
+      it("should invoke spawners", function () {
+        expect($entity.Field.spawnEntityChangeEvents.calls.allArgs())
+        .toEqual([
+          [entitiesBefore, entitiesAfter],
+          [entitiesBefore, entitiesAfter],
+          [entitiesBefore, entitiesAfter],
           [entitiesBefore, entitiesAfter],
           [entitiesBefore, entitiesAfter]
         ]);
+      });
 
-        expect(compositeFields).toEqual([
-          'user/1/emails'.toField(),
-          'user/1/children'.toField()
-        ]);
+      it("should return array of event instances", function () {
+        expect(result).toEqual([0, 1, 2, 3, 4]);
       });
     });
 

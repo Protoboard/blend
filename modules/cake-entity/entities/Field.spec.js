@@ -79,6 +79,28 @@ describe("$entity", function () {
           expect(result).toBe(field);
         });
       });
+
+      describe("when fieldType is primitive", function () {
+        beforeEach(function () {
+          $entity.entities
+          .appendNode('document.__field'.toPath(), {
+            'foo/baz': {
+              fieldType: 'primitive'
+            }
+          });
+
+          result = 'foo/bar/baz'.toField();
+        });
+
+        afterEach(function () {
+          $entity.entities
+          .deleteNode('document.__field.foo/baz'.toPath());
+        });
+
+        it("should return PrimitiveField instance", function () {
+          expect($entity.PrimitiveField.mixedBy(result)).toBeTruthy();
+        });
+      });
     });
 
     describe("getItem()", function () {
