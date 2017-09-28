@@ -30,6 +30,7 @@
     "grunt-string-replace": "^1.3.1",
     "ink-docstrap": "^1.3.0",
     "jasmine": "^2.8.0",
+    "jasmine-core": "file:jasmine-core-2.8.0.tgz",
     "karma": "^1.7.1",
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.0",

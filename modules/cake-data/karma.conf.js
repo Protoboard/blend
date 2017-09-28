@@ -15,6 +15,7 @@ module.exports = function (config) {
       '../../dist/cake-oop.js',
       '../../dist/cake-utils.js',
       '../../dist/cake-data.js',
+      '../../test/jasmine-spyOnCakeMethod.js',
       '**/*.spec.js'
     ],
 
