@@ -74,12 +74,14 @@ $entity.Document = $oop.getClass('$entity.Document')
    * @param {$data.Tree} entitiesBefore
    * @param {$data.Tree} entitiesAfter
    * @returns {Array.<$entity.EntityChangeEvent>}
+   * @todo Pass in nodeBefore & nodeAfter
    */
   spawnEntityChangeEvents: function (entitiesBefore, entitiesAfter) {
     var document = this,
         fieldNames = this.getFieldNames();
 
     // delegating event spawning to fields
+    // todo Separate primitive & composite fields for performance gain.
     return fieldNames
     .reduce(function (spawnedEvents, fieldName) {
       var events = document.getField(fieldName)
