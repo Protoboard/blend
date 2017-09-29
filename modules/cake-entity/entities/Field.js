@@ -2,6 +2,8 @@
 
 /**
  * @function $entity.Field.create
+ * @param {object} properties
+ * @param {$entity.FieldKey} properties.entityKey
  * @returns {$entity.Field}
  */
 

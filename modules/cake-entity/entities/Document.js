@@ -2,6 +2,8 @@
 
 /**
  * @function $entity.Document.create
+ * @param {object} properties
+ * @param {$entity.DocumentKey} properties.entityKey
  * @returns {$entity.Document}
  */
 
