@@ -170,47 +170,35 @@ describe("$entity", function () {
       });
 
       it("should spawn events for primitive fields", function () {
-        expect($entity.Field.spawnEvent.calls.all())
-        .toEqual([
-          {
-            object: 'user/1/name'.toField(),
-            args: [{
-              eventName: $entity.EVENT_ENTITY_CHANGE,
-              _nodeBefore: "Rick Sanchez",
-              _nodeAfter: "Pickle Rick"
-            }],
-            invocationOrder: 0,
-            returnValue: 0
-          },
-          {
-            object: 'user/1/age'.toField(),
-            args: [{
-              eventName: $entity.EVENT_ENTITY_CHANGE,
-              _nodeBefore: undefined,
-              _nodeAfter: 64
-            }],
-            invocationOrder: 1,
-            returnValue: 1
-          }
-        ]);
+        var calls = $entity.Field.spawnEvent.calls.all();
+
+        expect(calls[0].object).toEqual('user/1/name'.toField());
+        expect(calls[0].args).toEqual([{
+          eventName: $entity.EVENT_ENTITY_CHANGE,
+          _nodeBefore: "Rick Sanchez",
+          _nodeAfter: "Pickle Rick"
+        }]);
+        expect(calls[0].returnValue).toBe(0);
+
+        expect(calls[1].object).toEqual('user/1/age'.toField());
+        expect(calls[1].args).toEqual([{
+          eventName: $entity.EVENT_ENTITY_CHANGE,
+          _nodeBefore: undefined,
+          _nodeAfter: 64
+        }]);
+        expect(calls[1].returnValue).toBe(1);
       });
 
       it("should invoke spawners on composite fields", function () {
-        expect($entity.Field.spawnEntityChangeEvents.calls.all())
-        .toEqual([
-          {
-            object: 'user/1/emails'.toField(),
-            args: [entitiesBefore, entitiesAfter],
-            invocationOrder: 6,
-            returnValue: 2
-          },
-          {
-            object: 'user/1/children'.toField(),
-            args: [entitiesBefore, entitiesAfter],
-            invocationOrder: 7,
-            returnValue: 3
-          }
-        ]);
+        var calls = $entity.Field.spawnEntityChangeEvents.calls.all();
+
+        expect(calls[0].object).toEqual('user/1/emails'.toField());
+        expect(calls[0].args).toEqual([entitiesBefore, entitiesAfter]);
+        expect(calls[0].returnValue).toBe(2);
+
+        expect(calls[1].object).toEqual('user/1/children'.toField());
+        expect(calls[1].args).toEqual([entitiesBefore, entitiesAfter]);
+        expect(calls[1].returnValue).toBe(3);
       });
 
       it("should return array of event instances", function () {
