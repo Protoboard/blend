@@ -206,10 +206,11 @@ describe("$entity", function () {
       });
 
       it("should trigger change event", function () {
-        expect(triggeredEvent.eventName).toEqual($entity.EVENT_ENTITY_CHANGE);
-        expect(triggeredEvent.sender).toEqual(entity);
-        expect(triggeredEvent.getNodeBefore()).toBe(nodeBefore);
-        expect(triggeredEvent.getNodeAfter()).toBe(nodeAfter);
+        expect(triggeredEvent).toEqual(entity.spawnEvent({
+          eventName: $entity.EVENT_ENTITY_CHANGE,
+          _nodeBefore: nodeBefore,
+          _nodeAfter: nodeAfter
+        }));
       });
     });
 
