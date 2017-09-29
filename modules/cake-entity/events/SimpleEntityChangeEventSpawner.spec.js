@@ -5,15 +5,15 @@ var $oop = window['cake-oop'],
 
 describe("$entity", function () {
   describe("SimpleEntityChangeEventSpawner", function () {
-    var PrimitiveField,
-        primitiveField,
+    var SimpleEntityChangeEventSpawner,
+        simpleEntityChangeEventSpawner,
         result;
 
     beforeEach(function () {
-      PrimitiveField = $oop.getClass('test.$entity.SimpleEntityChangeEventSpawner.SimpleEntityChangeEventSpawner')
+      SimpleEntityChangeEventSpawner = $oop.getClass('test.$entity.SimpleEntityChangeEventSpawner.SimpleEntityChangeEventSpawner')
       .mix($entity.Field)
       .mix($entity.SimpleEntityChangeEventSpawner);
-      primitiveField = PrimitiveField.fromComponents('foo', 'bar', 'baz');
+      simpleEntityChangeEventSpawner = SimpleEntityChangeEventSpawner.fromComponents('foo', 'bar', 'baz');
     });
 
     describe("spawnEntityChangeEvents()", function () {
@@ -41,7 +41,7 @@ describe("$entity", function () {
             }
           });
 
-          result = primitiveField.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
         });
 
         it("should spawn single event", function () {
@@ -58,7 +58,7 @@ describe("$entity", function () {
           entitiesBefore = $data.Tree.fromData({});
           entitiesAfter = $data.Tree.fromData({});
 
-          result = primitiveField.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
         });
 
         it("should spawn single event", function () {
