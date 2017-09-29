@@ -41,7 +41,10 @@ describe("$entity", function () {
             }
           });
 
-          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(
+              entitiesBefore, entitiesAfter,
+              entitiesBefore.data.document.foo.bar.baz,
+              entitiesAfter.data.document.foo.bar.baz);
         });
 
         it("should spawn single event", function () {
@@ -58,7 +61,8 @@ describe("$entity", function () {
           entitiesBefore = $data.Tree.fromData({});
           entitiesAfter = $data.Tree.fromData({});
 
-          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(
+              entitiesBefore, entitiesAfter);
         });
 
         it("should spawn single event", function () {

@@ -268,7 +268,9 @@ describe("$entity", function () {
                   bar: nodeAfter
                 }
               }
-            }));
+            }),
+            nodeBefore,
+            nodeAfter);
       });
 
       it("should trigger spawned events", function () {

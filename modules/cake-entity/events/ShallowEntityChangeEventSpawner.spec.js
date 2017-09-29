@@ -50,7 +50,10 @@ describe("$entity", function () {
           }
         });
 
-        result = shallowEntityChangeEventSpawner.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+        result = shallowEntityChangeEventSpawner.spawnEntityChangeEvents(
+            entitiesBefore, entitiesAfter,
+            entitiesBefore.data.document.foo.bar.baz,
+            entitiesAfter.data.document.foo.bar.baz);
       });
 
       it("should spawn events", function () {

@@ -81,8 +81,8 @@ describe("$entity", function () {
     });
 
     describe("spawnEntityChangeEvents()", function () {
-      var entitiesBefore,
-          entitiesAfter,
+      var nodeBefore, nodeAfter,
+          entitiesBefore, entitiesAfter,
           result;
 
       beforeEach(function () {
@@ -123,41 +123,46 @@ describe("$entity", function () {
           }
         });
 
+        nodeBefore = {
+          name: "Rick Sanchez",
+          gender: 'male',
+          emails: {
+            "rick@rickandmortyahundredyears.com": 1,
+            "rick.sanchez@smithfamily.com": 1
+          },
+          children: {
+            'user/2': 1
+          }
+        };
         entitiesBefore = $data.Tree.fromData({
           document: {
             user: {
-              1: {
-                name: "Rick Sanchez",
-                gender: 'male',
-                emails: {
-                  "rick@rickandmortyahundredyears.com": 1,
-                  "rick.sanchez@smithfamily.com": 1
-                },
-                children: {
-                  'user/2': 1
-                }
-              }
+              1: nodeBefore
             }
           }
         });
+        nodeAfter = {
+          name: "Pickle Rick",
+          gender: 'male',
+          emails: {
+            "rick@rickandmortyahundredyears.com": 1,
+            "rick.sanchez@smithfamily.com": 1,
+            "picklerick@gazorpazorp.org": 1
+          },
+          age: 64
+        };
         entitiesAfter = $data.Tree.fromData({
           document: {
             user: {
-              1: {
-                name: "Pickle Rick",
-                gender: 'male',
-                emails: {
-                  "rick@rickandmortyahundredyears.com": 1,
-                  "rick.sanchez@smithfamily.com": 1,
-                  "picklerick@gazorpazorp.org": 1
-                },
-                age: 64
-              }
+              1: nodeAfter
             }
           }
         });
 
-        result = document.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+        result = document.spawnEntityChangeEvents(
+            entitiesBefore, entitiesAfter,
+            entitiesBefore.data.document.user[1],
+            entitiesAfter.data.document.user[1]);
       });
 
       afterEach(function () {
@@ -193,11 +198,15 @@ describe("$entity", function () {
         var calls = $entity.Field.spawnEntityChangeEvents.calls.all();
 
         expect(calls[0].object).toEqual('user/1/emails'.toField());
-        expect(calls[0].args).toEqual([entitiesBefore, entitiesAfter]);
+        expect(calls[0].args)
+        .toEqual([entitiesBefore, entitiesAfter, nodeBefore.emails,
+          nodeAfter.emails]);
         expect(calls[0].returnValue).toBe(2);
 
         expect(calls[1].object).toEqual('user/1/children'.toField());
-        expect(calls[1].args).toEqual([entitiesBefore, entitiesAfter]);
+        expect(calls[1].args)
+        .toEqual([entitiesBefore, entitiesAfter, nodeBefore.children,
+          nodeAfter.children]);
         expect(calls[1].returnValue).toBe(3);
       });
 
