@@ -149,6 +149,20 @@ describe("$entity", function () {
       });
     });
 
+    describe("getChildKey()", function () {
+      beforeEach(function () {
+        result = fieldKey.getChildKey('quux');
+      });
+
+      it("should return an ItemKey", function () {
+        expect($entity.ItemKey.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should return item in collection", function () {
+        expect(result).toEqual('foo/bar/baz/quux'.toItemKey());
+      });
+    });
+
     describe("getEntityPath()", function () {
       beforeEach(function () {
         result = fieldKey.getEntityPath();
@@ -168,16 +182,20 @@ describe("$entity", function () {
     });
 
     describe("getItemKey()", function () {
+      var itemKey;
+
       beforeEach(function () {
-        result = fieldKey.getItemKey('quux');
+        itemKey = {};
+        spyOn(fieldKey, 'getChildKey').and.returnValue(itemKey);
+        result = fieldKey.getItemKey('baz');
       });
 
-      it("should return an ItemKey", function () {
-        expect($entity.ItemKey.mixedBy(result)).toBeTruthy();
+      it("should invoke getChildKey()", function () {
+        expect(fieldKey.getChildKey).toHaveBeenCalledWith('baz');
       });
 
-      it("should return item in collection", function () {
-        expect(result).toEqual('foo/bar/baz/quux'.toItemKey());
+      it("should return child key", function () {
+        expect(result).toBe(itemKey);
       });
     });
 

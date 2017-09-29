@@ -93,6 +93,19 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
 
   /**
    * @inheritDoc
+   * @param {string} childId
+   * @returns {$entity.FieldKey}
+   */
+  getChildKey: function (childId) {
+    return $entity.FieldKey.fromComponents(
+        this.documentType,
+        this.documentId,
+        childId
+    );
+  },
+
+  /**
+   * @inheritDoc
    * @returns {$data.Path}
    */
   getEntityPath: function () {
@@ -110,11 +123,7 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
    * @returns {$entity.FieldKey}
    */
   getFieldKey: function (fieldName) {
-    return $entity.FieldKey.fromComponents(
-        this.documentType,
-        this.documentId,
-        fieldName
-    );
+    return this.getChildKey(fieldName);
   },
 
   /**

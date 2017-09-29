@@ -175,7 +175,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("setPrimitiveNode", function () {
+    describe("setPrimitiveNode()", function () {
       var documentKey,
           documentPath,
           triggeredEvent,
@@ -213,7 +213,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("setNode", function () {
+    describe("setNode()", function () {
       var documentKey,
           documentPath,
           eventsToBeTriggered,
@@ -272,6 +272,25 @@ describe("$entity", function () {
 
       it("should trigger spawned events", function () {
         expect(triggeredEvents).toEqual(eventsToBeTriggered);
+      });
+    });
+
+    describe("getChildEntity()", function () {
+      var fieldKey;
+
+      beforeEach(function () {
+        fieldKey = 'foo/bar/baz'.toFieldKey();
+        spyOn(entity.entityKey, 'getChildKey').and.returnValue(fieldKey);
+        result = entity.getChildEntity('baz');
+      });
+
+      it("should retrieve child key", function () {
+        expect(entity.entityKey.getChildKey).toHaveBeenCalledWith('baz');
+      });
+
+      it("should return an entity with child key", function () {
+        expect($entity.Entity.mixedBy(result)).toBeTruthy();
+        expect(result.entityKey).toBe(fieldKey);
       });
     });
   });

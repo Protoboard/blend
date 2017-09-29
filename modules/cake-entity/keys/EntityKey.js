@@ -53,6 +53,15 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    * @returns {$entity.DocumentKey}
    * @abstract
    */
+
+  /**
+   * Retrieves a key to the child entity identified by `childId`
+   * @function $entity.EntityKey#getChildKey
+   * @param {string} childId
+   * @returns {$entity.EntityKey}
+   * @abstract
+   * @todo Farm out to ParentEntityKey interface.
+   */
 });
 
 $oop.getClass('$data.Path')

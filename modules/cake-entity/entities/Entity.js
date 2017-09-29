@@ -142,6 +142,17 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     }
 
     return this;
+  },
+
+  /**
+   * Retrieves the child entity identified by `childId`.
+   * @param {string} childId
+   * @returns {$entity.Entity}
+   * @todo Farm out to ParentEntity mixin.
+   */
+  getChildEntity: function (childId) {
+    var childKey = this.entityKey.getChildKey(childId);
+    return $entity.Entity.fromEntityKey(childKey);
   }
 });
 
