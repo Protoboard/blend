@@ -83,17 +83,18 @@ describe("$entity", function () {
     describe("spawnEntityChangeEvents()", function () {
       var entitiesBefore,
           entitiesAfter,
-          result,
-          affectedFields;
+          result;
 
       beforeEach(function () {
-        document = Document.fromEntityKey('user/1'.toDocumentKey());
+        document = 'user/1'.toDocument();
         result = 0;
-        affectedFields = [];
 
+        spyOn($entity.Field, 'spawnEvent')
+        .and.callFake(function () {
+          return result++;
+        });
         spyOn($entity.Field, 'spawnEntityChangeEvents')
         .and.callFake(function () {
-          affectedFields.push(this);
           return result++;
         });
 
@@ -102,9 +103,27 @@ describe("$entity", function () {
           user: {
             fields: ['name', 'emails', 'children', 'gender', 'age']
           }
+        })
+        .appendNode('document.__field'.toPath(), {
+          'user/emails': {
+            fieldType: 'composite',
+            valueType: 'collection'
+          },
+          'user/children': {
+            fieldType: 'composite',
+            valueType: 'collection'
+          }
+        })
+        .appendNode('document.__item'.toPath(), {
+          'user/emails': {
+            keyType: 'email'
+          },
+          'user/children': {
+            keyType: 'reference'
+          }
         });
 
-        entitiesBefore = $data.Tree.create({
+        entitiesBefore = $data.Tree.fromData({
           document: {
             user: {
               1: {
@@ -121,7 +140,7 @@ describe("$entity", function () {
             }
           }
         });
-        entitiesAfter = $data.Tree.create({
+        entitiesAfter = $data.Tree.fromData({
           document: {
             user: {
               1: {
@@ -143,22 +162,59 @@ describe("$entity", function () {
 
       afterEach(function () {
         $entity.entities
-        .deleteNode('document.__document.user'.toPath());
+        .deleteNode('document.__document.user'.toPath())
+        .deleteNode('document.__field.user/emails'.toPath())
+        .deleteNode('document.__field.user/children'.toPath())
+        .deleteNode('document.__item.user/emails'.toPath())
+        .deleteNode('document.__item.user/children'.toPath());
       });
 
-      it("should invoke spawners", function () {
-        expect($entity.Field.spawnEntityChangeEvents.calls.allArgs())
+      it("should spawn events for primitive fields", function () {
+        expect($entity.Field.spawnEvent.calls.all())
         .toEqual([
-          [entitiesBefore, entitiesAfter],
-          [entitiesBefore, entitiesAfter],
-          [entitiesBefore, entitiesAfter],
-          [entitiesBefore, entitiesAfter],
-          [entitiesBefore, entitiesAfter]
+          {
+            object: 'user/1/name'.toField(),
+            args: [{
+              eventName: $entity.EVENT_ENTITY_CHANGE,
+              _nodeBefore: "Rick Sanchez",
+              _nodeAfter: "Pickle Rick"
+            }],
+            invocationOrder: 0,
+            returnValue: 0
+          },
+          {
+            object: 'user/1/age'.toField(),
+            args: [{
+              eventName: $entity.EVENT_ENTITY_CHANGE,
+              _nodeBefore: undefined,
+              _nodeAfter: 64
+            }],
+            invocationOrder: 1,
+            returnValue: 1
+          }
+        ]);
+      });
+
+      it("should invoke spawners on composite fields", function () {
+        expect($entity.Field.spawnEntityChangeEvents.calls.all())
+        .toEqual([
+          {
+            object: 'user/1/emails'.toField(),
+            args: [entitiesBefore, entitiesAfter],
+            invocationOrder: 6,
+            returnValue: 2
+          },
+          {
+            object: 'user/1/children'.toField(),
+            args: [entitiesBefore, entitiesAfter],
+            invocationOrder: 7,
+            returnValue: 3
+          }
         ]);
       });
 
       it("should return array of event instances", function () {
-        expect(result).toEqual([0, 1, 2, 3, 4]);
+        expect(result).toEqual([0, 1, 2, 3]);
       });
     });
 

@@ -44,11 +44,15 @@ $entity.ShallowEntityChangeEventSpawner = $oop.getClass('$entity.ShallowEntityCh
 
     // adding separate events about changed properties
     propertyNamesRemain.toCollection()
+    // Here we're assuming that items are always primitive. Which they are
+    // ATM, but if this changes in the future, this section must be changed.
     .filter(function (propertyName) {
       return nodeAfter[propertyName] !== nodeBefore[propertyName];
     })
-    // todo Delegate to items.
     .forEachItem(function (propertyName) {
+      // This deliberately duplicates
+      // SimpleEntityChangeEventSpawner#spawnEntityChangeEvents for performance
+      // reasons.
       var childEntity = that.getChildEntity(propertyName);
       events.push(childEntity.spawnEvent({
         eventName: $entity.EVENT_ENTITY_CHANGE,

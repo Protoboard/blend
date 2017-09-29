@@ -76,18 +76,48 @@ $entity.Document = $oop.getClass('$entity.Document')
    * @returns {Array.<$entity.EntityChangeEvent>}
    * @todo Pass in nodeBefore & nodeAfter
    */
-  spawnEntityChangeEvents: function (entitiesBefore, entitiesAfter) {
-    var document = this,
-        fieldNames = this.getFieldNames();
+  spawnEntityChangeEvents: function spawnEntityChangeEvents(entitiesBefore,
+      entitiesAfter
+  ) {
+    var events = spawnEntityChangeEvents.returned,
+        document = this,
+        documentKey = this.entityKey,
+        documentType = documentKey.documentType,
+        entityPath = documentKey.getEntityPath(),
+        nodeBefore = entitiesBefore.getNode(entityPath) || {},
+        nodeAfter = entitiesAfter.getNode(entityPath) || {},
+        fieldTypeIndex = $entity.FieldTypeIndex.create(),
+        primitiveFieldNames = fieldTypeIndex
+        .getFieldNamesByFieldType(documentType, 'primitive'),
+        compositeFieldNames = fieldTypeIndex
+        .getFieldNamesByFieldType(documentType, 'composite');
 
-    // delegating event spawning to fields
-    // todo Separate primitive & composite fields for performance gain.
-    return fieldNames
-    .reduce(function (spawnedEvents, fieldName) {
-      var events = document.getField(fieldName)
-      .spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
-      return spawnedEvents.concat(events);
-    }, []);
+    // adding events for primitive fields
+    primitiveFieldNames
+    .filter(function (fieldName) {
+      return nodeAfter[fieldName] !== nodeBefore[fieldName];
+    })
+    .forEach(function (fieldName) {
+      // This deliberately duplicates
+      // SimpleEntityChangeEventSpawner#spawnEntityChangeEvents for
+      // performance reasons.
+      var field = document.getField(fieldName);
+      events.push(field.spawnEvent({
+        eventName: $entity.EVENT_ENTITY_CHANGE,
+        _nodeBefore: nodeBefore[fieldName],
+        _nodeAfter: nodeAfter[fieldName]
+      }));
+    });
+
+    // delegating spawning to composite fields
+    compositeFieldNames
+    .forEach(function (fieldName) {
+      var field = document.getField(fieldName),
+          fieldEvents = field.spawnEntityChangeEvents(entitiesBefore, entitiesAfter);
+      events = events.concat(fieldEvents);
+    });
+
+    return events;
   },
 
   /**

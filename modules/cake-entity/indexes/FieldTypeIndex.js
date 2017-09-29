@@ -100,7 +100,7 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
    * Retrieves a list of field attribute references matching the specified
    * `documentType` and `fieldType`.
    * @param {string} fieldType Either 'primitive' or 'composite'.
-   * @returns {Array.<reference>} List of field names
+   * @returns {Array.<string>} List of field names
    */
   getFieldRefsByFieldType: function (fieldType) {
     var indexPath = $data.Path.fromComponents([
