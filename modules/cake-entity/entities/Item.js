@@ -8,11 +8,14 @@
  */
 
 /**
+ * Items are expected to be primitive.
  * @class $entity.Item
  * @extends $entity.Entity
+ * @mixes $entity.SimpleEntityChangeEventSpawner
  */
 $entity.Item = $oop.getClass('$entity.Item')
 .mix($oop.getClass('$entity.Entity'))
+.mix($oop.getClass('$entity.SimpleEntityChangeEventSpawner'))
 .define(/** @lends $entity.Item# */{
   /**
    * @inheritDoc
