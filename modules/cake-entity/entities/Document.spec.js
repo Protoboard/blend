@@ -144,9 +144,7 @@ describe("$entity", function () {
           age: 64
         };
 
-        result = document.spawnEntityChangeEvents(
-            nodeBefore,
-            nodeAfter);
+        result = document.spawnEntityChangeEvents(nodeBefore, nodeAfter);
       });
 
       afterEach(function () {
@@ -194,6 +192,15 @@ describe("$entity", function () {
 
       it("should return array of event instances", function () {
         expect(result).toEqual([0, 1, 2, 3]);
+      });
+
+      describe("when fields attribute is not documented", function () {
+        it("should not throw", function () {
+          expect(function () {
+            'foo/bar'.toDocument()
+            .spawnEntityChangeEvents(nodeBefore, nodeAfter);
+          }).not.toThrow();
+        });
       });
     });
 

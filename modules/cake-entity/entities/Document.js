@@ -84,16 +84,16 @@ $entity.Document = $oop.getClass('$entity.Document')
         documentType = documentKey.documentType,
         fieldTypeIndex = $entity.FieldTypeIndex.create(),
         primitiveFieldNames = fieldTypeIndex
-        .getFieldNamesByFieldType(documentType, 'primitive'),
+        .getFieldNamesByFieldType(documentType, 'primitive') || [],
         compositeFieldNames = fieldTypeIndex
-        .getFieldNamesByFieldType(documentType, 'composite');
-
-    // todo Falling back when documentType:fields is not documented.
+        .getFieldNamesByFieldType(documentType, 'composite') || [];
 
     // adding events for primitive fields
     primitiveFieldNames
     .filter(function (fieldName) {
-      return nodeAfter[fieldName] !== nodeBefore[fieldName];
+      var fieldBefore = nodeBefore && nodeBefore[fieldName],
+          fieldAfter = nodeAfter && nodeAfter[fieldName];
+      return fieldAfter !== fieldBefore;
     })
     .forEach(function (fieldName) {
       // This deliberately duplicates
