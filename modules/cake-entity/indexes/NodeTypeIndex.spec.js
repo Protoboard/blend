@@ -4,9 +4,9 @@ var $oop = window['cake-oop'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
-  describe("FieldTypeIndex", function () {
-    var FieldTypeIndex,
-        fieldTypeIndex,
+  describe("NodeTypeIndex", function () {
+    var NodeTypeIndex,
+        nodeTypeIndex,
         result;
 
     beforeEach(function () {
@@ -14,11 +14,11 @@ describe("$entity", function () {
       .deleteNode('__fieldName.byFieldType'.toPath())
       .deleteNode('__fieldRef.byFieldType'.toPath());
 
-      delete $oop.Class.classByClassId['test.$entity.FieldTypeIndex.FieldTypeIndex'];
-      FieldTypeIndex = $oop.getClass('test.$entity.FieldTypeIndex.FieldTypeIndex')
-      .mix($entity.FieldTypeIndex);
+      delete $oop.Class.classByClassId['test.$entity.NodeTypeIndex.NodeTypeIndex'];
+      NodeTypeIndex = $oop.getClass('test.$entity.NodeTypeIndex.NodeTypeIndex')
+      .mix($entity.NodeTypeIndex);
 
-      fieldTypeIndex = FieldTypeIndex.create();
+      nodeTypeIndex = NodeTypeIndex.create();
     });
 
     describe("create()", function () {
@@ -69,7 +69,7 @@ describe("$entity", function () {
 
     describe("getFieldRefsByFieldType()", function () {
       beforeEach(function () {
-        result = $entity.FieldTypeIndex.create()
+        result = $entity.NodeTypeIndex.create()
         .getFieldRefsByFieldType('leaf');
       });
 
@@ -87,7 +87,7 @@ describe("$entity", function () {
 
     describe("getFieldNamesByFieldType()", function () {
       beforeEach(function () {
-        result = $entity.FieldTypeIndex.create()
+        result = $entity.NodeTypeIndex.create()
         .getFieldNamesByFieldType('__field', 'leaf');
       });
 

@@ -1,30 +1,29 @@
 "use strict";
 
 /**
- * @function $entity.FieldTypeIndex.create
- * @returns {$entity.FieldTypeIndex}
+ * @function $entity.NodeTypeIndex.create
+ * @returns {$entity.NodeTypeIndex}
  */
 
 /**
  * Maintains a lookup of field references by document type and field type.
- * @class $entity.FieldTypeIndex
+ * @class $entity.NodeTypeIndex
  * @todo Create nodeType enum for documentation.
- * @todo Rename
  */
-$entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
+$entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
 .mix($oop.Singleton)
-.define(/** @lends $entity.FieldTypeIndex# */{
+.define(/** @lends $entity.NodeTypeIndex# */{
   /** @ignore */
   init: function () {
-    this._initFieldTypeIndex();
+    this._initNodeTypeIndex();
   },
 
   /** @private */
-  _initFieldTypeIndex: function () {
+  _initNodeTypeIndex: function () {
     // querying all nodeType paths
     var that = this,
         fieldsQuery = $data.Query.fromString('document.__document.*.fields.*'),
-        compositeFieldsQuery = $data.Query.fromString('document.__field.*.nodeType:branch'),
+        branchFieldsQuery = $data.Query.fromString('document.__field.*.nodeType:branch'),
 
         // attribute ref:key lookup for all documented fields
         fieldAttributeKeys = $entity.entities.queryPathNodePairs(fieldsQuery)
@@ -36,7 +35,7 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
         .toCollection(),
 
         // attribute ref:ref lookup for all fields documented as branch nodes
-        compositeFieldRefs = $entity.entities.queryPathsWrapped(compositeFieldsQuery)
+        branchFieldRefs = $entity.entities.queryPathsWrapped(branchFieldsQuery)
         .mapValues(function (path) {
           return path.components[2];
         })
@@ -47,7 +46,7 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
 
     // processing field types
     // a) adding branch node fields
-    compositeFieldRefs
+    branchFieldRefs
     .join(fieldAttributeKeys)
     .forEachItem(function (fieldAttributeKey, fieldAttributeRef) {
       var documentType = fieldAttributeKey.documentType,
@@ -73,7 +72,7 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
   /**
    * @param {string} nodeType
    * @param {reference} fieldRef
-   * @returns {$entity.FieldTypeIndex}
+   * @returns {$entity.NodeTypeIndex}
    * @private
    */
   _addFieldRef: function (nodeType, fieldRef) {
@@ -87,7 +86,7 @@ $entity.FieldTypeIndex = $oop.getClass('$entity.FieldTypeIndex')
    * @param {string} nodeType
    * @param {string} documentType
    * @param {reference} fieldName
-   * @returns {$entity.FieldTypeIndex}
+   * @returns {$entity.NodeTypeIndex}
    * @private
    */
   _addFieldName: function (nodeType, documentType, fieldName) {

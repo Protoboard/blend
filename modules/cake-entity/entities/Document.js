@@ -82,14 +82,14 @@ $entity.Document = $oop.getClass('$entity.Document')
         document = this,
         documentKey = this.entityKey,
         documentType = documentKey.documentType,
-        fieldTypeIndex = $entity.FieldTypeIndex.create(),
-        primitiveFieldNames = fieldTypeIndex
+        nodeTypeIndex = $entity.NodeTypeIndex.create(),
+        leafFieldNames = nodeTypeIndex
         .getFieldNamesByFieldType(documentType, 'leaf') || [],
-        compositeFieldNames = fieldTypeIndex
+        branchFieldNames = nodeTypeIndex
         .getFieldNamesByFieldType(documentType, 'branch') || [];
 
     // adding events for leaf node fields
-    primitiveFieldNames
+    leafFieldNames
     .filter(function (fieldName) {
       var fieldBefore = nodeBefore && nodeBefore[fieldName],
           fieldAfter = nodeAfter && nodeAfter[fieldName];
@@ -108,7 +108,7 @@ $entity.Document = $oop.getClass('$entity.Document')
     });
 
     // delegating spawning to branch node fields
-    compositeFieldNames
+    branchFieldNames
     .forEach(function (fieldName) {
       var field = document.getField(fieldName),
           fieldEvents = field.spawnEntityChangeEvents(
