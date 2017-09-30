@@ -10,7 +10,7 @@
  *     $entity.AttributeDocumentKey.fromDocumentIdComponents('__field',
  *     ['user', 'gender']);
  * $entity.entities.appendNode(attributeDocumentKey.getEntityPath(), {
- *   fieldType: 'primitive'
+ *   nodeType: 'leaf'
  * });
  */
 $entity.entities = $data.Tree.fromData({
@@ -24,7 +24,7 @@ $entity.entities = $data.Tree.fromData({
       },
       __field: {
         fields: [
-          'fieldType',
+          'nodeType',
           'valueType',
           'keyType', // todo Remove?
           'options' // todo Rename to valueOptions
@@ -50,11 +50,11 @@ $entity.entities = $data.Tree.fromData({
         valueType: 'collection'
       },
 
-      '__field/fieldType': {
+      '__field/nodeType': {
         valueType: 'string',
         options: {
-          primitive: 1,
-          composite: 1 // todo Rename to object
+          leaf: 1, // default
+          branch: 1
         }
       },
       '__field/keyType': {
@@ -74,7 +74,7 @@ $entity.entities = $data.Tree.fromData({
         }
       },
       '__field/options': {
-        fieldType: 'composite',
+        nodeType: 'branch',
         valueType: 'collection'
       },
 
@@ -93,23 +93,23 @@ $entity.entities = $data.Tree.fromData({
         }
       },
       '__item/options': {
-        fieldType: 'composite',
+        nodeType: 'branch',
         valueType: 'collection'
       }
 
       //// Sample fields
       //'user/name': {
-      //  /** Field contains primitive */
+      //  /** Field contains string */
       //  valueType: 'string'
       //},
       //'user/emails': {
       //  /** Field contains collection */
-      //  fieldType: 'composite',
+      //  nodeType: 'branch',
       //  valueType: 'collection'
       //},
       //'user/friends': {
       //  /** Field contains collection */
-      //  fieldType: 'composite',
+      //  nodeType: 'branch',
       //  valueType: 'collection'
       //}
     },

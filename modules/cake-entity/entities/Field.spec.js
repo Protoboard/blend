@@ -55,7 +55,7 @@ describe("$entity", function () {
         .toEqual([
           'entity.document.foo.bar.baz'.toPath(),
           'entity.document.__field.foo/baz'.toPath(),
-          "entity.document.__field.__field/fieldType.options.primitive".toPath()
+          "entity.document.__field.__field/nodeType.options.leaf".toPath()
         ]);
       });
 
@@ -80,12 +80,12 @@ describe("$entity", function () {
         });
       });
 
-      describe("when fieldType is primitive", function () {
+      describe("when nodeType is leaf", function () {
         beforeEach(function () {
           $entity.entities
           .appendNode('document.__field'.toPath(), {
             'foo/baz': {
-              fieldType: 'primitive'
+              nodeType: 'leaf'
             }
           });
 

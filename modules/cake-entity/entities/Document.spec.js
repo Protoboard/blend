@@ -105,11 +105,11 @@ describe("$entity", function () {
         })
         .appendNode('document.__field'.toPath(), {
           'user/emails': {
-            fieldType: 'composite',
+            nodeType: 'branch',
             valueType: 'collection'
           },
           'user/children': {
-            fieldType: 'composite',
+            nodeType: 'branch',
             valueType: 'collection'
           }
         })
@@ -156,7 +156,7 @@ describe("$entity", function () {
         .deleteNode('document.__item.user/children'.toPath());
       });
 
-      it("should spawn events for primitive fields", function () {
+      it("should spawn events for leaf node fields", function () {
         var calls = $entity.Field.spawnEvent.calls.all();
 
         expect(calls[0].object).toEqual('user/1/name'.toField());
@@ -176,7 +176,7 @@ describe("$entity", function () {
         expect(calls[1].returnValue).toBe(1);
       });
 
-      it("should invoke spawners on composite fields", function () {
+      it("should invoke spawners on branch node fields", function () {
         var calls = $entity.Field.spawnEntityChangeEvents.calls.all();
 
         expect(calls[0].object).toEqual('user/1/emails'.toField());

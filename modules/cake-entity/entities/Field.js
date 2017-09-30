@@ -48,7 +48,7 @@ $entity.Field = $oop.getClass('$entity.Field')
         attributeDocumentKey = fieldKey.getAttributeDocumentKey(),
         attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
         .clone().unshift('entity'),
-        fieldTypeKey = fieldKey.getFieldTypeKey(),
+        fieldTypeKey = fieldKey.getNodeTypeKey(),
         fieldTypePath = fieldTypeKey.getEntityPath().clone().unshift('entity');
 
     this.listeningPath = fieldEventPath;
@@ -75,12 +75,12 @@ $entity.Field
       var entityKey = properties.entityKey;
       return $utils.StringifyCached.mixedBy(entityKey);
     })
-// primitive fields
+// leaf node fields
 .forwardTo(
     $oop.mixClass($entity.Field, $oop.getClass('$entity.SimpleEntityChangeEventSpawner')),
     function (properties) {
       var fieldKey = properties && properties.entityKey;
-      return fieldKey && fieldKey.getFieldType() === 'primitive';
+      return fieldKey && fieldKey.getNodeType() === 'leaf';
     });
 
 $oop.getClass('$entity.Entity')

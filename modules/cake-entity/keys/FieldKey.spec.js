@@ -199,46 +199,46 @@ describe("$entity", function () {
       });
     });
 
-    describe("getFieldType()", function () {
+    describe("getNodeType()", function () {
       var attributeKey;
 
       beforeEach(function () {
         attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
-            '__field', ['user', 'name']).getFieldKey('fieldType');
+            '__field', ['user', 'name']).getFieldKey('nodeType');
         $entity.entities.setNode(attributeKey.getEntityPath(), 'foo');
 
-        result = 'user/1/name'.toFieldKey().getFieldType();
+        result = 'user/1/name'.toFieldKey().getNodeType();
       });
 
       afterEach(function () {
         $entity.entities.deleteNode(attributeKey.getEntityPath());
       });
 
-      it("should retrieve fieldType attribute", function () {
+      it("should retrieve nodeType attribute", function () {
         expect(result).toBe('foo');
       });
 
-      describe("when no fieldType is set for field", function () {
+      describe("when no nodeType is set for field", function () {
         beforeEach(function () {
           $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = 'user/1/name'.toFieldKey().getFieldType();
+          result = 'user/1/name'.toFieldKey().getNodeType();
         });
 
         it("should return default", function () {
-          expect(result).toBe('primitive');
+          expect(result).toBe('leaf');
         });
       });
     });
 
-    describe("getFieldTypeKey()", function () {
+    describe("getNodeTypeKey()", function () {
       beforeEach(function () {
-        spyOn(fieldKey, 'getFieldType').and.returnValue('FOO');
-        result = fieldKey.getFieldTypeKey();
+        spyOn(fieldKey, 'getNodeType').and.returnValue('FOO');
+        result = fieldKey.getNodeTypeKey();
       });
 
-      it("should return key to fieldType", function () {
+      it("should return key to nodeType", function () {
         expect(result)
-        .toEqual("__field/__field\\/fieldType/options/FOO".toItemKey());
+        .toEqual("__field/__field\\/nodeType/options/FOO".toItemKey());
       });
     });
 

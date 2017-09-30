@@ -117,13 +117,12 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
-   * Sets specified *primitive* node as new value for the current entity,
-   * and triggers change event for the current entity only. Primitive nodes
-   * are considered *non-object* nodes.
+   * Sets specified *leaf* node as new value for the current entity,
+   * and triggers change event for the current entity only.
    * @param {*} node
    * @returns {$entity.Entity}
    */
-  setPrimitiveNode: function (node) {
+  setNodeAsLeaf: function (node) {
     var nodeBefore = this.getSilentNode(),
         entityPath = this.entityKey.getEntityPath();
 

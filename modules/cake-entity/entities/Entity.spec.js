@@ -175,7 +175,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("setPrimitiveNode()", function () {
+    describe("setNodeAsLeaf()", function () {
       var documentKey,
           documentPath,
           nodeBefore,
@@ -190,7 +190,7 @@ describe("$entity", function () {
         spyOn($entity.EntityChangeEvent, 'trigger');
         $entity.entities.setNode(documentPath, nodeBefore);
 
-        result = entity.setPrimitiveNode(nodeAfter);
+        result = entity.setNodeAsLeaf(nodeAfter);
       });
 
       it("should return self", function () {

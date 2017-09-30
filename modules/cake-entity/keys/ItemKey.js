@@ -128,7 +128,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
    * @todo Move to CollectionFieldKey?
    */
   getItemType: function () {
-    return this.getAttribute('itemType') || 'primitive';
+    return this.getAttribute('itemType') || 'leaf';
   },
 
   /**
@@ -152,7 +152,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
    * @todo Move to CollectionFieldKey?
    */
   getItemIdType: function () {
-    return this.getAttribute('itemIdType') || 'primitive';
+    return this.getAttribute('itemIdType') || 'leaf';
   },
 
   /**

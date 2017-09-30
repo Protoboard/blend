@@ -24,13 +24,13 @@ describe("$entity", function () {
     describe("create()", function () {
       it("should add fieldRef entries", function () {
         expect($entity.index.data.__fieldRef.byFieldType).toEqual({
-          "composite": {
+          "branch": {
             "__field/options": 1,
             "__item/options": 1
           },
-          "primitive": {
+          "leaf": {
             "__document/fields": 1,
-            "__field/fieldType": 1,
+            "__field/nodeType": 1,
             "__field/keyType": 1,
             "__field/valueType": 1,
             "__item/keyType": 1,
@@ -41,7 +41,7 @@ describe("$entity", function () {
 
       it("should add fieldName entries", function () {
         expect($entity.index.data.__fieldName.byFieldType).toEqual({
-          "composite": {
+          "branch": {
             "__field": {
               "options": 1
             },
@@ -49,12 +49,12 @@ describe("$entity", function () {
               "options": 1
             }
           },
-          "primitive": {
+          "leaf": {
             "__document": {
               "fields": 1
             },
             "__field": {
-              "fieldType": 1,
+              "nodeType": 1,
               "keyType": 1,
               "valueType": 1
             },
@@ -70,13 +70,13 @@ describe("$entity", function () {
     describe("getFieldRefsByFieldType()", function () {
       beforeEach(function () {
         result = $entity.FieldTypeIndex.create()
-        .getFieldRefsByFieldType('primitive');
+        .getFieldRefsByFieldType('leaf');
       });
 
       it("should return field references", function () {
         expect(result.sort()).toEqual([
           "__document/fields",
-          "__field/fieldType",
+          "__field/nodeType",
           "__field/keyType",
           "__field/valueType",
           "__item/keyType",
@@ -88,12 +88,12 @@ describe("$entity", function () {
     describe("getFieldNamesByFieldType()", function () {
       beforeEach(function () {
         result = $entity.FieldTypeIndex.create()
-        .getFieldNamesByFieldType('__field', 'primitive');
+        .getFieldNamesByFieldType('__field', 'leaf');
       });
 
       it("should return field references", function () {
         expect(result.sort()).toEqual([
-          "fieldType",
+          "nodeType",
           "keyType",
           "valueType"
         ].sort());

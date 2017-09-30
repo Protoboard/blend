@@ -8,7 +8,7 @@
  */
 
 /**
- * Items are expected to be primitive.
+ * Items are always treated like leaf nodes.
  * @class $entity.Item
  * @extends $entity.Entity
  * @mixes $entity.SimpleEntityChangeEventSpawner

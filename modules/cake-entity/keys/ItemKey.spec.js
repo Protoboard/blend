@@ -196,7 +196,7 @@ describe("$entity", function () {
         });
 
         it("should return default", function () {
-          expect(result).toBe('primitive');
+          expect(result).toBe('leaf');
         });
       });
     });
@@ -242,7 +242,7 @@ describe("$entity", function () {
         });
 
         it("should return default", function () {
-          expect(result).toBe('primitive');
+          expect(result).toBe('leaf');
         });
       });
     });

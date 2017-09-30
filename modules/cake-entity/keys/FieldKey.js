@@ -14,7 +14,7 @@
  * @extends $entity.EntityKey
  * @mixes $entity.ValueKey
  * @implements $utils.Stringifiable
- * @todo Cache attributeDocumentKey, fieldType, fieldTypeKey
+ * @todo Cache attributeDocumentKey, nodeType, nodeTypeKey
  */
 $entity.FieldKey = $oop.getClass('$entity.FieldKey')
 .mix($oop.getClass('$entity.EntityKey'))
@@ -139,23 +139,25 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   /**
    * Retrieves *value type* attribute for the current field entity.
    * @returns {string}
+   * @todo Move to $entity.EntityKey
    */
-  getFieldType: function () {
-    return this.getAttribute('fieldType') || 'primitive';
+  getNodeType: function () {
+    return this.getAttribute('nodeType') || 'leaf';
   },
 
   /**
    * Retrieves an attribute entity key identifying the *value type* attribute
    * for the current field entity in the entity store.
    * @returns {$entity.ItemKey}
+   * @todo Move to $entity.EntityKey
    */
-  getFieldTypeKey: function () {
-    var fieldType = this.getFieldType();
+  getNodeTypeKey: function () {
+    var nodeType = this.getNodeType();
     return this.getAttributeDocumentKey()
-    .getFieldKey('fieldType')
+    .getFieldKey('nodeType')
     .getAttributeDocumentKey()
     .getFieldKey('options')
-    .getItemKey(fieldType);
+    .getItemKey(nodeType);
   },
 
   /**

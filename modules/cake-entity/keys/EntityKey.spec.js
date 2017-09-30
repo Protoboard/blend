@@ -67,7 +67,7 @@ describe("$entity", function () {
         $entity.entities.deleteNode(attributeKey.getEntityPath());
       });
 
-      it("should retrieve fieldType attribute", function () {
+      it("should retrieve nodeType attribute", function () {
         expect(result).toBe('bar');
       });
     });

@@ -4,6 +4,7 @@
  * Describes an entity that triggers a single event when changed.
  * @class $entity.SimpleEntityChangeEventSpawner
  * @augments $entity.Entity
+ * @todo Rename
  */
 $entity.SimpleEntityChangeEventSpawner = $oop.getClass('$entity.SimpleEntityChangeEventSpawner')
 .expect($oop.getClass('$entity.Entity'))
