@@ -31,6 +31,26 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
+   * Extracts a node of affected properties reflecting the entity's current
+   * state.
+   * @param {Object} nodeAfter
+   * @returns {Object}
+   * @private
+   * @todo Need a faster way of filtering properties. (Collection#filterByKeys?)
+   */
+  _extractNodeBeforeForAppend: function (nodeAfter) {
+    var nodeBefore = this.getSilentNode();
+
+    return $data.Collection.fromData(nodeAfter)
+    .mapValues(function (value, key) {
+      return key;
+    })
+    .toStringCollection()
+    .join($data.Collection.fromData(nodeBefore))
+        .data;
+  },
+
+  /**
    * Retrieves data node associated with the current entity.
    * @returns {*}
    */
@@ -122,7 +142,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
 
   /**
    * Sets specified node as new value for the current entity, and
-   * triggers change events for all affected child entities.
+   * triggers change events for all affected entities.
    * @param {*} node
    * @returns {$entity.Entity}
    */
@@ -135,6 +155,47 @@ $entity.Entity = $oop.getClass('$entity.Entity')
       $entity.entities.setNode(entityPath, node);
 
       events = this.spawnEntityChangeEvents(nodeBefore, node);
+      $data.Collection.fromData(events)
+      .callOnEachValue('trigger');
+    }
+
+    return this;
+  },
+
+  /**
+   * Appends properties of the specified node to those of the current
+   * entity, and triggers change events for all affected entities. Second
+   * degree children and beyond will be overwritten just like in
+   * {@link $entity.Entity#setNode}.
+   * @param {Object} node
+   * @returns {$entity.Entity}
+   * @todo Add removal counterpart
+   */
+  appendNode: function (node) {
+    var entityPath = this.entityKey.getEntityPath(),
+        nodeBefore = this._extractNodeBeforeForAppend(node),
+        events;
+
+    $entity.entities.appendNode(entityPath, node);
+    events = this.spawnEntityChangeEvents(nodeBefore, node);
+    $data.Collection.fromData(events)
+    .callOnEachValue('trigger');
+
+    return this;
+  },
+
+  /**
+   * Deletes current entity node and triggers change events for all affected
+   * entities.
+   * @returns {$entity.Entity}
+   */
+  deleteNode: function () {
+    var nodeBefore = this.getSilentNode(),
+        events;
+
+    if (nodeBefore !== undefined) {
+      $entity.entities.deleteNode(this.entityKey.getEntityPath());
+      events = this.spawnEntityChangeEvents(nodeBefore, undefined);
       $data.Collection.fromData(events)
       .callOnEachValue('trigger');
     }

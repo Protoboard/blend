@@ -178,7 +178,6 @@ describe("$entity", function () {
     describe("setPrimitiveNode()", function () {
       var documentKey,
           documentPath,
-          triggeredEvent,
           nodeBefore,
           nodeAfter;
 
@@ -188,10 +187,7 @@ describe("$entity", function () {
         nodeBefore = {};
         nodeAfter = {};
 
-        spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
-          triggeredEvent = this;
-          return $utils.Deferred.create().promise;
-        });
+        spyOn($entity.EntityChangeEvent, 'trigger');
         $entity.entities.setNode(documentPath, nodeBefore);
 
         result = entity.setPrimitiveNode(nodeAfter);
@@ -206,7 +202,9 @@ describe("$entity", function () {
       });
 
       it("should trigger change event", function () {
-        expect(triggeredEvent).toEqual(entity.spawnEvent({
+        var calls = $entity.EntityChangeEvent.trigger.calls.all();
+
+        expect(calls[0].object).toEqual(entity.spawnEvent({
           eventName: $entity.EVENT_ENTITY_CHANGE,
           nodeBefore: nodeBefore,
           nodeAfter: nodeAfter
@@ -218,7 +216,6 @@ describe("$entity", function () {
       var documentKey,
           documentPath,
           eventsToBeTriggered,
-          triggeredEvents,
           nodeBefore,
           nodeAfter;
 
@@ -230,16 +227,12 @@ describe("$entity", function () {
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE)
         ];
-        triggeredEvents = [];
         nodeBefore = {};
         nodeAfter = {};
 
         spyOn(entity, 'spawnEntityChangeEvents').and
         .returnValue(eventsToBeTriggered);
-        spyOn($entity.EntityChangeEvent, 'trigger').and.callFake(function () {
-          triggeredEvents.push(this);
-          return $utils.Deferred.create().promise;
-        });
+        spyOn($entity.EntityChangeEvent, 'trigger');
         $entity.entities.setNode(documentPath, nodeBefore);
 
         result = entity.setNode(nodeAfter);
@@ -259,7 +252,142 @@ describe("$entity", function () {
       });
 
       it("should trigger spawned events", function () {
-        expect(triggeredEvents).toEqual(eventsToBeTriggered);
+        var calls = $entity.EntityChangeEvent.trigger.calls.all();
+
+        expect(calls.length).toBe(eventsToBeTriggered.length);
+        expect(calls[0].object).toBe(eventsToBeTriggered[0]);
+        expect(calls[1].object).toBe(eventsToBeTriggered[1]);
+        expect(calls[2].object).toBe(eventsToBeTriggered[2]);
+      });
+    });
+
+    describe("appendNode()", function () {
+      var documentKey,
+          documentPath,
+          eventsToBeTriggered,
+          nodeBefore,
+          nodeToAppend;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        documentPath = documentKey.getEntityPath();
+        eventsToBeTriggered = [
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE)
+        ];
+        nodeBefore = {
+          "id": "X999_Y999",
+          "from": "user/X12",
+          "message": "Looking forward to 2010!",
+          "actions": {
+            "comment/0": 0,
+            "like/0": 1,
+            "like/1": 2,
+            "like/2": 3
+          },
+          "type": "status",
+          "created_time": "2010-08-02T21:27:44+0000"
+        };
+        nodeToAppend = {
+          "message": "Looking forward to 2011!",
+          "actions": {
+            "comment/0": 0,
+            "like/0": 1,
+            "like/3": 2
+          },
+          "type": "status",
+          "updated_time": "2010-08-02T22:00:00+0000"
+        };
+
+        spyOn(entity, 'spawnEntityChangeEvents').and
+        .returnValue(eventsToBeTriggered);
+        spyOn($entity.EntityChangeEvent, 'trigger');
+        $entity.entities.setNode(documentPath, nodeBefore);
+
+        result = entity.appendNode(nodeToAppend);
+      });
+
+      afterEach(function () {
+        $entity.entities.deletePath(documentKey.getEntityPath());
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(entity);
+      });
+
+      it("should append node to existing node in container", function () {
+        expect($entity.entities.getNode(documentPath)).toEqual({
+          "id": "X999_Y999",
+          "from": "user/X12",
+          "message": "Looking forward to 2011!",
+          "actions": {
+            "comment/0": 0,
+            "like/0": 1,
+            "like/3": 2
+          },
+          "type": "status",
+          "created_time": "2010-08-02T21:27:44+0000",
+          "updated_time": "2010-08-02T22:00:00+0000"
+        });
+      });
+
+      it("should trigger change events", function () {
+        var calls = $entity.EntityChangeEvent.trigger.calls.all();
+
+        expect(calls.length).toBe(eventsToBeTriggered.length);
+        expect(calls[0].object).toBe(eventsToBeTriggered[0]);
+        expect(calls[1].object).toBe(eventsToBeTriggered[1]);
+        expect(calls[2].object).toBe(eventsToBeTriggered[2]);
+      });
+    });
+
+    describe("deleteNode()", function () {
+      var documentKey,
+          documentPath,
+          eventsToBeTriggered,
+          nodeBefore,
+          nodeAfter;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        documentPath = documentKey.getEntityPath();
+        eventsToBeTriggered = [
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
+          $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE)
+        ];
+        nodeBefore = {};
+        nodeAfter = undefined;
+
+        spyOn(entity, 'spawnEntityChangeEvents').and
+        .returnValue(eventsToBeTriggered);
+        spyOn($entity.EntityChangeEvent, 'trigger');
+        $entity.entities.setNode(documentPath, nodeBefore);
+
+        result = entity.deleteNode();
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(entity);
+      });
+
+      it("should delete node from container", function () {
+        expect($entity.entities.getNode(documentPath)).toBeUndefined();
+      });
+
+      it("should spawn events", function () {
+        expect(entity.spawnEntityChangeEvents)
+        .toHaveBeenCalledWith(nodeBefore, nodeAfter);
+      });
+
+      it("should trigger spawned events", function () {
+        var calls = $entity.EntityChangeEvent.trigger.calls.all();
+
+        expect(calls.length).toBe(eventsToBeTriggered.length);
+        expect(calls[0].object).toBe(eventsToBeTriggered[0]);
+        expect(calls[1].object).toBe(eventsToBeTriggered[1]);
+        expect(calls[2].object).toBe(eventsToBeTriggered[2]);
       });
     });
 
