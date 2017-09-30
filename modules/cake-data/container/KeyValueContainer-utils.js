@@ -94,8 +94,8 @@ $oop.copyProperties($data, /** @lends $data */{
    */
   getMergeResultClass: function (LeftClass, RightClass) {
     var resultKeyType = LeftClass.keyType === RightClass.keyType ?
-            LeftClass.keyType :
-            $data.KEY_TYPE_ANY,
+        LeftClass.keyType :
+        $data.KEY_TYPE_ANY,
         resultValueType = LeftClass.valueType === RightClass.valueType ?
             LeftClass.valueType :
             $data.VALUE_TYPE_ANY;

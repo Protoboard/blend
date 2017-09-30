@@ -11,8 +11,8 @@ $data.Comparable = $oop.getClass('$data.Comparable')
    * @returns {boolean}
    */
   equals: function (instance) {
-    return instance && // must have value
-        (this === instance || // either same instance
+    return instance && ( // must have value
+        this === instance || // either same instance
         this.__classId === instance.__classId); // or shares class
   },
 

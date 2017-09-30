@@ -209,7 +209,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       if (Next) {
         // placing mixin before Next class, and reconstructing lookup
         contributorList.splice(contributorList.indexOf(Next), 0, Class);
-        contributors.lookup = contributorList.reduce(function (lookup, Class, i) {
+        contributors.lookup = contributorList
+        .reduce(function (lookup, Class, i) {
           lookup[Class.__classId] = i;
           return lookup;
         }, {});
@@ -790,7 +791,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // sorting forwards by priority (descending)
     // here we're relying on Array#sort() mutating the array as the same array
     // is referenced from the final class
-    forwards.sort(function (/**$oop.ForwardDescriptor*/a, /**$oop.ForwardDescriptor*/b) {
+    forwards.sort(function (/**$oop.ForwardDescriptor*/a,
+        /**$oop.ForwardDescriptor*/b
+    ) {
       var aId = a.class.__classId,
           bId = b.class.__classId,
           ap = hostDistances[aId] || 0,

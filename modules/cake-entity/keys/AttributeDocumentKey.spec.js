@@ -15,8 +15,8 @@ describe("$entity", function () {
 
     describe("fromDocumentIdComponents()", function () {
       it("should join documentId components", function () {
-        expect(AttributeDocumentKey.fromDocumentIdComponents('foo', ['bar', 'baz',
-          'quux']))
+        expect(AttributeDocumentKey.fromDocumentIdComponents('foo', [
+          'bar', 'baz', 'quux']))
         .toEqual(['foo', 'bar/baz/quux'].toDocumentKey());
       });
     });

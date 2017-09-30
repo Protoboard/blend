@@ -98,7 +98,8 @@ describe("$entity", function () {
         });
 
         it("should return SimpleEntityChangeEventSpawner instance", function () {
-          expect($entity.SimpleEntityChangeEventSpawner.mixedBy(result)).toBeTruthy();
+          expect($entity.SimpleEntityChangeEventSpawner.mixedBy(result))
+          .toBeTruthy();
         });
       });
     });

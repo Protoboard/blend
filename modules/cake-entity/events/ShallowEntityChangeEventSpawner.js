@@ -15,7 +15,8 @@ $entity.ShallowEntityChangeEventSpawner = $oop.getClass('$entity.ShallowEntityCh
    * @param {*} nodeAfter
    * @returns {Array.<$entity.EntityChangeEvent>}
    */
-  spawnEntityChangeEvents: function spawnEntityChangeEvents(nodeBefore, nodeAfter
+  spawnEntityChangeEvents: function spawnEntityChangeEvents(nodeBefore,
+      nodeAfter
   ) {
     var that = this,
         events = spawnEntityChangeEvents.returned,
