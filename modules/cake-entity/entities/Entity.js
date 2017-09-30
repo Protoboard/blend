@@ -87,18 +87,12 @@ $entity.Entity = $oop.getClass('$entity.Entity')
 
   /**
    * Spawns events for all changes affected by the change specified by
-   * `entitiesBefore` and `entitiesAfter`
-   * @param {$data.Tree} entitiesBefore
-   * @param {$data.Tree} entitiesAfter
+   * `nodeBefore` and `nodeAfter`
    * @param {*} nodeBefore
    * @param {*} nodeAfter
    * @returns {Array.<$entity.EntityChangeEvent>}
-   * @todo Are entitiesBefore & entitiesAfter still necessary? Check after
-   * having added appendNode.
    */
-  spawnEntityChangeEvents: function (entitiesBefore, entitiesAfter, nodeBefore,
-      nodeAfter
-  ) {
+  spawnEntityChangeEvents: function (nodeBefore, nodeAfter) {
     return [];
   },
 
@@ -135,15 +129,12 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   setNode: function (node) {
     var nodeBefore = this.getSilentNode(),
         entityPath = this.entityKey.getEntityPath(),
-        entitiesBefore = $data.Tree.create().setNode(entityPath, nodeBefore),
-        entitiesAfter = $data.Tree.create().setNode(entityPath, node),
         events;
 
     if (node !== nodeBefore) {
       $entity.entities.setNode(entityPath, node);
 
-      events = this.spawnEntityChangeEvents(entitiesBefore, entitiesAfter,
-          nodeBefore, node);
+      events = this.spawnEntityChangeEvents(nodeBefore, node);
       $data.Collection.fromData(events)
       .callOnEachValue('trigger');
     }

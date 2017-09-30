@@ -10,22 +10,20 @@ $entity.SimpleEntityChangeEventSpawner = $oop.getClass('$entity.SimpleEntityChan
 .define(/** @lends $entity.SimpleEntityChangeEventSpawner# */{
   /**
    * Spawns a single event if there is a change in node value.
-   * @param {$data.Tree} entitiesBefore
-   * @param {$data.Tree} entitiesAfter
    * @param {*} nodeBefore
    * @param {*} nodeAfter
    * @returns {Array.<$entity.EntityChangeEvent>}
    */
-  spawnEntityChangeEvents: function spawnEntityChangeEvents(entitiesBefore,
-      entitiesAfter, nodeBefore, nodeAfter
+  spawnEntityChangeEvents: function spawnEntityChangeEvents(nodeBefore,
+      nodeAfter
   ) {
     var events = spawnEntityChangeEvents.returned;
 
     if (nodeAfter !== nodeBefore) {
       return events.concat([this.spawnEvent({
         eventName: $entity.EVENT_ENTITY_CHANGE,
-        entitiesBefore: entitiesBefore,
-        entitiesAfter: entitiesAfter
+        _nodeBefore: nodeBefore,
+        _nodeAfter: nodeAfter
       })]);
     } else {
       return events;

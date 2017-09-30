@@ -254,23 +254,8 @@ describe("$entity", function () {
       });
 
       it("should spawn events", function () {
-        expect(entity.spawnEntityChangeEvents).toHaveBeenCalledWith(
-            $data.Tree.fromData({
-              document: {
-                foo: {
-                  bar: nodeBefore
-                }
-              }
-            }),
-            $data.Tree.fromData({
-              document: {
-                foo: {
-                  bar: nodeAfter
-                }
-              }
-            }),
-            nodeBefore,
-            nodeAfter);
+        expect(entity.spawnEntityChangeEvents)
+        .toHaveBeenCalledWith(nodeBefore, nodeAfter);
       });
 
       it("should trigger spawned events", function () {

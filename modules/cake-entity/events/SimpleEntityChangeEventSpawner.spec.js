@@ -42,27 +42,24 @@ describe("$entity", function () {
           });
 
           result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(
-              entitiesBefore, entitiesAfter,
               entitiesBefore.data.document.foo.bar.baz,
               entitiesAfter.data.document.foo.bar.baz);
         });
 
         it("should spawn single event", function () {
-          expect(result instanceof Array).toBeTruthy();
-          var event = result[0];
-          expect($entity.EntityChangeEvent.mixedBy(event)).toBeTruthy();
-          expect(event.entitiesBefore).toBe(entitiesBefore);
-          expect(event.entitiesAfter).toBe(entitiesAfter);
+          expect(result).toEqual([
+            'foo/bar/baz'.toField().spawnEvent({
+              eventName: $entity.EVENT_ENTITY_CHANGE,
+              _nodeBefore: "Hello",
+              _nodeAfter: "World"
+            })
+          ]);
         });
       });
 
       describe("when node has not changed", function () {
         beforeEach(function () {
-          entitiesBefore = $data.Tree.fromData({});
-          entitiesAfter = $data.Tree.fromData({});
-
-          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(
-              entitiesBefore, entitiesAfter);
+          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents();
         });
 
         it("should spawn single event", function () {

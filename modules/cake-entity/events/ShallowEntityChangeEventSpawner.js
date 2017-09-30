@@ -11,14 +11,11 @@ $entity.ShallowEntityChangeEventSpawner = $oop.getClass('$entity.ShallowEntityCh
 .define(/** @lends $entity.ShallowEntityChangeEventSpawner# */{
   /**
    * Spawns a single event if there is a change in node value.
-   * @param {$data.Tree} entitiesBefore
-   * @param {$data.Tree} entitiesAfter
    * @param {*} nodeBefore
    * @param {*} nodeAfter
    * @returns {Array.<$entity.EntityChangeEvent>}
    */
-  spawnEntityChangeEvents: function spawnEntityChangeEvents(entitiesBefore,
-      entitiesAfter, nodeBefore, nodeAfter
+  spawnEntityChangeEvents: function spawnEntityChangeEvents(nodeBefore, nodeAfter
   ) {
     var that = this,
         events = spawnEntityChangeEvents.returned,

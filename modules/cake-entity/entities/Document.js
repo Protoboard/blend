@@ -71,14 +71,12 @@ $entity.Document = $oop.getClass('$entity.Document')
 
   /**
    * Spawns events for document entity change.
-   * @param {$data.Tree} entitiesBefore
-   * @param {$data.Tree} entitiesAfter
    * @param {*} nodeBefore
    * @param {*} nodeAfter
    * @returns {Array.<$entity.EntityChangeEvent>}
    */
-  spawnEntityChangeEvents: function spawnEntityChangeEvents(entitiesBefore,
-      entitiesAfter, nodeBefore, nodeAfter
+  spawnEntityChangeEvents: function spawnEntityChangeEvents(nodeBefore,
+      nodeAfter
   ) {
     var events = spawnEntityChangeEvents.returned,
         document = this,
@@ -89,6 +87,8 @@ $entity.Document = $oop.getClass('$entity.Document')
         .getFieldNamesByFieldType(documentType, 'primitive'),
         compositeFieldNames = fieldTypeIndex
         .getFieldNamesByFieldType(documentType, 'composite');
+
+    // todo Falling back when documentType:fields is not documented.
 
     // adding events for primitive fields
     primitiveFieldNames
@@ -111,8 +111,8 @@ $entity.Document = $oop.getClass('$entity.Document')
     compositeFieldNames
     .forEach(function (fieldName) {
       var field = document.getField(fieldName),
-          fieldEvents = field.spawnEntityChangeEvents(entitiesBefore,
-              entitiesAfter, nodeBefore && nodeBefore[fieldName],
+          fieldEvents = field.spawnEntityChangeEvents(
+              nodeBefore && nodeBefore[fieldName],
               nodeAfter && nodeAfter[fieldName]);
       events = events.concat(fieldEvents);
     });

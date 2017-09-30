@@ -160,7 +160,6 @@ describe("$entity", function () {
         });
 
         result = document.spawnEntityChangeEvents(
-            entitiesBefore, entitiesAfter,
             entitiesBefore.data.document.user[1],
             entitiesAfter.data.document.user[1]);
       });
@@ -199,20 +198,22 @@ describe("$entity", function () {
 
         expect(calls[0].object).toEqual('user/1/emails'.toField());
         expect(calls[0].args)
-        .toEqual([entitiesBefore, entitiesAfter, nodeBefore.emails,
-          nodeAfter.emails]);
+        .toEqual([nodeBefore.emails, nodeAfter.emails]);
         expect(calls[0].returnValue).toBe(2);
 
         expect(calls[1].object).toEqual('user/1/children'.toField());
         expect(calls[1].args)
-        .toEqual([entitiesBefore, entitiesAfter, nodeBefore.children,
-          nodeAfter.children]);
+        .toEqual([nodeBefore.children, nodeAfter.children]);
         expect(calls[1].returnValue).toBe(3);
       });
 
       it("should return array of event instances", function () {
         expect(result).toEqual([0, 1, 2, 3]);
       });
+
+      describe("when documentType:fields is absent", function (){
+        it("should treat all ")
+      })
     });
 
     describe("getField()", function () {
