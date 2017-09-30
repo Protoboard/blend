@@ -111,8 +111,8 @@ $entity.Entity = $oop.getClass('$entity.Entity')
       $entity.entities.setNode(entityPath, node);
       this.spawnEvent({
         eventName: $entity.EVENT_ENTITY_CHANGE,
-        _nodeBefore: nodeBefore,
-        _nodeAfter: node
+        nodeBefore: nodeBefore,
+        nodeAfter: node
       })
       .trigger();
     }

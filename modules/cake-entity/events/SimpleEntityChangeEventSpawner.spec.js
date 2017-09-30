@@ -17,41 +17,24 @@ describe("$entity", function () {
     });
 
     describe("spawnEntityChangeEvents()", function () {
-      var entitiesBefore,
-          entitiesAfter;
+      var nodeBefore,
+          nodeAfter;
 
       describe("when node has changed", function () {
         beforeEach(function () {
-          entitiesBefore = $data.Tree.fromData({
-            document: {
-              foo: {
-                bar: {
-                  baz: 'Hello'
-                }
-              }
-            }
-          });
-          entitiesAfter = $data.Tree.fromData({
-            document: {
-              foo: {
-                bar: {
-                  baz: "World"
-                }
-              }
-            }
-          });
+          nodeBefore = "Hello";
+          nodeAfter = "World";
 
-          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents(
-              entitiesBefore.data.document.foo.bar.baz,
-              entitiesAfter.data.document.foo.bar.baz);
+          result = simpleEntityChangeEventSpawner
+          .spawnEntityChangeEvents(nodeBefore, nodeAfter);
         });
 
         it("should spawn single event", function () {
           expect(result).toEqual([
             'foo/bar/baz'.toField().spawnEvent({
               eventName: $entity.EVENT_ENTITY_CHANGE,
-              _nodeBefore: "Hello",
-              _nodeAfter: "World"
+              nodeBefore: "Hello",
+              nodeAfter: "World"
             })
           ]);
         });

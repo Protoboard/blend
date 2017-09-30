@@ -22,8 +22,8 @@ $entity.SimpleEntityChangeEventSpawner = $oop.getClass('$entity.SimpleEntityChan
     if (nodeAfter !== nodeBefore) {
       return events.concat([this.spawnEvent({
         eventName: $entity.EVENT_ENTITY_CHANGE,
-        _nodeBefore: nodeBefore,
-        _nodeAfter: nodeAfter
+        nodeBefore: nodeBefore,
+        nodeAfter: nodeAfter
       })]);
     } else {
       return events;

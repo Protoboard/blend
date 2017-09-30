@@ -82,7 +82,6 @@ describe("$entity", function () {
 
     describe("spawnEntityChangeEvents()", function () {
       var nodeBefore, nodeAfter,
-          entitiesBefore, entitiesAfter,
           result;
 
       beforeEach(function () {
@@ -134,13 +133,6 @@ describe("$entity", function () {
             'user/2': 1
           }
         };
-        entitiesBefore = $data.Tree.fromData({
-          document: {
-            user: {
-              1: nodeBefore
-            }
-          }
-        });
         nodeAfter = {
           name: "Pickle Rick",
           gender: 'male',
@@ -151,17 +143,10 @@ describe("$entity", function () {
           },
           age: 64
         };
-        entitiesAfter = $data.Tree.fromData({
-          document: {
-            user: {
-              1: nodeAfter
-            }
-          }
-        });
 
         result = document.spawnEntityChangeEvents(
-            entitiesBefore.data.document.user[1],
-            entitiesAfter.data.document.user[1]);
+            nodeBefore,
+            nodeAfter);
       });
 
       afterEach(function () {
@@ -179,16 +164,16 @@ describe("$entity", function () {
         expect(calls[0].object).toEqual('user/1/name'.toField());
         expect(calls[0].args).toEqual([{
           eventName: $entity.EVENT_ENTITY_CHANGE,
-          _nodeBefore: "Rick Sanchez",
-          _nodeAfter: "Pickle Rick"
+          nodeBefore: "Rick Sanchez",
+          nodeAfter: "Pickle Rick"
         }]);
         expect(calls[0].returnValue).toBe(0);
 
         expect(calls[1].object).toEqual('user/1/age'.toField());
         expect(calls[1].args).toEqual([{
           eventName: $entity.EVENT_ENTITY_CHANGE,
-          _nodeBefore: undefined,
-          _nodeAfter: 64
+          nodeBefore: undefined,
+          nodeAfter: 64
         }]);
         expect(calls[1].returnValue).toBe(1);
       });
@@ -210,10 +195,6 @@ describe("$entity", function () {
       it("should return array of event instances", function () {
         expect(result).toEqual([0, 1, 2, 3]);
       });
-
-      describe("when documentType:fields is absent", function (){
-        it("should treat all ")
-      })
     });
 
     describe("getField()", function () {

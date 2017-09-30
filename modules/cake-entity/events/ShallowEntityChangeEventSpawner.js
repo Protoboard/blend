@@ -50,8 +50,8 @@ $entity.ShallowEntityChangeEventSpawner = $oop.getClass('$entity.ShallowEntityCh
       var childEntity = that.getChildEntity(propertyName);
       events.push(childEntity.spawnEvent({
         eventName: $entity.EVENT_ENTITY_CHANGE,
-        _nodeBefore: nodeBefore[propertyName],
-        _nodeAfter: nodeAfter[propertyName]
+        nodeBefore: nodeBefore[propertyName],
+        nodeAfter: nodeAfter[propertyName]
       }));
     });
 

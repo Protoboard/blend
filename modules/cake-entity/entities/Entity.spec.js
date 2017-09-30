@@ -208,8 +208,8 @@ describe("$entity", function () {
       it("should trigger change event", function () {
         expect(triggeredEvent).toEqual(entity.spawnEvent({
           eventName: $entity.EVENT_ENTITY_CHANGE,
-          _nodeBefore: nodeBefore,
-          _nodeAfter: nodeAfter
+          nodeBefore: nodeBefore,
+          nodeAfter: nodeAfter
         }));
       });
     });

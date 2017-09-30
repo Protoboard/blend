@@ -102,8 +102,8 @@ $entity.Document = $oop.getClass('$entity.Document')
       var field = document.getField(fieldName);
       events.push(field.spawnEvent({
         eventName: $entity.EVENT_ENTITY_CHANGE,
-        _nodeBefore: nodeBefore && nodeBefore[fieldName],
-        _nodeAfter: nodeAfter && nodeAfter[fieldName]
+        nodeBefore: nodeBefore && nodeBefore[fieldName],
+        nodeAfter: nodeAfter && nodeAfter[fieldName]
       }));
     });
 
