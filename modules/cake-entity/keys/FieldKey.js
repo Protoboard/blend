@@ -137,7 +137,7 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   },
 
   /**
-   * Retrieves *value type* attribute for the current field entity.
+   * Retrieves `nodeType` attribute for the current entity.
    * @returns {string}
    * @todo Move to $entity.EntityKey
    */
@@ -146,8 +146,8 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   },
 
   /**
-   * Retrieves an attribute entity key identifying the *value type* attribute
-   * for the current field entity in the entity store.
+   * Retrieves an attribute entity key identifying the *nodeType* attribute
+   * for the current entity in the entity store.
    * @returns {$entity.ItemKey}
    * @todo Move to $entity.EntityKey
    */

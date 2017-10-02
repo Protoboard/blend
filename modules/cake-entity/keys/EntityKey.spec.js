@@ -12,7 +12,13 @@ describe("$entity", function () {
 
     beforeEach(function () {
       EntityKey = $oop.getClass('test.$entity.EntityKey.EntityKey')
-      .mix($entity.EntityKey);
+      .mix($entity.EntityKey)
+      .define({
+        getAttributeDocumentKey: function () {
+          return '__field/foo'.toDocumentKey();
+        }
+      });
+      entityKey = EntityKey.create();
     });
 
     describe("fromEntityPath()", function () {
@@ -56,11 +62,10 @@ describe("$entity", function () {
       var attributeKey;
 
       beforeEach(function () {
-        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
-            '__field', ['user', 'name']).getFieldKey('foo');
-        $entity.entities.setNode(attributeKey.getEntityPath(), 'bar');
+        attributeKey = entityKey.getAttributeDocumentKey().getFieldKey('bar');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'BAZ');
 
-        result = 'user/1/name'.toFieldKey().getAttribute('foo');
+        result = entityKey.getAttribute('bar');
       });
 
       afterEach(function () {
@@ -68,7 +73,27 @@ describe("$entity", function () {
       });
 
       it("should retrieve nodeType attribute", function () {
-        expect(result).toBe('bar');
+        expect(result).toBe('BAZ');
+      });
+    });
+
+    describe("getValueType()", function () {
+      var attributeKey;
+
+      beforeEach(function () {
+        attributeKey = entityKey.getAttributeDocumentKey()
+        .getFieldKey('valueType');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'QUUX');
+
+        result = entityKey.getValueType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should return valueType attribute", function () {
+        expect(result).toBe('QUUX');
       });
     });
   });
