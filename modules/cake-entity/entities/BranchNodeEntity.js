@@ -5,11 +5,23 @@
  * Expects to be added to $entity.Entity classes.
  * @mixin $entity.BranchNodeEntity
  * @augments $entity.Entity
- * @todo Add spread w/ triggerPath to nodeType
  */
 $entity.BranchNodeEntity = $oop.getClass('$entity.BranchNodeEntity')
 .expect($oop.getClass('$entity.Entity'))
 .define(/** @lends $entity.BranchNodeEntity# */{
+  /** @ignore */
+  spread: function () {
+    var entityKey = this.entityKey,
+        attributeDocumentKey = entityKey.getAttributeDocumentKey(),
+        entityType = attributeDocumentKey.documentType,
+        nodeTypeKey = $entity.DocumentKey.fromComponents(entityType, 'nodeType'),
+        nodeTypePath = $data.Path.fromComponents([
+          'entity', 'document', '__field', nodeTypeKey.toString(), 'options',
+          'branch']);
+
+    this.triggerPaths.push(nodeTypePath);
+  },
+
   /**
    * Extracts a node of affected properties reflecting the entity's current
    * state.

@@ -30,6 +30,19 @@ describe("$entity", function () {
     });
 
     describe("create()", function () {
+      it("should set listeningPath", function () {
+        expect(entity.listeningPath)
+        .toEqual('entity.document.foo.bar'.toPath());
+      });
+
+      it("should initialize triggerPaths", function () {
+        expect(entity.triggerPaths).toEqual([
+          'entity.document.foo.bar'.toPath(),
+          'entity'.toPath(),
+          'entity.document.__document.foo'.toPath()
+        ]);
+      });
+
       describe("when entityKey is cached", function () {
         var EntityKey,
             entityKey,
@@ -41,11 +54,16 @@ describe("$entity", function () {
           .mix($entity.EntityKey)
           .mix($utils.StringifyCached)
           .define({
+            getAttributeDocumentKey: function () {
+              return 'FOO/BAR'.toDocumentKey();
+            },
             toString: function () {
-              return this.foo;
+              return this._entityPath + '';
             }
           });
-          entityKey = EntityKey.create({foo: 'bar'});
+          entityKey = EntityKey.create({
+            _entityPath: 'foo'.toPath()
+          });
           entity = $entity.Entity.fromEntityKey(entityKey);
 
           result = $entity.Entity.fromEntityKey(entityKey);

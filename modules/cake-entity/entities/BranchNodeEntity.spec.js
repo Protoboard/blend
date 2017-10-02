@@ -17,7 +17,14 @@ describe("$entity", function () {
       .mix($entity.BranchNodeEntity);
       branchNodeEntity = BranchNodeEntity.fromEntityKey('foo/bar'.toDocumentKey());
     });
-    
+
+    describe("create()", function () {
+      it("should initialize triggerPaths", function () {
+        var nodeTypePath = 'entity.document.__field.__document/nodeType.options.branch'.toPath();
+        expect(branchNodeEntity.triggerPaths).toContain(nodeTypePath);
+      });
+    });
+
     describe("appendNode()", function () {
       var documentKey,
           documentPath,

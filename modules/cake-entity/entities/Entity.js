@@ -30,6 +30,22 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     });
   },
 
+  /** @ignore */
+  spread: function () {
+    var entityKey = this.entityKey,
+        listeningPath = entityKey.getEntityPath()
+        .clone().unshift('entity'),
+        attributeDocumentKey = entityKey.getAttributeDocumentKey();
+
+    this.listeningPath = listeningPath;
+
+    this.triggerPaths = [
+      listeningPath,
+      $data.Path.fromString('entity'),
+      attributeDocumentKey.getEntityPath().clone().unshift('entity')
+    ];
+  },
+
   /**
    * Retrieves data node associated with the current entity.
    * @returns {*}

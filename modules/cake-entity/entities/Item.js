@@ -49,11 +49,6 @@ $entity.Item = $oop.getClass('$entity.Item')
   /** @ignore */
   spread: function () {
     var itemKey = this.entityKey,
-        attributeDocumentKey = itemKey.getAttributeDocumentKey(),
-        itemEventPath = $data.Path.fromString('entity')
-        .concat(itemKey.getEntityPath()),
-        attributeDocumentEventPath = $data.Path.fromString('entity')
-        .concat(attributeDocumentKey.getEntityPath()),
         itemTypeKey = itemKey.getItemTypeKey(),
         itemTypePath = $data.Path.fromString('entity')
         .concat(itemTypeKey.getEntityPath()),
@@ -61,15 +56,11 @@ $entity.Item = $oop.getClass('$entity.Item')
         itemIdTypePath = $data.Path.fromString('entity')
         .concat(itemIdTypeKey.getEntityPath());
 
-    this.listeningPath = itemEventPath;
-
-    this.triggerPaths = [
-      itemEventPath,
-      attributeDocumentEventPath,
+    this.triggerPaths = this.triggerPaths.concat([
       itemTypePath,
       // todo Might only need itemType only, as only value is affected.
       itemIdTypePath
-    ];
+    ]);
   }
 });
 

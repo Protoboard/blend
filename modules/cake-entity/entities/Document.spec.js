@@ -45,19 +45,6 @@ describe("$entity", function () {
     });
 
     describe("create()", function () {
-      it("should initialize listeningPath", function () {
-        expect(document.listeningPath)
-        .toEqual('entity.document.foo.bar'.toPath());
-      });
-
-      it("should initialize triggerPaths", function () {
-        expect(document.triggerPaths)
-        .toEqual([
-          'entity.document.foo.bar'.toPath(),
-          'entity.document.__document.foo'.toPath()
-        ]);
-      });
-
       describe("when entityKey is cached", function () {
         var DocumentKey,
             documentKey,

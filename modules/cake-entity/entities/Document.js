@@ -41,23 +41,6 @@ $entity.Document = $oop.getClass('$entity.Document')
     });
   },
 
-  /** @ignore */
-  spread: function () {
-    var documentKey = this.entityKey,
-        attributeDocumentKey = documentKey.getAttributeDocumentKey(),
-        documentEventPath = $data.Path.fromString('entity')
-        .concat(documentKey.getEntityPath()),
-        attributeDocumentEventPath = $data.Path.fromString('entity')
-        .concat(attributeDocumentKey.getEntityPath());
-
-    this.listeningPath = documentEventPath;
-
-    this.triggerPaths = [
-      documentEventPath,
-      attributeDocumentEventPath
-    ];
-  },
-
   /**
    * @returns {Array.<string>}
    * @todo Make it on demand.

@@ -42,29 +42,6 @@ $entity.Field = $oop.getClass('$entity.Field')
   },
 
   /** @ignore */
-  spread: function () {
-    var fieldKey = this.entityKey,
-        fieldEventPath = $data.Path.fromString('entity')
-        .concat(fieldKey.getEntityPath()),
-        attributeDocumentKey = fieldKey.getAttributeDocumentKey(),
-        attributeDocumentEventPath = $data.Path.fromString('entity')
-        .concat(attributeDocumentKey.getEntityPath()),
-        nodeType = fieldKey.getNodeType(),
-        // todo Delegate to BranchNodeEntity / LeafNodeEntity
-        nodeTypePath = $data.Path.fromComponents([
-          'entity', 'document', '__field', '__field/nodeType', 'options',
-          nodeType]);
-
-    this.listeningPath = fieldEventPath;
-
-    this.triggerPaths = [
-      fieldEventPath,
-      attributeDocumentEventPath,
-      nodeTypePath
-    ];
-  },
-
-  /** @ignore */
   getItem: function (itemId) {
     return $entity.Item.fromEntityKey(this.entityKey.getItemKey(itemId));
   }
