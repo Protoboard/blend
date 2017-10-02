@@ -72,7 +72,7 @@ describe("$entity", function () {
         $entity.entities.deleteNode(attributeKey.getEntityPath());
       });
 
-      it("should retrieve nodeType attribute", function () {
+      it("should retrieve attribute", function () {
         expect(result).toBe('BAZ');
       });
     });
@@ -105,6 +105,26 @@ describe("$entity", function () {
         it("should return default", function () {
           expect(result).toBe('leaf');
         });
+      });
+    });
+
+    describe("getKeyType()", function () {
+      var attributeKey;
+
+      beforeEach(function () {
+        attributeKey = entityKey.getAttributeDocumentKey()
+        .getFieldKey('keyType');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'QUUX');
+
+        result = entityKey.getKeyType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should return keyType attribute", function () {
+        expect(result).toBe('QUUX');
       });
     });
 

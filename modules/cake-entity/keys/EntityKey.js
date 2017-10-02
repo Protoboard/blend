@@ -4,7 +4,6 @@
  * Common functionality for entity keys.
  * @class $entity.EntityKey
  * @extends $data.Comparable
- * @todo Add #getKeyType()
  */
 $entity.EntityKey = $oop.getClass('$entity.EntityKey')
 .mix($data.Comparable)
@@ -54,6 +53,14 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    */
   getNodeType: function () {
     return this.getAttribute('nodeType') || 'leaf';
+  },
+
+  /**
+   * Retrieves `valueType` attribute for the current entity.
+   * @returns {string}
+   */
+  getKeyType: function () {
+    return this.getAttribute('keyType');
   },
 
   /**
