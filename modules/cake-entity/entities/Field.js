@@ -41,22 +41,30 @@ $entity.Field = $oop.getClass('$entity.Field')
     });
   },
 
-  /** @ignore */
+  /**
+   * @ignore
+   * @todo Revisit path generation for performance improvement.
+   */
   spread: function () {
     var fieldKey = this.entityKey,
         fieldEventPath = fieldKey.getEntityPath().clone().unshift('entity'),
         attributeDocumentKey = fieldKey.getAttributeDocumentKey(),
         attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
         .clone().unshift('entity'),
-        fieldTypeKey = fieldKey.getNodeTypeKey(),
-        fieldTypePath = fieldTypeKey.getEntityPath().clone().unshift('entity');
+        nodeType = fieldKey.getNodeType(),
+        nodeTypeKey = fieldKey.getAttributeDocumentKey()
+        .getFieldKey('nodeType')
+        .getAttributeDocumentKey()
+        .getFieldKey('options')
+        .getItemKey(nodeType),
+        nodeTypePath = nodeTypeKey.getEntityPath().clone().unshift('entity');
 
     this.listeningPath = fieldEventPath;
 
     this.triggerPaths = [
       fieldEventPath,
       attributeDocumentEventPath,
-      fieldTypePath
+      nodeTypePath
     ];
   },
 

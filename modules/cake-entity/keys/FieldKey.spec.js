@@ -230,18 +230,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeTypeKey()", function () {
-      beforeEach(function () {
-        spyOn(fieldKey, 'getNodeType').and.returnValue('FOO');
-        result = fieldKey.getNodeTypeKey();
-      });
-
-      it("should return key to nodeType", function () {
-        expect(result)
-        .toEqual("__field/__field\\/nodeType/options/FOO".toItemKey());
-      });
-    });
-
     describe("toString()", function () {
       it("should return string representation", function () {
         expect(fieldKey.toString()).toBe('foo/bar/baz');

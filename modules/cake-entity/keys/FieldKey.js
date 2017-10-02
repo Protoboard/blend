@@ -146,21 +146,6 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
   },
 
   /**
-   * Retrieves an attribute entity key identifying the *nodeType* attribute
-   * for the current entity in the entity store.
-   * @returns {$entity.ItemKey}
-   * @todo Move to $entity.EntityKey
-   */
-  getNodeTypeKey: function () {
-    var nodeType = this.getNodeType();
-    return this.getAttributeDocumentKey()
-    .getFieldKey('nodeType')
-    .getAttributeDocumentKey()
-    .getFieldKey('options')
-    .getItemKey(nodeType);
-  },
-
-  /**
    * Serializes current field key.
    * @example
    * $entity.FieldKey.fromComponents('user', '1234', 'name').toString()
