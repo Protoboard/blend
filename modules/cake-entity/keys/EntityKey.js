@@ -49,7 +49,15 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
   },
 
   /**
-   * Retrieves the `valueType` attribute for the current entity.
+   * Retrieves `nodeType` attribute for the current entity.
+   * @returns {string}
+   */
+  getNodeType: function () {
+    return this.getAttribute('nodeType') || 'leaf';
+  },
+
+  /**
+   * Retrieves `valueType` attribute for the current entity.
    * @returns {string}
    */
   getValueType: function () {

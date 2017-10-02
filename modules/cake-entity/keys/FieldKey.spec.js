@@ -199,37 +199,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeType()", function () {
-      var attributeKey;
-
-      beforeEach(function () {
-        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
-            '__field', ['user', 'name']).getFieldKey('nodeType');
-        $entity.entities.setNode(attributeKey.getEntityPath(), 'foo');
-
-        result = 'user/1/name'.toFieldKey().getNodeType();
-      });
-
-      afterEach(function () {
-        $entity.entities.deleteNode(attributeKey.getEntityPath());
-      });
-
-      it("should retrieve nodeType attribute", function () {
-        expect(result).toBe('foo');
-      });
-
-      describe("when no nodeType is set for field", function () {
-        beforeEach(function () {
-          $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = 'user/1/name'.toFieldKey().getNodeType();
-        });
-
-        it("should return default", function () {
-          expect(result).toBe('leaf');
-        });
-      });
-    });
-
     describe("toString()", function () {
       it("should return string representation", function () {
         expect(fieldKey.toString()).toBe('foo/bar/baz');

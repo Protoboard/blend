@@ -77,6 +77,37 @@ describe("$entity", function () {
       });
     });
 
+    describe("getNodeType()", function () {
+      var attributeKey;
+
+      beforeEach(function () {
+        attributeKey = entityKey.getAttributeDocumentKey()
+        .getFieldKey('nodeType');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'QUUX');
+
+        result = entityKey.getNodeType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should retrieve nodeType attribute", function () {
+        expect(result).toBe('QUUX');
+      });
+
+      describe("when no nodeType is set", function () {
+        beforeEach(function () {
+          $entity.entities.deleteNode(attributeKey.getEntityPath());
+          result = entityKey.getNodeType();
+        });
+
+        it("should return default", function () {
+          expect(result).toBe('leaf');
+        });
+      });
+    });
+
     describe("getValueType()", function () {
       var attributeKey;
 
