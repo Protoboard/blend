@@ -171,6 +171,23 @@ describe("$entity", function () {
       });
     });
 
+    describe("getNodeType()", function () {
+      var attributeKey;
+
+      describe("when no nodeType is set", function () {
+        beforeEach(function () {
+          attributeKey = documentKey.getAttributeDocumentKey()
+          .getFieldKey('nodeType');
+          $entity.entities.deleteNode(attributeKey.getEntityPath());
+          result = documentKey.getNodeType();
+        });
+
+        it("should return default", function () {
+          expect(result).toBe('branch');
+        });
+      });
+    });
+
     describe("getFieldKey()", function () {
       var fieldKey;
 

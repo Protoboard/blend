@@ -119,6 +119,14 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
   },
 
   /**
+   * @inheritDoc
+   * @returns {string}
+   */
+  getNodeType: function getNodeType() {
+    return getNodeType.returned || 'branch';
+  },
+
+  /**
    * @param {string} fieldName
    * @returns {$entity.FieldKey}
    */

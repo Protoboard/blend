@@ -6,7 +6,16 @@
  * @augments $entity.EntityKey
  */
 $entity.ValueKey = $oop.getClass('$entity.ValueKey')
-.expect($oop.getClass('$entity.EntityKey'));
+.expect($oop.getClass('$entity.EntityKey'))
+.define(/** @lends $entity.ValueKey# */{
+  /**
+   * @inheritDoc
+   * @returns {string}
+   */
+  getNodeType: function getNodeType() {
+    return getNodeType.returned || 'leaf';
+  }
+});
 
 $oop.copyProperties($assert, /** @lends $assert */{
   /**

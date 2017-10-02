@@ -52,7 +52,7 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    * @returns {string}
    */
   getNodeType: function () {
-    return this.getAttribute('nodeType') || 'leaf';
+    return this.getAttribute('nodeType');
   },
 
   /**

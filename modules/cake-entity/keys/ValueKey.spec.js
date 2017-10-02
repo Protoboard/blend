@@ -46,3 +46,42 @@ describe("$assert", function () {
     });
   });
 });
+
+describe("$entity", function () {
+  describe("ValueKey", function () {
+    var ValueKey,
+        valueKey,
+        result;
+
+    beforeEach(function () {
+      ValueKey = $oop.getClass('test.$entity.ValueKey.ValueKey')
+      .mix($entity.EntityKey)
+      .mix($entity.ValueKey)
+      .define({
+        getAttributeDocumentKey: function () {
+          return 'foo/bar'.toDocumentKey();
+        }
+      });
+      valueKey = ValueKey.create({
+        _entityPath: 'baz'.toPath()
+      });
+    });
+
+    describe("getNodeType()", function () {
+      var attributeKey;
+
+      describe("when no nodeType is set", function () {
+        beforeEach(function () {
+          attributeKey = valueKey.getAttributeDocumentKey()
+          .getFieldKey('nodeType');
+          $entity.entities.deleteNode(attributeKey.getEntityPath());
+          result = valueKey.getNodeType();
+        });
+
+        it("should return default", function () {
+          expect(result).toBe('leaf');
+        });
+      });
+    });
+  });
+});

@@ -95,17 +95,6 @@ describe("$entity", function () {
       it("should retrieve nodeType attribute", function () {
         expect(result).toBe('QUUX');
       });
-
-      describe("when no nodeType is set", function () {
-        beforeEach(function () {
-          $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = entityKey.getNodeType();
-        });
-
-        it("should return default", function () {
-          expect(result).toBe('leaf');
-        });
-      });
     });
 
     describe("getKeyType()", function () {
