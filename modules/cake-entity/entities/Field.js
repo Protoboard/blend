@@ -41,23 +41,19 @@ $entity.Field = $oop.getClass('$entity.Field')
     });
   },
 
-  /**
-   * @ignore
-   * @todo Revisit path generation for performance improvement.
-   */
+  /** @ignore */
   spread: function () {
     var fieldKey = this.entityKey,
-        fieldEventPath = fieldKey.getEntityPath().clone().unshift('entity'),
+        fieldEventPath = $data.Path.fromString('entity')
+        .concat(fieldKey.getEntityPath()),
         attributeDocumentKey = fieldKey.getAttributeDocumentKey(),
-        attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
-        .clone().unshift('entity'),
+        attributeDocumentEventPath = $data.Path.fromString('entity')
+        .concat(attributeDocumentKey.getEntityPath()),
         nodeType = fieldKey.getNodeType(),
-        nodeTypeKey = fieldKey.getAttributeDocumentKey()
-        .getFieldKey('nodeType')
-        .getAttributeDocumentKey()
-        .getFieldKey('options')
-        .getItemKey(nodeType),
-        nodeTypePath = nodeTypeKey.getEntityPath().clone().unshift('entity');
+        // todo Delegate to BranchNodeEntity / LeafNodeEntity
+        nodeTypePath = $data.Path.fromComponents([
+          'entity', 'document', '__field', '__field/nodeType', 'options',
+          nodeType]);
 
     this.listeningPath = fieldEventPath;
 

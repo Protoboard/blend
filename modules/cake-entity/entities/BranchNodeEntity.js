@@ -5,6 +5,7 @@
  * Expects to be added to $entity.Entity classes.
  * @mixin $entity.BranchNodeEntity
  * @augments $entity.Entity
+ * @todo Add spread w/ triggerPath to nodeType
  */
 $entity.BranchNodeEntity = $oop.getClass('$entity.BranchNodeEntity')
 .expect($oop.getClass('$entity.Entity'))

@@ -45,10 +45,10 @@ $entity.Document = $oop.getClass('$entity.Document')
   spread: function () {
     var documentKey = this.entityKey,
         attributeDocumentKey = documentKey.getAttributeDocumentKey(),
-        documentEventPath = documentKey.getEntityPath().clone()
-        .unshift('entity'),
-        attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
-        .clone().unshift('entity');
+        documentEventPath = $data.Path.fromString('entity')
+        .concat(documentKey.getEntityPath()),
+        attributeDocumentEventPath = $data.Path.fromString('entity')
+        .concat(attributeDocumentKey.getEntityPath());
 
     this.listeningPath = documentEventPath;
 

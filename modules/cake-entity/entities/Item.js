@@ -50,14 +50,16 @@ $entity.Item = $oop.getClass('$entity.Item')
   spread: function () {
     var itemKey = this.entityKey,
         attributeDocumentKey = itemKey.getAttributeDocumentKey(),
-        itemEventPath = itemKey.getEntityPath().clone().unshift('entity'),
-        attributeDocumentEventPath = attributeDocumentKey.getEntityPath()
-        .clone().unshift('entity'),
+        itemEventPath = $data.Path.fromString('entity')
+        .concat(itemKey.getEntityPath()),
+        attributeDocumentEventPath = $data.Path.fromString('entity')
+        .concat(attributeDocumentKey.getEntityPath()),
         itemTypeKey = itemKey.getItemTypeKey(),
-        itemTypePath = itemTypeKey.getEntityPath().clone().unshift('entity'),
+        itemTypePath = $data.Path.fromString('entity')
+        .concat(itemTypeKey.getEntityPath()),
         itemIdTypeKey = itemKey.getItemIdTypeKey(),
-        itemIdTypePath = itemIdTypeKey.getEntityPath().clone()
-        .unshift('entity');
+        itemIdTypePath = $data.Path.fromString('entity')
+        .concat(itemIdTypeKey.getEntityPath());
 
     this.listeningPath = itemEventPath;
 
