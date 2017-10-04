@@ -113,29 +113,6 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
-   * Sets specified *leaf* node as new value for the current entity,
-   * and triggers change event for the current entity only.
-   * @param {*} node
-   * @returns {$entity.Entity}
-   */
-  setNodeAsLeaf: function (node) {
-    var nodeBefore = this.getSilentNode(),
-        entityPath = this.entityKey.getEntityPath();
-
-    if (node !== nodeBefore) {
-      $entity.entities.setNode(entityPath, node);
-      this.spawnEvent({
-        eventName: $entity.EVENT_ENTITY_CHANGE,
-        nodeBefore: nodeBefore,
-        nodeAfter: node
-      })
-      .trigger();
-    }
-
-    return this;
-  },
-
-  /**
    * Sets specified node as new value for the current entity, and
    * triggers change events for all affected entities.
    * @param {*} node

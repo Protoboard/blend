@@ -25,6 +25,43 @@ describe("$entity", function () {
       });
     });
 
+    describe("setNodeAsLeaf()", function () {
+      var documentKey,
+          documentPath,
+          nodeBefore,
+          nodeAfter;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        documentPath = documentKey.getEntityPath();
+        nodeBefore = {};
+        nodeAfter = {};
+
+        spyOn($entity.EntityChangeEvent, 'trigger');
+        $entity.entities.setNode(documentPath, nodeBefore);
+
+        result = branchNodeEntity.setNodeAsLeaf(nodeAfter);
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(branchNodeEntity);
+      });
+
+      it("should set node in container", function () {
+        expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+      });
+
+      it("should trigger change event", function () {
+        var calls = $entity.EntityChangeEvent.trigger.calls.all();
+
+        expect(calls[0].object).toEqual(branchNodeEntity.spawnEvent({
+          eventName: $entity.EVENT_ENTITY_CHANGE,
+          nodeBefore: nodeBefore,
+          nodeAfter: nodeAfter
+        }));
+      });
+    });
+
     describe("appendNode()", function () {
       var documentKey,
           documentPath,

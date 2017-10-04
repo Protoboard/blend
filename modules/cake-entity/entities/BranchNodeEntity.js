@@ -42,6 +42,29 @@ $entity.BranchNodeEntity = $oop.getClass('$entity.BranchNodeEntity')
   },
 
   /**
+   * Sets specified *leaf* node as new value for the current entity,
+   * and triggers change event for the current entity only.
+   * @param {*} node
+   * @returns {$entity.BranchNodeEntity}
+   */
+  setNodeAsLeaf: function (node) {
+    var nodeBefore = this.getSilentNode(),
+        entityPath = this.entityKey.getEntityPath();
+
+    if (node !== nodeBefore) {
+      $entity.entities.setNode(entityPath, node);
+      this.spawnEvent({
+        eventName: $entity.EVENT_ENTITY_CHANGE,
+        nodeBefore: nodeBefore,
+        nodeAfter: node
+      })
+      .trigger();
+    }
+
+    return this;
+  },
+
+  /**
    * Appends properties of the specified node to those of the current
    * entity, and triggers change events for all affected entities. Second
    * degree children and beyond will be overwritten just like in
