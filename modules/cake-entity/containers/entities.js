@@ -26,7 +26,7 @@ $entity.entities = $data.Tree.fromData({
         fields: [
           'nodeType',
           'valueType',
-          'keyType', // todo Remove?
+          'keyType',
           'options' // todo Rename to valueOptions
         ]
       },
@@ -81,6 +81,7 @@ $entity.entities = $data.Tree.fromData({
       '__item/valueType': {
         valueType: 'string',
         options: {
+          string: 1, // default
           reference: 1,
           order: 1
         }
@@ -88,6 +89,7 @@ $entity.entities = $data.Tree.fromData({
       '__item/keyType': {
         valueType: 'string',
         options: {
+          string: 1, // default
           reference: 1,
           order: 1
         }

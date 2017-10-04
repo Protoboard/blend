@@ -167,95 +167,37 @@ describe("$entity", function () {
       });
     });
 
-    describe("getItemType()", function () {
-      var attributeKey;
+    describe("getKeyType()", function () {
+      describe("when no keyType is set for item", function () {
+        var attributeKey;
 
-      beforeEach(function () {
-        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
-            '__item', ['user', 'friends']);
-        $entity.entities.setNode(attributeKey.getEntityPath(), {
-          itemType: 'foo',
-          itemIdType: 'bar'
-        });
-
-        result = 'user/1/friends/Joe'.toItemKey().getItemType();
-      });
-
-      afterEach(function () {
-        $entity.entities.deleteNode(attributeKey.getEntityPath());
-      });
-
-      it("should retrieve itemType attribute", function () {
-        expect(result).toBe('foo');
-      });
-
-      describe("when no itemType is set for item", function () {
         beforeEach(function () {
+          attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
+              '__item', ['user', 'friends']);
           $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = 'user/1/friends/Joe'.toItemKey().getItemType();
+          result = 'user/1/friends/Joe'.toItemKey().getKeyType();
         });
 
         it("should return default", function () {
-          expect(result).toBe('leaf');
+          expect(result).toBe('string');
         });
       });
     });
 
-    describe("getItemTypeKey()", function () {
-      beforeEach(function () {
-        spyOn(itemKey, 'getItemType').and.returnValue('FOO');
-        result = itemKey.getItemTypeKey();
-      });
+    describe("getValueType()", function () {
+      describe("when no valueType is set for item", function () {
+        var attributeKey;
 
-      it("should return key to itemType", function () {
-        expect(result)
-        .toEqual("__field/__item\\/itemType/options/FOO".toItemKey());
-      });
-    });
-
-    describe("getItemIdType()", function () {
-      var attributeKey;
-
-      beforeEach(function () {
         attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
             '__item', ['user', 'friends']);
-        $entity.entities.setNode(attributeKey.getEntityPath(), {
-          itemType: 'foo',
-          itemIdType: 'bar'
-        });
-
-        result = 'user/1/friends/Joe'.toItemKey().getItemIdType();
-      });
-
-      afterEach(function () {
-        $entity.entities.deleteNode(attributeKey.getEntityPath());
-      });
-
-      it("should retrieve itemType attribute", function () {
-        expect(result).toBe('bar');
-      });
-
-      describe("when no itemIdType is set for item", function () {
         beforeEach(function () {
           $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = 'user/1/friends/Joe'.toItemKey().getItemIdType();
+          result = 'user/1/friends/Joe'.toItemKey().getValueType();
         });
 
         it("should return default", function () {
-          expect(result).toBe('leaf');
+          expect(result).toBe('string');
         });
-      });
-    });
-
-    describe("getItemIdTypeKey()", function () {
-      beforeEach(function () {
-        spyOn(itemKey, 'getItemIdType').and.returnValue('FOO');
-        result = itemKey.getItemIdTypeKey();
-      });
-
-      it("should return key to itemIdType", function () {
-        expect(result)
-        .toEqual("__field/__item\\/itemIdType/options/FOO".toItemKey());
       });
     });
 

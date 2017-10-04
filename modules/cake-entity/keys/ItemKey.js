@@ -22,7 +22,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
 .define(/** @lends $entity.ItemKey# */{
   /**
    * Identifies the collection field the item belongs to.
-   * todo Somehow this should be cached for items belonging to the same field.
+   * @todo Somehow this should be cached for items belonging to the same field.
    * @member {$entity.FieldKey} $entity.ItemKey#fieldKey
    */
 
@@ -123,51 +123,19 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   },
 
   /**
-   * Retrieves *value type* attribute for the current item entity.
+   * @inheritDoc
    * @returns {string}
-   * @todo Move to CollectionFieldKey?
    */
-  getItemType: function () {
-    return this.getAttribute('itemType') || 'leaf';
+  getKeyType: function getKeyType() {
+    return getKeyType.returned || 'string';
   },
 
   /**
-   * Retrieves an attribute entity key identifying the *value type* attribute
-   * for the current item entity in the entity store.
-   * @returns {$entity.ItemKey}
-   * @todo Move to CollectionFieldKey?
-   */
-  getItemTypeKey: function () {
-    var itemType = this.getItemType();
-    return this.getAttributeDocumentKey()
-    .getFieldKey('itemType')
-    .getAttributeDocumentKey()
-    .getFieldKey('options')
-    .getItemKey(itemType);
-  },
-
-  /**
-   * Retrieves *key type* attribute for the current item entity.
+   * @inheritDoc
    * @returns {string}
-   * @todo Move to CollectionFieldKey?
    */
-  getItemIdType: function () {
-    return this.getAttribute('itemIdType') || 'leaf';
-  },
-
-  /**
-   * Retrieves an attribute entity key identifying the *key type* attribute
-   * for the current item entity in the entity store.
-   * @returns {$entity.ItemKey}
-   * @todo Move to CollectionFieldKey?
-   */
-  getItemIdTypeKey: function () {
-    var itemIdType = this.getItemIdType();
-    return this.getAttributeDocumentKey()
-    .getFieldKey('itemIdType')
-    .getAttributeDocumentKey()
-    .getFieldKey('options')
-    .getItemKey(itemIdType);
+  getValueType: function getValueType() {
+    return getValueType.returned || 'string';
   },
 
   /**
