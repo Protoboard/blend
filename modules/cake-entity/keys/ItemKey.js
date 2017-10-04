@@ -124,14 +124,14 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
    * @returns {string}
    */
   getIdType: function () {
-    return this.getAttribute('itemIdType') || 'string';
+    return this.getAttribute('itemIdType');
   },
 
   /**
    * @returns {string}
    */
-  getValueType: function () {
-    return this.getAttribute('itemValueType') || 'string';
+  getValueType: function getValueType() {
+    return getValueType.returned || this.getAttribute('itemValueType');
   },
 
   /**

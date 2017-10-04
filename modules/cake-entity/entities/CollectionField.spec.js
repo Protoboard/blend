@@ -7,13 +7,23 @@ var $oop = window['cake-oop'],
 describe("$entity", function () {
   describe("CollectionField", function () {
     var CollectionField,
+        collectionFieldKey,
         collectionField,
         result;
 
     beforeEach(function () {
       CollectionField = $oop.getClass('test.$entity.CollectionField.CollectionField')
       .mix($entity.CollectionField);
-      collectionField = CollectionField.fromEntityKey('foo/bar/baz'.toFieldKey());
+      collectionFieldKey = $entity.CollectionFieldKey.fromString('foo/bar/baz');
+      collectionField = CollectionField.fromEntityKey(collectionFieldKey);
+    });
+
+    describe("create()", function () {
+      it("should initialize triggerPaths", function () {
+        expect(collectionField.triggerPaths).toContain(
+            'entity.document.__field.__field/itemIdType.options.string'.toPath(),
+            'entity.document.__field.__field/itemValueType.options.string'.toPath());
+      });
     });
 
     describe("spawnEntityChangeEvents()", function () {
@@ -40,7 +50,7 @@ describe("$entity", function () {
 
       it("should spawn events", function () {
         expect(result).toEqual([
-          CollectionField.fromEntityKey('foo/bar/baz'.toFieldKey())
+          CollectionField.fromEntityKey(collectionFieldKey)
           .spawnEvent({
             eventName: $entity.EVENT_ENTITY_CHANGE,
             propertiesAdded: ['4', '5'],

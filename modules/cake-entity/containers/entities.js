@@ -34,8 +34,7 @@ $entity.entities = $data.Tree.fromData({
         ]
       },
       __item: {
-        fields: [
-        ]
+        fields: []
       }
 
       // Sample document type
@@ -126,7 +125,6 @@ $entity.entities = $data.Tree.fromData({
     },
 
     /** Item attribute documents. */
-    __item: {
-    }
+    __item: {}
   }
 });

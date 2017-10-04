@@ -42,6 +42,17 @@ $entity.Field = $oop.getClass('$entity.Field')
   },
 
   /** @ignore */
+  spread: function () {
+    var fieldKey = this.entityKey,
+        valueType = fieldKey.getValueType() || 'string',
+        valueTypePath = $data.Path.fromComponents([
+          'entity', 'document', '__field', '__field/valueType', 'options',
+          valueType]);
+
+    this.triggerPaths.push(valueTypePath);
+  },
+
+  /** @ignore */
   getItem: function (itemId) {
     return $entity.Item.fromEntityKey(this.entityKey.getItemKey(itemId));
   }

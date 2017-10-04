@@ -45,6 +45,13 @@ describe("$entity", function () {
     });
 
     describe("create()", function () {
+      it("should initialize triggerPaths", function () {
+        it("should initialize triggerPaths", function () {
+          expect(field.triggerPaths).toContain(
+              'entity.document.__field.__field/valueType.options.string'.toPath());
+        });
+      });
+
       describe("when entityKey is cached", function () {
         var FieldKey,
             fieldKey,

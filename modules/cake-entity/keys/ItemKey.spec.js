@@ -184,17 +184,6 @@ describe("$entity", function () {
       it("should retrieve itemIdType attribute of field", function () {
         expect(result).toBe('reference');
       });
-
-      describe("when no itemIdType is set for field", function () {
-        beforeEach(function () {
-          $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = 'user/1/friends/Joe'.toItemKey().getIdType();
-        });
-
-        it("should return default", function () {
-          expect(result).toBe('string');
-        });
-      });
     });
 
     describe("getValueType()", function () {
@@ -213,17 +202,6 @@ describe("$entity", function () {
 
       it("should retrieve itemValueType attribute of field", function () {
         expect(result).toBe('reference');
-      });
-
-      describe("when no itemValueType is set for field", function () {
-        beforeEach(function () {
-          $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = 'user/1/friends/Joe'.toItemKey().getValueType();
-        });
-
-        it("should return default", function () {
-          expect(result).toBe('string');
-        });
       });
     });
 

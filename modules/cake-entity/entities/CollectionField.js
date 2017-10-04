@@ -13,7 +13,24 @@
 $entity.CollectionField = $oop.getClass('$entity.CollectionField')
 .mix($oop.getClass('$entity.Field'))
 .mix($oop.getClass('$entity.BranchNoded'))
-.define({
+.define(/** @lends $entity.CollectionField# */{
+  /** @ignore */
+  spread: function () {
+    var triggerPaths = this.triggerPaths,
+        collectionFieldKey = this.entityKey,
+        itemIdType = collectionFieldKey.getItemIdType() || 'string',
+        itemIdTypePath = $data.Path.fromComponents([
+          'entity', 'document', '__field', '__field/itemIdType', 'options',
+          itemIdType]),
+        itemValueType = collectionFieldKey.getItemValueType() || 'string',
+        itemValueTypePath = $data.Path.fromComponents([
+          'entity', 'document', '__field', '__field/itemValueType', 'options',
+          itemValueType]);
+
+    triggerPaths.push(itemIdTypePath);
+    triggerPaths.push(itemValueTypePath);
+  },
+
   /**
    * Spawns a single event if there is a change in node value.
    * @param {*} nodeBefore

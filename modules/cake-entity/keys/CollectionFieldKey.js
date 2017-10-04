@@ -6,7 +6,10 @@
  */
 
 /**
+ * Identifies a `CollectionField`. Provides collection-specific attribute
+ * getters.
  * @class $entity.CollectionFieldKey
+ * @extends $entity.FieldKey
  */
 $entity.CollectionFieldKey = $oop.getClass('$entity.CollectionFieldKey')
 .mix($oop.getClass('$entity.FieldKey'))
