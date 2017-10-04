@@ -9,12 +9,61 @@
  * @class $entity.CollectionField
  * @extends $entity.Field
  * @extends $entity.BranchNodeEntity
- * @mixes $entity.ShallowEntityChangeEventSpawner
  */
 $entity.CollectionField = $oop.getClass('$entity.CollectionField')
 .mix($oop.getClass('$entity.Field'))
 .mix($oop.getClass('$entity.BranchNodeEntity'))
-.mix($oop.getClass('$entity.ShallowEntityChangeEventSpawner'));
+.define({
+  /**
+   * Spawns a single event if there is a change in node value.
+   * @param {*} nodeBefore
+   * @param {*} nodeAfter
+   * @returns {Array.<$entity.EntityChangeEvent>}
+   */
+  spawnEntityChangeEvents: function spawnEntityChangeEvents(nodeBefore,
+      nodeAfter
+  ) {
+    var that = this,
+        events = spawnEntityChangeEvents.returned,
+        itemIdsBefore = $data.Collection.fromData(nodeBefore)
+        .getKeysWrapped().toStringSet(),
+        itemIdsAfter = $data.Collection.fromData(nodeAfter)
+        .getKeysWrapped().toStringSet(),
+
+        // grouping properties by add / remove / change
+        itemIdsAdded = itemIdsAfter.subtract(itemIdsBefore),
+        itemIdsRemoved = itemIdsAfter.subtractFrom(itemIdsBefore),
+        ItemIdsRemain = itemIdsAfter.intersectWith(itemIdsBefore);
+
+    // adding single event about add / remove
+    events.push(this.spawnEvent({
+      eventName: $entity.EVENT_ENTITY_CHANGE,
+      propertiesAdded: itemIdsAdded.asCollection().getKeys(),
+      propertiesRemoved: itemIdsRemoved.asCollection().getKeys()
+    }));
+
+    // adding separate events about changed properties
+    ItemIdsRemain.toCollection()
+    // Here we're assuming that items are always leaf nodes. Which they are
+    // ATM, but if this changes in the future, this section must be changed.
+    .filter(function (propertyName) {
+      return nodeAfter[propertyName] !== nodeBefore[propertyName];
+    })
+    .forEachItem(function (propertyName) {
+      // This deliberately duplicates
+      // SimpleEntityChangeEventSpawner#spawnEntityChangeEvents for performance
+      // reasons.
+      var childEntity = that.getChildEntity(propertyName);
+      events.push(childEntity.spawnEvent({
+        eventName: $entity.EVENT_ENTITY_CHANGE,
+        nodeBefore: nodeBefore[propertyName],
+        nodeAfter: nodeAfter[propertyName]
+      }));
+    });
+
+    return events;
+  }
+});
 
 $oop.getClass('$entity.Field')
 .forwardTo(
