@@ -93,19 +93,13 @@ describe("$entity", function () {
         .appendNode('document.__field'.toPath(), {
           'user/emails': {
             nodeType: 'branch',
-            valueType: 'collection'
+            valueType: 'collection',
+            itemIdType: 'email'
           },
           'user/children': {
             nodeType: 'branch',
-            valueType: 'collection'
-          }
-        })
-        .appendNode('document.__item'.toPath(), {
-          'user/emails': {
-            keyType: 'email'
-          },
-          'user/children': {
-            keyType: 'reference'
+            valueType: 'collection',
+            itemIdType: 'reference'
           }
         });
 
@@ -138,9 +132,7 @@ describe("$entity", function () {
         $entity.entities
         .deleteNode('document.__document.user'.toPath())
         .deleteNode('document.__field.user/emails'.toPath())
-        .deleteNode('document.__field.user/children'.toPath())
-        .deleteNode('document.__item.user/emails'.toPath())
-        .deleteNode('document.__item.user/children'.toPath());
+        .deleteNode('document.__field.user/children'.toPath());
       });
 
       it("should spawn events for leaf node fields", function () {

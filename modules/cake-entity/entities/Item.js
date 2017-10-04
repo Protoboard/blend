@@ -49,13 +49,13 @@ $entity.Item = $oop.getClass('$entity.Item')
   /** @ignore */
   spread: function () {
     var itemKey = this.entityKey,
-        itemIdType = itemKey.getKeyType(),
+        itemIdType = itemKey.getIdType(),
         itemIdTypePath = $data.Path.fromComponents([
-          'entity', 'document', '__field', '__item/keyType', 'options',
+          'entity', 'document', '__field', '__field/itemIdType', 'options',
           itemIdType]),
         itemType = itemKey.getValueType(),
         itemTypePath = $data.Path.fromComponents([
-          'entity', 'document', '__field', '__item/valueType', 'options',
+          'entity', 'document', '__field', '__field/itemValueType', 'options',
           itemType]);
 
     this.triggerPaths = this.triggerPaths.concat([

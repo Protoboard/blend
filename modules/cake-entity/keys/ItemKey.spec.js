@@ -143,8 +143,8 @@ describe("$entity", function () {
         expect($entity.AttributeDocumentKey.mixedBy(result)).toBeTruthy();
       });
 
-      it("should return attribute document key to the item", function () {
-        expect(result.equals($entity.DocumentKey.fromString('__item/foo\\/baz')))
+      it("should return attribute document key to parent field", function () {
+        expect(result.equals($entity.DocumentKey.fromString('__field/foo\\/baz')))
         .toBeTruthy();
       });
     });
@@ -167,15 +167,28 @@ describe("$entity", function () {
       });
     });
 
-    describe("getKeyType()", function () {
-      describe("when no keyType is set for item", function () {
-        var attributeKey;
+    describe("getIdType()", function () {
+      var attributeKey;
 
+      beforeEach(function () {
+        attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
+            '__field', ['user', 'friends']).getFieldKey('itemIdType');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'reference');
+        result = 'user/1/friends/Joe'.toItemKey().getIdType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should retrieve itemIdType attribute of field", function () {
+        expect(result).toBe('reference');
+      });
+
+      describe("when no itemIdType is set for field", function () {
         beforeEach(function () {
-          attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
-              '__item', ['user', 'friends']);
           $entity.entities.deleteNode(attributeKey.getEntityPath());
-          result = 'user/1/friends/Joe'.toItemKey().getKeyType();
+          result = 'user/1/friends/Joe'.toItemKey().getIdType();
         });
 
         it("should return default", function () {
@@ -185,11 +198,24 @@ describe("$entity", function () {
     });
 
     describe("getValueType()", function () {
-      describe("when no valueType is set for item", function () {
-        var attributeKey;
+      var attributeKey;
 
+      beforeEach(function () {
         attributeKey = $entity.AttributeDocumentKey.fromDocumentIdComponents(
-            '__item', ['user', 'friends']);
+            '__field', ['user', 'friends']).getFieldKey('itemValueType');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'reference');
+        result = 'user/1/friends/Joe'.toItemKey().getValueType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should retrieve itemValueType attribute of field", function () {
+        expect(result).toBe('reference');
+      });
+
+      describe("when no itemValueType is set for field", function () {
         beforeEach(function () {
           $entity.entities.deleteNode(attributeKey.getEntityPath());
           result = 'user/1/friends/Joe'.toItemKey().getValueType();

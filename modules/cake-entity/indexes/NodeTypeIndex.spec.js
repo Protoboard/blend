@@ -27,18 +27,14 @@ describe("$entity", function () {
           "branch": {
             "__field/valueOptions": 1,
             "__field/itemIdOptions": 1,
-            "__field/itemValueOptions": 1,
-            "__item/valueOptions": 1,
-            "__item/idOptions": 1
+            "__field/itemValueOptions": 1
           },
           "leaf": {
             "__document/fields": 1,
             "__field/nodeType": 1,
             "__field/valueType": 1,
             "__field/itemIdType": 1,
-            "__field/itemValueType": 1,
-            "__item/idType": 1,
-            "__item/valueType": 1
+            "__field/itemValueType": 1
           }
         });
       });
@@ -50,10 +46,6 @@ describe("$entity", function () {
               "valueOptions": 1,
               "itemIdOptions": 1,
               "itemValueOptions": 1
-            },
-            "__item": {
-              "idOptions": 1,
-              "valueOptions": 1
             }
           },
           "leaf": {
@@ -65,10 +57,6 @@ describe("$entity", function () {
               "valueType": 1,
               "itemIdType": 1,
               "itemValueType": 1
-            },
-            "__item": {
-              "idType": 1,
-              "valueType": 1
             }
           }
         });
@@ -87,9 +75,7 @@ describe("$entity", function () {
           "__field/nodeType",
           "__field/valueType",
           "__field/itemIdType",
-          "__field/itemValueType",
-          "__item/idType",
-          "__item/valueType"
+          "__field/itemValueType"
         ].sort());
       });
     });

@@ -51,8 +51,8 @@ describe("$entity", function () {
 
       it("should initialize triggerPaths", function () {
         expect(item.triggerPaths).toContain(
-            "entity.document.__field.__item/keyType.options.string".toPath(),
-            "entity.document.__field.__item/valueType.options.string".toPath());
+            "entity.document.__field.__field/itemIdType.options.string".toPath(),
+            "entity.document.__field.__field/itemValueType.options.string".toPath());
       });
 
       describe("when entityKey is cached", function () {

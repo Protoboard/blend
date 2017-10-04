@@ -95,10 +95,8 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
    * @returns {$entity.DocumentKey}
    */
   getAttributeDocumentKey: function () {
-    // todo Revisit whether separate attribute document for item is a good idea.
-    // (Vs. going together with field)
     var fieldKey = this.fieldKey;
-    return $entity.AttributeDocumentKey.fromDocumentIdComponents('__item', [
+    return $entity.AttributeDocumentKey.fromDocumentIdComponents('__field', [
       fieldKey.documentKey.documentType,
       fieldKey.fieldName
     ]);
@@ -123,19 +121,17 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   },
 
   /**
-   * @inheritDoc
    * @returns {string}
    */
-  getKeyType: function getKeyType() {
-    return getKeyType.returned || 'string';
+  getIdType: function () {
+    return this.getAttribute('itemIdType') || 'string';
   },
 
   /**
-   * @inheritDoc
    * @returns {string}
    */
-  getValueType: function getValueType() {
-    return getValueType.returned || 'string';
+  getValueType: function () {
+    return this.getAttribute('itemValueType') || 'string';
   },
 
   /**
