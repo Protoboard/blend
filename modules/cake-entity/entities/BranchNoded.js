@@ -3,12 +3,12 @@
 /**
  * Describes an entity that wraps a branch node in the entity container.
  * Expects to be added to $entity.Entity classes.
- * @mixin $entity.BranchNodeEntity
+ * @mixin $entity.BranchNoded
  * @augments $entity.Entity
  */
-$entity.BranchNodeEntity = $oop.getClass('$entity.BranchNodeEntity')
+$entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
 .expect($oop.getClass('$entity.Entity'))
-.define(/** @lends $entity.BranchNodeEntity# */{
+.define(/** @lends $entity.BranchNoded# */{
   /** @ignore */
   spread: function () {
     var entityKey = this.entityKey,
@@ -45,7 +45,7 @@ $entity.BranchNodeEntity = $oop.getClass('$entity.BranchNodeEntity')
    * Sets specified *leaf* node as new value for the current entity,
    * and triggers change event for the current entity only.
    * @param {*} node
-   * @returns {$entity.BranchNodeEntity}
+   * @returns {$entity.BranchNoded}
    */
   setNodeAsLeaf: function (node) {
     var nodeBefore = this.getSilentNode(),
@@ -70,7 +70,7 @@ $entity.BranchNodeEntity = $oop.getClass('$entity.BranchNodeEntity')
    * degree children and beyond will be overwritten just like in
    * {@link $entity.Entity#setNode}.
    * @param {Object} node
-   * @returns {$entity.BranchNodeEntity}
+   * @returns {$entity.BranchNoded}
    * @todo Add removal counterpart
    */
   appendNode: function (node) {

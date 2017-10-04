@@ -8,11 +8,11 @@
 /**
  * @class $entity.CollectionField
  * @extends $entity.Field
- * @extends $entity.BranchNodeEntity
+ * @extends $entity.BranchNoded
  */
 $entity.CollectionField = $oop.getClass('$entity.CollectionField')
 .mix($oop.getClass('$entity.Field'))
-.mix($oop.getClass('$entity.BranchNodeEntity'))
+.mix($oop.getClass('$entity.BranchNoded'))
 .define({
   /**
    * Spawns a single event if there is a change in node value.

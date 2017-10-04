@@ -13,7 +13,7 @@
  */
 $entity.Document = $oop.getClass('$entity.Document')
 .mix($oop.getClass('$entity.Entity'))
-.mix($oop.getClass('$entity.BranchNodeEntity'))
+.mix($oop.getClass('$entity.BranchNoded'))
 .define(/** @lends $entity.Document# */{
   /**
    * @inheritDoc

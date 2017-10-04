@@ -6,15 +6,15 @@ var $oop = window['cake-oop'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
-  describe("BranchNodeEntity", function () {
+  describe("BranchNoded", function () {
     var BranchNodeEntity,
         branchNodeEntity,
         result;
 
     beforeEach(function () {
-      BranchNodeEntity = $oop.getClass('test.$entity.BranchNodeEntity.BranchNodeEntity')
+      BranchNodeEntity = $oop.getClass('test.$entity.BranchNoded.BranchNodeEntity')
       .mix($entity.Entity)
-      .mix($entity.BranchNodeEntity);
+      .mix($entity.BranchNoded);
       branchNodeEntity = BranchNodeEntity.fromEntityKey('foo/bar'.toDocumentKey());
     });
 
