@@ -70,8 +70,5 @@ $oop.getClass('$entity.Field')
     $entity.CollectionField,
     function (properties) {
       var fieldKey = properties && properties.entityKey;
-      return fieldKey &&
-          // todo These two should be separate using .forwardMix()
-          fieldKey.getNodeType() === 'branch' &&
-          fieldKey.getValueType() === 'collection';
+      return $entity.CollectionFieldKey.mixedBy(fieldKey);
     });

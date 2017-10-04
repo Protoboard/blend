@@ -96,46 +96,6 @@ describe("$entity", function () {
         expect(result).toBe('QUUX');
       });
     });
-
-    describe("getKeyType()", function () {
-      var attributeKey;
-
-      beforeEach(function () {
-        attributeKey = entityKey.getAttributeDocumentKey()
-        .getFieldKey('keyType');
-        $entity.entities.setNode(attributeKey.getEntityPath(), 'QUUX');
-
-        result = entityKey.getKeyType();
-      });
-
-      afterEach(function () {
-        $entity.entities.deleteNode(attributeKey.getEntityPath());
-      });
-
-      it("should return keyType attribute", function () {
-        expect(result).toBe('QUUX');
-      });
-    });
-
-    describe("getValueType()", function () {
-      var attributeKey;
-
-      beforeEach(function () {
-        attributeKey = entityKey.getAttributeDocumentKey()
-        .getFieldKey('valueType');
-        $entity.entities.setNode(attributeKey.getEntityPath(), 'QUUX');
-
-        result = entityKey.getValueType();
-      });
-
-      afterEach(function () {
-        $entity.entities.deleteNode(attributeKey.getEntityPath());
-      });
-
-      it("should return valueType attribute", function () {
-        expect(result).toBe('QUUX');
-      });
-    });
   });
 });
 

@@ -60,22 +60,10 @@ describe("$entity", function () {
     var result;
 
     describe("create()", function () {
-      describe("when nodeType is branch", function () {
+      describe("when entityKey is CollectionFieldKey", function () {
         beforeEach(function () {
-          $entity.entities
-          .appendNode('document.__field'.toPath(), {
-            'foo/baz': {
-              nodeType: 'branch',
-              valueType: 'collection'
-            }
-          });
-
-          result = 'foo/bar/baz'.toField();
-        });
-
-        afterEach(function () {
-          $entity.entities
-          .deleteNode('document.__field.foo/baz'.toPath());
+          result = $entity.CollectionFieldKey.fromString('foo/bar/baz')
+          .toField();
         });
 
         it("should return CollectionField instance", function () {

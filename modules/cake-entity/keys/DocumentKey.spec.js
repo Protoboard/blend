@@ -188,6 +188,26 @@ describe("$entity", function () {
       });
     });
 
+    describe("getFieldNames()", function () {
+      var attributeKey;
+
+      beforeEach(function () {
+        attributeKey = documentKey.getAttributeDocumentKey()
+        .getFieldKey('fields');
+        $entity.entities.setNode(attributeKey.getEntityPath(), [1, 2, 3, 4]);
+
+        result = documentKey.getFieldNames();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should retrieve nodeType attribute", function () {
+        expect(result).toEqual([1, 2, 3, 4]);
+      });
+    });
+
     describe("getFieldKey()", function () {
       var fieldKey;
 

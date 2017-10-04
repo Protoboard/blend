@@ -25,15 +25,19 @@ describe("$entity", function () {
       it("should add fieldRef entries", function () {
         expect($entity.index.data.__fieldRef.byFieldType).toEqual({
           "branch": {
-            "__field/options": 1,
-            "__item/options": 1
+            "__field/valueOptions": 1,
+            "__field/itemIdOptions": 1,
+            "__field/itemValueOptions": 1,
+            "__item/valueOptions": 1,
+            "__item/idOptions": 1
           },
           "leaf": {
             "__document/fields": 1,
             "__field/nodeType": 1,
-            "__field/keyType": 1,
             "__field/valueType": 1,
-            "__item/keyType": 1,
+            "__field/itemIdType": 1,
+            "__field/itemValueType": 1,
+            "__item/idType": 1,
             "__item/valueType": 1
           }
         });
@@ -43,10 +47,13 @@ describe("$entity", function () {
         expect($entity.index.data.__fieldName.byFieldType).toEqual({
           "branch": {
             "__field": {
-              "options": 1
+              "valueOptions": 1,
+              "itemIdOptions": 1,
+              "itemValueOptions": 1
             },
             "__item": {
-              "options": 1
+              "idOptions": 1,
+              "valueOptions": 1
             }
           },
           "leaf": {
@@ -55,12 +62,13 @@ describe("$entity", function () {
             },
             "__field": {
               "nodeType": 1,
-              "keyType": 1,
-              "valueType": 1
+              "valueType": 1,
+              "itemIdType": 1,
+              "itemValueType": 1
             },
             "__item": {
-              "valueType": 1,
-              "keyType": 1
+              "idType": 1,
+              "valueType": 1
             }
           }
         });
@@ -77,9 +85,10 @@ describe("$entity", function () {
         expect(result.sort()).toEqual([
           "__document/fields",
           "__field/nodeType",
-          "__field/keyType",
           "__field/valueType",
-          "__item/keyType",
+          "__field/itemIdType",
+          "__field/itemValueType",
+          "__item/idType",
           "__item/valueType"
         ].sort());
       });
@@ -94,8 +103,9 @@ describe("$entity", function () {
       it("should return field references", function () {
         expect(result.sort()).toEqual([
           "nodeType",
-          "keyType",
-          "valueType"
+          "valueType",
+          "itemIdType",
+          "itemValueType"
         ].sort());
       });
     });

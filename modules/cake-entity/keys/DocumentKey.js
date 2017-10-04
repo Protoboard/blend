@@ -127,6 +127,14 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
   },
 
   /**
+   * Retrieves field names associated with teh current document's documentType.
+   * @returns {Array.<string>}
+   */
+  getFieldNames: function () {
+    return this.getAttribute('fields');
+  },
+
+  /**
    * @param {string} fieldName
    * @returns {$entity.FieldKey}
    */

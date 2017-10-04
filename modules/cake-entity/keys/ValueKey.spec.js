@@ -83,5 +83,43 @@ describe("$entity", function () {
         });
       });
     });
+
+    describe("getValueType()", function () {
+      var attributeKey;
+
+      beforeEach(function () {
+        attributeKey = valueKey.getAttributeDocumentKey()
+        .getFieldKey('valueType');
+        $entity.entities.setNode(attributeKey.getEntityPath(), 'A');
+        result = valueKey.getValueType();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should retrieve valueType attribute", function () {
+        expect(result).toEqual('A');
+      });
+    });
+
+    describe("getValueOptions()", function () {
+      var attributeKey;
+
+      beforeEach(function () {
+        attributeKey = valueKey.getAttributeDocumentKey()
+        .getFieldKey('valueOptions');
+        $entity.entities.setNode(attributeKey.getEntityPath(), [0, 1]);
+        result = valueKey.getValueOptions();
+      });
+
+      afterEach(function () {
+        $entity.entities.deleteNode(attributeKey.getEntityPath());
+      });
+
+      it("should retrieve valueOptions attribute", function () {
+        expect(result).toEqual([0, 1]);
+      });
+    });
   });
 });

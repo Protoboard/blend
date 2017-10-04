@@ -26,15 +26,19 @@ $entity.entities = $data.Tree.fromData({
         fields: [
           'nodeType',
           'valueType',
-          'keyType',
-          'options' // todo Rename to valueOptions
+          'valueOptions',
+          'itemIdType',
+          'itemIdOptions',
+          'itemValueType',
+          'itemValueOptions'
         ]
       },
       __item: {
         fields: [
+          'idType',
+          'idOptions',
           'valueType',
-          'keyType',
-          'options' // todo Rename to valueOptions
+          'valueOptions'
         ]
       }
 
@@ -46,26 +50,26 @@ $entity.entities = $data.Tree.fromData({
 
     /** Field attribute documents. */
     __field: {
+      '__document/valueType': {
+        valueType: 'string',
+        valueOptions: {
+          document: 1
+        }
+      },
       '__document/fields': {
         valueType: 'collection'
       },
 
       '__field/nodeType': {
         valueType: 'string',
-        options: {
+        valueOptions: {
           leaf: 1, // default
           branch: 1
         }
       },
-      '__field/keyType': {
-        valueType: 'string',
-        options: {
-          string: 1 // default
-        }
-      },
       '__field/valueType': {
         valueType: 'string',
-        options: {
+        valueOptions: {
           string: 1, // default
           number: 1,
           boolean: 1,
@@ -73,28 +77,57 @@ $entity.entities = $data.Tree.fromData({
           collection: 1
         }
       },
-      '__field/options': {
+      '__field/valueOptions': {
+        nodeType: 'branch',
+        valueType: 'collection'
+      },
+      '__field/itemIdType': {
+        valueType: 'string',
+        valueOptions: {
+          string: 1, // default
+          reference: 1,
+          order: 1
+        }
+      },
+      '__field/itemIdOptions': {
+        nodeType: 'branch',
+        valueType: 'collection'
+      },
+      '__field/itemValueType': {
+        valueType: 'string',
+        valueOptions: {
+          string: 1, // default
+          reference: 1,
+          order: 1
+        }
+      },
+      '__field/itemValueOptions': {
         nodeType: 'branch',
         valueType: 'collection'
       },
 
+      // todo Redundant
+      '__item/idType': {
+        valueType: 'string',
+        valueOptions: {
+          string: 1, // default
+          reference: 1,
+          order: 1
+        }
+      },
+      '__item/idOptions': {
+        nodeType: 'branch',
+        valueType: 'collection'
+      },
       '__item/valueType': {
         valueType: 'string',
-        options: {
+        valueOptions: {
           string: 1, // default
           reference: 1,
           order: 1
         }
       },
-      '__item/keyType': {
-        valueType: 'string',
-        options: {
-          string: 1, // default
-          reference: 1,
-          order: 1
-        }
-      },
-      '__item/options': {
+      '__item/valueOptions': {
         nodeType: 'branch',
         valueType: 'collection'
       }
@@ -107,12 +140,18 @@ $entity.entities = $data.Tree.fromData({
       //'user/emails': {
       //  /** Field contains collection */
       //  nodeType: 'branch',
-      //  valueType: 'collection'
+      //  valueType: 'collection',
+      //  /** Items are emails */
+      //  itemValueType: 'email'
       //},
       //'user/friends': {
       //  /** Field contains collection */
       //  nodeType: 'branch',
       //  valueType: 'collection'
+      //  /** Item IDs are references */
+      //  itemIdType: 'reference',
+      //  /** Items are booleans */
+      //  itemValueType: 'boolean'
       //}
     },
 
@@ -124,10 +163,10 @@ $entity.entities = $data.Tree.fromData({
       //  valueType: 'email'
       //},
       //'user/friends': {
-      //  /** Items are booleans */
-      //  valueType: 'boolean',
       //  /** Item IDs are references */
-      //  keyType: 'reference'
+      //  idType: 'reference',
+      //  /** Items are booleans */
+      //  valueType: 'boolean'
       //}
     }
   }
