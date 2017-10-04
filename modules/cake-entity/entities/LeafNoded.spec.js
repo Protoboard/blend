@@ -4,16 +4,16 @@ var $oop = window['cake-oop'],
     $entity = window['cake-entity'];
 
 describe("$entity", function () {
-  describe("SimpleEntityChangeEventSpawner", function () {
-    var SimpleEntityChangeEventSpawner,
-        simpleEntityChangeEventSpawner,
+  describe("LeafNoded", function () {
+    var LeafNodedField,
+        leafNodedField,
         result;
 
     beforeEach(function () {
-      SimpleEntityChangeEventSpawner = $oop.getClass('test.$entity.SimpleEntityChangeEventSpawner.SimpleEntityChangeEventSpawner')
+      LeafNodedField = $oop.getClass('test.$entity.LeafNoded.LeafNoded')
       .mix($entity.Field)
-      .mix($entity.SimpleEntityChangeEventSpawner);
-      simpleEntityChangeEventSpawner = SimpleEntityChangeEventSpawner.fromComponents('foo', 'bar', 'baz');
+      .mix($entity.LeafNoded);
+      leafNodedField = LeafNodedField.fromComponents('foo', 'bar', 'baz');
     });
 
     describe("spawnEntityChangeEvents()", function () {
@@ -25,7 +25,7 @@ describe("$entity", function () {
           nodeBefore = "Hello";
           nodeAfter = "World";
 
-          result = simpleEntityChangeEventSpawner
+          result = leafNodedField
           .spawnEntityChangeEvents(nodeBefore, nodeAfter);
         });
 
@@ -42,7 +42,7 @@ describe("$entity", function () {
 
       describe("when node has not changed", function () {
         beforeEach(function () {
-          result = simpleEntityChangeEventSpawner.spawnEntityChangeEvents();
+          result = leafNodedField.spawnEntityChangeEvents();
         });
 
         it("should spawn single event", function () {

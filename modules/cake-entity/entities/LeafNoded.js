@@ -1,14 +1,12 @@
 "use strict";
 
 /**
- * Describes an entity that triggers a single event when changed.
- * @class $entity.SimpleEntityChangeEventSpawner
+ * @mixin $entity.LeafNoded
  * @augments $entity.Entity
- * @todo Rename
  */
-$entity.SimpleEntityChangeEventSpawner = $oop.getClass('$entity.SimpleEntityChangeEventSpawner')
+$entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
 .expect($oop.getClass('$entity.Entity'))
-.define(/** @lends $entity.SimpleEntityChangeEventSpawner# */{
+.define(/** @lends $entity.LeafNoded# */{
   /**
    * Spawns a single event if there is a change in node value.
    * @param {*} nodeBefore

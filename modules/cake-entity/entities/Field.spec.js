@@ -83,8 +83,8 @@ describe("$entity", function () {
           .deleteNode('document.__field.foo/baz'.toPath());
         });
 
-        it("should return SimpleEntityChangeEventSpawner instance", function () {
-          expect($entity.SimpleEntityChangeEventSpawner.mixedBy(result))
+        it("should return LeafNoded instance", function () {
+          expect($entity.LeafNoded.mixedBy(result))
           .toBeTruthy();
         });
       });

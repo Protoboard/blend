@@ -58,7 +58,7 @@ $entity.Field
     })
 // leaf node fields
 .forwardTo(
-    $oop.mixClass($entity.Field, $oop.getClass('$entity.SimpleEntityChangeEventSpawner')),
+    $oop.mixClass($entity.Field, $oop.getClass('$entity.LeafNoded')),
     function (properties) {
       var fieldKey = properties && properties.entityKey;
       return fieldKey && fieldKey.getNodeType() === 'leaf';

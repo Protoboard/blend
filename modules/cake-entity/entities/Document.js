@@ -81,7 +81,7 @@ $entity.Document = $oop.getClass('$entity.Document')
     })
     .forEach(function (fieldName) {
       // This deliberately duplicates
-      // SimpleEntityChangeEventSpawner#spawnEntityChangeEvents for
+      // LeafNoded#spawnEntityChangeEvents for
       // performance reasons.
       var field = document.getField(fieldName);
       events.push(field.spawnEvent({

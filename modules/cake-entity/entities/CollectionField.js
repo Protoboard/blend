@@ -51,7 +51,7 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
     })
     .forEachItem(function (propertyName) {
       // This deliberately duplicates
-      // SimpleEntityChangeEventSpawner#spawnEntityChangeEvents for performance
+      // LeafNoded#spawnEntityChangeEvents for performance
       // reasons.
       var childEntity = that.getChildEntity(propertyName);
       events.push(childEntity.spawnEvent({

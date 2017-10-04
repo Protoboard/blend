@@ -11,11 +11,11 @@
  * Items are always treated like leaf nodes.
  * @class $entity.Item
  * @extends $entity.Entity
- * @mixes $entity.SimpleEntityChangeEventSpawner
+ * @mixes $entity.LeafNoded
  */
 $entity.Item = $oop.getClass('$entity.Item')
 .mix($oop.getClass('$entity.Entity'))
-.mix($oop.getClass('$entity.SimpleEntityChangeEventSpawner'))
+.mix($oop.getClass('$entity.LeafNoded'))
 .define(/** @lends $entity.Item# */{
   /**
    * @inheritDoc
