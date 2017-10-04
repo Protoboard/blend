@@ -19,6 +19,7 @@ $entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
           'entity', 'document', '__field', nodeTypeKey.toString(), 'options',
           'branch']);
 
+    // todo Not 100% certain this is justified
     this.triggerPaths.push(nodeTypePath);
   },
 

@@ -7,6 +7,20 @@
 $entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
 .expect($oop.getClass('$entity.Entity'))
 .define(/** @lends $entity.LeafNoded# */{
+  /** @ignore */
+  spread: function () {
+    var entityKey = this.entityKey,
+        attributeDocumentKey = entityKey.getAttributeDocumentKey(),
+        entityType = attributeDocumentKey.documentType,
+        nodeTypeKey = $entity.DocumentKey.fromComponents(entityType, 'nodeType'),
+        nodeTypePath = $data.Path.fromComponents([
+          'entity', 'document', '__field', nodeTypeKey.toString(), 'options',
+          'leaf']);
+
+    // todo Not 100% certain this is justified
+    this.triggerPaths.push(nodeTypePath);
+  },
+
   /**
    * Spawns a single event if there is a change in node value.
    * @param {*} nodeBefore
