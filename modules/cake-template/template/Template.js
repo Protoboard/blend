@@ -164,14 +164,6 @@ $template.Template = $oop.getClass('$template.Template')
     } else {
       return this._clearParameters();
     }
-  },
-
-  /**
-   * Stringifies template.
-   * @returns {string}
-   */
-  toString: function () {
-    return $utils.stringify(this.templateString);
   }
 });
 
