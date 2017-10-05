@@ -57,42 +57,6 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
   },
 
   /**
-   * @param {Array.<string>} propertiesAdded
-   * @returns {$entity.EntityChangeEvent}
-   */
-  setPropertiesAdded: function (propertiesAdded) {
-    this.propertiesAdded = propertiesAdded;
-    return this;
-  },
-
-  /**
-   * @param {Array.<string>} propertiesRemoved
-   * @returns {$entity.EntityChangeEvent}
-   */
-  setPropertiesRemoved: function (propertiesRemoved) {
-    this.propertiesRemoved = propertiesRemoved;
-    return this;
-  },
-
-  /**
-   * @param {*} nodeBefore
-   * @returns {$entity.EntityChangeEvent}
-   */
-  setNodeBefore: function (nodeBefore) {
-    this.nodeBefore = nodeBefore;
-    return this;
-  },
-
-  /**
-   * @param {*} nodeAfter
-   * @returns {$entity.EntityChangeEvent}
-   */
-  setNodeAfter: function (nodeAfter) {
-    this.nodeAfter = nodeAfter;
-    return this;
-  },
-
-  /**
    * Retrieves the before state of the node associated with the sending
    * entity, wrapped in a `DataContainer` instance.
    * @returns {$data.DataContainer}
