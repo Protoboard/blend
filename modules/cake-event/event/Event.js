@@ -11,7 +11,6 @@
  * Signals a change in the state of some component of the application. Carries
  * information about the affected component and the cause(s) that led to the
  * corresponding change.
- * @todo Add payload
  * @class $event.Event
  * @extends $utils.Cloneable
  * @extends $data.Link
