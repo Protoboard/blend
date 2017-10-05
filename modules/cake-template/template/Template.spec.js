@@ -137,6 +137,17 @@ describe("$template", function () {
             expect(result).toEqual(['foo ', '{{bar}}', ' baz']);
           });
 
+          describe("when params have leading/trailing whitespace", function () {
+            beforeEach(function () {
+              template = 'A {{   foo   }} B {{   bar   }} C'.toTemplate();
+              result = template.extractTokens();
+            });
+
+            it("should strip out whitespace from params", function () {
+              expect(result).toEqual(['A ', '{{foo}}', ' B ', '{{bar}}', ' C']);
+            });
+          });
+
           describe("when params are touching", function () {
             beforeEach(function () {
               template = '{{foo}}{{bar}}'.toTemplate();
@@ -193,6 +204,15 @@ describe("$template", function () {
           '{{bar}}': "quux"
         });
         expect(result).toBe("foo quux baz");
+      });
+
+      describe("when parameters are not handlebars-wrapped", function () {
+        it("should resolve parameters", function () {
+          result = template.getResolvedString({
+            'bar': "quux"
+          });
+          expect(result).toBe("foo quux baz");
+        });
       });
 
       describe("on missing parameter value list", function () {

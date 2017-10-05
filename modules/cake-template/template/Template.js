@@ -33,6 +33,26 @@ $template.Template = $oop.getClass('$template.Template')
   },
 
   /**
+   * @param {Array.<string>} tokens
+   * @returns {Array.<string>} Sanitized tokens
+   * @private
+   */
+  _sanitizeTokens: function (tokens) {
+    var tokenCount = tokens.length,
+        i, token, matches;
+
+    for (i = 0; i < tokenCount; i++) {
+      token = tokens[i];
+      matches = $template.RE_TEMPLATE_PARAMETER_EXTRACTOR.exec(token);
+      if (matches) {
+        tokens[i] = '{{' + matches[1] + '}}';
+      }
+    }
+
+    return tokens;
+  },
+
+  /**
    * Resolves templateString parameters. Returns an object in which each
    * templateString parameter is associated with an array-of-arrays structure
    * holding corresponding string literals.
@@ -87,13 +107,19 @@ $template.Template = $oop.getClass('$template.Template')
    */
   _resolveParameters: function (parameterValues) {
     var parameterValuesAsTemplates = $data.Collection.fromData(parameterValues)
+    .mapKeys(function (templateString, parameter) {
+      return $template.RE_TEMPLATE_PARAMETER_TESTER.test(parameter) ?
+          parameter :
+          '{{' + parameter + '}}';
+    })
     // discarding undefined parameter values
     .filter(function (parameterValue) {
       return parameterValue !== undefined;
     })
     // converting each parameter value to Template
     .passEachValueTo($template.Template.fromString, $template.Template)
-    .setItem('{{}}', this),
+    .setItem('{{}}', this)
+    .toCollection(),
         tokenTree = this._buildTokenTree(parameterValuesAsTemplates);
 
     return this._flattenStringTree(tokenTree['{{}}']);
@@ -113,11 +139,13 @@ $template.Template = $oop.getClass('$template.Template')
    * @returns {string|string[]}
    */
   extractTokens: function () {
-    var templateString = $utils.stringify(this.templateString);
+    var templateString = $utils.stringify(this.templateString),
+        tokens;
     if ($template.RE_TEMPLATE_PARAMETER_TESTER.test(templateString)) {
       return [templateString];
     } else {
-      return templateString.split($template.RE_TEMPLATE_SPLITTER);
+      tokens = templateString.split($template.RE_TEMPLATE_SPLITTER);
+      return this._sanitizeTokens(tokens);
     }
   },
 
@@ -188,6 +216,12 @@ $oop.copyProperties($template, /** @lends $template */{
    * @constant
    */
   RE_TEMPLATE_PARAMETER_TESTER: /^{{[^{}]+}}$/,
+
+  /**
+   * @type {RegExp}
+   * @constant
+   */
+  RE_TEMPLATE_PARAMETER_EXTRACTOR: /^{{\s*([^{}\s]+)\s*}}$/,
 
   /**
    * @type {RegExp}
