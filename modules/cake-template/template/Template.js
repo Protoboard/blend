@@ -13,7 +13,7 @@
 $template.Template = $oop.getClass('$template.Template')
 .define(/** @lends $template.Template# */{
   /**
-   * @member {string|$utils.Stringifiable} templateString
+   * @member {string|$utils.Stringifiable} $template.Template#templateString
    */
 
   /**
@@ -106,20 +106,21 @@ $template.Template = $oop.getClass('$template.Template')
    * @private
    */
   _resolveParameters: function (parameterValues) {
-    var parameterValuesAsTemplates = $data.Collection.fromData(parameterValues)
-    .mapKeys(function (templateString, parameter) {
-      return $template.RE_TEMPLATE_PARAMETER_TESTER.test(parameter) ?
-          parameter :
-          '{{' + parameter + '}}';
-    })
-    // discarding undefined parameter values
-    .filter(function (parameterValue) {
-      return parameterValue !== undefined;
-    })
-    // converting each parameter value to Template
-    .passEachValueTo($template.Template.fromString, $template.Template)
-    .setItem('{{}}', this)
-    .toCollection(),
+    var
+        parameterValuesAsTemplates = $data.Collection.fromData(parameterValues)
+        .mapKeys(function (templateString, parameter) {
+          return $template.RE_TEMPLATE_PARAMETER_TESTER.test(parameter) ?
+              parameter :
+              '{{' + parameter + '}}';
+        })
+        // discarding undefined parameter values
+        .filter(function (parameterValue) {
+          return parameterValue !== undefined;
+        })
+        // converting each parameter value to Template
+        .passEachValueTo($template.Template.fromString, $template.Template)
+        .setItem('{{}}', this)
+        .toCollection(),
         tokenTree = this._buildTokenTree(parameterValuesAsTemplates);
 
     return this._flattenStringTree(tokenTree['{{}}']);
