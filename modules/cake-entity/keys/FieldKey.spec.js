@@ -5,16 +5,16 @@ var $oop = window['cake-oop'],
     $entity = window['cake-entity'];
 
 describe("$assert", function () {
-  var documentKey;
+  var fieldKey;
 
   beforeEach(function () {
-    documentKey = $entity.FieldKey.fromComponents('foo', 'bar', 'baz');
+    fieldKey = $entity.FieldKey.fromComponents('foo', 'bar', 'baz');
     spyOn($assert, 'assert').and.callThrough();
   });
 
   describe("isFieldKey()", function () {
     it("should pass message to assert", function () {
-      $assert.isFieldKey(documentKey, "bar");
+      $assert.isFieldKey(fieldKey, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");
     });
 
@@ -29,7 +29,7 @@ describe("$assert", function () {
 
   describe("isFieldKeyOptional()", function () {
     it("should pass message to assert", function () {
-      $assert.isFieldKeyOptional(documentKey, "bar");
+      $assert.isFieldKeyOptional(fieldKey, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");
     });
 
