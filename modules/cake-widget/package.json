@@ -1,0 +1,29 @@
+{
+  "name": "cake-widget",
+  "version": "0.1.0",
+  "description": "Widget framework module for Layercake",
+  "keywords": [
+    "widget",
+    "component",
+    "stateful",
+    "viewcontroller"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2014-2017 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/layercake.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "cake-assert": "~0.5.0",
+    "cake-data": "~0.5.0",
+    "cake-event": "~0.5.0",
+    "cake-oop": "~0.5.0",
+    "cake-template": "~0.5.0",
+    "cake-utils": "~0.5.0"
+  }
+}
