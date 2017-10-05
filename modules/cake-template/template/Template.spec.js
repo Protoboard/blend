@@ -242,7 +242,7 @@ describe("String", function () {
     var template;
 
     beforeEach(function () {
-      template = $template.Template.fromString('foo/bar/baz');
+      template = $template.Template.fromString('foo');
       spyOn($template.Template, 'create').and.returnValue(template);
       result = 'foo'.toTemplate();
     });
