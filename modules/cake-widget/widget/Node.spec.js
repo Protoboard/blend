@@ -33,6 +33,7 @@ describe("$widget", function () {
         childNode = Node.create({
           nodeName: 'foo'
         });
+        spyOn(childNode, 'addToParentNode').and.callThrough();
         result = node.addChildNode(childNode);
       });
 
@@ -44,8 +45,8 @@ describe("$widget", function () {
         expect(node.childNodes.getValue('foo')).toBe(childNode);
       });
 
-      it("should set parentNode on child", function () {
-        expect(childNode.parentNode).toBe(node);
+      it("should invoke addToParentNode on childNode", function () {
+        expect(childNode.addToParentNode).toHaveBeenCalledWith(node);
       });
 
       describe("when child already has parent", function () {
@@ -112,7 +113,7 @@ describe("$widget", function () {
           nodeName: 'foo'
         });
         node.addChildNode(childNode);
-
+        spyOn(childNode, 'removeFromParentNode').and.callThrough();
         result = node.removeChildNode('foo');
       });
 
@@ -124,8 +125,8 @@ describe("$widget", function () {
         expect(node.childNodes.getValue('foo')).toBeUndefined();
       });
 
-      it("should reset parentNode on child", function () {
-        expect(childNode.parentNode).toBeUndefined();
+      it("should invoke removeFromParentNode on childNode", function () {
+        expect(childNode.removeFromParentNode).toHaveBeenCalled();
       });
     });
 
@@ -169,6 +170,10 @@ describe("$widget", function () {
         expect(result).toBe(node);
       });
 
+      it("should set parentNode property", function () {
+        expect(node.parentNode).toBe(parentNode);
+      });
+
       it("should invoke addChildNode on parent", function () {
         expect(parentNode.addChildNode).toHaveBeenCalledWith(node);
       });
@@ -187,6 +192,10 @@ describe("$widget", function () {
 
       it("should return self", function () {
         expect(result).toBe(node);
+      });
+
+      it("should reset parentNode property", function () {
+        expect(node.parentNode).toBeUndefined();
       });
 
       it("should invoke addChildNode on parent", function () {

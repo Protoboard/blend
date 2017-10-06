@@ -52,7 +52,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       }
 
       this.childNodes.setItem(childNodeName, node);
-      node.parentNode = this;
+      node.addToParentNode(this);
     }
 
     return this;
@@ -74,7 +74,7 @@ $widget.Node = $oop.getClass('$widget.Node')
     var childNode = this.childNodes.getValue(nodeName);
     if (childNode) {
       this.childNodes.deleteItem(nodeName);
-      childNode.parentNode = undefined;
+      childNode.removeFromParentNode();
     }
     return this;
   },
@@ -102,7 +102,10 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @returns {$widget.Node}
    */
   addToParentNode: function (node) {
-    node.addChildNode(this);
+    if (node !== this.parentNode) {
+      this.parentNode = node;
+      node.addChildNode(this);
+    }
     return this;
   },
 
@@ -112,6 +115,7 @@ $widget.Node = $oop.getClass('$widget.Node')
   removeFromParentNode: function () {
     var parentNode = this.parentNode;
     if (parentNode) {
+      this.parentNode = undefined;
       parentNode.removeChildNode(this.nodeName);
     }
     return this;
