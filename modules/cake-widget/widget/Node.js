@@ -8,7 +8,6 @@
 /**
  * @class $widget.Node
  * @extends $utils.Identifiable
- * @todo Introduce child order. (Separate mixin?)
  */
 $widget.Node = $oop.getClass('$widget.Node')
 .mix($utils.Identifiable)
