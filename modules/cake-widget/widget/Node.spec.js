@@ -218,5 +218,94 @@ describe("$widget", function () {
         expect(parentNode.renameChildNode).toHaveBeenCalledWith('foo', 'bar');
       });
     });
+
+    describe("getNodePath()", function () {
+      var node2, node3;
+
+      beforeEach(function () {
+        node2 = Node.create();
+        node3 = Node.create();
+        node.addToParentNode(
+            node2.addToParentNode(
+                node3));
+      });
+
+      it("should retrieve path to node", function () {
+        var nodePath = [
+          node3.instanceId,
+          node2.instanceId,
+          node.instanceId
+        ]
+        .map(String)
+        .toPath();
+
+        expect(node.getNodePath()).toEqual(nodePath);
+      });
+    });
+
+    describe("getParentNodes()", function () {
+      var node2, node3;
+
+      beforeEach(function () {
+        node2 = Node.create();
+        node3 = Node.create();
+        node.addToParentNode(
+            node2.addToParentNode(
+                node3));
+      });
+
+      it("should retrieve array of parent nodes", function () {
+        expect(node.getParentNodes()).toEqual([node2, node3]);
+      });
+    });
+
+    describe("getClosestParentNode()", function () {
+      var node2, node3, node4;
+
+      beforeEach(function () {
+        node2 = Node.create({
+          nodeName: 'foo'
+        });
+        node3 = Node.create({
+          nodeName: 'bar'
+        });
+        node4 = Node.create({
+          nodeName: 'foo'
+        });
+        node.addToParentNode(
+            node2.addToParentNode(
+                node3));
+      });
+
+      it("should retrieve first node that matches filter", function () {
+        var filter = function (node) {
+          return node && node.nodeName === 'foo';
+        };
+        expect(node.getClosestParentNode(filter)).toBe(node2);
+      });
+    });
+
+    describe("getAllChildNodes()", function () {
+      var node1, node2, node3, node4;
+
+      beforeEach(function () {
+        node1 = Node.create();
+        node2 = Node.create();
+        node3 = Node.create();
+        node4 = Node.create();
+
+        node.addChildNode(
+            node1.addChildNode(
+                node2.addChildNode(
+                    node4))
+            .addChildNode(node3));
+      });
+
+      it("should retrieve list of all child nodes", function () {
+        expect(node.getAllChildNodes()).toEqual([
+          node1, node2, node4, node3
+        ]);
+      });
+    });
   });
 });

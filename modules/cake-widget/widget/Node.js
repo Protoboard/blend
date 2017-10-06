@@ -123,11 +123,73 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @returns {$widget.Node}
    */
   setNodeName: function (nodeName) {
-    var nodeNameBefore = this.nodeName;
+    var nodeNameBefore = this.nodeName,
+        parentNode = this.parentNode;
     if (nodeName !== nodeNameBefore) {
       this.nodeName = nodeName;
-      this.parentNode.renameChildNode(nodeNameBefore, nodeName);
+      if (parentNode) {
+        parentNode.renameChildNode(nodeNameBefore, nodeName);
+      }
     }
     return this;
+  },
+
+  /**
+   * @returns {$data.Path}
+   */
+  getNodePath: function () {
+    var node = this,
+        components = [];
+
+    while (node) {
+      components.unshift(String(node.instanceId));
+      node = node.parentNode;
+    }
+
+    return $data.Path.fromComponents(components);
+  },
+
+  /**
+   * @returns {Array.<$widget.Node>}
+   */
+  getParentNodes: function () {
+    var parentNode = this.parentNode,
+        result = [];
+
+    while (parentNode) {
+      result.push(parentNode);
+      parentNode = parentNode.parentNode;
+    }
+
+    return result;
+  },
+
+  /**
+   * @param {function} callback
+   * @returns {$widget.Node}
+   */
+  getClosestParentNode: function (callback) {
+    var parentNode = this.parentNode;
+    while (parentNode && !callback(parentNode)) {
+      parentNode = parentNode.parentNode;
+    }
+    return parentNode;
+  },
+
+  /**
+   * @returns {Array.<$widget.Node>}
+   */
+  getAllChildNodes: function () {
+    var result = [];
+
+    (function burrow(parentNode) {
+      parentNode.childNodes
+      .forEachItem(function (childNode) {
+        result.push(childNode);
+        burrow(childNode);
+      });
+    }(this));
+
+    return result;
   }
 });
