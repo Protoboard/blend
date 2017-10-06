@@ -18,6 +18,7 @@ module.exports = function (config) {
       'dist/cake-event.js',
       'dist/cake-template.js',
       'dist/cake-entity.js',
+      'dist/cake-widget.js',
       'test/jasmine-spyOn.js',
       'test/*.js',
       'modules/**/*.spec.js'
