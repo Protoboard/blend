@@ -83,6 +83,27 @@ describe("$widget", function () {
       });
     });
 
+    describe("getChildNode()", function () {
+      var childNode;
+
+      beforeEach(function () {
+        childNode = Node.create({
+          nodeName: 'foo'
+        });
+        node.addChildNode(childNode);
+      });
+
+      it("should retrieve specified child node", function () {
+        expect(node.getChildNode('foo')).toBe(childNode);
+      });
+
+      describe("when no child node matches name", function () {
+        it("should return undefined", function () {
+          expect(node.getChildNode('bar')).toBeUndefined();
+        });
+      });
+    });
+
     describe("removeChildNode()", function () {
       var childNode;
 
@@ -105,6 +126,33 @@ describe("$widget", function () {
 
       it("should reset parentNode on child", function () {
         expect(childNode.parentNode).toBeUndefined();
+      });
+    });
+
+    describe("renameChildNode()", function () {
+      var childNode;
+
+      beforeEach(function () {
+        childNode = Node.create({
+          nodeName: 'foo'
+        });
+        spyOn(childNode, 'setNodeName').and.callThrough();
+        node.addChildNode(childNode);
+        result = node.renameChildNode('foo', 'bar');
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(node);
+      });
+
+      it("should move child node in collection", function () {
+        expect(node.childNodes.data).toEqual({
+          bar: childNode
+        });
+      });
+
+      it("should invoke setNodeName on childNode", function () {
+        expect(childNode.setNodeName).toHaveBeenCalledWith('bar');
       });
     });
 
@@ -143,6 +191,31 @@ describe("$widget", function () {
 
       it("should invoke addChildNode on parent", function () {
         expect(parentNode.removeChildNode).toHaveBeenCalledWith('foo');
+      });
+    });
+
+    describe("setNodeName()", function () {
+      var parentNode;
+
+      beforeEach(function () {
+        parentNode = Node.create();
+        node.nodeName = 'foo';
+        parentNode.addChildNode(node);
+        spyOn(parentNode, 'renameChildNode').and.callThrough();
+
+        result = node.setNodeName('bar');
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(node);
+      });
+
+      it("should update nodeName property", function () {
+        expect(node.nodeName).toBe('bar');
+      });
+
+      it("should invoke renameChildNode on parentNode", function () {
+        expect(parentNode.renameChildNode).toHaveBeenCalledWith('foo', 'bar');
       });
     });
   });

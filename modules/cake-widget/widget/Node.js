@@ -8,6 +8,7 @@
 /**
  * @class $widget.Node
  * @extends $utils.Identifiable
+ * @todo Introduce child order. (Separate mixin?)
  */
 $widget.Node = $oop.getClass('$widget.Node')
 .mix($utils.Identifiable)
@@ -59,6 +60,14 @@ $widget.Node = $oop.getClass('$widget.Node')
   },
 
   /**
+   * @param {string} nodeName
+   * @returns {*}
+   */
+  getChildNode: function (nodeName) {
+    return this.childNodes.getValue(nodeName);
+  },
+
+  /**
    * @param nodeName
    * @returns {$widget.Node}
    */
@@ -68,6 +77,24 @@ $widget.Node = $oop.getClass('$widget.Node')
       this.childNodes.deleteItem(nodeName);
       childNode.parentNode = undefined;
     }
+    return this;
+  },
+
+  /**
+   * @param {string} nodeNameBefore
+   * @param {string} nodeNameAfter
+   * @returns {$widget.Node}
+   */
+  renameChildNode: function (nodeNameBefore, nodeNameAfter) {
+    var childNode = this.getChildNode(nodeNameBefore),
+        childNodes = this.childNodes;
+
+    if (childNode) {
+      childNodes.deleteItem(nodeNameBefore);
+      childNode.setNodeName(nodeNameAfter);
+      childNodes.setItem(nodeNameAfter, childNode);
+    }
+
     return this;
   },
 
@@ -87,6 +114,19 @@ $widget.Node = $oop.getClass('$widget.Node')
     var parentNode = this.parentNode;
     if (parentNode) {
       parentNode.removeChildNode(this.nodeName);
+    }
+    return this;
+  },
+
+  /**
+   * @param {string} nodeName
+   * @returns {$widget.Node}
+   */
+  setNodeName: function (nodeName) {
+    var nodeNameBefore = this.nodeName;
+    if (nodeName !== nodeNameBefore) {
+      this.nodeName = nodeName;
+      this.parentNode.renameChildNode(nodeNameBefore, nodeName);
     }
     return this;
   }
