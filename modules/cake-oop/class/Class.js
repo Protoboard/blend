@@ -373,7 +373,12 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           .filter(function (method) {
             return method !== undefined;
           }),
-          methodCount = compactedMethods.length;
+          methodCount = compactedMethods.length,
+          saved = {};
+
+      compactedMethods.forEach(function (method) {
+        method.saved = saved;
+      });
 
       if (methodCount === 1) {
         // there is only 1 function so far for this method
