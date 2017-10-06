@@ -41,6 +41,10 @@ describe("$widget", function () {
         expect(result).toBe(node);
       });
 
+      it("should save before state", function () {
+        expect(node.addChildNode.childNodeBefore).toBeUndefined();
+      });
+
       it("should add node to childNodes", function () {
         expect(node.childNodes.getValue('foo')).toBe(childNode);
       });
@@ -74,6 +78,10 @@ describe("$widget", function () {
           node.addChildNode(Node.create({
             nodeName: 'foo'
           }));
+        });
+
+        it("should save before state", function () {
+          expect(node.addChildNode.saved.childNodeBefore).toBe(childNode);
         });
 
         it("should remove child", function () {
@@ -121,6 +129,10 @@ describe("$widget", function () {
         expect(result).toBe(node);
       });
 
+      it("should save before state", function () {
+        expect(node.removeChildNode.saved.childNodeBefore).toBe(childNode);
+      });
+
       it("should remove node from collection", function () {
         expect(node.childNodes.getValue('foo')).toBeUndefined();
       });
@@ -144,6 +156,10 @@ describe("$widget", function () {
 
       it("should return self", function () {
         expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        expect(node.renameChildNode.saved.childNode).toBe(childNode);
       });
 
       it("should move child node in collection", function () {
@@ -170,6 +186,10 @@ describe("$widget", function () {
         expect(result).toBe(node);
       });
 
+      it("should save before state", function () {
+        expect(node.addToParentNode.saved.parentNodeBefore).toBeUndefined();
+      });
+
       it("should set parentNode property", function () {
         expect(node.parentNode).toBe(parentNode);
       });
@@ -192,6 +212,11 @@ describe("$widget", function () {
 
       it("should return self", function () {
         expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        expect(node.removeFromParentNode.saved.parentNodeBefore)
+        .toBe(parentNode);
       });
 
       it("should reset parentNode property", function () {
@@ -217,6 +242,10 @@ describe("$widget", function () {
 
       it("should return self", function () {
         expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        expect(node.setNodeName.saved.nodeNameBefore).toBe('foo');
       });
 
       it("should update nodeName property", function () {

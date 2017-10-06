@@ -34,18 +34,17 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @param {$widget.Node} node
    * @returns {$widget.Node}
    */
-  addChildNode: function (node) {
+  addChildNode: function addChildNode(node) {
     var parentNodeBefore = node.parentNode,
         childNodeName = node.nodeName,
-        childNodeBefore;
+        childNodeBefore = this.childNodes.getValue(childNodeName);
 
-    if (parentNodeBefore !== this) {
+    if (childNodeBefore !== node) {
       if (parentNodeBefore) {
         // removing node from existing parent
         parentNodeBefore.removeChildNode(childNodeName);
       }
 
-      childNodeBefore = this.childNodes.getValue(childNodeName);
       if (childNodeBefore) {
         // removing conflicting child node
         this.removeChildNode(childNodeName);
@@ -55,6 +54,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       node.addToParentNode(this);
     }
 
+    addChildNode.saved.childNodeBefore = childNodeBefore;
     return this;
   },
 
@@ -70,12 +70,14 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @param nodeName
    * @returns {$widget.Node}
    */
-  removeChildNode: function (nodeName) {
-    var childNode = this.childNodes.getValue(nodeName);
-    if (childNode) {
+  removeChildNode: function removeChildNode(nodeName) {
+    var childNodeBefore = this.childNodes.getValue(nodeName);
+    if (childNodeBefore) {
       this.childNodes.deleteItem(nodeName);
-      childNode.removeFromParentNode();
+      childNodeBefore.removeFromParentNode();
     }
+
+    removeChildNode.saved.childNodeBefore = childNodeBefore;
     return this;
   },
 
@@ -84,7 +86,7 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @param {string} nodeNameAfter
    * @returns {$widget.Node}
    */
-  renameChildNode: function (nodeNameBefore, nodeNameAfter) {
+  renameChildNode: function renameChildNode(nodeNameBefore, nodeNameAfter) {
     var childNode = this.getChildNode(nodeNameBefore),
         childNodes = this.childNodes;
 
@@ -94,6 +96,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       childNodes.setItem(nodeNameAfter, childNode);
     }
 
+    renameChildNode.saved.childNode = childNode;
     return this;
   },
 
@@ -101,23 +104,28 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @param {$widget.Node} node
    * @returns {$widget.Node}
    */
-  addToParentNode: function (node) {
-    if (node !== this.parentNode) {
+  addToParentNode: function addToParentNode(node) {
+    var parentNodeBefore = this.parentNode;
+    if (node !== parentNodeBefore) {
       this.parentNode = node;
       node.addChildNode(this);
     }
+
+    addToParentNode.saved.parentNodeBefore = parentNodeBefore;
     return this;
   },
 
   /**
    * @returns {$widget.Node}
    */
-  removeFromParentNode: function () {
-    var parentNode = this.parentNode;
-    if (parentNode) {
+  removeFromParentNode: function removeFromParentNode() {
+    var parentNodeBefore = this.parentNode;
+    if (parentNodeBefore) {
       this.parentNode = undefined;
-      parentNode.removeChildNode(this.nodeName);
+      parentNodeBefore.removeChildNode(this.nodeName);
     }
+
+    removeFromParentNode.saved.parentNodeBefore = parentNodeBefore;
     return this;
   },
 
@@ -125,15 +133,18 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @param {string} nodeName
    * @returns {$widget.Node}
    */
-  setNodeName: function (nodeName) {
+  setNodeName: function setNodeName(nodeName) {
     var nodeNameBefore = this.nodeName,
         parentNode = this.parentNode;
+
     if (nodeName !== nodeNameBefore) {
       this.nodeName = nodeName;
       if (parentNode) {
         parentNode.renameChildNode(nodeNameBefore, nodeName);
       }
     }
+
+    setNodeName.saved.nodeNameBefore = nodeNameBefore;
     return this;
   },
 
