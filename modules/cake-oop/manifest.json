@@ -9,7 +9,7 @@
       "class/ForwardDescriptor.js",
       "class/MemberMatrix.js",
       "class/Class.js",
-      "class/Class-mixClass.js",
+      "class/mixClass.js",
       "classes/Singleton.js"
     ]
   }

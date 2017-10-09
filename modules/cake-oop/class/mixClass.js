@@ -1,6 +1,6 @@
 "use strict";
 
-$oop.copyProperties($oop.Class, /** @lends $oop.Class */{
+$oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Ad-hoc classes indexed by the class IDs of the mixins they're composed
    * of, in order of definition.
@@ -17,7 +17,7 @@ $oop.copyProperties($oop.Class, /** @lends $oop.Class */{
    * (Eg. $data.StringCollection = $data.Collection + $data.StringValueHost.)
    */
   mixClass: function (Mixin) {
-    var classByMixinIds = $oop.Class.classByMixinIds,
+    var classByMixinIds = $oop.classByMixinIds,
         Mixins = slice.call(arguments),
         // todo Should break down to atomic mixins
         path = Mixins.map(function (Mixin) {
@@ -39,15 +39,5 @@ $oop.copyProperties($oop.Class, /** @lends $oop.Class */{
     }
 
     return Class;
-  }
-});
-
-$oop.copyProperties($oop, /** @lends $oop */{
-  /**
-   * @param {...$oop.Class} Mixin
-   * @returns {$oop.Class}
-   */
-  mixClass: function (Mixin) {
-    return $oop.Class.mixClass.apply(null, arguments);
   }
 });
