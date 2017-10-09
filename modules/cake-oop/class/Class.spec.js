@@ -10,87 +10,13 @@ describe("$oop", function () {
         result;
 
     beforeEach(function () {
-      classByClassId = $oop.Class.classByClassId;
-      $oop.Class.classByClassId = {};
-      Class = $oop.Class.getClass('Class');
+      classByClassId = $oop.classByClassId;
+      $oop.classByClassId = {};
+      Class = $oop.getClass('Class');
     });
 
     afterEach(function () {
-      $oop.Class.classByClassId = classByClassId;
-    });
-
-    describe("getClass()", function () {
-      describe("when passing no arguments", function () {
-        it("should throw", function () {
-          expect(function () {
-            $oop.Class.getClass();
-          }).toThrow();
-        });
-      });
-
-      describe("when class already created", function () {
-        beforeEach(function () {
-          result = $oop.Class.getClass('Class');
-        });
-
-        it("should return same class", function () {
-          expect(result).toBe(Class);
-        });
-      });
-
-      it("should set class ID", function () {
-        expect(result.__classId).toEqual('Class');
-      });
-
-      it("should initialize member container", function () {
-        expect(result.__members).toEqual({});
-      });
-
-      it("should initialize interfaces", function () {
-        expect(result.__interfaces).toEqual({
-          downstream: {list: [], lookup: {}},
-          upstream: {list: [], lookup: {}}
-        });
-      });
-
-      it("should initialize mixins", function () {
-        expect(result.__mixins).toEqual({
-          downstream: {list: [], lookup: {}},
-          upstream: {list: [], lookup: {}}
-        });
-      });
-
-      it("should initialize expected", function () {
-        expect(result.__expected).toEqual({
-          downstream: {list: [], lookup: {}},
-          upstream: {list: [], lookup: {}}
-        });
-      });
-
-      it("should initialize contributors", function () {
-        expect(result.__contributors).toEqual({list: [], lookup: {}});
-      });
-
-      it("should initialize __methodMatrix", function () {
-        expect(result.__methodMatrix).toEqual({});
-      });
-
-      it("should initialize missing method names", function () {
-        expect(result.__missingMethodNames)
-        .toEqual({list: [], lookup: {}});
-      });
-
-      it("should initialize forwards", function () {
-        expect(result.__forwards).toEqual([]);
-      });
-
-      it("should initialize hash function", function () {
-        expect(result.__mapper).toBeUndefined();
-      });
-
-      it("should initialize instance lookup", function () {
-        expect(result.__instanceLookup).toEqual({});
-      });
+      $oop.classByClassId = classByClassId;
     });
 
     describe("define()", function () {
@@ -108,7 +34,7 @@ describe("$oop", function () {
       describe("when passing no arguments", function () {
         it("should throw", function () {
           expect(function () {
-            $oop.Class.getClass('Class2').define();
+            $oop.getClass('Class2').define();
           }).toThrow();
         });
       });
@@ -198,7 +124,7 @@ describe("$oop", function () {
         it("should throw", function () {
           expect(function () {
             Class.define({
-              baz: $oop.Class.getClass('Test').create()
+              baz: $oop.getClass('Test').create()
             });
           }).toThrow();
         });
@@ -208,7 +134,7 @@ describe("$oop", function () {
         it("should not throw", function () {
           expect(function () {
             Class.define({
-              baz: $oop.Class.getClass('Test')
+              baz: $oop.getClass('Test')
             });
           }).not.toThrow();
         });
@@ -232,7 +158,7 @@ describe("$oop", function () {
 
       describe("then implementing relevant interface", function () {
         beforeEach(function () {
-          Class.implement($oop.Class.getClass('Interface')
+          Class.implement($oop.getClass('Interface')
           .define({
             bar: function () {
             },
@@ -300,7 +226,7 @@ describe("$oop", function () {
       var Interface;
 
       beforeEach(function () {
-        Interface = $oop.Class.getClass('Interface')
+        Interface = $oop.getClass('Interface')
         .define({
           foo: "FOO",
           bar: function () {
@@ -360,7 +286,7 @@ describe("$oop", function () {
 
       describe("then defining relevant methods", function () {
         beforeEach(function () {
-          Class.implement($oop.Class.getClass('Interface2')
+          Class.implement($oop.getClass('Interface2')
           .define({
             baz: function () {
             }
@@ -383,12 +309,12 @@ describe("$oop", function () {
       describe("then mixing same class", function () {
         beforeEach(function () {
           Class
-          .implement($oop.Class.getClass('Interface2')
+          .implement($oop.getClass('Interface2')
           .define({
             baz: function () {
             }
           }))
-          .mixOnly($oop.Class.getClass('Mixin')
+          .mixOnly($oop.getClass('Mixin')
           .define({
             bar: function () {},
             quux: function () {}
@@ -404,7 +330,7 @@ describe("$oop", function () {
 
         describe("then defining members on mixin", function () {
           beforeEach(function () {
-            $oop.Class.getClass('Mixin')
+            $oop.getClass('Mixin')
             .define({
               baz: function () {}
             });
@@ -442,7 +368,7 @@ describe("$oop", function () {
       var Trait;
 
       beforeEach(function () {
-        Trait = $oop.Class.getClass('Trait')
+        Trait = $oop.getClass('Trait')
         .define({
           foo: "FOO",
           bar: function () {}
@@ -527,7 +453,7 @@ describe("$oop", function () {
 
       describe("then implementing relevant interface", function () {
         beforeEach(function () {
-          Class.implement($oop.Class.getClass('Interface')
+          Class.implement($oop.getClass('Interface')
           .define({
             bar: function () {
             },
@@ -561,8 +487,8 @@ describe("$oop", function () {
         var Expected2, Expected3, Mixin;
 
         beforeEach(function () {
-          Class.expect(Expected2 = $oop.Class.getClass('Expected2')
-          .mixOnly(Mixin = $oop.Class.getClass('Mixin')));
+          Class.expect(Expected2 = $oop.getClass('Expected2')
+          .mixOnly(Mixin = $oop.getClass('Mixin')));
 
           Mixin.expect(Expected3 = $oop.getClass('Expected3'));
         });
@@ -880,7 +806,7 @@ describe("$oop", function () {
       var Expected;
 
       beforeEach(function () {
-        Expected = $oop.Class.getClass('Expected');
+        Expected = $oop.getClass('Expected');
         result = Class.expect(Expected);
       });
 
@@ -931,10 +857,10 @@ describe("$oop", function () {
         var Expected2, Expected3, Mixin, Mixin2;
 
         beforeEach(function () {
-          Class.expect(Expected2 = $oop.Class.getClass('Expected2')
-          .expect(Expected3 = $oop.Class.getClass('Expected3')));
+          Class.expect(Expected2 = $oop.getClass('Expected2')
+          .expect(Expected3 = $oop.getClass('Expected3')));
 
-          Expected2.mixOnly(Mixin = $oop.Class.getClass('Mixin'));
+          Expected2.mixOnly(Mixin = $oop.getClass('Mixin'));
         });
 
         it("should transfer expected mixins", function () {
@@ -957,7 +883,7 @@ describe("$oop", function () {
       beforeEach(function () {
         filter = function () {
         };
-        Class.forwardTo(Class1 = $oop.Class.getClass('Class1'), filter);
+        Class.forwardTo(Class1 = $oop.getClass('Class1'), filter);
       });
 
       describe("when passing invalid argument", function () {
@@ -980,11 +906,11 @@ describe("$oop", function () {
             filter2, filter3;
 
         beforeEach(function () {
-          Class2 = $oop.Class.getClass('Class2')
+          Class2 = $oop.getClass('Class2')
           .mixOnly(Class);
           filter2 = function () {
           };
-          Class3 = $oop.Class.getClass('Class3')
+          Class3 = $oop.getClass('Class3')
           .mixOnly(Class2)
           .mixOnly(Class);
           filter3 = function () {
@@ -1051,7 +977,7 @@ describe("$oop", function () {
       var Interface;
 
       beforeEach(function () {
-        Interface = $oop.Class.getClass('Interface');
+        Interface = $oop.getClass('Interface');
         Class.implement(Interface);
       });
 
@@ -1071,7 +997,7 @@ describe("$oop", function () {
 
       describe("on absent interface", function () {
         it("should return false", function () {
-          var Interface2 = $oop.Class.getClass('Interface2');
+          var Interface2 = $oop.getClass('Interface2');
           expect(Class.implements(Interface2)).toBe(false);
         });
       });
@@ -1081,7 +1007,7 @@ describe("$oop", function () {
       var Interface;
 
       beforeEach(function () {
-        Interface = $oop.Class.getClass('Interface');
+        Interface = $oop.getClass('Interface');
         Class.implement(Interface);
       });
 
@@ -1099,7 +1025,7 @@ describe("$oop", function () {
 
       describe("on non-implementing class", function () {
         it("should return false", function () {
-          var Class2 = $oop.Class.getClass('Class2');
+          var Class2 = $oop.getClass('Class2');
           expect(Interface.isImplementedBy(Class2)).toBe(false);
         });
       });
@@ -1109,7 +1035,7 @@ describe("$oop", function () {
       var Trait;
 
       beforeEach(function () {
-        Trait = $oop.Class.getClass('Trait');
+        Trait = $oop.getClass('Trait');
         Class.mixOnly(Trait);
       });
 
@@ -1135,7 +1061,7 @@ describe("$oop", function () {
 
       describe("on absent mixin", function () {
         it("should return false", function () {
-          var Trait2 = $oop.Class.getClass('Trait2');
+          var Trait2 = $oop.getClass('Trait2');
           expect(Class.mixes(Trait2)).toBe(false);
         });
       });
@@ -1145,7 +1071,7 @@ describe("$oop", function () {
       var Trait;
 
       beforeEach(function () {
-        Trait = $oop.Class.getClass('Interface');
+        Trait = $oop.getClass('Interface');
         Class.mixOnly(Trait);
       });
 
@@ -1163,7 +1089,7 @@ describe("$oop", function () {
 
       describe("on non-mixing class", function () {
         it("should return false", function () {
-          var Class2 = $oop.Class.getClass('Class2');
+          var Class2 = $oop.getClass('Class2');
           expect(Trait.mixedBy(Class2)).toBe(false);
         });
       });
@@ -1237,7 +1163,7 @@ describe("$oop", function () {
         var Host;
 
         beforeEach(function () {
-          Host = $oop.Class.getClass('Host');
+          Host = $oop.getClass('Host');
           Class.expect(Host);
         });
 
@@ -1305,10 +1231,10 @@ describe("$oop", function () {
             }
           });
 
-          Forward = $oop.Class.getClass('Forward')
+          Forward = $oop.getClass('Forward')
           .mixOnly(Class);
 
-          $oop.Class.getClass('Class')
+          $oop.getClass('Class')
           .forwardTo(Forward, function (args) {
             return args.foo === 1;
           });
@@ -1334,13 +1260,13 @@ describe("$oop", function () {
           var Forward2;
 
           beforeEach(function () {
-            Forward2 = $oop.Class.getClass('Forward2')
+            Forward2 = $oop.getClass('Forward2')
             .cache(function (args) {
               return '_' + args.foo;
             })
             .mixOnly(Class);
 
-            $oop.Class.getClass('Class')
+            $oop.getClass('Class')
             .forwardTo(Forward2, function (args) {
               return args.foo === 2;
             });
@@ -1355,7 +1281,7 @@ describe("$oop", function () {
 
       describe("of unimplemented class", function () {
         beforeEach(function () {
-          Class.implement($oop.Class.getClass('Interface')
+          Class.implement($oop.getClass('Interface')
           .define({
             foo: function () {
             }
@@ -1421,13 +1347,13 @@ describe("$assert", function () {
       Class;
 
   beforeEach(function () {
-    classByClassId = $oop.Class.classByClassId;
-    $oop.Class.classByClassId = {};
-    Class = $oop.Class.getClass('Class');
+    classByClassId = $oop.classByClassId;
+    $oop.classByClassId = {};
+    Class = $oop.getClass('Class');
   });
 
   afterEach(function () {
-    $oop.Class.classByClassId = classByClassId;
+    $oop.classByClassId = classByClassId;
   });
 
   describe("isClass()", function () {

@@ -8,7 +8,7 @@ describe("$oop", function () {
         singleton;
 
     beforeEach(function () {
-      delete $oop.Class.classByClassId['test.$oop.Singleton.Singleton'];
+      delete $oop.classByClassId['test.$oop.Singleton.Singleton'];
       Singleton = $oop.getClass('test.$oop.Singleton.Singleton')
       .mix($oop.Singleton);
       singleton = Singleton.create();

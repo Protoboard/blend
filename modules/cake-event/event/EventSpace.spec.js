@@ -11,7 +11,7 @@ describe("$event", function () {
         result;
 
     beforeEach(function () {
-      delete $oop.Class.classByClassId['test.$event.EventSpace.EventSpace'];
+      delete $oop.classByClassId['test.$event.EventSpace.EventSpace'];
       EventSpace = $oop.getClass('test.$event.EventSpace.EventSpace')
       .mix($event.EventSpace);
 

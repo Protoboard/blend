@@ -110,20 +110,4 @@ describe("$oop", function () {
           propertyDescriptor);
     });
   });
-
-  describe("getClass()", function () {
-    var Class,
-        result;
-
-    beforeEach(function () {
-      Class = $oop.Class.getClass('Class');
-      spyOn($oop.Class, 'getClass').and.returnValue(Class);
-      result = $oop.getClass('Class');
-    });
-
-    it("should invoke Class.getClass", function () {
-      expect($oop.Class.getClass).toHaveBeenCalledWith('Class');
-      expect(result).toBe(Class);
-    });
-  });
 });

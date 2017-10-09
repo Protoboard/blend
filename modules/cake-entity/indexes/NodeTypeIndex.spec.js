@@ -14,7 +14,7 @@ describe("$entity", function () {
       .deleteNode('__fieldName.byFieldType'.toPath())
       .deleteNode('__fieldRef.byFieldType'.toPath());
 
-      delete $oop.Class.classByClassId['test.$entity.NodeTypeIndex.NodeTypeIndex'];
+      delete $oop.classByClassId['test.$entity.NodeTypeIndex.NodeTypeIndex'];
       NodeTypeIndex = $oop.getClass('test.$entity.NodeTypeIndex.NodeTypeIndex')
       .mix($entity.NodeTypeIndex);
 

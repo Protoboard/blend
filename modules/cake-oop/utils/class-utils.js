@@ -69,14 +69,6 @@ $oop.copyProperties($oop, /** @lends $oop */{
     var result = Object.create(base || Object.prototype);
     $oop.copyProperties(result, members, propertyDescriptor);
     return result;
-  },
-
-  /**
-   * @param {string} classId
-   * @returns {$oop.Class}
-   */
-  getClass: function (classId) {
-    return $oop.Class.getClass(classId);
   }
 });
 
