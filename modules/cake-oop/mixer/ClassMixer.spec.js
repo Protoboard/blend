@@ -4,22 +4,22 @@ var $oop = window['cake-oop'];
 
 describe("$oop", function () {
   describe("ClassMixer", function () {
-    var classesByMixinId,
+    var classByMixinIds,
         Mixin1, Mixin2,
         result;
 
     beforeEach(function () {
-      classesByMixinId = $oop.classesByMixinId;
-      $oop.classesByMixinId = {};
+      classByMixinIds = $oop.classByMixinIds;
+      $oop.classByMixinIds = {};
     });
 
     afterEach(function () {
-      $oop.classesByMixinId = classesByMixinId;
+      $oop.classByMixinIds = classByMixinIds;
     });
 
     describe("mixClass()", function () {
       beforeEach(function () {
-        $oop.classesByMixinId = {};
+        $oop.classByMixinIds = {};
         spyOn($oop, 'generateUuid').and.returnValue('foo');
         Mixin1 = $oop.getClass("test.$oop.ClassMixer.Mixin1");
         Mixin2 = $oop.getClass("test.$oop.ClassMixer.Mixin2");
@@ -36,7 +36,7 @@ describe("$oop", function () {
       });
 
       it("should set class in lookup", function () {
-        expect($oop.classesByMixinId).toEqual({
+        expect($oop.classByMixinIds).toEqual({
           "test\\.$oop\\.ClassMixer\\.Mixin1.test\\.$oop\\.ClassMixer\\.Mixin2": {
             foo: result
           }
