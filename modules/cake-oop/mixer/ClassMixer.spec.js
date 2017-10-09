@@ -5,6 +5,7 @@ var $oop = window['cake-oop'];
 describe("$oop", function () {
   describe("ClassMixer", function () {
     var classByMixinIds,
+        Class,
         Mixin1, Mixin2,
         result;
 
@@ -19,23 +20,25 @@ describe("$oop", function () {
 
     describe("mixClass()", function () {
       beforeEach(function () {
-        $oop.classByMixinIds = {};
         spyOn($oop, 'generateUuid').and.returnValue('foo');
+        Class = $oop.getClass("test.$oop.ClassMixer.Class");
         Mixin1 = $oop.getClass("test.$oop.ClassMixer.Mixin1");
         Mixin2 = $oop.getClass("test.$oop.ClassMixer.Mixin2");
-        result = $oop.mixClass(Mixin1, Mixin2);
       });
 
       it("should create a Class", function () {
+        result = $oop.mixClass(Mixin1, Mixin2);
         expect($oop.Class.isPrototypeOf(result)).toBeTruthy();
       });
 
       it("should mix specified mixins", function () {
+        result = $oop.mixClass(Mixin1, Mixin2);
         expect(result.mixes(Mixin1)).toBeTruthy();
         expect(result.mixes(Mixin2)).toBeTruthy();
       });
 
       it("should set class in lookup", function () {
+        result = $oop.mixClass(Mixin1, Mixin2);
         expect($oop.classByMixinIds).toEqual({
           "test.$oop.ClassMixer.Mixin1,test.$oop.ClassMixer.Mixin2": {
             foo: result
@@ -43,14 +46,27 @@ describe("$oop", function () {
         });
       });
 
-      describe("when already mixed", function () {
-        var Class;
+      describe("when matching class is already in index", function () {
         beforeEach(function () {
-          Class = result;
-          result = $oop.mixClass(Mixin1, Mixin2);
+          spyOn($oop.ClassByMixinsIndex, 'getClassForMixins').and
+          .returnValue(Class);
         });
 
-        it("should fetch existing class", function () {
+        it("should retrieve class from index", function () {
+          result = $oop.mixClass(Mixin1, Mixin2);
+          expect($oop.ClassByMixinsIndex.getClassForMixins)
+          .toHaveBeenCalledWith([Mixin1, Mixin2]);
+          expect(result).toBe(Class);
+        });
+      });
+
+      describe("when existing class matches mixins", function () {
+        beforeEach(function () {
+          Class.mix(Mixin1).mix(Mixin2);
+        });
+
+        it("should return class", function () {
+          result = $oop.mixClass(Mixin1, Mixin2);
           expect(result).toBe(Class);
         });
       });
@@ -67,10 +83,10 @@ describe("$oop", function () {
       Mixin2 = {};
 
       spyOn($oop.ClassMixer, 'mixClass').and.returnValue(Class);
-      result = $oop.mixClass(Mixin1, Mixin2);
     });
 
     it("should invoke ClassMixer.mixClass", function () {
+      result = $oop.mixClass(Mixin1, Mixin2);
       expect($oop.ClassMixer.mixClass).toHaveBeenCalledWith(Mixin1, Mixin2);
       expect(result).toBe(Class);
     });

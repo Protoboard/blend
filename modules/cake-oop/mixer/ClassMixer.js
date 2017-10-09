@@ -38,6 +38,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
       // finding an existing matching class
       Class = this._findFirstMatchingClass(mixins);
       if (Class) {
+        // adding Class for this specific combination of mixins
         ClassByMixinsIndex.addClassForMixins(Class, mixins);
       }
     }
