@@ -22,9 +22,9 @@ describe("$oop", function () {
       $oop.classByMixinIds = classByMixinIds;
     });
 
-    describe("addClassForMixins()", function () {
+    describe("setClassForMixins()", function () {
       beforeEach(function () {
-        result = $oop.ClassByMixinsIndex.addClassForMixins(
+        result = $oop.ClassByMixinsIndex.setClassForMixins(
             Class, [Mixin1, Mixin2]);
       });
 
@@ -45,7 +45,7 @@ describe("$oop", function () {
 
         beforeEach(function () {
           CommaMixin = $oop.getClass('test,$oop,CBMI,CommaMixin');
-          result = $oop.ClassByMixinsIndex.addClassForMixins(
+          result = $oop.ClassByMixinsIndex.setClassForMixins(
               Class, [Mixin1, CommaMixin]);
         });
 
@@ -58,13 +58,13 @@ describe("$oop", function () {
       });
     });
 
-    describe("addClass()", function () {
+    describe("setClass()", function () {
       beforeEach(function () {
         Class
         .mix(Mixin1)
         .mix(Mixin2);
 
-        result = $oop.ClassByMixinsIndex.addClass(Class);
+        result = $oop.ClassByMixinsIndex.setClass(Class);
       });
 
       it("should return self", function () {
@@ -82,7 +82,7 @@ describe("$oop", function () {
 
     describe("getClassForMixins()", function () {
       beforeEach(function () {
-        $oop.ClassByMixinsIndex.addClassForMixins(Class, [Mixin1, Mixin2]);
+        $oop.ClassByMixinsIndex.setClassForMixins(Class, [Mixin1, Mixin2]);
         result = $oop.ClassByMixinsIndex.getClassForMixins([Mixin1, Mixin2]);
       });
 

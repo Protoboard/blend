@@ -42,9 +42,8 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
    * @param {$oop.Class} Class
    * @param {Array.<$oop.Class>} mixins
    * @returns {$oop.ClassByMixinsIndex}
-   * @todo Rename to set...
    */
-  addClassForMixins: function (Class, mixins) {
+  setClassForMixins: function (Class, mixins) {
     var mixinHash = this._getHashForMixins(mixins),
         classByMixinIds = $oop.classByMixinIds,
         classLookup = classByMixinIds[mixinHash];
@@ -59,12 +58,11 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
    * Adds Class to index, based on its own mixins.
    * @param {$oop.Class} Class
    * @returns {$oop.ClassByMixinsIndex}
-   * @todo Rename to set...
    */
-  addClass: function (Class) {
+  setClass: function (Class) {
     var mixins = Class.__mixins.downstream.list;
     if (mixins.length) {
-      this.addClassForMixins(Class, mixins);
+      this.setClassForMixins(Class, mixins);
     }
     return this;
   },

@@ -39,7 +39,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
       Class = this._findFirstMatchingClass(mixins);
       if (Class) {
         // adding Class for this specific combination of mixins
-        ClassByMixinsIndex.addClassForMixins(Class, mixins);
+        ClassByMixinsIndex.setClassForMixins(Class, mixins);
       }
     }
 
@@ -49,7 +49,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
       mixins.forEach(function (Mixin) {
         Class.mix(Mixin);
       });
-      ClassByMixinsIndex.addClass(Class);
+      ClassByMixinsIndex.setClass(Class);
     }
 
     return Class;

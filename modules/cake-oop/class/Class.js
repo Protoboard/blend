@@ -899,7 +899,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     }
 
     // adding self to by-mixins index
-    $oop.ClassByMixinsIndex.addClass(this);
+    $oop.ClassByMixinsIndex.setClass(this);
 
     return this;
   },
