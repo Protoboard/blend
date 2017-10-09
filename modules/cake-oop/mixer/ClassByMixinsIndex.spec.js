@@ -34,9 +34,26 @@ describe("$oop", function () {
 
       it("should set Class in index", function () {
         expect($oop.classByMixinIds).toEqual({
-          'test\\.$oop\\.CBMI\\.Mixin1.test\\.$oop\\.CBMI\\.Mixin2': {
+          'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
             'test.$oop.CBMI.Class': Class
           }
+        });
+      });
+
+      describe("when mixin's class ID contains comma", function () {
+        var CommaMixin;
+
+        beforeEach(function () {
+          CommaMixin = $oop.getClass('test,$oop,CBMI,CommaMixin');
+          result = $oop.ClassByMixinsIndex.addClassForMixins(
+              Class, [Mixin1, CommaMixin]);
+        });
+
+        it("should escape comma in index key", function () {
+          expect($oop.classByMixinIds['test.$oop.CBMI.Mixin1,test\\,$oop\\,CBMI\\,CommaMixin'])
+          .toEqual({
+            'test.$oop.CBMI.Class': Class
+          });
         });
       });
     });
@@ -56,7 +73,7 @@ describe("$oop", function () {
 
       it("should set Class in index", function () {
         expect($oop.classByMixinIds).toEqual({
-          'test\\.$oop\\.CBMI\\.Mixin1.test\\.$oop\\.CBMI\\.Mixin2': {
+          'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
             'test.$oop.CBMI.Class': Class
           }
         });

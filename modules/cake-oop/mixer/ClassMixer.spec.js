@@ -37,7 +37,7 @@ describe("$oop", function () {
 
       it("should set class in lookup", function () {
         expect($oop.classByMixinIds).toEqual({
-          "test\\.$oop\\.ClassMixer\\.Mixin1.test\\.$oop\\.ClassMixer\\.Mixin2": {
+          "test.$oop.ClassMixer.Mixin1,test.$oop.ClassMixer.Mixin2": {
             foo: result
           }
         });

@@ -12,11 +12,11 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
   _getHashForMixins: function (mixins) {
     return mixins
     .map(function (Mixin) {
-      return Mixin.__classId.replace(/\./g, '\\.');
+      return Mixin.__classId.replace(/\,/g, '\\,');
     })
     // todo Should mixin order matter? Ie. mixClass(A,B) !== mixClass(B,A)
     .sort()
-    .join('.');
+    .join(',');
   },
 
   /**
