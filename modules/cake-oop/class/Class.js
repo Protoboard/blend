@@ -898,6 +898,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       this._setInstanceMapper(Class.__mapper);
     }
 
+    // adding self to by-mixins index
+    $oop.ClassByMixinsIndex.addClass(this);
+
     return this;
   },
 
