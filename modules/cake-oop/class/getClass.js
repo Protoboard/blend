@@ -3,15 +3,14 @@
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * All classes indexed by class ID.
-   * @memberOf $oop.Class
    * @type {object}
+   * @todo Refactor class lookup to include an array too.
    */
   classByClassId: {},
 
   /**
    * Fetches the class by the specified ID. Creates the class if it doesn't
    * exist yet.
-   * @memberOf $oop.Class
    * @param {string} classId
    * @returns {$oop.Class}
    */

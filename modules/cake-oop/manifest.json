@@ -10,7 +10,7 @@
       "class/MemberMatrix.js",
       "class/Class.js",
       "class/getClass.js",
-      "class/mixClass.js",
+      "class/ClassMixer.js",
       "classes/Singleton.js"
     ]
   }
