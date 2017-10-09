@@ -2,10 +2,10 @@
 
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
+   * This is a near-duplicate of $data.Tree#getNode
    * @param {Object} data
    * @param {Array<string>} pathComponents
    * @returns {*}
-   * @todo This is a near-duplicate of $data.Tree#getNode
    */
   getNode: function (data, pathComponents) {
     var pathComponentCount = pathComponents.length,
@@ -23,10 +23,10 @@ $oop.copyProperties($oop, /** @lends $oop */{
   },
 
   /**
+   * This is a near-duplicate of $data.Tree#setNode
    * @param {Object} data
    * @param {Array<string>} pathComponents
    * @param {*} node
-   * @todo This is a near-duplicate of $data.Tree#setNode
    */
   setNode: function (data, pathComponents, node) {
     var lastPathComponentIndex = pathComponents.length - 1,
