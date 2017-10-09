@@ -89,5 +89,11 @@ describe("$oop", function () {
     it("should initialize instance lookup", function () {
       expect(result.__instanceLookup).toEqual({});
     });
+
+    it("should add Class to index", function () {
+      expect($oop.classByClassId).toEqual({
+        'test.$oop.getClass.Class': Class
+      });
+    });
   });
 });
