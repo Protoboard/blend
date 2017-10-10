@@ -5,6 +5,7 @@ var $oop = window['cake-oop'];
 describe("$oop", function () {
   describe("ClassByMixinsIndex", function () {
     var classByMixinIds,
+        mixinsByClassId,
         Class,
         Mixin1,
         Mixin2,
@@ -12,7 +13,9 @@ describe("$oop", function () {
 
     beforeEach(function () {
       classByMixinIds = $oop.classByMixinIds;
+      mixinsByClassId = $oop.mixinsByClassId;
       $oop.classByMixinIds = {};
+      $oop.mixinsByClassId = {};
       Class = $oop.getClass('test.$oop.CBMI.Class');
       Mixin1 = $oop.getClass('test.$oop.CBMI.Mixin1');
       Mixin2 = $oop.getClass('test.$oop.CBMI.Mixin2');
@@ -20,6 +23,7 @@ describe("$oop", function () {
 
     afterEach(function () {
       $oop.classByMixinIds = classByMixinIds;
+      $oop.mixinsByClassId = mixinsByClassId;
     });
 
     describe("setClassForMixins()", function () {
@@ -35,7 +39,10 @@ describe("$oop", function () {
       it("should set Class in index", function () {
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
-            'test.$oop.CBMI.Class': Class
+            list: [Class],
+            lookup: {
+              'test.$oop.CBMI.Class': true
+            }
           }
         });
       });
@@ -52,7 +59,8 @@ describe("$oop", function () {
         it("should escape comma in index key", function () {
           expect($oop.classByMixinIds['test.$oop.CBMI.Mixin1,test\\,$oop\\,CBMI\\,CommaMixin'])
           .toEqual({
-            'test.$oop.CBMI.Class': Class
+            list: [Class],
+            lookup: {'test.$oop.CBMI.Class': true}
           });
         });
       });
@@ -61,8 +69,8 @@ describe("$oop", function () {
     describe("setClass()", function () {
       beforeEach(function () {
         Class
-        .mix(Mixin1)
-        .mix(Mixin2);
+        .mixOnly(Mixin1)
+        .mixOnly(Mixin2);
 
         result = $oop.ClassByMixinsIndex.setClass(Class);
       });
@@ -74,7 +82,8 @@ describe("$oop", function () {
       it("should set Class in index", function () {
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
-            'test.$oop.CBMI.Class': Class
+            list: [Class],
+            lookup: {'test.$oop.CBMI.Class': true}
           }
         });
       });

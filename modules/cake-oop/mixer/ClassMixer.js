@@ -6,10 +6,10 @@
 $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer */{
   /**
    * @param {Array.<$oop.Class>} Mixins
-   * @returns {$oop.Class}
+   * @returns {Array.<$oop.Class>}
    * @private
    */
-  _findFirstMatchingClass: function (Mixins) {
+  _findMatchingClasses: function (Mixins) {
     var classByClassId = $oop.classByClassId,
         classIds = Object.keys(classByClassId);
 
@@ -20,7 +20,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
       return Mixins.every(function (Mixin) {
         return Mixin.mixedBy(Class);
       });
-    })[0];
+    });
   },
 
   /**
@@ -36,11 +36,12 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
 
     if (!Class) {
       // finding an existing matching class
-      Class = this._findFirstMatchingClass(mixins);
-      if (Class) {
+      this._findMatchingClasses(mixins)
+      .forEach(function (Class) {
         // adding Class for this specific combination of mixins
         ClassByMixinsIndex.setClassForMixins(Class, mixins);
-      }
+      });
+      Class = ClassByMixinsIndex.getClassForMixins(mixins);
     }
 
     if (!Class) {

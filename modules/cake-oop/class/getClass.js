@@ -48,7 +48,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
          * Registry of interfaces implemented by the current class, and classes
          * implementing the current class as an interface.
          * @todo Add typedef
-         * @type {object}
+         * @type {{downstream:$oop.QuickList,upstream:$oop.QuickList}}
          * @private
          */
         __interfaces: {
@@ -60,7 +60,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
          * Registry of classes mixed by the current class, and classes that mix
          * the current class.
          * @todo Add typedef
-         * @type {object}
+         * @type {{downstream:$oop.QuickList,upstream:$oop.QuickList}}
          * @private
          */
         __mixins: {
@@ -72,7 +72,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
          * Registry of classes expected by the current class, and classes
          * requiring the current class.
          * @todo Add typedef
-         * @type {object}
+         * @type {{downstream:$oop.QuickList,upstream:$oop.QuickList}}
          * @private
          */
         __expected: {
@@ -83,14 +83,14 @@ $oop.copyProperties($oop, /** @lends $oop */{
         /**
          * Registry of classes that transitively mix the current class.
          * Transitive mixers mix the class and all its mixins.
-         * @type {{list: Array, lookup: object}}
+         * @type {$oop.QuickList}
          * @private
          */
         __transitiveMixers: {list: [], lookup: {}},
 
         /**
          * Registry of methods not implemented by current class.
-         * @type {{list: Array, lookup: object}}
+         * @type {$oop.QuickList}
          * @private
          */
         __missingMethodNames: {list: [], lookup: {}},
@@ -98,7 +98,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
         /**
          * Registry of all classes contributing members to the current class.
          * **Order is important.**
-         * @type {{list: Array, lookup: object}}
+         * @type {$oop.QuickList}
          * @private
          */
         __contributors: {list: [], lookup: {}},

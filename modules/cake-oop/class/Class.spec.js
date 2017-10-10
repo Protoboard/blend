@@ -7,20 +7,24 @@ describe("$oop", function () {
   describe("Class", function () {
     var classByClassId,
         classByMixinIds,
+        mixinsByClassId,
         Class,
         result;
 
     beforeEach(function () {
       classByClassId = $oop.classByClassId;
       classByMixinIds = $oop.classByMixinIds;
+      mixinsByClassId = $oop.mixinsByClassId;
       $oop.classByClassId = {};
       $oop.classByMixinIds = {};
+      $oop.mixinsByClassId = {};
       Class = $oop.getClass('Class');
     });
 
     afterEach(function () {
       $oop.classByClassId = classByClassId;
       $oop.classByMixinIds = classByMixinIds;
+      $oop.mixinsByClassId = mixinsByClassId;
     });
 
     describe("define()", function () {
@@ -455,10 +459,13 @@ describe("$oop", function () {
         expect(Class.bar).toBe(Trait.__members.bar);
       });
 
-      it("should add class to ClassByMixinsIndex", function () {
+      it("should add class to classByMixinIds", function () {
         expect($oop.classByMixinIds).toEqual({
           'Trait': {
-            'Class': Class
+            list: [Class],
+            lookup: {
+              'Class': true
+            }
           }
         });
       });

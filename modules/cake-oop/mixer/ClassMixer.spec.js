@@ -5,17 +5,21 @@ var $oop = window['cake-oop'];
 describe("$oop", function () {
   describe("ClassMixer", function () {
     var classByMixinIds,
+        mixinsByClassId,
         Class,
         Mixin1, Mixin2,
         result;
 
     beforeEach(function () {
       classByMixinIds = $oop.classByMixinIds;
+      mixinsByClassId = $oop.mixinsByClassId;
       $oop.classByMixinIds = {};
+      $oop.mixinsByClassId = {};
     });
 
     afterEach(function () {
       $oop.classByMixinIds = classByMixinIds;
+      $oop.mixinsByClassId = mixinsByClassId;
     });
 
     describe("mixClass()", function () {
@@ -41,7 +45,10 @@ describe("$oop", function () {
         result = $oop.mixClass(Mixin1, Mixin2);
         expect($oop.classByMixinIds).toEqual({
           "test.$oop.ClassMixer.Mixin1,test.$oop.ClassMixer.Mixin2": {
-            foo: result
+            list: [result],
+            lookup: {
+              foo: true
+            }
           }
         });
       });

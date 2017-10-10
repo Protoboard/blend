@@ -12,7 +12,7 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
   _getHashForMixins: function (mixins) {
     return mixins
     .map(function (Mixin) {
-      return Mixin.__classId.replace(/\,/g, '\\,');
+      return Mixin.__classId.replace(/,/g, '\\,');
     })
     // todo Should mixin order matter? Ie. mixClass(A,B) !== mixClass(B,A)
     .sort()
@@ -20,21 +20,24 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
   },
 
   /**
-   * @param {string} mixinsHash
-   * @returns {$oop.Class}
+   * @param {Array.<$oop.Class>} mixinHash
    * @private
    */
-  _getFirstClass: function (mixinsHash) {
-    var classLookup = $oop.classByMixinIds[mixinsHash],
-        classId;
+  _updateClassOrderForMixins: function (mixinHash) {
+    //console.log("updating class list order for", mixinHash);
+    var classes = $oop.getSafeIndexEntry($oop.classByMixinIds, mixinHash),
+        classList = classes.list;
 
-    if (classLookup) {
-      for (classId in classLookup) {
-        if (hOP.call(classLookup, classId)) {
-          return classLookup[classId];
-        }
-      }
-    }
+    // making sure list[0] is best choice
+    // sorting on each insert makes it slow, but allows for fast access,
+    // which is what we rely on at instantiation time
+    // todo Incorporate declared vs. ad-hoc distinction (declared to be lower)
+    classList.sort(function (ClassA, ClassB) {
+      var mixinCountA = ClassA.__mixins.downstream.list.length,
+          mixinCountB = ClassB.__mixins.downstream.list.length;
+      return mixinCountA > mixinCountB ? 1 :
+          mixinCountA < mixinCountB ? -1 : 0;
+    });
   },
 
   /**
@@ -44,13 +47,30 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
    * @returns {$oop.ClassByMixinsIndex}
    */
   setClassForMixins: function (Class, mixins) {
-    var mixinHash = this._getHashForMixins(mixins),
-        classByMixinIds = $oop.classByMixinIds,
-        classLookup = classByMixinIds[mixinHash];
-    if (!classLookup) {
-      classByMixinIds[mixinHash] = classLookup = {};
+    var that = this,
+        classId = Class.__classId,
+        mixinHash = this._getHashForMixins(mixins),
+        classesForMixins = $oop.getSafeIndexEntry($oop.classByMixinIds, mixinHash),
+        mixinsForClass = $oop.getSafeIndexEntry($oop.mixinsByClassId, classId),
+        classList = classesForMixins.list,
+        classLookup = classesForMixins.lookup,
+        mixinList = mixinsForClass.list,
+        mixinLookup = mixinsForClass.lookup;
+
+    if (!hOP.call(classLookup, classId)) {
+      classList.push(Class);
+      classLookup[classId] = true;
     }
-    classLookup[Class.__classId] = Class;
+
+    if (!hOP.call(mixinLookup, mixinHash)) {
+      mixinList.push(mixinHash);
+      mixinLookup[mixinHash] = true;
+    }
+
+    mixinList.forEach(function (mixinHash) {
+      that._updateClassOrderForMixins(mixinHash);
+    });
+
     return this;
   },
 
@@ -73,8 +93,9 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
    * @returns {$oop.Class}
    */
   getClassForMixins: function (mixins) {
-    var mixinHash = this._getHashForMixins(mixins);
-    return this._getFirstClass(mixinHash);
+    var mixinHash = this._getHashForMixins(mixins),
+        classes = $oop.classByMixinIds[mixinHash];
+    return classes && classes.list[0];
   }
 });
 
@@ -82,7 +103,12 @@ $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Classes (declared or ad-hoc) indexed by the serialized class IDs of the
    * mixins they're composed of.
-   * @type {object}
+   * @type {$oop.QuickListLookup}
    */
-  classByMixinIds: {}
+  classByMixinIds: {},
+
+  /**
+   * @type {$oop.QuickListLookup}
+   */
+  mixinsByClassId: {}
 });
