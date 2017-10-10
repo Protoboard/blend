@@ -1,9 +1,11 @@
 "use strict";
 
 /**
- * @class $oop.ClassByMixinsIndex
+ * Maintains an index of classes and mixins, with the intent of providing quick
+ * access to classes based on (a subset of) their mixins.
+ * @class $oop.MixerIndex
  */
-$oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.ClassByMixinsIndex */{
+$oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex */{
   /**
    * @param {Array.<$oop.Class>} mixins
    * @returns {string}
@@ -31,7 +33,7 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
     // making sure list[0] is best choice
     // sorting on each insert makes it slow, but allows for fast access,
     // which is what we rely on at instantiation time
-    // todo Incorporate declared vs. ad-hoc distinction (declared to be lower)
+    // todo Declared classes should take precedence over ad-hoc.
     classList.sort(function (ClassA, ClassB) {
       var mixinCountA = ClassA.__mixins.downstream.list.length,
           mixinCountB = ClassB.__mixins.downstream.list.length;
@@ -44,7 +46,7 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
    * Adds Class to index, associating it with the specified list of mixins.
    * @param {$oop.Class} Class
    * @param {Array.<$oop.Class>} mixins
-   * @returns {$oop.ClassByMixinsIndex}
+   * @returns {$oop.MixerIndex}
    */
   setClassForMixins: function (Class, mixins) {
     var that = this,
@@ -77,7 +79,7 @@ $oop.ClassByMixinsIndex = $oop.createObject(Object.prototype, /** @lends $oop.Cl
   /**
    * Adds Class to index, based on its own mixins.
    * @param {$oop.Class} Class
-   * @returns {$oop.ClassByMixinsIndex}
+   * @returns {$oop.MixerIndex}
    */
   setClass: function (Class) {
     var mixins = Class.__mixins.downstream.list;

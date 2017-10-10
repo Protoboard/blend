@@ -31,17 +31,17 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    */
   mixClass: function (Mixin) {
     var mixins = slice.call(arguments),
-        ClassByMixinsIndex = $oop.ClassByMixinsIndex,
-        Class = ClassByMixinsIndex.getClassForMixins(mixins);
+        MixerIndex = $oop.MixerIndex,
+        Class = MixerIndex.getClassForMixins(mixins);
 
     if (!Class) {
       // finding an existing matching class
       this._findMatchingClasses(mixins)
       .forEach(function (Class) {
         // adding Class for this specific combination of mixins
-        ClassByMixinsIndex.setClassForMixins(Class, mixins);
+        MixerIndex.setClassForMixins(Class, mixins);
       });
-      Class = ClassByMixinsIndex.getClassForMixins(mixins);
+      Class = MixerIndex.getClassForMixins(mixins);
     }
 
     if (!Class) {
@@ -50,7 +50,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
       mixins.forEach(function (Mixin) {
         Class.mix(Mixin);
       });
-      ClassByMixinsIndex.setClass(Class);
+      MixerIndex.setClass(Class);
     }
 
     return Class;

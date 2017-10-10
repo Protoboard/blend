@@ -55,13 +55,13 @@ describe("$oop", function () {
 
       describe("when matching class is already in index", function () {
         beforeEach(function () {
-          spyOn($oop.ClassByMixinsIndex, 'getClassForMixins').and
+          spyOn($oop.MixerIndex, 'getClassForMixins').and
           .returnValue(Class);
         });
 
         it("should retrieve class from index", function () {
           result = $oop.mixClass(Mixin1, Mixin2);
-          expect($oop.ClassByMixinsIndex.getClassForMixins)
+          expect($oop.MixerIndex.getClassForMixins)
           .toHaveBeenCalledWith([Mixin1, Mixin2]);
           expect(result).toBe(Class);
         });

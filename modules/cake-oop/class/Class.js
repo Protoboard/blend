@@ -219,6 +219,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           methodCount = compactedMethods.length,
           saved = {};
 
+      // decorating each contributed method with a `saved` container
       compactedMethods.forEach(function (method) {
         method.saved = saved;
       });
@@ -899,7 +900,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     }
 
     // adding self to by-mixins index
-    $oop.ClassByMixinsIndex.setClass(this);
+    $oop.MixerIndex.setClass(this);
 
     return this;
   },

@@ -12,7 +12,7 @@
       "class/assertions.js",
       "class/Class.js",
       "class/getClass.js",
-      "mixer/ClassByMixinsIndex.js",
+      "mixer/MixerIndex.js",
       "mixer/ClassMixer.js",
       "mixer/mixClass.js",
       "classes/Singleton.js"

@@ -3,7 +3,7 @@
 var $oop = window['cake-oop'];
 
 describe("$oop", function () {
-  describe("ClassByMixinsIndex", function () {
+  describe("MixerIndex", function () {
     var classByMixinIds,
         mixinsByClassId,
         Class,
@@ -28,18 +28,18 @@ describe("$oop", function () {
 
     describe("setClassForMixins()", function () {
       beforeEach(function () {
-        spyOn($oop.ClassByMixinsIndex, '_updateClassOrderForMixins').and
+        spyOn($oop.MixerIndex, '_updateClassOrderForMixins').and
         .callThrough();
       });
 
       it("should return self", function () {
-        result = $oop.ClassByMixinsIndex.setClassForMixins(
+        result = $oop.MixerIndex.setClassForMixins(
             Class, [Mixin1, Mixin2]);
-        expect(result).toBe($oop.ClassByMixinsIndex);
+        expect(result).toBe($oop.MixerIndex);
       });
 
       it("should set Class in index", function () {
-        result = $oop.ClassByMixinsIndex.setClassForMixins(
+        result = $oop.MixerIndex.setClassForMixins(
             Class, [Mixin1, Mixin2]);
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
@@ -52,7 +52,7 @@ describe("$oop", function () {
       });
 
       it("should set mixinHash in index", function () {
-        result = $oop.ClassByMixinsIndex.setClassForMixins(
+        result = $oop.MixerIndex.setClassForMixins(
             Class, [Mixin1, Mixin2]);
         expect($oop.mixinsByClassId).toEqual({
           'test.$oop.CBMI.Class': {
@@ -66,9 +66,9 @@ describe("$oop", function () {
 
       // todo Need better test for this.
       it("should update class order in index", function () {
-        result = $oop.ClassByMixinsIndex.setClassForMixins(
+        result = $oop.MixerIndex.setClassForMixins(
             Class, [Mixin1, Mixin2]);
-        expect($oop.ClassByMixinsIndex._updateClassOrderForMixins)
+        expect($oop.MixerIndex._updateClassOrderForMixins)
         .toHaveBeenCalledWith('test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2');
       });
 
@@ -77,12 +77,12 @@ describe("$oop", function () {
 
         beforeEach(function () {
           CommaMixin = $oop.getClass('test,$oop,CBMI,CommaMixin');
-          result = $oop.ClassByMixinsIndex.setClassForMixins(
+          result = $oop.MixerIndex.setClassForMixins(
               Class, [Mixin1, Mixin2]);
         });
 
         it("should escape comma in index key", function () {
-          result = $oop.ClassByMixinsIndex.setClassForMixins(
+          result = $oop.MixerIndex.setClassForMixins(
               Class, [Mixin1, CommaMixin]);
 
           expect($oop.classByMixinIds['test.$oop.CBMI.Mixin1,test\\,$oop\\,CBMI\\,CommaMixin'])
@@ -105,11 +105,11 @@ describe("$oop", function () {
         .mixOnly(Mixin1)
         .mixOnly(Mixin2);
 
-        result = $oop.ClassByMixinsIndex.setClass(Class);
+        result = $oop.MixerIndex.setClass(Class);
       });
 
       it("should return self", function () {
-        expect(result).toBe($oop.ClassByMixinsIndex);
+        expect(result).toBe($oop.MixerIndex);
       });
 
       it("should set Class in index", function () {
@@ -132,11 +132,11 @@ describe("$oop", function () {
 
     describe("getClassForMixins()", function () {
       beforeEach(function () {
-        $oop.ClassByMixinsIndex.setClassForMixins(Class, [Mixin1, Mixin2]);
+        $oop.MixerIndex.setClassForMixins(Class, [Mixin1, Mixin2]);
       });
 
       it("should return Class matching mixins", function () {
-        result = $oop.ClassByMixinsIndex.getClassForMixins([Mixin1, Mixin2]);
+        result = $oop.MixerIndex.getClassForMixins([Mixin1, Mixin2]);
         expect(result).toBe(Class);
       });
 
@@ -145,7 +145,7 @@ describe("$oop", function () {
 
         beforeEach(function () {
           Mixin3 = $oop.getClass('test.$oop.CBMI.Mixin3');
-          result = $oop.ClassByMixinsIndex.getClassForMixins([Mixin1, Mixin3]);
+          result = $oop.MixerIndex.getClassForMixins([Mixin1, Mixin3]);
         });
 
         it("should return undefined", function () {
