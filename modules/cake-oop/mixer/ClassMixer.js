@@ -1,7 +1,10 @@
 "use strict";
 
 /**
+ * Implements ad-hoc mixing of classes. User internally by `$oop.Class`.
  * @class $oop.ClassMixer
+ * @see $oop.mixClass
+ * @ignore
  */
 $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer */{
   /**

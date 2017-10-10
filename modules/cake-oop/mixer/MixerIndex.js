@@ -2,8 +2,10 @@
 
 /**
  * Maintains an index of classes and mixins, with the intent of providing quick
- * access to classes based on (a subset of) their mixins.
+ * access to classes based on (a subset of) their mixins. Used internally by
+ * `$oop.ClassMixer`.
  * @class $oop.MixerIndex
+ * @ignore
  */
 $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex */{
   /**
@@ -13,9 +15,8 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    */
   _getHashForMixins: function (mixins) {
     return mixins
-    .map(function (Mixin) {
-      return Mixin.__classId.replace(/,/g, '\\,');
-    })
+    .map($oop.getClassId)
+    .map($oop.escapeCommas)
     // todo Should mixin order matter? Ie. mixClass(A,B) !== mixClass(B,A)
     .sort()
     .join(',');
@@ -104,15 +105,17 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Classes (declared or ad-hoc) indexed by the serialized class IDs of the
-   * mixins they're composed of.
+   * mixins they're composed of. Used internally by `$oop.MixerIndex`.
    * @type {$oop.QuickListLookup}
+   * @ignore
    */
   classByMixinIds: {},
 
   /**
    * Mixin hashes indexed by class ID of mixer classes. Inverse of
-   * `$oop.classByMixinIds`.
+   * `$oop.classByMixinIds`. Used internally by `$oop.MixerIndex`.
    * @type {$oop.QuickListLookup}
+   * @ignore
    */
   mixinsByClassId: {}
 });
