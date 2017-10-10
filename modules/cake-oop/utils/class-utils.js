@@ -69,6 +69,15 @@ $oop.copyProperties($oop, /** @lends $oop */{
     var result = Object.create(base || Object.prototype);
     $oop.copyProperties(result, members, propertyDescriptor);
     return result;
+  },
+
+  /**
+   * Retrieves class ID for specified class. To be used in `Array#map()`.
+   * @param {$oop.Class} Class
+   * @returns {string}
+   */
+  getClassId: function (Class) {
+    return Class && Class.__classId;
   }
 });
 

@@ -4,6 +4,7 @@
       "globals.js",
       "utils/class-utils.js",
       "utils/uuid-utils.js",
+      "utils/string-utils.js",
       "index/QuickList.js",
       "index/QuickListLookup.js",
       "index/index-utils.js",

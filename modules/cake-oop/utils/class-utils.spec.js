@@ -110,4 +110,24 @@ describe("$oop", function () {
           propertyDescriptor);
     });
   });
+
+  describe("getClassId()", function () {
+    var Class;
+
+    beforeEach(function () {
+      Class = $oop.getClass('test.$oop.class-utils.Class');
+    });
+
+    it("should retrieve class ID from Class", function () {
+      expect($oop.getClassId(Class)).toBe('test.$oop.class-utils.Class');
+    });
+
+    describe("for falsy input", function () {
+      it("should return falsy", function () {
+        expect($oop.getClassId(undefined)).toBeFalsy();
+        expect($oop.getClassId(null)).toBeFalsy();
+        expect($oop.getClassId('')).toBeFalsy();
+      });
+    });
+  });
 });
