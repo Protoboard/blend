@@ -108,6 +108,8 @@ $oop.copyProperties($oop, /** @lends $oop */{
   classByMixinIds: {},
 
   /**
+   * Mixin hashes indexed by class ID of mixer classes. Inverse of
+   * `$oop.classByMixinIds`.
    * @type {$oop.QuickListLookup}
    */
   mixinsByClassId: {}
