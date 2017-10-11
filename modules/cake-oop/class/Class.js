@@ -389,6 +389,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * Updates class distances based on the inclusion of the specified class.
    * Inclusion distance determines forwards priority.
    * @private
+   * @deprecated Remove alongside with #forwardTo()
    */
   _updateClassDistances: function (Mixin) {
     var classId = this.__classId,
@@ -568,11 +569,15 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   _transferForwardsFrom: function (Class) {
     var that = this;
     Class.__forwards2.list
-    .forEach(function (forwardDescriptor) {
+    // excluding forward mixins that are already mixed by current class
+    .filter(function (forward) {
+      return !that.mixes(forward.mixin);
+    })
+    .forEach(function (forward) {
       that._addToForwards(
-          forwardDescriptor.mixin,
-          forwardDescriptor.filter,
-          forwardDescriptor.source);
+          forward.mixin,
+          forward.filter,
+          forward.source);
     });
   },
 
@@ -1057,6 +1062,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     // delegating forward to mixers
     this.__mixins.upstream.list
+    .filter(function (Mixer) {
+      return !Mixer.mixes(Mixin);
+    })
     .forEach(function (Mixer) {
       Mixer._addToForwards(Mixin, filter, Source);
     });
