@@ -373,16 +373,14 @@ describe("$oop", function () {
     });
 
     describe("mixOnly()", function () {
-      var Trait;
+      var Mixin;
 
       beforeEach(function () {
-        Trait = $oop.getClass('Trait')
+        Mixin = $oop.getClass('test.$oop.Class.Mixin')
         .define({
           foo: "FOO",
           bar: function () {}
         });
-
-        result = Class.mixOnly(Trait);
       });
 
       describe("when passing no arguments", function () {
@@ -394,20 +392,23 @@ describe("$oop", function () {
       });
 
       it("should return self", function () {
+        result = Class.mixOnly(Mixin);
         expect(result).toBe(Class);
       });
 
       it("should add to mixins", function () {
+        Class.mixOnly(Mixin);
         expect(Class.__mixins.downstream).toEqual({
-          list: [Trait],
+          list: [Mixin],
           lookup: {
-            Trait: 1
+            'test.$oop.Class.Mixin': 1
           }
         });
       });
 
       it("should add self to includers on remote class", function () {
-        expect(Trait.__mixins.upstream).toEqual({
+        Class.mixOnly(Mixin);
+        expect(Mixin.__mixins.upstream).toEqual({
           list: [Class],
           lookup: {
             Class: 1
@@ -416,47 +417,53 @@ describe("$oop", function () {
       });
 
       it("should add to list of contributions", function () {
+        Class.mixOnly(Mixin);
         expect(Class.__contributors).toEqual({
-          list: [Trait],
+          list: [Mixin],
           lookup: {
-            Trait: 0
+            'test.$oop.Class.Mixin': 0
           }
         });
       });
 
       describe("on duplication", function () {
         beforeEach(function () {
-          Class.mixOnly(Trait);
+          Class.mixOnly(Mixin);
         });
 
         it("should not add to contributions again", function () {
+          Class.mixOnly(Mixin);
           expect(Class.__contributors).toEqual({
-            list: [Trait],
+            list: [Mixin],
             lookup: {
-              Trait: 0
+              'test.$oop.Class.Mixin': 0
             }
           });
         });
       });
 
       it("should add methods to __methodMatrix", function () {
+        Class.mixOnly(Mixin);
         expect(Class.__methodMatrix).toEqual({
-          bar: [Trait.__members.bar]
+          bar: [Mixin.__members.bar]
         });
       });
 
       it("should add properties to __propertyMatrix", function () {
+        Class.mixOnly(Mixin);
         expect(Class.__propertyMatrix).toEqual({
-          foo: [Trait.__members.foo]
+          foo: [Mixin.__members.foo]
         });
       });
 
       it("should re-calculate properties on class", function () {
+        Class.mixOnly(Mixin);
         expect(Class.foo).toBe("FOO");
       });
 
       it("should add methods to class", function () {
-        expect(Class.bar).toBe(Trait.__members.bar);
+        Class.mixOnly(Mixin);
+        expect(Class.bar).toBe(Mixin.__members.bar);
       });
 
       describe("when class has more than 1 mixin", function () {
@@ -467,9 +474,11 @@ describe("$oop", function () {
         });
 
         it("should add class to classByMixinIds", function () {
-          Class.mixOnly(Mixin2);
+          Class
+          .mixOnly(Mixin)
+          .mixOnly(Mixin2);
           expect($oop.classByMixinIds).toEqual({
-            'Trait,test.$oop.Class.Mixin2': {
+            'test.$oop.Class.Mixin,test.$oop.Class.Mixin2': {
               list: [Class],
               lookup: {
                 'Class': true
@@ -481,6 +490,7 @@ describe("$oop", function () {
 
       describe("then implementing relevant interface", function () {
         beforeEach(function () {
+          Class.mixOnly(Mixin);
           Class.implement($oop.getClass('Interface')
           .define({
             bar: function () {
@@ -500,7 +510,8 @@ describe("$oop", function () {
 
       describe("then requiring same class", function () {
         beforeEach(function () {
-          Class.expect(Trait);
+          Class.mixOnly(Mixin);
+          Class.expect(Mixin);
         });
 
         it("should not add class to expected mixins", function () {
@@ -512,22 +523,23 @@ describe("$oop", function () {
       });
 
       describe("when mixin has expectations or mixins", function () {
-        var Expected2, Expected3, Mixin;
+        var Expected2, Expected3, Mixin1;
 
         beforeEach(function () {
-          Class.expect(Expected2 = $oop.getClass('Expected2')
-          .mixOnly(Mixin = $oop.getClass('Mixin')));
+          Class.expect(Expected2 = $oop.getClass('test.$oop.Class.Expected2')
+          .mixOnly(Mixin1 = $oop.getClass('test.$oop.Class.Mixin1')));
 
-          Mixin.expect(Expected3 = $oop.getClass('Expected3'));
+          Mixin1.expect(Expected3 = $oop.getClass('test.$oop.Class.Expected3'));
         });
 
         it("should transfer expected mixins", function () {
+          Class.mixOnly(Mixin);
           expect(Class.__expected.downstream).toEqual({
-            list: [Expected2, Mixin, Expected3],
+            list: [Expected2, Mixin1, Expected3],
             lookup: {
-              Mixin: Mixin,
-              Expected2: Expected2,
-              Expected3: Expected3
+              'test.$oop.Class.Mixin1': Mixin1,
+              'test.$oop.Class.Expected2': Expected2,
+              'test.$oop.Class.Expected3': Expected3
             }
           });
         });
@@ -535,7 +547,8 @@ describe("$oop", function () {
 
       describe("then defining members on mixins", function () {
         beforeEach(function () {
-          Trait.define({
+          Class.mixOnly(Mixin);
+          Mixin.define({
             bar: function () {},
             baz: function () {},
             foo: "BAR",
@@ -545,15 +558,15 @@ describe("$oop", function () {
 
         it("should add new methods to __methodMatrix", function () {
           expect(Class.__methodMatrix).toEqual({
-            bar: [Trait.__members.bar],
-            baz: [Trait.__members.baz]
+            bar: [Mixin.__members.bar],
+            baz: [Mixin.__members.baz]
           });
         });
 
         it("should add new properties to __propertyMatrix", function () {
           expect(Class.__propertyMatrix).toEqual({
-            foo: [Trait.__members.foo],
-            quux: [Trait.__members.quux]
+            foo: [Mixin.__members.foo],
+            quux: [Mixin.__members.quux]
           });
         });
 
@@ -563,11 +576,11 @@ describe("$oop", function () {
         });
 
         it("should replace methods on class", function () {
-          expect(Class.bar).toBe(Trait.__members.bar);
+          expect(Class.bar).toBe(Mixin.__members.bar);
         });
 
         it("should replace methods on class", function () {
-          expect(Class.baz).toBe(Trait.__members.baz);
+          expect(Class.baz).toBe(Mixin.__members.baz);
         });
       });
 
@@ -575,6 +588,7 @@ describe("$oop", function () {
         var batch;
 
         beforeEach(function () {
+          Class.mixOnly(Mixin);
           batch = {
             bar: function () {}
           };
@@ -701,8 +715,9 @@ describe("$oop", function () {
         var mapper;
 
         beforeEach(function () {
+          Class.mixOnly(Mixin);
           mapper = function () {};
-          Trait.cache(mapper);
+          Mixin.cache(mapper);
         });
 
         it("should transfer mapper to mixer", function () {
