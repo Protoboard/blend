@@ -377,6 +377,15 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * @private
+   */
+  _addToMixerIndex: function () {
+    if (this.__mixins.downstream.list.length > 1) {
+      $oop.MixerIndex.setClass(this);
+    }
+  },
+
+  /**
    * Updates class distances based on the inclusion of the specified class.
    * Inclusion distance determines forwards priority.
    * @private
@@ -552,6 +561,22 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * Transfers forward descriptors from specified class to current class.
+   * @param {$oop.Class} Class
+   * @private
+   */
+  _transferForwardsFrom: function (Class) {
+    var that = this;
+    Class.__forwards2.list
+    .forEach(function (forwardDescriptor) {
+      that._addToForwards(
+          forwardDescriptor.mixin,
+          forwardDescriptor.filter,
+          forwardDescriptor.source);
+    });
+  },
+
+  /**
    * Delegates a batch of methods to mixers.
    * @param {object} members
    * @private
@@ -632,6 +657,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
    * Rebuilds forwards array based on class distances and forwards contents.
    * @private
+   * @deprecated Remove when #forwardMix is ready
    */
   _updateForwards: function () {
     var forwards = this.__forwards,
@@ -649,6 +675,30 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           bp = hostDistances[bId] || 0;
       return ap > bp ? -1 : bp > ap ? 1 : 0;
     });
+  },
+
+  /**
+   * @param {$oop.Class} Mixin
+   * @param {function} filter
+   * @param {$oop.Class} Source
+   * @private
+   */
+  _addToForwards: function (Mixin, filter, Source) {
+    var forwards = this.__forwards2,
+        forwardHash = [Mixin.__classId, Source.__classId]
+        .map($oop.escapeCommas)
+        .join(','),
+        forwardList = forwards.list,
+        forwardLookup = forwards.lookup;
+
+    if (!hOP.call(forwardLookup, forwardHash)) {
+      forwardList.push({
+        mixin: Mixin,
+        filter: filter,
+        source: Source
+      });
+      forwardLookup[forwardHash] = true;
+    }
   },
 
   /**
@@ -675,6 +725,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   create: function (properties) {
     // retrieving forward class (if any)
+    // todo Remove when #forwardMix is done
     var that = this,
         forwards = this.__forwards,
         forwardsCount = forwards.length,
@@ -710,9 +761,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       $assert.fail([
         "Class '" + that.__classId + "' doesn't implement method(s): " +
         missingMethodNames
-        .map(function (methodName) {
-          return "'" + methodName + "'";
-        }) + ".",
+        .map($oop.addQuotes) + ".",
         "Can't instantiate."
       ].join(" "));
     }
@@ -724,9 +773,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       $assert.fail([
         "Class '" + that.__classId + "' doesn't satisfy expectation(s): " +
         expected
-        .map(function (Class) {
-          return "'" + Class.__classId + "'";
-        })
+        .map($oop.getClassId)
+        .map($oop.addQuotes)
         .join(",") + ".",
         "Can't instantiate."
       ].join(" "));
@@ -859,6 +907,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // adding to upstream mixins
     Class._addToMixers(this);
 
+    // adding self to MixerIndex
+    this._addToMixerIndex();
+
     // determining how mixin affects distances
     this._updateClassDistances(Class);
 
@@ -876,6 +927,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     // transferring as mixin to transitive mixers
     this._transferMixinToTransitiveMixers(Class);
+
+    // transferring forward definitions
+    this._transferForwardsFrom(Class);
 
     var members = Class.__members;
 
@@ -898,9 +952,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     if (Class.__mapper) {
       this._setInstanceMapper(Class.__mapper);
     }
-
-    // adding self to by-mixins index
-    $oop.MixerIndex.setClass(this);
 
     return this;
   },
@@ -973,6 +1024,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @param {function} filter
    * @returns {$oop.Class}
+   * @deprecated Use #forwardMix instead.
    */
   forwardTo: function (Class, filter) {
     $assert.isClass(Class, "Class#forwardTo expects type Class.");
@@ -992,6 +1044,27 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * @param {$oop.Class} Mixin
+   * @param {function} filter
+   * @returns {$oop.Class}
+   */
+  forwardMix: function (Mixin, filter) {
+    $assert.isClass(Mixin, "Class#forwardMix expects type Class.");
+
+    var Source = this;
+
+    this._addToForwards(Mixin, filter, Source);
+
+    // delegating forward to mixers
+    this.__mixins.upstream.list
+    .forEach(function (Mixer) {
+      Mixer._addToForwards(Mixin, filter, Source);
+    });
+
+    return this;
+  },
+
+  /**
    * Specifies a mapper function to be used to build a registry.
    * @todo Rename
    * @param {function} mapper
@@ -1005,7 +1078,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // delegating mapper to mixers
     this.__mixins.upstream.list
     .forEach(function (Class) {
-      // setting mapper on mixer
       Class._setInstanceMapper(mapper);
     });
 

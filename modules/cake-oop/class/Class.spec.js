@@ -459,14 +459,23 @@ describe("$oop", function () {
         expect(Class.bar).toBe(Trait.__members.bar);
       });
 
-      it("should add class to classByMixinIds", function () {
-        expect($oop.classByMixinIds).toEqual({
-          'Trait': {
-            list: [Class],
-            lookup: {
-              'Class': true
+      describe("when class has more than 1 mixin", function () {
+        var Mixin2;
+
+        beforeEach(function () {
+          Mixin2 = $oop.getClass('test.$oop.Class.Mixin2');
+        });
+
+        it("should add class to classByMixinIds", function () {
+          Class.mixOnly(Mixin2);
+          expect($oop.classByMixinIds).toEqual({
+            'Trait,test.$oop.Class.Mixin2': {
+              list: [Class],
+              lookup: {
+                'Class': true
+              }
             }
-          }
+          });
         });
       });
 
@@ -873,7 +882,7 @@ describe("$oop", function () {
       });
 
       describe("when expected mixin has mixins (present or expected)", function () {
-        var Expected2, Expected3, Mixin, Mixin2;
+        var Expected2, Expected3, Mixin;
 
         beforeEach(function () {
           Class.expect(Expected2 = $oop.getClass('Expected2')
@@ -949,6 +958,98 @@ describe("$oop", function () {
             'class': Class1,
             'filter': filter
           }]);
+        });
+      });
+    });
+
+    describe("forwardMix()", function () {
+      var ForwardMixin,
+          filter;
+
+      beforeEach(function () {
+        ForwardMixin = $oop.getClass('test.$oop.Class.ForwardMixin');
+        filter = function () {};
+      });
+
+      it("should return self", function () {
+        result = Class.forwardMix(ForwardMixin, filter);
+        expect(result).toBe(Class);
+      });
+
+      it("should add forward descriptor", function () {
+        Class.forwardMix(ForwardMixin, filter);
+        expect(Class.__forwards2).toEqual({
+          lookup: {
+            'test.$oop.Class.ForwardMixin,Class': true
+          },
+          list: [{
+            mixin: ForwardMixin,
+            filter: filter,
+            source: Class
+          }]
+        });
+      });
+
+      describe("when passing invalid argument", function () {
+        it("should throw", function () {
+          expect(function () {
+            Class.forwardMix(null, filter);
+          }).toThrow();
+        });
+      });
+
+      describe("when class has mixers", function () {
+        var Mixer1, Mixer2;
+
+        beforeEach(function () {
+          Mixer1 = $oop.getClass('test.$oop.Class.Mixer1')
+          .mixOnly(Class);
+          Mixer2 = $oop.getClass('test.$oop.Class.Mixer2')
+          .mixOnly(Class);
+        });
+
+        it("should propagate forwards to mixers", function () {
+          Class.forwardMix(ForwardMixin, filter);
+          expect(Mixer1.__forwards2).toEqual({
+            lookup: {
+              'test.$oop.Class.ForwardMixin,Class': true
+            },
+            list: [{
+              mixin: ForwardMixin,
+              filter: filter,
+              source: Class
+            }]
+          });
+          expect(Mixer2.__forwards2).toEqual({
+            lookup: {
+              'test.$oop.Class.ForwardMixin,Class': true
+            },
+            list: [{
+              mixin: ForwardMixin,
+              filter: filter,
+              source: Class
+            }]
+          });
+        });
+      });
+
+      describe("then mixing to another class", function () {
+        var Mixer;
+
+        beforeEach(function () {
+          Class.forwardMix(ForwardMixin, filter);
+          Mixer = $oop.getClass('test.$oop.Class.Mixer');
+        });
+
+        it("should transfer forwards", function () {
+          Mixer.mixOnly(Class);
+          expect(Mixer.__forwards2.list).toContain({
+            mixin: ForwardMixin,
+            filter: filter,
+            source: Class
+          });
+          expect(Mixer.__forwards2.lookup['test.$oop.Class.ForwardMixin,Class'])
+          .toBe(true);
         });
       });
     });

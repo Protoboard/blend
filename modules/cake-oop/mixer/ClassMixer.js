@@ -31,6 +31,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    * mixins.
    * @param {...$oop.Class} Mixin
    * @returns {$oop.Class}
+   * @todo Change variable argument list to array?
    */
   mixClass: function (Mixin) {
     var mixins = slice.call(arguments),
