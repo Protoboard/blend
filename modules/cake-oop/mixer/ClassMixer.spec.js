@@ -4,20 +4,24 @@ var $oop = window['cake-oop'];
 
 describe("$oop", function () {
   describe("ClassMixer", function () {
-    var classByMixinIds,
+    var classByClassId,
+        classByMixinIds,
         mixinsByClassId,
         Class,
         Mixin1, Mixin2,
         result;
 
     beforeEach(function () {
+      classByClassId = $oop.classByClassId;
       classByMixinIds = $oop.classByMixinIds;
       mixinsByClassId = $oop.mixinsByClassId;
+      $oop.classByClassId = {};
       $oop.classByMixinIds = {};
       $oop.mixinsByClassId = {};
     });
 
     afterEach(function () {
+      $oop.classByClassId = classByClassId;
       $oop.classByMixinIds = classByMixinIds;
       $oop.mixinsByClassId = mixinsByClassId;
     });
@@ -25,9 +29,18 @@ describe("$oop", function () {
     describe("mixClass()", function () {
       beforeEach(function () {
         spyOn($oop, 'generateUuid').and.returnValue('foo');
-        Class = $oop.getClass("test.$oop.ClassMixer.Class");
-        Mixin1 = $oop.getClass("test.$oop.ClassMixer.Mixin1");
-        Mixin2 = $oop.getClass("test.$oop.ClassMixer.Mixin2");
+        Class = $oop.getClass("test.$oop.ClassMixer.Class")
+        .define({
+          foo: 'FOO'
+        });
+        Mixin1 = $oop.getClass("test.$oop.ClassMixer.Mixin1")
+        .define({
+          bar: 'BAR'
+        });
+        Mixin2 = $oop.getClass("test.$oop.ClassMixer.Mixin2")
+        .define({
+          baz: 'BAZ'
+        });
       });
 
       it("should create a Class", function () {
@@ -50,6 +63,41 @@ describe("$oop", function () {
               foo: true
             }
           }
+        });
+      });
+
+      describe("when one argument mixes another", function () {
+        var Mixin3;
+
+        beforeEach(function () {
+          Mixin3 = $oop.getClass("test.$oop.ClassMixer.Mixin3")
+          .define({
+            quux: 'QUUX'
+          });
+          Mixin1.mixOnly(Mixin2);
+        });
+
+        it("should observe inheritance in mix order", function () {
+          result = $oop.mixClass(Mixin1, Mixin2, Mixin3);
+          expect(result.__contributors.list).toEqual([
+            Mixin2,
+            Mixin1,
+            Mixin3
+          ]);
+        });
+      });
+
+      describe("when one argument expects another", function () {
+        beforeEach(function () {
+          Mixin1.expect(Mixin2);
+        });
+
+        it("should observe expectation in mix order", function () {
+          result = $oop.mixClass(Mixin1, Mixin2);
+          expect(result.__contributors.list).toEqual([
+            Mixin2,
+            Mixin1
+          ]);
         });
       });
 

@@ -27,6 +27,21 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
   },
 
   /**
+   * Compare callback for determining mixin addition order.
+   * @param {$oop.Class} MixinA
+   * @param {$oop.Class} MixinB
+   * @returns {number}
+   * @private
+   */
+  _compareMixins: function (MixinA, MixinB) {
+    return (MixinA.mixes(MixinB) || MixinA.expects(MixinB)) ? 1 :
+        (MixinB.mixes(MixinA) || MixinB.expects(MixinA)) ? -1 :
+            MixinA.__classId > MixinB.__classId ? 1 :
+                MixinB.__classId > MixinA.__classId ? -1 :
+                    0;
+  },
+
+  /**
    * Creates or retrieves an ad-hoc class that is made up of the specified
    * mixins.
    * @param {...$oop.Class} Mixin
@@ -34,7 +49,9 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    * @todo Change variable argument list to array?
    */
   mixClass: function (Mixin) {
-    var mixins = slice.call(arguments),
+    var
+        mixins = slice.call(arguments)
+        .sort(this._compareMixins),
         MixerIndex = $oop.MixerIndex,
         Class = MixerIndex.getClassForMixins(mixins);
 
