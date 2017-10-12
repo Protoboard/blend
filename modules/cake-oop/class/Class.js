@@ -1104,11 +1104,12 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+  /**
    * Tells whether the specified class implements the current Interface.
    * @param {$oop.Class} Class
    * @returns {boolean}
    */
-  isImplementedBy: function (Class) {
+  implementedBy: function (Class) {
     return $oop.Class.isPrototypeOf(Class) &&
         Class.implements(this);
   },

@@ -1214,7 +1214,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("isImplementedBy()", function () {
+    describe("implementedBy()", function () {
       var Interface;
 
       beforeEach(function () {
@@ -1224,20 +1224,20 @@ describe("$oop", function () {
 
       describe("when passing non-class", function () {
         it("should return false", function () {
-          expect(Interface.isImplementedBy(undefined)).toBe(false);
+          expect(Interface.implementedBy(undefined)).toBe(false);
         });
       });
 
       describe("on implementing class", function () {
         it("should return true", function () {
-          expect(Interface.isImplementedBy(Class)).toBe(true);
+          expect(Interface.implementedBy(Class)).toBe(true);
         });
       });
 
       describe("on non-implementing class", function () {
         it("should return false", function () {
           var Class2 = $oop.getClass('Class2');
-          expect(Interface.isImplementedBy(Class2)).toBe(false);
+          expect(Interface.implementedBy(Class2)).toBe(false);
         });
       });
     });
