@@ -1306,6 +1306,64 @@ describe("$oop", function () {
       });
     });
 
+    describe("expects()", function () {
+      var Trait;
+
+      beforeEach(function () {
+        Trait = $oop.getClass('Trait')
+        .expect(Class);
+      });
+
+      describe("on invalid argument", function () {
+        it("should throw", function () {
+          expect(function () {
+            Trait.expects();
+          }).toThrow();
+        });
+      });
+
+      describe("on fulfilled expectation", function () {
+        it("should return true", function () {
+          expect(Trait.expects(Class)).toBe(true);
+        });
+      });
+
+      describe("on unfulfilled expectation", function () {
+        it("should return false", function () {
+          var Trait2 = $oop.getClass('Trait2');
+          expect(Trait2.expects(Class)).toBe(false);
+        });
+      });
+    });
+
+    describe("expectedBy()", function () {
+      var Trait;
+
+      beforeEach(function () {
+        Trait = $oop.getClass('Interface')
+        .expect(Class);
+      });
+
+      describe("when passing non-class", function () {
+        it("should return false", function () {
+          expect(Trait.expectedBy(undefined)).toBe(false);
+        });
+      });
+
+      describe("on fulfilled expectation", function () {
+        it("should return true", function () {
+          expect(Class.expectedBy(Trait)).toBe(true);
+        });
+      });
+
+      describe("on non-mixing class", function () {
+        it("should return false", function () {
+          var Trait2 = $oop.getClass('Trait2');
+          expect(Class.expectedBy(Trait2)).toBe(false);
+        });
+      });
+    });
+
     describe("create()", function () {
       var instance;
 
