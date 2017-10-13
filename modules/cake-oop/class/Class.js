@@ -567,30 +567,24 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @private
    */
   _transferForwardsFrom: function (Class) {
-    var that = this,
-        forwards,
-        forwardFilters,
-        forwardSources;
+    var that = this;
 
-    forwards = Class.__forwards2;
-    forwardFilters = forwards.filters;
-    forwardSources = forwards.sources;
-    forwards.mixins
-    .forEach(function (Mixin, i) {
-      if (!that.mixes(Mixin)) {
-        // excluding forward mixins that are already mixed by current class
-        that._addToForwards(Mixin, forwardFilters[i], forwardSources[i], that);
-      }
+    Class.__forwards2.list
+    // excluding forward mixins that are already mixed by current class
+    .filter(function (forward) {
+      return !that.mixes(forward.mixin);
+    })
+    .forEach(function (forward) {
+      that._addToForwards(forward.mixin, forward.filter, forward.source, that);
     });
 
     // removing forwards from current class that are mixed by Class
-    forwards = this.__forwards2;
-    forwardSources = forwards.sources;
-    forwards.mixins
-    .forEach(function (Mixin, i) {
-      if (Class.mixes(Mixin)) {
-        that._removeFromForwards(Mixin, forwardSources[i]);
-      }
+    this.__forwards2.list
+    .filter(function (forward) {
+      return Class.mixes(forward.mixin);
+    })
+    .forEach(function (forward) {
+      that._removeFromForwards(forward.mixin, forward.source);
     });
   },
 
@@ -696,20 +690,16 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Updates forwards lookup based on current contents of __forwards2.mixins
-   * and __forwards2.sources.
+   * Updates forwards lookup based on current contents of __forwards2.list.
    * @private
    */
   _updateForwardLookup: function () {
-    var forwards = this.__forwards2,
-        forwardSources = forwards.sources;
-
-    forwards.lookup = forwards.mixins
-    .reduce(function (lookup, Mixin, i) {
-      var Source = forwardSources[i],
-          lookupHash = [Mixin.__classId, Source.__classId]
-          .map($oop.escapeCommas)
-          .join(',');
+    var forwards = this.__forwards2;
+    forwards.lookup = forwards.list
+    .reduce(function (lookup, forward, i) {
+      var lookupHash = [forward.mixin.__classId, forward.source.__classId]
+      .map($oop.escapeCommas)
+      .join(',');
       lookup[lookupHash] = i;
       return lookup;
     }, {});
@@ -729,33 +719,36 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         .join(','),
         // todo Maintain list indexes in lookup? (Like in __contributors)
         forwardLookup = forwards.lookup,
-        forwardMixins = forwards.mixins,
-        forwardFilters = forwards.filters,
+        forwardList = forwards.list,
         forwardSources = forwards.sources,
+        forward,
         afterSourceIndex;
 
     if (!hOP.call(forwardLookup, lookupHash)) {
+      forward = {
+        mixin: Mixin,
+        filter: filter,
+        source: Source
+      };
+
       if (AfterSource) {
         // inserting before a specific forward mixin
         afterSourceIndex = forwardSources.indexOf(AfterSource);
 
         if (afterSourceIndex > -1) {
-          forwardMixins.splice(afterSourceIndex, 0, Mixin);
-          forwardFilters.splice(afterSourceIndex, 0, filter);
+          forwardList.splice(afterSourceIndex, 0, forward);
           forwardSources.splice(afterSourceIndex, 0, Source);
           this._updateForwardLookup();
         } else {
           // adding at end
-          forwardLookup[lookupHash] = forwardMixins.length;
-          forwardMixins.push(Mixin);
-          forwardFilters.push(filter);
+          forwardLookup[lookupHash] = forwardList.length;
+          forwardList.push(forward);
           forwardSources.push(Source);
         }
       } else {
         // adding at end
-        forwardLookup[lookupHash] = forwardMixins.length;
-        forwardMixins.push(Mixin);
-        forwardFilters.push(filter);
+        forwardLookup[lookupHash] = forwardList.length;
+        forwardList.push(forward);
         forwardSources.push(Source);
       }
     }
@@ -771,16 +764,14 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         forwardHash = [Mixin.__classId, Source.__classId]
         .map($oop.escapeCommas)
         .join(','),
-        forwardMixins = forwards.mixins,
-        forwardFilters = forwards.filters,
+        forwardList = forwards.list,
         forwardSources = forwards.sources,
         forwardLookup = forwards.lookup,
         forwardIndex;
 
     if (hOP.call(forwardLookup, forwardHash)) {
       forwardIndex = forwardLookup[forwardHash];
-      forwardMixins.splice(forwardIndex, 1);
-      forwardFilters.splice(forwardIndex, 1);
+      forwardList.splice(forwardIndex, 1);
       forwardSources.splice(forwardIndex, 1);
       this._updateForwardLookup();
     }

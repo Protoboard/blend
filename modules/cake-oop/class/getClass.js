@@ -136,14 +136,12 @@ $oop.copyProperties($oop, /** @lends $oop */{
         __forwards: [],
 
         /**
-         * @type {Object}
+         * @type {$oop.QuickList}
          * @private
          * @todo Rename
-         * @todo Merge arrays into a single `list`, leave standalone `sources`
          */
         __forwards2: {
-          mixins: [],
-          filters: [],
+          list: [],
           sources: [],
           lookup: {}
         },
