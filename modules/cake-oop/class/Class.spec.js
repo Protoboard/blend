@@ -559,9 +559,10 @@ describe("$oop", function () {
           Class.mixOnly(Mixin);
           expect(Class.__forwards2).toEqual({
             mixins: [ForwardMixin],
-            filters: [[filter]],
+            filters: [filter],
+            sources: [Class],
             lookup: {
-              'test.$oop.Class.ForwardMixin': true
+              'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true
             }
           });
         });
@@ -579,9 +580,10 @@ describe("$oop", function () {
             Class.mixOnly(Mixin);
             expect(Class.__forwards2).toEqual({
               mixins: [ForwardMixin],
-              filters: [[filter]],
+              filters: [filter],
+              sources: [Class],
               lookup: {
-                'test.$oop.Class.ForwardMixin': true
+                'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true
               }
             });
           });
@@ -1038,9 +1040,10 @@ describe("$oop", function () {
         Class.forwardMix(ForwardMixin, filter);
         expect(Class.__forwards2).toEqual({
           mixins: [ForwardMixin],
-          filters: [[filter]],
+          filters: [filter],
+          sources: [Class],
           lookup: {
-            'test.$oop.Class.ForwardMixin': true
+            'test.$oop.Class.ForwardMixin,Class': true
           }
         });
       });
@@ -1067,16 +1070,18 @@ describe("$oop", function () {
           Class.forwardMix(ForwardMixin, filter);
           expect(Mixer1.__forwards2).toEqual({
             mixins: [ForwardMixin],
-            filters: [[filter]],
+            filters: [filter],
+            sources: [Class],
             lookup: {
-              'test.$oop.Class.ForwardMixin': true
+              'test.$oop.Class.ForwardMixin,Class': true
             }
           });
           expect(Mixer2.__forwards2).toEqual({
             mixins: [ForwardMixin],
-            filters: [[filter]],
+            filters: [filter],
+            sources: [Class],
             lookup: {
-              'test.$oop.Class.ForwardMixin': true
+              'test.$oop.Class.ForwardMixin,Class': true
             }
           });
         });
@@ -1093,14 +1098,16 @@ describe("$oop", function () {
             Class.forwardMix(ForwardMixin, filter);
             expect(Mixer1.__forwards2).toEqual({
               mixins: [ForwardMixin],
-              filters: [[filter]],
+              filters: [filter],
+              sources: [Class],
               lookup: {
-                'test.$oop.Class.ForwardMixin': true
+                'test.$oop.Class.ForwardMixin,Class': true
               }
             });
             expect(Mixer2.__forwards2).toEqual({
               mixins: [],
               filters: [],
+              sources: [],
               lookup: {}
             });
           });
@@ -1115,27 +1122,15 @@ describe("$oop", function () {
           filter2 = function () {};
         });
 
-        it("should add filter", function () {
+        it("should do nothing filter", function () {
           Class.forwardMix(ForwardMixin, filter2);
           expect(Class.__forwards2).toEqual({
             mixins: [ForwardMixin],
-            filters: [[filter, filter2]],
+            filters: [filter],
+            sources: [Class],
             lookup: {
-              'test.$oop.Class.ForwardMixin': true
+              'test.$oop.Class.ForwardMixin,Class': true
             }
-          });
-        });
-
-        describe("when using same filter function", function () {
-          it("should not add filter again", function () {
-            Class.forwardMix(ForwardMixin, filter);
-            expect(Class.__forwards2).toEqual({
-              mixins: [ForwardMixin],
-              filters: [[filter]],
-              lookup: {
-                'test.$oop.Class.ForwardMixin': true
-              }
-            });
           });
         });
       });
@@ -1151,8 +1146,9 @@ describe("$oop", function () {
         it("should transfer forwards", function () {
           Mixer.mixOnly(Class);
           expect(Mixer.__forwards2.mixins).toContain(ForwardMixin);
-          expect(Mixer.__forwards2.filters).toContain([filter]);
-          expect(Mixer.__forwards2.lookup['test.$oop.Class.ForwardMixin'])
+          expect(Mixer.__forwards2.filters).toContain(filter);
+          expect(Mixer.__forwards2.sources).toContain(Class);
+          expect(Mixer.__forwards2.lookup['test.$oop.Class.ForwardMixin,Class'])
           .toBe(true);
         });
       });

@@ -138,6 +138,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
         __forwards2: {
           mixins: [],
           filters: [],
+          sources: [],
           lookup: {}
         },
 
