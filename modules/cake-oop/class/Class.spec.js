@@ -567,6 +567,28 @@ describe("$oop", function () {
           });
         });
 
+        describe("when current class also has mixins", function () {
+          var ForwardMixin2;
+
+          beforeEach(function () {
+            ForwardMixin2 = $oop.getClass('test.$oop.Class.ForwardMixin2');
+            Class.forwardMix(ForwardMixin2, filter);
+          });
+
+          it("should transfer mixin's forwards before own", function () {
+            Class.mixOnly(Mixin);
+            expect(Class.__forwards2).toEqual({
+              mixins: [ForwardMixin, ForwardMixin2],
+              filters: [filter, filter],
+              sources: [Mixin, Class],
+              lookup: {
+                'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true,
+                'test.$oop.Class.ForwardMixin2,Class': true
+              }
+            });
+          });
+        });
+
         describe("when forward is mixed by current class", function () {
           var ForwardMixin2;
 

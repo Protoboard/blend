@@ -576,7 +576,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     .forEach(function (Mixin, i) {
       if (!that.mixes(Mixin)) {
         // excluding forward mixins that are already mixed by current class
-        that._addToForwards(Mixin, forwardFilters[i], forwardSources[i]);
+        that._addToForwards(Mixin, forwardFilters[i], forwardSources[i], that);
       }
     });
   },
@@ -686,24 +686,42 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Mixin
    * @param {function} filter
    * @param {$oop.Class} Source
+   * @param {$oop.Class} [AfterSource]
    * @private
    */
-  _addToForwards: function (Mixin, filter, Source) {
+  _addToForwards: function (Mixin, filter, Source, AfterSource) {
     var forwards = this.__forwards2,
         lookupHash = [Mixin.__classId, Source.__classId]
         .map($oop.escapeCommas)
         .join(','),
+        // todo Maintain list indexes in lookup? (Like in __contributors)
         forwardLookup = forwards.lookup,
         forwardMixins = forwards.mixins,
         forwardFilters = forwards.filters,
-        forwardSources = forwards.sources;
+        forwardSources = forwards.sources,
+        afterSourceIndex;
 
     if (!hOP.call(forwardLookup, lookupHash)) {
-      // mixin has not been added yet
-      // todo Replace w/ splice once we pass Through class
-      forwardMixins.push(Mixin);
-      forwardFilters.push(filter);
-      forwardSources.push(Source);
+      if (AfterSource) {
+        // inserting before a specific forward mixin
+        afterSourceIndex = forwardSources.indexOf(AfterSource);
+
+        if (afterSourceIndex > -1) {
+          forwardMixins.splice(afterSourceIndex, 0, Mixin);
+          forwardFilters.splice(afterSourceIndex, 0, filter);
+          forwardSources.splice(afterSourceIndex, 0, Source);
+        } else {
+          // adding at end
+          forwardMixins.push(Mixin);
+          forwardFilters.push(filter);
+          forwardSources.push(Source);
+        }
+      } else {
+        // adding at end
+        forwardMixins.push(Mixin);
+        forwardFilters.push(filter);
+        forwardSources.push(Source);
+      }
       forwardLookup[lookupHash] = true;
     }
   },
