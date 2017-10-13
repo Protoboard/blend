@@ -568,15 +568,28 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _transferForwardsFrom: function (Class) {
     var that = this,
-        forwards = Class.__forwards2,
-        forwardFilters = forwards.filters,
-        forwardSources = forwards.sources;
+        forwards,
+        forwardFilters,
+        forwardSources;
 
+    forwards = Class.__forwards2;
+    forwardFilters = forwards.filters;
+    forwardSources = forwards.sources;
     forwards.mixins
     .forEach(function (Mixin, i) {
       if (!that.mixes(Mixin)) {
         // excluding forward mixins that are already mixed by current class
         that._addToForwards(Mixin, forwardFilters[i], forwardSources[i], that);
+      }
+    });
+
+    // removing forwards from current class that are mixed by Class
+    forwards = this.__forwards2;
+    forwardSources = forwards.sources;
+    forwards.mixins
+    .forEach(function (Mixin, i) {
+      if (Class.mixes(Mixin)) {
+        that._removeFromForwards(Mixin, forwardSources[i]);
       }
     });
   },
@@ -683,6 +696,26 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * Updates forwards lookup based on current contents of __forwards2.mixins
+   * and __forwards2.sources.
+   * @private
+   */
+  _updateForwardLookup: function () {
+    var forwards = this.__forwards2,
+        forwardSources = forwards.sources;
+
+    forwards.lookup = forwards.mixins
+    .reduce(function (lookup, Mixin, i) {
+      var Source = forwardSources[i],
+          lookupHash = [Mixin.__classId, Source.__classId]
+          .map($oop.escapeCommas)
+          .join(',');
+      lookup[lookupHash] = i;
+      return lookup;
+    }, {});
+  },
+
+  /**
    * @param {$oop.Class} Mixin
    * @param {function} filter
    * @param {$oop.Class} Source
@@ -710,19 +743,46 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           forwardMixins.splice(afterSourceIndex, 0, Mixin);
           forwardFilters.splice(afterSourceIndex, 0, filter);
           forwardSources.splice(afterSourceIndex, 0, Source);
+          this._updateForwardLookup();
         } else {
           // adding at end
+          forwardLookup[lookupHash] = forwardMixins.length;
           forwardMixins.push(Mixin);
           forwardFilters.push(filter);
           forwardSources.push(Source);
         }
       } else {
         // adding at end
+        forwardLookup[lookupHash] = forwardMixins.length;
         forwardMixins.push(Mixin);
         forwardFilters.push(filter);
         forwardSources.push(Source);
       }
-      forwardLookup[lookupHash] = true;
+    }
+  },
+
+  /**
+   * @param {$oop.Class} Mixin
+   * @param {$oop.Class} Source
+   * @private
+   */
+  _removeFromForwards: function (Mixin, Source) {
+    var forwards = this.__forwards2,
+        forwardHash = [Mixin.__classId, Source.__classId]
+        .map($oop.escapeCommas)
+        .join(','),
+        forwardMixins = forwards.mixins,
+        forwardFilters = forwards.filters,
+        forwardSources = forwards.sources,
+        forwardLookup = forwards.lookup,
+        forwardIndex;
+
+    if (hOP.call(forwardLookup, forwardHash)) {
+      forwardIndex = forwardLookup[forwardHash];
+      forwardMixins.splice(forwardIndex, 1);
+      forwardFilters.splice(forwardIndex, 1);
+      forwardSources.splice(forwardIndex, 1);
+      this._updateForwardLookup();
     }
   },
 

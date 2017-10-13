@@ -562,12 +562,12 @@ describe("$oop", function () {
             filters: [filter],
             sources: [Mixin],
             lookup: {
-              'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true
+              'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': 0
             }
           });
         });
 
-        describe("when current class also has mixins", function () {
+        describe("when current class also has forwards", function () {
           var ForwardMixin2;
 
           beforeEach(function () {
@@ -582,8 +582,21 @@ describe("$oop", function () {
               filters: [filter, filter],
               sources: [Mixin, Class],
               lookup: {
-                'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true,
-                'test.$oop.Class.ForwardMixin2,Class': true
+                'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': 0,
+                'test.$oop.Class.ForwardMixin2,Class': 1
+              }
+            });
+          });
+
+          it("should remove forwards that are or are mixed by the mixin", function () {
+            Mixin.mix(ForwardMixin2);
+            Class.mixOnly(Mixin);
+            expect(Class.__forwards2).toEqual({
+              mixins: [ForwardMixin],
+              filters: [filter],
+              sources: [Mixin],
+              lookup: {
+                'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': 0
               }
             });
           });
@@ -605,7 +618,7 @@ describe("$oop", function () {
               filters: [filter],
               sources: [Mixin],
               lookup: {
-                'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true
+                'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': 0
               }
             });
           });
@@ -1065,7 +1078,7 @@ describe("$oop", function () {
           filters: [filter],
           sources: [Class],
           lookup: {
-            'test.$oop.Class.ForwardMixin,Class': true
+            'test.$oop.Class.ForwardMixin,Class': 0
           }
         });
       });
@@ -1095,7 +1108,7 @@ describe("$oop", function () {
             filters: [filter],
             sources: [Class],
             lookup: {
-              'test.$oop.Class.ForwardMixin,Class': true
+              'test.$oop.Class.ForwardMixin,Class': 0
             }
           });
           expect(Mixer2.__forwards2).toEqual({
@@ -1103,7 +1116,7 @@ describe("$oop", function () {
             filters: [filter],
             sources: [Class],
             lookup: {
-              'test.$oop.Class.ForwardMixin,Class': true
+              'test.$oop.Class.ForwardMixin,Class': 0
             }
           });
         });
@@ -1123,7 +1136,7 @@ describe("$oop", function () {
               filters: [filter],
               sources: [Class],
               lookup: {
-                'test.$oop.Class.ForwardMixin,Class': true
+                'test.$oop.Class.ForwardMixin,Class': 0
               }
             });
             expect(Mixer2.__forwards2).toEqual({
@@ -1151,7 +1164,7 @@ describe("$oop", function () {
             filters: [filter],
             sources: [Class],
             lookup: {
-              'test.$oop.Class.ForwardMixin,Class': true
+              'test.$oop.Class.ForwardMixin,Class': 0
             }
           });
         });
@@ -1171,7 +1184,7 @@ describe("$oop", function () {
           expect(Mixer.__forwards2.filters).toContain(filter);
           expect(Mixer.__forwards2.sources).toContain(Class);
           expect(Mixer.__forwards2.lookup['test.$oop.Class.ForwardMixin,Class'])
-          .toBe(true);
+          .toBeDefined();
         });
       });
     });

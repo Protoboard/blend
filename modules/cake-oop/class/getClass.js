@@ -139,6 +139,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
          * @type {Object}
          * @private
          * @todo Rename
+         * @todo Merge arrays into a single `list`, leave standalone `sources`
          */
         __forwards2: {
           mixins: [],
