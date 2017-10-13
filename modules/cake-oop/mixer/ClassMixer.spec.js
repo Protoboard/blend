@@ -74,7 +74,7 @@ describe("$oop", function () {
           .define({
             quux: 'QUUX'
           });
-          Mixin1.mixOnly(Mixin2);
+          Mixin1.mix(Mixin2);
         });
 
         it("should observe inheritance in mix order", function () {
@@ -83,20 +83,6 @@ describe("$oop", function () {
             Mixin2,
             Mixin1,
             Mixin3
-          ]);
-        });
-      });
-
-      describe("when one argument expects another", function () {
-        beforeEach(function () {
-          Mixin1.expect(Mixin2);
-        });
-
-        it("should observe expectation in mix order", function () {
-          result = $oop.mixClass(Mixin1, Mixin2);
-          expect(result.__contributors.list).toEqual([
-            Mixin2,
-            Mixin1
           ]);
         });
       });

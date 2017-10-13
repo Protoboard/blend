@@ -576,8 +576,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     .forEach(function (forward) {
       that._addToForwards(
           forward.mixin,
-          forward.filter,
-          forward.source);
+          forward.filter);
     });
   },
 
@@ -685,24 +684,28 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
    * @param {$oop.Class} Mixin
    * @param {function} filter
-   * @param {$oop.Class} Source
    * @private
    */
-  _addToForwards: function (Mixin, filter, Source) {
+  _addToForwards: function (Mixin, filter) {
     var forwards = this.__forwards2,
-        forwardHash = [Mixin.__classId, Source.__classId]
-        .map($oop.escapeCommas)
-        .join(','),
-        forwardList = forwards.list,
-        forwardLookup = forwards.lookup;
+        mixinId = Mixin.__classId,
+        forwardLookup = forwards.lookup,
+        forwardList = forwards.list;
 
-    if (!hOP.call(forwardLookup, forwardHash)) {
-      forwardList.push({
+    // adding mixin when either:
+    // - mixin has not been added yet at all
+    // - or no matching filter is found for mixin
+    if (!hOP.call(forwardLookup, mixinId) ||
+        !forwardList.filter(function (forward, i) {
+          return forward.mixin === Mixin &&
+              forward.filter === filter;
+        }).length
+    ) {
+      forwards.list.push({
         mixin: Mixin,
-        filter: filter,
-        source: Source
+        filter: filter
       });
-      forwardLookup[forwardHash] = true;
+      forwardLookup[mixinId] = true;
     }
   },
 
@@ -1103,7 +1106,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     return !!this.__interfaces.downstream.lookup[Interface.__classId];
   },
 
-  /**
   /**
    * Tells whether the specified class implements the current Interface.
    * @param {$oop.Class} Class
