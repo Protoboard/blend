@@ -131,11 +131,15 @@ $oop.copyProperties($oop, /** @lends $oop */{
         __forwards: [],
 
         /**
-         * @type {$oop.QuickList}
+         * @type {Object}
          * @private
          * @todo Rename
          */
-        __forwards2: {list: [], lookup: {}},
+        __forwards2: {
+          mixins: [],
+          filters: [],
+          lookup: {}
+        },
 
         /**
          * Hash function for caching instances.

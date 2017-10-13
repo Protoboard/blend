@@ -27,7 +27,6 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    * @private
    */
   _updateClassOrderForMixins: function (mixinHash) {
-    //console.log("updating class list order for", mixinHash);
     var classes = $oop.getSafeIndexEntry($oop.classByMixinIds, mixinHash),
         classList = classes.list;
 

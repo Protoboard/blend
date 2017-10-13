@@ -567,16 +567,19 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @private
    */
   _transferForwardsFrom: function (Class) {
-    var that = this;
-    Class.__forwards2.list
-    // excluding forward mixins that are already mixed by current class
-    .filter(function (forward) {
-      return !that.mixes(forward.mixin);
-    })
-    .forEach(function (forward) {
-      that._addToForwards(
-          forward.mixin,
-          forward.filter);
+    var that = this,
+        forwards = Class.__forwards2,
+        forwardFilters = forwards.filters;
+
+    forwards.mixins
+    .forEach(function (Mixin, i) {
+      var filtersForMixin = forwardFilters[i];
+      if (!that.mixes(Mixin)) {
+        // excluding forward mixins that are already mixed by current class
+        filtersForMixin.forEach(function (filter) {
+          that._addToForwards(Mixin, filter);
+        });
+      }
     });
   },
 
@@ -690,21 +693,22 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var forwards = this.__forwards2,
         mixinId = Mixin.__classId,
         forwardLookup = forwards.lookup,
-        forwardList = forwards.list;
+        forwardMixins = forwards.mixins,
+        forwardFilters = forwards.filters,
+        filterIndex, filtersForMixin;
 
-    // adding mixin when either:
-    // - mixin has not been added yet at all
-    // - or no matching filter is found for mixin
-    if (!hOP.call(forwardLookup, mixinId) ||
-        !forwardList.filter(function (forward, i) {
-          return forward.mixin === Mixin &&
-              forward.filter === filter;
-        }).length
-    ) {
-      forwards.list.push({
-        mixin: Mixin,
-        filter: filter
-      });
+    if (hOP.call(forwardLookup, mixinId)) {
+      // mixin already added
+      filterIndex = forwardMixins.indexOf(Mixin);
+      filtersForMixin = forwardFilters[filterIndex];
+      if (filtersForMixin.indexOf(filter) === -1) {
+        filtersForMixin.push(filter);
+      }
+    } else {
+      // mixin has not been added yet
+      // todo Replace w/ splice once we pass Through class
+      forwardMixins.push(Mixin);
+      forwardFilters.push([filter]);
       forwardLookup[mixinId] = true;
     }
   },
