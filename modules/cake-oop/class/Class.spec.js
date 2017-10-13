@@ -560,7 +560,7 @@ describe("$oop", function () {
           expect(Class.__forwards2).toEqual({
             mixins: [ForwardMixin],
             filters: [filter],
-            sources: [Class],
+            sources: [Mixin],
             lookup: {
               'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true
             }
@@ -581,7 +581,7 @@ describe("$oop", function () {
             expect(Class.__forwards2).toEqual({
               mixins: [ForwardMixin],
               filters: [filter],
-              sources: [Class],
+              sources: [Mixin],
               lookup: {
                 'test.$oop.Class.ForwardMixin,test.$oop.Class.Mixin': true
               }
@@ -679,7 +679,7 @@ describe("$oop", function () {
           it("should update forwards", function () {
             expect(D.__forwards.map(function (forwardDescriptor) {
               return forwardDescriptor.class;
-            })).toEqual([D, C, B]);
+            })).toEqual([A, B, C]);
           });
         });
 
@@ -703,7 +703,7 @@ describe("$oop", function () {
           it("should update forwards", function () {
             expect(D.__forwards.map(function (forwardDescriptor) {
               return forwardDescriptor.class;
-            })).toEqual([D, C, B]);
+            })).toEqual([A, B, C]);
           });
         });
 
@@ -727,7 +727,7 @@ describe("$oop", function () {
           it("should update forwards", function () {
             expect(D.__forwards.map(function (forwardDescriptor) {
               return forwardDescriptor.class;
-            })).toEqual([D, C, B]);
+            })).toEqual([A, B, C]);
           });
         });
 
@@ -751,7 +751,7 @@ describe("$oop", function () {
           it("should update forwards", function () {
             expect(D.__forwards.map(function (forwardDescriptor) {
               return forwardDescriptor.class;
-            })).toEqual([D, C, B]);
+            })).toEqual([A, B, C]);
           });
         });
       });

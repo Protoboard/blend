@@ -26,10 +26,15 @@ $oop.copyProperties($oop, /** @lends $oop */{
         /**
          * Identifies class.
          * @type {string}
-         * @private
          */
-        __classId: classId,
+        __classId: classId
+      }, {
+        writable: false,
+        enumerable: true,
+        configurable: false
+      });
 
+      $oop.copyProperties(Class, /** @lends $oop.Class# */{
         /**
          * Properties and methods contributed by the current class.
          * @type {object}
