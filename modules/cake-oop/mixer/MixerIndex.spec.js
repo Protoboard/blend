@@ -5,31 +5,37 @@ var $oop = window['cake-oop'];
 describe("$oop", function () {
   describe("MixerIndex", function () {
     var classByMixinIds,
-        mixinsByClassId,
         Class,
         Mixin1,
         Mixin2,
         result;
 
     beforeEach(function () {
-      classByMixinIds = $oop.classByMixinIds;
-      mixinsByClassId = $oop.mixinsByClassId;
-      $oop.classByMixinIds = {};
-      $oop.mixinsByClassId = {};
       Class = $oop.getClass('test.$oop.CBMI.Class');
       Mixin1 = $oop.getClass('test.$oop.CBMI.Mixin1');
       Mixin2 = $oop.getClass('test.$oop.CBMI.Mixin2');
+
+      classByMixinIds = $oop.classByMixinIds;
+      $oop.classByMixinIds = {};
     });
 
     afterEach(function () {
       $oop.classByMixinIds = classByMixinIds;
-      $oop.mixinsByClassId = mixinsByClassId;
     });
 
     describe("setClassForMixins()", function () {
+      var AdHoc;
+
       beforeEach(function () {
-        spyOn($oop.MixerIndex, '_updateClassOrderForMixins').and
-        .callThrough();
+        AdHoc = $oop.getClass('2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe');
+        $oop.classByMixinIds['test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2'] = {
+          list: [AdHoc],
+          lookup: {'2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe': 0}
+        };
+      });
+
+      afterEach(function () {
+        delete $oop.classByMixinIds['test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2'];
       });
 
       it("should return self", function () {
@@ -38,38 +44,18 @@ describe("$oop", function () {
         expect(result).toBe($oop.MixerIndex);
       });
 
-      it("should set Class in index", function () {
+      it("should set declared Class before ad-hoc", function () {
         result = $oop.MixerIndex.setClassForMixins(
             Class, [Mixin1, Mixin2]);
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
-            list: [Class],
+            list: [Class, AdHoc],
             lookup: {
-              'test.$oop.CBMI.Class': true
+              '2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe': 1,
+              'test.$oop.CBMI.Class': 0
             }
           }
         });
-      });
-
-      it("should set mixinHash in index", function () {
-        result = $oop.MixerIndex.setClassForMixins(
-            Class, [Mixin1, Mixin2]);
-        expect($oop.mixinsByClassId).toEqual({
-          'test.$oop.CBMI.Class': {
-            list: ['test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2'],
-            lookup: {
-              'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': true
-            }
-          }
-        });
-      });
-
-      // todo Need better test for this.
-      it("should update class order in index", function () {
-        result = $oop.MixerIndex.setClassForMixins(
-            Class, [Mixin1, Mixin2]);
-        expect($oop.MixerIndex._updateClassOrderForMixins)
-        .toHaveBeenCalledWith('test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2');
       });
 
       describe("when mixin's class ID contains comma", function () {
@@ -84,17 +70,11 @@ describe("$oop", function () {
         it("should escape comma in index key", function () {
           result = $oop.MixerIndex.setClassForMixins(
               Class, [Mixin1, CommaMixin]);
-
           expect($oop.classByMixinIds['test.$oop.CBMI.Mixin1,test\\,$oop\\,CBMI\\,CommaMixin'])
           .toEqual({
             list: [Class],
-            lookup: {'test.$oop.CBMI.Class': true}
+            lookup: {'test.$oop.CBMI.Class': 0}
           });
-          expect($oop.mixinsByClassId['test.$oop.CBMI.Class'].list)
-          .toContain('test.$oop.CBMI.Mixin1,test\\,$oop\\,CBMI\\,CommaMixin');
-          expect($oop.mixinsByClassId['test.$oop.CBMI.Class']
-              .lookup['test.$oop.CBMI.Mixin1,test\\,$oop\\,CBMI\\,CommaMixin'])
-          .toBe(true);
         });
       });
     });
@@ -104,27 +84,70 @@ describe("$oop", function () {
         Class
         .mixOnly(Mixin1)
         .mixOnly(Mixin2);
-
-        result = $oop.MixerIndex.setClass(Class);
       });
 
       it("should return self", function () {
+        result = $oop.MixerIndex.setClass(Class);
         expect(result).toBe($oop.MixerIndex);
       });
 
       it("should set Class in index", function () {
+        $oop.MixerIndex.setClass(Class);
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
             list: [Class],
-            lookup: {'test.$oop.CBMI.Class': true}
+            lookup: {'test.$oop.CBMI.Class': 0}
           }
         });
-        expect($oop.mixinsByClassId).toEqual({
-          'test.$oop.CBMI.Class': {
-            list: ['test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2'],
-            lookup: {
-              'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': true
-            }
+      });
+    });
+
+    describe("deleteClassForMixins()", function () {
+      var AdHoc;
+
+      beforeEach(function () {
+        AdHoc = $oop.getClass('2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe');
+        $oop.MixerIndex
+        .setClassForMixins(AdHoc, [Mixin1, Mixin2])
+        .setClassForMixins(Class, [Mixin1, Mixin2]);
+      });
+
+      it("should return self", function () {
+        result = $oop.MixerIndex.deleteClassForMixins(
+            Class, [Mixin1, Mixin2]);
+        expect(result).toBe($oop.MixerIndex);
+      });
+
+      it("should delete Class from index", function () {
+        $oop.MixerIndex.deleteClassForMixins(Class, [Mixin1, Mixin2]);
+        expect($oop.classByMixinIds).toEqual({
+          'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
+            list: [AdHoc],
+            lookup: {'2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe': 0}
+          }
+        });
+      });
+    });
+
+    describe("deleteClass()", function () {
+      beforeEach(function () {
+        Class
+        .mixOnly(Mixin1)
+        .mixOnly(Mixin2);
+        $oop.MixerIndex.setClass(Class);
+      });
+
+      it("should return self", function () {
+        result = $oop.MixerIndex.deleteClass(Class);
+        expect(result).toBe($oop.MixerIndex);
+      });
+
+      it("should set Class in index", function () {
+        $oop.MixerIndex.deleteClass(Class);
+        expect($oop.classByMixinIds).toEqual({
+          'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
+            list: [],
+            lookup: {}
           }
         });
       });

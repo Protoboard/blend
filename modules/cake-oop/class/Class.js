@@ -386,6 +386,13 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * @private
+   */
+  _removeFromMixerIndex: function () {
+    $oop.MixerIndex.deleteClass(this);
+  },
+
+  /**
    * Updates class distances based on the inclusion of the specified class.
    * Inclusion distance determines forwards priority.
    * @private
@@ -976,6 +983,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     $assert.isClass(Class, "Class#mixOnly expects type Class.");
 
     // todo Detect & throw on circular mixin
+
+    this._removeFromMixerIndex();
 
     // adding to downstream mixins
     this._addToMixins(Class);

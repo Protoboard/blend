@@ -17,9 +17,25 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
     return mixins
     .map($oop.getClassId)
     .map($oop.escapeCommas)
-    // todo Should mixin order matter? Ie. mixClass(A,B) !== mixClass(B,A)
     .sort()
     .join(',');
+  },
+
+  /**
+   * Compare function to be used in sorting arrays of classes. Places
+   * declared classes first, ad-hoc classes (with UUID as ID) last.
+   * @param {$oop.Class} MixinA
+   * @param {$oop.Class} MixinB
+   * @returns {number}
+   * @private
+   */
+  _compareMixins: function (MixinA, MixinB) {
+    var RE_UUID = $oop.RE_UUID,
+        classIdA = MixinA.__classId,
+        classIdB = MixinB.__classId;
+    return RE_UUID.test(classIdA) && !RE_UUID.test(classIdB) ? 1 :
+        RE_UUID.test(classIdB) && !RE_UUID.test(classIdA) ? -1 :
+            0;
   },
 
   /**
@@ -27,19 +43,22 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    * @private
    */
   _updateClassOrderForMixins: function (mixinHash) {
-    var classes = $oop.getSafeIndexEntry($oop.classByMixinIds, mixinHash),
-        classList = classes.list;
+    var classes = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash);
+    classes.list
+    .sort(this._compareMixins);
+  },
 
-    // making sure list[0] is best choice
-    // sorting on each insert makes it slow, but allows for fast access,
-    // which is what we rely on at instantiation time
-    // todo Declared classes should take precedence over ad-hoc.
-    classList.sort(function (ClassA, ClassB) {
-      var mixinCountA = ClassA.__mixins.downstream.list.length,
-          mixinCountB = ClassB.__mixins.downstream.list.length;
-      return mixinCountA > mixinCountB ? 1 :
-          mixinCountA < mixinCountB ? -1 : 0;
-    });
+  /**
+   * @param mixinHash
+   * @private
+   */
+  _updateClassLookupForMixins: function (mixinHash) {
+    var classes = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash);
+    classes.lookup = classes.list
+    .reduce(function (lookup, Class, i) {
+      lookup[Class.__classId] = i;
+      return lookup;
+    }, {});
   },
 
   /**
@@ -49,29 +68,18 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    * @returns {$oop.MixerIndex}
    */
   setClassForMixins: function (Class, mixins) {
-    var that = this,
-        classId = Class.__classId,
+    var classId = Class.__classId,
         mixinHash = this._getHashForMixins(mixins),
-        classesForMixins = $oop.getSafeIndexEntry($oop.classByMixinIds, mixinHash),
-        mixinsForClass = $oop.getSafeIndexEntry($oop.mixinsByClassId, classId),
+        classesForMixins = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash),
         classList = classesForMixins.list,
-        classLookup = classesForMixins.lookup,
-        mixinList = mixinsForClass.list,
-        mixinLookup = mixinsForClass.lookup;
+        classLookup = classesForMixins.lookup;
 
+    // adding class to index and updating order
     if (!hOP.call(classLookup, classId)) {
       classList.push(Class);
-      classLookup[classId] = true;
+      this._updateClassOrderForMixins(mixinHash);
+      this._updateClassLookupForMixins(mixinHash);
     }
-
-    if (!hOP.call(mixinLookup, mixinHash)) {
-      mixinList.push(mixinHash);
-      mixinLookup[mixinHash] = true;
-    }
-
-    mixinList.forEach(function (mixinHash) {
-      that._updateClassOrderForMixins(mixinHash);
-    });
 
     return this;
   },
@@ -85,6 +93,43 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
     var mixins = Class.__mixins.downstream.list;
     if (mixins.length) {
       this.setClassForMixins(Class, mixins);
+    }
+    return this;
+  },
+
+  /**
+   * Removes the class that is associated with the specified mixins from the
+   * index.
+   * @param {$oop.Class} Class
+   * @param {Array.<$oop.Class>} mixins
+   * @returns {$oop.MixerIndex}
+   * @todo Should not create new entry
+   */
+  deleteClassForMixins: function (Class, mixins) {
+    var classId = Class.__classId,
+        mixinHash = this._getHashForMixins(mixins),
+        classesForMixins = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash),
+        classList = classesForMixins.list,
+        classLookup = classesForMixins.lookup;
+
+    // removing class from index and updating order
+    if (hOP.call(classLookup, classId)) {
+      classList.splice(classLookup[classId], 1);
+      this._updateClassLookupForMixins(mixinHash);
+    }
+
+    return this;
+  },
+
+  /**
+   * Removes Class from index, based on its own mixins.
+   * @param {$oop.Class} Class
+   * @returns {$oop.MixerIndex}
+   */
+  deleteClass: function (Class) {
+    var mixins = Class.__mixins.downstream.list;
+    if (mixins.length) {
+      this.deleteClassForMixins(Class, mixins);
     }
     return this;
   },
@@ -108,13 +153,5 @@ $oop.copyProperties($oop, /** @lends $oop */{
    * @type {$oop.QuickListLookup}
    * @ignore
    */
-  classByMixinIds: {},
-
-  /**
-   * Mixin hashes indexed by class ID of mixer classes. Inverse of
-   * `$oop.classByMixinIds`. Used internally by `$oop.MixerIndex`.
-   * @type {$oop.QuickListLookup}
-   * @ignore
-   */
-  mixinsByClassId: {}
+  classByMixinIds: {}
 });

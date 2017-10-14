@@ -6,7 +6,6 @@ describe("$oop", function () {
   describe("ClassMixer", function () {
     var classByClassId,
         classByMixinIds,
-        mixinsByClassId,
         Class,
         Mixin1, Mixin2,
         result;
@@ -14,16 +13,13 @@ describe("$oop", function () {
     beforeEach(function () {
       classByClassId = $oop.classByClassId;
       classByMixinIds = $oop.classByMixinIds;
-      mixinsByClassId = $oop.mixinsByClassId;
       $oop.classByClassId = {};
       $oop.classByMixinIds = {};
-      $oop.mixinsByClassId = {};
     });
 
     afterEach(function () {
       $oop.classByClassId = classByClassId;
       $oop.classByMixinIds = classByMixinIds;
-      $oop.mixinsByClassId = mixinsByClassId;
     });
 
     describe("mixClass()", function () {
@@ -57,10 +53,14 @@ describe("$oop", function () {
       it("should set class in lookup", function () {
         result = $oop.mixClass(Mixin1, Mixin2);
         expect($oop.classByMixinIds).toEqual({
+          "test.$oop.ClassMixer.Mixin1": {
+            list: [],
+            lookup: {}
+          },
           "test.$oop.ClassMixer.Mixin1,test.$oop.ClassMixer.Mixin2": {
             list: [result],
             lookup: {
-              foo: true
+              foo: 0
             }
           }
         });
@@ -102,11 +102,29 @@ describe("$oop", function () {
       });
 
       describe("when existing class matches mixins", function () {
+        var Mixin3;
+
         beforeEach(function () {
-          Class.mix(Mixin1).mix(Mixin2);
+          Mixin3 = $oop.getClass('test.$oop.ClassMixer.Mixin3')
+          .define({
+            quux: 'QUUX'
+          });
+
+          $oop.getClass('test.$oop.ClassMixer.Class1')
+          .mix(Mixin1);
+
+          $oop.getClass('test.$oop.ClassMixer.Class2')
+          .mix(Mixin1)
+          .mix(Mixin2)
+          .mix(Mixin3);
+
+          // only Class matches exactly
+          Class
+          .mix(Mixin1)
+          .mix(Mixin2);
         });
 
-        it("should return class", function () {
+        it("should return matching class", function () {
           result = $oop.mixClass(Mixin1, Mixin2);
           expect(result).toBe(Class);
         });

@@ -478,10 +478,14 @@ describe("$oop", function () {
           .mixOnly(Mixin)
           .mixOnly(Mixin2);
           expect($oop.classByMixinIds).toEqual({
+            'test.$oop.Class.Mixin': {
+              list: [],
+              lookup: {}
+            },
             'test.$oop.Class.Mixin,test.$oop.Class.Mixin2': {
               list: [Class],
               lookup: {
-                'Class': true
+                'Class': 0
               }
             }
           });

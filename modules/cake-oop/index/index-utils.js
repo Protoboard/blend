@@ -2,18 +2,18 @@
 
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
-   * @param {$oop.QuickListLookup} index
+   * @param {$oop.QuickListLookup} quickListLookup
    * @param {string} key
    * @returns {$oop.QuickList}
    */
-  getSafeIndexEntry: function (index, key) {
-    var indexEntry = index[key];
-    if (!indexEntry) {
-      index[key] = indexEntry = {
+  getSafeQuickList: function (quickListLookup, key) {
+    var quickList = quickListLookup[key];
+    if (!quickList) {
+      quickListLookup[key] = quickList = {
         list: [],
         lookup: {}
       };
     }
-    return indexEntry;
+    return quickList;
   }
 });

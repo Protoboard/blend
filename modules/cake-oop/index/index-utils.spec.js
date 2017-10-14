@@ -17,15 +17,15 @@ describe("$oop", function () {
     };
   });
 
-  describe("getSafeIndexEntry()", function () {
+  describe("getSafeQuickList()", function () {
     it("should retrieve specified indexEntry", function () {
-      result = $oop.getSafeIndexEntry(index, 'foo');
+      result = $oop.getSafeQuickList(index, 'foo');
       expect(result).toBe(indexEntry);
     });
 
     describe("on absent key", function () {
       it("should store new entry in index", function () {
-        result = $oop.getSafeIndexEntry(index, 'bar');
+        result = $oop.getSafeQuickList(index, 'bar');
         expect(result).toEqual({
           list: [],
           lookup: {}
