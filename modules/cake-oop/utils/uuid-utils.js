@@ -2,6 +2,13 @@
 
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
+   * Matches UUIDs generated with `$oop.generateUuid()`
+   * @type {RegExp}
+   * @constant
+   */
+  RE_UUID: /^[a-z\d]{8}-[a-z\d]{4}-[a-z\d]{4}-[a-z\d]{4}-[a-z\d]{12}$/,
+
+  /**
    * Generates RFC-compliant, but not cryptographic quality UUID. Readable
    * implementation, rather than fast. Used in generating class IDs for
    * ad-hoc classes.

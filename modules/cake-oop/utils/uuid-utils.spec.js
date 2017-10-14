@@ -3,6 +3,19 @@
 var $oop = window['cake-oop'];
 
 describe("$oop", function () {
+  describe("RE_UUID", function () {
+    it("should match UUIDs", function () {
+      expect($oop.RE_UUID.test("2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe"))
+      .toBeTruthy();
+      expect($oop.RE_UUID.test("3cb1acdd-c789-427c-af74-d0e244463529"))
+      .toBeTruthy();
+      expect($oop.RE_UUID.test("4bd85482-d740-4e4d-9af0-437b50736824"))
+      .toBeTruthy();
+      expect($oop.RE_UUID.test("994545d0-3702-4030-b333-c0d4c5b5ac88"))
+      .toBeTruthy();
+    });
+  });
+
   describe("generateUuid()", function () {
     var result;
 
