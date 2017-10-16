@@ -8,6 +8,8 @@
  */
 $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer */{
   /**
+   * Matching Class' contributors with mixins & second-degree mixins. When
+   * `Class` doesn't contribute members, only its mixins will be used.
    * @param {$oop.Class} Class
    * @param {Array.<$oop.Class>} mixins
    * @returns {boolean}
@@ -16,7 +18,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    */
   _classMatchesMixins: function (Class, mixins) {
     var
-        mixinsA = Class.__mixins.downstream.list
+        mixinsA = Class.__contributors.list
         .map($oop.getClassId)
         .sort(),
         mixinsB = mixins
