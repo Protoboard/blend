@@ -8,8 +8,28 @@
  */
 $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer */{
   /**
-   * Matching Class' contributors with mixins & second-degree mixins. When
-   * `Class` doesn't contribute members, only its mixins will be used.
+   * Normalizes list of mixins by removing all classes that are mixed by
+   * another in the list.
+   * @param {Array.<$oop.Class>} mixins
+   * @private
+   */
+  _normalizeMixins: function (mixins) {
+    return mixins
+    .map(function (Mixed) {
+      var mixed = mixins
+      .some(function (Mixer) {
+        return Mixed !== Mixer && Mixer.mixes(Mixed);
+      });
+      return mixed ?
+          undefined :
+          Mixed;
+    })
+    .filter(function (Mixin) {
+      return $oop.Class.isPrototypeOf(Mixin);
+    });
+  },
+
+  /**
    * @param {$oop.Class} Class
    * @param {Array.<$oop.Class>} mixins
    * @returns {boolean}
@@ -18,7 +38,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    */
   _classMatchesMixins: function (Class, mixins) {
     var
-        mixinsA = Class.__contributors.list
+        mixinsA = Class.__mixins.downstream.list
         .map($oop.getClassId)
         .sort(),
         mixinsB = mixins
@@ -59,15 +79,18 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    */
   _findMatchingClasses: function (mixins) {
     var that = this,
-        classByClassId = $oop.classByClassId,
-        classIds = Object.keys(classByClassId);
+        normalizedMixins = this._normalizeMixins(mixins);
 
-    return classIds
-    // todo We could avoid this map with a global `classes` array.
-    .map($oop.getClass)
-    .filter(function (Class) {
-      return that._classMatchesMixins(Class, mixins);
-    });
+    if (normalizedMixins.length === 1) {
+      return normalizedMixins;
+    } else {
+      return Object.keys($oop.classByClassId)
+      // todo We could avoid this map with a global `classes` array.
+      .map($oop.getClass)
+      .filter(function (Class) {
+        return that._classMatchesMixins(Class, mixins);
+      });
+    }
   },
 
   /**
