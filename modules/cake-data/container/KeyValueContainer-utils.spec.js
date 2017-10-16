@@ -9,10 +9,9 @@ describe("$data", function () {
       Dictionary,
       StringDictionary,
       PairList,
-      StringPairList,
-      result;
+      StringPairList;
 
-  beforeEach(function () {
+  beforeAll(function () {
     Collection = $oop.getClass('test.$data.KeyValueContainer-utils.Collection')
     .mix($data.Collection);
     StringCollection = $oop.getClass('test.$data.KeyValueContainer-utils.StringCollection')

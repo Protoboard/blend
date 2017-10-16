@@ -8,7 +8,7 @@ describe("$utils", function () {
     var Cloneable,
         cloneable;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Cloneable = $oop.getClass('test.$utils.Cloneable.Cloneable')
       .mixOnly($utils.Cloneable)
       .define({
@@ -16,6 +16,9 @@ describe("$utils", function () {
           return clone.returned;
         }
       });
+    });
+
+    beforeEach(function () {
       cloneable = Cloneable.create({foo: 'foo'});
     });
 

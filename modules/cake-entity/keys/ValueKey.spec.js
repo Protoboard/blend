@@ -8,10 +8,13 @@ describe("$assert", function () {
   var ValueKey,
       valueKey;
 
-  beforeEach(function () {
+  beforeAll(function () {
     ValueKey = $oop.getClass('test.$entity.ValueKey.ValueKey')
     .mix($entity.EntityKey)
     .mix($entity.ValueKey);
+  });
+
+  beforeEach(function () {
     valueKey = ValueKey.create();
     spyOn($assert, 'assert').and.callThrough();
   });
@@ -53,7 +56,7 @@ describe("$entity", function () {
         valueKey,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       ValueKey = $oop.getClass('test.$entity.ValueKey.ValueKey')
       .mix($entity.EntityKey)
       .mix($entity.ValueKey)
@@ -62,6 +65,9 @@ describe("$entity", function () {
           return 'foo/bar'.toDocumentKey();
         }
       });
+    });
+
+    beforeEach(function () {
       valueKey = ValueKey.create({
         _entityPath: 'baz'.toPath()
       });

@@ -12,13 +12,16 @@ describe("$data", function () {
       result;
 
   describe("Collection", function () {
+    beforeAll(function () {
+      Collection = $oop.getClass("test.$data.Collection.Collection")
+      .mix($data.Collection);
+    });
+
     beforeEach(function () {
       data = {
         foo: "FOO",
         bar: "BAR"
       };
-      Collection = $oop.getClass("test.$data.Collection.Collection")
-      .mix($data.Collection);
       collection = Collection.create({data: data});
     });
 

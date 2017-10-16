@@ -11,12 +11,14 @@ describe("$data", function () {
     var StringKeyHost,
         stringKeyHost;
 
-    beforeEach(function () {
+    beforeAll(function () {
       StringKeyHost = $oop.getClass('test.$data.StringKeyHost.StringKeyHost')
       .mix($data.DataContainer)
       .mix($data.KeyValueContainer)
       .mixOnly($data.StringKeyHost);
+    });
 
+    beforeEach(function () {
       stringKeyHost = StringKeyHost.create();
     });
 
@@ -25,12 +27,14 @@ describe("$data", function () {
           leftContainer,
           joinedContainer;
 
-      beforeEach(function () {
+      beforeAll(function () {
         StringValueHost = $oop.getClass('test.$data.StringKeyHost.StringValueHost')
         .mix($data.DataContainer)
         .mix($data.KeyValueContainer)
         .mixOnly($data.StringValueHost);
+      });
 
+      beforeEach(function () {
         leftContainer = StringValueHost.create({data: {}});
 
         joinedContainer = {};

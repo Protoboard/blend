@@ -47,9 +47,12 @@ describe("$data", function () {
         query,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Query = $oop.getClass('test.$data.Query.Query')
       .mix($data.Query);
+    });
+
+    beforeEach(function () {
       query = Query.create({
         components: [
           'foo',

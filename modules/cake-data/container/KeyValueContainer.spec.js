@@ -12,12 +12,7 @@ describe("$data", function () {
         Settable,
         result;
 
-    beforeEach(function () {
-      data = {
-        foo: "FOO",
-        bar: "BAR"
-      };
-
+    beforeAll(function () {
       KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
       .mix($data.DataContainer)
       .mix($data.ObjectContainer)
@@ -43,6 +38,13 @@ describe("$data", function () {
           this.data[key] = value;
         }
       });
+    });
+
+    beforeEach(function () {
+      data = {
+        foo: "FOO",
+        bar: "BAR"
+      };
 
       keyValueContainer = KeyValueContainer.create({data: data});
     });
@@ -51,7 +53,7 @@ describe("$data", function () {
       var KeyValueContainer2,
           keyValueContainer2;
 
-      beforeEach(function () {
+      beforeAll(function () {
         KeyValueContainer2 = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer2')
         .mix($data.DataContainer)
         .mix($data.ArrayContainer)
@@ -67,6 +69,9 @@ describe("$data", function () {
             });
           }
         });
+      });
+
+      beforeEach(function () {
         keyValueContainer2 = KeyValueContainer2.fromData([
           [1, "foo"],
           [2, "bar"]
@@ -91,7 +96,7 @@ describe("$data", function () {
       var SetContainer,
           setContainer;
 
-      beforeEach(function () {
+      beforeAll(function () {
         SetContainer = $oop.getClass('test.$data.KeyValueContainer.SetContainer')
         .mix($data.DataContainer)
         .mix($data.ArrayContainer)
@@ -105,6 +110,9 @@ describe("$data", function () {
             this.data.forEach(callback);
           }
         });
+      });
+
+      beforeEach(function () {
         setContainer = SetContainer.fromData([1, 2, 3, 4]);
 
         result = KeyValueContainer.fromSetContainer(setContainer);
@@ -211,10 +219,13 @@ describe("$data", function () {
       var KeyValueConvertible,
           transformed;
 
-      beforeEach(function () {
+      beforeAll(function () {
         KeyValueConvertible = $oop.getClass('test.$data.KeyValueContainer.KeyValueConvertible')
         .mix($data.DataContainer)
         .mix($data.KeyValueConvertible);
+      });
+
+      beforeEach(function () {
         transformed = {};
 
         spyOn(KeyValueConvertible, 'fromKeyValueContainer').and

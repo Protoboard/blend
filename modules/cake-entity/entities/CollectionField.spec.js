@@ -11,9 +11,12 @@ describe("$entity", function () {
         collectionField,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       CollectionField = $oop.getClass('test.$entity.CollectionField.CollectionField')
       .mix($entity.CollectionField);
+    });
+
+    beforeEach(function () {
       collectionFieldKey = $entity.CollectionFieldKey.fromString('foo/bar/baz');
       collectionField = CollectionField.fromEntityKey(collectionFieldKey);
     });

@@ -9,7 +9,7 @@ describe("$utils", function () {
         cachedStringifiable,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       CachedStringifiable = $oop.getClass('test.$utils.StringifyCached.StringifyCached')
       .implement($utils.Stringifiable)
       .mix($utils.StringifyCached)
@@ -18,6 +18,9 @@ describe("$utils", function () {
           return this.foo;
         }
       });
+    });
+
+    beforeEach(function () {
       cachedStringifiable = CachedStringifiable.create({foo: "foo"});
     });
 

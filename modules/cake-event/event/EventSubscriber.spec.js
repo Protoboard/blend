@@ -9,8 +9,7 @@ describe("$event", function () {
         subscriber,
         result;
 
-    beforeEach(function () {
-      $event.EventSpace.__instanceLookup = {};
+    beforeAll(function () {
       Subscriber = $oop.getClass('test.$event.EventSubscriber.Subscriber')
       .mix($event.EventSubscriber)
       .define({
@@ -22,6 +21,10 @@ describe("$event", function () {
           return this;
         }
       });
+    });
+
+    beforeEach(function () {
+      $event.EventSpace.__instanceLookup = {};
       subscriber = Subscriber.create({subscriberId: 'foo'});
     });
 

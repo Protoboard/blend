@@ -11,9 +11,12 @@ describe("$entity", function () {
         entityChangeEvent,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       EntityChangeEvent = $oop.getClass('test.$entity.EntityChangeEvent.EntityChangeEvent')
       .mix($entity.EntityChangeEvent);
+    });
+
+    beforeEach(function () {
       entityChangeEvent = EntityChangeEvent.fromEventName('event1');
     });
 

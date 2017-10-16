@@ -10,11 +10,13 @@ describe("$oop", function () {
         Mixin2,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Class = $oop.getClass('test.$oop.CBMI.Class');
       Mixin1 = $oop.getClass('test.$oop.CBMI.Mixin1');
       Mixin2 = $oop.getClass('test.$oop.CBMI.Mixin2');
+    });
 
+    beforeEach(function () {
       classByMixinIds = $oop.classByMixinIds;
       $oop.classByMixinIds = {};
     });
@@ -26,8 +28,11 @@ describe("$oop", function () {
     describe("setClassForMixins()", function () {
       var AdHoc;
 
-      beforeEach(function () {
+      beforeAll(function () {
         AdHoc = $oop.getClass('2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe');
+      });
+
+      beforeEach(function () {
         $oop.classByMixinIds['test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2'] = {
           list: [AdHoc],
           lookup: {'2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe': 0}
@@ -61,8 +66,11 @@ describe("$oop", function () {
       describe("when mixin's class ID contains comma", function () {
         var CommaMixin;
 
-        beforeEach(function () {
+        beforeAll(function () {
           CommaMixin = $oop.getClass('test,$oop,CBMI,CommaMixin');
+        });
+
+        beforeEach(function () {
           result = $oop.MixerIndex.setClassForMixins(
               Class, [Mixin1, Mixin2]);
         });
@@ -105,8 +113,11 @@ describe("$oop", function () {
     describe("deleteClassForMixins()", function () {
       var AdHoc;
 
-      beforeEach(function () {
+      beforeAll(function () {
         AdHoc = $oop.getClass('2b684b1b-6ba8-48b0-964f-4ba1a9bea9fe');
+      });
+
+      beforeEach(function () {
         $oop.MixerIndex
         .setClassForMixins(AdHoc, [Mixin1, Mixin2])
         .setClassForMixins(Class, [Mixin1, Mixin2]);
@@ -161,8 +172,11 @@ describe("$oop", function () {
       describe("when no Class matches mixins", function () {
         var Mixin3;
 
-        beforeEach(function () {
+        beforeAll(function () {
           Mixin3 = $oop.getClass('test.$oop.CBMI.Mixin3');
+        });
+
+        beforeEach(function () {
           result = $oop.MixerIndex.getClassForMixins([Mixin1, Mixin3]);
         });
 

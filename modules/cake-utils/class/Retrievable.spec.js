@@ -8,11 +8,14 @@ describe("$utils", function () {
     var Retrievable,
         instance;
 
+    beforeAll(function () {
+      Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
+      .mix($utils.Retrievable);
+    });
+
     beforeEach(function () {
       $utils.Identifiable.lastInstanceId = -1;
       $utils.Retrievable.instances = {};
-      Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
-      .mix($utils.Retrievable);
     });
 
     describe("create()", function () {

@@ -10,9 +10,12 @@ describe("$entity", function () {
         document,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Document = $oop.getClass('test.$entity.Document.Document')
       .mix($entity.Document);
+    });
+
+    beforeEach(function () {
       document = Document.fromEntityKey('foo/bar'.toDocumentKey());
     });
 
@@ -51,10 +54,13 @@ describe("$entity", function () {
             document,
             result;
 
-        beforeEach(function () {
+        beforeAll(function () {
           DocumentKey = $oop.getClass('test.$entity.Document.DocumentKey')
           .mix($entity.DocumentKey)
           .mix($utils.StringifyCached);
+        });
+
+        beforeEach(function () {
           documentKey = DocumentKey.fromComponents('foo', 'bar');
           document = $entity.Document.fromEntityKey(documentKey);
 

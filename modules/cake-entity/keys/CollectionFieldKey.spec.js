@@ -10,9 +10,12 @@ describe("$entity", function () {
         attributeKey,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       CollectionFieldKey = $oop.getClass('test.$entity.CollectionFieldKey.CollectionFieldKey')
       .mix($entity.CollectionFieldKey);
+    });
+
+    beforeEach(function () {
       collectionFieldKey = CollectionFieldKey.fromComponents('foo', 'bar', 'baz');
 
       attributeKey = collectionFieldKey.getAttributeDocumentKey();

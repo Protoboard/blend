@@ -10,9 +10,12 @@ describe("$entity", function () {
         field,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Field = $oop.getClass('test.$entity.Field.Field')
       .mix($entity.Field);
+    });
+
+    beforeEach(function () {
       field = Field.fromEntityKey('foo/bar/baz'.toFieldKey());
     });
 
@@ -58,10 +61,13 @@ describe("$entity", function () {
             field,
             result;
 
-        beforeEach(function () {
+        beforeAll(function () {
           FieldKey = $oop.getClass('test.$entity.Field.FieldKey')
           .mix($entity.FieldKey)
           .mix($utils.StringifyCached);
+        });
+
+        beforeEach(function () {
           fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
           field = $entity.Field.fromEntityKey(fieldKey);
 

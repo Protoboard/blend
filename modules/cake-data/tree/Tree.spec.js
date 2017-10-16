@@ -47,10 +47,12 @@ describe("$data", function () {
         tree,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Tree = $oop.getClass('test.$data.Tree.Tree')
       .mix($data.Tree);
+    });
 
+    beforeEach(function () {
       tree = Tree.create({
         data: {
           foo: {

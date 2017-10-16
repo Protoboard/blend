@@ -50,9 +50,12 @@ describe("$entity", function () {
         documentKey,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       DocumentKey = $oop.getClass('test.$entity.DocumentKey.DocumentKey')
       .mix($entity.DocumentKey);
+    });
+
+    beforeEach(function () {
       documentKey = DocumentKey.create({
         documentType: 'foo',
         documentId: 'bar'

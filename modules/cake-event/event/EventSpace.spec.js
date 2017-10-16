@@ -10,12 +10,17 @@ describe("$event", function () {
         eventSpace,
         result;
 
-    beforeEach(function () {
-      delete $oop.classByClassId['test.$event.EventSpace.EventSpace'];
+    beforeAll(function () {
       EventSpace = $oop.getClass('test.$event.EventSpace.EventSpace')
       .mix($event.EventSpace);
+    });
 
+    beforeEach(function () {
       eventSpace = EventSpace.create();
+    });
+
+    afterEach(function () {
+      EventSpace.create().subscriptions.clear();
     });
 
     describe("create()", function () {

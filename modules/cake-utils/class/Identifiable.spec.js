@@ -7,10 +7,13 @@ describe("$utils", function () {
   describe("Identifiable", function () {
     var Identifiable;
 
-    beforeEach(function () {
-      $utils.Identifiable.lastInstanceId = -1;
+    beforeAll(function () {
       Identifiable = $oop.getClass('test.$utils.Identifiable.Identifiable')
       .mix($utils.Identifiable);
+    });
+
+    beforeEach(function () {
+      $utils.Identifiable.lastInstanceId = -1;
     });
 
     describe("create()", function () {

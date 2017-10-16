@@ -9,9 +9,12 @@ describe("$data", function () {
         masterLink,
         chain;
 
-    beforeEach(function () {
+    beforeAll(function () {
       MasterLink = $oop.getClass('test.$data.MasterLink.MasterLink')
       .mix($data.MasterLink);
+    });
+
+    beforeEach(function () {
       chain = $data.Chain.create();
       masterLink = MasterLink.create({chain: chain});
     });

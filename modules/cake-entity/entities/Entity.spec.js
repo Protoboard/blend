@@ -13,7 +13,7 @@ describe("$entity", function () {
         entity,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
       .mix($entity.EntityKey)
       .define({
@@ -26,6 +26,9 @@ describe("$entity", function () {
       });
       Entity = $oop.getClass('test.$entity.Entity.Entity')
       .mix($entity.Entity);
+    });
+
+    beforeEach(function () {
       entityKey = EntityKey.fromEntityPath('foo.bar.baz'.toPath());
       entity = Entity.fromEntityKey(entityKey);
     });
@@ -60,7 +63,7 @@ describe("$entity", function () {
             entity,
             result;
 
-        beforeEach(function () {
+        beforeAll(function () {
           EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
           .mix($entity.EntityKey)
           .mix($utils.StringifyCached)
@@ -72,6 +75,9 @@ describe("$entity", function () {
               return this._entityPath + '';
             }
           });
+        });
+
+        beforeEach(function () {
           entityKey = EntityKey.create({
             _entityPath: 'foo'.toPath()
           });
@@ -323,9 +329,12 @@ describe("$entity", function () {
         entityKey,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
       .mix($entity.EntityKey);
+    });
+
+    beforeEach(function () {
       entityKey = 'foo/bar'.toDocumentKey();
     });
 

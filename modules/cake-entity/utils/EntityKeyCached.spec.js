@@ -9,10 +9,13 @@ describe("$entity", function () {
         entityKeyCached,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       EntityKeyCached = $oop.getClass('test.$entity.EntityKeyCached.EntityKeyCached')
       .mix($entity.EntityKeyHost)
       .mix($entity.EntityKeyCached);
+    });
+
+    beforeEach(function () {
       entityKeyCached = EntityKeyCached.create({
         entityKey: 'foo/bar'.toDocumentKey()
       });

@@ -49,9 +49,12 @@ describe("$entity", function () {
         fieldKey,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       FieldKey = $oop.getClass('test.$entity.FieldKey.FieldKey')
       .mix($entity.FieldKey);
+    });
+
+    beforeEach(function () {
       fieldKey = FieldKey.create({
         documentKey: 'foo/bar'.toDocumentKey(),
         fieldName: 'baz'

@@ -10,9 +10,12 @@ describe("$widget", function () {
         node,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Node = $oop.getClass('test.$widget.Node.Node')
       .mix($widget.Node);
+    });
+
+    beforeEach(function () {
       node = Node.create();
     });
 

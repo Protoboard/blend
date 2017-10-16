@@ -47,10 +47,12 @@ describe("$data", function () {
         path,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Path = $oop.getClass('test.$data.Path.Path')
       .mix($data.Path);
+    });
 
+    beforeEach(function () {
       path = Path.create({components: ['foo', 'bar', 'baz']});
     });
 

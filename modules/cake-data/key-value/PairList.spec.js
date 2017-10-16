@@ -12,13 +12,16 @@ describe("$data", function () {
       result;
 
   describe("PairList", function () {
+    beforeAll(function () {
+      PairList = $oop.getClass("test.$data.PairList.PairList")
+      .mix($data.PairList);
+    });
+
     beforeEach(function () {
       data = [
         {key: "foo", value: "FOO"},
         {key: "bar", value: "BAR"}
       ];
-      PairList = $oop.getClass("test.$data.PairList.PairList")
-      .mix($data.PairList);
       pairList = PairList.create({data: data});
     });
 

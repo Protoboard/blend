@@ -49,9 +49,12 @@ describe("$template", function () {
         liveTemplate,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       LiveTemplate = $oop.getClass('test.$template.LiveTemplate.LiveTemplate')
       .mix($template.LiveTemplate);
+    });
+
+    beforeEach(function () {
       liveTemplate = LiveTemplate.fromString('Hello {{name}}!');
     });
 

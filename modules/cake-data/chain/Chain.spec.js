@@ -50,9 +50,12 @@ describe("$data", function () {
         chain,
         link;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Chain = $oop.getClass('test.$data.Chain.Chain')
       .mix($data.Chain);
+    });
+
+    beforeEach(function () {
       chain = Chain.create();
       link = $data.Link.create();
     });
@@ -296,7 +299,7 @@ describe("$data", function () {
           chain2,
           link3, link4;
 
-      beforeEach(function () {
+      beforeAll(function () {
         Link = $oop.getClass('test.$data.Chain.Link')
         .mix($data.Link)
         .define({
@@ -305,7 +308,9 @@ describe("$data", function () {
             return clone.returned;
           }
         });
+      });
 
+      beforeEach(function () {
         link1 = Link.create({foo: 'A'});
         link2 = Link.create({foo: 'B'});
         link3 = Link.create({foo: 'C'});

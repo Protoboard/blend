@@ -10,11 +10,14 @@ describe("$data", function () {
         objectContainer,
         result;
 
-    beforeEach(function () {
-      data = {};
+    beforeAll(function () {
       ObjectContainer = $oop.getClass('test.$data.ObjectContainer.ObjectContainer')
       .mix($data.DataContainer)
       .mix($data.ObjectContainer);
+    });
+
+    beforeEach(function () {
+      data = {};
       objectContainer = ObjectContainer.create({data: data});
     });
 

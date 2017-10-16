@@ -13,13 +13,16 @@ describe("$data", function () {
         StringSet,
         set, set2;
 
+    beforeAll(function () {
+      StringSet = $oop.getClass("test.$data.StringSet.StringSet")
+      .mix($data.StringSet);
+    });
+
     beforeEach(function () {
       data = {
         foo: 1,
         bar: 1
       };
-      StringSet = $oop.getClass("test.$data.StringSet.StringSet")
-      .mix($data.StringSet);
       set = StringSet.create({data: data});
       set2 = StringSet.create({
         data: {

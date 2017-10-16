@@ -11,12 +11,7 @@ describe("$data", function () {
         itemContainer,
         result;
 
-    beforeEach(function () {
-      data = {
-        foo: "FOO",
-        bar: "BAR"
-      };
-
+    beforeAll(function () {
       ItemContainer = $oop.getClass('test.$data.ItemContainer.ItemContainer')
       .mix($data.DataContainer)
       .mix($data.ItemContainer)
@@ -31,6 +26,13 @@ describe("$data", function () {
           }
         }
       });
+    });
+
+    beforeEach(function () {
+      data = {
+        foo: "FOO",
+        bar: "BAR"
+      };
 
       itemContainer = ItemContainer.create({data: data});
     });

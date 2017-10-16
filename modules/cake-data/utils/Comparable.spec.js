@@ -8,10 +8,12 @@ describe("$data", function () {
     var Comparable,
         comparable;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Comparable = $oop.getClass('test.$data.Comparable.Comparable')
       .mixOnly($data.Comparable);
+    });
 
+    beforeEach(function () {
       comparable = Comparable.create();
     });
 

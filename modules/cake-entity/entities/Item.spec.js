@@ -9,9 +9,12 @@ describe("$entity", function () {
     var Item,
         item;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Item = $oop.getClass('test.$entity.Item.Item')
       .mix($entity.Item);
+    });
+
+    beforeEach(function () {
       item = Item.fromEntityKey('foo/bar/baz/quux'.toItemKey());
     });
 
@@ -61,10 +64,13 @@ describe("$entity", function () {
             item,
             result;
 
-        beforeEach(function () {
+        beforeAll(function () {
           ItemKey = $oop.getClass('test.$entity.Item.ItemKey')
           .mix($entity.ItemKey)
           .mix($utils.StringifyCached);
+        });
+
+        beforeEach(function () {
           itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
           item = $entity.Item.fromEntityKey(itemKey);
 

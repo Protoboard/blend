@@ -8,7 +8,7 @@ describe("$data", function () {
         queryComponent,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       QueryComponent = $oop.getClass('test.$data.QueryComponent.QueryComponent')
       .mix($data.QueryComponent);
     });

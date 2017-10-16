@@ -12,13 +12,16 @@ describe("$data", function () {
   describe("OrderedList", function () {
     var comparer;
 
+    beforeAll(function () {
+      OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
+      .mix($data.OrderedList);
+    });
+
     beforeEach(function () {
       data = ['bar', 'foo'];
       comparer = function (a, b) {
         return a > b ? 1 : a < b ? -1 : 0;
       };
-      OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
-      .mix($data.OrderedList);
       orderedList = OrderedList.create({data: data, comparer: comparer});
     });
 

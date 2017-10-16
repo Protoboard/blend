@@ -10,9 +10,7 @@ describe("$data", function () {
         setContainer,
         result;
 
-    beforeEach(function () {
-      data = ['foo', 'bar'];
-
+    beforeAll(function () {
       SetContainer = $oop.getClass('test.$data.SetContainer.SetContainer')
       .mix($data.DataContainer)
       .mix($data.ArrayContainer)
@@ -25,6 +23,10 @@ describe("$data", function () {
           this.data.forEach(callback, context);
         }
       });
+    });
+
+    beforeEach(function () {
+      data = ['foo', 'bar'];
 
       setContainer = SetContainer.create({data: data});
     });
@@ -51,7 +53,7 @@ describe("$data", function () {
       var SetContainer2,
           setContainer2;
 
-      beforeEach(function () {
+      beforeAll(function () {
         SetContainer2 = $oop.getClass('test.$data.SetContainer.SetContainer2')
         .mix($data.DataContainer)
         .mix($data.ObjectContainer)
@@ -65,6 +67,9 @@ describe("$data", function () {
             Object.keys(this.data).forEach(callback);
           }
         });
+      });
+
+      beforeEach(function () {
         setContainer2 = SetContainer2.fromData({
           "foo": 1,
           "bar": 1
@@ -86,7 +91,7 @@ describe("$data", function () {
       var KeyValueContainer,
           keyValueContainer;
 
-      beforeEach(function () {
+      beforeAll(function () {
         KeyValueContainer = $oop.getClass('test.$data.SetContainer.KeyValueContainer')
         .mix($data.DataContainer)
         .mix($data.ArrayContainer)
@@ -102,6 +107,9 @@ describe("$data", function () {
             });
           }
         });
+      });
+
+      beforeEach(function () {
         keyValueContainer = KeyValueContainer.fromData([
           [1, "foo"],
           [2, "bar"]
@@ -189,10 +197,13 @@ describe("$data", function () {
       var SetConvertible,
           transformed;
 
-      beforeEach(function () {
+      beforeAll(function () {
         SetConvertible = $oop.getClass('test.$data.SetContainer.SetConvertible')
         .mix($data.DataContainer)
         .mix($data.SetConvertible);
+      });
+
+      beforeEach(function () {
         transformed = {};
 
         spyOn(SetConvertible, 'fromSetContainer').and.returnValue(transformed);

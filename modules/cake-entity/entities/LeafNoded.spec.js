@@ -9,10 +9,13 @@ describe("$entity", function () {
         leafNodedField,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       LeafNodedField = $oop.getClass('test.$entity.LeafNoded.LeafNoded')
       .mix($entity.Field)
       .mix($entity.LeafNoded);
+    });
+
+    beforeEach(function () {
       leafNodedField = LeafNodedField.fromComponents('foo', 'bar', 'baz');
     });
 

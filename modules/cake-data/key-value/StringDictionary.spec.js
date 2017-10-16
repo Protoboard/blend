@@ -10,13 +10,16 @@ describe("$data", function () {
       result;
 
   describe("StringDictionary", function () {
+    beforeAll(function () {
+      StringDictionary = $oop.getClass("test.$data.StringDictionary.StringDictionary")
+      .mix($data.StringDictionary);
+    });
+
     beforeEach(function () {
       data = {
         foo: {"FOO": 1},
         bar: {"BAR": 1, "bar": 1}
       };
-      StringDictionary = $oop.getClass("test.$data.StringDictionary.StringDictionary")
-      .mix($data.StringDictionary);
       dictionary = StringDictionary.create({data: data});
       dictionary._itemCount = 3;
     });

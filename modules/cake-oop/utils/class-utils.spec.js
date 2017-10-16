@@ -114,7 +114,7 @@ describe("$oop", function () {
   describe("getClassId()", function () {
     var Class;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Class = $oop.getClass('test.$oop.class-utils.Class');
     });
 

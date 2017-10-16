@@ -9,9 +9,12 @@ describe("$data", function () {
         container,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       DataContainer = $oop.getClass("test.$data.DataContainer.DataContainer")
       .mix($data.DataContainer);
+    });
+
+    beforeEach(function () {
       container = DataContainer.create({data: null});
     });
 
@@ -34,9 +37,12 @@ describe("$data", function () {
     describe("as()", function () {
       var DataContainer2;
 
-      beforeEach(function () {
+      beforeAll(function () {
         DataContainer2 = $oop.getClass("test.$data.DataContainer.DataContainer2")
         .mix($data.DataContainer);
+      });
+
+      beforeEach(function () {
         result = container.as(DataContainer2);
       });
 

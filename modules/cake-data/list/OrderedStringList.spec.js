@@ -10,10 +10,13 @@ describe("$data", function () {
       result;
 
   describe("OrderedStringList", function () {
-    beforeEach(function () {
-      data = ['bar', 'foo'];
+    beforeAll(function () {
       OrderedStringList = $oop.getClass("test.$data.OrderedStringList.OrderedStringList")
       .mix($data.OrderedStringList);
+    });
+
+    beforeEach(function () {
+      data = ['bar', 'foo'];
       orderedStringList = OrderedStringList.create({data: data});
     });
 

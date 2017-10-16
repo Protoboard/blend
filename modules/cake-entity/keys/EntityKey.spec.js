@@ -10,7 +10,7 @@ describe("$entity", function () {
         entityKey,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       EntityKey = $oop.getClass('test.$entity.EntityKey.EntityKey')
       .mix($entity.EntityKey)
       .define({
@@ -18,7 +18,10 @@ describe("$entity", function () {
           return '__field/foo'.toDocumentKey();
         }
       });
-      entityKey = EntityKey.create();
+    });
+
+    beforeEach(function () {
+       entityKey = EntityKey.create();
     });
 
     describe("fromEntityPath()", function () {
@@ -105,9 +108,12 @@ describe("$data", function () {
         path,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Path = $oop.getClass('test.$entity.EntityKey.Path')
       .mix($data.Path);
+    });
+
+    beforeEach(function () {
       path = Path.fromComponents(['document', 'foo', 'bar']);
     });
 

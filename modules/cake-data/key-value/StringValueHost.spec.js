@@ -11,7 +11,7 @@ describe("$data", function () {
         StringValueHost,
         stringValueHost;
 
-    beforeEach(function () {
+    beforeAll(function () {
       StringKeyHost = $oop.getClass('test.$data.StringValueHost.StringKeyHost')
       .mix($data.DataContainer)
       .mix($data.KeyValueContainer)
@@ -41,7 +41,9 @@ describe("$data", function () {
           }
         }
       });
+    });
 
+    beforeEach(function () {
       stringValueHost = StringValueHost.create({
         data: {
           hello: ['foo', 'bar'],

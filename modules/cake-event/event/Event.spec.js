@@ -10,10 +10,12 @@ describe("$event", function () {
         event,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Event = $oop.getClass('test.$event.Event.Event')
       .mix($event.Event);
+    });
 
+    beforeEach(function () {
       event = Event.create({eventName: 'event1'});
     });
 

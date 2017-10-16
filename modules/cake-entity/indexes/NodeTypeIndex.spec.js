@@ -9,11 +9,15 @@ describe("$entity", function () {
         nodeTypeIndex,
         result;
 
+    beforeAll(function () {
+    });
+
     beforeEach(function () {
       $entity.index
       .deleteNode('__fieldName.byFieldType'.toPath())
       .deleteNode('__fieldRef.byFieldType'.toPath());
 
+      // NodeTypeIndex (re-)initializes index when instantiated
       delete $oop.classByClassId['test.$entity.NodeTypeIndex.NodeTypeIndex'];
       NodeTypeIndex = $oop.getClass('test.$entity.NodeTypeIndex.NodeTypeIndex')
       .mix($entity.NodeTypeIndex);

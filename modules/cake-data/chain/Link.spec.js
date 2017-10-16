@@ -9,9 +9,12 @@ describe("$data", function () {
         link,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Link = $oop.getClass('test.$data.Link.Link')
       .mix($data.Link);
+    });
+
+    beforeEach(function () {
       link = Link.create();
     });
 

@@ -51,7 +51,7 @@ describe("$template", function () {
         template,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       Stringifiable = $oop.getClass('test.$template.Template.Stringifiable')
       .implement($utils.Stringifiable)
       .define({

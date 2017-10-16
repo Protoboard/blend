@@ -9,9 +9,12 @@ describe("$event", function () {
         eventListener,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       EventListener = $oop.getClass('test.$event.EventListener.EventListener')
       .mix($event.EventListener);
+    });
+
+    beforeEach(function () {
       eventListener = EventListener.create();
     });
 

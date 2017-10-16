@@ -9,9 +9,12 @@ describe("$event", function () {
         eventSender,
         result;
 
-    beforeEach(function () {
+    beforeAll(function () {
       EventSender = $oop.getClass('test.$event.EventSender.EventSender')
       .mix($event.EventSender);
+    });
+
+    beforeEach(function () {
       eventSender = EventSender.create();
     });
 

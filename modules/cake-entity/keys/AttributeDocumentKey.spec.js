@@ -5,10 +5,9 @@ var $oop = window['cake-oop'],
 
 describe("$entity", function () {
   describe("AttributeDocumentKey", function () {
-    var AttributeDocumentKey,
-        result;
+    var AttributeDocumentKey;
 
-    beforeEach(function () {
+    beforeAll(function () {
       AttributeDocumentKey = $oop.getClass('test.$entity.AttributeDocumentKey.AttributeDocumentKey')
       .mix($entity.AttributeDocumentKey);
     });
@@ -26,7 +25,7 @@ describe("$entity", function () {
     var DocumentKey,
         documentKey;
 
-    beforeEach(function () {
+    beforeAll(function () {
       DocumentKey = $oop.getClass('test.$entity.AttributeDocumentKey.DocumentKey')
       .mix($entity.DocumentKey);
     });
