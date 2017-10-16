@@ -103,19 +103,22 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    * @param {$oop.Class} Class
    * @param {Array.<$oop.Class>} mixins
    * @returns {$oop.MixerIndex}
-   * @todo Should not create new entry
    */
   deleteClassForMixins: function (Class, mixins) {
     var classId = Class.__classId,
         mixinHash = this._getHashForMixins(mixins),
-        classesForMixins = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash),
-        classList = classesForMixins.list,
-        classLookup = classesForMixins.lookup;
+        classesForMixins = $oop.classByMixinIds[mixinHash],
+        classList = classesForMixins && classesForMixins.list,
+        classLookup = classesForMixins && classesForMixins.lookup;
 
     // removing class from index and updating order
-    if (hOP.call(classLookup, classId)) {
+    if (classLookup && hOP.call(classLookup, classId)) {
       classList.splice(classLookup[classId], 1);
-      this._updateClassLookupForMixins(mixinHash);
+      if (classList.length) {
+        this._updateClassLookupForMixins(mixinHash);
+      } else {
+        delete $oop.classByMixinIds[mixinHash];
+      }
     }
 
     return this;

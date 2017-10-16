@@ -142,14 +142,9 @@ describe("$oop", function () {
         expect(result).toBe($oop.MixerIndex);
       });
 
-      it("should set Class in index", function () {
+      it("should delete Class from index", function () {
         $oop.MixerIndex.deleteClass(Class);
-        expect($oop.classByMixinIds).toEqual({
-          'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
-            list: [],
-            lookup: {}
-          }
-        });
+        expect($oop.classByMixinIds).toEqual({});
       });
     });
 

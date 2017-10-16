@@ -53,10 +53,6 @@ describe("$oop", function () {
       it("should set class in lookup", function () {
         result = $oop.mixClass(Mixin1, Mixin2);
         expect($oop.classByMixinIds).toEqual({
-          "test.$oop.ClassMixer.Mixin1": {
-            list: [],
-            lookup: {}
-          },
           "test.$oop.ClassMixer.Mixin1,test.$oop.ClassMixer.Mixin2": {
             list: [result],
             lookup: {
