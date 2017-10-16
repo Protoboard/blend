@@ -393,63 +393,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Updates class distances based on the inclusion of the specified class.
-   * Inclusion distance determines forwards priority.
-   * @private
-   * @deprecated Remove alongside with #forwardTo()
-   */
-  _updateClassDistances: function (Mixin) {
-    var classId = this.__classId,
-        mixinId = Mixin.__classId,
-        mixinLookup = this.__mixins.downstream.lookup;
-
-    // updating distance of parent paths hosts of 2nd degree mixins
-    var mixinHosts2deg = Mixin.__mixins.upstream,
-        mixinHosts2degLookup = mixinHosts2deg.lookup;
-    mixinHosts2deg.lookup[classId] = mixinLookup[mixinId] =
-        mixinHosts2deg.list
-        .filter(function (MixinHost) {
-          return hOP.call(mixinLookup, MixinHost.__classId);
-        })
-        .reduce(function (distance, MixinHost) {
-          return Math.max(distance,
-              mixinLookup[MixinHost.__classId] +
-              MixinHost.__mixins.downstream.lookup[mixinId]);
-        }, mixinLookup[mixinId]);
-
-    // updating distances of child paths with lead 2nd degree mixins & lookup
-    var mixins2deg = Mixin.__mixins.downstream,
-        mixins2degLookup = mixins2deg.lookup;
-    mixins2deg.list
-    .filter(function (Mixin2deg) {
-      return hOP.call(mixinLookup, Mixin2deg.__classId);
-    })
-    .forEach(function (Mixin2deg) {
-      var mixin2degId = Mixin2deg.__classId,
-          mixinHost3degLookup = Mixin2deg.__mixins.upstream.lookup;
-      mixinHost3degLookup[classId] = mixinLookup[mixin2degId] =
-          Math.max(mixinLookup[mixin2degId],
-              mixinLookup[mixinId] +
-              mixins2degLookup[mixin2degId]);
-    });
-
-    // updating distances of child paths with trail
-    var hosts = this.__mixins.upstream;
-    hosts.list
-    .filter(function (Host) {
-      return hOP.call(Host.__mixins.downstream.lookup, mixinId);
-    })
-    .forEach(function (Host) {
-      var hostId = Host.__classId,
-          hostMixinLookup = Host.__mixins.downstream.lookup;
-      mixinHosts2degLookup[hostId] = hostMixinLookup[mixinId] =
-          Math.max(hostMixinLookup[mixinId],
-              mixinLookup[mixinId] +
-              hostMixinLookup[classId]);
-    });
-  },
-
-  /**
    * @param {$oop.Class} Class
    * @private
    */
@@ -674,29 +617,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Rebuilds forwards array based on class distances and forwards contents.
-   * @private
-   * @deprecated Remove when #forwardMix is ready
-   */
-  _updateForwards: function () {
-    var forwards = this.__forwards,
-        hostDistances = this.__mixins.upstream.lookup;
-
-    // sorting forwards by priority (descending)
-    // here we're relying on Array#sort() mutating the array as the same array
-    // is referenced from the final class
-    forwards.sort(function (/**$oop.ForwardDescriptor*/a,
-        /**$oop.ForwardDescriptor*/b
-    ) {
-      var aId = a.class.__classId,
-          bId = b.class.__classId,
-          ap = hostDistances[aId] || 0,
-          bp = hostDistances[bId] || 0;
-      return ap > bp ? -1 : bp > ap ? 1 : 0;
-    });
-  },
-
-  /**
    * Updates forwards lookup based on current contents of __forwards2.list.
    * @private
    */
@@ -840,22 +760,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     properties = properties || {};
 
     // retrieving forward class (if any)
-    // todo Remove when #forwardMix is done
     var that = this,
-        forwards = this.__forwards,
-        forwardsCount = forwards.length,
-        i, forward;
-    for (i = 0; i < forwardsCount; i++) {
-      forward = forwards[i];
-      if (forward.filter(properties)) {
-        // properties fit forward filter
-        // forwarding
-        that = forward['class'];
-        break;
-      }
-    }
+        forwardClass;
 
-    var forwardClass;
     while (forwardClass = that._getForwardClass(properties)) {
       that = forwardClass;
     }
@@ -905,7 +812,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     var propertyNames,
         propertyCount,
-        propertyName;
+        propertyName,
+        i;
 
     if (properties instanceof Object) {
       // copying properties to instance
@@ -1032,12 +940,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // adding self to MixerIndex
     this._addToMixerIndex();
 
-    // determining how mixin affects distances
-    this._updateClassDistances(Class);
-
-    // rebuilding forwards information
-    this._updateForwards();
-
     // adding mixed class to contributions
     this._addToContributors(Class, Through);
 
@@ -1136,31 +1038,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     // transferring mixins (present & expected) from expected mixin
     this._transferExpectedFrom(Class);
-
-    return this;
-  },
-
-  /**
-   * Forwards the class to the specified class, if constructor arguments
-   * satisfy the supplied filter.
-   * @param {$oop.Class} Class
-   * @param {function} filter
-   * @returns {$oop.Class}
-   * @deprecated Use #forwardMix instead.
-   */
-  forwardTo: function (Class, filter) {
-    $assert.isClass(Class, "Class#forwardTo expects type Class.");
-
-    var forwards = this.__forwards;
-
-    // adding forward descriptor
-    forwards.push({
-      'class': Class,
-      'filter': filter
-    });
-
-    // re-building forwards order
-    this._updateForwards();
 
     return this;
   },

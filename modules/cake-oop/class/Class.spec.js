@@ -697,116 +697,6 @@ describe("$oop", function () {
         });
       });
 
-      describe("mixing multiple classes", function () {
-        var A, B, C, D;
-
-        beforeEach(function () {
-          A = $oop.getClass('A');
-          B = $oop.getClass('B');
-          C = $oop.getClass('C');
-          D = $oop.getClass('D');
-          D.forwardTo(A, function () {});
-          D.forwardTo(B, function () {});
-          D.forwardTo(C, function () {});
-        });
-
-        describe("short paths first", function () {
-          beforeEach(function () {
-            A.mixOnly(B);
-            B.mixOnly(C);
-            C.mixOnly(D);
-            B.mixOnly(D);
-            A.mixOnly(C);
-            A.mixOnly(D);
-          });
-
-          it("should set mixin distances", function () {
-            expect(A.__mixins.downstream.lookup)
-            .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__mixins.upstream.lookup)
-            .toEqual({C: 1, B: 2, A: 3});
-          });
-
-          it("should update forwards", function () {
-            expect(D.__forwards.map(function (forwardDescriptor) {
-              return forwardDescriptor.class;
-            })).toEqual([A, B, C]);
-          });
-        });
-
-        describe("long leading paths first", function () {
-          beforeEach(function () {
-            A.mixOnly(D);
-            B.mixOnly(D);
-            C.mixOnly(D);
-            A.mixOnly(C);
-            B.mixOnly(C);
-            A.mixOnly(B);
-          });
-
-          it("should set mixin distances", function () {
-            expect(A.__mixins.downstream.lookup)
-            .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__mixins.upstream.lookup)
-            .toEqual({C: 1, B: 2, A: 3});
-          });
-
-          it("should update forwards", function () {
-            expect(D.__forwards.map(function (forwardDescriptor) {
-              return forwardDescriptor.class;
-            })).toEqual([A, B, C]);
-          });
-        });
-
-        describe("long trailing paths first", function () {
-          beforeEach(function () {
-            A.mixOnly(D);
-            A.mixOnly(C);
-            A.mixOnly(B);
-            B.mixOnly(D);
-            B.mixOnly(C);
-            C.mixOnly(D);
-          });
-
-          it("should set mixin distances", function () {
-            expect(A.__mixins.downstream.lookup)
-            .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__mixins.upstream.lookup)
-            .toEqual({C: 1, B: 2, A: 3});
-          });
-
-          it("should update forwards", function () {
-            expect(D.__forwards.map(function (forwardDescriptor) {
-              return forwardDescriptor.class;
-            })).toEqual([A, B, C]);
-          });
-        });
-
-        describe("randomly", function () {
-          beforeEach(function () {
-            A.mixOnly(B);
-            A.mixOnly(D);
-            B.mixOnly(D);
-            A.mixOnly(C);
-            B.mixOnly(C);
-            C.mixOnly(D);
-          });
-
-          it("should set mixin distances", function () {
-            expect(A.__mixins.downstream.lookup)
-            .toEqual({B: 1, C: 2, D: 3});
-            expect(D.__mixins.upstream.lookup)
-            .toEqual({C: 1, B: 2, A: 3});
-          });
-
-          it("should update forwards", function () {
-            expect(D.__forwards.map(function (forwardDescriptor) {
-              return forwardDescriptor.class;
-            })).toEqual([A, B, C]);
-          });
-        });
-      });
-
       describe("then setting mapper on mixin", function () {
         var mapper;
 
@@ -1012,63 +902,6 @@ describe("$oop", function () {
               Expected3: Expected3
             }
           });
-        });
-      });
-    });
-
-    describe("forwardTo()", function () {
-      var filter, Class1;
-
-      beforeEach(function () {
-        filter = function () {
-        };
-        Class.forwardTo(Class1 = $oop.getClass('Class1'), filter);
-      });
-
-      describe("when passing invalid argument", function () {
-        it("should throw", function () {
-          expect(function () {
-            Class.forwardTo(null, filter, 1);
-          }).toThrow();
-        });
-      });
-
-      it("should add forward descriptor", function () {
-        expect(Class.__forwards).toEqual([{
-          'class': Class1,
-          'filter': filter
-        }]);
-      });
-
-      describe("when adding more specific class to forwards", function () {
-        var Class2, Class3,
-            filter2, filter3;
-
-        beforeEach(function () {
-          Class2 = $oop.getClass('Class2')
-          .mixOnly(Class);
-          filter2 = function () {
-          };
-          Class3 = $oop.getClass('Class3')
-          .mixOnly(Class2)
-          .mixOnly(Class);
-          filter3 = function () {
-          };
-          Class.forwardTo(Class3, filter3);
-          Class.forwardTo(Class2, filter2);
-        });
-
-        it("should sort descriptors by class distance", function () {
-          expect(Class.__forwards).toEqual([{
-            'class': Class3,
-            'filter': filter3
-          }, {
-            'class': Class2,
-            'filter': filter2
-          }, {
-            'class': Class1,
-            'filter': filter
-          }]);
         });
       });
     });
@@ -1578,7 +1411,7 @@ describe("$oop", function () {
           .mixOnly(Class);
 
           $oop.getClass('Class')
-          .forwardTo(Forward, function (args) {
+          .forwardMix(Forward, function (args) {
             return args.foo === 1;
           });
         });
@@ -1610,7 +1443,7 @@ describe("$oop", function () {
             .mixOnly(Class);
 
             $oop.getClass('Class')
-            .forwardTo(Forward2, function (args) {
+            .forwardMix(Forward2, function (args) {
               return args.foo === 2;
             });
           });
