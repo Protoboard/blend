@@ -59,24 +59,16 @@ $entity.Field = $oop.getClass('$entity.Field')
 });
 
 $entity.Field
-// caching Field if key is cached
-// todo Remove as soon as forwards propagate
-.forwardTo(
-    $oop.mixClass($entity.Field, $oop.getClass('$entity.EntityKeyCached')),
-    function (properties) {
-      var entityKey = properties.entityKey;
-      return $utils.StringifyCached.mixedBy(entityKey);
-    })
 // leaf node fields
-.forwardTo(
-    $oop.mixClass($entity.Field, $oop.getClass('$entity.LeafNoded')),
-    function (properties) {
-      var fieldKey = properties && properties.entityKey;
-      return fieldKey && fieldKey.getNodeType() === 'leaf';
-    });
+.forwardMix($oop.getClass('$entity.LeafNoded'), function (properties) {
+  var fieldKey = properties && properties.entityKey;
+  // todo Need better way of specifying mutually exclusive
+  return !this.mixes($entity.BranchNoded) &&
+      fieldKey && fieldKey.getNodeType() === 'leaf';
+});
 
 $oop.getClass('$entity.Entity')
-.forwardTo($entity.Field, function (properties) {
+.forwardMix($entity.Field, function (properties) {
   return $entity.FieldKey.mixedBy(properties.entityKey);
 });
 

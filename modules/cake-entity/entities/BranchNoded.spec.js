@@ -7,21 +7,24 @@ var $oop = window['cake-oop'],
 
 describe("$entity", function () {
   describe("BranchNoded", function () {
-    var BranchNodeEntity,
-        branchNodeEntity,
+    var BranchNoded,
+        branchNoded,
         result;
 
-    beforeEach(function () {
-      BranchNodeEntity = $oop.getClass('test.$entity.BranchNoded.BranchNodeEntity')
+    beforeAll(function () {
+      BranchNoded = $oop.getClass('test.$entity.BranchNoded.BranchNoded')
       .mix($entity.Entity)
       .mix($entity.BranchNoded);
-      branchNodeEntity = BranchNodeEntity.fromEntityKey('foo/bar'.toDocumentKey());
+    });
+
+    beforeEach(function () {
+      branchNoded = BranchNoded.fromEntityKey('foo/bar'.toDocumentKey());
     });
 
     describe("create()", function () {
       it("should initialize triggerPaths", function () {
         var nodeTypePath = 'entity.document.__field.__document/nodeType.options.branch'.toPath();
-        expect(branchNodeEntity.triggerPaths).toContain(nodeTypePath);
+        expect(branchNoded.triggerPaths).toContain(nodeTypePath);
       });
     });
 
@@ -40,11 +43,11 @@ describe("$entity", function () {
         spyOn($entity.EntityChangeEvent, 'trigger');
         $entity.entities.setNode(documentPath, nodeBefore);
 
-        result = branchNodeEntity.setNodeAsLeaf(nodeAfter);
+        result = branchNoded.setNodeAsLeaf(nodeAfter);
       });
 
       it("should return self", function () {
-        expect(result).toBe(branchNodeEntity);
+        expect(result).toBe(branchNoded);
       });
 
       it("should set node in container", function () {
@@ -54,7 +57,7 @@ describe("$entity", function () {
       it("should trigger change event", function () {
         var calls = $entity.EntityChangeEvent.trigger.calls.all();
 
-        expect(calls[0].object).toEqual(branchNodeEntity.spawnEvent({
+        expect(calls[0].object).toEqual(branchNoded.spawnEvent({
           eventName: $entity.EVENT_ENTITY_CHANGE,
           nodeBefore: nodeBefore,
           nodeAfter: nodeAfter
@@ -101,12 +104,12 @@ describe("$entity", function () {
           "updated_time": "2010-08-02T22:00:00+0000"
         };
 
-        spyOn(branchNodeEntity, 'spawnEntityChangeEvents').and
+        spyOn(branchNoded, 'spawnEntityChangeEvents').and
         .returnValue(eventsToBeTriggered);
         spyOn($entity.EntityChangeEvent, 'trigger');
         $entity.entities.setNode(documentPath, nodeBefore);
 
-        result = branchNodeEntity.appendNode(nodeToAppend);
+        result = branchNoded.appendNode(nodeToAppend);
       });
 
       afterEach(function () {
@@ -114,7 +117,7 @@ describe("$entity", function () {
       });
 
       it("should return self", function () {
-        expect(result).toBe(branchNodeEntity);
+        expect(result).toBe(branchNoded);
       });
 
       it("should append node to existing node in container", function () {

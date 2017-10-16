@@ -115,17 +115,8 @@ $entity.Document = $oop.getClass('$entity.Document')
   }
 });
 
-// caching Document if key is cached
-// todo Remove as soon as forwards propagate
-$entity.Document.forwardTo(
-    $oop.mixClass($entity.Document, $oop.getClass('$entity.EntityKeyCached')),
-    function (properties) {
-      var entityKey = properties.entityKey;
-      return $utils.StringifyCached.mixedBy(entityKey);
-    });
-
 $oop.getClass('$entity.Entity')
-.forwardTo($entity.Document, function (properties) {
+.forwardMix($entity.Document, function (properties) {
   return $entity.DocumentKey.mixedBy(properties.entityKey);
 });
 

@@ -153,14 +153,13 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   }
 });
 
-$entity.ItemKey.forwardTo(
-    $oop.mixClass($entity.ItemKey, $oop.getClass('$utils.StringifyCached')),
-    function (properties) {
-      return $utils.StringifyCached.mixedBy(properties.fieldKey);
-    });
+$entity.ItemKey
+.forwardMix($oop.getClass('$utils.StringifyCached'), function (properties) {
+  return $utils.StringifyCached.mixedBy(properties.fieldKey);
+});
 
 $oop.getClass('$entity.EntityKey')
-.forwardTo($entity.ItemKey, function (properties) {
+.forwardMix($entity.ItemKey, function (properties) {
   var entityPath = properties._entityPath,
       components = entityPath && entityPath.components;
   return components &&

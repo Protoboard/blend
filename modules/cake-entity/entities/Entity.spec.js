@@ -7,15 +7,26 @@ var $oop = window['cake-oop'],
 
 describe("$entity", function () {
   describe("Entity", function () {
-    var Entity,
+    var EntityKey,
+        Entity,
         entityKey,
         entity,
         result;
 
     beforeEach(function () {
+      EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
+      .mix($entity.EntityKey)
+      .define({
+        getAttributeDocumentKey: function () {
+          return '__foo/bar'.toDocumentKey();
+        },
+        getChildKey: function (childId) {
+          return EntityKey.fromEntityPath(['foo', childId].toPath());
+        }
+      });
       Entity = $oop.getClass('test.$entity.Entity.Entity')
       .mix($entity.Entity);
-      entityKey = 'foo/bar'.toDocumentKey();
+      entityKey = EntityKey.fromEntityPath('foo.bar.baz'.toPath());
       entity = Entity.fromEntityKey(entityKey);
     });
 
@@ -32,14 +43,14 @@ describe("$entity", function () {
     describe("create()", function () {
       it("should set listeningPath", function () {
         expect(entity.listeningPath)
-        .toEqual('entity.document.foo.bar'.toPath());
+        .toEqual('entity.foo.bar.baz'.toPath());
       });
 
       it("should initialize triggerPaths", function () {
         expect(entity.triggerPaths).toEqual([
-          'entity.document.foo.bar'.toPath(),
+          'entity.foo.bar.baz'.toPath(),
           'entity'.toPath(),
-          'entity.document.__document.foo'.toPath()
+          'entity.document.__foo.bar'.toPath()
         ]);
       });
 
@@ -80,12 +91,12 @@ describe("$entity", function () {
 
       beforeEach(function () {
         node = {};
-        $entity.entities.setNode('document.foo.bar'.toPath(), node);
+        $entity.entities.setNode('foo.bar.baz'.toPath(), node);
         result = entity.getNode();
       });
 
       afterEach(function () {
-        $entity.entities.deletePath('document.foo.bar'.toPath());
+        $entity.entities.deletePath('foo.bar.baz'.toPath());
       });
 
       it("should return entity node", function () {
@@ -95,7 +106,7 @@ describe("$entity", function () {
       describe("when entity node is absent", function () {
         beforeEach(function () {
           spyOn(entity, 'trigger');
-          $entity.entities.deleteNode('document.foo.bar'.toPath());
+          $entity.entities.deleteNode('foo.bar.baz'.toPath());
           result = entity.getNode();
         });
 
@@ -132,12 +143,12 @@ describe("$entity", function () {
 
       beforeEach(function () {
         node = {};
-        $entity.entities.setNode('document.foo.bar'.toPath(), node);
+        $entity.entities.setNode('foo.bar.baz'.toPath(), node);
         result = entity.getSilentNode();
       });
 
       afterEach(function () {
-        $entity.entities.deletePath('document.foo.bar'.toPath());
+        $entity.entities.deletePath('foo.bar.baz'.toPath());
       });
 
       it("should return entity node", function () {
@@ -168,12 +179,12 @@ describe("$entity", function () {
 
       beforeEach(function () {
         node = {};
-        $entity.entities.setNode('document.foo.bar'.toPath(), node);
+        $entity.entities.setNode('foo.bar.baz'.toPath(), node);
         result = entity.touchNode();
       });
 
       afterEach(function () {
-        $entity.entities.deletePath('document.foo.bar'.toPath());
+        $entity.entities.deletePath('foo.bar.baz'.toPath());
       });
 
       it("should return self", function () {
@@ -183,7 +194,7 @@ describe("$entity", function () {
       describe("when entity node is absent", function () {
         beforeEach(function () {
           spyOn(entity, 'trigger');
-          $entity.entities.deleteNode('document.foo.bar'.toPath());
+          $entity.entities.deleteNode('foo.bar.baz'.toPath());
           result = entity.getNode();
         });
 
@@ -194,15 +205,13 @@ describe("$entity", function () {
     });
 
     describe("setNode()", function () {
-      var documentKey,
-          documentPath,
+      var entityPath,
           eventsToBeTriggered,
           nodeBefore,
           nodeAfter;
 
       beforeEach(function () {
-        documentKey = 'foo/bar'.toDocumentKey();
-        documentPath = documentKey.getEntityPath();
+        entityPath = entityKey.getEntityPath();
         eventsToBeTriggered = [
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
@@ -214,7 +223,7 @@ describe("$entity", function () {
         spyOn(entity, 'spawnEntityChangeEvents').and
         .returnValue(eventsToBeTriggered);
         spyOn($entity.EntityChangeEvent, 'trigger');
-        $entity.entities.setNode(documentPath, nodeBefore);
+        $entity.entities.setNode(entityPath, nodeBefore);
 
         result = entity.setNode(nodeAfter);
       });
@@ -224,7 +233,7 @@ describe("$entity", function () {
       });
 
       it("should set node in container", function () {
-        expect($entity.entities.getNode(documentPath)).toBe(nodeAfter);
+        expect($entity.entities.getNode(entityPath)).toBe(nodeAfter);
       });
 
       it("should spawn events", function () {
@@ -243,15 +252,13 @@ describe("$entity", function () {
     });
 
     describe("deleteNode()", function () {
-      var documentKey,
-          documentPath,
+      var entityPath,
           eventsToBeTriggered,
           nodeBefore,
           nodeAfter;
 
       beforeEach(function () {
-        documentKey = 'foo/bar'.toDocumentKey();
-        documentPath = documentKey.getEntityPath();
+        entityPath = entityKey.getEntityPath();
         eventsToBeTriggered = [
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
@@ -263,7 +270,7 @@ describe("$entity", function () {
         spyOn(entity, 'spawnEntityChangeEvents').and
         .returnValue(eventsToBeTriggered);
         spyOn($entity.EntityChangeEvent, 'trigger');
-        $entity.entities.setNode(documentPath, nodeBefore);
+        $entity.entities.setNode(entityPath, nodeBefore);
 
         result = entity.deleteNode();
       });
@@ -273,7 +280,7 @@ describe("$entity", function () {
       });
 
       it("should delete node from container", function () {
-        expect($entity.entities.getNode(documentPath)).toBeUndefined();
+        expect($entity.entities.getNode(entityPath)).toBeUndefined();
       });
 
       it("should spawn events", function () {
@@ -292,11 +299,11 @@ describe("$entity", function () {
     });
 
     describe("getChildEntity()", function () {
-      var fieldKey;
+      var childKey;
 
       beforeEach(function () {
-        fieldKey = 'foo/bar/baz'.toFieldKey();
-        spyOn(entity.entityKey, 'getChildKey').and.returnValue(fieldKey);
+        childKey = 'foo/bar/baz'.toFieldKey();
+        spyOn(entity.entityKey, 'getChildKey').and.returnValue(childKey);
         result = entity.getChildEntity('baz');
       });
 
@@ -306,7 +313,7 @@ describe("$entity", function () {
 
       it("should return an entity with child key", function () {
         expect($entity.Entity.mixedBy(result)).toBeTruthy();
-        expect(result.entityKey).toBe(fieldKey);
+        expect(result.entityKey).toBe(childKey);
       });
     });
   });

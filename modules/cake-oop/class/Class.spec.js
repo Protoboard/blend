@@ -1453,9 +1453,6 @@ describe("$oop", function () {
       describe("on invalid argument", function () {
         it("should throw", function () {
           expect(function () {
-            Class.create(null);
-          }).toThrow();
-          expect(function () {
             Class.create(1);
           }).toThrow();
           expect(function () {

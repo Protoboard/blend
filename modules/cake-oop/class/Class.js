@@ -802,11 +802,43 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+   * @param {Object} properties
+   * @returns {$oop.Class}
+   * @private
+   * @todo Measure performance impact
+   */
+  _getForwardClass: function (properties) {
+    var that = this,
+        forwards,
+        mixins;
+
+    if (this.__forwards2.list) {
+      forwards = this.__forwards2.list
+      .filter(function (forward) {
+        return forward.filter.call(that, properties);
+      });
+
+      if (forwards.length) {
+        // obtaining compact mixin array (each affected mixin occurring once)
+        mixins = forwards
+        .map(function (forward) {
+          return forward.mixin;
+        });
+        mixins.unshift(this);
+
+        return $oop.mixClass.apply($oop.mixClass, mixins);
+      }
+    }
+  },
+
+  /**
    * Creates a new instance.
    * @param {Object} [properties]
    * @returns {$oop.Class}
    */
   create: function (properties) {
+    properties = properties || {};
+
     // retrieving forward class (if any)
     // todo Remove when #forwardMix is done
     var that = this,
@@ -821,6 +853,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         that = forward['class'];
         break;
       }
+    }
+
+    var forwardClass;
+    while (forwardClass = that._getForwardClass(properties)) {
+      that = forwardClass;
     }
 
     // fetching cached instance
@@ -878,7 +915,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         propertyName = propertyNames[i];
         instance[propertyName] = properties[propertyName];
       }
-    } else if (properties !== undefined) {
+    } else {
       // invalid properties supplied
       $assert.fail([
         "Invalid properties supplied to class '" + this.__classId + "'.",
@@ -1184,6 +1221,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
+
    * Tells whether the specified class implements the current Interface.
    * @param {$oop.Class} Class
    * @returns {boolean}

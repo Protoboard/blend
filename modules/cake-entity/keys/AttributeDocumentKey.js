@@ -37,6 +37,6 @@ $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
 });
 
 $oop.getClass('$entity.DocumentKey')
-.forwardTo($entity.AttributeDocumentKey, function (properties) {
+.forwardMix($utils.StringifyCached, function (properties) {
   return $utils.matchesPrefix(properties.documentType, '__');
 });

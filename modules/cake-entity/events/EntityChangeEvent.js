@@ -76,6 +76,6 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
 });
 
 $oop.getClass('$event.Event')
-.forwardTo($entity.EntityChangeEvent, function (properties) {
+.forwardMix($entity.EntityChangeEvent, function (properties) {
   return $utils.matchesPrefix(properties.eventName, 'entity.change');
 });

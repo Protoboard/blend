@@ -83,9 +83,6 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
 });
 
 $oop.getClass('$entity.Field')
-.forwardTo(
-    $entity.CollectionField,
-    function (properties) {
-      var fieldKey = properties && properties.entityKey;
-      return $entity.CollectionFieldKey.mixedBy(fieldKey);
-    });
+.forwardMix($entity.CollectionField, function (properties) {
+  return $entity.CollectionFieldKey.mixedBy(properties.entityKey);
+});

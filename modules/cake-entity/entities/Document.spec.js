@@ -75,6 +75,9 @@ describe("$entity", function () {
         document = 'user/1'.toDocument();
         result = 0;
 
+        // bringing ad-hoc LeafNoded class into existence
+        // spy wouldn't work otherwise
+        document.getField('name');
         spyOn($entity.Field, 'spawnEvent')
         .and.callFake(function () {
           return result++;
@@ -124,8 +127,6 @@ describe("$entity", function () {
           },
           age: 64
         };
-
-        result = document.spawnEntityChangeEvents(nodeBefore, nodeAfter);
       });
 
       afterEach(function () {
@@ -136,6 +137,7 @@ describe("$entity", function () {
       });
 
       it("should spawn events for leaf node fields", function () {
+        document.spawnEntityChangeEvents(nodeBefore, nodeAfter);
         var calls = $entity.Field.spawnEvent.calls.all();
 
         expect(calls[0].object).toEqual('user/1/name'.toField());
@@ -156,6 +158,7 @@ describe("$entity", function () {
       });
 
       it("should invoke spawners on branch node fields", function () {
+        document.spawnEntityChangeEvents(nodeBefore, nodeAfter);
         var calls = $entity.Field.spawnEntityChangeEvents.calls.all();
 
         expect(calls[0].object).toEqual('user/1/emails'.toField());
@@ -170,6 +173,7 @@ describe("$entity", function () {
       });
 
       it("should return array of event instances", function () {
+        result = document.spawnEntityChangeEvents(nodeBefore, nodeAfter);
         expect(result).toEqual([0, 1, 2, 3]);
       });
 

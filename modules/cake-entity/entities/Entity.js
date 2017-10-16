@@ -39,11 +39,10 @@ $entity.Entity = $oop.getClass('$entity.Entity')
 
     this.listeningPath = listeningPath;
 
-    this.triggerPaths = [
-      listeningPath,
-      $data.Path.fromString('entity'),
-      attributeDocumentKey.getEntityPath().clone().unshift('entity')
-    ];
+    var triggerPaths = this.triggerPaths = this.triggerPaths || [];
+    triggerPaths.push(listeningPath);
+    triggerPaths.push($data.Path.fromString('entity'));
+    triggerPaths.push(attributeDocumentKey.getEntityPath().clone().unshift('entity'));
   },
 
   /**
@@ -166,13 +165,10 @@ $entity.Entity = $oop.getClass('$entity.Entity')
 });
 
 // caching Entity if key is cached
-// todo Replace w/ forwardMix when available
-$entity.Entity.forwardTo(
-    $oop.mixClass($entity.Entity, $oop.getClass('$entity.EntityKeyCached')),
-    function (properties) {
-      var entityKey = properties.entityKey;
-      return $utils.StringifyCached.mixedBy(entityKey);
-    });
+$entity.Entity
+.forwardMix($oop.getClass('$entity.EntityKeyCached'), function (properties) {
+  return $utils.StringifyCached.mixedBy(properties.entityKey);
+});
 
 $oop.getClass('$entity.EntityKey')
 .delegate(/** @lends $entity.EntityKey# */{

@@ -48,15 +48,22 @@ $entity.CollectionFieldKey = $oop.getClass('$entity.CollectionFieldKey')
 });
 
 $oop.getClass('$entity.FieldKey')
-.forwardTo($entity.CollectionFieldKey, function (properties) {
-  var attributeDocumentKey = $entity.FieldKey.getAttributeDocumentKey.call(properties),
-      valueTypePath = $data.Path.fromComponents([
+// 'collection' field valueType
+.forwardMix($entity.CollectionFieldKey, function (properties) {
+  var documentKey = properties.documentKey,
+      fieldName = properties.fieldName,
+      attributeDocumentKey = documentKey && fieldName &&
+          $entity.AttributeDocumentKey.fromDocumentIdComponents('__field', [
+            documentKey.documentType,
+            fieldName
+          ]),
+      valueTypePath = attributeDocumentKey && $data.Path.fromComponents([
         'document',
         '__field',
         attributeDocumentKey.documentId,
         'valueType'
       ]),
-      valueType = $entity.entities.getNode(valueTypePath);
+      valueType = valueTypePath && $entity.entities.getNode(valueTypePath);
 
   return valueType === 'collection';
 });
