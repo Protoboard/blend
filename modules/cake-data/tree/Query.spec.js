@@ -49,7 +49,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Query = $oop.getClass('test.$data.Query.Query')
-      .mix($data.Query);
+      .blend($data.Query);
     });
 
     beforeEach(function () {

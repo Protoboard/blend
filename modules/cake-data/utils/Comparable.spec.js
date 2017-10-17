@@ -10,7 +10,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Comparable = $oop.getClass('test.$data.Comparable.Comparable')
-      .mixOnly($data.Comparable);
+      .mix($data.Comparable);
     });
 
     beforeEach(function () {

@@ -15,9 +15,9 @@
  * @extends $entity.EntityKeyHost
  */
 $entity.Entity = $oop.getClass('$entity.Entity')
-.mix($event.EventSender)
-.mix($event.EventListener)
-.mix($oop.getClass('$entity.EntityKeyHost'))
+.blend($event.EventSender)
+.blend($event.EventListener)
+.blend($oop.getClass('$entity.EntityKeyHost'))
 .define(/** @lends $entity.Entity# */{
   /**
    * @memberOf $entity.Entity

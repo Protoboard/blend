@@ -12,7 +12,7 @@
  * @extends $entity.FieldKey
  */
 $entity.CollectionFieldKey = $oop.getClass('$entity.CollectionFieldKey')
-.mix($oop.getClass('$entity.FieldKey'))
+.blend($oop.getClass('$entity.FieldKey'))
 .define(/** @lends $entity.CollectionFieldKey# */{
   /**
    * Retrieves type associated with collection's item IDs (keys).

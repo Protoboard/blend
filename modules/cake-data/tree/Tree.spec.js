@@ -49,7 +49,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Tree = $oop.getClass('test.$data.Tree.Tree')
-      .mix($data.Tree);
+      .blend($data.Tree);
     });
 
     beforeEach(function () {

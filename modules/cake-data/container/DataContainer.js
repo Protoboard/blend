@@ -17,7 +17,7 @@
  * @implements $data.Reinterpretable
  */
 $data.DataContainer = $oop.getClass('$data.DataContainer')
-.mix($utils.Cloneable)
+.blend($utils.Cloneable)
 .implement($utils.Destructible)
 .implement($oop.getClass('$data.Clearable'))
 .implement($oop.getClass('$data.Reinterpretable'))

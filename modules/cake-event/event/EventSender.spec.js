@@ -11,7 +11,7 @@ describe("$event", function () {
 
     beforeAll(function () {
       EventSender = $oop.getClass('test.$event.EventSender.EventSender')
-      .mix($event.EventSender);
+      .blend($event.EventSender);
     });
 
     beforeEach(function () {

@@ -12,7 +12,7 @@ describe("$data", function () {
   describe("OrderedStringList", function () {
     beforeAll(function () {
       OrderedStringList = $oop.getClass("test.$data.OrderedStringList.OrderedStringList")
-      .mix($data.OrderedStringList);
+      .blend($data.OrderedStringList);
     });
 
     beforeEach(function () {

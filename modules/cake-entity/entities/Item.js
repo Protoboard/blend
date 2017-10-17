@@ -14,8 +14,8 @@
  * @mixes $entity.LeafNoded
  */
 $entity.Item = $oop.getClass('$entity.Item')
-.mix($oop.getClass('$entity.Entity'))
-.mix($oop.getClass('$entity.LeafNoded'))
+.blend($oop.getClass('$entity.Entity'))
+.blend($oop.getClass('$entity.LeafNoded'))
 .define(/** @lends $entity.Item# */{
   /**
    * @inheritDoc

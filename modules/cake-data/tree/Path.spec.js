@@ -49,7 +49,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Path = $oop.getClass('test.$data.Path.Path')
-      .mix($data.Path);
+      .blend($data.Path);
     });
 
     beforeEach(function () {

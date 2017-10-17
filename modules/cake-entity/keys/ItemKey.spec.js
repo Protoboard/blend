@@ -51,7 +51,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       ItemKey = $oop.getClass('test.$entity.ItemKey.ItemKey')
-      .mix($entity.ItemKey);
+      .blend($entity.ItemKey);
     });
 
     beforeEach(function () {

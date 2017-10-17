@@ -14,9 +14,9 @@
  * @extends $data.SetContainer
  */
 $data.StringSet = $oop.getClass('$data.StringSet')
-.mix($oop.getClass('$data.DataContainer'))
-.mix($oop.getClass('$data.ObjectContainer'))
-.mix($oop.getClass('$data.SetContainer'))
+.blend($oop.getClass('$data.DataContainer'))
+.blend($oop.getClass('$data.ObjectContainer'))
+.blend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.StringSet# */{
   /**
    * @param {string} item

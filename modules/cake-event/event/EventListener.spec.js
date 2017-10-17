@@ -11,7 +11,7 @@ describe("$event", function () {
 
     beforeAll(function () {
       EventListener = $oop.getClass('test.$event.EventListener.EventListener')
-      .mix($event.EventListener);
+      .blend($event.EventListener);
     });
 
     beforeEach(function () {

@@ -13,9 +13,9 @@ describe("$data", function () {
 
     beforeAll(function () {
       StringKeyHost = $oop.getClass('test.$data.StringKeyHost.StringKeyHost')
-      .mix($data.DataContainer)
-      .mix($data.KeyValueContainer)
-      .mixOnly($data.StringKeyHost);
+      .blend($data.DataContainer)
+      .blend($data.KeyValueContainer)
+      .mix($data.StringKeyHost);
     });
 
     beforeEach(function () {
@@ -29,9 +29,9 @@ describe("$data", function () {
 
       beforeAll(function () {
         StringValueHost = $oop.getClass('test.$data.StringKeyHost.StringValueHost')
-        .mix($data.DataContainer)
-        .mix($data.KeyValueContainer)
-        .mixOnly($data.StringValueHost);
+        .blend($data.DataContainer)
+        .blend($data.KeyValueContainer)
+        .mix($data.StringValueHost);
       });
 
       beforeEach(function () {

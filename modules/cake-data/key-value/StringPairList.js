@@ -14,7 +14,7 @@
  * @extends $data.PairList
  */
 $data.StringPairList = $oop.getClass('$data.StringPairList')
-.mix($oop.getClass('$data.PairList'))
+.blend($oop.getClass('$data.PairList'))
 .define(/** @lends $data.StringPairList# */{
   /**
    * @type {string}

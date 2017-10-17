@@ -10,7 +10,7 @@ describe("$utils", function () {
 
     beforeAll(function () {
       Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
-      .mix($utils.Retrievable);
+      .blend($utils.Retrievable);
     });
 
     beforeEach(function () {

@@ -15,7 +15,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
-      .mix($entity.EntityKey)
+      .blend($entity.EntityKey)
       .define({
         getAttributeDocumentKey: function () {
           return '__foo/bar'.toDocumentKey();
@@ -25,7 +25,7 @@ describe("$entity", function () {
         }
       });
       Entity = $oop.getClass('test.$entity.Entity.Entity')
-      .mix($entity.Entity);
+      .blend($entity.Entity);
     });
 
     beforeEach(function () {
@@ -65,8 +65,8 @@ describe("$entity", function () {
 
         beforeAll(function () {
           EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
-          .mix($entity.EntityKey)
-          .mix($utils.StringifyCached)
+          .blend($entity.EntityKey)
+          .blend($utils.StringifyCached)
           .define({
             getAttributeDocumentKey: function () {
               return 'FOO/BAR'.toDocumentKey();
@@ -331,7 +331,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
-      .mix($entity.EntityKey);
+      .blend($entity.EntityKey);
     });
 
     beforeEach(function () {

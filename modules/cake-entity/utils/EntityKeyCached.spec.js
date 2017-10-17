@@ -11,8 +11,8 @@ describe("$entity", function () {
 
     beforeAll(function () {
       EntityKeyCached = $oop.getClass('test.$entity.EntityKeyCached.EntityKeyCached')
-      .mix($entity.EntityKeyHost)
-      .mix($entity.EntityKeyCached);
+      .blend($entity.EntityKeyHost)
+      .blend($entity.EntityKeyCached);
     });
 
     beforeEach(function () {

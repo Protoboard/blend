@@ -11,7 +11,7 @@ describe("$event", function () {
 
     beforeAll(function () {
       EventTrail = $oop.getClass('test.$event.EventTrail.EventTrail')
-      .mix($event.EventTrail);
+      .blend($event.EventTrail);
     });
 
     describe("create()", function () {

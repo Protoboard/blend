@@ -12,7 +12,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       Field = $oop.getClass('test.$entity.Field.Field')
-      .mix($entity.Field);
+      .blend($entity.Field);
     });
 
     beforeEach(function () {
@@ -63,8 +63,8 @@ describe("$entity", function () {
 
         beforeAll(function () {
           FieldKey = $oop.getClass('test.$entity.Field.FieldKey')
-          .mix($entity.FieldKey)
-          .mix($utils.StringifyCached);
+          .blend($entity.FieldKey)
+          .blend($utils.StringifyCached);
         });
 
         beforeEach(function () {

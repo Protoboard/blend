@@ -16,9 +16,9 @@
  * @extends $data.SetContainer
  */
 $data.OrderedList = $oop.getClass('$data.OrderedList')
-.mix($oop.getClass('$data.DataContainer'))
-.mix($oop.getClass('$data.ArrayContainer'))
-.mix($oop.getClass('$data.SetContainer'))
+.blend($oop.getClass('$data.DataContainer'))
+.blend($oop.getClass('$data.ArrayContainer'))
+.blend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
   /** @ignore */
   spread: function () {

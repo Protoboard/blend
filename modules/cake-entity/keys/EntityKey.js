@@ -6,7 +6,7 @@
  * @extends $data.Comparable
  */
 $entity.EntityKey = $oop.getClass('$entity.EntityKey')
-.mix($data.Comparable)
+.blend($data.Comparable)
 .define(/** @lends $entity.EntityKey# */{
   /**
    * Identifies the entity's data node in the entity store.

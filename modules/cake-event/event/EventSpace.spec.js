@@ -12,7 +12,7 @@ describe("$event", function () {
 
     beforeAll(function () {
       EventSpace = $oop.getClass('test.$event.EventSpace.EventSpace')
-      .mix($event.EventSpace);
+      .blend($event.EventSpace);
     });
 
     beforeEach(function () {

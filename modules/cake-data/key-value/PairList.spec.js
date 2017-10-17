@@ -14,7 +14,7 @@ describe("$data", function () {
   describe("PairList", function () {
     beforeAll(function () {
       PairList = $oop.getClass("test.$data.PairList.PairList")
-      .mix($data.PairList);
+      .blend($data.PairList);
     });
 
     beforeEach(function () {

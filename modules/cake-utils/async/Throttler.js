@@ -15,7 +15,7 @@
  * @extends $utils.Scheduler
  */
 $utils.Throttler = $oop.getClass('$utils.Throttler')
-.mix($oop.getClass('$utils.Scheduler'))
+.blend($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Throttler# */{
   /**
    * Exact time between dispatched calls in milliseconds.

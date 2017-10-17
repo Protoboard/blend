@@ -13,17 +13,17 @@ describe("$data", function () {
 
   beforeAll(function () {
     Collection = $oop.getClass('test.$data.KeyValueContainer-utils.Collection')
-    .mix($data.Collection);
+    .blend($data.Collection);
     StringCollection = $oop.getClass('test.$data.KeyValueContainer-utils.StringCollection')
-    .mix($data.StringCollection);
+    .blend($data.StringCollection);
     Dictionary = $oop.getClass('test.$data.KeyValueContainer-utils.Dictionary')
-    .mix($data.Dictionary);
+    .blend($data.Dictionary);
     StringDictionary = $oop.getClass('test.$data.KeyValueContainer-utils.StringDictionary')
-    .mix($data.StringDictionary);
+    .blend($data.StringDictionary);
     PairList = $oop.getClass('test.$data.KeyValueContainer-utils.PairList')
-    .mix($data.PairList);
+    .blend($data.PairList);
     StringPairList = $oop.getClass('test.$data.KeyValueContainer-utils.StringPairList')
-    .mix($data.StringPairList);
+    .blend($data.StringPairList);
   });
 
   describe("getMapResultClass()", function () {

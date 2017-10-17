@@ -14,7 +14,7 @@
  * @extends $data.OrderedList
  */
 $data.OrderedStringList = $oop.getClass('$data.OrderedStringList')
-.mix($oop.getClass('$data.OrderedList'))
+.blend($oop.getClass('$data.OrderedList'))
 .define(/** @lends $data.OrderedStringList# */{
   /**
    * Increments last character of specified string.

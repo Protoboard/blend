@@ -12,8 +12,8 @@ describe("$data", function () {
 
     beforeAll(function () {
       ObjectContainer = $oop.getClass('test.$data.ObjectContainer.ObjectContainer')
-      .mix($data.DataContainer)
-      .mix($data.ObjectContainer);
+      .blend($data.DataContainer)
+      .blend($data.ObjectContainer);
     });
 
     beforeEach(function () {

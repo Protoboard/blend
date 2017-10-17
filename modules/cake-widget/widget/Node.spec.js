@@ -12,7 +12,7 @@ describe("$widget", function () {
 
     beforeAll(function () {
       Node = $oop.getClass('test.$widget.Node.Node')
-      .mix($widget.Node);
+      .blend($widget.Node);
     });
 
     beforeEach(function () {

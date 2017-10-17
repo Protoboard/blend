@@ -13,7 +13,7 @@
  * @extends $utils.Scheduler
  */
 $utils.Debouncer = $oop.getClass('$utils.Debouncer')
-.mix($oop.getClass('$utils.Scheduler'))
+.blend($oop.getClass('$utils.Scheduler'))
 .define(/** @lends $utils.Debouncer# */{
   /**
    * Minimum time between dispatched calls in milliseconds.

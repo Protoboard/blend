@@ -7,7 +7,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
    * @param {Array.<$oop.Class>} mixins
    * @returns {$oop.Class}
    */
-  mixClass: function (mixins) {
-    return $oop.ClassMixer.mixClass(mixins);
+  blendClass: function (mixins) {
+    return $oop.ClassBlender.blendClass(mixins);
   }
 });

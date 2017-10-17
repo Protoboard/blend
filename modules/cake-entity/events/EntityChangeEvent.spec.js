@@ -13,7 +13,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       EntityChangeEvent = $oop.getClass('test.$entity.EntityChangeEvent.EntityChangeEvent')
-      .mix($entity.EntityChangeEvent);
+      .blend($entity.EntityChangeEvent);
     });
 
     beforeEach(function () {

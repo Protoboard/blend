@@ -11,7 +11,7 @@ describe("$event", function () {
 
     beforeAll(function () {
       Subscriber = $oop.getClass('test.$event.EventSubscriber.Subscriber')
-      .mix($event.EventSubscriber)
+      .blend($event.EventSubscriber)
       .define({
         foo: function () {},
         bar: function () {},

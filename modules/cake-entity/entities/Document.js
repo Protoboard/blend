@@ -12,8 +12,8 @@
  * @extends $entity.Entity
  */
 $entity.Document = $oop.getClass('$entity.Document')
-.mix($oop.getClass('$entity.Entity'))
-.mix($oop.getClass('$entity.BranchNoded'))
+.blend($oop.getClass('$entity.Entity'))
+.blend($oop.getClass('$entity.BranchNoded'))
 .define(/** @lends $entity.Document# */{
   /**
    * @inheritDoc

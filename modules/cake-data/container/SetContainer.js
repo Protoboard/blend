@@ -12,7 +12,7 @@
  * @implements $data.Transformable
  */
 $data.SetContainer = $oop.getClass('$data.SetContainer')
-.mix($oop.getClass('$data.ItemContainer'))
+.blend($oop.getClass('$data.ItemContainer'))
 .implement($oop.getClass('$data.Filterable'))
 .implement($oop.getClass('$data.Reducible'))
 .implement($oop.getClass('$data.SetConvertible'))

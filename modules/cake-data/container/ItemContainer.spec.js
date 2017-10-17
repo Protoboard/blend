@@ -13,8 +13,8 @@ describe("$data", function () {
 
     beforeAll(function () {
       ItemContainer = $oop.getClass('test.$data.ItemContainer.ItemContainer')
-      .mix($data.DataContainer)
-      .mix($data.ItemContainer)
+      .blend($data.DataContainer)
+      .blend($data.ItemContainer)
       .define({
         forEachItem: function (callback, context) {
           var data = this.data,

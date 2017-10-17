@@ -18,8 +18,8 @@
  * @implements $data.Stackable
  */
 $data.Chain = $oop.getClass('$data.Chain')
-.mix($oop.getClass('$data.DataContainer'))
-.mix($oop.getClass('$data.SetContainer'))
+.blend($oop.getClass('$data.DataContainer'))
+.blend($oop.getClass('$data.SetContainer'))
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Chain# */{
   /**

@@ -12,7 +12,7 @@ describe("$event", function () {
 
     beforeAll(function () {
       Event = $oop.getClass('test.$event.Event.Event')
-      .mix($event.Event);
+      .blend($event.Event);
     });
 
     beforeEach(function () {

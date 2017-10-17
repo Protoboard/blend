@@ -15,8 +15,8 @@
  * @mixes $utils.StringifyCached
  */
 $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
-.mix($oop.getClass('$entity.DocumentKey'))
-.mix($oop.getClass('$utils.StringifyCached'))
+.blend($oop.getClass('$entity.DocumentKey'))
+.blend($oop.getClass('$utils.StringifyCached'))
 .define(/** @lends $entity.AttributeDocumentKey# */{
   /**
    * @memberOf $entity.AttributeDocumentKey

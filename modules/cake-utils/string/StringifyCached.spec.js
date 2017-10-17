@@ -12,7 +12,7 @@ describe("$utils", function () {
     beforeAll(function () {
       CachedStringifiable = $oop.getClass('test.$utils.StringifyCached.StringifyCached')
       .implement($utils.Stringifiable)
-      .mix($utils.StringifyCached)
+      .blend($utils.StringifyCached)
       .define({
         toString: function () {
           return this.foo;

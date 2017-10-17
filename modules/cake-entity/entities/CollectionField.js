@@ -11,8 +11,8 @@
  * @extends $entity.BranchNoded
  */
 $entity.CollectionField = $oop.getClass('$entity.CollectionField')
-.mix($oop.getClass('$entity.Field'))
-.mix($oop.getClass('$entity.BranchNoded'))
+.blend($oop.getClass('$entity.Field'))
+.blend($oop.getClass('$entity.BranchNoded'))
 .define(/** @lends $entity.CollectionField# */{
   /** @ignore */
   spread: function () {

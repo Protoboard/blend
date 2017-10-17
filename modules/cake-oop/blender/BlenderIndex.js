@@ -3,11 +3,11 @@
 /**
  * Maintains an index of classes and mixins, with the intent of providing quick
  * access to classes based on (a subset of) their mixins. Used internally by
- * `$oop.ClassMixer`.
- * @class $oop.MixerIndex
+ * `$oop.ClassBlender`.
+ * @class $oop.BlenderIndex
  * @ignore
  */
-$oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex */{
+$oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderIndex */{
   /**
    * @param {Array.<$oop.Class>} mixins
    * @returns {string}
@@ -65,7 +65,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    * Adds Class to index, associating it with the specified list of mixins.
    * @param {$oop.Class} Class
    * @param {Array.<$oop.Class>} mixins
-   * @returns {$oop.MixerIndex}
+   * @returns {$oop.BlenderIndex}
    */
   setClassForMixins: function (Class, mixins) {
     var classId = Class.__classId,
@@ -87,7 +87,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
   /**
    * Adds Class to index, based on its own mixins.
    * @param {$oop.Class} Class
-   * @returns {$oop.MixerIndex}
+   * @returns {$oop.BlenderIndex}
    */
   setClass: function (Class) {
     var mixins = Class.__mixins.downstream.list;
@@ -102,7 +102,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    * index.
    * @param {$oop.Class} Class
    * @param {Array.<$oop.Class>} mixins
-   * @returns {$oop.MixerIndex}
+   * @returns {$oop.BlenderIndex}
    */
   deleteClassForMixins: function (Class, mixins) {
     var classId = Class.__classId,
@@ -127,7 +127,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
   /**
    * Removes Class from index, based on its own mixins.
    * @param {$oop.Class} Class
-   * @returns {$oop.MixerIndex}
+   * @returns {$oop.BlenderIndex}
    */
   deleteClass: function (Class) {
     var mixins = Class.__mixins.downstream.list;
@@ -152,7 +152,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Classes (declared or ad-hoc) indexed by the serialized class IDs of the
-   * mixins they're composed of. Used internally by `$oop.MixerIndex`.
+   * mixins they're composed of. Used internally by `$oop.BlenderIndex`.
    * @type {$oop.QuickListLookup}
    * @ignore
    */

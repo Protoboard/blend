@@ -12,9 +12,9 @@ describe("$data", function () {
 
     beforeAll(function () {
       SetContainer = $oop.getClass('test.$data.SetContainer.SetContainer')
-      .mix($data.DataContainer)
-      .mix($data.ArrayContainer)
-      .mix($data.SetContainer)
+      .blend($data.DataContainer)
+      .blend($data.ArrayContainer)
+      .blend($data.SetContainer)
       .define({
         setItem: function (item) {
           this.data.push(item);
@@ -55,9 +55,9 @@ describe("$data", function () {
 
       beforeAll(function () {
         SetContainer2 = $oop.getClass('test.$data.SetContainer.SetContainer2')
-        .mix($data.DataContainer)
-        .mix($data.ObjectContainer)
-        .mix($data.SetContainer)
+        .blend($data.DataContainer)
+        .blend($data.ObjectContainer)
+        .blend($data.SetContainer)
         .define({
           setItem: function (item) {
             this.data[item] = 1;
@@ -93,9 +93,9 @@ describe("$data", function () {
 
       beforeAll(function () {
         KeyValueContainer = $oop.getClass('test.$data.SetContainer.KeyValueContainer')
-        .mix($data.DataContainer)
-        .mix($data.ArrayContainer)
-        .mix($data.KeyValueContainer)
+        .blend($data.DataContainer)
+        .blend($data.ArrayContainer)
+        .blend($data.KeyValueContainer)
         .define({
           setItem: function (key, value) {
             this.data.push([key, value]);
@@ -199,8 +199,8 @@ describe("$data", function () {
 
       beforeAll(function () {
         SetConvertible = $oop.getClass('test.$data.SetContainer.SetConvertible')
-        .mix($data.DataContainer)
-        .mix($data.SetConvertible);
+        .blend($data.DataContainer)
+        .blend($data.SetConvertible);
       });
 
       beforeEach(function () {

@@ -10,7 +10,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       QueryComponent = $oop.getClass('test.$data.QueryComponent.QueryComponent')
-      .mix($data.QueryComponent);
+      .blend($data.QueryComponent);
     });
 
     describe("fromString()", function () {

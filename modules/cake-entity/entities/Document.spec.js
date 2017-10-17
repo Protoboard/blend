@@ -12,7 +12,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       Document = $oop.getClass('test.$entity.Document.Document')
-      .mix($entity.Document);
+      .blend($entity.Document);
     });
 
     beforeEach(function () {
@@ -56,8 +56,8 @@ describe("$entity", function () {
 
         beforeAll(function () {
           DocumentKey = $oop.getClass('test.$entity.Document.DocumentKey')
-          .mix($entity.DocumentKey)
-          .mix($utils.StringifyCached);
+          .blend($entity.DocumentKey)
+          .blend($utils.StringifyCached);
         });
 
         beforeEach(function () {

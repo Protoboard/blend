@@ -15,7 +15,7 @@
  * @implements $utils.Stringifiable
  */
 $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
-.mix($oop.getClass('$entity.EntityKey'))
+.blend($oop.getClass('$entity.EntityKey'))
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.DocumentKey# */{
   /**

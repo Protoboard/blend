@@ -16,8 +16,8 @@
  * @extends $data.Link
  */
 $event.Event = $oop.getClass('$event.Event')
-.mix($utils.Cloneable)
-.mix($data.Link)
+.blend($utils.Cloneable)
+.blend($data.Link)
 .define(/** @lends $event.Event# */{
   /**
    * Identifies event type.

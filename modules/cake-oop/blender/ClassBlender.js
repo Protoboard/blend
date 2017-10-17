@@ -2,11 +2,11 @@
 
 /**
  * Implements ad-hoc mixing of classes. Used internally by `$oop.Class`.
- * @class $oop.ClassMixer
- * @see $oop.mixClass
+ * @class $oop.ClassBlender
+ * @see $oop.blendClass
  * @ignore
  */
-$oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer */{
+$oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBlender */{
   /**
    * Normalizes list of mixins by removing all classes that are mixed by
    * another in the list.
@@ -99,27 +99,27 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    * @param {Array.<$oop.Class>} mixins
    * @returns {$oop.Class}
    */
-  mixClass: function (mixins) {
-    var MixerIndex = $oop.MixerIndex,
-        Class = MixerIndex.getClassForMixins(mixins);
+  blendClass: function (mixins) {
+    var BlenderIndex = $oop.BlenderIndex,
+        Class = BlenderIndex.getClassForMixins(mixins);
 
     if (!Class) {
       // finding an existing matching class
       this._findMatchingClasses(mixins)
       .forEach(function (Class) {
         // adding Class for this specific combination of mixins
-        MixerIndex.setClassForMixins(Class, mixins);
+        BlenderIndex.setClassForMixins(Class, mixins);
       });
-      Class = MixerIndex.getClassForMixins(mixins);
+      Class = BlenderIndex.getClassForMixins(mixins);
     }
 
     if (!Class) {
       // creating ad-hoc class and adding mixins
       Class = $oop.getClass($oop.generateUuid());
       mixins.forEach(function (Mixin) {
-        Class.mix(Mixin);
+        Class.blend(Mixin);
       });
-      MixerIndex.setClass(Class);
+      BlenderIndex.setClass(Class);
     }
 
     return Class;

@@ -21,5 +21,5 @@
  * });
  */
 $event.WrapperEvent = $oop.getClass('$event.WrapperEvent')
-.mix($oop.getClass('$event.Event'))
-.mix($oop.getClass('$event.Wrapper'));
+.blend($oop.getClass('$event.Event'))
+.blend($oop.getClass('$event.Wrapper'));

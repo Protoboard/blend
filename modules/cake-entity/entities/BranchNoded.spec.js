@@ -13,8 +13,8 @@ describe("$entity", function () {
 
     beforeAll(function () {
       BranchNoded = $oop.getClass('test.$entity.BranchNoded.BranchNoded')
-      .mix($entity.Entity)
-      .mix($entity.BranchNoded);
+      .blend($entity.Entity)
+      .blend($entity.BranchNoded);
     });
 
     beforeEach(function () {

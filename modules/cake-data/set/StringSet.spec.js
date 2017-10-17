@@ -15,7 +15,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       StringSet = $oop.getClass("test.$data.StringSet.StringSet")
-      .mix($data.StringSet);
+      .blend($data.StringSet);
     });
 
     beforeEach(function () {

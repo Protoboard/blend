@@ -52,7 +52,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Chain = $oop.getClass('test.$data.Chain.Chain')
-      .mix($data.Chain);
+      .blend($data.Chain);
     });
 
     beforeEach(function () {
@@ -301,7 +301,7 @@ describe("$data", function () {
 
       beforeAll(function () {
         Link = $oop.getClass('test.$data.Chain.Link')
-        .mix($data.Link)
+        .blend($data.Link)
         .define({
           clone: function clone() {
             clone.returned.foo = this.foo;

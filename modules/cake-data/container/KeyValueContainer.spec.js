@@ -14,9 +14,9 @@ describe("$data", function () {
 
     beforeAll(function () {
       KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
-      .mix($data.DataContainer)
-      .mix($data.ObjectContainer)
-      .mix($data.KeyValueContainer)
+      .blend($data.DataContainer)
+      .blend($data.ObjectContainer)
+      .blend($data.KeyValueContainer)
       .define({
         setItem: function (key, value) {
           this.data[key] = value;
@@ -31,8 +31,8 @@ describe("$data", function () {
       });
 
       Settable = $oop.getClass('test.$data.KeyValueContainer.Settable')
-      .mix($data.DataContainer)
-      .mix($data.ObjectContainer)
+      .blend($data.DataContainer)
+      .blend($data.ObjectContainer)
       .define({
         setItem: function (key, value) {
           this.data[key] = value;
@@ -55,9 +55,9 @@ describe("$data", function () {
 
       beforeAll(function () {
         KeyValueContainer2 = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer2')
-        .mix($data.DataContainer)
-        .mix($data.ArrayContainer)
-        .mix($data.KeyValueContainer)
+        .blend($data.DataContainer)
+        .blend($data.ArrayContainer)
+        .blend($data.KeyValueContainer)
         .define({
           setItem: function (key, value) {
             this.data.push([key, value]);
@@ -98,9 +98,9 @@ describe("$data", function () {
 
       beforeAll(function () {
         SetContainer = $oop.getClass('test.$data.KeyValueContainer.SetContainer')
-        .mix($data.DataContainer)
-        .mix($data.ArrayContainer)
-        .mix($data.SetContainer)
+        .blend($data.DataContainer)
+        .blend($data.ArrayContainer)
+        .blend($data.SetContainer)
         .define({
           setItem: function (item) {
             this.data.push(item);
@@ -221,8 +221,8 @@ describe("$data", function () {
 
       beforeAll(function () {
         KeyValueConvertible = $oop.getClass('test.$data.KeyValueContainer.KeyValueConvertible')
-        .mix($data.DataContainer)
-        .mix($data.KeyValueConvertible);
+        .blend($data.DataContainer)
+        .blend($data.KeyValueConvertible);
       });
 
       beforeEach(function () {

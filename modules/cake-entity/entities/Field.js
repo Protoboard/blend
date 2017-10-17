@@ -12,7 +12,7 @@
  * @extends $entity.Entity
  */
 $entity.Field = $oop.getClass('$entity.Field')
-.mix($oop.getClass('$entity.Entity'))
+.blend($oop.getClass('$entity.Entity'))
 .define(/** @lends $entity.Field# */{
   /**
    * @inheritDoc

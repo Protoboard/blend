@@ -11,8 +11,8 @@ describe("$entity", function () {
 
     beforeAll(function () {
       LeafNodedField = $oop.getClass('test.$entity.LeafNoded.LeafNoded')
-      .mix($entity.Field)
-      .mix($entity.LeafNoded);
+      .blend($entity.Field)
+      .blend($entity.LeafNoded);
     });
 
     beforeEach(function () {

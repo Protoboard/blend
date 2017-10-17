@@ -18,7 +18,7 @@
  * @todo Separate ParentEntityChangeEvent?
  */
 $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
-.mix($event.Event)
+.blend($event.Event)
 .define(/** @lends $entity.EntityChangeEvent# */{
   /**
    * Identifies child nodes that were *added* by the change.

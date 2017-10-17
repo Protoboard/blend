@@ -10,8 +10,8 @@ describe("$assert", function () {
 
   beforeAll(function () {
     ValueKey = $oop.getClass('test.$entity.ValueKey.ValueKey')
-    .mix($entity.EntityKey)
-    .mix($entity.ValueKey);
+    .blend($entity.EntityKey)
+    .blend($entity.ValueKey);
   });
 
   beforeEach(function () {
@@ -58,8 +58,8 @@ describe("$entity", function () {
 
     beforeAll(function () {
       ValueKey = $oop.getClass('test.$entity.ValueKey.ValueKey')
-      .mix($entity.EntityKey)
-      .mix($entity.ValueKey)
+      .blend($entity.EntityKey)
+      .blend($entity.ValueKey)
       .define({
         getAttributeDocumentKey: function () {
           return 'foo/bar'.toDocumentKey();

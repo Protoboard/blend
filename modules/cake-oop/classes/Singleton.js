@@ -5,7 +5,7 @@
  * @mixin $oop.Singleton
  * @example
  * var MySingletonClass = $oop.getClass('MySingletonClass')
- * .mix($oop.Singleton)
+ * .blend($oop.Singleton)
  */
 $oop.Singleton = $oop.getClass('$oop.Singleton')
 .cache(function () {

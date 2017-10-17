@@ -9,7 +9,7 @@ describe("$utils", function () {
 
     beforeAll(function () {
       Identifiable = $oop.getClass('test.$utils.Identifiable.Identifiable')
-      .mix($utils.Identifiable);
+      .blend($utils.Identifiable);
     });
 
     beforeEach(function () {

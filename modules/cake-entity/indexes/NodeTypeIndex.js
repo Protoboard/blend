@@ -11,7 +11,7 @@
  * @todo Create nodeType enum for documentation.
  */
 $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
-.mix($oop.Singleton)
+.blend($oop.Singleton)
 .define(/** @lends $entity.NodeTypeIndex# */{
   /** @ignore */
   init: function () {

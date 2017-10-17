@@ -12,7 +12,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       CollectionFieldKey = $oop.getClass('test.$entity.CollectionFieldKey.CollectionFieldKey')
-      .mix($entity.CollectionFieldKey);
+      .blend($entity.CollectionFieldKey);
     });
 
     beforeEach(function () {

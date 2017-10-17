@@ -86,12 +86,12 @@ $oop.copyProperties($oop, /** @lends $oop */{
         },
 
         /**
-         * Registry of classes that transitively mix the current class.
-         * Transitive mixers mix the class and all its mixins.
+         * Registry of classes that blend the current class. Blenders mix the
+         * class and all its mixins.
          * @type {$oop.QuickList}
          * @private
          */
-        __transitiveMixers: {list: [], lookup: {}},
+        __blenders: {list: [], lookup: {}},
 
         /**
          * Registry of methods not implemented by current class.

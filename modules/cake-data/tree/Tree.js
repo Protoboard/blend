@@ -17,8 +17,8 @@
  * @todo Make Filterable and implement filtering by query.
  */
 $data.Tree = $oop.getClass('$data.Tree')
-.mix($oop.getClass('$data.DataContainer'))
-.mix($oop.getClass('$data.ObjectContainer'))
+.blend($oop.getClass('$data.DataContainer'))
+.blend($oop.getClass('$data.ObjectContainer'))
 .implement($oop.getClass('$data.Queryable'))
 .define(/** @lends $data.Tree# */{
   /**

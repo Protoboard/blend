@@ -17,10 +17,10 @@
  * @extends $data.StringKeyHost
  */
 $data.Collection = $oop.getClass('$data.Collection')
-.mix($oop.getClass('$data.DataContainer'))
-.mix($oop.getClass('$data.ObjectContainer'))
-.mix($oop.getClass('$data.KeyValueContainer'))
-.mix($oop.getClass('$data.StringKeyHost'))
+.blend($oop.getClass('$data.DataContainer'))
+.blend($oop.getClass('$data.ObjectContainer'))
+.blend($oop.getClass('$data.KeyValueContainer'))
+.blend($oop.getClass('$data.StringKeyHost'))
 .define(/** @lends $data.Collection# */{
   /**
    * @type {string}

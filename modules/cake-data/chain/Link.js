@@ -11,7 +11,7 @@
  * @mixes $utils.Cloneable
  */
 $data.Link = $oop.getClass('$data.Link')
-.mix($utils.Cloneable)
+.blend($utils.Cloneable)
 .define(/** @lends $data.Link# */{
   /**
    * Chain instance the link is associated with.

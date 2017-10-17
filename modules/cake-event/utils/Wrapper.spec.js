@@ -12,8 +12,8 @@ describe("$event", function () {
 
     beforeAll(function () {
       Wrapper = $oop.getClass('test.$event.Wrapper.Wrapper')
-      .mix($utils.Cloneable)
-      .mix($event.Wrapper);
+      .blend($utils.Cloneable)
+      .blend($event.Wrapper);
     });
 
     beforeEach(function () {

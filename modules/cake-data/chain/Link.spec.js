@@ -11,7 +11,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Link = $oop.getClass('test.$data.Link.Link')
-      .mix($data.Link);
+      .blend($data.Link);
     });
 
     beforeEach(function () {

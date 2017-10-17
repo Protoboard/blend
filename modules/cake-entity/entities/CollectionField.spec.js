@@ -13,7 +13,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       CollectionField = $oop.getClass('test.$entity.CollectionField.CollectionField')
-      .mix($entity.CollectionField);
+      .blend($entity.CollectionField);
     });
 
     beforeEach(function () {

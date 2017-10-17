@@ -22,7 +22,7 @@
  * $data.Query.create(['foo', '*', 'bar:!baz,quux'])
  */
 $data.Query = $oop.getClass('$data.Query')
-.mix($utils.Cloneable)
+.blend($utils.Cloneable)
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.Query# */{

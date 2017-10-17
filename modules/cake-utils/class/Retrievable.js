@@ -9,7 +9,7 @@
  */
 $utils.Retrievable = $oop.getClass('$utils.Retrievable')
 .implement($oop.getClass('$utils.Destructible'))
-.mix($oop.getClass('$utils.Identifiable'))
+.blend($oop.getClass('$utils.Identifiable'))
 .define(/** @lends $utils.Retrievable# */{
   /**
    * Global registry for instances having the Retrievable mixin.

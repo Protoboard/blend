@@ -51,7 +51,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       FieldKey = $oop.getClass('test.$entity.FieldKey.FieldKey')
-      .mix($entity.FieldKey);
+      .blend($entity.FieldKey);
     });
 
     beforeEach(function () {

@@ -13,8 +13,8 @@
  * @extends $utils.Destructible
  */
 $event.EventSpace = $oop.getClass('$event.EventSpace')
-.mix($oop.Singleton)
-.mix($utils.Destructible)
+.blend($oop.Singleton)
+.blend($utils.Destructible)
 .define(/** @lends $event.EventSpace# */{
   /**
    * @member {$data.Tree} $event.EventSpace#subscription

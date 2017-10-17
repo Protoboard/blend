@@ -9,7 +9,7 @@ describe("$oop", function () {
 
     beforeAll(function () {
       Singleton = $oop.getClass('test.$oop.Singleton.Singleton')
-      .mix($oop.Singleton);
+      .blend($oop.Singleton);
     });
 
     beforeEach(function () {
@@ -19,7 +19,7 @@ describe("$oop", function () {
     describe("then mixing again", function () {
       it("should not throw", function () {
         expect(function () {
-          Singleton.mix($oop.Singleton);
+          Singleton.blend($oop.Singleton);
         }).not.toThrow();
       });
     });

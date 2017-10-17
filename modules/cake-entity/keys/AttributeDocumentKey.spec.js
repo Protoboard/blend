@@ -9,7 +9,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       AttributeDocumentKey = $oop.getClass('test.$entity.AttributeDocumentKey.AttributeDocumentKey')
-      .mix($entity.AttributeDocumentKey);
+      .blend($entity.AttributeDocumentKey);
     });
 
     describe("fromDocumentIdComponents()", function () {
@@ -27,7 +27,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       DocumentKey = $oop.getClass('test.$entity.AttributeDocumentKey.DocumentKey')
-      .mix($entity.DocumentKey);
+      .blend($entity.DocumentKey);
     });
 
     describe("create()", function () {

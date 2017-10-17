@@ -14,7 +14,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
-      .mix($data.OrderedList);
+      .blend($data.OrderedList);
     });
 
     beforeEach(function () {

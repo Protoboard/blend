@@ -12,7 +12,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       EntityKey = $oop.getClass('test.$entity.EntityKey.EntityKey')
-      .mix($entity.EntityKey)
+      .blend($entity.EntityKey)
       .define({
         getAttributeDocumentKey: function () {
           return '__field/foo'.toDocumentKey();
@@ -110,7 +110,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Path = $oop.getClass('test.$entity.EntityKey.Path')
-      .mix($data.Path);
+      .blend($data.Path);
     });
 
     beforeEach(function () {

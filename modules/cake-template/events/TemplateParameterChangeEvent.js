@@ -10,7 +10,7 @@
  * @extends $event.Event
  */
 $template.TemplateParameterChangeEvent = $oop.getClass('$template.TemplateParameterChangeEvent')
-.mix($event.Event);
+.blend($event.Event);
 
 /**
  * @member {Object} $template.TemplateParameterChangeEvent#parameterValuesBefore

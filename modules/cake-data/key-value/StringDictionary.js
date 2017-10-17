@@ -18,11 +18,11 @@
  * @extends $data.StringValueHost
  */
 $data.StringDictionary = $oop.getClass('$data.StringDictionary')
-.mix($oop.getClass('$data.DataContainer'))
-.mix($oop.getClass('$data.ObjectContainer'))
-.mix($oop.getClass('$data.KeyValueContainer'))
-.mix($oop.getClass('$data.StringKeyHost'))
-.mix($oop.getClass('$data.StringValueHost'))
+.blend($oop.getClass('$data.DataContainer'))
+.blend($oop.getClass('$data.ObjectContainer'))
+.blend($oop.getClass('$data.KeyValueContainer'))
+.blend($oop.getClass('$data.StringKeyHost'))
+.blend($oop.getClass('$data.StringValueHost'))
 .define(/** @lends $data.StringDictionary# */{
   /**
    * @param {string} key

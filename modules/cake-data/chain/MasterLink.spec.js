@@ -11,7 +11,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       MasterLink = $oop.getClass('test.$data.MasterLink.MasterLink')
-      .mix($data.MasterLink);
+      .blend($data.MasterLink);
     });
 
     beforeEach(function () {

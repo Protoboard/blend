@@ -12,7 +12,7 @@ describe("$data", function () {
   describe("StringDictionary", function () {
     beforeAll(function () {
       StringDictionary = $oop.getClass("test.$data.StringDictionary.StringDictionary")
-      .mix($data.StringDictionary);
+      .blend($data.StringDictionary);
     });
 
     beforeEach(function () {

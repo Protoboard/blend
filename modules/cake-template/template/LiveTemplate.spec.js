@@ -51,7 +51,7 @@ describe("$template", function () {
 
     beforeAll(function () {
       LiveTemplate = $oop.getClass('test.$template.LiveTemplate.LiveTemplate')
-      .mix($template.LiveTemplate);
+      .blend($template.LiveTemplate);
     });
 
     beforeEach(function () {

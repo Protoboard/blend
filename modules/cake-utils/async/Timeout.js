@@ -14,7 +14,7 @@
  * @extends $utils.Timer
  */
 $utils.Timeout = $oop.getClass('$utils.Timeout')
-.mix($oop.getClass('$utils.Timer'))
+.blend($oop.getClass('$utils.Timer'))
 .define(/** @lends $utils.Timeout# */{
   /**
    * @inheritDoc

@@ -63,7 +63,7 @@ describe("$template", function () {
         }
       });
       Template = $oop.getClass('test.$template.Template.Template')
-      .mix($template.Template);
+      .blend($template.Template);
     });
 
     describe("fromString()", function () {

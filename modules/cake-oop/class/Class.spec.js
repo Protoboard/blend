@@ -322,7 +322,7 @@ describe("$oop", function () {
             baz: function () {
             }
           }))
-          .mixOnly($oop.getClass('Mixin')
+          .mix($oop.getClass('Mixin')
           .define({
             bar: function () {},
             quux: function () {}
@@ -372,7 +372,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("mixOnly()", function () {
+    describe("mix()", function () {
       var Mixin;
 
       beforeEach(function () {
@@ -386,18 +386,18 @@ describe("$oop", function () {
       describe("when passing no arguments", function () {
         it("should throw", function () {
           expect(function () {
-            Class.mixOnly();
+            Class.mix();
           }).toThrow();
         });
       });
 
       it("should return self", function () {
-        result = Class.mixOnly(Mixin);
+        result = Class.mix(Mixin);
         expect(result).toBe(Class);
       });
 
       it("should add to mixins", function () {
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
         expect(Class.__mixins.downstream).toEqual({
           list: [Mixin],
           lookup: {
@@ -407,7 +407,7 @@ describe("$oop", function () {
       });
 
       it("should add self to includers on remote class", function () {
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
         expect(Mixin.__mixins.upstream).toEqual({
           list: [Class],
           lookup: {
@@ -417,7 +417,7 @@ describe("$oop", function () {
       });
 
       it("should add to list of contributions", function () {
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
         expect(Class.__contributors).toEqual({
           list: [Mixin],
           lookup: {
@@ -428,11 +428,11 @@ describe("$oop", function () {
 
       describe("when mixing the same mixin again", function () {
         beforeEach(function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
         });
 
         it("should not add to contributions again", function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           expect(Class.__contributors).toEqual({
             list: [Mixin],
             lookup: {
@@ -443,26 +443,26 @@ describe("$oop", function () {
       });
 
       it("should add methods to __methodMatrix", function () {
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
         expect(Class.__methodMatrix).toEqual({
           bar: [Mixin.__members.bar]
         });
       });
 
       it("should add properties to __propertyMatrix", function () {
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
         expect(Class.__propertyMatrix).toEqual({
           foo: [Mixin.__members.foo]
         });
       });
 
       it("should re-calculate properties on class", function () {
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
         expect(Class.foo).toBe("FOO");
       });
 
       it("should add methods to class", function () {
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
         expect(Class.bar).toBe(Mixin.__members.bar);
       });
 
@@ -475,8 +475,8 @@ describe("$oop", function () {
 
         it("should add class to classByMixinIds", function () {
           Class
-          .mixOnly(Mixin)
-          .mixOnly(Mixin2);
+          .mix(Mixin)
+          .mix(Mixin2);
           expect($oop.classByMixinIds).toEqual({
             'test.$oop.Class.Mixin,test.$oop.Class.Mixin2': {
               list: [Class],
@@ -490,7 +490,7 @@ describe("$oop", function () {
 
       describe("then implementing relevant interface", function () {
         beforeEach(function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           Class.implement($oop.getClass('Interface')
           .define({
             bar: function () {
@@ -510,7 +510,7 @@ describe("$oop", function () {
 
       describe("then requiring same class", function () {
         beforeEach(function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           Class.expect(Mixin);
         });
 
@@ -527,13 +527,13 @@ describe("$oop", function () {
 
         beforeEach(function () {
           Class.expect(Expected2 = $oop.getClass('test.$oop.Class.Expected2')
-          .mixOnly(Mixin1 = $oop.getClass('test.$oop.Class.Mixin1')));
+          .mix(Mixin1 = $oop.getClass('test.$oop.Class.Mixin1')));
 
           Mixin1.expect(Expected3 = $oop.getClass('test.$oop.Class.Expected3'));
         });
 
         it("should transfer expected mixins", function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           expect(Class.__expected.downstream).toEqual({
             list: [Expected2, Mixin1, Expected3],
             lookup: {
@@ -556,7 +556,7 @@ describe("$oop", function () {
         });
 
         it("should transfer forwards from mixin", function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           expect(Class.__forwards).toEqual({
             list: [{
               mixin: ForwardMixin,
@@ -579,7 +579,7 @@ describe("$oop", function () {
           });
 
           it("should transfer mixin's forwards before own", function () {
-            Class.mixOnly(Mixin);
+            Class.mix(Mixin);
             expect(Class.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
@@ -599,8 +599,8 @@ describe("$oop", function () {
           });
 
           it("should remove forwards that are or are mixed by the mixin", function () {
-            Mixin.mix(ForwardMixin2);
-            Class.mixOnly(Mixin);
+            Mixin.blend(ForwardMixin2);
+            Class.mix(Mixin);
             expect(Class.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
@@ -620,12 +620,12 @@ describe("$oop", function () {
 
           beforeEach(function () {
             ForwardMixin2 = $oop.getClass('test.$oop.Class.ForwardMixin2');
-            Class.mixOnly(ForwardMixin2);
+            Class.mix(ForwardMixin2);
             Mixin.forwardMix(ForwardMixin2, filter);
           });
 
           it("should not transfer mixed forward", function () {
-            Class.mixOnly(Mixin);
+            Class.mix(Mixin);
             expect(Class.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
@@ -643,7 +643,7 @@ describe("$oop", function () {
 
       describe("then defining members on mixins", function () {
         beforeEach(function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           Mixin.define({
             bar: function () {},
             baz: function () {},
@@ -684,7 +684,7 @@ describe("$oop", function () {
         var batch;
 
         beforeEach(function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           batch = {
             bar: function () {}
           };
@@ -701,18 +701,18 @@ describe("$oop", function () {
         var mapper;
 
         beforeEach(function () {
-          Class.mixOnly(Mixin);
+          Class.mix(Mixin);
           mapper = function () {};
           Mixin.cache(mapper);
         });
 
-        it("should transfer mapper to mixer", function () {
+        it("should transfer mapper to blender", function () {
           expect(Class.__mapper).toBe(mapper);
         });
       });
     });
 
-    describe("mix()", function () {
+    describe("blend()", function () {
       var Mixin1,
           Mixin2;
 
@@ -723,14 +723,14 @@ describe("$oop", function () {
           bar: function () {}
         });
         Mixin2 = $oop.getClass("Mixin2")
-        .mixOnly(Mixin1)
+        .mix(Mixin1)
         .define({
           BAZ: "BAZ",
           baz: function () {}
         });
 
         Class
-        .mix(Mixin2)
+        .blend(Mixin2)
         .define({
           BAR: "QUUX",
           foo: function () {}
@@ -743,9 +743,9 @@ describe("$oop", function () {
         ]);
       });
 
-      it("should add to transitive mixers to mixins", function () {
-        expect(Mixin1.__transitiveMixers.list).toEqual([Class]);
-        expect(Mixin2.__transitiveMixers.list).toEqual([Class]);
+      it("should add class to blenders", function () {
+        expect(Mixin1.__blenders.list).toEqual([Class]);
+        expect(Mixin2.__blenders.list).toEqual([Class]);
       });
 
       describe("then mixing a class", function () {
@@ -764,11 +764,11 @@ describe("$oop", function () {
             foo: function () {}
           });
           Mixin1
-          .mixOnly(Mixin3)
-          .mixOnly(Mixin4);
+          .mix(Mixin3)
+          .mix(Mixin4);
         });
 
-        it("should propagate to transitive mixers", function () {
+        it("should propagate to blenders", function () {
           expect(Class.__mixins.downstream.list).toEqual([
             Mixin1, Mixin2, Mixin3, Mixin4
           ]);
@@ -871,7 +871,7 @@ describe("$oop", function () {
 
       describe("then mixing same class", function () {
         beforeEach(function () {
-          Class.mixOnly(Expected);
+          Class.mix(Expected);
         });
 
         it("should remove class from expected mixins", function () {
@@ -889,7 +889,7 @@ describe("$oop", function () {
           Class.expect(Expected2 = $oop.getClass('Expected2')
           .expect(Expected3 = $oop.getClass('Expected3')));
 
-          Expected2.mixOnly(Mixin = $oop.getClass('Mixin'));
+          Expected2.mix(Mixin = $oop.getClass('Mixin'));
         });
 
         it("should transfer expected mixins", function () {
@@ -948,9 +948,9 @@ describe("$oop", function () {
 
         beforeEach(function () {
           Mixer1 = $oop.getClass('test.$oop.Class.Mixer1')
-          .mixOnly(Class);
+          .mix(Class);
           Mixer2 = $oop.getClass('test.$oop.Class.Mixer2')
-          .mixOnly(Class);
+          .mix(Class);
         });
 
         it("should propagate forwards to mixers", function () {
@@ -984,7 +984,7 @@ describe("$oop", function () {
 
           beforeEach(function () {
             ForwardMixin = $oop.getClass('test.$oop.Class.ForwardMixin');
-            Mixer2.mixOnly(ForwardMixin);
+            Mixer2.mix(ForwardMixin);
           });
 
           it("should not propagate forwards to mixers", function () {
@@ -1042,7 +1042,7 @@ describe("$oop", function () {
         });
 
         it("should transfer forwards", function () {
-          Mixer.mixOnly(Class);
+          Mixer.mix(Class);
           expect(Mixer.__forwards.list).toContain({
             mixin: ForwardMixin,
             filter: filter,
@@ -1080,15 +1080,15 @@ describe("$oop", function () {
         expect(Class.__mapper).toBe(mapper);
       });
 
-      describe("then mixOnly()", function () {
+      describe("then mix()", function () {
         var Mixer;
 
         beforeEach(function () {
           Mixer = $oop.getClass("test.$oop.Class.Mixer")
-          .mix(Class);
+          .blend(Class);
         });
 
-        it("should transfer mapper to mixer", function () {
+        it("should transfer mapper to blender", function () {
           expect(Mixer.__mapper).toBe(mapper);
         });
       });
@@ -1157,7 +1157,7 @@ describe("$oop", function () {
 
       beforeEach(function () {
         Mixin = $oop.getClass('test.$oop.Class.Mixin');
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
       });
 
       describe("on invalid argument", function () {
@@ -1193,7 +1193,7 @@ describe("$oop", function () {
 
       beforeEach(function () {
         Mixin = $oop.getClass('test.$oop.Class.Mixin');
-        Class.mixOnly(Mixin);
+        Class.mix(Mixin);
       });
 
       describe("when passing non-class", function () {
@@ -1408,7 +1408,7 @@ describe("$oop", function () {
           });
 
           Forward = $oop.getClass('Forward')
-          .mixOnly(Class);
+          .mix(Class);
 
           $oop.getClass('Class')
           .forwardMix(Forward, function (args) {
@@ -1440,7 +1440,7 @@ describe("$oop", function () {
             .cache(function (args) {
               return '_' + args.foo;
             })
-            .mixOnly(Class);
+            .mix(Class);
 
             $oop.getClass('Class')
             .forwardMix(Forward2, function (args) {

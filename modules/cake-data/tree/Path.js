@@ -21,8 +21,8 @@
  * $data.Path.create(['foo', 'bar', 'baz'])
  */
 $data.Path = $oop.getClass('$data.Path')
-.mix($utils.Cloneable)
-.mix($oop.getClass('$data.Comparable'))
+.blend($utils.Cloneable)
+.blend($oop.getClass('$data.Comparable'))
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Stackable'))
 .define(/** @lends $data.Path# */{

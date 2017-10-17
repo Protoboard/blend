@@ -41,7 +41,7 @@
  * // matches pair where value is "bar"
  */
 $data.QueryComponent = $oop.getClass('$data.QueryComponent')
-.mix($utils.Cloneable)
+.blend($utils.Cloneable)
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
 .define(/** @lends $data.QueryComponent# */{

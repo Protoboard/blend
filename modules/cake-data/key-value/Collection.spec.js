@@ -14,7 +14,7 @@ describe("$data", function () {
   describe("Collection", function () {
     beforeAll(function () {
       Collection = $oop.getClass("test.$data.Collection.Collection")
-      .mix($data.Collection);
+      .blend($data.Collection);
     });
 
     beforeEach(function () {

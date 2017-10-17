@@ -394,32 +394,32 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
    * @private
    */
-  _addToMixerIndex: function () {
+  _addToBlenderIndex: function () {
     if (this.__mixins.downstream.list.length > 1) {
-      $oop.MixerIndex.setClass(this);
+      $oop.BlenderIndex.setClass(this);
     }
   },
 
   /**
    * @private
    */
-  _removeFromMixerIndex: function () {
-    $oop.MixerIndex.deleteClass(this);
+  _removeFromBlenderIndex: function () {
+    $oop.BlenderIndex.deleteClass(this);
   },
 
   /**
    * @param {$oop.Class} Class
    * @private
    */
-  _addToTransitiveMixers: function (Class) {
-    var transitiveMixers = this.__transitiveMixers,
-        transitiveMixerList = transitiveMixers.list,
-        transitiveMixerLookup = transitiveMixers.lookup,
+  _addToBlenders: function (Class) {
+    var blenders = this.__blenders,
+        benderList = blenders.list,
+        blenderLookup = blenders.lookup,
         classId = Class.__classId;
 
-    if (!hOP.call(transitiveMixerLookup, classId)) {
-      transitiveMixerList.push(Class);
-      transitiveMixerLookup[classId] = Class;
+    if (!hOP.call(blenderLookup, classId)) {
+      benderList.push(Class);
+      blenderLookup[classId] = Class;
     }
   },
 
@@ -504,17 +504,16 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Transfers specified class as mixin to all transitive mixers of the current
-   * class.
+   * Transfers specified class as mixin to all blenders of the current class.
    * @param {$oop.Class} Class
    * @private
    */
-  _transferMixinToTransitiveMixers: function (Class) {
+  _transferMixinToBlenders: function (Class) {
     var that = this;
-    this.__transitiveMixers.list
-    .forEach(function (TransitiveMixer) {
-      Class._addToTransitiveMixers(TransitiveMixer);
-      TransitiveMixer.mixOnly(Class, that);
+    this.__blenders.list
+    .forEach(function (Blender) {
+      Class._addToBlenders(Blender);
+      Blender.mix(Class, that);
     });
   },
 
@@ -713,7 +712,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       // mapper already exists and is different than specified
       $assert.fail([
         "Instance mapper collision in '" + this.__classId + "'.",
-        "Can't mix."
+        "Can't blend."
       ].join(" "));
     }
   },
@@ -747,7 +746,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
       if (mixins.length > 1) {
         // mixing new class
-        that = $oop.mixClass(mixins);
+        that = $oop.blendClass(mixins);
       } else {
         // no matching forwards found
         // going with last value of that
@@ -896,22 +895,22 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @returns {$oop.Class}
    * @todo Detect & throw on circular mixin
    */
-  mixOnly: function (Mixin, Through) {
-    $assert.isClass(Mixin, "Class#mixOnly expects type Class.");
+  mix: function (Mixin, Through) {
+    $assert.isClass(Mixin, "Class#mix expects type Class.");
 
     var members = Mixin.__members;
 
     // updating class relationships
-    this._removeFromMixerIndex();
+    this._removeFromBlenderIndex();
     this._addToDownstreamMixins(Mixin);
     Mixin._addToUpstreamMixins(this);
-    this._addToMixerIndex();
+    this._addToBlenderIndex();
     this._updateMemberMatrix(this.__methodMatrix, Mixin, Through);
     this._updateMemberMatrix(this.__propertyMatrix, Mixin, Through);
     this._addToContributors(Mixin, Through);
     this._removeMetExpectations(Mixin);
     this._transferExpectedFrom(Mixin);
-    this._transferMixinToTransitiveMixers(Mixin);
+    this._transferMixinToBlenders(Mixin);
     this._transferForwardsFrom(Mixin);
 
     // updating members in class
@@ -933,7 +932,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @returns {$oop.Class}
    */
-  mix: function (Class) {
+  blend: function (Class) {
     // gathering all dependencies (including Class)
     var that = this,
         contributors = this._gatherAllContributorsFrom(Class);
@@ -941,8 +940,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // mixing all dependencies
     contributors
     .forEach(function (Class) {
-      Class._addToTransitiveMixers(that);
-      that.mixOnly(Class);
+      Class._addToBlenders(that);
+      that.mix(Class);
     });
 
     return this;

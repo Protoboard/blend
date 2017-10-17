@@ -52,7 +52,7 @@ describe("$entity", function () {
 
     beforeAll(function () {
       DocumentKey = $oop.getClass('test.$entity.DocumentKey.DocumentKey')
-      .mix($entity.DocumentKey);
+      .blend($entity.DocumentKey);
     });
 
     beforeEach(function () {

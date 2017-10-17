@@ -10,7 +10,7 @@ describe("$utils", function () {
 
     beforeAll(function () {
       Cloneable = $oop.getClass('test.$utils.Cloneable.Cloneable')
-      .mixOnly($utils.Cloneable)
+      .mix($utils.Cloneable)
       .define({
         clone: function clone() {
           return clone.returned;

@@ -17,8 +17,8 @@
  * @todo Cache attributeDocumentKey, nodeType, nodeTypeKey
  */
 $entity.FieldKey = $oop.getClass('$entity.FieldKey')
-.mix($oop.getClass('$entity.EntityKey'))
-.mix($oop.getClass('$entity.ValueKey'))
+.blend($oop.getClass('$entity.EntityKey'))
+.blend($oop.getClass('$entity.ValueKey'))
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.FieldKey# */{
   /**

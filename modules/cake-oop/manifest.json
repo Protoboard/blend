@@ -13,9 +13,9 @@
       "class/assertions.js",
       "class/Class.js",
       "class/getClass.js",
-      "mixer/MixerIndex.js",
-      "mixer/ClassMixer.js",
-      "mixer/mixClass.js",
+      "blender/BlenderIndex.js",
+      "blender/ClassBlender.js",
+      "blender/blendClass.js",
       "classes/Singleton.js"
     ]
   }

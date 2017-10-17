@@ -10,7 +10,7 @@
  * @extends $utils.Identifiable
  */
 $widget.Node = $oop.getClass('$widget.Node')
-.mix($utils.Identifiable)
+.blend($utils.Identifiable)
 .define(/** @lends $widget.Node# */{
   /**
    * @member {$widget.Node} $widget.Node#parentNode

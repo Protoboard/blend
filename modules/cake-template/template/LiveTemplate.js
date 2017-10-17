@@ -16,10 +16,10 @@
  * @implements $utils.Stringifiable
  */
 $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
-.mix($oop.getClass('$template.Template'))
-.mix($utils.Identifiable)
-.mix($event.EventSender)
-.mix($event.EventListener)
+.blend($oop.getClass('$template.Template'))
+.blend($utils.Identifiable)
+.blend($event.EventSender)
+.blend($event.EventListener)
 .implement($utils.Stringifiable)
 .define(/** @lends $template.LiveTemplate# */{
   /**
