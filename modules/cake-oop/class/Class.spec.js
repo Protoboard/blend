@@ -1153,11 +1153,11 @@ describe("$oop", function () {
     });
 
     describe("mixes()", function () {
-      var Trait;
+      var Mixin;
 
       beforeEach(function () {
-        Trait = $oop.getClass('Trait');
-        Class.mixOnly(Trait);
+        Mixin = $oop.getClass('test.$oop.Class.Mixin');
+        Class.mixOnly(Mixin);
       });
 
       describe("on invalid argument", function () {
@@ -1176,100 +1176,100 @@ describe("$oop", function () {
 
       describe("on present mixin", function () {
         it("should return true", function () {
-          expect(Class.mixes(Trait)).toBe(true);
+          expect(Class.mixes(Mixin)).toBe(true);
         });
       });
 
       describe("on absent mixin", function () {
         it("should return false", function () {
-          var Trait2 = $oop.getClass('Trait2');
-          expect(Class.mixes(Trait2)).toBe(false);
+          var Mixin2 = $oop.getClass('test.$oop.Class.Mixin2');
+          expect(Class.mixes(Mixin2)).toBe(false);
         });
       });
     });
 
     describe("mixedBy()", function () {
-      var Trait;
+      var Mixin;
 
       beforeEach(function () {
-        Trait = $oop.getClass('Interface');
-        Class.mixOnly(Trait);
+        Mixin = $oop.getClass('test.$oop.Class.Mixin');
+        Class.mixOnly(Mixin);
       });
 
       describe("when passing non-class", function () {
         it("should return false", function () {
-          expect(Trait.mixedBy(undefined)).toBe(false);
+          expect(Mixin.mixedBy(undefined)).toBe(false);
         });
       });
 
       describe("on mixing class", function () {
         it("should return true", function () {
-          expect(Trait.mixedBy(Class)).toBe(true);
+          expect(Mixin.mixedBy(Class)).toBe(true);
         });
       });
 
       describe("on non-mixing class", function () {
         it("should return false", function () {
           var Class2 = $oop.getClass('Class2');
-          expect(Trait.mixedBy(Class2)).toBe(false);
+          expect(Mixin.mixedBy(Class2)).toBe(false);
         });
       });
     });
 
     describe("expects()", function () {
-      var Trait;
+      var Mixin;
 
       beforeEach(function () {
-        Trait = $oop.getClass('Trait')
+        Mixin = $oop.getClass('test.$oop.Class.Mixin')
         .expect(Class);
       });
 
       describe("on invalid argument", function () {
         it("should throw", function () {
           expect(function () {
-            Trait.expects();
+            Mixin.expects();
           }).toThrow();
         });
       });
 
       describe("on fulfilled expectation", function () {
         it("should return true", function () {
-          expect(Trait.expects(Class)).toBe(true);
+          expect(Mixin.expects(Class)).toBe(true);
         });
       });
 
       describe("on unfulfilled expectation", function () {
         it("should return false", function () {
-          var Trait2 = $oop.getClass('Trait2');
-          expect(Trait2.expects(Class)).toBe(false);
+          var Mixin2 = $oop.getClass('test.$oop.Class.Mixin2');
+          expect(Mixin2.expects(Class)).toBe(false);
         });
       });
     });
 
     describe("expectedBy()", function () {
-      var Trait;
+      var Mixin;
 
       beforeEach(function () {
-        Trait = $oop.getClass('Interface')
+        Mixin = $oop.getClass('test.$oop.Class.Mixin')
         .expect(Class);
       });
 
       describe("when passing non-class", function () {
         it("should return false", function () {
-          expect(Trait.expectedBy(undefined)).toBe(false);
+          expect(Mixin.expectedBy(undefined)).toBe(false);
         });
       });
 
       describe("on fulfilled expectation", function () {
         it("should return true", function () {
-          expect(Class.expectedBy(Trait)).toBe(true);
+          expect(Class.expectedBy(Mixin)).toBe(true);
         });
       });
 
       describe("on non-mixing class", function () {
         it("should return false", function () {
-          var Trait2 = $oop.getClass('Trait2');
-          expect(Class.expectedBy(Trait2)).toBe(false);
+          var Mixin2 = $oop.getClass('test.$oop.Class.Mixin2');
+          expect(Class.expectedBy(Mixin2)).toBe(false);
         });
       });
     });
@@ -1335,7 +1335,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("of trait", function () {
+      describe("of mixin", function () {
         var Host;
 
         beforeEach(function () {

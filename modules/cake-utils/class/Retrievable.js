@@ -12,7 +12,7 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
 .mix($oop.getClass('$utils.Identifiable'))
 .define(/** @lends $utils.Retrievable# */{
   /**
-   * Global registry for instances having the Retrievable trait.
+   * Global registry for instances having the Retrievable mixin.
    * @memberOf $utils.Retrievable
    * @type {object}
    */

@@ -1023,7 +1023,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
   /**
    * Specifies that a mixin is expected by to be (on) the host class.
-   * Used by traits only.
+   * Used by mixins only.
    * @param {$oop.Class} Class
    * @returns {$oop.Class}
    */
