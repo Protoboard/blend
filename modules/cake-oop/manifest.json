@@ -8,7 +8,6 @@
       "index/QuickList.js",
       "index/QuickListLookup.js",
       "index/index-utils.js",
-      "class/ForwardDescriptor.js",
       "class/MemberMatrix.js",
       "class/assertions.js",
       "class/Class.js",
