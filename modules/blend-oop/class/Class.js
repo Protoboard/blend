@@ -983,8 +983,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {function} filter
    * @returns {$oop.Class}
    */
-  forwardMix: function (Mixin, filter) {
-    $assert.isClass(Mixin, "Class#forwardMix expects type Class.");
+  forwardBlend: function (Mixin, filter) {
+    $assert.isClass(Mixin, "Class#forwardBlend expects type Class.");
 
     var Source = this;
 

@@ -7,24 +7,20 @@ describe("$oop", function () {
   describe("Class", function () {
     var classByClassId,
         classByMixinIds,
-        mixinsByClassId,
         Class,
         result;
 
     beforeEach(function () {
       classByClassId = $oop.classByClassId;
       classByMixinIds = $oop.classByMixinIds;
-      mixinsByClassId = $oop.mixinsByClassId;
       $oop.classByClassId = {};
       $oop.classByMixinIds = {};
-      $oop.mixinsByClassId = {};
       Class = $oop.getClass('Class');
     });
 
     afterEach(function () {
       $oop.classByClassId = classByClassId;
       $oop.classByMixinIds = classByMixinIds;
-      $oop.mixinsByClassId = mixinsByClassId;
     });
 
     describe("define()", function () {
@@ -552,7 +548,7 @@ describe("$oop", function () {
         beforeEach(function () {
           ForwardMixin = $oop.getClass('test.$oop.Class.ForwardMixin');
           filter = function () {};
-          Mixin.forwardMix(ForwardMixin, filter);
+          Mixin.forwardBlend(ForwardMixin, filter);
         });
 
         it("should transfer forwards from mixin", function () {
@@ -575,7 +571,7 @@ describe("$oop", function () {
 
           beforeEach(function () {
             ForwardMixin2 = $oop.getClass('test.$oop.Class.ForwardMixin2');
-            Class.forwardMix(ForwardMixin2, filter);
+            Class.forwardBlend(ForwardMixin2, filter);
           });
 
           it("should transfer mixin's forwards before own", function () {
@@ -621,7 +617,7 @@ describe("$oop", function () {
           beforeEach(function () {
             ForwardMixin2 = $oop.getClass('test.$oop.Class.ForwardMixin2');
             Class.mix(ForwardMixin2);
-            Mixin.forwardMix(ForwardMixin2, filter);
+            Mixin.forwardBlend(ForwardMixin2, filter);
           });
 
           it("should not transfer mixed forward", function () {
@@ -906,7 +902,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("forwardMix()", function () {
+    describe("forwardBlend()", function () {
       var ForwardMixin,
           filter;
 
@@ -916,12 +912,12 @@ describe("$oop", function () {
       });
 
       it("should return self", function () {
-        result = Class.forwardMix(ForwardMixin, filter);
+        result = Class.forwardBlend(ForwardMixin, filter);
         expect(result).toBe(Class);
       });
 
       it("should add forward descriptor", function () {
-        Class.forwardMix(ForwardMixin, filter);
+        Class.forwardBlend(ForwardMixin, filter);
         expect(Class.__forwards).toEqual({
           list: [{
             mixin: ForwardMixin,
@@ -938,7 +934,7 @@ describe("$oop", function () {
       describe("when passing invalid argument", function () {
         it("should throw", function () {
           expect(function () {
-            Class.forwardMix(null, filter);
+            Class.forwardBlend(null, filter);
           }).toThrow();
         });
       });
@@ -954,7 +950,7 @@ describe("$oop", function () {
         });
 
         it("should propagate forwards to mixers", function () {
-          Class.forwardMix(ForwardMixin, filter);
+          Class.forwardBlend(ForwardMixin, filter);
           expect(Mixer1.__forwards).toEqual({
             list: [{
               mixin: ForwardMixin,
@@ -988,7 +984,7 @@ describe("$oop", function () {
           });
 
           it("should not propagate forwards to mixers", function () {
-            Class.forwardMix(ForwardMixin, filter);
+            Class.forwardBlend(ForwardMixin, filter);
             expect(Mixer1.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
@@ -1013,12 +1009,12 @@ describe("$oop", function () {
         var filter2;
 
         beforeEach(function () {
-          Class.forwardMix(ForwardMixin, filter);
+          Class.forwardBlend(ForwardMixin, filter);
           filter2 = function () {};
         });
 
         it("should do nothing filter", function () {
-          Class.forwardMix(ForwardMixin, filter2);
+          Class.forwardBlend(ForwardMixin, filter2);
           expect(Class.__forwards).toEqual({
             list: [{
               mixin: ForwardMixin,
@@ -1037,7 +1033,7 @@ describe("$oop", function () {
         var Mixer;
 
         beforeEach(function () {
-          Class.forwardMix(ForwardMixin, filter);
+          Class.forwardBlend(ForwardMixin, filter);
           Mixer = $oop.getClass('test.$oop.Class.Mixer');
         });
 
@@ -1411,7 +1407,7 @@ describe("$oop", function () {
           .mix(Class);
 
           $oop.getClass('Class')
-          .forwardMix(Forward, function (args) {
+          .forwardBlend(Forward, function (args) {
             return args.foo === 1;
           });
         });
@@ -1443,7 +1439,7 @@ describe("$oop", function () {
             .mix(Class);
 
             $oop.getClass('Class')
-            .forwardMix(Forward2, function (args) {
+            .forwardBlend(Forward2, function (args) {
               return args.foo === 2;
             });
           });

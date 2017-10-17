@@ -155,7 +155,7 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
 });
 
 $oop.getClass('$entity.EntityKey')
-.forwardMix($entity.DocumentKey, function (properties) {
+.forwardBlend($entity.DocumentKey, function (properties) {
   var entityPath = properties && properties._entityPath,
       components = entityPath && entityPath.components;
   return components &&

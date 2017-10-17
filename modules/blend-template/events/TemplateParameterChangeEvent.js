@@ -21,6 +21,6 @@ $template.TemplateParameterChangeEvent = $oop.getClass('$template.TemplateParame
  */
 
 $oop.getClass('$event.Event')
-.forwardMix($template.TemplateParameterChangeEvent, function (properties) {
+.forwardBlend($template.TemplateParameterChangeEvent, function (properties) {
   return $utils.matchesPrefix(properties.eventName, 'template.change.parameter');
 });

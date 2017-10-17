@@ -60,7 +60,7 @@ $entity.Field = $oop.getClass('$entity.Field')
 
 $entity.Field
 // leaf node fields
-.forwardMix($oop.getClass('$entity.LeafNoded'), function (properties) {
+.forwardBlend($oop.getClass('$entity.LeafNoded'), function (properties) {
   var fieldKey = properties && properties.entityKey;
   // todo Need better way of specifying mutually exclusive
   return !this.mixes($entity.BranchNoded) &&
@@ -68,7 +68,7 @@ $entity.Field
 });
 
 $oop.getClass('$entity.Entity')
-.forwardMix($entity.Field, function (properties) {
+.forwardBlend($entity.Field, function (properties) {
   return $entity.FieldKey.mixedBy(properties.entityKey);
 });
 

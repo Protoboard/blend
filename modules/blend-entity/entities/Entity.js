@@ -166,7 +166,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
 
 // caching Entity if key is cached
 $entity.Entity
-.forwardMix($oop.getClass('$entity.EntityKeyCached'), function (properties) {
+.forwardBlend($oop.getClass('$entity.EntityKeyCached'), function (properties) {
   return $utils.StringifyCached.mixedBy(properties.entityKey);
 });
 

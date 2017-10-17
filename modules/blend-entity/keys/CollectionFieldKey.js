@@ -49,7 +49,7 @@ $entity.CollectionFieldKey = $oop.getClass('$entity.CollectionFieldKey')
 
 $oop.getClass('$entity.FieldKey')
 // 'collection' field valueType
-.forwardMix($entity.CollectionFieldKey, function (properties) {
+.forwardBlend($entity.CollectionFieldKey, function (properties) {
   var documentKey = properties.documentKey,
       fieldName = properties.fieldName,
       attributeDocumentKey = documentKey && fieldName &&

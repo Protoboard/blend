@@ -116,7 +116,7 @@ $entity.Document = $oop.getClass('$entity.Document')
 });
 
 $oop.getClass('$entity.Entity')
-.forwardMix($entity.Document, function (properties) {
+.forwardBlend($entity.Document, function (properties) {
   return $entity.DocumentKey.mixedBy(properties.entityKey);
 });
 
