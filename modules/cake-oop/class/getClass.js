@@ -129,18 +129,13 @@ $oop.copyProperties($oop, /** @lends $oop */{
         __propertyMatrix: {},
 
         /**
-         * List of forwards (surrogate) descriptors.
-         * @type {$oop.ForwardDescriptor[]}
-         * @private
-         */
-        __forwards: [],
-
-        /**
+         * Registry of forward descriptors. Forwards define additional
+         * mixins to be mixed to classes when initial properties meet the
+         * specified condition.
          * @type {$oop.QuickList}
          * @private
-         * @todo Rename
          */
-        __forwards2: {
+        __forwards: {
           list: [],
           sources: [],
           lookup: {}

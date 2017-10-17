@@ -40,18 +40,18 @@ describe("$oop", function () {
       });
 
       it("should create a Class", function () {
-        result = $oop.mixClass(Mixin1, Mixin2);
+        result = $oop.mixClass([Mixin1, Mixin2]);
         expect($oop.Class.isPrototypeOf(result)).toBeTruthy();
       });
 
       it("should mix specified mixins", function () {
-        result = $oop.mixClass(Mixin1, Mixin2);
+        result = $oop.mixClass([Mixin1, Mixin2]);
         expect(result.mixes(Mixin1)).toBeTruthy();
         expect(result.mixes(Mixin2)).toBeTruthy();
       });
 
       it("should set class in lookup", function () {
-        result = $oop.mixClass(Mixin1, Mixin2);
+        result = $oop.mixClass([Mixin1, Mixin2]);
         expect($oop.classByMixinIds).toEqual({
           "test.$oop.ClassMixer.Mixin1,test.$oop.ClassMixer.Mixin2": {
             list: [result],
@@ -74,7 +74,7 @@ describe("$oop", function () {
         });
 
         it("should observe inheritance in mix order", function () {
-          result = $oop.mixClass(Mixin1, Mixin2, Mixin3);
+          result = $oop.mixClass([Mixin1, Mixin2, Mixin3]);
           expect(result.__contributors.list).toEqual([
             Mixin2,
             Mixin1,
@@ -90,7 +90,7 @@ describe("$oop", function () {
         });
 
         it("should retrieve class from index", function () {
-          result = $oop.mixClass(Mixin1, Mixin2);
+          result = $oop.mixClass([Mixin1, Mixin2]);
           expect($oop.MixerIndex.getClassForMixins)
           .toHaveBeenCalledWith([Mixin1, Mixin2]);
           expect(result).toBe(Class);
@@ -121,7 +121,7 @@ describe("$oop", function () {
         });
 
         it("should return matching class", function () {
-          result = $oop.mixClass(Mixin1, Mixin2);
+          result = $oop.mixClass([Mixin1, Mixin2]);
           expect(result).toBe(Class);
         });
       });
@@ -141,8 +141,8 @@ describe("$oop", function () {
     });
 
     it("should invoke ClassMixer.mixClass", function () {
-      result = $oop.mixClass(Mixin1, Mixin2);
-      expect($oop.ClassMixer.mixClass).toHaveBeenCalledWith(Mixin1, Mixin2);
+      result = $oop.mixClass([Mixin1, Mixin2]);
+      expect($oop.ClassMixer.mixClass).toHaveBeenCalledWith([Mixin1, Mixin2]);
       expect(result).toBe(Class);
     });
   });

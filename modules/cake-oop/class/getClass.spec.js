@@ -79,7 +79,11 @@ describe("$oop", function () {
     });
 
     it("should initialize forwards", function () {
-      expect(result.__forwards).toEqual([]);
+      expect(result.__forwards).toEqual({
+        list: [],
+        sources: [],
+        lookup: {}
+      });
     });
 
     it("should initialize hash function", function () {

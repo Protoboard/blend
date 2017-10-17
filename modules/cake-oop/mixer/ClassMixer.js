@@ -96,13 +96,11 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
   /**
    * Creates or retrieves an ad-hoc class that is made up of the specified
    * mixins.
-   * @param {...$oop.Class} Mixin
+   * @param {Array.<$oop.Class>} mixins
    * @returns {$oop.Class}
-   * @todo Change variable argument list to array?
    */
-  mixClass: function (Mixin) {
-    var mixins = slice.call(arguments),
-        MixerIndex = $oop.MixerIndex,
+  mixClass: function (mixins) {
+    var MixerIndex = $oop.MixerIndex,
         Class = MixerIndex.getClassForMixins(mixins);
 
     if (!Class) {

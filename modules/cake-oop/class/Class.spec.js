@@ -557,7 +557,7 @@ describe("$oop", function () {
 
         it("should transfer forwards from mixin", function () {
           Class.mixOnly(Mixin);
-          expect(Class.__forwards2).toEqual({
+          expect(Class.__forwards).toEqual({
             list: [{
               mixin: ForwardMixin,
               filter: filter,
@@ -580,7 +580,7 @@ describe("$oop", function () {
 
           it("should transfer mixin's forwards before own", function () {
             Class.mixOnly(Mixin);
-            expect(Class.__forwards2).toEqual({
+            expect(Class.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
                 filter: filter,
@@ -601,7 +601,7 @@ describe("$oop", function () {
           it("should remove forwards that are or are mixed by the mixin", function () {
             Mixin.mix(ForwardMixin2);
             Class.mixOnly(Mixin);
-            expect(Class.__forwards2).toEqual({
+            expect(Class.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
                 filter: filter,
@@ -626,7 +626,7 @@ describe("$oop", function () {
 
           it("should not transfer mixed forward", function () {
             Class.mixOnly(Mixin);
-            expect(Class.__forwards2).toEqual({
+            expect(Class.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
                 filter: filter,
@@ -922,7 +922,7 @@ describe("$oop", function () {
 
       it("should add forward descriptor", function () {
         Class.forwardMix(ForwardMixin, filter);
-        expect(Class.__forwards2).toEqual({
+        expect(Class.__forwards).toEqual({
           list: [{
             mixin: ForwardMixin,
             filter: filter,
@@ -955,7 +955,7 @@ describe("$oop", function () {
 
         it("should propagate forwards to mixers", function () {
           Class.forwardMix(ForwardMixin, filter);
-          expect(Mixer1.__forwards2).toEqual({
+          expect(Mixer1.__forwards).toEqual({
             list: [{
               mixin: ForwardMixin,
               filter: filter,
@@ -966,7 +966,7 @@ describe("$oop", function () {
               'test.$oop.Class.ForwardMixin,Class': 0
             }
           });
-          expect(Mixer2.__forwards2).toEqual({
+          expect(Mixer2.__forwards).toEqual({
             list: [{
               mixin: ForwardMixin,
               filter: filter,
@@ -989,7 +989,7 @@ describe("$oop", function () {
 
           it("should not propagate forwards to mixers", function () {
             Class.forwardMix(ForwardMixin, filter);
-            expect(Mixer1.__forwards2).toEqual({
+            expect(Mixer1.__forwards).toEqual({
               list: [{
                 mixin: ForwardMixin,
                 filter: filter,
@@ -1000,7 +1000,7 @@ describe("$oop", function () {
                 'test.$oop.Class.ForwardMixin,Class': 0
               }
             });
-            expect(Mixer2.__forwards2).toEqual({
+            expect(Mixer2.__forwards).toEqual({
               list: [],
               sources: [],
               lookup: {}
@@ -1019,7 +1019,7 @@ describe("$oop", function () {
 
         it("should do nothing filter", function () {
           Class.forwardMix(ForwardMixin, filter2);
-          expect(Class.__forwards2).toEqual({
+          expect(Class.__forwards).toEqual({
             list: [{
               mixin: ForwardMixin,
               filter: filter,
@@ -1043,13 +1043,13 @@ describe("$oop", function () {
 
         it("should transfer forwards", function () {
           Mixer.mixOnly(Class);
-          expect(Mixer.__forwards2.list).toContain({
+          expect(Mixer.__forwards.list).toContain({
             mixin: ForwardMixin,
             filter: filter,
             source: Class
           });
-          expect(Mixer.__forwards2.sources).toContain(Class);
-          expect(Mixer.__forwards2.lookup['test.$oop.Class.ForwardMixin,Class'])
+          expect(Mixer.__forwards.sources).toContain(Class);
+          expect(Mixer.__forwards.lookup['test.$oop.Class.ForwardMixin,Class'])
           .toBeDefined();
         });
       });

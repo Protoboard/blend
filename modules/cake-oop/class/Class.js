@@ -519,7 +519,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   _transferForwardsFrom: function (Class) {
     var that = this;
 
-    Class.__forwards2.list
+    Class.__forwards.list
     // excluding forward mixins that are already mixed by current class
     .filter(function (forward) {
       return !that.mixes(forward.mixin);
@@ -529,7 +529,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     });
 
     // removing forwards from current class that are mixed by Class
-    this.__forwards2.list
+    this.__forwards.list
     .filter(function (forward) {
       return Class.mixes(forward.mixin);
     })
@@ -617,11 +617,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Updates forwards lookup based on current contents of __forwards2.list.
+   * Updates forwards lookup based on current contents of __forwards.list.
    * @private
    */
   _updateForwardLookup: function () {
-    var forwards = this.__forwards2;
+    var forwards = this.__forwards;
     forwards.lookup = forwards.list
     .reduce(function (lookup, forward, i) {
       var lookupHash = [forward.mixin.__classId, forward.source.__classId]
@@ -640,7 +640,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @private
    */
   _addToForwards: function (Mixin, filter, Source, AfterSource) {
-    var forwards = this.__forwards2,
+    var forwards = this.__forwards,
         lookupHash = [Mixin.__classId, Source.__classId]
         .map($oop.escapeCommas)
         .join(','),
@@ -687,7 +687,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @private
    */
   _removeFromForwards: function (Mixin, Source) {
-    var forwards = this.__forwards2,
+    var forwards = this.__forwards,
         forwardHash = [Mixin.__classId, Source.__classId]
         .map($oop.escapeCommas)
         .join(','),
@@ -722,36 +722,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * @param {Object} properties
-   * @returns {$oop.Class}
-   * @private
-   * @todo Measure performance impact
-   */
-  _getForwardClass: function (properties) {
-    var that = this,
-        forwards,
-        mixins;
-
-    if (this.__forwards2.list) {
-      forwards = this.__forwards2.list
-      .filter(function (forward) {
-        return forward.filter.call(that, properties);
-      });
-
-      if (forwards.length) {
-        // obtaining compact mixin array (each affected mixin occurring once)
-        mixins = forwards
-        .map(function (forward) {
-          return forward.mixin;
-        });
-        mixins.unshift(this);
-
-        return $oop.mixClass.apply($oop.mixClass, mixins);
-      }
-    }
-  },
-
-  /**
    * Creates a new instance.
    * @param {Object} [properties]
    * @returns {$oop.Class}
@@ -759,12 +729,33 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   create: function (properties) {
     properties = properties || {};
 
-    // retrieving forward class (if any)
+    // finding forward class (if any)
     var that = this,
-        forwardClass;
+        forwards,
+        forwardCount,
+        i, forward,
+        mixins;
+    while (true) {
+      forwards = that.__forwards.list;
+      forwardCount = forwards.length;
+      mixins = [that];
 
-    while (forwardClass = that._getForwardClass(properties)) {
-      that = forwardClass;
+      // obtaining suitable mixins
+      for (i = 0; i < forwardCount; i++) {
+        forward = forwards[i];
+        if (forward.filter.call(this, properties)) {
+          mixins.push(forward.mixin);
+        }
+      }
+
+      if (mixins.length > 1) {
+        // mixing new class
+        that = $oop.mixClass(mixins);
+      } else {
+        // no matching forwards found
+        // going with last value of that
+        break;
+      }
     }
 
     // fetching cached instance
@@ -810,13 +801,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // instantiating class
     instance = Object.create(that);
 
+    // copying initial properties to instance
     var propertyNames,
         propertyCount,
-        propertyName,
-        i;
-
+        propertyName;
     if (properties instanceof Object) {
-      // copying properties to instance
       propertyNames = Object.getOwnPropertyNames(properties);
       propertyCount = propertyNames.length;
       for (i = 0; i < propertyCount; i++) {
