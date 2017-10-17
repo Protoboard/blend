@@ -426,7 +426,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("on duplication", function () {
+      describe("when mixing the same mixin again", function () {
         beforeEach(function () {
           Class.mixOnly(Mixin);
         });

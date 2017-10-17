@@ -21,7 +21,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Copies batch of members to class members container.
+   * Copies batch of members to class members container. Overwrites
+   * conflicting properties.
    * @param {object} batch
    * @private
    */
@@ -346,7 +347,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToMixins: function (Class) {
+  _addToDownstreamMixins: function (Class) {
     var mixins = this.__mixins.downstream,
         mixinList = mixins.list,
         mixinLookup = mixins.lookup,
@@ -363,7 +364,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToMixers: function (Class) {
+  _addToUpstreamMixins: function (Class) {
     var hosts = this.__mixins.upstream,
         hostList = hosts.list,
         hostLookup = hosts.lookup,
@@ -412,7 +413,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToExpected: function (Class) {
+  _addToDownstreamExpectations: function (Class) {
     var classId = this.__classId,
         expectedId = Class.__classId,
         mixinLookup = this.__mixins.downstream.lookup,
@@ -435,7 +436,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _addToHosts: function (Class) {
+  _addToUpstreamExpectations: function (Class) {
     var hosts = this.__expected.upstream,
         hostList = hosts.list,
         hostLookup = hosts.lookup,
@@ -451,7 +452,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @param {$oop.Class} Class
    * @private
    */
-  _removeFromExpected: function (Class) {
+  _removeMetExpectations: function (Class) {
     var classId = Class.__classId,
         expected = this.__expected.downstream,
         expectedList = expected.list,
@@ -476,21 +477,15 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // expectations
     Class.__expected.downstream.list.concat(Class.__mixins.downstream.list)
     .forEach(function (Class) {
-      // adding expected mixin to registry
-      that._addToExpected(Class);
-
-      // adding to hosts on expected
-      Class._addToHosts(that);
+      that._addToDownstreamExpectations(Class);
+      Class._addToUpstreamExpectations(that);
     });
 
     // transferring class AS expected to mixers and hosts of current class
     this.__mixins.upstream.list.concat(this.__expected.upstream.list)
     .forEach(function (Host) {
-      // adding expected mixin to registry
-      Host._addToExpected(Class);
-
-      // adding to hosts on expected mixin
-      Class._addToHosts(Host);
+      Host._addToDownstreamExpectations(Class);
+      Class._addToUpstreamExpectations(Host);
     });
   },
 
@@ -502,11 +497,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _transferMixinToTransitiveMixers: function (Class) {
     var that = this;
-    this.__transitiveMixers.list.forEach(function (TransitiveMixer) {
-      // adding mixer to mixin
+    this.__transitiveMixers.list
+    .forEach(function (TransitiveMixer) {
       Class._addToTransitiveMixers(TransitiveMixer);
-
-      // mixing class in mixer
       TransitiveMixer.mixOnly(Class, that);
     });
   },
@@ -548,19 +541,10 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
     this.__mixins.upstream.list
     .forEach(function (Class) {
-      // adding methods to lookup at specified index
       Class._addMethodsToMatrix(members, classId);
-
-      // adding properties to lookup at specified index
       Class._addPropertiesToMatrix(members, classId);
-
-      // adding / overwriting properties
       Class._addPropertiesToClass(members);
-
-      // adding wrapper method when necessary
       Class._addWrapperMethodsToClass(members);
-
-      // updating missing method names
       Class._removeFromMissingMethods(members);
     });
   },
@@ -574,7 +558,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   _delegateToImplementers: function (members) {
     this.__interfaces.upstream.list
     .forEach(function (Class) {
-      // updating missing method names
       Class._addToMissingMethods(members);
     });
   },
@@ -856,28 +839,14 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       this.define(this.__delegates);
     }
 
-    // adding batch to members, overwriting conflicting properties
+    // updating members in class
     this._addToMembers(batch);
-
-    // adding methods to lookup at specified index
     this._addMethodsToMatrix(batch, this.__classId);
-
-    // adding properties to lookup at specified index
     this._addPropertiesToMatrix(batch, this.__classId);
-
-    // adding / overwriting properties
     this._addPropertiesToClass(batch);
-
-    // adding wrapper method when necessary
     this._addWrapperMethodsToClass(batch);
-
-    // updating missing methods names
     this._removeFromMissingMethods(batch);
-
-    // delegating batch to mixers
     this._delegateToMixers(batch);
-
-    // updating implementers
     this._delegateToImplementers(batch);
 
     return this;
@@ -895,7 +864,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   delegate: function (batch) {
     $assert.isObject(batch, "No members specified.");
 
-    // adding batch of delegates, overwriting conflicting properties
     this._addToDelegates(batch);
 
     if (this.__contributors.lookup[this.__classId] !== undefined) {
@@ -909,61 +877,36 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
   /**
    * Specifies a class to be mixed by the host class.
-   * @param {$oop.Class} Class
+   * @param {$oop.Class} Mixin
    * @param {$oop.Class} [Through]
    * @returns {$oop.Class}
+   * @todo Detect & throw on circular mixin
    */
-  mixOnly: function (Class, Through) {
-    $assert.isClass(Class, "Class#mixOnly expects type Class.");
+  mixOnly: function (Mixin, Through) {
+    $assert.isClass(Mixin, "Class#mixOnly expects type Class.");
 
-    // todo Detect & throw on circular mixin
+    var members = Mixin.__members;
 
+    // updating class relationships
     this._removeFromMixerIndex();
-
-    // adding to downstream mixins
-    this._addToMixins(Class);
-
-    // adding to upstream mixins
-    Class._addToMixers(this);
-
-    // adding self to MixerIndex
+    this._addToDownstreamMixins(Mixin);
+    Mixin._addToUpstreamMixins(this);
     this._addToMixerIndex();
+    this._addToContributors(Mixin, Through);
+    this._removeMetExpectations(Mixin);
+    this._transferExpectedFrom(Mixin);
+    this._transferMixinToTransitiveMixers(Mixin);
+    this._transferForwardsFrom(Mixin);
 
-    // adding mixed class to contributions
-    this._addToContributors(Class, Through);
-
-    // removing met expectations
-    this._removeFromExpected(Class);
-
-    // transferring 2nd dregree mixins (present & expected) from mixin
-    this._transferExpectedFrom(Class);
-
-    // transferring as mixin to transitive mixers
-    this._transferMixinToTransitiveMixers(Class);
-
-    // transferring forward definitions
-    this._transferForwardsFrom(Class);
-
-    var members = Class.__members;
-
-    // adding methods to lookup at specified index
-    this._addMethodsToMatrix(members, Class.__classId, Through && Through.__classId);
-
-    // adding properties to lookup at specified index
-    this._addPropertiesToMatrix(members, Class.__classId, Through && Through.__classId);
-
-    // adding / overwriting properties
+    // updating members in class
+    this._addMethodsToMatrix(members, Mixin.__classId, Through && Through.__classId);
+    this._addPropertiesToMatrix(members, Mixin.__classId, Through && Through.__classId);
     this._addPropertiesToClass(members);
-
-    // adding wrapper method when necessary
     this._addWrapperMethodsToClass(members);
-
-    // updating missing method names
     this._removeFromMissingMethods(members);
 
-    // updating instance mapper
-    if (Class.__mapper) {
-      this._setInstanceMapper(Class.__mapper);
+    if (Mixin.__mapper) {
+      this._setInstanceMapper(Mixin.__mapper);
     }
 
     return this;
@@ -980,10 +923,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         contributors = this._gatherAllContributorsFrom(Class);
 
     // mixing all dependencies
-    contributors.forEach(function (Class) {
-      // adding current class to mixin as transitive mixer
+    contributors
+    .forEach(function (Class) {
       Class._addToTransitiveMixers(that);
-
       that.mixOnly(Class);
     });
 
@@ -998,13 +940,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   implement: function (Interface) {
     $assert.isClass(Interface, "Class#implement expects type Class.");
 
-    // adding to interfaces
     this._addToInterfaces(Interface);
-
-    // adding to implementers on Interface
     Interface._addToImplementers(this);
-
-    // updating missing method names
     this._addToMissingMethods(Interface.__members);
 
     return this;
@@ -1019,13 +956,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   expect: function (Class) {
     $assert.isClass(Class, "Class#expect expects type Class.");
 
-    // adding expected mixin to registry
-    this._addToExpected(Class);
-
-    // adding to hosts on expected
-    Class._addToHosts(this);
-
-    // transferring mixins (present & expected) from expected mixin
+    this._addToDownstreamExpectations(Class);
+    Class._addToUpstreamExpectations(this);
     this._transferExpectedFrom(Class);
 
     return this;
@@ -1082,7 +1014,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   implements: function (Interface) {
     $assert.isClass(Interface, "Class type expected");
-
     return !!this.__interfaces.downstream.lookup[Interface.__classId];
   },
 
@@ -1106,7 +1037,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     $assert.isClass(Class, "Class type expected");
 
     var classId = Class.__classId;
-
     return this.__classId === classId ||
         !!this.__mixins.downstream.lookup[classId];
   },
@@ -1127,7 +1057,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   expects: function (Class) {
     $assert.isClass(Class, "Class type expected");
-
     return !!this.__expected.downstream.lookup[Class.__classId];
   },
 
