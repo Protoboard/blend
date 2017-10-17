@@ -11,14 +11,14 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'dist/cake-assert.js',
-      'dist/cake-oop.js',
-      'dist/cake-utils.js',
-      'dist/cake-data.js',
-      'dist/cake-event.js',
-      'dist/cake-template.js',
-      'dist/cake-entity.js',
-      'dist/cake-widget.js',
+      'dist/blend-assert.js',
+      'dist/blend-oop.js',
+      'dist/blend-utils.js',
+      'dist/blend-data.js',
+      'dist/blend-event.js',
+      'dist/blend-template.js',
+      'dist/blend-entity.js',
+      'dist/blend-widget.js',
       'test/jasmine-spyOn.js',
       'test/*.js',
       'modules/**/*.spec.js'

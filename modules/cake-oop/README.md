@@ -1,2 +1,0 @@
-Layercake OOP Module
-====================

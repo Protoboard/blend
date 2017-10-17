@@ -1,0 +1,20 @@
+{
+  "name": "blend-assert",
+  "version": "0.1.0",
+  "description": "Assertion module for Blend",
+  "keywords": [
+    "blend",
+    "assert",
+    "assertions"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2017 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/blend.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  }
+}

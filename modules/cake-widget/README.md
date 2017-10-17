@@ -1,2 +1,0 @@
-Layercake Widget Framework Module
-=================================

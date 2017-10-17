@@ -1,2 +1,0 @@
-Layercake String Template Module
-================================

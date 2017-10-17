@@ -1,0 +1,29 @@
+{
+  "name": "blend-widget",
+  "version": "0.1.0",
+  "description": "Widget framework module for Blend",
+  "keywords": [
+    "widget",
+    "component",
+    "stateful",
+    "viewcontroller"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2014-2017 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/blend.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "blend-assert": "~0.5.0",
+    "blend-data": "~0.5.0",
+    "blend-event": "~0.5.0",
+    "blend-oop": "~0.5.0",
+    "blend-template": "~0.5.0",
+    "blend-utils": "~0.5.0"
+  }
+}

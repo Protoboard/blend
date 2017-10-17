@@ -1,2 +1,0 @@
-Layercake Data Structures Module
-================================

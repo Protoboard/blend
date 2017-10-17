@@ -159,7 +159,7 @@ module.exports = function (grunt) {
 
     notify: buildNotifyConfig({
       options: {
-        title: 'LayercakeJS'
+        title: 'Blend'
       },
       doc: {
         options: {

@@ -1,0 +1,29 @@
+{
+  "name": "blend-template",
+  "version": "0.1.0",
+  "description": "String template module for Blend",
+  "keywords": [
+    "template",
+    "live template",
+    "substitution",
+    "replacement",
+    "handlebars"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2015-2017 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/blend.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "blend-assert": "~0.5.0",
+    "blend-data": "~0.5.0",
+    "blend-event": "~0.5.0",
+    "blend-oop": "~0.5.0",
+    "blend-utils": "~0.5.0"
+  }
+}

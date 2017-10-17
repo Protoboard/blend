@@ -1,2 +1,0 @@
-Layercake Entity Framework Module
-=================================

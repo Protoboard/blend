@@ -1,0 +1,21 @@
+{
+  "name": "blend-oop",
+  "version": "0.1.0",
+  "description": "OOP module for Blend",
+  "keywords": [
+    "assert"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2011-2017 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/blend.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "blend-assert": "~0.5.0"
+  }
+}

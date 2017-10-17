@@ -1,5 +1,5 @@
 {
-  "name": "layercake",
+  "name": "blend",
   "version": "0.1.0",
   "description": "Web app framework",
   "keywords": [
@@ -13,7 +13,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:danstocker/layercake.git"
+    "url": "git@github.com:danstocker/blend.git"
   },
   "engines": {
     "npm": "^3.0.0"
