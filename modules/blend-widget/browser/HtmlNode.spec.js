@@ -1,0 +1,212 @@
+"use strict";
+
+var $oop = window['blend-oop'],
+    $widget = window['blend-widget'];
+
+describe("$widget", function () {
+  describe("HtmlNode", function () {
+    var HtmlNode,
+        htmlNode;
+
+    beforeAll(function () {
+      HtmlNode = $oop.getClass('test.$widget.HtmlNode.HtmlNode')
+      .blend($widget.Node)
+      .blend($widget.HtmlNode);
+    });
+
+    describe("create()", function () {
+      it("should initialize elementName", function () {
+        htmlNode = HtmlNode.create();
+        expect(htmlNode.elementName).toBe('div');
+      });
+
+      it("should initialize cssClasses", function () {
+        htmlNode = HtmlNode.create();
+        expect($widget.CssClasses.mixedBy(htmlNode.cssClasses)).toBeTruthy();
+        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.create());
+      });
+
+      it("should initialize inlineStyles", function () {
+        htmlNode = HtmlNode.create();
+        expect($widget.InlineStyles.mixedBy(htmlNode.inlineStyles))
+        .toBeTruthy();
+        expect(htmlNode.inlineStyles).toEqual($widget.InlineStyles.create());
+      });
+
+      it("should initialize 'id' attribute", function () {
+        htmlNode = HtmlNode.create({
+          elementId: 'foo'
+        });
+        expect(htmlNode.attributes.getValue('id')).toBe('foo');
+      });
+
+      it("should initialize 'class' attribute", function () {
+        htmlNode = HtmlNode.create({
+          cssClasses: $widget.CssClasses.fromData({
+            foo: 'foo',
+            bar: 'bar'
+          })
+        });
+        expect(htmlNode.attributes.getValue('class')).toBe('foo bar');
+      });
+
+      it("should initialize 'style' attribute", function () {
+        htmlNode = HtmlNode.create({
+          inlineStyles: $widget.InlineStyles.fromData({
+            width: '10px',
+            height: '1em'
+          })
+        });
+        expect(htmlNode.attributes.getValue('style'))
+        .toBe('width:10px;height:1em');
+      });
+    });
+
+    describe("setElementId()", function () {
+      var result;
+
+      beforeEach(function () {
+        htmlNode = HtmlNode.create();
+        result = htmlNode.setElementId('w0');
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(htmlNode);
+      });
+
+      it("should set elementId property", function () {
+        expect(htmlNode.elementId).toBe('w0');
+      });
+
+      it("should update 'id' attribute", function () {
+        expect(htmlNode.attributes.getValue('id')).toBe('w0');
+      });
+    });
+
+    describe("addCssClass()", function () {
+      beforeEach(function () {
+        htmlNode = HtmlNode.create();
+      });
+
+      it("should return self", function () {
+        var result = htmlNode.addCssClass('foo');
+        expect(result).toBe(htmlNode);
+      });
+
+      it("should add to cssClasses", function () {
+        htmlNode.addCssClass('foo');
+        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
+          foo: 'foo'
+        }));
+      });
+
+      it("should update 'class' attribute", function () {
+        htmlNode.addCssClass('foo');
+        expect(htmlNode.getAttribute('class')).toBe('foo');
+      });
+    });
+
+    describe("hasCssClass()", function () {
+      beforeEach(function () {
+        htmlNode = HtmlNode.create()
+        .addCssClass('foo');
+      });
+
+      describe("for present CSS class", function () {
+        it("should return truthy", function () {
+          expect(htmlNode.hasCssClass('foo')).toBeTruthy();
+        });
+      });
+
+      describe("for absent CSS class", function () {
+        it("should return falsy", function () {
+          expect(htmlNode.hasCssClass('bar')).toBeFalsy();
+        });
+      });
+    });
+
+    describe("removeCssClass()", function () {
+      beforeEach(function () {
+        htmlNode = HtmlNode.create()
+        .addCssClass('foo');
+      });
+
+      it("should return self", function () {
+        var result = htmlNode.removeCssClass('foo');
+        expect(result).toBe(htmlNode);
+      });
+
+      it("should remove from cssClasses", function () {
+        htmlNode.removeCssClass('foo');
+        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({}));
+      });
+
+      it("should update 'class' attribute", function () {
+        htmlNode.removeCssClass('foo');
+        expect(htmlNode.getAttribute('class')).toBe('');
+      });
+    });
+
+    describe("setInlineStyle()", function () {
+      beforeEach(function () {
+        htmlNode = HtmlNode.create();
+      });
+
+      it("should return self", function () {
+        var result = htmlNode.setInlineStyle('foo', 'bar');
+        expect(result).toBe(htmlNode);
+      });
+
+      it("should add to inlineStyles", function () {
+        htmlNode.setInlineStyle('foo', 'bar');
+        expect(htmlNode.inlineStyles).toEqual($widget.InlineStyles.fromData({
+          foo: 'bar'
+        }));
+      });
+
+      it("should update 'style' attribute", function () {
+        htmlNode.setInlineStyle('foo', 'bar');
+        expect(htmlNode.getAttribute('style')).toBe('foo:bar');
+      });
+    });
+
+    describe("getInlineStyle()", function () {
+      beforeEach(function () {
+        htmlNode = HtmlNode.create()
+        .setInlineStyle('foo', 'bar');
+      });
+
+      it("should return inline style for specified name", function () {
+        expect(htmlNode.getInlineStyle('foo')).toBe('bar');
+      });
+
+      describe("for absent inline style", function () {
+        it("should return undefined", function () {
+          expect(htmlNode.getInlineStyle('bar')).toBeUndefined();
+        });
+      });
+    });
+
+    describe("deleteInlineStyle()", function () {
+      beforeEach(function () {
+        htmlNode = HtmlNode.create()
+        .setInlineStyle('foo', 'bar');
+      });
+
+      it("should return self", function () {
+        var result = htmlNode.deleteInlineStyle('foo');
+        expect(result).toBe(htmlNode);
+      });
+
+      it("should remove from inlineStyles", function () {
+        htmlNode.deleteInlineStyle('foo');
+        expect(htmlNode.inlineStyles).toEqual($widget.InlineStyles.fromData({}));
+      });
+
+      it("should update 'style' attribute", function () {
+        htmlNode.deleteInlineStyle('foo');
+        expect(htmlNode.getAttribute('style')).toBe('');
+      });
+    });
+  });
+});
