@@ -2,6 +2,8 @@
 
 /**
  * @function $widget.XmlAttributes.create
+ * @param {Object} [properties]
+ * @param {Object|Array} [properties.data]
  * @returns {$widget.XmlAttributes}
  */
 

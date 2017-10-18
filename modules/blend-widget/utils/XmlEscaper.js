@@ -1,11 +1,6 @@
 "use strict";
 
 /**
- * @function $widget.XmlEscaper.create
- * @returns {$widget.XmlEscaper}
- */
-
-/**
  * @class $widget.XmlEscaper
  */
 $widget.XmlEscaper = $oop.getClass('$widget.XmlEscaper')
