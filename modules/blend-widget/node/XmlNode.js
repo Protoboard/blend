@@ -70,6 +70,7 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
     var elementName = $widget.escapeXmlEntities(this.elementName);
     return [
       '<' + elementName + ' ' + this.attributes + '>',
+      // todo Would be nice if we could decouple children from XmlNode
       this.childNodes
       .callOnEachValue('toString')
       .getValues()
