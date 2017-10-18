@@ -1,7 +1,7 @@
 "use strict";
 
 var $oop = window['blend-oop'],
-    $utils = window['blend-oop'];
+    $utils = window['blend-utils'];
 
 describe("$utils", function () {
   describe("Deferred", function () {
