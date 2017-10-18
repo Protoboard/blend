@@ -28,6 +28,11 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
 
   /** @ignore */
   spread: function () {
+    var childNodes = this.childNodes;
+    this.childNodes = childNodes ?
+        childNodes.as($widget.XmlNodes) :
+        $widget.XmlNodes.create();
+
     this.attributes = this.attributes || $widget.XmlAttributes.create();
   },
 
@@ -67,16 +72,12 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
    * @returns {string}
    */
   toString: function () {
-    var elementName = $widget.escapeXmlEntities(this.elementName);
+    var elementName = $widget.escapeXmlEntities(this.elementName),
+        attributes = this.attributes;
     return [
-      '<' + elementName + ' ' + this.attributes + '>',
+      '<' + elementName + (attributes.getItemCount() ? (' ' + attributes) : '') + '>',
       // todo Would be nice if we could decouple children from XmlNode
-      this.childNodes
-      .callOnEachValue('toString')
-      .getValues()
-      // todo Sort by child order once introduced
-      .sort()
-      .join(''),
+      this.childNodes,
       '</' + elementName + '>'
     ].join('');
   }

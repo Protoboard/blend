@@ -35,6 +35,11 @@ describe("$widget", function () {
         });
       });
 
+      it("should re-initialize childNodes", function () {
+        xmlNode = XmlNode.create({elementName: 'Tag'});
+        expect($widget.XmlNodes.mixedBy(xmlNode.childNodes)).toBeTruthy();
+      });
+
       it("should initialize attributes", function () {
         xmlNode = XmlNode.create({elementName: 'Tag'});
         expect($widget.XmlAttributes.mixedBy(xmlNode.attributes))
