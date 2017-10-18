@@ -67,7 +67,7 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
    * @param {Array.<$oop.Class>} mixins
    * @returns {$oop.BlenderIndex}
    */
-  setClassForMixins: function (Class, mixins) {
+  addClassForMixins: function (Class, mixins) {
     var classId = Class.__classId,
         mixinHash = this._getHashForMixins(mixins),
         classesForMixins = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash),
@@ -89,10 +89,10 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
    * @param {$oop.Class} Class
    * @returns {$oop.BlenderIndex}
    */
-  setClass: function (Class) {
+  addClass: function (Class) {
     var mixins = Class.__mixins.downstream.list;
     if (mixins.length) {
-      this.setClassForMixins(Class, mixins);
+      this.addClassForMixins(Class, mixins);
     }
     return this;
   },
@@ -104,7 +104,7 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
    * @param {Array.<$oop.Class>} mixins
    * @returns {$oop.BlenderIndex}
    */
-  deleteClassForMixins: function (Class, mixins) {
+  removeClassForMixins: function (Class, mixins) {
     var classId = Class.__classId,
         mixinHash = this._getHashForMixins(mixins),
         classesForMixins = $oop.classByMixinIds[mixinHash],
@@ -129,10 +129,10 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
    * @param {$oop.Class} Class
    * @returns {$oop.BlenderIndex}
    */
-  deleteClass: function (Class) {
+  removeClass: function (Class) {
     var mixins = Class.__mixins.downstream.list;
     if (mixins.length) {
-      this.deleteClassForMixins(Class, mixins);
+      this.removeClassForMixins(Class, mixins);
     }
     return this;
   },

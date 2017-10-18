@@ -108,7 +108,7 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
       this._findMatchingClasses(mixins)
       .forEach(function (Class) {
         // adding Class for this specific combination of mixins
-        BlenderIndex.setClassForMixins(Class, mixins);
+        BlenderIndex.addClassForMixins(Class, mixins);
       });
       Class = BlenderIndex.getClassForMixins(mixins);
     }
@@ -119,7 +119,7 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
       mixins.forEach(function (Mixin) {
         Class.blend(Mixin);
       });
-      BlenderIndex.setClass(Class);
+      BlenderIndex.addClass(Class);
     }
 
     return Class;

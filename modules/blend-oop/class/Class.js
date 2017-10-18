@@ -396,7 +396,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   _addToBlenderIndex: function () {
     if (this.__mixins.downstream.list.length > 1) {
-      $oop.BlenderIndex.setClass(this);
+      $oop.BlenderIndex.addClass(this);
     }
   },
 
@@ -404,7 +404,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    * @private
    */
   _removeFromBlenderIndex: function () {
-    $oop.BlenderIndex.deleteClass(this);
+    $oop.BlenderIndex.removeClass(this);
   },
 
   /**

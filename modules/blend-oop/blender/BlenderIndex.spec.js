@@ -25,7 +25,7 @@ describe("$oop", function () {
       $oop.classByMixinIds = classByMixinIds;
     });
 
-    describe("setClassForMixins()", function () {
+    describe("addClassForMixins()", function () {
       var AdHoc;
 
       beforeAll(function () {
@@ -44,13 +44,13 @@ describe("$oop", function () {
       });
 
       it("should return self", function () {
-        result = $oop.BlenderIndex.setClassForMixins(
+        result = $oop.BlenderIndex.addClassForMixins(
             Class, [Mixin1, Mixin2]);
         expect(result).toBe($oop.BlenderIndex);
       });
 
       it("should set declared Class before ad-hoc", function () {
-        result = $oop.BlenderIndex.setClassForMixins(
+        result = $oop.BlenderIndex.addClassForMixins(
             Class, [Mixin1, Mixin2]);
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
@@ -71,12 +71,12 @@ describe("$oop", function () {
         });
 
         beforeEach(function () {
-          result = $oop.BlenderIndex.setClassForMixins(
+          result = $oop.BlenderIndex.addClassForMixins(
               Class, [Mixin1, Mixin2]);
         });
 
         it("should escape comma in index key", function () {
-          result = $oop.BlenderIndex.setClassForMixins(
+          result = $oop.BlenderIndex.addClassForMixins(
               Class, [Mixin1, CommaMixin]);
           expect($oop.classByMixinIds['test.$oop.CBMI.Mixin1,test\\,$oop\\,CBMI\\,CommaMixin'])
           .toEqual({
@@ -87,7 +87,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("setClass()", function () {
+    describe("addClass()", function () {
       beforeEach(function () {
         Class
         .mix(Mixin1)
@@ -95,12 +95,12 @@ describe("$oop", function () {
       });
 
       it("should return self", function () {
-        result = $oop.BlenderIndex.setClass(Class);
+        result = $oop.BlenderIndex.addClass(Class);
         expect(result).toBe($oop.BlenderIndex);
       });
 
       it("should set Class in index", function () {
-        $oop.BlenderIndex.setClass(Class);
+        $oop.BlenderIndex.addClass(Class);
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
             list: [Class],
@@ -110,7 +110,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("deleteClassForMixins()", function () {
+    describe("removeClassForMixins()", function () {
       var AdHoc;
 
       beforeAll(function () {
@@ -119,18 +119,18 @@ describe("$oop", function () {
 
       beforeEach(function () {
         $oop.BlenderIndex
-        .setClassForMixins(AdHoc, [Mixin1, Mixin2])
-        .setClassForMixins(Class, [Mixin1, Mixin2]);
+        .addClassForMixins(AdHoc, [Mixin1, Mixin2])
+        .addClassForMixins(Class, [Mixin1, Mixin2]);
       });
 
       it("should return self", function () {
-        result = $oop.BlenderIndex.deleteClassForMixins(
+        result = $oop.BlenderIndex.removeClassForMixins(
             Class, [Mixin1, Mixin2]);
         expect(result).toBe($oop.BlenderIndex);
       });
 
-      it("should delete Class from index", function () {
-        $oop.BlenderIndex.deleteClassForMixins(Class, [Mixin1, Mixin2]);
+      it("should remove Class from index", function () {
+        $oop.BlenderIndex.removeClassForMixins(Class, [Mixin1, Mixin2]);
         expect($oop.classByMixinIds).toEqual({
           'test.$oop.CBMI.Mixin1,test.$oop.CBMI.Mixin2': {
             list: [AdHoc],
@@ -140,28 +140,28 @@ describe("$oop", function () {
       });
     });
 
-    describe("deleteClass()", function () {
+    describe("removeClass()", function () {
       beforeEach(function () {
         Class
         .mix(Mixin1)
         .mix(Mixin2);
-        $oop.BlenderIndex.setClass(Class);
+        $oop.BlenderIndex.addClass(Class);
       });
 
       it("should return self", function () {
-        result = $oop.BlenderIndex.deleteClass(Class);
+        result = $oop.BlenderIndex.removeClass(Class);
         expect(result).toBe($oop.BlenderIndex);
       });
 
-      it("should delete Class from index", function () {
-        $oop.BlenderIndex.deleteClass(Class);
+      it("should remove Class from index", function () {
+        $oop.BlenderIndex.removeClass(Class);
         expect($oop.classByMixinIds).toEqual({});
       });
     });
 
     describe("getClassForMixins()", function () {
       beforeEach(function () {
-        $oop.BlenderIndex.setClassForMixins(Class, [Mixin1, Mixin2]);
+        $oop.BlenderIndex.addClassForMixins(Class, [Mixin1, Mixin2]);
       });
 
       it("should return Class matching mixins", function () {
