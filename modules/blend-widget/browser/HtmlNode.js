@@ -51,7 +51,12 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
    * @private
    */
   _updateIdAttribute: function () {
-    this.setAttribute('id', this.elementId);
+    var idAttribute = this.elementId;
+    if (idAttribute) {
+      this.setAttribute('id', idAttribute);
+    } else {
+      this.deleteAttribute('id');
+    }
   },
 
   /**
@@ -59,7 +64,12 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
    * @private
    */
   _updateClassAttribute: function () {
-    this.setAttribute('class', this.cssClasses.toString());
+    var classAttribute = this.cssClasses.toString();
+    if (classAttribute) {
+      this.setAttribute('class', classAttribute);
+    } else {
+      this.deleteAttribute('class');
+    }
   },
 
   /**
@@ -67,7 +77,12 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
    * @private
    */
   _updateStyleAttribute: function () {
-    this.setAttribute('style', this.inlineStyles.toString());
+    var styleAttribute = this.inlineStyles.toString();
+    if (styleAttribute) {
+      this.setAttribute('style', styleAttribute);
+    } else {
+      this.deleteAttribute('style');
+    }
   },
 
   /**

@@ -155,7 +155,7 @@ describe("$widget", function () {
 
       it("should update 'class' attribute", function () {
         htmlNode.removeCssClass('foo');
-        expect(htmlNode.getAttribute('class')).toBe('');
+        expect(htmlNode.getAttribute('class')).toBeUndefined();
       });
     });
 
@@ -218,7 +218,7 @@ describe("$widget", function () {
 
       it("should update 'style' attribute", function () {
         htmlNode.deleteInlineStyle('foo');
-        expect(htmlNode.getAttribute('style')).toBe('');
+        expect(htmlNode.getAttribute('style')).toBeUndefined();
       });
     });
   });
