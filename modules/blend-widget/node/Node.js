@@ -2,6 +2,8 @@
 
 /**
  * @function $widget.Node.create
+ * @param {Object} [properties]
+ * @param {string} [properties.nodeName]
  * @returns {$widget.Node}
  */
 
