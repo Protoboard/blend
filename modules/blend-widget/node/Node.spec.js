@@ -7,24 +7,21 @@ var $oop = window['blend-oop'],
 describe("$widget", function () {
   describe("Node", function () {
     var Node,
-        node,
-        result;
+        node;
 
     beforeAll(function () {
       Node = $oop.getClass('test.$widget.Node.Node')
       .blend($widget.Node);
     });
 
-    beforeEach(function () {
-      node = Node.create();
-    });
-
     describe("create()", function () {
       it("should initialize nodeName", function () {
+        node = Node.create();
         expect(node.nodeName).toEqual(String(node.instanceId));
       });
 
       it("should initialize childNodes", function () {
+        node = Node.create();
         expect(node.childNodes).toEqual($data.Collection.create());
       });
     });
@@ -33,26 +30,30 @@ describe("$widget", function () {
       var childNode;
 
       beforeEach(function () {
+        node = Node.create();
         childNode = Node.create({
           nodeName: 'foo'
         });
         spyOn(childNode, 'addToParentNode').and.callThrough();
-        result = node.addChildNode(childNode);
       });
 
       it("should return self", function () {
+        var result = node.addChildNode(childNode);
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
+        node.addChildNode(childNode);
         expect(node.addChildNode.childNodeBefore).toBeUndefined();
       });
 
       it("should add node to childNodes", function () {
+        node.addChildNode(childNode);
         expect(node.childNodes.getValue('foo')).toBe(childNode);
       });
 
       it("should invoke addToParentNode on childNode", function () {
+        node.addChildNode(childNode);
         expect(childNode.addToParentNode).toHaveBeenCalledWith(node);
       });
 
@@ -60,15 +61,16 @@ describe("$widget", function () {
         var parentNodeBefore;
 
         beforeEach(function () {
+          node.addChildNode(childNode);
           spyOn(Node, 'removeChildNode');
           parentNodeBefore = Node.create();
+        });
+
+        it("should remove child from previous parent", function () {
           node.addChildNode(Node.create({
             nodeName: 'bar',
             parentNode: parentNodeBefore
           }));
-        });
-
-        it("should remove child from previous parent", function () {
           var calls = Node.removeChildNode.calls.all();
           expect(calls[0].object).toBe(parentNodeBefore);
           expect(calls[0].args).toEqual(['bar']);
@@ -77,6 +79,7 @@ describe("$widget", function () {
 
       describe("when node already has child by same name", function () {
         beforeEach(function () {
+          node.addChildNode(childNode);
           spyOn(Node, 'removeChildNode');
           node.addChildNode(Node.create({
             nodeName: 'foo'
@@ -99,6 +102,7 @@ describe("$widget", function () {
       var childNode;
 
       beforeEach(function () {
+        node = Node.create();
         childNode = Node.create({
           nodeName: 'foo'
         });
@@ -120,27 +124,31 @@ describe("$widget", function () {
       var childNode;
 
       beforeEach(function () {
+        node = Node.create();
         childNode = Node.create({
           nodeName: 'foo'
         });
         node.addChildNode(childNode);
         spyOn(childNode, 'removeFromParentNode').and.callThrough();
-        result = node.removeChildNode('foo');
       });
 
       it("should return self", function () {
+        var result = node.removeChildNode('foo');
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
+        node.removeChildNode('foo');
         expect(node.removeChildNode.saved.childNodeBefore).toBe(childNode);
       });
 
       it("should remove node from collection", function () {
+        node.removeChildNode('foo');
         expect(node.childNodes.getValue('foo')).toBeUndefined();
       });
 
       it("should invoke removeFromParentNode on childNode", function () {
+        node.removeChildNode('foo');
         expect(childNode.removeFromParentNode).toHaveBeenCalled();
       });
     });
@@ -149,29 +157,33 @@ describe("$widget", function () {
       var childNode;
 
       beforeEach(function () {
+        node = Node.create();
         childNode = Node.create({
           nodeName: 'foo'
         });
         spyOn(childNode, 'setNodeName').and.callThrough();
         node.addChildNode(childNode);
-        result = node.renameChildNode('foo', 'bar');
       });
 
       it("should return self", function () {
+        var result = node.renameChildNode('foo', 'bar');
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
+        node.renameChildNode('foo', 'bar');
         expect(node.renameChildNode.saved.childNode).toBe(childNode);
       });
 
       it("should move child node in collection", function () {
+        node.renameChildNode('foo', 'bar');
         expect(node.childNodes.data).toEqual({
           bar: childNode
         });
       });
 
       it("should invoke setNodeName on childNode", function () {
+        node.renameChildNode('foo', 'bar');
         expect(childNode.setNodeName).toHaveBeenCalledWith('bar');
       });
     });
@@ -180,24 +192,28 @@ describe("$widget", function () {
       var parentNode;
 
       beforeEach(function () {
+        node = Node.create();
         parentNode = Node.create();
         spyOn(parentNode, 'addChildNode');
-        result = node.addToParentNode(parentNode);
       });
 
       it("should return self", function () {
+        var result = node.addToParentNode(parentNode);
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
+        node.addToParentNode(parentNode);
         expect(node.addToParentNode.saved.parentNodeBefore).toBeUndefined();
       });
 
       it("should set parentNode property", function () {
+        node.addToParentNode(parentNode);
         expect(node.parentNode).toBe(parentNode);
       });
 
       it("should invoke addChildNode on parent", function () {
+        node.addToParentNode(parentNode);
         expect(parentNode.addChildNode).toHaveBeenCalledWith(node);
       });
     });
@@ -210,23 +226,26 @@ describe("$widget", function () {
         parentNode = Node.create()
         .addChildNode(node);
         spyOn(parentNode, 'removeChildNode');
-        result = node.removeFromParentNode();
       });
 
       it("should return self", function () {
+        var result = node.removeFromParentNode();
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
+        node.removeFromParentNode();
         expect(node.removeFromParentNode.saved.parentNodeBefore)
         .toBe(parentNode);
       });
 
       it("should reset parentNode property", function () {
+        node.removeFromParentNode();
         expect(node.parentNode).toBeUndefined();
       });
 
       it("should invoke addChildNode on parent", function () {
+        node.removeFromParentNode();
         expect(parentNode.removeChildNode).toHaveBeenCalledWith('foo');
       });
     });
@@ -235,27 +254,30 @@ describe("$widget", function () {
       var parentNode;
 
       beforeEach(function () {
+        node = Node.create();
         parentNode = Node.create();
         node.nodeName = 'foo';
         parentNode.addChildNode(node);
         spyOn(parentNode, 'renameChildNode').and.callThrough();
-
-        result = node.setNodeName('bar');
       });
 
       it("should return self", function () {
+        var result = node.setNodeName('bar');
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
+        node.setNodeName('bar');
         expect(node.setNodeName.saved.nodeNameBefore).toBe('foo');
       });
 
       it("should update nodeName property", function () {
+        node.setNodeName('bar');
         expect(node.nodeName).toBe('bar');
       });
 
       it("should invoke renameChildNode on parentNode", function () {
+        node.setNodeName('bar');
         expect(parentNode.renameChildNode).toHaveBeenCalledWith('foo', 'bar');
       });
     });
@@ -264,6 +286,7 @@ describe("$widget", function () {
       var node2, node3;
 
       beforeEach(function () {
+        node = Node.create();
         node2 = Node.create();
         node3 = Node.create();
         node.addToParentNode(
@@ -288,6 +311,7 @@ describe("$widget", function () {
       var node2, node3;
 
       beforeEach(function () {
+        node = Node.create();
         node2 = Node.create();
         node3 = Node.create();
         node.addToParentNode(
@@ -304,6 +328,7 @@ describe("$widget", function () {
       var node2, node3, node4;
 
       beforeEach(function () {
+        node = Node.create();
         node2 = Node.create({
           nodeName: 'foo'
         });
@@ -330,6 +355,7 @@ describe("$widget", function () {
       var node1, node2, node3, node4;
 
       beforeEach(function () {
+        node = Node.create();
         node1 = Node.create();
         node2 = Node.create();
         node3 = Node.create();
