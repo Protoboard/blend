@@ -27,8 +27,6 @@ $widget.XmlEscaper = $oop.getClass('$widget.XmlEscaper')
       return '&gt';
     case '&':
       return '&amp';
-    default:
-      return char;
     }
   },
 
