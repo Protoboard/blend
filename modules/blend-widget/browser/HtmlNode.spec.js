@@ -14,6 +14,18 @@ describe("$widget", function () {
       .blend($widget.HtmlNode);
     });
 
+    describe("fromElementId()", function () {
+      it("should return HtmlNode instance", function () {
+        htmlNode = HtmlNode.fromElementId('foo');
+        expect(HtmlNode.mixedBy(htmlNode)).toBeTruthy();
+      });
+
+      it("should initialize elementId", function () {
+        htmlNode = HtmlNode.fromElementId('foo');
+        expect(htmlNode.elementId).toBe('foo');
+      });
+    });
+
     describe("create()", function () {
       it("should initialize elementName", function () {
         htmlNode = HtmlNode.create();
@@ -200,7 +212,8 @@ describe("$widget", function () {
 
       it("should remove from inlineStyles", function () {
         htmlNode.deleteInlineStyle('foo');
-        expect(htmlNode.inlineStyles).toEqual($widget.InlineStyles.fromData({}));
+        expect(htmlNode.inlineStyles)
+        .toEqual($widget.InlineStyles.fromData({}));
       });
 
       it("should update 'style' attribute", function () {

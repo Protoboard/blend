@@ -23,6 +23,15 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
    * @member {$widget.InlineStyles} $widget.HtmlNode#inlineStyles
    */
 
+  /**
+   * @memberOf $widget.HtmlNode
+   * @param {string} elementId
+   * @returns {$widget.HtmlNode}
+   */
+  fromElementId: function (elementId) {
+    return this.create({elementId: elementId});
+  },
+
   /** @ignore */
   spread: function () {
     this.elementName = this.elementName || 'div';
