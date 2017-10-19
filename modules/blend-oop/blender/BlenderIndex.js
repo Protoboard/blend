@@ -29,7 +29,7 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
    * @returns {number}
    * @private
    */
-  _compareMixins: function (MixinA, MixinB) {
+  _compareMixinIds: function (MixinA, MixinB) {
     var RE_UUID = $oop.RE_UUID,
         classIdA = MixinA.__classId,
         classIdB = MixinB.__classId;
@@ -45,7 +45,7 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
   _updateClassOrderForMixins: function (mixinHash) {
     var classes = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash);
     classes.list
-    .sort(this._compareMixins);
+    .sort(this._compareMixinIds);
   },
 
   /**
