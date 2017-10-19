@@ -250,6 +250,27 @@ describe("$widget", function () {
       });
     });
 
+    describe("setNodeOrder()", function () {
+      beforeEach(function () {
+        node.nodeOrder = 11;
+      });
+
+      it("should return self", function () {
+        var result = node.setNodeOrder(12);
+        expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        node.setNodeOrder(12);
+        expect(node.setNodeOrder.saved.nodeOrderBefore).toBe(11);
+      });
+
+      it("should update nodeName property", function () {
+        node.setNodeOrder(12);
+        expect(node.nodeOrder).toBe(12);
+      });
+    });
+
     describe("setNodeName()", function () {
       var parentNode;
 

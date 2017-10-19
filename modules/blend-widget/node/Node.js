@@ -15,14 +15,24 @@ $widget.Node = $oop.getClass('$widget.Node')
 .blend($utils.Identifiable)
 .define(/** @lends $widget.Node# */{
   /**
+   * Reference to the current node's parent. Nodes cannot belong to more
+   * than one parent node. Detached nodes have no parent node specified.
    * @member {$widget.Node} $widget.Node#parentNode
    */
 
   /**
+   * Identifies the node in the context of its parent node.
    * @member {string} $widget.Node#nodeName
    */
 
   /**
+   * Determines where the current node stands among its sibling nodes.
+   * @member {number} $widget.Node#nodeOrder
+   */
+
+  /**
+   * List of references to child nodes. Each child node appears once in
+   * `childNodes`.
    * @member {$data.Collection} $widget.Node#childNodes
    */
 
@@ -128,6 +138,21 @@ $widget.Node = $oop.getClass('$widget.Node')
     }
 
     removeFromParentNode.saved.parentNodeBefore = parentNodeBefore;
+    return this;
+  },
+
+  /**
+   * @param {number} nodeOrder
+   * @returns {$widget.Node}
+   */
+  setNodeOrder: function setNodeOrder(nodeOrder) {
+    var nodeOrderBefore = this.nodeOrder;
+
+    if (nodeOrder !== nodeOrderBefore) {
+      this.nodeOrder = nodeOrder;
+    }
+
+    setNodeOrder.saved.nodeOrderBefore = nodeOrderBefore;
     return this;
   },
 
