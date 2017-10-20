@@ -20,7 +20,7 @@ describe("$widget", function () {
         expect(node.nodeName).toEqual(String(node.instanceId));
       });
 
-     it("should initialize nodeOrder", function () {
+      it("should initialize nodeOrder", function () {
         node = Node.create();
         expect(node.nodeOrder).toBe(0);
       });
@@ -171,25 +171,40 @@ describe("$widget", function () {
       });
 
       it("should return self", function () {
-        var result = node.renameChildNode('foo', 'bar');
+        var result = node.renameChildNode(childNode, 'bar');
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
-        node.renameChildNode('foo', 'bar');
-        expect(node.renameChildNode.saved.childNode).toBe(childNode);
+        node.renameChildNode(childNode, 'bar');
+        expect(node.renameChildNode.saved.nodeNameBefore).toBe('foo');
       });
 
       it("should move child node in collection", function () {
-        node.renameChildNode('foo', 'bar');
+        node.renameChildNode(childNode, 'bar');
         expect(node.childNodes.data).toEqual({
           bar: childNode
         });
       });
 
       it("should invoke setNodeName on childNode", function () {
-        node.renameChildNode('foo', 'bar');
+        node.renameChildNode(childNode, 'bar');
         expect(childNode.setNodeName).toHaveBeenCalledWith('bar');
+      });
+
+      describe("when passing non-child node", function () {
+        var node2;
+
+        beforeEach(function () {
+          node2 = Node.create({
+            nodeName: 'baz'
+          });
+        });
+
+        it("should not change name", function () {
+          node.renameChildNode(node2, 'bar');
+          expect(node2.nodeName).toBe('baz');
+        });
       });
     });
 
@@ -304,7 +319,7 @@ describe("$widget", function () {
 
       it("should invoke renameChildNode on parentNode", function () {
         node.setNodeName('bar');
-        expect(parentNode.renameChildNode).toHaveBeenCalledWith('foo', 'bar');
+        expect(parentNode.renameChildNode).toHaveBeenCalledWith(node, 'bar');
       });
     });
 
