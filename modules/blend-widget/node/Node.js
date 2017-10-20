@@ -103,7 +103,9 @@ $widget.Node = $oop.getClass('$widget.Node')
     var nodeNameBefore = childNode.nodeName,
         childNodes = this.childNodes;
 
-    if (nodeName !== nodeNameBefore && childNodes.getValue(childNode.nodeName)) {
+    if (nodeName !== nodeNameBefore &&
+        childNodes.hasItem(childNode.nodeName, childNode)
+    ) {
       childNodes.deleteItem(nodeNameBefore);
       childNode.setNodeName(nodeName);
       childNodes.setItem(nodeName, childNode);

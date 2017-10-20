@@ -197,13 +197,13 @@ describe("$widget", function () {
 
         beforeEach(function () {
           node2 = Node.create({
-            nodeName: 'baz'
+            nodeName: 'foo'
           });
         });
 
         it("should not change name", function () {
           node.renameChildNode(node2, 'bar');
-          expect(node2.nodeName).toBe('baz');
+          expect(node2.nodeName).toBe('foo');
         });
       });
     });
