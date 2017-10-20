@@ -18,15 +18,18 @@ describe("$widget", function () {
     });
 
     describe("toString()", function () {
-      it("should serialize all nodes in predictable", function () {
-        xmlNodes = XmlNodes.fromData({
-          0: XmlNode.fromElementName('Tag1')
-          .setNodeOrder(2),
-          1: XmlNode.fromElementName('Tag2')
-          .setNodeOrder(1),
-          2: XmlNode.fromElementName('Tag3')
-          .setNodeOrder(2)
-        });
+      it("should serialize all nodes in order", function () {
+        xmlNodes = XmlNodes.create()
+        .setItem(
+            XmlNode.fromElementName('Tag1')
+            .setNodeOrder(2))
+        .setItem(
+            XmlNode.fromElementName('Tag2')
+            .setNodeOrder(1))
+        .setItem(
+            XmlNode.fromElementName('Tag3')
+            .setNodeOrder(2));
+
         expect(xmlNodes + '').toBe([
           '<Tag2></Tag2>',
           '<Tag1></Tag1>',

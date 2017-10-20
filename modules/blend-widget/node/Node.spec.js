@@ -14,6 +14,18 @@ describe("$widget", function () {
       .blend($widget.Node);
     });
 
+    describe("fromNodeName()", function () {
+      it("should return Node instance", function () {
+        node = Node.fromNodeName('foo');
+        expect(Node.mixedBy(node)).toBeTruthy();
+      });
+
+      it("should initialize nodeName", function () {
+        node = Node.fromNodeName('foo');
+        expect(node.nodeName).toBe('foo');
+      });
+    });
+
     describe("create()", function () {
       it("should initialize nodeName", function () {
         node = Node.create();

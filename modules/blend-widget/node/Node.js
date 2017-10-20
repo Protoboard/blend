@@ -40,32 +40,21 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @member {$data.Collection} $widget.Node#childNodeLookup
    */
 
+  /**
+   * @memberOf $widget.Node
+   * @param {string} nodeName
+   * @returns {$widget.Node}
+   */
+  fromNodeName: function (nodeName) {
+    return this.create({nodeName: nodeName});
+  },
+
   /** @ignore */
   spread: function () {
     this.nodeName = this.nodeName || String(this.instanceId);
     this.nodeOrder = this.nodeOrder || 0;
-    this.childNodes = this.childNodes || $data.OrderedList.create({
-      compare: this._compareNodes
-    });
+    this.childNodes = this.childNodes || $widget.Nodes.create();
     this.childNodeLookup = this.childNodeLookup || $data.Collection.create();
-  },
-
-  /**
-   * @param {$widget.Node} nodeA
-   * @param {$widget.Node} nodeB
-   * @returns {number}
-   * @private
-   */
-  _compareNodes: function (nodeA, nodeB) {
-    var orderA = nodeA && nodeA.nodeOrder,
-        orderB = nodeB && nodeB.nodeOrder,
-        nameA = nodeA && nodeA.nodeName,
-        nameB = nodeB && nodeB.nodeName;
-    return orderA > orderB ? 1 :
-        orderA < orderB ? -1 :
-            nameA > nameB ? 1 :
-                nameA < nameB ? -1 :
-                    0;
   },
 
   /**

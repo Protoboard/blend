@@ -10,6 +10,8 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.XmlNode# */{
   /**
+   * Name of the XML element associated with the current node. Eg. 'html',
+   * 'div', etc.
    * @member {string} $widget.XmlNode#elementName
    */
 
@@ -28,9 +30,9 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
 
   /** @ignore */
   spread: function () {
-    var childNodeLookup = this.childNodeLookup;
-    this.childNodeLookup = childNodeLookup ?
-        childNodeLookup.as($widget.XmlNodes) :
+    var childNodes = this.childNodes;
+    this.childNodes = childNodes ?
+        childNodes.as($widget.XmlNodes) :
         $widget.XmlNodes.create();
 
     this.attributes = this.attributes || $widget.XmlAttributes.create();
@@ -77,7 +79,7 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
     return [
       '<' + elementName + (attributes.getItemCount() ? (' ' + attributes) : '') + '>',
       // todo Would be nice if we could decouple children from XmlNode
-      this.childNodeLookup,
+      this.childNodes,
       '</' + elementName + '>'
     ].join('');
   }

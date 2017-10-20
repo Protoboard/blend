@@ -65,7 +65,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
     });
 
     // adding content to element
-    element.innerHTML = this.childNodeLookup.toString();
+    element.innerHTML = this.childNodes.toString();
 
     return element;
   },
@@ -166,7 +166,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   reRenderContents: function () {
     var element = this.getElement();
     if (element) {
-      element.innerHtml = this.childNodeLookup.toString();
+      element.innerHtml = this.childNodes.toString();
     }
     return this;
   }
