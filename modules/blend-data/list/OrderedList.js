@@ -20,12 +20,12 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
 .blend($oop.getClass('$data.ArrayContainer'))
 .blend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
+  /**
+   * @member {$data.Comparer} $data.OrderedList#comparer
+   */
+
   /** @ignore */
   spread: function () {
-    /**
-     * @member {$data.Comparer} $data.OrderedList#comparer
-     * @protected
-     */
     this.comparer = this.comparer || this._defaultComparer;
   },
 
