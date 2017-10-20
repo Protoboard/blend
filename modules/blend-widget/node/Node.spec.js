@@ -142,6 +142,68 @@ describe("$widget", function () {
       });
     });
 
+    describe("getNextChild()", function () {
+      var childNode1,
+          childNode2;
+
+      beforeEach(function () {
+        childNode1 = Node.create()
+        .setNodeOrder(1);
+        childNode2 = Node.create()
+        .setNodeOrder(2);
+        node = Node.create()
+        .addChildNode(childNode1)
+        .addChildNode(childNode2);
+      });
+
+      it("should retrieve next child", function () {
+        expect(node.getNextChild(childNode1)).toBe(childNode2);
+      });
+
+      describe("for last child", function () {
+        it("should return undefined", function () {
+          expect(node.getNextChild(childNode2)).toBeUndefined();
+        });
+      });
+
+      describe("for non-child node", function () {
+        it("should return undefined", function () {
+          expect(node.getNextChild(Node.create())).toBeUndefined();
+        });
+      });
+    });
+
+    describe("getPreviousChild()", function () {
+      var childNode1,
+          childNode2;
+
+      beforeEach(function () {
+        childNode1 = Node.create()
+        .setNodeOrder(1);
+        childNode2 = Node.create()
+        .setNodeOrder(2);
+        node = Node.create()
+        .addChildNode(childNode1)
+        .addChildNode(childNode2);
+      });
+
+      it("should retrieve previous child", function () {
+        expect(node.getPreviousChild(childNode2)).toBe(childNode1);
+      });
+
+      describe("for first child", function () {
+        it("should return undefined", function () {
+          expect(node.getPreviousChild(childNode1)).toBeUndefined();
+        });
+      });
+
+      describe("for non-child node", function () {
+        it("should return undefined", function () {
+          expect(node.getPreviousChild(Node.create())).toBeUndefined();
+        });
+      });
+    });
+
     describe("removeChildNode()", function () {
       var childNode;
 
@@ -411,6 +473,74 @@ describe("$widget", function () {
       it("should invoke setChildOrder on parentNode", function () {
         node.setNodeOrder(12);
         expect(parentNode.setChildOrder).toHaveBeenCalledWith(node, 12);
+      });
+    });
+
+    describe("getNextSibling()", function () {
+      var parentNode,
+          childNode1,
+          childNode2,
+          detachedNode;
+
+      beforeEach(function () {
+        childNode1 = Node.create()
+        .setNodeOrder(1);
+        childNode2 = Node.create()
+        .setNodeOrder(3);
+        detachedNode = Node.create();
+        parentNode = Node.create()
+        .addChildNode(childNode1)
+        .addChildNode(childNode2);
+      });
+
+      it("should retrieve next child", function () {
+        expect(childNode1.getNextSibling()).toBe(childNode2);
+      });
+
+      describe("for last child", function () {
+        it("should return undefined", function () {
+          expect(childNode2.getNextSibling()).toBeUndefined();
+        });
+      });
+
+      describe("for detached node", function () {
+        it("should return undefined", function () {
+          expect(detachedNode.getNextSibling()).toBeUndefined();
+        });
+      });
+    });
+
+    describe("getPreviousSibling()", function () {
+      var parentNode,
+          childNode1,
+          childNode2,
+          detachedNode;
+
+      beforeEach(function () {
+        childNode1 = Node.create()
+        .setNodeOrder(1);
+        childNode2 = Node.create()
+        .setNodeOrder(3);
+        detachedNode = Node.create();
+        parentNode = Node.create()
+        .addChildNode(childNode1)
+        .addChildNode(childNode2);
+      });
+
+      it("should retrieve next child", function () {
+        expect(childNode2.getPreviousSibling()).toBe(childNode1);
+      });
+
+      describe("for last child", function () {
+        it("should return undefined", function () {
+          expect(childNode1.getPreviousSibling()).toBeUndefined();
+        });
+      });
+
+      describe("for detached node", function () {
+        it("should return undefined", function () {
+          expect(detachedNode.getPreviousSibling()).toBeUndefined();
+        });
       });
     });
 

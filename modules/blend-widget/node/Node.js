@@ -95,6 +95,30 @@ $widget.Node = $oop.getClass('$widget.Node')
   },
 
   /**
+   * Retrieves child node following the specified node.
+   * @returns {$widget.Node}
+   */
+  getNextChild: function (node) {
+    var childNodes = this.childNodes,
+        index = childNodes.indexOf(node);
+    return index > -1 ?
+        childNodes.data[index + 1] :
+        undefined;
+  },
+
+  /**
+   * Retrieves child node preceding the specified node.
+   * @returns {$widget.Node}
+   */
+  getPreviousChild: function (node) {
+    var childNodes = this.childNodes,
+        index = childNodes.indexOf(node);
+    return index > -1 ?
+        childNodes.data[index - 1] :
+        undefined;
+  },
+
+  /**
    * @param nodeName
    * @returns {$widget.Node}
    */
@@ -217,6 +241,24 @@ $widget.Node = $oop.getClass('$widget.Node')
 
     setNodeOrder.saved.nodeOrderBefore = nodeOrderBefore;
     return this;
+  },
+
+  /**
+   * Retrieves sibling node following the current node.
+   * @returns {$widget.Node}
+   */
+  getNextSibling: function () {
+    var parentNode = this.parentNode;
+    return parentNode && parentNode.getNextChild(this);
+  },
+
+  /**
+   * Retrieves sibling node preceding the current node.
+   * @returns {$widget.Node}
+   */
+  getPreviousSibling: function () {
+    var parentNode = this.parentNode;
+    return parentNode && parentNode.getPreviousChild(this);
   },
 
   /**
