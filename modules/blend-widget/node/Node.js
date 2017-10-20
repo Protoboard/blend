@@ -36,11 +36,37 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @member {$data.Collection} $widget.Node#childNodes
    */
 
+  /**
+   * @member {$data.OrderedList} $widget.Node#childOrder
+   * @todo To replace #childNodes?
+   */
+
   /** @ignore */
   spread: function () {
     this.nodeName = this.nodeName || String(this.instanceId);
     this.nodeOrder = this.nodeOrder || 0;
     this.childNodes = this.childNodes || $data.Collection.create();
+    this.childOrder = this.childOrder || $data.OrderedList.create({
+      compare: this._compareNodes
+    });
+  },
+
+  /**
+   * @param {$widget.Node} nodeA
+   * @param {$widget.Node} nodeB
+   * @returns {number}
+   * @private
+   */
+  _compareNodes: function (nodeA, nodeB) {
+    var orderA = nodeA && nodeA.nodeOrder,
+        orderB = nodeB && nodeB.nodeOrder,
+        nameA = nodeA && nodeA.nodeName,
+        nameB = nodeB && nodeB.nodeName;
+    return orderA > orderB ? 1 :
+        orderA < orderB ? -1 :
+            nameA > nameB ? 1 :
+                nameA < nameB ? -1 :
+                    0;
   },
 
   /**
@@ -64,6 +90,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       }
 
       this.childNodes.setItem(childNodeName, node);
+      this.childOrder.setItem(node);
       node.addToParentNode(this);
     }
 
@@ -87,6 +114,7 @@ $widget.Node = $oop.getClass('$widget.Node')
     var childNodeBefore = this.childNodes.getValue(nodeName);
     if (childNodeBefore) {
       this.childNodes.deleteItem(nodeName);
+      this.childOrder.deleteItem(childNodeBefore);
       childNodeBefore.removeFromParentNode();
     }
 
@@ -112,6 +140,27 @@ $widget.Node = $oop.getClass('$widget.Node')
     }
 
     renameChildNode.saved.nodeNameBefore = nodeNameBefore;
+    return this;
+  },
+
+  /**
+   * @param {$widget.Node} childNode
+   * @param {number} nodeOrder
+   * @returns {$widget.Node}
+   */
+  changeChildOrder: function changeChildOrder(childNode, nodeOrder) {
+    var nodeOrderBefore = childNode.nodeOrder,
+        childOrder = this.childOrder;
+
+    if (nodeOrder !== nodeOrderBefore &&
+        this.childNodes.hasItem(childNode.nodeName, childNode)
+    ) {
+      childOrder.deleteItem(childNode);
+      childNode.setNodeOrder(nodeOrder);
+      childOrder.setItem(childNode);
+    }
+
+    changeChildOrder.saved.nodeOrderBefore = nodeOrderBefore;
     return this;
   },
 
@@ -145,21 +194,6 @@ $widget.Node = $oop.getClass('$widget.Node')
   },
 
   /**
-   * @param {number} nodeOrder
-   * @returns {$widget.Node}
-   */
-  setNodeOrder: function setNodeOrder(nodeOrder) {
-    var nodeOrderBefore = this.nodeOrder;
-
-    if (nodeOrder !== nodeOrderBefore) {
-      this.nodeOrder = nodeOrder;
-    }
-
-    setNodeOrder.saved.nodeOrderBefore = nodeOrderBefore;
-    return this;
-  },
-
-  /**
    * @param {string} nodeName
    * @returns {$widget.Node}
    */
@@ -175,6 +209,25 @@ $widget.Node = $oop.getClass('$widget.Node')
     }
 
     setNodeName.saved.nodeNameBefore = nodeNameBefore;
+    return this;
+  },
+
+  /**
+   * @param {number} nodeOrder
+   * @returns {$widget.Node}
+   */
+  setNodeOrder: function setNodeOrder(nodeOrder) {
+    var nodeOrderBefore = this.nodeOrder,
+        parentNode = this.parentNode;
+
+    if (nodeOrder !== nodeOrderBefore) {
+      this.nodeOrder = nodeOrder;
+      if (parentNode) {
+        parentNode.changeChildOrder(this, nodeOrder);
+      }
+    }
+
+    setNodeOrder.saved.nodeOrderBefore = nodeOrderBefore;
     return this;
   },
 

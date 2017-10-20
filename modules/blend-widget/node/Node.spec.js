@@ -57,6 +57,11 @@ describe("$widget", function () {
         expect(node.childNodes.getValue('foo')).toBe(childNode);
       });
 
+      it("should add node to childOrder", function () {
+        node.addChildNode(childNode);
+        expect(node.childOrder.data).toEqual([childNode]);
+      });
+
       it("should invoke addToParentNode on childNode", function () {
         node.addChildNode(childNode);
         expect(childNode.addToParentNode).toHaveBeenCalledWith(node);
@@ -147,9 +152,14 @@ describe("$widget", function () {
         expect(node.removeChildNode.saved.childNodeBefore).toBe(childNode);
       });
 
-      it("should remove node from collection", function () {
+      it("should remove node from childNodes", function () {
         node.removeChildNode('foo');
         expect(node.childNodes.getValue('foo')).toBeUndefined();
+      });
+
+      it("should remove node from childOrder", function () {
+        node.removeChildNode('foo');
+        expect(node.childOrder.data).toEqual([]);
       });
 
       it("should invoke removeFromParentNode on childNode", function () {
@@ -180,7 +190,7 @@ describe("$widget", function () {
         expect(node.renameChildNode.saved.nodeNameBefore).toBe('foo');
       });
 
-      it("should move child node in collection", function () {
+      it("should move child node in childNodes", function () {
         node.renameChildNode(childNode, 'bar');
         expect(node.childNodes.data).toEqual({
           bar: childNode
@@ -204,6 +214,64 @@ describe("$widget", function () {
         it("should not change name", function () {
           node.renameChildNode(node2, 'bar');
           expect(node2.nodeName).toBe('foo');
+        });
+      });
+    });
+
+    describe("changeChildOrder()", function () {
+      var childNode,
+          childNode2;
+
+      beforeEach(function () {
+        node = Node.create();
+        childNode = Node.create({
+          nodeName: 'foo'
+        });
+        childNode2 = Node.create({
+          nodeOrder: 1
+        });
+        spyOn(childNode, 'setNodeOrder').and.callThrough();
+
+        node
+        .addChildNode(childNode2)
+        .addChildNode(childNode);
+      });
+
+      it("should return self", function () {
+        var result = node.changeChildOrder(childNode, 2);
+        expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        node.changeChildOrder(childNode, 2);
+        expect(node.changeChildOrder.saved.nodeOrderBefore).toBe(0);
+      });
+
+      it("should move child node in childOrder", function () {
+        node.changeChildOrder(childNode, 2);
+        expect(node.childOrder.data).toEqual([
+          childNode2, childNode
+        ]);
+      });
+
+      it("should invoke setNodeName on childNode", function () {
+        node.changeChildOrder(childNode, 2);
+        expect(childNode.setNodeOrder).toHaveBeenCalledWith(2);
+      });
+
+      describe("when passing non-child node", function () {
+        var node2;
+
+        beforeEach(function () {
+          node2 = Node.create({
+            nodeName: 'foo',
+            nodeOrder: 1
+          });
+        });
+
+        it("should not change name", function () {
+          node.changeChildOrder(node2, 2);
+          expect(node2.nodeOrder).toBe(1);
         });
       });
     });
@@ -270,27 +338,6 @@ describe("$widget", function () {
       });
     });
 
-    describe("setNodeOrder()", function () {
-      beforeEach(function () {
-        node.nodeOrder = 11;
-      });
-
-      it("should return self", function () {
-        var result = node.setNodeOrder(12);
-        expect(result).toBe(node);
-      });
-
-      it("should save before state", function () {
-        node.setNodeOrder(12);
-        expect(node.setNodeOrder.saved.nodeOrderBefore).toBe(11);
-      });
-
-      it("should update nodeName property", function () {
-        node.setNodeOrder(12);
-        expect(node.nodeOrder).toBe(12);
-      });
-    });
-
     describe("setNodeName()", function () {
       var parentNode;
 
@@ -320,6 +367,38 @@ describe("$widget", function () {
       it("should invoke renameChildNode on parentNode", function () {
         node.setNodeName('bar');
         expect(parentNode.renameChildNode).toHaveBeenCalledWith(node, 'bar');
+      });
+    });
+
+    describe("setNodeOrder()", function () {
+      var parentNode;
+
+      beforeEach(function () {
+        node = Node.create();
+        parentNode = Node.create();
+        node.nodeOrder = 11;
+        parentNode.addChildNode(node);
+        spyOn(parentNode, 'changeChildOrder').and.callThrough();
+      });
+
+      it("should return self", function () {
+        var result = node.setNodeOrder(12);
+        expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        node.setNodeOrder(12);
+        expect(node.setNodeOrder.saved.nodeOrderBefore).toBe(11);
+      });
+
+      it("should update nodeName property", function () {
+        node.setNodeOrder(12);
+        expect(node.nodeOrder).toBe(12);
+      });
+
+      it("should invoke changeChildOrder on parentNode", function () {
+        node.setNodeOrder(12);
+        expect(parentNode.changeChildOrder).toHaveBeenCalledWith(node, 12);
       });
     });
 
