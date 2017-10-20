@@ -5,7 +5,7 @@
  * @param {Object} [properties]
  * @param {Array} [properties.data] If data has content, it must be already
  * ordered!
- * @param {function} [comparer]
+ * @param {function} [compare]
  * @returns {$data.OrderedList}
  */
 
@@ -21,17 +21,17 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
 .blend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
   /**
-   * @member {$data.Comparer} $data.OrderedList#comparer
+   * @member {$data.Comparer} $data.OrderedList#compare
    */
 
   /** @ignore */
   spread: function () {
-    this.comparer = this.comparer || this._defaultComparer;
+    this.compare = this.compare || this._comparePrimitives;
   },
 
   /** @ignore */
   init: function () {
-    $assert.isFunction(this.comparer, "Invalid comparer function");
+    $assert.isFunction(this.compare, "Invalid compare function");
   },
 
   /**
@@ -41,7 +41,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
    * @returns {number}
    * @private
    */
-  _defaultComparer: function (a, b) {
+  _comparePrimitives: function (a, b) {
     return a > b ? 1 : a < b ? -1 : 0;
   },
 
@@ -64,19 +64,20 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
     start = start || 0;
     end = end === undefined ? data.length : end;
 
-    var medianPos = Math.floor((start + end) / 2),
+    var compare = this.compare,
+        medianPos = Math.floor((start + end) / 2),
         medianValue = data[medianPos];
 
-    if (data[start] >= value) {
+    if (compare(data[start], value) > -1) {
       // out of range hit
       return start;
     } else if (end - start <= 1) {
       // between two adjacent values
       return end;
-    } else if (medianValue >= value) {
+    } else if (compare(medianValue, value) > -1) {
       // narrowing range to lower half
       return this._spliceIndexOf(value, start, medianPos);
-    } else if (medianValue < value) {
+    } else if (compare(medianValue, value) === -1) {
       // narrowing range to upper half
       return this._spliceIndexOf(value, medianPos, end);
     } else {

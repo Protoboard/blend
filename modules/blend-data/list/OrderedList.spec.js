@@ -10,7 +10,7 @@ describe("$data", function () {
       result;
 
   describe("OrderedList", function () {
-    var comparer;
+    var compare;
 
     beforeAll(function () {
       OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
@@ -19,10 +19,10 @@ describe("$data", function () {
 
     beforeEach(function () {
       data = ['bar', 'foo'];
-      comparer = function (a, b) {
+      compare = function (a, b) {
         return a > b ? 1 : a < b ? -1 : 0;
       };
-      orderedList = OrderedList.create({data: data, comparer: comparer});
+      orderedList = OrderedList.create({data: data, compare: compare});
     });
 
     describe("create()", function () {
@@ -30,8 +30,8 @@ describe("$data", function () {
         expect(orderedList.data).toBe(data);
       });
 
-      it("should set comparer", function () {
-        expect(orderedList.comparer).toBe(comparer);
+      it("should set compare", function () {
+        expect(orderedList.compare).toBe(compare);
       });
 
       describe("on missing arguments", function () {
@@ -41,8 +41,8 @@ describe("$data", function () {
 
         it("should set default properties", function () {
           expect(orderedList.data).toEqual([]);
-          expect(orderedList.comparer)
-          .toBe(orderedList._defaultComparer);
+          expect(orderedList.compare)
+          .toBe(orderedList._comparePrimitives);
         });
       });
 
@@ -52,7 +52,7 @@ describe("$data", function () {
             OrderedList.create({data: 'foo'});
           }).toThrow();
           expect(function () {
-            OrderedList.create({data: [], comparer: 'foo'});
+            OrderedList.create({data: [], compare: 'foo'});
           }).toThrow();
         });
       });
@@ -63,8 +63,8 @@ describe("$data", function () {
         result = orderedList.clone();
       });
 
-      it("should set comparer property", function () {
-        expect(result.comparer).toBe(orderedList.comparer);
+      it("should set compare property", function () {
+        expect(result.compare).toBe(orderedList.compare);
       });
     });
 
