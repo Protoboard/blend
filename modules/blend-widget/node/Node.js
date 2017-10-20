@@ -138,6 +138,7 @@ $widget.Node = $oop.getClass('$widget.Node')
    * @param {$widget.Node} childNode
    * @param {string} nodeName
    * @returns {$widget.Node}
+   * @todo Should we be able to change this?
    */
   setChildName: function setChildName(childNode, nodeName) {
     var nodeNameBefore = childNode.nodeName,
@@ -162,14 +163,14 @@ $widget.Node = $oop.getClass('$widget.Node')
    */
   setChildOrder: function setChildOrder(childNode, nodeOrder) {
     var nodeOrderBefore = childNode.nodeOrder,
-        childOrder = this.childNodes;
+        childNodes = this.childNodes;
 
     if (nodeOrder !== nodeOrderBefore &&
         this.childNodeLookup.hasItem(childNode.nodeName, childNode)
     ) {
-      childOrder.deleteItem(childNode);
+      childNodes.deleteItem(childNode);
       childNode.setNodeOrder(nodeOrder);
-      childOrder.setItem(childNode);
+      childNodes.setItem(childNode);
     }
 
     setChildOrder.saved.nodeOrderBefore = nodeOrderBefore;
