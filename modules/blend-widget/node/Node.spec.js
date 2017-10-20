@@ -20,6 +20,11 @@ describe("$widget", function () {
         expect(node.nodeName).toEqual(String(node.instanceId));
       });
 
+     it("should initialize nodeOrder", function () {
+        node = Node.create();
+        expect(node.nodeOrder).toBe(0);
+      });
+
       it("should initialize childNodes", function () {
         node = Node.create();
         expect(node.childNodes).toEqual($data.Collection.create());
