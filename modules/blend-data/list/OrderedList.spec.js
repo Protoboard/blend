@@ -204,6 +204,49 @@ describe("$data", function () {
       });
     });
 
+    describe("indexOf()", function () {
+      beforeEach(function () {
+        data = [
+          {order: 1},
+          {order: 4},
+          {order: 5},
+          {order: 7},
+          {order: 9},
+          {order: 100}
+        ];
+        orderedList = OrderedList.create({
+          data: data,
+          compare: function (a, b) {
+            var orderA = a && a.order,
+                orderB = b && b.order;
+            return orderA > orderB ? 1 :
+                orderA < orderB ? -1 :
+                    0;
+          }
+        });
+      });
+
+      describe("for present items", function () {
+        it("should return index", function () {
+          expect(orderedList.indexOf(data[0])).toBe(0);
+          expect(orderedList.indexOf(data[1])).toBe(1);
+          expect(orderedList.indexOf(data[2])).toBe(2);
+          expect(orderedList.indexOf(data[3])).toBe(3);
+          expect(orderedList.indexOf(data[4])).toBe(4);
+          expect(orderedList.indexOf(data[5])).toBe(5);
+        });
+      });
+
+      describe("for absent items", function () {
+        it("should return -1", function () {
+          expect(orderedList.indexOf({order: 0})).toBe(-1);
+          expect(orderedList.indexOf({order: 2})).toBe(-1);
+          expect(orderedList.indexOf({order: 20})).toBe(-1);
+          expect(orderedList.indexOf({order: 200})).toBe(-1);
+        });
+      });
+    });
+
     describe("getRange()", function () {
       beforeEach(function () {
         orderedList

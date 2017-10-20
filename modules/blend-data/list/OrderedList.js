@@ -56,7 +56,6 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
    * @param {number} [end]
    * @returns {number}
    * @private
-   * @todo Add public `#indexOf()` that returns -1 for absent values
    */
   _spliceIndexOf: function (value, start, end) {
     var data = this.data;
@@ -141,6 +140,17 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
     }
 
     return this;
+  },
+
+  /**
+   * @param {*} item
+   * @returns {number}
+   */
+  indexOf: function (item) {
+    var spliceIndex = this._spliceIndexOf(item);
+    return this.data[spliceIndex] === item ?
+        spliceIndex :
+        -1;
   },
 
   /**
