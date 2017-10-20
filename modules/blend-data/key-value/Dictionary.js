@@ -89,6 +89,16 @@ $data.Dictionary = $oop.getClass('$data.Dictionary')
   },
 
   /**
+   * @param {string} key
+   * @param {*} value
+   * @returns {boolean}
+   */
+  hasItem: function (key, value) {
+    var values = this.data[key];
+    return !!values && values.indexOf(value) > -1;
+  },
+
+  /**
    * @param {function} callback
    * @param {Object} [context]
    * @returns {$data.Dictionary}

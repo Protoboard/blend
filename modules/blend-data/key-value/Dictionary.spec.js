@@ -120,6 +120,19 @@ describe("$data", function () {
       });
     });
 
+    describe("hasItem()", function () {
+      describe("for existing item", function () {
+        it("should return true", function () {
+          expect(dictionary.hasItem('foo', 'FOO')).toBeTruthy();
+        });
+      });
+      describe("for absent item", function () {
+        it("should return false", function () {
+          expect(dictionary.hasItem('foo', 'foo')).toBeFalsy();
+        });
+      });
+    });
+
     describe("forEachItem", function () {
       var callback;
 

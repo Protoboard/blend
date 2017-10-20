@@ -69,6 +69,15 @@ $data.Collection = $oop.getClass('$data.Collection')
   },
 
   /**
+   * @param {string} key
+   * @param {*} value
+   * @returns {boolean}
+   */
+  hasItem: function (key, value) {
+    return this.getValue(key) === value;
+  },
+
+  /**
    * @param {function} callback Function to be called for each item
    * @param {Object} [context] Context for callback
    * @returns {$data.Collection} Current instance

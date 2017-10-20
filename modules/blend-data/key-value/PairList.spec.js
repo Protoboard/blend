@@ -70,6 +70,14 @@ describe("$data", function () {
       });
     });
 
+    describe("hasItem()", function () {
+      it("should throw", function () {
+        expect(function () {
+          pairList.hasItem('foo', "FOO");
+        }).toThrow();
+      });
+    });
+
     describe("forEachItem()", function () {
       var callback;
 

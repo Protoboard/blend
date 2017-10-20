@@ -40,12 +40,26 @@ $data.PairList = $oop.getClass('$data.PairList')
    * @param {string} key
    * @param {*} [value]
    * @returns {$data.PairList}
+   * @todo Allow when low-performance switch is on?
    */
   deleteItem: function (key, value) {
     $assert.fail([
       this.__classId + "does not support item deletion."
     ].join(" "));
     return this;
+  },
+
+  /**
+   * @param {string} key
+   * @param {*} [value]
+   * @returns {boolean}
+   * @todo Allow when low-performance switch is on?
+   */
+  hasItem: function (key, value) {
+    $assert.fail([
+      this.__classId + "does not support item testing."
+    ].join(" "));
+    return false;
   },
 
   /**

@@ -87,6 +87,16 @@ $data.StringDictionary = $oop.getClass('$data.StringDictionary')
   },
 
   /**
+   * @param {string} key
+   * @param {*} value
+   * @returns {boolean}
+   */
+  hasItem: function (key, value) {
+    var values = this.data[key];
+    return !!(values && values[value]);
+  },
+
+  /**
    * @param {function} callback
    * @param {Object} [context]
    * @returns {$data.StringDictionary}
