@@ -25,9 +25,9 @@ describe("$widget", function () {
         expect(node.nodeOrder).toBe(0);
       });
 
-      it("should initialize childNodes", function () {
+      it("should initialize childNodeLookup", function () {
         node = Node.create();
-        expect(node.childNodes).toEqual($data.Collection.create());
+        expect(node.childNodeLookup).toEqual($data.Collection.create());
       });
     });
 
@@ -52,14 +52,14 @@ describe("$widget", function () {
         expect(node.addChildNode.childNodeBefore).toBeUndefined();
       });
 
-      it("should add node to childNodes", function () {
+      it("should add node to childNodeLookup", function () {
         node.addChildNode(childNode);
-        expect(node.childNodes.getValue('foo')).toBe(childNode);
+        expect(node.childNodeLookup.getValue('foo')).toBe(childNode);
       });
 
-      it("should add node to childOrder", function () {
+      it("should add node to childNodes", function () {
         node.addChildNode(childNode);
-        expect(node.childOrder.data).toEqual([childNode]);
+        expect(node.childNodes.data).toEqual([childNode]);
       });
 
       it("should invoke addToParentNode on childNode", function () {
@@ -152,14 +152,14 @@ describe("$widget", function () {
         expect(node.removeChildNode.saved.childNodeBefore).toBe(childNode);
       });
 
-      it("should remove node from childNodes", function () {
+      it("should remove node from childNodeLookup", function () {
         node.removeChildNode('foo');
-        expect(node.childNodes.getValue('foo')).toBeUndefined();
+        expect(node.childNodeLookup.getValue('foo')).toBeUndefined();
       });
 
-      it("should remove node from childOrder", function () {
+      it("should remove node from childNodes", function () {
         node.removeChildNode('foo');
-        expect(node.childOrder.data).toEqual([]);
+        expect(node.childNodes.data).toEqual([]);
       });
 
       it("should invoke removeFromParentNode on childNode", function () {
@@ -168,7 +168,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("renameChildNode()", function () {
+    describe("setChildName()", function () {
       var childNode;
 
       beforeEach(function () {
@@ -181,24 +181,24 @@ describe("$widget", function () {
       });
 
       it("should return self", function () {
-        var result = node.renameChildNode(childNode, 'bar');
+        var result = node.setChildName(childNode, 'bar');
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
-        node.renameChildNode(childNode, 'bar');
-        expect(node.renameChildNode.saved.nodeNameBefore).toBe('foo');
+        node.setChildName(childNode, 'bar');
+        expect(node.setChildName.saved.nodeNameBefore).toBe('foo');
       });
 
-      it("should move child node in childNodes", function () {
-        node.renameChildNode(childNode, 'bar');
-        expect(node.childNodes.data).toEqual({
+      it("should move child node in childNodeLookup", function () {
+        node.setChildName(childNode, 'bar');
+        expect(node.childNodeLookup.data).toEqual({
           bar: childNode
         });
       });
 
       it("should invoke setNodeName on childNode", function () {
-        node.renameChildNode(childNode, 'bar');
+        node.setChildName(childNode, 'bar');
         expect(childNode.setNodeName).toHaveBeenCalledWith('bar');
       });
 
@@ -212,13 +212,13 @@ describe("$widget", function () {
         });
 
         it("should not change name", function () {
-          node.renameChildNode(node2, 'bar');
+          node.setChildName(node2, 'bar');
           expect(node2.nodeName).toBe('foo');
         });
       });
     });
 
-    describe("changeChildOrder()", function () {
+    describe("setChildOrder()", function () {
       var childNode,
           childNode2;
 
@@ -238,24 +238,24 @@ describe("$widget", function () {
       });
 
       it("should return self", function () {
-        var result = node.changeChildOrder(childNode, 2);
+        var result = node.setChildOrder(childNode, 2);
         expect(result).toBe(node);
       });
 
       it("should save before state", function () {
-        node.changeChildOrder(childNode, 2);
-        expect(node.changeChildOrder.saved.nodeOrderBefore).toBe(0);
+        node.setChildOrder(childNode, 2);
+        expect(node.setChildOrder.saved.nodeOrderBefore).toBe(0);
       });
 
-      it("should move child node in childOrder", function () {
-        node.changeChildOrder(childNode, 2);
-        expect(node.childOrder.data).toEqual([
+      it("should move child node in childNodes", function () {
+        node.setChildOrder(childNode, 2);
+        expect(node.childNodes.data).toEqual([
           childNode2, childNode
         ]);
       });
 
       it("should invoke setNodeName on childNode", function () {
-        node.changeChildOrder(childNode, 2);
+        node.setChildOrder(childNode, 2);
         expect(childNode.setNodeOrder).toHaveBeenCalledWith(2);
       });
 
@@ -270,7 +270,7 @@ describe("$widget", function () {
         });
 
         it("should not change name", function () {
-          node.changeChildOrder(node2, 2);
+          node.setChildOrder(node2, 2);
           expect(node2.nodeOrder).toBe(1);
         });
       });
@@ -346,7 +346,7 @@ describe("$widget", function () {
         parentNode = Node.create();
         node.nodeName = 'foo';
         parentNode.addChildNode(node);
-        spyOn(parentNode, 'renameChildNode').and.callThrough();
+        spyOn(parentNode, 'setChildName').and.callThrough();
       });
 
       it("should return self", function () {
@@ -364,9 +364,9 @@ describe("$widget", function () {
         expect(node.nodeName).toBe('bar');
       });
 
-      it("should invoke renameChildNode on parentNode", function () {
+      it("should invoke setChildName on parentNode", function () {
         node.setNodeName('bar');
-        expect(parentNode.renameChildNode).toHaveBeenCalledWith(node, 'bar');
+        expect(parentNode.setChildName).toHaveBeenCalledWith(node, 'bar');
       });
     });
 
@@ -378,7 +378,7 @@ describe("$widget", function () {
         parentNode = Node.create();
         node.nodeOrder = 11;
         parentNode.addChildNode(node);
-        spyOn(parentNode, 'changeChildOrder').and.callThrough();
+        spyOn(parentNode, 'setChildOrder').and.callThrough();
       });
 
       it("should return self", function () {
@@ -396,9 +396,9 @@ describe("$widget", function () {
         expect(node.nodeOrder).toBe(12);
       });
 
-      it("should invoke changeChildOrder on parentNode", function () {
+      it("should invoke setChildOrder on parentNode", function () {
         node.setNodeOrder(12);
-        expect(parentNode.changeChildOrder).toHaveBeenCalledWith(node, 12);
+        expect(parentNode.setChildOrder).toHaveBeenCalledWith(node, 12);
       });
     });
 

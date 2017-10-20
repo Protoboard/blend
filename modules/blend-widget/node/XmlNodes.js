@@ -11,6 +11,7 @@
  * @class $widget.XmlNodes
  * @extends $data.Collection
  * @implements $utils.Stringifiable
+ * @todo Rebase on OrderedList?
  */
 $widget.XmlNodes = $oop.getClass('$widget.XmlNodes')
 .blend($data.Collection)

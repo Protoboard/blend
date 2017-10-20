@@ -35,9 +35,9 @@ describe("$widget", function () {
         });
       });
 
-      it("should re-initialize childNodes", function () {
+      it("should re-initialize childNodeLookup", function () {
         xmlNode = XmlNode.create({elementName: 'Tag'});
-        expect($widget.XmlNodes.mixedBy(xmlNode.childNodes)).toBeTruthy();
+        expect($widget.XmlNodes.mixedBy(xmlNode.childNodeLookup)).toBeTruthy();
       });
 
       it("should initialize attributes", function () {
