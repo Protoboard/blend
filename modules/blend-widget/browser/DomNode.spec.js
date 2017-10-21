@@ -15,6 +15,114 @@ describe("$widget", function () {
       .blend($widget.DomNode);
     });
 
+    describe("addChildNode()", function () {
+      var element,
+          childNode, childElement;
+
+      beforeEach(function () {
+        domNode = DomNode.fromNodeName('foo');
+        element = document.createElement('div');
+        childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
+        childElement = document.createElement('div');
+
+        spyOn(domNode, 'getElement').and.returnValue(element);
+        spyOn(childNode, 'createElement').and.returnValue(childElement);
+      });
+
+      it("should return self", function () {
+        var result = domNode.addChildNode(childNode);
+        expect(result).toBe(domNode);
+      });
+
+      it("should render node as child", function () {
+        domNode.addChildNode(childNode);
+        expect(element.childNodes.item(0)).toBe(childElement);
+      });
+
+      describe("when node already has children", function () {
+        var childNode2, childElement2;
+
+        beforeEach(function () {
+          childNode2 = DomNode.create({nodeName: 'baz', nodeOrder: 1});
+          childElement2 = document.createElement('div');
+          spyOn(childNode, 'getElement').and.returnValue(childElement);
+          spyOn(childNode2, 'createElement').and.returnValue(childElement2);
+
+          domNode.addChildNode(childNode);
+        });
+
+        it("should render at appropriate index", function () {
+          domNode.addChildNode(childNode2);
+          expect(element.childNodes.item(0)).toBe(childElement2);
+          expect(element.childNodes.item(1)).toBe(childElement);
+        });
+      });
+    });
+
+    describe("removeChild()", function () {
+      var element,
+          childNode, childElement;
+
+      beforeEach(function () {
+        domNode = DomNode.fromNodeName('foo');
+        element = document.createElement('div');
+        childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
+        childElement = document.createElement('div');
+
+        spyOn(domNode, 'getElement').and.returnValue(element);
+        spyOn(childNode, 'createElement').and.returnValue(childElement);
+        spyOn(childNode, 'getElement').and.returnValue(childElement);
+
+        domNode.addChildNode(childNode);
+      });
+
+      it("should return self", function () {
+        var result = domNode.removeChildNode('bar');
+        expect(result).toBe(domNode);
+      });
+
+      it("should remove child element from parent", function () {
+        domNode.removeChildNode('bar');
+        expect(element.childNodes.length).toBe(0);
+      });
+    });
+
+    describe("setChildOrder()", function () {
+      var element,
+          childNode1, childElement1,
+          childNode2, childElement2;
+
+      beforeEach(function () {
+        domNode = DomNode.fromNodeName('foo');
+        element = document.createElement('div');
+        childNode1 = DomNode.create({nodeName: 'bar', nodeOrder: 1});
+        childElement1 = document.createElement('div');
+        childNode2 = DomNode.create({nodeName: 'baz', nodeOrder: 2});
+        childElement2 = document.createElement('div');
+
+        spyOn(domNode, 'getElement').and.returnValue(element);
+        spyOn(childNode1, 'createElement').and.returnValue(childElement1);
+        spyOn(childNode1, 'getElement').and.returnValue(childElement1);
+        spyOn(childNode2, 'createElement').and.returnValue(childElement2);
+        spyOn(childNode2, 'getElement').and.returnValue(childElement2);
+
+        domNode
+        .addChildNode(childNode1)
+        .addChildNode(childNode2);
+      });
+
+      it("should return self", function () {
+        var result = domNode.setChildOrder(childNode1, 3);
+        expect(result).toBe(domNode);
+      });
+
+      it("should move element in parent", function () {
+        domNode.setChildOrder(childNode1, 3);
+        expect(element.childNodes.item(0)).toBe(childElement2);
+        expect(element.childNodes.item(1)).toBe(childElement1);
+      });
+    });
+
     describe("setAttribute()", function () {
       var element;
 

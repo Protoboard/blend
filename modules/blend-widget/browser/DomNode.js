@@ -7,11 +7,75 @@
  * @mixin $widget.DomNode
  * @augments $widget.Node
  * @augments $widget.HtmlNode
+ * @todo Add #onRender() here?
+ * @todo Remove #render... methods? Only applicable to root widget.
  */
 $widget.DomNode = $oop.getClass('$widget.DomNode')
 .expect($oop.getClass('$widget.Node'))
 .expect($oop.getClass('$widget.HtmlNode'))
 .define(/** @lends $widget.DomNode# */{
+  /**
+   * Renders added child node.
+   * @param {$widget.DomNode} node
+   * @returns {$widget.DomNode}
+   */
+  addChildNode: function addChildNode(node) {
+    var childNodeBefore = addChildNode.saved.childNodeBefore,
+        element = this.getElement(),
+        childElement,
+        nextChild, nextChildElement;
+
+    if (element && node !== childNodeBefore) {
+      childElement = node.createElement();
+      nextChild = this.getNextChild(node);
+      nextChildElement = nextChild && nextChild.getElement() || null;
+      element.insertBefore(childElement, nextChildElement);
+    }
+
+    return this;
+  },
+
+  /**
+   * @param {string} nodeName
+   * @returns {$widget.DomNode}
+   */
+  removeChildNode: function removeChildNode(nodeName) {
+    var childNodeBefore = removeChildNode.saved.childNodeBefore,
+        element = this.getElement(),
+        childNodeElement;
+
+    if (element && childNodeBefore) {
+      childNodeElement = childNodeBefore.getElement();
+      element.removeChild(childNodeElement);
+    }
+
+    return this;
+  },
+
+  /**
+   * @param {$widget.DomNode} childNode
+   * @param {number} nodeOrder
+   * @returns {$widget.DomNode}
+   */
+  setChildOrder: function setChildOrder(childNode, nodeOrder) {
+    var nodeOrderBefore = setChildOrder.saved.nodeOrderBefore,
+        element = this.getElement(),
+        childElement,
+        nextChild, nextChildElement;
+
+    if (element && nodeOrder !== nodeOrderBefore) {
+      childElement = childNode.getElement();
+      if (childElement) {
+        // moving child element to new index
+        nextChild = this.getNextChild(childNode);
+        nextChildElement = nextChild && nextChild.getElement() || null;
+        element.insertBefore(childElement, nextChildElement);
+      }
+    }
+
+    return this;
+  },
+
   /**
    * @param {string} attributeName
    * @param {string} attributeValue
