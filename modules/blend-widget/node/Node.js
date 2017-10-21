@@ -209,6 +209,7 @@ $widget.Node = $oop.getClass('$widget.Node')
   /**
    * @param {string} nodeName
    * @returns {$widget.Node}
+   * @todo Should this be changeable?
    */
   setNodeName: function setNodeName(nodeName) {
     var nodeNameBefore = this.nodeName,

@@ -12,6 +12,7 @@
  */
 $widget.TextNode = $oop.getClass('$widget.TextNode')
 .blend($oop.getClass('$widget.Node'))
+.blend($oop.getClass('$widget.ChildOnly'))
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.TextNode# */{
   /**
@@ -34,71 +35,6 @@ $widget.TextNode = $oop.getClass('$widget.TextNode')
    */
   fromTextContent: function (textContent) {
     return this.create({textContent: textContent});
-  },
-
-  /**
-   * @param {$widget.Node} node
-   * @ignore
-   */
-  addChildNode: function (node) {
-    $assert.fail("TextNode can't have children");
-  },
-
-  /**
-   * @param {string} nodeName
-   * @ignore
-   */
-  getChildNode: function (nodeName) {
-    $assert.fail("TextNode can't have children");
-  },
-
-  /**
-   * @param {$widget.Node} node
-   * @ignore
-   */
-  getNextChild: function (node) {
-    $assert.fail("TextNode can't have children");
-  },
-
-  /**
-   * @param {$widget.Node} node
-   * @ignore
-   */
-  getPreviousChild: function (node) {
-    $assert.fail("TextNode can't have children");
-  },
-
-  /**
-   * @param {string} nodeName
-   * @ignore
-   */
-  removeChildNode: function (nodeName) {
-    $assert.fail("TextNode can't have children");
-  },
-
-  /**
-   * @param {$widget.Node} childNode
-   * @param {string} nodeName
-   * @ignore
-   */
-  setChildName: function (childNode, nodeName) {
-    $assert.fail("TextNode can't have children");
-  },
-
-  /**
-   * @param {$widget.Node} childNode
-   * @param {number} nodeOrder
-   * @ignore
-   */
-  setChildOrder: function (childNode, nodeOrder) {
-    $assert.fail("TextNode can't have children");
-  },
-
-  /**
-   * @ignore
-   */
-  getAllChildNodes: function () {
-    $assert.fail("TextNode can't have children");
   },
 
   /** @returns {string} */
