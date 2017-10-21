@@ -21,7 +21,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
 .blend($oop.getClass('$data.SetContainer'))
 .define(/** @lends $data.OrderedList# */{
   /**
-   * @member {$data.Comparer} $data.OrderedList#compare
+   * @member {function} $data.OrderedList#compare
    */
 
   /** @ignore */
