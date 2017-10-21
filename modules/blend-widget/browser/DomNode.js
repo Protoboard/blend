@@ -2,20 +2,18 @@
 
 /**
  * DOM manifest behavior for `Node` classes. Expects to be added to `Node`
- * classes that also have the `HtmlNode` mixin.
+ * classes that also have the `XmlNode` mixin.
  * Requires browser environment.
  * @mixin $widget.DomNode
  * @augments $widget.Node
  * @augments $widget.XmlNode
- * @todo Add #onRender() here?
- * @todo Remove #render... methods? Only applicable to root widget.
  */
 $widget.DomNode = $oop.getClass('$widget.DomNode')
 .expect($oop.getClass('$widget.Node'))
 .expect($oop.getClass('$widget.XmlNode'))
 .define(/** @lends $widget.DomNode# */{
   /**
-   * Renders added child node.
+   * Renders child node and adds it to the DOM at the appropriate child index.
    * @param {$widget.DomNode} node
    * @returns {$widget.DomNode}
    */
@@ -36,6 +34,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   },
 
   /**
+   * Removes element associated with current node from DOM.
    * @param {string} nodeName
    * @returns {$widget.DomNode}
    */
@@ -53,6 +52,8 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   },
 
   /**
+   * Moves element associated with current node within parent element, to
+   * reflect changed `nodeOrder`.
    * @param {$widget.DomNode} childNode
    * @param {number} nodeOrder
    * @returns {$widget.DomNode}
@@ -77,6 +78,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   },
 
   /**
+   * Updates HTML attribute on the element associated with the current node.
    * @param {string} attributeName
    * @param {string} attributeValue
    * @returns {$widget.DomNode}
@@ -97,6 +99,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   },
 
   /**
+   * Removes HTML attribute from the element associated with the current node.
    * @param {string} attributeName
    * @returns {$widget.DomNode}
    */
@@ -144,94 +147,14 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
 
   /**
    * Renders current node and appends it to the children of the specified
-   * `parentElement`.
+   * `parentElement`. To be used internally by the framework.
    * @param {Element} parentElement
    * @returns {$widget.DomNode}
+   * @ignore
    */
-  renderAtEnd: function (parentElement) {
+  renderInto: function (parentElement) {
     var element = this.getElement() || this.createElement();
     parentElement.appendChild(element);
-    return this;
-  },
-
-  /**
-   * Renders current node and prepends it to the children of the specified
-   * `parentElement`.
-   * @param {Element} parentElement
-   * @returns {$widget.DomNode}
-   */
-  renderAtStart: function (parentElement) {
-    var element = this.getElement() || this.createElement(),
-        firstChild = parentElement.firstChild;
-    if (firstChild) {
-      // parent element is not empty
-      parentElement.insertBefore(element, firstChild);
-    } else {
-      // parent element is empty
-      parentElement.appendChild(element);
-    }
-    return this;
-  },
-
-  /**
-   * Renders current node and places it before the specified element.
-   * @param {Element} nextElement
-   * @returns {$widget.DomNode}
-   */
-  renderBefore: function (nextElement) {
-    var parentElement = nextElement.parentNode,
-        element;
-    if (parentElement) {
-      element = this.getElement() || this.createElement();
-      parentElement.insertBefore(element, nextElement);
-    }
-    return this;
-  },
-
-  /**
-   * Renders current node and places it after the specified element.
-   * @param {Element} previousElement
-   * @returns {$widget.DomNode}
-   */
-  renderAfter: function (previousElement) {
-    var parentElement = previousElement.parentNode,
-        element,
-        nextSibling;
-    if (parentElement) {
-      element = this.getElement() || this.createElement();
-      nextSibling = previousElement.nextSibling;
-      if (nextSibling) {
-        // previousElement has a next sibling
-        parentElement.insertBefore(element, nextSibling);
-      } else {
-        // previousElement is last one in parent
-        parentElement.appendChild(element);
-      }
-    }
-    return this;
-  },
-
-  /**
-   * Re-renders current node.
-   * @returns {$widget.DomNode}
-   */
-  reRender: function () {
-    var element = this.getElement();
-    if (element) {
-      element.parentNode.replaceChild(this.createElement(), element);
-    }
-    return this;
-  },
-
-  /**
-   * Re-renders contents of current node. Own element will not be replaced.
-   * @returns {$widget.DomNode}
-   */
-  reRenderContents: function () {
-    var element = this.getElement();
-    if (element) {
-      element.innerHtml = this.childNodes.toString();
-    }
     return this;
   }
 });

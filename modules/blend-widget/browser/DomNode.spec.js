@@ -235,7 +235,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("renderAtEnd()", function () {
+    describe("renderInto()", function () {
       var parentElement,
           element;
 
@@ -248,12 +248,12 @@ describe("$widget", function () {
       });
 
       it("should return self", function () {
-        var result = domNode.renderAtEnd(parentElement);
+        var result = domNode.renderInto(parentElement);
         expect(result).toBe(domNode);
       });
 
       it("should append element to parentElement", function () {
-        domNode.renderAtEnd(parentElement);
+        domNode.renderInto(parentElement);
         expect(parentElement.lastChild).toBe(element);
       });
 
@@ -267,191 +267,9 @@ describe("$widget", function () {
         });
 
         it("should remove element from old parent", function () {
-          domNode.renderAtEnd(parentElement);
+          domNode.renderInto(parentElement);
           expect(oldParentElement.contains(element)).toBeFalsy();
         });
-      });
-    });
-
-    describe("renderAtStart()", function () {
-      var parentElement;
-      var element;
-
-      beforeEach(function () {
-        parentElement = document.createElement('div');
-        element = document.createElement('div');
-        domNode = DomNode.fromElementId('foo');
-        spyOn(domNode, 'createElement').and.returnValue(element);
-      });
-
-      it("should return self", function () {
-        var result = domNode.renderAtStart(parentElement);
-        expect(result).toBe(domNode);
-      });
-
-      it("should append element to parentNode", function () {
-        domNode.renderAtStart(parentElement);
-        expect(parentElement.firstChild).toBe(element);
-      });
-
-      describe("when already rendered in DOM", function () {
-        var oldParentElement;
-
-        beforeEach(function () {
-          oldParentElement = document.createElement('div');
-          oldParentElement.appendChild(element);
-          spyOn(domNode, 'getElement').and.returnValue(element);
-        });
-
-        it("should remove element from old parent", function () {
-          domNode.renderAtStart(parentElement);
-          expect(oldParentElement.contains(element)).toBeFalsy();
-        });
-      });
-
-      describe("when parent has children", function () {
-        var element1;
-
-        beforeEach(function () {
-          element1 = document.createElement('div');
-          parentElement.appendChild(element1);
-        });
-
-        it("should insert before first child", function () {
-          domNode.renderAtStart(parentElement);
-          expect(parentElement.firstChild).toBe(element);
-          expect(parentElement.lastChild).toBe(element1);
-        });
-      });
-    });
-
-    describe("renderBefore()", function () {
-      var parentElement,
-          nextElement,
-          element;
-
-      beforeEach(function () {
-        parentElement = document.createElement('div');
-        nextElement = document.createElement('div');
-        element = document.createElement('div');
-        parentElement.appendChild(document.createElement('div'));
-        parentElement.appendChild(nextElement);
-
-        domNode = DomNode.fromElementId('foo');
-
-        spyOn(domNode, 'createElement').and.returnValue(element);
-      });
-
-      it("should return self", function () {
-        var result = domNode.renderBefore(nextElement);
-        expect(result).toBe(domNode);
-      });
-
-      it("should insert element before nextElement", function () {
-        domNode.renderBefore(nextElement);
-        expect(element.nextSibling).toBe(nextElement);
-      });
-
-      describe("when already rendered in DOM", function () {
-        var oldParentElement;
-
-        beforeEach(function () {
-          oldParentElement = document.createElement('div');
-          oldParentElement.appendChild(element);
-
-          spyOn(domNode, 'getElement').and.returnValue(element);
-        });
-
-        it("should remove element from old parent", function () {
-          domNode.renderBefore(nextElement);
-          expect(oldParentElement.contains(element)).toBeFalsy();
-        });
-      });
-    });
-
-    describe("renderAfter()", function () {
-      var parentElement,
-          previousElement,
-          element;
-
-      beforeEach(function () {
-        parentElement = document.createElement('div');
-        previousElement = document.createElement('div');
-        element = document.createElement('div');
-        parentElement.appendChild(previousElement);
-
-        domNode = DomNode.fromElementId('foo');
-
-        spyOn(domNode, 'createElement').and.returnValue(element);
-      });
-
-      it("should return self", function () {
-        var result = domNode.renderAfter(previousElement);
-        expect(result).toBe(domNode);
-      });
-
-      it("should insert element after previousElement", function () {
-        domNode.renderAfter(previousElement);
-        expect(element.previousSibling).toBe(previousElement);
-      });
-
-      describe("when already rendered in DOM", function () {
-        var oldParentElement;
-
-        beforeEach(function () {
-          oldParentElement = document.createElement('div');
-          oldParentElement.appendChild(element);
-
-          spyOn(domNode, 'getElement').and.returnValue(element);
-        });
-
-        it("should remove element from old parent", function () {
-          domNode.renderAfter(previousElement);
-          expect(oldParentElement.contains(element)).toBeFalsy();
-        });
-      });
-
-      describe("when previousElement is not last sibling", function () {
-        var element1;
-
-        beforeEach(function () {
-          element1 = document.createElement('div');
-          parentElement.appendChild(element1);
-        });
-
-        it("should insert after previous", function () {
-          domNode.renderAfter(previousElement);
-          expect(previousElement.nextSibling).toBe(element);
-          expect(element.nextSibling).toBe(element1);
-        });
-      });
-    });
-
-    describe("reRender()", function () {
-      var parentElement,
-          oldElement,
-          newElement;
-
-      beforeEach(function () {
-        parentElement = document.createElement('div');
-        oldElement = document.createElement('div');
-        newElement = document.createElement('div');
-        parentElement.appendChild(oldElement);
-        domNode = DomNode.fromElementId('foo');
-
-        spyOn(domNode, 'getElement').and.returnValue(oldElement);
-        spyOn(domNode, 'createElement').and.returnValue(newElement);
-      });
-
-      it("should return self", function () {
-        var result = domNode.reRender();
-        expect(result).toBe(domNode);
-      });
-
-      it("should replace element", function () {
-        domNode.reRender();
-        expect(parentElement.contains(oldElement)).toBeFalsy();
-        expect(parentElement.contains(newElement)).toBeTruthy();
       });
     });
   });
