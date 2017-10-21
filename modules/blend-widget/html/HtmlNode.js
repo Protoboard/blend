@@ -4,7 +4,7 @@
  * HTML manifest behavior for `Node` classes.
  * @mixin $widget.HtmlNode
  * @extends $widget.XmlNode
- * @todo Add #setChildName() setting CSS class.
+ * @todo Add nodeName as CSS class on init.
  */
 $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
 .blend($oop.getClass('$widget.XmlNode'))

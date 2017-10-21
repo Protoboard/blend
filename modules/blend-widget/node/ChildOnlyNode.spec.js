@@ -53,15 +53,6 @@ describe("$widget", function () {
       });
     });
 
-    describe("setChildName()", function () {
-      it("should throw", function () {
-        expect(function () {
-          ChildOnlyNode.fromString('foo')
-          .setChildName($widget.Node.create(), 'bar');
-        }).toThrow();
-      });
-    });
-
     describe("setChildOrder()", function () {
       it("should throw", function () {
         expect(function () {

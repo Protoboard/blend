@@ -136,28 +136,6 @@ $widget.Node = $oop.getClass('$widget.Node')
 
   /**
    * @param {$widget.Node} childNode
-   * @param {string} nodeName
-   * @returns {$widget.Node}
-   * @todo Should we be able to change this?
-   */
-  setChildName: function setChildName(childNode, nodeName) {
-    var nodeNameBefore = childNode.nodeName,
-        childNodeLookup = this.childNodeLookup;
-
-    if (nodeName !== nodeNameBefore &&
-        childNodeLookup.hasItem(childNode.nodeName, childNode)
-    ) {
-      childNodeLookup.deleteItem(nodeNameBefore);
-      childNode.setNodeName(nodeName);
-      childNodeLookup.setItem(nodeName, childNode);
-    }
-
-    setChildName.saved.nodeNameBefore = nodeNameBefore;
-    return this;
-  },
-
-  /**
-   * @param {$widget.Node} childNode
    * @param {number} nodeOrder
    * @returns {$widget.Node}
    */
@@ -203,26 +181,6 @@ $widget.Node = $oop.getClass('$widget.Node')
     }
 
     removeFromParentNode.saved.parentNodeBefore = parentNodeBefore;
-    return this;
-  },
-
-  /**
-   * @param {string} nodeName
-   * @returns {$widget.Node}
-   * @todo Should this be changeable?
-   */
-  setNodeName: function setNodeName(nodeName) {
-    var nodeNameBefore = this.nodeName,
-        parentNode = this.parentNode;
-
-    if (nodeName !== nodeNameBefore) {
-      this.nodeName = nodeName;
-      if (parentNode) {
-        parentNode.setChildName(this, nodeName);
-      }
-    }
-
-    setNodeName.saved.nodeNameBefore = nodeNameBefore;
     return this;
   },
 

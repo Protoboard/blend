@@ -29,14 +29,6 @@ describe("$widget", function () {
       });
     });
 
-    describe("setNodeName()", function () {
-      it("should throw", function () {
-        expect(function () {
-          ParentOnlyNode.fromString('foo').setNodeName('bar');
-        }).toThrow();
-      });
-    });
-
     describe("setNodeOrder()", function () {
       it("should throw", function () {
         expect(function () {

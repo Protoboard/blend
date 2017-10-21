@@ -44,14 +44,6 @@ $widget.ChildOnlyNode = $oop.getClass('$widget.ChildOnlyNode')
 
   /**
    * @param {$widget.Node} childNode
-   * @param {string} nodeName
-   */
-  setChildName: function (childNode, nodeName) {
-    $assert.fail("Node can't have children");
-  },
-
-  /**
-   * @param {$widget.Node} childNode
    * @param {number} nodeOrder
    */
   setChildOrder: function (childNode, nodeOrder) {

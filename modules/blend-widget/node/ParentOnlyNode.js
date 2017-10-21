@@ -19,13 +19,6 @@ $widget.ParentOnlyNode = $oop.getClass('$widget.ParentOnlyNode')
   },
 
   /**
-   * @param {string} nodeName
-   */
-  setNodeName: function (nodeName) {
-    $assert.fail("Node can't have parent");
-  },
-
-  /**
    * @param {number} nodeOrder
    */
   setNodeOrder: function (nodeOrder) {
