@@ -6,13 +6,13 @@
  * Requires browser environment.
  * @mixin $widget.DomNode
  * @augments $widget.Node
- * @augments $widget.HtmlNode
+ * @augments $widget.XmlNode
  * @todo Add #onRender() here?
  * @todo Remove #render... methods? Only applicable to root widget.
  */
 $widget.DomNode = $oop.getClass('$widget.DomNode')
 .expect($oop.getClass('$widget.Node'))
-.expect($oop.getClass('$widget.HtmlNode'))
+.expect($oop.getClass('$widget.XmlNode'))
 .define(/** @lends $widget.DomNode# */{
   /**
    * Renders added child node.
