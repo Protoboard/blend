@@ -4,7 +4,6 @@
  * HTML manifest behavior for `Node` classes.
  * @mixin $widget.HtmlNode
  * @extends $widget.XmlNode
- * @todo Add nodeName as CSS class on init.
  */
 $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
 .blend($oop.getClass('$widget.XmlNode'))
@@ -42,9 +41,18 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
 
   /** @ignore */
   init: function () {
+    this._updateNodeNameClass();
     this._updateIdAttribute();
     this._updateClassAttribute();
     this._updateStyleAttribute();
+  },
+
+  /** @private */
+  _updateNodeNameClass: function () {
+    var nodeName = this.nodeName;
+    if (nodeName) {
+      this.addCssClass(nodeName);
+    }
   },
 
   /**

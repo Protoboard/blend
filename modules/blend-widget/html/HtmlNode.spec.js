@@ -33,9 +33,13 @@ describe("$widget", function () {
       });
 
       it("should initialize cssClasses", function () {
-        htmlNode = HtmlNode.create();
+        htmlNode = HtmlNode.create({
+          nodeName: 'foo'
+        });
         expect($widget.CssClasses.mixedBy(htmlNode.cssClasses)).toBeTruthy();
-        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.create());
+        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
+          foo: 'foo'
+        }));
       });
 
       it("should initialize inlineStyles", function () {
@@ -54,12 +58,13 @@ describe("$widget", function () {
 
       it("should initialize 'class' attribute", function () {
         htmlNode = HtmlNode.create({
+          nodeName: 'baz',
           cssClasses: $widget.CssClasses.fromData({
             foo: 'foo',
             bar: 'bar'
           })
         });
-        expect(htmlNode.attributes.getValue('class')).toBe('foo bar');
+        expect(htmlNode.attributes.getValue('class')).toBe('foo bar baz');
       });
 
       it("should initialize 'style' attribute", function () {
@@ -97,24 +102,25 @@ describe("$widget", function () {
 
     describe("addCssClass()", function () {
       beforeEach(function () {
-        htmlNode = HtmlNode.create();
+        htmlNode = HtmlNode.fromNodeName('foo');
       });
 
       it("should return self", function () {
-        var result = htmlNode.addCssClass('foo');
+        var result = htmlNode.addCssClass('bar');
         expect(result).toBe(htmlNode);
       });
 
       it("should add to cssClasses", function () {
-        htmlNode.addCssClass('foo');
+        htmlNode.addCssClass('bar');
         expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
-          foo: 'foo'
+          foo: 'foo',
+          bar: 'bar'
         }));
       });
 
       it("should update 'class' attribute", function () {
-        htmlNode.addCssClass('foo');
-        expect(htmlNode.getAttribute('class')).toBe('foo');
+        htmlNode.addCssClass('bar');
+        expect(htmlNode.getAttribute('class')).toBe('foo bar');
       });
     });
 
@@ -139,23 +145,27 @@ describe("$widget", function () {
 
     describe("removeCssClass()", function () {
       beforeEach(function () {
-        htmlNode = HtmlNode.create()
-        .addCssClass('foo');
+        htmlNode = HtmlNode.create({
+          nodeName: 'foo'
+        })
+        .addCssClass('bar');
       });
 
       it("should return self", function () {
-        var result = htmlNode.removeCssClass('foo');
+        var result = htmlNode.removeCssClass('bar');
         expect(result).toBe(htmlNode);
       });
 
       it("should remove from cssClasses", function () {
-        htmlNode.removeCssClass('foo');
-        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({}));
+        htmlNode.removeCssClass('bar');
+        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
+          foo: 'foo'
+        }));
       });
 
       it("should update 'class' attribute", function () {
-        htmlNode.removeCssClass('foo');
-        expect(htmlNode.getAttribute('class')).toBeUndefined();
+        htmlNode.removeCssClass('bar');
+        expect(htmlNode.getAttribute('class')).toBe('foo');
       });
     });
 

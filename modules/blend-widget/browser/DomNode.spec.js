@@ -189,7 +189,10 @@ describe("$widget", function () {
         element = document.createElement('div');
         domNode = DomNode.fromElementId('foo')
         .setAttribute('hello', 'world')
-        .addChildNode(DomNode.fromElementId('bar'));
+        .addChildNode(DomNode.create({
+          elementId: 'bar',
+          nodeName: 'baz'
+        }));
         spyOn(document, 'createElement').and.returnValue(element);
       });
 
@@ -211,7 +214,7 @@ describe("$widget", function () {
 
       it("should add contents", function () {
         var result = domNode.createElement();
-        expect(result.innerHTML).toEqual('<div id="bar"></div>');
+        expect(result.innerHTML).toEqual('<div class="baz" id="bar"></div>');
       });
     });
 
