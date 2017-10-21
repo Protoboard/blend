@@ -151,6 +151,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
    * @param {Element} parentElement
    * @returns {$widget.DomNode}
    * @ignore
+   * @todo Move to a DomRootWidget forward?
    */
   renderInto: function (parentElement) {
     var element = this.getElement() || this.createElement();
