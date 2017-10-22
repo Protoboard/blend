@@ -38,7 +38,10 @@ describe("$widget", function () {
         });
         expect($widget.CssClasses.mixedBy(htmlNode.cssClasses)).toBeTruthy();
         expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
-          foo: 'foo'
+          foo: 'foo',
+          '$widget.Node': '$widget.Node',
+          '$widget.XmlNode': '$widget.XmlNode',
+          '$widget.HtmlNode': '$widget.HtmlNode'
         }));
       });
 
@@ -64,7 +67,8 @@ describe("$widget", function () {
             bar: 'bar'
           })
         });
-        expect(htmlNode.attributes.getValue('class')).toBe('foo bar baz');
+        expect(htmlNode.attributes.getValue('class'))
+        .toBe('foo bar baz $widget.Node $widget.XmlNode $widget.HtmlNode');
       });
 
       it("should initialize 'style' attribute", function () {
@@ -112,15 +116,13 @@ describe("$widget", function () {
 
       it("should add to cssClasses", function () {
         htmlNode.addCssClass('bar');
-        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
-          foo: 'foo',
-          bar: 'bar'
-        }));
+        expect(htmlNode.cssClasses.hasItem('bar', 'bar')).toBeTruthy();
       });
 
       it("should update 'class' attribute", function () {
         htmlNode.addCssClass('bar');
-        expect(htmlNode.getAttribute('class')).toBe('foo bar');
+        expect(htmlNode.getAttribute('class'))
+        .toBe('foo $widget.Node $widget.XmlNode $widget.HtmlNode bar');
       });
     });
 
@@ -158,14 +160,13 @@ describe("$widget", function () {
 
       it("should remove from cssClasses", function () {
         htmlNode.removeCssClass('bar');
-        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
-          foo: 'foo'
-        }));
+        expect(htmlNode.cssClasses.hasItem('bar', 'bar')).toBeFalsy();
       });
 
       it("should update 'class' attribute", function () {
         htmlNode.removeCssClass('bar');
-        expect(htmlNode.getAttribute('class')).toBe('foo');
+        expect(htmlNode.getAttribute('class'))
+        .toBe('foo $widget.Node $widget.XmlNode $widget.HtmlNode');
       });
     });
 

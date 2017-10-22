@@ -214,7 +214,8 @@ describe("$widget", function () {
 
       it("should add contents", function () {
         var result = domNode.createElement();
-        expect(result.innerHTML).toEqual('<div class="baz" id="bar"></div>');
+        expect(result.innerHTML)
+        .toEqual('<div class="baz $widget.Node $widget.XmlNode $widget.HtmlNode $widget.DomNode" id="bar"></div>');
       });
     });
 
