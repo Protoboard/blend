@@ -9,16 +9,15 @@
 
 /**
  * @class $widget.CssClasses
- * @extends $data.Collection
+ * @extends $data.StringSet
  * @implements $utils.Stringifiable
- * @todo Change base class to StringSet?
  */
 $widget.CssClasses = $oop.getClass('$widget.CssClasses')
-.blend($data.Collection)
+.blend($data.StringSet)
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.CssClasses# */{
   /** @returns {string} */
   toString: function () {
-    return this.getKeys().join(' ');
+    return Object.keys(this.data).join(' ');
   }
 });

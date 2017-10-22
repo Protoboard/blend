@@ -38,10 +38,10 @@ describe("$widget", function () {
         });
         expect($widget.CssClasses.mixedBy(htmlNode.cssClasses)).toBeTruthy();
         expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
-          foo: 'foo',
-          '$widget.Node': '$widget.Node',
-          '$widget.XmlNode': '$widget.XmlNode',
-          '$widget.HtmlNode': '$widget.HtmlNode'
+          foo: 1,
+          '$widget.Node': 1,
+          '$widget.XmlNode': 1,
+          '$widget.HtmlNode': 1
         }));
       });
 

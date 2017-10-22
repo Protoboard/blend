@@ -132,8 +132,8 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
    */
   addCssClass: function (cssClass) {
     var cssClasses = this.cssClasses;
-    if (!cssClasses.getValue(cssClass)) {
-      cssClasses.setItem(cssClass, cssClass);
+    if (!cssClasses.hasItem(cssClass)) {
+      cssClasses.setItem(cssClass);
       this._updateClassAttribute();
     }
     return this;
@@ -144,7 +144,7 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
    * @returns {boolean}
    */
   hasCssClass: function (cssClass) {
-    return !!this.cssClasses.getValue(cssClass);
+    return !!this.cssClasses.hasItem(cssClass);
   },
 
   /**
@@ -153,7 +153,7 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
    */
   removeCssClass: function (cssClass) {
     var cssClasses = this.cssClasses;
-    if (cssClasses.getValue(cssClass)) {
+    if (cssClasses.hasItem(cssClass)) {
       cssClasses.deleteItem(cssClass);
       this._updateClassAttribute();
     }
