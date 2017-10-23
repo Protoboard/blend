@@ -12,7 +12,6 @@
  */
 $widget.TextNode = $oop.getClass('$widget.TextNode')
 .blend($oop.getClass('$widget.Node'))
-.blend($oop.getClass('$widget.ChildOnly'))
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.TextNode# */{
   /**
