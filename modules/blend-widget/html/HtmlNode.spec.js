@@ -27,24 +27,6 @@ describe("$widget", function () {
     });
 
     describe("create()", function () {
-      it("should initialize elementName", function () {
-        htmlNode = HtmlNode.create();
-        expect(htmlNode.elementName).toBe('div');
-      });
-
-      it("should initialize cssClasses", function () {
-        htmlNode = HtmlNode.create({
-          nodeName: 'foo'
-        });
-        expect($widget.CssClasses.mixedBy(htmlNode.cssClasses)).toBeTruthy();
-        expect(htmlNode.cssClasses).toEqual($widget.CssClasses.fromData({
-          foo: 1,
-          '$widget.Node': 1,
-          '$widget.XmlNode': 1,
-          '$widget.HtmlNode': 1
-        }));
-      });
-
       it("should initialize inlineStyles", function () {
         htmlNode = HtmlNode.create();
         expect($widget.InlineStyles.mixedBy(htmlNode.inlineStyles))
@@ -68,7 +50,7 @@ describe("$widget", function () {
           })
         });
         expect(htmlNode.attributes.getValue('class'))
-        .toBe('foo bar baz $widget.Node $widget.XmlNode $widget.HtmlNode');
+        .toBe('foo bar');
       });
 
       it("should initialize 'style' attribute", function () {
@@ -122,7 +104,7 @@ describe("$widget", function () {
       it("should update 'class' attribute", function () {
         htmlNode.addCssClass('bar');
         expect(htmlNode.getAttribute('class'))
-        .toBe('foo $widget.Node $widget.XmlNode $widget.HtmlNode bar');
+        .toBe('bar');
       });
     });
 
@@ -165,8 +147,7 @@ describe("$widget", function () {
 
       it("should update 'class' attribute", function () {
         htmlNode.removeCssClass('bar');
-        expect(htmlNode.getAttribute('class'))
-        .toBe('foo $widget.Node $widget.XmlNode $widget.HtmlNode');
+        expect(htmlNode.getAttribute('class')).toBeUndefined();
       });
     });
 

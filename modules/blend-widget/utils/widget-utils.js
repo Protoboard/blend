@@ -25,5 +25,14 @@ $oop.copyProperties($widget, /** @lends $widget */{
             nameA > nameB ? 1 :
                 nameA < nameB ? -1 :
                     0;
+  },
+
+  /**
+   * Detects whether we are running in a browser environment.
+   * @returns {boolean}
+   * @todo Need better (but still fast) detection.
+   */
+  isBrowser: function () {
+    return typeof window === 'object';
   }
 });

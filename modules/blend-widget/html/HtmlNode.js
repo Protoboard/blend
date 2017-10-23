@@ -41,38 +41,9 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
 
   /** @ignore */
   init: function () {
-    this._updateNodeNameClass();
-    this._updateMixinClasses();
     this._updateIdAttribute();
     this._updateClassAttribute();
     this._updateStyleAttribute();
-  },
-
-  /** @private */
-  _updateNodeNameClass: function () {
-    var nodeName = this.nodeName;
-    if (nodeName) {
-      this.addCssClass(nodeName);
-    }
-  },
-
-  /**
-   * Applies mixin class IDs as CSS classes. Excludes mixins that do not
-   * mix or expect `$widget.Node`.
-   * @private
-   */
-  _updateMixinClasses: function () {
-    var that = this,
-        Node = $widget.Node;
-
-    this.__contributors.list
-    .filter(function (Mixin) {
-      return Mixin.mixes(Node) || Mixin.expects(Node);
-    })
-    .map($oop.getClassId)
-    .forEach(function (classId) {
-      that.addCssClass(classId);
-    });
   },
 
   /**
