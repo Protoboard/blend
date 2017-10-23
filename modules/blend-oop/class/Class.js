@@ -889,7 +889,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Specifies a class to be mixed by the host class.
+   * Mixes specified mixin to the current class.
    * @param {$oop.Class} Mixin
    * @param {$oop.Class} [Through]
    * @returns {$oop.Class}
@@ -928,7 +928,22 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   },
 
   /**
-   * Mixes specified class and all its mixins, direct or indirect.
+   * Mixes specified mixin to the current class given that the specified
+   * callback returns truthy.
+   * @param {$oop.Class} Mixin
+   * @param {function} callback
+   * @returns {$oop.Class}
+   */
+  mixWhen: function (Mixin, callback) {
+    if (callback.call(this)) {
+      this.mix(Mixin);
+    }
+    return this;
+  },
+
+  /**
+   * Mixes specified class and all its mixins, direct or indirect, to the
+   * current class.
    * @param {$oop.Class} Class
    * @returns {$oop.Class}
    */
@@ -944,6 +959,20 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       that.mix(Class);
     });
 
+    return this;
+  },
+
+  /**
+   * Mixes specified class and all its mixins, direct or indirect, to the
+   * current class, given that the specified callback returns truthy.
+   * @param {$oop.Class} Class
+   * @param {function} callback
+   * @returns {$oop.Class}
+   */
+  blendWhen: function (Class, callback) {
+    if (callback.call(this)) {
+      this.blend(Class);
+    }
     return this;
   },
 

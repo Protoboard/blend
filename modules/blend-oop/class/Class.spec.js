@@ -708,6 +708,34 @@ describe("$oop", function () {
       });
     });
 
+    describe("mixWhen()", function () {
+      var Mixin;
+
+      beforeEach(function () {
+        Mixin = $oop.getClass('test.$oop.Class.Mixin');
+        spyOn(Class, 'mix');
+      });
+
+      it("should return self", function () {
+        var result = Class.mixWhen(Mixin, function () {});
+        expect(result).toBe(Class);
+      });
+
+      describe("when callback returns truthy", function () {
+        it("should mix class", function () {
+          Class.mixWhen(Mixin, function () {return true;});
+          expect(Class.mix).toHaveBeenCalledWith(Mixin);
+        });
+      });
+
+      describe("when callback returns falsy", function () {
+        it("should not mix class", function () {
+          Class.mixWhen(Mixin, function () {return false;});
+          expect(Class.mix).not.toHaveBeenCalledWith(Mixin);
+        });
+      });
+    });
+
     describe("blend()", function () {
       var Mixin1,
           Mixin2;
@@ -823,6 +851,34 @@ describe("$oop", function () {
               Mixin4.__members.FOO
             ]
           });
+        });
+      });
+    });
+
+    describe("blendWhen()", function () {
+      var Mixin;
+
+      beforeEach(function () {
+        Mixin = $oop.getClass('test.$oop.Class.Mixin');
+        spyOn(Class, 'blend');
+      });
+
+      it("should return self", function () {
+        var result = Class.blendWhen(Mixin, function () {});
+        expect(result).toBe(Class);
+      });
+
+      describe("when callback returns truthy", function () {
+        it("should blend class", function () {
+          Class.blendWhen(Mixin, function () {return true;});
+          expect(Class.blend).toHaveBeenCalledWith(Mixin);
+        });
+      });
+
+      describe("when callback returns falsy", function () {
+        it("should not blend class", function () {
+          Class.blendWhen(Mixin, function () {return false;});
+          expect(Class.blend).not.toHaveBeenCalledWith(Mixin);
         });
       });
     });
