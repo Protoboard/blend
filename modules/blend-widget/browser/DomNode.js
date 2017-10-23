@@ -7,10 +7,13 @@
  * @mixin $widget.DomNode
  * @augments $widget.Node
  * @augments $widget.XmlNode
+ * @implements $widget.Renderable
+ * @todo Wrap element modifications in requestAnimationFrame()
  */
 $widget.DomNode = $oop.getClass('$widget.DomNode')
 .expect($oop.getClass('$widget.Node'))
 .expect($oop.getClass('$widget.XmlNode'))
+.implement($oop.getClass('$widget.Renderable'))
 .define(/** @lends $widget.DomNode# */{
   /**
    * Renders child node and adds it to the DOM at the appropriate child index.
@@ -119,6 +122,43 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   },
 
   /**
+   * Renders current node and appends it to the children of the specified
+   * `parentElement`.
+   * @param {Element} parentElement
+   * @returns {$widget.DomNode}
+   * @ignore
+   */
+  renderInto: function (parentElement) {
+    var element = this.getElement() || this.createElement();
+    parentElement.appendChild(element);
+    return this;
+  },
+
+  /**
+   * Re-renders current node.
+   * @returns {$widget.DomNode}
+   */
+  reRender: function () {
+    var element = this.getElement();
+    if (element) {
+      element.parentNode.replaceChild(this.createElement(), element);
+    }
+    return this;
+  },
+
+  /**
+   * Re-renders contents of current node. Own element will not be replaced.
+   * @returns {$widget.DomNode}
+   */
+  reRenderContents: function () {
+    var element = this.getElement();
+    if (element) {
+      element.innerHtml = this.childNodes.toString();
+    }
+    return this;
+  },
+
+  /**
    * Creates a DOM element which reflects the node's current state.
    * @returns {Element}
    */
@@ -143,19 +183,5 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
    */
   getElement: function () {
     return document.getElementById(this.elementId);
-  },
-
-  /**
-   * Renders current node and appends it to the children of the specified
-   * `parentElement`. To be used internally by the framework.
-   * @param {Element} parentElement
-   * @returns {$widget.DomNode}
-   * @ignore
-   * @todo Move to a DomRootWidget forward?
-   */
-  renderInto: function (parentElement) {
-    var element = this.getElement() || this.createElement();
-    parentElement.appendChild(element);
-    return this;
   }
 });

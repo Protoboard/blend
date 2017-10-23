@@ -215,7 +215,7 @@ describe("$widget", function () {
       it("should add contents", function () {
         var result = domNode.createElement();
         expect(result.innerHTML)
-        .toEqual('<div class="baz $widget.Node $widget.XmlNode $widget.HtmlNode $widget.DomNode" id="bar"></div>');
+        .toEqual('<div id="bar"></div>');
       });
     });
 
@@ -274,6 +274,62 @@ describe("$widget", function () {
           domNode.renderInto(parentElement);
           expect(oldParentElement.contains(element)).toBeFalsy();
         });
+      });
+    });
+
+    describe("reRender()", function () {
+      var parentElement,
+          oldElement,
+          newElement;
+
+      beforeEach(function () {
+        parentElement = document.createElement('div');
+        oldElement = document.createElement('div');
+        newElement = document.createElement('div');
+        parentElement.appendChild(oldElement);
+        domNode = DomNode.fromElementId('foo');
+
+        spyOn(domNode, 'getElement').and.returnValue(oldElement);
+        spyOn(domNode, 'createElement').and.returnValue(newElement);
+      });
+
+      it("should return self", function () {
+        var result = domNode.reRender();
+        expect(result).toBe(domNode);
+      });
+
+      it("should replace element", function () {
+        domNode.reRender();
+        expect(parentElement.contains(oldElement)).toBeFalsy();
+        expect(parentElement.contains(newElement)).toBeTruthy();
+      });
+    });
+
+    describe("reRenderContents()", function () {
+      var parentElement,
+          oldElement,
+          newElement;
+
+      beforeEach(function () {
+        parentElement = document.createElement('div');
+        oldElement = document.createElement('div');
+        newElement = document.createElement('div');
+        parentElement.appendChild(oldElement);
+        domNode = DomNode.fromElementId('foo');
+
+        spyOn(domNode, 'getElement').and.returnValue(oldElement);
+        spyOn(domNode, 'createElement').and.returnValue(newElement);
+      });
+
+      it("should return self", function () {
+        var result = domNode.reRenderContents();
+        expect(result).toBe(domNode);
+      });
+
+      it("should replace element", function () {
+        domNode.reRenderContents();
+        expect(parentElement.contains(oldElement)).toBeFalsy();
+        expect(parentElement.contains(newElement)).toBeTruthy();
       });
     });
   });
