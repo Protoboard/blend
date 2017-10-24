@@ -73,13 +73,19 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   /**
    * @returns {string}
    */
+  getContentString: function () {
+    return this.childNodes.toString();
+  },
+
+  /**
+   * @returns {string}
+   */
   toString: function () {
     var elementName = $widget.escapeXmlEntities(this.elementName),
         attributes = this.attributes;
     return [
       '<' + elementName + (attributes.getItemCount() ? (' ' + attributes) : '') + '>',
-      // todo Would be nice if we could decouple children from XmlNode
-      this.childNodes,
+      this.getContentString(),
       '</' + elementName + '>'
     ].join('');
   }
