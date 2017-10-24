@@ -11,8 +11,6 @@
 /**
  * @class $widget.Widget
  * @extends $widget.Node
- * @mixes $widget.HtmlNode
- * @mixes $widget.DomNode
  * @extends $utils.Retrievable
  * @extends $event.EventSender
  * @extends $event.EventListener
@@ -20,8 +18,6 @@
  */
 $widget.Widget = $oop.getClass('$widget.Widget')
 .blend($oop.getClass('$widget.Node'))
-.blendWhen($oop.getClass('$widget.HtmlNode'), $widget.isBrowser)
-.blendWhen($oop.getClass('$widget.DomNode'), $widget.isBrowser)
 .blend($utils.Retrievable)
 .blend($event.EventSender)
 .blend($event.EventListener)
@@ -29,42 +25,8 @@ $widget.Widget = $oop.getClass('$widget.Widget')
 .define(/** @lends $widget.Widget# */{
   /** @ignore */
   spread: function () {
-    this.elementId = this.elementId || 'w' + this.instanceId;
-    this.nodeName = this.nodeName || this.elementId;
-    this.subscriberId = this.subscriberId || this.elementId;
-  },
-
-  /** @ignore */
-  init: function () {
-    this._updateNodeNameClass();
-    this._updateMixinClasses();
-  },
-
-  /** @private */
-  _updateNodeNameClass: function () {
-    var nodeName = this.nodeName;
-    if (nodeName) {
-      this.addCssClass(nodeName);
-    }
-  },
-
-  /**
-   * Applies mixin class IDs as CSS classes. Excludes mixins that do not
-   * mix or expect `$widget.Widget`.
-   * @private
-   */
-  _updateMixinClasses: function () {
-    var that = this,
-        Widget = $widget.Widget;
-
-    this.__contributors.list
-    .filter(function (Mixin) {
-      return Mixin.mixes(Widget) || Mixin.expects(Widget);
-    })
-    .map($oop.getClassId)
-    .forEach(function (classId) {
-      that.addCssClass(classId);
-    });
+    this.nodeName = this.nodeName || String(this.instanceId);
+    this.subscriberId = this.subscriberId || String(this.instanceId);
   },
 
   /**
@@ -112,6 +74,11 @@ $widget.Widget = $oop.getClass('$widget.Widget')
     this.childNodeLookup.callOnEachValue('onDetach');
   }
 });
+
+$widget.Widget
+.forwardBlend($oop.getClass('$widget.HtmlNode'), $widget.isBrowser)
+.forwardBlend($oop.getClass('$widget.HtmlWidget'), $widget.isBrowser)
+.forwardBlend($oop.getClass('$widget.DomNode'), $widget.isBrowser);
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

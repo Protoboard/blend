@@ -27,23 +27,12 @@ describe("$widget", function () {
 
       it("should initialize subscriberId", function () {
         widget = Widget.create();
-        expect(widget.subscriberId).toBe('w' + widget.instanceId);
+        expect(widget.subscriberId).toBe(String(widget.instanceId));
       });
 
       it("should initialize elementName", function () {
         widget = Widget.create();
         expect(widget.elementName).toBe('div');
-      });
-
-      it("should initialize cssClasses", function () {
-        widget = Widget.create({
-          nodeName: 'foo'
-        });
-        expect($widget.CssClasses.mixedBy(widget.cssClasses)).toBeTruthy();
-        expect(widget.cssClasses).toEqual($widget.CssClasses.fromData({
-          foo: 1,
-          '$widget.Widget': 1
-        }));
       });
     });
 
