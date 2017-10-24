@@ -306,19 +306,17 @@ describe("$widget", function () {
     });
 
     describe("reRenderContents()", function () {
-      var parentElement,
-          oldElement,
-          newElement;
+      var domNode, element,
+          childNode, childElement;
 
       beforeEach(function () {
-        parentElement = document.createElement('div');
-        oldElement = document.createElement('div');
-        newElement = document.createElement('div');
-        parentElement.appendChild(oldElement);
-        domNode = DomNode.fromElementId('foo');
+        element = document.createElement('div');
+        domNode = DomNode.fromElementName('div');
+        childNode = DomNode.fromElementName('div');
+        spyOn(domNode, 'getElement').and.returnValue(element);
 
-        spyOn(domNode, 'getElement').and.returnValue(oldElement);
-        spyOn(domNode, 'createElement').and.returnValue(newElement);
+        domNode
+        .addChildNode(childNode);
       });
 
       it("should return self", function () {
@@ -326,10 +324,10 @@ describe("$widget", function () {
         expect(result).toBe(domNode);
       });
 
-      it("should replace element", function () {
+      it("should replace contents", function () {
+        childElement = element.childNodes[0];
         domNode.reRenderContents();
-        expect(parentElement.contains(oldElement)).toBeFalsy();
-        expect(parentElement.contains(newElement)).toBeTruthy();
+        expect(element.childNodes[0]).not.toBe(childElement);
       });
     });
   });

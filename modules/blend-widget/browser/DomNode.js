@@ -153,7 +153,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   reRenderContents: function () {
     var element = this.getElement();
     if (element) {
-      element.innerHtml = this.childNodes.toString();
+      element.innerHTML = this.childNodes.toString();
     }
     return this;
   },
