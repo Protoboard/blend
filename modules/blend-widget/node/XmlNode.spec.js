@@ -102,6 +102,20 @@ describe("$widget", function () {
       });
     });
 
+    describe("getContentMarkup()", function () {
+      var childNode;
+
+      beforeEach(function () {
+        xmlNode = XmlNode.fromElementName('Foo');
+        childNode = XmlNode.fromElementName('Bar');
+        xmlNode.addChildNode(childNode);
+      });
+
+      it("should return markup for children", function () {
+        expect(xmlNode.getContentMarkup()).toBe('<Bar></Bar>');
+      });
+    });
+
     describe("toString()", function () {
       it("should return generated markup", function () {
         xmlNode = XmlNode.fromElementName('Tag')

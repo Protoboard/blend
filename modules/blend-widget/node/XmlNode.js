@@ -73,7 +73,7 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   /**
    * @returns {string}
    */
-  getContentString: function () {
+  getContentMarkup: function () {
     return this.childNodes.toString();
   },
 
@@ -85,7 +85,7 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
         attributes = this.attributes;
     return [
       '<' + elementName + (attributes.getItemCount() ? (' ' + attributes) : '') + '>',
-      this.getContentString(),
+      this.getContentMarkup(),
       '</' + elementName + '>'
     ].join('');
   }
