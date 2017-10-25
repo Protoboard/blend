@@ -47,3 +47,6 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
     });
   }
 });
+
+$oop.getClass('$widget.Widget')
+.forwardBlend($widget.HtmlWidget, $widget.isBrowser);

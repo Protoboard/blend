@@ -185,3 +185,6 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
     return document.getElementById(this.elementId);
   }
 });
+
+$oop.getClass('$widget.Node')
+.forwardBlend($widget.DomNode, $widget.isBrowser);

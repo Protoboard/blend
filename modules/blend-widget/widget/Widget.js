@@ -75,11 +75,6 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   }
 });
 
-$widget.Widget
-.forwardBlend($oop.getClass('$widget.HtmlNode'), $widget.isBrowser)
-.forwardBlend($oop.getClass('$widget.HtmlWidget'), $widget.isBrowser)
-.forwardBlend($oop.getClass('$widget.DomNode'), $widget.isBrowser);
-
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$widget.Widget}

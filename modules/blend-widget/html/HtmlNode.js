@@ -166,3 +166,6 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
     return this;
   }
 });
+
+$oop.getClass('$widget.Node')
+.forwardBlend($widget.HtmlNode, $widget.isBrowser);
