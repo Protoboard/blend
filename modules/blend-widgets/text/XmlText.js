@@ -2,9 +2,11 @@
 
 /**
  * @mixin $widgets.XmlText
+ * @extends $widget.XmlNode
  * @augments $widgets.Text
  */
 $widgets.XmlText = $oop.getClass('$widgets.XmlText')
+.blend($oop.getClass('$widget.XmlNode'))
 .expect($oop.getClass('$widgets.Text'))
 .define(/** @lends $widgets.XmlText# */{
   /**
