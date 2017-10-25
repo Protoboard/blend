@@ -19,6 +19,7 @@ module.exports = function (config) {
       'dist/blend-template.js',
       'dist/blend-entity.js',
       'dist/blend-widget.js',
+      'dist/blend-widgets.js',
       'test/jasmine-spyOn.js',
       'test/*.js',
       'modules/**/*.spec.js'
