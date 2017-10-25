@@ -17,13 +17,10 @@ $data.ObjectContainer = $oop.getClass('$data.ObjectContainer')
    */
 
   /** @ignore */
-  spread: function () {
-    this.data = this.data || {};
-  },
-
-  /** @ignore */
   init: function () {
-    $assert.isObject(this.data, "Invalid object buffer");
+    $assert.isObjectOptional(this.data, "Invalid object buffer");
+
+    this.data = this.data || {};
   },
 
   /**

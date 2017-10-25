@@ -25,7 +25,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
    */
 
   /** @ignore */
-  spread: function () {
+  defaults: function () {
     this.compare = this.compare || this._comparePrimitives;
   },
 

@@ -169,9 +169,9 @@ describe("$widget", function () {
 
       it("should add to inlineStyles", function () {
         htmlNode.setInlineStyle('foo', 'bar');
-        expect(htmlNode.inlineStyles).toEqual($widget.InlineStyles.fromData({
+        expect(htmlNode.inlineStyles.data).toEqual({
           foo: 'bar'
-        }));
+        });
       });
 
       it("should update 'style' attribute", function () {
@@ -210,8 +210,8 @@ describe("$widget", function () {
 
       it("should remove from inlineStyles", function () {
         htmlNode.deleteInlineStyle('foo');
-        expect(htmlNode.inlineStyles)
-        .toEqual($widget.InlineStyles.fromData({}));
+        expect(htmlNode.inlineStyles.data)
+        .toEqual({});
       });
 
       it("should update 'style' attribute", function () {

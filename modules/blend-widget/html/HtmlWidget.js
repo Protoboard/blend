@@ -2,10 +2,12 @@
 
 /**
  * @mixin $widget.HtmlWidget
+ * @extends $widget.HtmlNode
  * @augments $widget.Widget
  * @todo Merge with $widget.HtmlNode?
  */
 $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
+.blend($oop.getClass('$widget.HtmlNode'))
 .expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widget.HtmlWidget# */{
   /** @ignore */

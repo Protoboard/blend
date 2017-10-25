@@ -23,7 +23,7 @@ $utils.Scheduler = $oop.getClass('$utils.Scheduler')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     this.scheduledArguments = [];
     this.scheduleTimers = [];
     this.schedulerDeferred = $utils.Deferred.create();

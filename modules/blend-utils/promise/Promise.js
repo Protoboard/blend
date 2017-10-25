@@ -51,7 +51,7 @@ $utils.Promise = $oop.getClass('$utils.Promise')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     this.promiseState = $utils.PROMISE_STATE_PENDING;
     this.notificationArguments = [];
     this.successHandlers = [];

@@ -18,6 +18,6 @@ $utils.Identifiable = $oop.getClass('$utils.Identifiable')
      * Identifies instance globally.
      * @member {number} $utils.Identifiable#instanceId
      */
-    this.instanceId = ++$utils.Identifiable.lastInstanceId;
+    this.instanceId = this.instanceId || ++$utils.Identifiable.lastInstanceId;
   }
 });

@@ -50,9 +50,17 @@ $widget.Node = $oop.getClass('$widget.Node')
   },
 
   /** @ignore */
+  defaults: function () {
+    this.nodeOrder = this.nodeOrder || 0;
+  },
+
+  /** @ignore */
   spread: function () {
     this.nodeName = this.nodeName || String(this.instanceId);
-    this.nodeOrder = this.nodeOrder || 0;
+  },
+
+  /** @ignore */
+  init: function () {
     this.childNodes = this.childNodes || $widget.Nodes.create();
     this.childNodeLookup = this.childNodeLookup || $data.Collection.create();
   },

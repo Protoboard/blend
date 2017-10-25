@@ -234,6 +234,12 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           methodCount = compactedMethods.length,
           saved = {};
 
+      if (methodName === 'defaults') {
+        // setting up defaults to be called in reversed order, so more
+        // specific classes take effect first
+        compactedMethods.reverse();
+      }
+
       // decorating each contributed method with a `saved` container
       compactedMethods.forEach(function (method) {
         method.saved = saved;
@@ -816,7 +822,12 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       ].join(" "));
     }
 
-    // spreading properties
+    // setting defaults
+    if (typeof instance.defaults === 'function') {
+      instance.defaults();
+    }
+
+    // spreading properties - ie. dependencies bw. properties
     if (typeof instance.spread === 'function') {
       instance.spread();
     }

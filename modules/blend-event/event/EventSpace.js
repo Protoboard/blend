@@ -21,7 +21,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     this.subscriptions = $data.Tree.create();
   },
 

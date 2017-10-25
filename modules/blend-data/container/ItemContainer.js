@@ -16,7 +16,7 @@ $data.ItemContainer = $oop.getClass('$data.ItemContainer')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     this._itemCount = this._itemCount || (this.data ? undefined : 0);
   },
 

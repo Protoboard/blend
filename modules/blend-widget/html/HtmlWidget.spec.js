@@ -27,11 +27,11 @@ describe("$widget", function () {
           nodeName: 'foo'
         });
         expect($widget.CssClasses.mixedBy(htmlWidget.cssClasses)).toBeTruthy();
-        expect(htmlWidget.cssClasses).toEqual($widget.CssClasses.fromData({
+        expect(htmlWidget.cssClasses.data).toEqual({
           foo: 1,
           '$widget.Widget': 1,
           '$widget.HtmlWidget': 1
-        }));
+        });
       });
     });
   });

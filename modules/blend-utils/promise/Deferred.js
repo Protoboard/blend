@@ -13,7 +13,7 @@
 $utils.Deferred = $oop.getClass('$utils.Deferred')
 .define(/** @lends $utils.Deferred# */{
   /** @ignore */
-  spread: function () {
+  init: function () {
     /**
      * Promise associated  with `Deferred`. Provides access to "resolve",
      * "reject", and "progress" events.

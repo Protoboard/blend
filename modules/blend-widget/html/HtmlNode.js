@@ -33,14 +33,15 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
   },
 
   /** @ignore */
-  spread: function () {
+  defaults: function () {
     this.elementName = this.elementName || 'div';
-    this.cssClasses = this.cssClasses || $widget.CssClasses.create();
-    this.inlineStyles = this.inlineStyles || $widget.InlineStyles.create();
   },
 
   /** @ignore */
   init: function () {
+    this.cssClasses = this.cssClasses || $widget.CssClasses.create();
+    this.inlineStyles = this.inlineStyles || $widget.InlineStyles.create();
+
     this._updateIdAttribute();
     this._updateClassAttribute();
     this._updateStyleAttribute();

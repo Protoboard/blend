@@ -29,14 +29,15 @@ $utils.Throttler = $oop.getClass('$utils.Throttler')
    */
 
   /** @ignore */
-  spread: function () {
+  defaults: function () {
     this.throttleDelay = this.throttleDelay || 0;
-    this.throttledCallCounts = [];
   },
 
   /** @ignore */
   init: function () {
     $assert.isNumber(this.throttleDelay, "Invalid throttle delay");
+
+    this.throttledCallCounts = [];
 
     this.elevateMethods(
         'onTimerTick',

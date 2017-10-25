@@ -43,7 +43,7 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     this.propertiesAdded = this.propertiesAdded || [];
     this.propertiesRemoved = this.propertiesRemoved || [];
   },

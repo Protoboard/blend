@@ -21,7 +21,7 @@ $utils.Debouncer = $oop.getClass('$utils.Debouncer')
    */
 
   /** @ignore */
-  spread: function () {
+  defaults: function () {
     this.debounceDelay = this.debounceDelay || 0;
   },
 

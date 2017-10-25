@@ -31,13 +31,10 @@ $data.MasterLink = $oop.getClass('$data.MasterLink')
    */
 
   /** @ignore */
-  spread: function () {
-    this.previousLink = this;
-    this.nextLink = this;
-  },
-
-  /** @ignore */
   init: function () {
     $assert.isChain(this.chain, "Invalid chain");
+
+    this.previousLink = this;
+    this.nextLink = this;
   }
 });

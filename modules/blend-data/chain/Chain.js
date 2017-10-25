@@ -32,7 +32,7 @@ $data.Chain = $oop.getClass('$data.Chain')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     // forcing data buffer to be a MasterLink
     this.data = $data.MasterLink.create({chain: this});
 

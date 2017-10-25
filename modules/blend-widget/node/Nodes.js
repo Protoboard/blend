@@ -13,7 +13,7 @@ $widget.Nodes = $oop.getClass('$widget.Nodes')
 .blend($data.OrderedList)
 .define(/** @lends $widget.Nodes# */{
   /** @ignore */
-  spread: function () {
-    this.compare = $widget.compareNodes;
+  defaults: function () {
+    this.compare = this.compare || $widget.compareNodes;
   }
 });

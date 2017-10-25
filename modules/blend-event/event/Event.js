@@ -64,9 +64,7 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /** @ignore */
-  spread: function () {
-    this.targetPaths = this.targetPaths || [];
-
+  defaults: function () {
     if (this.propagates === undefined) {
       this.propagates = true;
     }
@@ -75,6 +73,9 @@ $event.Event = $oop.getClass('$event.Event')
   /** @ignore */
   init: function () {
     $assert.isString(this.eventName, "Invalid eventName.");
+
+    this.targetPaths = this.targetPaths || [];
+
     this.elevateMethods('unlink');
   },
 

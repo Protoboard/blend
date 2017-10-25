@@ -17,7 +17,7 @@ $event.EventSender = $oop.getClass('$event.EventSender')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     this.triggerPaths = this.triggerPaths || [];
   },
 

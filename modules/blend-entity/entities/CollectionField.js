@@ -15,7 +15,7 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
 .blend($oop.getClass('$entity.BranchNoded'))
 .define(/** @lends $entity.CollectionField# */{
   /** @ignore */
-  spread: function () {
+  init: function () {
     var triggerPaths = this.triggerPaths,
         collectionFieldKey = this.entityKey,
         itemIdType = collectionFieldKey.getItemIdType() || 'string',

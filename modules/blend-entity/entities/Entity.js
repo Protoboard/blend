@@ -31,7 +31,7 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     var entityKey = this.entityKey,
         listeningPath = entityKey.getEntityPath()
         .clone().unshift('entity'),

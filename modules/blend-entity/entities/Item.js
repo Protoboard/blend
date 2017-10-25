@@ -47,7 +47,7 @@ $entity.Item = $oop.getClass('$entity.Item')
   },
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     var triggerPaths = this.triggerPaths,
         itemKey = this.entityKey,
         idType = itemKey.getIdType() || 'string',

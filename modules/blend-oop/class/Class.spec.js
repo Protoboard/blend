@@ -1349,6 +1349,25 @@ describe("$oop", function () {
         });
       });
 
+      describe("when defaults is defined", function () {
+        var defaults,
+            args;
+
+        beforeEach(function () {
+          args = {};
+          defaults = jasmine.createSpy();
+          Class.define({
+            defaults: defaults
+          });
+
+          Class.create(args);
+        });
+
+        it("should invoke defaults", function () {
+          expect(defaults).toHaveBeenCalledWith();
+        });
+      });
+
       describe("when spread is defined", function () {
         var spread,
             args;

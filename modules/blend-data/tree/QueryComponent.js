@@ -144,7 +144,10 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
     if (this.valueOptions) {
       this._spreadValueOptions();
     }
+  },
 
+  /** @ignore */
+  init: function () {
     // by default, matching all keys & values
     if (this.matchesAnyKey === undefined) {
       this.matchesAnyKey = true;

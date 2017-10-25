@@ -31,22 +31,20 @@ $utils.Timer = $oop.getClass('$utils.Timer')
    */
 
   /** @ignore */
-  spread: function () {
-    var timerDeferred = $utils.Deferred.create();
-
-    this.timerDeferred = timerDeferred;
-    this.timerPromise = timerDeferred.promise;
-  },
-
-  /** @ignore */
   init: function () {
     $assert.isNumber(this.timerId, "Invalid timer ID");
+
+    var timerDeferred = $utils.Deferred.create(),
+        timerPromise = timerDeferred.promise;
+
+    this.timerDeferred = timerDeferred;
+    this.timerPromise = timerPromise;
 
     this.elevateMethods(
         'onTimerPromiseResolve',
         'onTimerPromiseReject');
 
-    this.timerPromise.then(
+    timerPromise.then(
         this.onTimerPromiseResolve,
         this.onTimerPromiseReject);
   },

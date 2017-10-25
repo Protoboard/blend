@@ -17,13 +17,10 @@ $data.ArrayContainer = $oop.getClass('$data.ArrayContainer')
    */
 
   /** @ignore */
-  spread: function () {
-    this.data = this.data || [];
-  },
-
-  /** @ignore */
   init: function () {
-    $assert.isArray(this.data, "Invalid array buffer");
+    $assert.isArrayOptional(this.data, "Invalid array buffer");
+
+    this.data = this.data || [];
   },
 
   /**

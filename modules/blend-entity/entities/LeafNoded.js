@@ -8,7 +8,7 @@ $entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
 .expect($oop.getClass('$entity.Entity'))
 .define(/** @lends $entity.LeafNoded# */{
   /** @ignore */
-  spread: function () {
+  init: function () {
     var entityKey = this.entityKey,
         attributeDocumentKey = entityKey.getAttributeDocumentKey(),
         entityType = attributeDocumentKey.documentType,

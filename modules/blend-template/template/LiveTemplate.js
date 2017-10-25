@@ -27,7 +27,7 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
    */
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     var listeningPath = $data.Path.fromComponents([
           'template', String(this.instanceId)]),
         triggerPaths = this.triggerPaths;

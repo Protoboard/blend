@@ -42,7 +42,7 @@ $entity.Field = $oop.getClass('$entity.Field')
   },
 
   /** @ignore */
-  spread: function () {
+  init: function () {
     var fieldKey = this.entityKey,
         valueType = fieldKey.getValueType() || 'string',
         valueTypePath = $data.Path.fromComponents([

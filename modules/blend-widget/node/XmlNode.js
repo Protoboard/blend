@@ -29,18 +29,15 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   },
 
   /** @ignore */
-  spread: function () {
+  init: function () {
+    $assert.isString(this.elementName, "Invalid elementName");
+
     var childNodes = this.childNodes;
     this.childNodes = childNodes ?
         childNodes.as($widget.XmlNodes) :
         $widget.XmlNodes.create();
 
     this.attributes = this.attributes || $widget.XmlAttributes.create();
-  },
-
-  /** @ignore */
-  init: function () {
-    $assert.isString(this.elementName, "Invalid elementName");
   },
 
   /**
