@@ -12,7 +12,7 @@ describe("$widget", function () {
     beforeAll(function () {
       Widget = $oop.getClass('test.$widget.Widget.Widget')
       .blend($widget.Widget);
-      Widget.__forwards = {list: [], sources: {}, lookup: {}};
+      Widget.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("create()", function () {

@@ -12,7 +12,7 @@ describe("$widget", function () {
       HtmlNode = $oop.getClass('test.$widget.HtmlNode.HtmlNode')
       .blend($widget.Node)
       .blend($widget.HtmlNode);
-      HtmlNode.__forwards = {list: [], sources: {}, lookup: {}};
+      HtmlNode.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("fromElementId()", function () {

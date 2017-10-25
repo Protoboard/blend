@@ -13,7 +13,7 @@ describe("$widget", function () {
       .blend($widget.Widget)
       .blend($widget.HtmlNode)
       .blend($widget.HtmlWidget);
-      HtmlWidget.__forwards = {list: [], sources: {}, lookup: {}};
+      HtmlWidget.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("create()", function () {

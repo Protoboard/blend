@@ -18,7 +18,7 @@ describe("$widget", function () {
           return fn.returned + "FOO";
         }
       });
-      DomNode.__forwards = {list: [], sources: {}, lookup: {}};
+      DomNode.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("addChildNode()", function () {
