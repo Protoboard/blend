@@ -12,7 +12,12 @@ describe("$widget", function () {
       DomNode = $oop.getClass('test.$widget.DomNode.DomNode')
       .blend($widget.Node)
       .blend($widget.HtmlNode)
-      .blend($widget.DomNode);
+      .blend($widget.DomNode)
+      .define({
+        getContentMarkup: function fn() {
+          return fn.returned + "FOO";
+        }
+      });
       DomNode.__forwards = {list: [], sources: {}, lookup: {}};
     });
 
@@ -216,7 +221,7 @@ describe("$widget", function () {
       it("should add contents", function () {
         var result = domNode.createElement();
         expect(result.innerHTML)
-        .toEqual('<div id="bar"></div>');
+        .toEqual('<div id="bar">FOO</div>FOO');
       });
     });
 
@@ -328,6 +333,7 @@ describe("$widget", function () {
       it("should replace contents", function () {
         childElement = element.childNodes[0];
         domNode.reRenderContents();
+        expect(element.innerHTML).toBe('<div>FOO</div>FOO');
         expect(element.childNodes[0]).not.toBe(childElement);
       });
     });
