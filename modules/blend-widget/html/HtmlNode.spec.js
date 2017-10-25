@@ -12,6 +12,7 @@ describe("$widget", function () {
       HtmlNode = $oop.getClass('test.$widget.HtmlNode.HtmlNode')
       .blend($widget.Node)
       .blend($widget.HtmlNode);
+      HtmlNode.__forwards = {list: [], sources: {}, lookup: {}};
     });
 
     describe("fromElementId()", function () {
@@ -27,6 +28,11 @@ describe("$widget", function () {
     });
 
     describe("create()", function () {
+      it("should initialize elementName", function () {
+        htmlNode = HtmlNode.create();
+        expect(htmlNode.elementName).toBe('div');
+      });
+
       it("should initialize inlineStyles", function () {
         htmlNode = HtmlNode.create();
         expect($widget.InlineStyles.mixedBy(htmlNode.inlineStyles))

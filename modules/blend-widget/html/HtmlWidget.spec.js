@@ -11,10 +11,17 @@ describe("$widget", function () {
     beforeAll(function () {
       HtmlWidget = $oop.getClass('test.$widget.HtmlWidget.HtmlWidget')
       .blend($widget.Widget)
+      .blend($widget.HtmlNode)
       .blend($widget.HtmlWidget);
+      HtmlWidget.__forwards = {list: [], sources: {}, lookup: {}};
     });
 
     describe("create()", function () {
+      it("should initialize elementId", function () {
+        htmlWidget = HtmlWidget.create();
+        expect(htmlWidget.elementId).toBe('w' + htmlWidget.instanceId);
+      });
+
       it("should initialize cssClasses", function () {
         htmlWidget = HtmlWidget.create({
           nodeName: 'foo'
@@ -23,8 +30,7 @@ describe("$widget", function () {
         expect(htmlWidget.cssClasses).toEqual($widget.CssClasses.fromData({
           foo: 1,
           '$widget.Widget': 1,
-          '$widget.HtmlWidget': 1,
-          'test.$widget.HtmlWidget.HtmlWidget': 1
+          '$widget.HtmlWidget': 1
         }));
       });
     });

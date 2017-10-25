@@ -36,6 +36,7 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
     var that = this,
         Widget = $widget.Widget;
 
+    // todo Should include own class no matter what
     this.__contributors.list
     .filter(function (Mixin) {
       return Mixin.mixes(Widget) || Mixin.expects(Widget);

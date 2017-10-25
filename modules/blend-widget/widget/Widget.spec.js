@@ -12,14 +12,10 @@ describe("$widget", function () {
     beforeAll(function () {
       Widget = $oop.getClass('test.$widget.Widget.Widget')
       .blend($widget.Widget);
+      Widget.__forwards = {list: [], sources: {}, lookup: {}};
     });
 
     describe("create()", function () {
-      it("should initialize elementId", function () {
-        widget = Widget.create();
-        expect(widget.elementId).toBe('w' + widget.instanceId);
-      });
-
       it("should initialize nodeName", function () {
         widget = Widget.create();
         expect(widget.nodeName).toBe(String(widget.instanceId));
@@ -28,11 +24,6 @@ describe("$widget", function () {
       it("should initialize subscriberId", function () {
         widget = Widget.create();
         expect(widget.subscriberId).toBe(String(widget.instanceId));
-      });
-
-      it("should initialize elementName", function () {
-        widget = Widget.create();
-        expect(widget.elementName).toBe('div');
       });
     });
 

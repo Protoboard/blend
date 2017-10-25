@@ -13,6 +13,7 @@ describe("$widget", function () {
       .blend($widget.Node)
       .blend($widget.HtmlNode)
       .blend($widget.DomNode);
+      DomNode.__forwards = {list: [], sources: {}, lookup: {}};
     });
 
     describe("addChildNode()", function () {

@@ -12,6 +12,7 @@ describe("$widget", function () {
       XmlNode = $oop.getClass('test.$widget.XmlNode.XmlNode')
       .blend($widget.Node)
       .blend($widget.XmlNode);
+      XmlNode.__forwards = {list: [], sources: {}, lookup: {}};
     });
 
     describe("fromElementName()", function () {
