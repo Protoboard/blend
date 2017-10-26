@@ -11,4 +11,21 @@
  */
 $widget.RootWidget = $oop.getClass('$widget.RootWidget')
 .blend($oop.getClass('$widget.Widget'))
-.blend($oop.Singleton);
+.blend($oop.Singleton)
+.define(/** @lends $widget.RootWidget */{
+  /** @ignore */
+  defaults: function () {
+    this.nodeName = this.nodeName || 'root';
+  },
+
+  /** @ignore */
+  init: function () {
+    var listeningPath = $data.Path.fromComponentsToString([
+      'widget', this.nodeName]);
+
+    this
+    .setListeningPath(listeningPath)
+    .addTriggerPath(listeningPath)
+    .addTriggerPath('widget');
+  }
+});

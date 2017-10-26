@@ -54,6 +54,74 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   },
 
   /**
+   * @param {$widget.Widget} node
+   * @returns {$widget.Widget}
+   */
+  addToParentNode: function addToParentNode(node) {
+    var parentNodeBefore = addToParentNode.shared.parentNodeBefore;
+    if (node !== parentNodeBefore) {
+      if (parentNodeBefore) {
+        this.removeEventPaths(parentNodeBefore.getNodePath().unshift('widget'));
+      }
+      this.addEventPaths(node.getNodePath().unshift('widget'));
+    }
+    return this;
+  },
+
+  /**
+   * @returns {$widget.Widget}
+   */
+  removeFromParentNode: function removeFromParentNode() {
+    var parentNodeBefore = removeFromParentNode.shared.parentNodeBefore;
+    if (parentNodeBefore) {
+      this.removeEventPaths(parentNodeBefore.getNodePath().unshift('widget'));
+    }
+    return this;
+  },
+
+  /**
+   * @param {$data.Path} parentNodePath
+   * @returns {$widget.Widget}
+   * @ignore
+   */
+  addEventPaths: function (parentNodePath) {
+    var parentNodePathStr = parentNodePath.toString(),
+        nodePath = parentNodePath.push(String(this.nodeName)),
+        nodePathStr = nodePath.toString();
+
+    this
+    .setListeningPath(nodePathStr)
+    .addTriggerPath(nodePathStr)
+    .addTriggerPath(parentNodePathStr)
+    .addTriggerPath('widget');
+
+    this.childNodeLookup.callOnEachValue('addEventPaths', nodePath);
+
+    return this;
+  },
+
+  /**
+   * @param {$data.Path} parentNodePath
+   * @returns {$widget.Widget}
+   * @ignore
+   */
+  removeEventPaths: function (parentNodePath) {
+    var parentNodePathStr = parentNodePath.toString(),
+        nodePath = parentNodePath.push(String(this.nodeName)),
+        nodePathStr = nodePath.toString();
+
+    this
+    .setListeningPath(undefined)
+    .removeTriggerPath(nodePathStr)
+    .removeTriggerPath(parentNodePathStr)
+    .removeTriggerPath('widget');
+
+    this.childNodeLookup.callOnEachValue('removeEventPaths', nodePath);
+
+    return this;
+  },
+
+  /**
    * @returns {boolean}
    */
   isAttached: function () {

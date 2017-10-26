@@ -168,6 +168,85 @@ describe("$widget", function () {
       });
     });
 
+    describe("addToParentNode()", function () {
+      var childWidget1,
+          childWidget2;
+
+      beforeEach(function () {
+        widget = Widget.fromNodeName('foo');
+        childWidget1 = Widget.fromNodeName('bar');
+        childWidget2 = Widget.fromNodeName('baz');
+        childWidget1.addChildNode(childWidget2);
+      });
+
+      it("should return self", function () {
+        var result = childWidget1.addToParentNode(widget);
+        expect(result).toBe(childWidget1);
+      });
+
+      describe("when passing different parent node", function () {
+        it("should set event paths on children", function () {
+          childWidget1.addToParentNode(widget);
+          expect(childWidget1.listeningPath).toBe('widget.foo.bar');
+          expect(childWidget1.triggerPaths.list)
+          .toContain('widget.foo.bar', 'widget.foo', 'widget');
+          expect(childWidget2.listeningPath).toBe('widget.foo.bar.baz');
+          expect(childWidget2.triggerPaths.list)
+          .toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+        });
+
+        describe("when node was already added to parent", function () {
+          var widget2;
+
+          beforeEach(function () {
+            widget2 = Widget.fromNodeName('quux');
+            childWidget1.addToParentNode(widget);
+          });
+
+          it("should remove old event paths", function () {
+            childWidget1.addToParentNode(widget2);
+            expect(childWidget1.listeningPath).not.toBe('widget.foo.bar');
+            expect(childWidget1.triggerPaths.list)
+            .not.toContain('widget.foo.bar', 'widget.foo', 'widget');
+            expect(childWidget2.listeningPath).not.toBe('widget.foo.bar.baz');
+            expect(childWidget2.triggerPaths.list)
+            .not.toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+          });
+        });
+      });
+    });
+
+    describe("removeFromParentNode()", function () {
+      var childWidget1,
+          childWidget2;
+
+      beforeEach(function () {
+        widget = Widget.fromNodeName('foo');
+        childWidget1 = Widget.fromNodeName('bar');
+        childWidget2 = Widget.fromNodeName('baz');
+        widget.addChildNode(
+            childWidget1.addChildNode(
+                childWidget2));
+      });
+
+      it("should return self", function () {
+        var result = childWidget1.removeFromParentNode();
+        expect(result).toBe(childWidget1);
+      });
+
+      describe("when node was already added to parent", function () {
+        it("should remove old event paths", function () {
+          childWidget1.removeFromParentNode();
+          expect(childWidget1.listeningPath).toBeUndefined();
+          expect(childWidget1.triggerPaths.list)
+          .not.toContain('widget.foo.bar', 'widget.foo', 'widget');
+          expect(childWidget2.listeningPath).toBeUndefined();
+          expect(childWidget2.triggerPaths.list)
+          .not.toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+        });
+      });
+    });
+
     describe("isAttached()", function () {
       beforeEach(function () {
         widget = Widget.create();
