@@ -240,11 +240,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         compactedMethods.reverse();
       }
 
-      // decorating each contributed method with a `saved` container
-      compactedMethods.forEach(function (method) {
-        method.saved = saved;
-      });
-
       if (methodCount === 1) {
         // there is only 1 function so far for this method
         that[methodName] = compactedMethods[0];
@@ -253,9 +248,10 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         that[methodName] = function wrapper() {
           var i, method, result;
 
-          // calling function in order of contributions
+          // calling functions in order of contributions
           for (i = 0; i < methodCount; i++) {
             method = compactedMethods[i];
+            method.saved = saved;
             method.returned = result;
             result = method.apply(this, arguments);
           }
@@ -263,6 +259,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           return result;
         };
       }
+
+      // adding saved container for compatibility
+      that[methodName].saved = saved;
     });
   },
 
