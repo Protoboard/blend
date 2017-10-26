@@ -27,8 +27,8 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
           itemValueType]);
 
     this
-    .addTriggerPath(itemIdTypePath)
-    .addTriggerPath(itemValueTypePath);
+    .addTriggerPath(itemIdTypePath.toString())
+    .addTriggerPath(itemValueTypePath.toString());
   },
 
   /**

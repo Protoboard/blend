@@ -15,11 +15,11 @@ $event.EventListener = $oop.getClass('$event.EventListener')
 .define(/** @lends $event.EventListener# */{
   /**
    * Path associated with instance where events will be listened to.
-   * @member {$data.Path} $event.EventListener#listeningPath
+   * @member {string} $event.EventListener#listeningPath
    */
 
   /**
-   * @param {$data.Path} listeningPath
+   * @param {string} listeningPath
    * @returns {$event.EventListener}
    */
   setListeningPath: function (listeningPath) {

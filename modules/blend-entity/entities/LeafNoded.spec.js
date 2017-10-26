@@ -21,8 +21,8 @@ describe("$entity", function () {
 
     describe("create()", function () {
       it("should initialize triggerPaths", function () {
-        var nodeTypePath = 'entity.document.__field.__field/nodeType.options.leaf'.toPath();
-        expect(leafNodedField.triggerPaths).toContain(nodeTypePath);
+        var nodeTypePath = 'entity.document.__field.__field/nodeType.options.leaf';
+        expect(leafNodedField.triggerPaths.list).toContain(nodeTypePath);
       });
     });
 

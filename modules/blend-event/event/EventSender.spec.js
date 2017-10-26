@@ -20,7 +20,7 @@ describe("$event", function () {
 
     describe("create()", function () {
       it("should initialize triggerPaths property", function () {
-        expect(eventSender.triggerPaths).toEqual([]);
+        expect(eventSender.triggerPaths).toEqual({list: [], lookup: {}});
       });
     });
 
@@ -51,16 +51,22 @@ describe("$event", function () {
       var triggerPath;
 
       beforeEach(function () {
-        triggerPath = 'foo.bar'.toPath();
-        result = eventSender.addTriggerPath(triggerPath);
+        triggerPath = 'foo.bar'.toPath().toString();
       });
 
       it("should return self", function () {
+        result = eventSender.addTriggerPath(triggerPath);
         expect(result).toBe(eventSender);
       });
 
       it("should add to triggerPaths", function () {
-        expect(eventSender.triggerPaths).toEqual([triggerPath]);
+        eventSender.addTriggerPath(triggerPath);
+        expect(eventSender.triggerPaths).toEqual({
+          list: [triggerPath],
+          lookup: {
+            'foo.bar': 1
+          }
+        });
       });
     });
 
@@ -69,8 +75,8 @@ describe("$event", function () {
 
       beforeEach(function () {
         triggerPaths = [
-          'foo'.toPath(),
-          'bar.baz'.toPath()];
+          'foo'.toPath().toString(),
+          'bar.baz'.toPath().toString()];
         result = eventSender.addTriggerPaths(triggerPaths);
       });
 
@@ -79,7 +85,13 @@ describe("$event", function () {
       });
 
       it("should add to triggerPaths", function () {
-        expect(eventSender.triggerPaths).toEqual(triggerPaths);
+        expect(eventSender.triggerPaths).toEqual({
+          list: triggerPaths,
+          lookup: {
+            'foo': 1,
+            'bar.baz': 1
+          }
+        });
       });
     });
 

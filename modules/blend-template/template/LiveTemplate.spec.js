@@ -61,13 +61,13 @@ describe("$template", function () {
     describe("create()", function () {
       it("should initialize listeningPath property", function () {
         expect(liveTemplate.listeningPath)
-        .toEqual(['template', '' + liveTemplate.instanceId].toPath());
+        .toEqual(['template', '' + liveTemplate.instanceId].toPath().toString());
       });
 
       it("should initialize triggerPaths property", function () {
-        expect(liveTemplate.triggerPaths).toContain(
-            ['template', '' + liveTemplate.instanceId].toPath(),
-            'template'.toPath());
+        expect(liveTemplate.triggerPaths.list).toContain(
+            ['template', '' + liveTemplate.instanceId].toPath().toString(),
+            'template'.toPath().toString());
       });
 
       it("should initialize parameterValues property", function () {

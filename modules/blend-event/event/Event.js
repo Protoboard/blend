@@ -40,12 +40,12 @@ $event.Event = $oop.getClass('$event.Event')
 
   /**
    * List of paths the event will trigger when triggered.
-   * @member {Array.<$data.Path>} $event.Event#targetPaths
+   * @member {Array.<string>} $event.Event#targetPaths
    */
 
   /**
    * Path currently visited by the event. Defined only while triggered.
-   * @member {$data.Path} $event.Event#currentPath
+   * @member {string} $event.Event#currentPath
    */
 
   /**
@@ -99,7 +99,7 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param {Array.<$data.Path>} targetPaths
+   * @param {Array.<string>} targetPaths
    * @returns {$event.Event}
    */
   addTargetPaths: function (targetPaths) {
@@ -183,7 +183,7 @@ $event.Event = $oop.getClass('$event.Event')
         for (i = 0; i < targetPathCount; i++) {
           targetPath = targetPaths[i];
           callbacksPath = $data.Path.fromComponents([
-            'callbacks', 'bySubscription', eventName, targetPath.toString()]);
+            'callbacks', 'bySubscription', eventName, targetPath]);
           callbacks = eventSpace.subscriptions.getNode(callbacksPath);
           subscriberIds = callbacks && Object.keys(callbacks);
           callbackCount = subscriberIds && subscriberIds.length || 0;

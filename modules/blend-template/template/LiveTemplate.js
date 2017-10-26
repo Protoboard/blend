@@ -31,11 +31,11 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
     var listeningPath = $data.Path.fromComponents([
       'template', String(this.instanceId)]);
 
-    this.setListeningPath(listeningPath);
+    this.setListeningPath(listeningPath.toString());
 
     this
-    .addTriggerPath(listeningPath)
-    .addTriggerPath($data.Path.fromString('template'));
+    .addTriggerPath(listeningPath.toString())
+    .addTriggerPath($data.Path.fromString('template').toString());
 
     this.parameterValues = this.parameterValues || {};
   },

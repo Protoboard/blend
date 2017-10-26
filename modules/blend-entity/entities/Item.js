@@ -59,8 +59,8 @@ $entity.Item = $oop.getClass('$entity.Item')
           valueType]);
 
     this
-    .addTriggerPath(idTypePath)
-    .addTriggerPath(valueTypePath);
+    .addTriggerPath(idTypePath.toString())
+    .addTriggerPath(valueTypePath.toString());
   }
 });
 

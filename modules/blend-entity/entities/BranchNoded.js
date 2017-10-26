@@ -20,7 +20,7 @@ $entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
           'branch']);
 
     // todo Not 100% certain this is justified
-    this.addTriggerPath(nodeTypePath);
+    this.addTriggerPath(nodeTypePath.toString());
   },
 
   /**

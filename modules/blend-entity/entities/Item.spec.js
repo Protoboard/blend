@@ -48,14 +48,13 @@ describe("$entity", function () {
 
     describe("create()", function () {
       it("should initialize listeningPath", function () {
-        expect(item.listeningPath)
-        .toEqual('entity.document.foo.bar.baz.quux'.toPath());
+        expect(item.listeningPath).toEqual('entity.document.foo.bar.baz.quux');
       });
 
       it("should initialize triggerPaths", function () {
-        expect(item.triggerPaths).toContain(
-            "entity.document.__field.__field/itemIdType.options.string".toPath(),
-            "entity.document.__field.__field/itemValueType.options.string".toPath());
+        expect(item.triggerPaths.list).toContain(
+            "entity.document.__field.__field/itemIdType.options.string",
+            "entity.document.__field.__field/itemValueType.options.string");
       });
 
       describe("when entityKey is cached", function () {

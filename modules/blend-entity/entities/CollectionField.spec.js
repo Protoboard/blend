@@ -23,9 +23,9 @@ describe("$entity", function () {
 
     describe("create()", function () {
       it("should initialize triggerPaths", function () {
-        expect(collectionField.triggerPaths).toContain(
-            'entity.document.__field.__field/itemIdType.options.string'.toPath(),
-            'entity.document.__field.__field/itemValueType.options.string'.toPath());
+        expect(collectionField.triggerPaths.list).toContain(
+            'entity.document.__field.__field/itemIdType.options.string',
+            'entity.document.__field.__field/itemValueType.options.string');
       });
     });
 

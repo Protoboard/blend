@@ -23,8 +23,8 @@ describe("$entity", function () {
 
     describe("create()", function () {
       it("should initialize triggerPaths", function () {
-        var nodeTypePath = 'entity.document.__field.__document/nodeType.options.branch'.toPath();
-        expect(branchNoded.triggerPaths).toContain(nodeTypePath);
+        var nodeTypePath = 'entity.document.__field.__document/nodeType.options.branch';
+        expect(branchNoded.triggerPaths.list).toContain(nodeTypePath);
       });
     });
 

@@ -45,16 +45,14 @@ describe("$entity", function () {
 
     describe("create()", function () {
       it("should set listeningPath", function () {
-        expect(entity.listeningPath)
-        .toEqual('entity.foo.bar.baz'.toPath());
+        expect(entity.listeningPath).toEqual('entity.foo.bar.baz');
       });
 
       it("should initialize triggerPaths", function () {
-        expect(entity.triggerPaths).toEqual([
-          'entity.foo.bar.baz'.toPath(),
-          'entity'.toPath(),
-          'entity.document.__foo.bar'.toPath()
-        ]);
+        expect(entity.triggerPaths.list).toContain(
+            'entity.foo.bar.baz',
+            'entity',
+            'entity.document.__foo.bar');
       });
 
       describe("when entityKey is cached", function () {

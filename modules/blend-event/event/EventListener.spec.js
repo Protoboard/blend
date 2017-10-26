@@ -22,7 +22,7 @@ describe("$event", function () {
       var listeningPath;
 
       beforeEach(function () {
-        listeningPath = 'foo.bar'.toPath();
+        listeningPath = 'foo.bar'.toPath().toString();
         result = eventListener.setListeningPath(listeningPath);
       });
 
