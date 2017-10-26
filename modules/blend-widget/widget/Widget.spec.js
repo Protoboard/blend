@@ -48,6 +48,10 @@ describe("$widget", function () {
           widget.addToParentNode($widget.RootWidget.create());
         });
 
+        afterEach(function () {
+          widget.removeFromParentNode();
+        });
+
         describe("when passing different node", function () {
           beforeEach(function () {
             spyOn(childWidget1, 'onAttach').and.callThrough();
@@ -111,6 +115,10 @@ describe("$widget", function () {
       describe("when parent is attached", function () {
         beforeEach(function () {
           widget.addToParentNode($widget.RootWidget.create());
+        });
+
+        afterEach(function () {
+          widget.removeFromParentNode();
         });
 
         describe("when passing existing child node", function () {

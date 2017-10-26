@@ -3,12 +3,12 @@
 /**
  * Implements DOM-specific behavior for `Text` widgets.
  * @mixin $widgets.DomText
- * @extends $widget.DomNode
+ * @extends $widget.DomWidget
  * @augments $widgets.Text
  * @augments $widgets.XmlText
  */
 $widgets.DomText = $oop.getClass('$widgets.DomText')
-.blend($widget.DomNode)
+.blend($widget.DomWidget)
 .expect($oop.getClass('$widgets.Text'))
 .expect($oop.getClass('$widgets.XmlText'))
 .define(/** @lends $widgets.DomText# */{
