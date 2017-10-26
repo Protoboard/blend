@@ -121,9 +121,11 @@ describe("$widget", function () {
           widget.removeFromParentNode();
         });
 
-        describe("when passing existing child node", function () {
+        describe("when passing existing child name", function () {
           beforeEach(function () {
             widget.addChildNode(childWidget1);
+            spyOn(childWidget1, 'off');
+            spyOn(childWidget2, 'off');
             spyOn(childWidget1, 'onDetach').and.callThrough();
             spyOn(childWidget2, 'onDetach').and.callThrough();
           });
@@ -133,9 +135,15 @@ describe("$widget", function () {
             expect(childWidget1.onDetach).toHaveBeenCalled();
             expect(childWidget2.onDetach).toHaveBeenCalled();
           });
+
+          it("should have children unsubscribe from events", function () {
+            widget.removeChildNode('bar');
+            expect(childWidget1.off).toHaveBeenCalled();
+            expect(childWidget2.off).toHaveBeenCalled();
+          });
         });
 
-        describe("when passing absent child node", function () {
+        describe("when passing absent child name", function () {
           it("should not invoke onDetach", function () {
             beforeEach(function () {
               spyOn(childWidget1, 'onDetach').and.callThrough();

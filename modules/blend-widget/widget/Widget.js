@@ -15,7 +15,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  * @extends $event.EventSubscriber
- * @todo Add unsubscribe on removal.
+ * @implements $utils.Destructible
  */
 $widget.Widget = $oop.getClass('$widget.Widget')
 .blend($oop.getClass('$widget.Node'))
@@ -137,11 +137,16 @@ $widget.Widget = $oop.getClass('$widget.Widget')
 
   /** @ignore */
   onAttach: function () {
+    // propagating attach 'event' to children
     this.childNodeLookup.callOnEachValue('onAttach');
   },
 
   /** @ignore */
   onDetach: function () {
+    // unsubscribing from all events subscribed by current widget
+    this.off();
+
+    // propagating detach 'event' to children
     this.childNodeLookup.callOnEachValue('onDetach');
   }
 });
