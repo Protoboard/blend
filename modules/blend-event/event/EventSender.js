@@ -44,7 +44,7 @@ $event.EventSender = $oop.getClass('$event.EventSender')
     var triggerPaths = this.triggerPaths,
         triggerPathLookup = triggerPaths.lookup;
 
-    if (!triggerPathLookup[triggerPath]) {
+    if (!hOP.call(triggerPathLookup, triggerPath)) {
       triggerPaths.list.push(triggerPath);
       triggerPathLookup[triggerPath] = 1;
     }
@@ -60,6 +60,37 @@ $event.EventSender = $oop.getClass('$event.EventSender')
     var that = this;
     triggerPaths.forEach(function (triggerPath) {
       that.addTriggerPath(triggerPath);
+    });
+    return this;
+  },
+
+  /**
+   * @param {string} triggerPath
+   * @returns {$event.EventSender}
+   */
+  removeTriggerPath: function (triggerPath) {
+    var triggerPaths = this.triggerPaths,
+        triggerPathList = triggerPaths.list,
+        triggerPathLookup = triggerPaths.lookup,
+        triggerPathIndex;
+
+    if (hOP.call(triggerPathLookup, triggerPath)) {
+      triggerPathIndex = triggerPathList.indexOf(triggerPath);
+      triggerPathList.splice(triggerPathIndex, 1);
+      delete triggerPathLookup[triggerPath];
+    }
+
+    return this;
+  },
+
+  /**
+   * @param {Array.<string>} triggerPaths
+   * @returns {$event.EventSender}
+   */
+  removeTriggerPaths: function (triggerPaths) {
+    var that = this;
+    triggerPaths.forEach(function (triggerPath) {
+      that.removeTriggerPath(triggerPath);
     });
     return this;
   },

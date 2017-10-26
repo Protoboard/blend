@@ -51,11 +51,11 @@ describe("$event", function () {
       var triggerPath;
 
       beforeEach(function () {
-        triggerPath = 'foo.bar'.toPath().toString();
+        triggerPath = 'foo.bar';
       });
 
       it("should return self", function () {
-        result = eventSender.addTriggerPath(triggerPath);
+        var result = eventSender.addTriggerPath(triggerPath);
         expect(result).toBe(eventSender);
       });
 
@@ -68,29 +68,141 @@ describe("$event", function () {
           }
         });
       });
+
+      describe("when adding existing triggerPath", function () {
+        beforeEach(function () {
+          eventSender.addTriggerPath(triggerPath);
+        });
+
+        it("should not add path again", function () {
+          eventSender.addTriggerPath(triggerPath);
+          expect(eventSender.triggerPaths).toEqual({
+            list: [triggerPath],
+            lookup: {
+              'foo.bar': 1
+            }
+          });
+        });
+      });
     });
 
     describe("addTriggerPaths()", function () {
       var triggerPaths;
 
       beforeEach(function () {
-        triggerPaths = [
-          'foo'.toPath().toString(),
-          'bar.baz'.toPath().toString()];
-        result = eventSender.addTriggerPaths(triggerPaths);
+        triggerPaths = ['foo', 'bar.baz'];
       });
 
       it("should return self", function () {
+        var result = eventSender.addTriggerPaths(triggerPaths);
         expect(result).toBe(eventSender);
       });
 
       it("should add to triggerPaths", function () {
+        eventSender.addTriggerPaths(triggerPaths);
         expect(eventSender.triggerPaths).toEqual({
           list: triggerPaths,
           lookup: {
             'foo': 1,
             'bar.baz': 1
           }
+        });
+      });
+
+      describe("when adding existing triggerPaths", function () {
+        var triggerPaths2;
+
+        beforeEach(function () {
+          eventSender.addTriggerPaths(triggerPaths);
+          triggerPaths2 = ['baz', 'bar.baz'];
+        });
+
+        it("should not add existing paths", function () {
+          eventSender.addTriggerPaths(triggerPaths2);
+          expect(eventSender.triggerPaths).toEqual({
+            list: ['foo', 'bar.baz', 'baz'],
+            lookup: {
+              'foo': 1,
+              'bar.baz': 1,
+              'baz': 1
+            }
+          });
+        });
+      });
+    });
+
+    describe("removeTriggerPath()", function () {
+      var triggerPath;
+
+      beforeEach(function () {
+        triggerPath = 'foo.bar';
+        eventSender.addTriggerPath(triggerPath);
+      });
+
+      it("should return self", function () {
+        var result = eventSender.removeTriggerPath(triggerPath);
+        expect(result).toBe(eventSender);
+      });
+
+      it("should remove from triggerPaths", function () {
+        eventSender.removeTriggerPath(triggerPath);
+        expect(eventSender.triggerPaths).toEqual({
+          list: [],
+          lookup: {}
+        });
+      });
+
+      describe("when removing absent triggerPath", function () {
+        beforeEach(function () {
+          eventSender.removeTriggerPath(triggerPath);
+        });
+
+        it("should not affect triggerPaths", function () {
+          eventSender.removeTriggerPath(triggerPath);
+          expect(eventSender.triggerPaths).toEqual({
+            list: [],
+            lookup: {}
+          });
+        });
+      });
+    });
+
+    describe("removeTriggerPaths()", function () {
+      var triggerPaths;
+
+      beforeEach(function () {
+        triggerPaths = ['foo', 'bar.baz'];
+        eventSender.addTriggerPaths(triggerPaths);
+      });
+
+      it("should return self", function () {
+        var result = eventSender.removeTriggerPaths(triggerPaths);
+        expect(result).toBe(eventSender);
+      });
+
+      it("should remove from triggerPaths", function () {
+        eventSender.removeTriggerPaths(triggerPaths);
+        expect(eventSender.triggerPaths).toEqual({
+          list: [],
+          lookup: {}
+        });
+      });
+
+      describe("when removing absent triggerPaths", function () {
+        var triggerPaths2;
+
+        beforeEach(function () {
+          triggerPaths2 = ['baz', 'bar.baz'];
+        });
+
+        it("should only remove existing paths", function () {
+          eventSender.removeTriggerPaths(triggerPaths2);
+          expect(eventSender.triggerPaths).toEqual({
+            list: ['foo'],
+            lookup: {
+              'foo': 1
+            }
+          });
         });
       });
     });

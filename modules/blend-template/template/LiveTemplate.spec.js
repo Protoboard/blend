@@ -67,7 +67,7 @@ describe("$template", function () {
       it("should initialize triggerPaths property", function () {
         expect(liveTemplate.triggerPaths.list).toContain(
             ['template', '' + liveTemplate.instanceId].toPath().toString(),
-            'template'.toPath().toString());
+            'template');
       });
 
       it("should initialize parameterValues property", function () {
