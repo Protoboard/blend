@@ -34,7 +34,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
    * @returns {$widget.Widget}
    */
   addChildNode: function addChildNode(node) {
-    var childNodeBefore = addChildNode.saved.childNodeBefore;
+    var childNodeBefore = addChildNode.shared.childNodeBefore;
     if (childNodeBefore !== node && this.isAttached()) {
       node.onAttach();
     }
@@ -46,7 +46,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
    * @returns {$widget.Widget}
    */
   removeChildNode: function removeChildNode(childNodeName) {
-    var childNodeBefore = removeChildNode.saved.childNodeBefore;
+    var childNodeBefore = removeChildNode.shared.childNodeBefore;
     if (childNodeBefore && this.isAttached()) {
       childNodeBefore.onDetach();
     }

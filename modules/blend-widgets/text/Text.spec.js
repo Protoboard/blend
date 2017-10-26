@@ -33,7 +33,7 @@ describe("$widgets", function () {
         text.setTextString('foo');
 
         text.setTextString('bar');
-        expect(text.setTextString.saved.textStringBefore).toBe('foo');
+        expect(text.setTextString.shared.textStringBefore).toBe('foo');
       });
     });
   });

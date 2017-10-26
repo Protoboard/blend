@@ -14,7 +14,7 @@ $widget.DomWidget = $oop.getClass('$widget.DomWidget')
    * @returns {$widget.DomWidget}
    */
   addChildNode: function addChildNode(node) {
-    var childNodeBefore = addChildNode.saved.childNodeBefore;
+    var childNodeBefore = addChildNode.shared.childNodeBefore;
     if (node !== childNodeBefore && this.isAttached() && this.getElement()) {
       node.onRender();
     }

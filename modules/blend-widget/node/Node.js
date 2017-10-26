@@ -90,7 +90,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       node.addToParentNode(this);
     }
 
-    addChildNode.saved.childNodeBefore = childNodeBefore;
+    addChildNode.shared.childNodeBefore = childNodeBefore;
     return this;
   },
 
@@ -138,7 +138,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       childNodeBefore.removeFromParentNode();
     }
 
-    removeChildNode.saved.childNodeBefore = childNodeBefore;
+    removeChildNode.shared.childNodeBefore = childNodeBefore;
     return this;
   },
 
@@ -159,7 +159,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       childNodes.setItem(childNode);
     }
 
-    setChildOrder.saved.nodeOrderBefore = nodeOrderBefore;
+    setChildOrder.shared.nodeOrderBefore = nodeOrderBefore;
     return this;
   },
 
@@ -174,7 +174,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       node.addChildNode(this);
     }
 
-    addToParentNode.saved.parentNodeBefore = parentNodeBefore;
+    addToParentNode.shared.parentNodeBefore = parentNodeBefore;
     return this;
   },
 
@@ -188,7 +188,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       parentNodeBefore.removeChildNode(this.nodeName);
     }
 
-    removeFromParentNode.saved.parentNodeBefore = parentNodeBefore;
+    removeFromParentNode.shared.parentNodeBefore = parentNodeBefore;
     return this;
   },
 
@@ -207,7 +207,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       }
     }
 
-    setNodeOrder.saved.nodeOrderBefore = nodeOrderBefore;
+    setNodeOrder.shared.nodeOrderBefore = nodeOrderBefore;
     return this;
   },
 

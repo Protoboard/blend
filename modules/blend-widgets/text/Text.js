@@ -27,7 +27,7 @@ $widgets.Text = $oop.getClass('$widgets.Text')
     if (textString !== textStringBefore) {
       this.textString = textString;
     }
-    setTextString.saved.textStringBefore = textStringBefore;
+    setTextString.shared.textStringBefore = textStringBefore;
     return this;
   }
 });

@@ -17,7 +17,7 @@ $widgets.DomText = $oop.getClass('$widgets.DomText')
    * @returns {$widgets.DomText}
    */
   setTextString: function setTextString(textString) {
-    var textStringBefore = setTextString.saved.textStringBefore;
+    var textStringBefore = setTextString.shared.textStringBefore;
     if (textString !== textStringBefore) {
       this.reRenderContents();
     }

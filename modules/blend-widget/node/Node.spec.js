@@ -110,7 +110,7 @@ describe("$widget", function () {
         });
 
         it("should save before state", function () {
-          expect(node.addChildNode.saved.childNodeBefore).toBe(childNode);
+          expect(node.addChildNode.shared.childNodeBefore).toBe(childNode);
         });
 
         it("should remove child", function () {
@@ -224,7 +224,7 @@ describe("$widget", function () {
 
       it("should save before state", function () {
         node.removeChildNode('foo');
-        expect(node.removeChildNode.saved.childNodeBefore).toBe(childNode);
+        expect(node.removeChildNode.shared.childNodeBefore).toBe(childNode);
       });
 
       it("should remove node from childNodeLookup", function () {
@@ -269,7 +269,7 @@ describe("$widget", function () {
 
       it("should save before state", function () {
         node.setChildOrder(childNode, 2);
-        expect(node.setChildOrder.saved.nodeOrderBefore).toBe(0);
+        expect(node.setChildOrder.shared.nodeOrderBefore).toBe(0);
       });
 
       it("should move child node in childNodes", function () {
@@ -317,7 +317,7 @@ describe("$widget", function () {
 
       it("should save before state", function () {
         node.addToParentNode(parentNode);
-        expect(node.addToParentNode.saved.parentNodeBefore).toBeUndefined();
+        expect(node.addToParentNode.shared.parentNodeBefore).toBeUndefined();
       });
 
       it("should set parentNode property", function () {
@@ -348,7 +348,7 @@ describe("$widget", function () {
 
       it("should save before state", function () {
         node.removeFromParentNode();
-        expect(node.removeFromParentNode.saved.parentNodeBefore)
+        expect(node.removeFromParentNode.shared.parentNodeBefore)
         .toBe(parentNode);
       });
 
@@ -381,7 +381,7 @@ describe("$widget", function () {
 
       it("should save before state", function () {
         node.setNodeOrder(12);
-        expect(node.setNodeOrder.saved.nodeOrderBefore).toBe(11);
+        expect(node.setNodeOrder.shared.nodeOrderBefore).toBe(11);
       });
 
       it("should update nodeName property", function () {

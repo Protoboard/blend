@@ -21,7 +21,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
    * @returns {$widget.DomNode}
    */
   addChildNode: function addChildNode(node) {
-    var childNodeBefore = addChildNode.saved.childNodeBefore,
+    var childNodeBefore = addChildNode.shared.childNodeBefore,
         element = this.getElement(),
         childElement,
         nextChild, nextChildElement;
@@ -42,7 +42,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
    * @returns {$widget.DomNode}
    */
   removeChildNode: function removeChildNode(nodeName) {
-    var childNodeBefore = removeChildNode.saved.childNodeBefore,
+    var childNodeBefore = removeChildNode.shared.childNodeBefore,
         element = this.getElement(),
         childNodeElement;
 
@@ -62,7 +62,7 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
    * @returns {$widget.DomNode}
    */
   setChildOrder: function setChildOrder(childNode, nodeOrder) {
-    var nodeOrderBefore = setChildOrder.saved.nodeOrderBefore,
+    var nodeOrderBefore = setChildOrder.shared.nodeOrderBefore,
         element = this.getElement(),
         childElement,
         nextChild, nextChildElement;

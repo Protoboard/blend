@@ -232,7 +232,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
             return method !== undefined;
           }),
           methodCount = compactedMethods.length,
-          saved = {};
+          shared = {};
 
       if (methodName === 'defaults') {
         // setting up defaults to be called in reversed order, so more
@@ -241,17 +241,17 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       }
 
       if (methodCount === 1) {
-        // there is only 1 function so far for this method
+        // exposing standalone function
         that[methodName] = compactedMethods[0];
       } else if (methodCount > 1) {
-        // there are more than 1 functions for this method in the matrix
+        // decorating & wrapping individual methods
         that[methodName] = function wrapper() {
           var i, method, result;
 
           // calling functions in order of contributions
           for (i = 0; i < methodCount; i++) {
             method = compactedMethods[i];
-            method.saved = saved;
+            method.shared = shared;
             method.returned = result;
             result = method.apply(this, arguments);
           }
@@ -260,8 +260,9 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         };
       }
 
-      // adding saved container for compatibility
-      that[methodName].saved = saved;
+      // adding shared container to both wrapper and standalone for
+      // compatibility
+      that[methodName].shared = shared;
     });
   },
 
