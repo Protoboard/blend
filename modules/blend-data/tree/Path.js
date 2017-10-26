@@ -42,6 +42,17 @@ $data.Path = $oop.getClass('$data.Path')
   },
 
   /**
+   * Converts `Path` components directly to string. Escapes components the
+   * same way as `$data.Path.fromComponents([...]).toString()`.
+   * @memberOf $data.Path
+   * @param {Array.<string>} components
+   * @returns {string}
+   */
+  fromComponentsToString: function (components) {
+    return components.map($data.escapePathComponent).join('.');
+  },
+
+  /**
    * Creates a `Path` instance based on the specified string.
    * @memberOf $data.Path
    * @param {string} pathStr

@@ -34,14 +34,14 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   init: function () {
     var entityKey = this.entityKey,
         listeningPath = entityKey.getEntityPath()
-        .clone().unshift('entity'),
+        .clone().unshift('entity').toString(),
         attributeDocumentKey = entityKey.getAttributeDocumentKey();
 
-    this.setListeningPath(listeningPath.toString());
+    this.setListeningPath(listeningPath);
 
     this
-    .addTriggerPath(listeningPath.toString())
-    .addTriggerPath($data.Path.fromString('entity').toString())
+    .addTriggerPath(listeningPath)
+    .addTriggerPath('entity')
     .addTriggerPath(
         attributeDocumentKey.getEntityPath().clone().unshift('entity')
         .toString());

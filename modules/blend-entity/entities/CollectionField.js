@@ -18,17 +18,17 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
   init: function () {
     var collectionFieldKey = this.entityKey,
         itemIdType = collectionFieldKey.getItemIdType() || 'string',
-        itemIdTypePath = $data.Path.fromComponents([
+        itemIdTypePath = $data.Path.fromComponentsToString([
           'entity', 'document', '__field', '__field/itemIdType', 'options',
           itemIdType]),
         itemValueType = collectionFieldKey.getItemValueType() || 'string',
-        itemValueTypePath = $data.Path.fromComponents([
+        itemValueTypePath = $data.Path.fromComponentsToString([
           'entity', 'document', '__field', '__field/itemValueType', 'options',
           itemValueType]);
 
     this
-    .addTriggerPath(itemIdTypePath.toString())
-    .addTriggerPath(itemValueTypePath.toString());
+    .addTriggerPath(itemIdTypePath)
+    .addTriggerPath(itemValueTypePath);
   },
 
   /**

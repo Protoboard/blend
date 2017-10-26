@@ -28,14 +28,14 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
 
   /** @ignore */
   init: function () {
-    var listeningPath = $data.Path.fromComponents([
+    var listeningPath = $data.Path.fromComponentsToString([
       'template', String(this.instanceId)]);
 
-    this.setListeningPath(listeningPath.toString());
+    this.setListeningPath(listeningPath);
 
     this
-    .addTriggerPath(listeningPath.toString())
-    .addTriggerPath($data.Path.fromString('template').toString());
+    .addTriggerPath(listeningPath)
+    .addTriggerPath('template');
 
     this.parameterValues = this.parameterValues || {};
   },

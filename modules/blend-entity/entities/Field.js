@@ -45,11 +45,11 @@ $entity.Field = $oop.getClass('$entity.Field')
   init: function () {
     var fieldKey = this.entityKey,
         valueType = fieldKey.getValueType() || 'string',
-        valueTypePath = $data.Path.fromComponents([
+        valueTypePath = $data.Path.fromComponentsToString([
           'entity', 'document', '__field', '__field/valueType', 'options',
           valueType]);
 
-    this.addTriggerPath(valueTypePath.toString());
+    this.addTriggerPath(valueTypePath);
   },
 
   /** @ignore */

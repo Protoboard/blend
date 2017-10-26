@@ -56,6 +56,18 @@ describe("$data", function () {
       path = Path.create({components: ['foo', 'bar', 'baz']});
     });
 
+    describe("fromComponentsToString()", function () {
+      it("should convert array to path string", function () {
+        expect($data.Path.fromComponentsToString(['foo', 'bar', 'baz']))
+        .toBe('foo.bar.baz');
+      });
+
+      it("should escape special characters in path components", function () {
+        expect($data.Path.fromComponentsToString(['fo.o', 'b.ar', 'b.a.z']))
+        .toBe('fo\\.o.b\\.ar.b\\.a\\.z');
+      });
+    });
+
     describe("create()", function () {
       it("should set components property", function () {
         expect(path.components).toEqual(['foo', 'bar', 'baz']);

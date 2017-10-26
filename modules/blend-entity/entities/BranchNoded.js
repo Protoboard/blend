@@ -15,12 +15,12 @@ $entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
         attributeDocumentKey = entityKey.getAttributeDocumentKey(),
         entityType = attributeDocumentKey.documentType,
         nodeTypeKey = $entity.DocumentKey.fromComponents(entityType, 'nodeType'),
-        nodeTypePath = $data.Path.fromComponents([
+        nodeTypePath = $data.Path.fromComponentsToString([
           'entity', 'document', '__field', nodeTypeKey.toString(), 'options',
           'branch']);
 
     // todo Not 100% certain this is justified
-    this.addTriggerPath(nodeTypePath.toString());
+    this.addTriggerPath(nodeTypePath);
   },
 
   /**
