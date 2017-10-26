@@ -37,12 +37,13 @@ $entity.Entity = $oop.getClass('$entity.Entity')
         .clone().unshift('entity'),
         attributeDocumentKey = entityKey.getAttributeDocumentKey();
 
-    this.listeningPath = listeningPath;
+    this.setListeningPath(listeningPath);
 
-    var triggerPaths = this.triggerPaths = this.triggerPaths || [];
-    triggerPaths.push(listeningPath);
-    triggerPaths.push($data.Path.fromString('entity'));
-    triggerPaths.push(attributeDocumentKey.getEntityPath().clone().unshift('entity'));
+    this
+    .addTriggerPath(listeningPath)
+    .addTriggerPath($data.Path.fromString('entity'))
+    .addTriggerPath(
+        attributeDocumentKey.getEntityPath().clone().unshift('entity'));
   },
 
   /**

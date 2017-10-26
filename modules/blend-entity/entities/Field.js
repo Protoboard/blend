@@ -49,7 +49,7 @@ $entity.Field = $oop.getClass('$entity.Field')
           'entity', 'document', '__field', '__field/valueType', 'options',
           valueType]);
 
-    this.triggerPaths.push(valueTypePath);
+    this.addTriggerPath(valueTypePath);
   },
 
   /** @ignore */

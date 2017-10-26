@@ -16,8 +16,7 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
 .define(/** @lends $entity.CollectionField# */{
   /** @ignore */
   init: function () {
-    var triggerPaths = this.triggerPaths,
-        collectionFieldKey = this.entityKey,
+    var collectionFieldKey = this.entityKey,
         itemIdType = collectionFieldKey.getItemIdType() || 'string',
         itemIdTypePath = $data.Path.fromComponents([
           'entity', 'document', '__field', '__field/itemIdType', 'options',
@@ -27,8 +26,9 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
           'entity', 'document', '__field', '__field/itemValueType', 'options',
           itemValueType]);
 
-    triggerPaths.push(itemIdTypePath);
-    triggerPaths.push(itemValueTypePath);
+    this
+    .addTriggerPath(itemIdTypePath)
+    .addTriggerPath(itemValueTypePath);
   },
 
   /**

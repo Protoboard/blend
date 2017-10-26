@@ -18,7 +18,7 @@ $entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
           'leaf']);
 
     // todo Not 100% certain this is justified
-    this.triggerPaths.push(nodeTypePath);
+    this.addTriggerPath(nodeTypePath);
   },
 
   /**

@@ -48,8 +48,7 @@ $entity.Item = $oop.getClass('$entity.Item')
 
   /** @ignore */
   init: function () {
-    var triggerPaths = this.triggerPaths,
-        itemKey = this.entityKey,
+    var itemKey = this.entityKey,
         idType = itemKey.getIdType() || 'string',
         idTypePath = $data.Path.fromComponents([
           'entity', 'document', '__field', '__field/itemIdType', 'options',
@@ -59,8 +58,9 @@ $entity.Item = $oop.getClass('$entity.Item')
           'entity', 'document', '__field', '__field/itemValueType', 'options',
           valueType]);
 
-    triggerPaths.push(idTypePath);
-    triggerPaths.push(valueTypePath);
+    this
+    .addTriggerPath(idTypePath)
+    .addTriggerPath(valueTypePath);
   }
 });
 

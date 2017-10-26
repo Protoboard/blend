@@ -29,13 +29,13 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
   /** @ignore */
   init: function () {
     var listeningPath = $data.Path.fromComponents([
-          'template', String(this.instanceId)]),
-        triggerPaths = this.triggerPaths;
+      'template', String(this.instanceId)]);
 
-    this.listeningPath = listeningPath;
+    this.setListeningPath(listeningPath);
 
-    triggerPaths.push(listeningPath);
-    triggerPaths.push($data.Path.fromString('template'));
+    this
+    .addTriggerPath(listeningPath)
+    .addTriggerPath($data.Path.fromString('template'));
 
     this.parameterValues = this.parameterValues || {};
   },
