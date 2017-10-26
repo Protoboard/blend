@@ -15,6 +15,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  * @extends $event.EventSubscriber
+ * @todo Add unsubscribe on removal.
  */
 $widget.Widget = $oop.getClass('$widget.Widget')
 .blend($oop.getClass('$widget.Node'))
@@ -60,10 +61,12 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   addToParentNode: function addToParentNode(node) {
     var parentNodeBefore = addToParentNode.shared.parentNodeBefore;
     if (node !== parentNodeBefore) {
-      if (parentNodeBefore) {
+      if (parentNodeBefore && parentNodeBefore.isAttached()) {
         this.removeEventPaths(parentNodeBefore.getNodePath().unshift('widget'));
       }
-      this.addEventPaths(node.getNodePath().unshift('widget'));
+      if (node.isAttached()) {
+        this.addEventPaths(node.getNodePath().unshift('widget'));
+      }
     }
     return this;
   },
@@ -73,7 +76,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
    */
   removeFromParentNode: function removeFromParentNode() {
     var parentNodeBefore = removeFromParentNode.shared.parentNodeBefore;
-    if (parentNodeBefore) {
+    if (parentNodeBefore && parentNodeBefore.isAttached()) {
       this.removeEventPaths(parentNodeBefore.getNodePath().unshift('widget'));
     }
     return this;
