@@ -467,24 +467,18 @@ describe("$widget", function () {
       var node2, node3;
 
       beforeEach(function () {
-        node = Node.create();
-        node2 = Node.create();
-        node3 = Node.create();
-        node.addToParentNode(
-            node2.addToParentNode(
+        node = Node.fromNodeName('foo');
+        node2 = Node.fromNodeName('bar');
+        node3 = Node.fromNodeName('baz');
+        node.addChildNode(
+            node2.addChildNode(
                 node3));
       });
 
       it("should retrieve path to node", function () {
-        var nodePath = [
-          node3.instanceId,
-          node2.instanceId,
-          node.instanceId
-        ]
-        .map(String)
-        .toPath();
-
-        expect(node.getNodePath()).toEqual(nodePath);
+        var result = node3.getNodePath();
+        expect($data.Path.mixedBy(result)).toBeTruthy();
+        expect(result).toEqual('foo.bar.baz'.toPath());
       });
     });
 

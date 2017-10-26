@@ -237,7 +237,7 @@ $widget.Node = $oop.getClass('$widget.Node')
         components = [];
 
     while (node) {
-      components.unshift(String(node.instanceId));
+      components.unshift(node.nodeName);
       node = node.parentNode;
     }
 
