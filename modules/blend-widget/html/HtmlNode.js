@@ -4,6 +4,7 @@
  * HTML manifest behavior for `Node` classes.
  * @mixin $widget.HtmlNode
  * @extends $widget.XmlNode
+ * @todo Maintaining reference count for CSS classes?
  */
 $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
 .blend($oop.getClass('$widget.XmlNode'))

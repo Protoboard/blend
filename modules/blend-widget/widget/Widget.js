@@ -143,7 +143,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
 
   /** @ignore */
   onDetach: function () {
-    // unsubscribing from all events subscribed by current widget
+    // unsubscribing from all events subscribed to by current widget
     this.off();
 
     // propagating detach 'event' to children

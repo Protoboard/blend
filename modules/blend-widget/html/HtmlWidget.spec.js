@@ -29,8 +29,9 @@ describe("$widget", function () {
         expect($widget.CssClasses.mixedBy(htmlWidget.cssClasses)).toBeTruthy();
         expect(htmlWidget.cssClasses.data).toEqual({
           foo: 1,
-          '$widget.Widget': 1,
-          '$widget.HtmlWidget': 1
+          widgetWidget: 1,
+          widgetHtmlWidget: 1,
+          testwidgetHtmlWidgetHtmlWidget: 1
         });
       });
     });

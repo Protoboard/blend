@@ -4,7 +4,6 @@
  * @mixin $widget.HtmlWidget
  * @extends $widget.HtmlNode
  * @augments $widget.Widget
- * @todo Merge with $widget.HtmlNode?
  */
 $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
 .blend($oop.getClass('$widget.HtmlNode'))
@@ -38,12 +37,16 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
     var that = this,
         Widget = $widget.Widget;
 
-    // todo Should include own class no matter what
-    this.__contributors.list
+    this.__mixins.downstream.list
     .filter(function (Mixin) {
       return Mixin.mixes(Widget) || Mixin.expects(Widget);
     })
     .map($oop.getClassId)
+    // including self
+    .concat(this.__classId)
+    .map(function (classId) {
+      return classId.replace($widget.RE_CSS_CLASS_FILTER, '');
+    })
     .forEach(function (classId) {
       that.addCssClass(classId);
     });
@@ -52,3 +55,11 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
 
 $oop.getClass('$widget.Widget')
 .forwardBlend($widget.HtmlWidget, $widget.isBrowser);
+
+$oop.copyProperties($widget, /** @lends $widget */{
+  /**
+   * @type {RegExp}
+   * @constant
+   */
+  RE_CSS_CLASS_FILTER: /[^a-zA-Z0-9-_]/g
+});
