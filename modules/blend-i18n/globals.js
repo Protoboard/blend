@@ -12,3 +12,11 @@ var $assert = require('blend-assert'),
 /**
  * @namespace $i18n
  */
+
+$oop.copyProperties($i18n, /** @lends $i18n */{
+  /**
+   * Signals that the global locale has changed.
+   * @constant
+   */
+  EVENT_LOCALE_CHANGE: 'i18n.change.locale'
+});

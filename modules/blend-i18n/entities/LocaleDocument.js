@@ -2,6 +2,8 @@
 
 /**
  * @function $i18n.LocaleDocument.create
+ * @param {object} properties
+ * @param {$entity.DocumentKey} properties.entityKey
  * @returns {$i18n.LocaleDocument}
  */
 
