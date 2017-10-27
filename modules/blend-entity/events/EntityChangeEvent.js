@@ -48,14 +48,6 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
     this.propertiesRemoved = this.propertiesRemoved || [];
   },
 
-  /** @inheritDoc */
-  setSender: function () {
-    // changing sender invalidates cached nodes
-    delete this.nodeBefore;
-    delete this.nodeAfter;
-    return this;
-  },
-
   /**
    * Retrieves the before state of the node associated with the sending
    * entity, wrapped in a `DataContainer` instance.

@@ -20,7 +20,7 @@ $template.TemplateParameterChangeEvent = $oop.getClass('$template.TemplateParame
  * @member {Object} $template.TemplateParameterChangeEvent#parameterValuesAfter
  */
 
-$oop.getClass('$event.Event')
+$event.Event
 .forwardBlend($template.TemplateParameterChangeEvent, function (properties) {
   return $utils.matchesPrefix(properties.eventName, 'template.change.parameter');
 });

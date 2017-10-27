@@ -67,9 +67,10 @@ describe("$event", function () {
 
     describe("clone()", function () {
       beforeEach(function () {
-        event.causingEvent = Event.create({eventName: 'event2'});
-        event
-        .setSender({});
+        event.causingEvent = Event.create({
+          eventName: 'event2',
+          sender: {}
+        });
 
         result = event.clone();
       });
@@ -83,23 +84,6 @@ describe("$event", function () {
         expect(result.causingEvent).toEqual(event.causingEvent);
         expect(result.sender).toEqual(event.sender);
         expect(result.currentPath).toEqual(event.currentPath);
-      });
-    });
-
-    describe("setSender()", function () {
-      var sender;
-
-      beforeEach(function () {
-        sender = {};
-        result = event.setSender(sender);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(event);
-      });
-
-      it("should set sender", function () {
-        expect(event.sender).toBe(sender);
       });
     });
 
@@ -238,17 +222,18 @@ describe("$event", function () {
         .on('event1', 'foo.bar.baz'.toPath(), '2', callback2)
         .on('event1', 'foo'.toPath(), '3', callback3);
 
-        lastEvent = Event.create({eventName: 'event2'});
+        lastEvent = Event.create({
+          eventName: 'event2',
+          sender: {}
+        });
         eventTrail = $event.EventTrail.create()
         .clear()
         .push(lastEvent);
 
-        event
-        .addTargetPaths([
+        event.addTargetPaths([
           'foo.bar.baz'.toPath(),
           'foo.bar'.toPath(),
-          'foo'.toPath()])
-        .setSender({});
+          'foo'.toPath()]);
 
         result = event.trigger();
       });

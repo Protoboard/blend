@@ -90,15 +90,6 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param {*} sender
-   * @returns {$event.Event}
-   */
-  setSender: function (sender) {
-    this.sender = sender;
-    return this;
-  },
-
-  /**
    * @param {Array.<string>} targetPaths
    * @returns {$event.Event}
    */

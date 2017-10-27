@@ -30,26 +30,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("setSender()", function () {
-      var sender;
-
-      beforeEach(function () {
-        sender = {};
-        entityChangeEvent.nodeBefore = {};
-        entityChangeEvent.nodeAfter = {};
-        result = entityChangeEvent.setSender(sender);
-      });
-
-      it("should return self", function () {
-        expect(result).toBe(entityChangeEvent);
-      });
-
-      it("should invalidate dependant properties", function () {
-        expect(entityChangeEvent.hasOwnProperty('nodeBefore')).toBeFalsy();
-        expect(entityChangeEvent.hasOwnProperty('nodeAfter')).toBeFalsy();
-      });
-    });
-
     describe("getNodeBeforeWrapped()", function () {
       beforeEach(function () {
         result = entityChangeEvent.getNodeBeforeWrapped();
