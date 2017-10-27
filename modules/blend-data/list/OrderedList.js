@@ -81,6 +81,7 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
       return this._spliceIndexOf(value, medianPos, end);
     } else {
       // default index, should never be reached
+      /* istanbul ignore next */
       return -1;
     }
   },

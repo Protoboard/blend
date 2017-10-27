@@ -46,6 +46,7 @@ $data.PairList = $oop.getClass('$data.PairList')
     $assert.fail([
       this.__classId + "does not support item deletion."
     ].join(" "));
+    /* istanbul ignore next */
     return this;
   },
 
@@ -59,6 +60,7 @@ $data.PairList = $oop.getClass('$data.PairList')
     $assert.fail([
       this.__classId + "does not support item testing."
     ].join(" "));
+    /* istanbul ignore next */
     return false;
   },
 

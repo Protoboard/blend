@@ -39,8 +39,11 @@ module.exports = function (grunt) {
           footer: [
             '}',
             'var n="' + pkg.name + '",e',
+            '/* istanbul ignore next */',
             'function rn(p){try{return require(p)}catch(e){return require("./"+p)}}',
+            '/* istanbul ignore next */',
             'function rw(p){return window[p]}',
+            '/* istanbul ignore next */',
             'if(typeof module=="object")d(rn,exports,module)',
             'else if(typeof define=="function")define(d)',
             'else d(rw,e=window[n]={},{exports:e})',

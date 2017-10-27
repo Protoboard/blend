@@ -37,12 +37,9 @@ $oop.copyProperties($utils, /** @lends $utils */{
     case 'string':
       return stringifiable;
     case 'object':
-      if (stringifiable instanceof Object) {
-        return stringifiable.toString();
-      } else {
-        return '';
-      }
-      break;
+      return stringifiable instanceof Object ?
+          stringifiable.toString() :
+          '';
     case 'boolean':
     case 'number':
       return String(stringifiable);

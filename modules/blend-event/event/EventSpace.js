@@ -238,6 +238,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
     default:
       $assert.fail("Invalid event unsubscription parameters");
+      /* istanbul ignore next */
       break;
     }
 
