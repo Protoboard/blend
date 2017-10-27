@@ -2,6 +2,10 @@
 
 $entity.entities
 .appendNode($data.Path.fromString('document.__field'), {
+  '_localeEnvironment/activeLocale': {
+    valueType: 'reference'
+  },
+
   '_locale/localeName': {
     valueType: 'string'
   },
