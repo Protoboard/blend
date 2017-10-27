@@ -11,6 +11,7 @@
 /**
  * @class $widget.Widget
  * @extends $widget.Node
+ * @extends $widget.Stateful
  * @extends $utils.Retrievable
  * @extends $event.EventSender
  * @extends $event.EventListener
@@ -19,6 +20,7 @@
  */
 $widget.Widget = $oop.getClass('$widget.Widget')
 .blend($oop.getClass('$widget.Node'))
+.blend($oop.getClass('$widget.Stateful'))
 .blend($utils.Retrievable)
 .blend($event.EventSender)
 .blend($event.EventListener)
