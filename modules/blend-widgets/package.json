@@ -18,12 +18,12 @@
     "npm": "^3.0.0"
   },
   "dependencies": {
-    "blend-assert": "~0.5.0",
-    "blend-data": "~0.5.0",
-    "blend-event": "~0.5.0",
-    "blend-oop": "~0.5.0",
-    "blend-template": "~0.5.0",
-    "blend-utils": "~0.5.0",
-    "blend-widget": "~0.5.0"
+    "blend-assert": "~0.1.0",
+    "blend-data": "~0.1.0",
+    "blend-event": "~0.1.0",
+    "blend-oop": "~0.1.0",
+    "blend-template": "~0.1.0",
+    "blend-utils": "~0.1.0",
+    "blend-widget": "~0.1.0"
   }
 }
