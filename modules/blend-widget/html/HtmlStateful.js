@@ -34,5 +34,5 @@ $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
 
 $oop.getClass('$widget.Node')
 .forwardBlend($widget.HtmlStateful, function () {
-  return this.mixes($widget.Stateful) && $widget.isBrowser();
+  return this.mixes($widget.Stateful) && $widget.isHtml();
 });

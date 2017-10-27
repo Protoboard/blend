@@ -16,4 +16,4 @@ $widgets.HtmlText = $oop.getClass('$widgets.HtmlText')
 });
 
 $oop.getClass('$widgets.Text')
-.forwardBlend($widgets.HtmlText, $widget.isBrowser);
+.forwardBlend($widgets.HtmlText, $widget.isHtml);
