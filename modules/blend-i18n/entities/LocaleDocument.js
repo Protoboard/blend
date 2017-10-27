@@ -88,11 +88,11 @@ $i18n.LocaleDocument = $oop.getClass('$i18n.LocaleDocument')
   },
 
   /**
-   * Sets translation key in the current locale.
+   * Adds translation key to translation references for the current locale.
    * @param {$entity.DocumentKey} translationKey
    * @returns {$i18n.LocaleDocument}
    */
-  setTranslationKey: function (translationKey) {
+  addTranslationKey: function (translationKey) {
     var translationRef = translationKey.toString();
     this.getField('translations').getItem(translationRef).setNode(1);
     return this;

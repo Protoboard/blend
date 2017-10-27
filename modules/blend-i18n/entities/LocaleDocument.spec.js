@@ -201,19 +201,19 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setTranslationKey()", function () {
+    describe("addTranslationKey()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
         localeDocument.deleteNode();
       });
 
       it("should return self", function () {
-        var result = localeDocument.setTranslationKey('baz/quux'.toDocumentKey());
+        var result = localeDocument.addTranslationKey('baz/quux'.toDocumentKey());
         expect(result).toBe(localeDocument);
       });
 
       it("should set reference in translations field", function () {
-        localeDocument.setTranslationKey('baz/quux'.toDocumentKey());
+        localeDocument.addTranslationKey('baz/quux'.toDocumentKey());
         var path = 'document.foo.bar.translations'.toPath();
         expect($entity.entities.getNode(path)).toEqual({
           'baz/quux': 1
