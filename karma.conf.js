@@ -18,6 +18,7 @@ module.exports = function (config) {
       'dist/blend-event.js',
       'dist/blend-template.js',
       'dist/blend-entity.js',
+      'dist/blend-i18n.js',
       'dist/blend-widget.js',
       'dist/blend-widgets.js',
       'test/jasmine-spyOn.js',
