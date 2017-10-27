@@ -18,5 +18,16 @@ $entity.entities
     nodeType: 'branch',
     valueType: 'collection',
     itemIdType: 'reference'
+  },
+
+  '_translation/originalString': {
+    valueType: 'string'
+  },
+  '_translation/pluralForms': {
+    nodeType: 'branch',
+    valueType: 'collection'
+  },
+  '_translation/context': {
+    valueType: 'string'
   }
 });
