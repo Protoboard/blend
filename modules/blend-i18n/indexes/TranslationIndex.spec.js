@@ -21,58 +21,56 @@ describe("$i18n", function () {
     describe("create()", function () {
       beforeEach(function () {
         TranslationIndex.__instanceLookup = {};
-        $entity.entities.data = {
-          document: {
-            _locale: {
-              'en-us': {
-                localeName: 'en-us',
-                translations: {
-                  '_translation/apple-en-us': 1,
-                  '_translation/state-en-us': 1
-                }
-              },
-              'de': {
-                localeName: 'de',
-                translations: {
-                  '_translation/apple-de': 1,
-                  '_translation/state-de': 1
-                }
+        $entity.entities.appendNode('document'.toPath(), {
+          _locale: {
+            'en-us': {
+              localeName: 'en-us',
+              translations: {
+                '_translation/apple-en-us': 1,
+                '_translation/state-en-us': 1
               }
             },
-            _translation: {
-              'apple-en-us': {
-                originalString: 'apple',
-                pluralForms: {
-                  0: 'apple',
-                  1: 'apples'
-                }
-              },
-              'state-en-us': {
-                originalString: 'state',
-                context: 'geography',
-                pluralForms: {
-                  0: 'state',
-                  1: 'states'
-                }
-              },
-              'apple-de': {
-                originalString: 'apple',
-                pluralForms: {
-                  0: 'Apfel',
-                  1: 'Äpfel'
-                }
-              },
-              'state-de': {
-                originalString: 'state',
-                context: 'geography',
-                pluralForms: {
-                  0: 'Staat',
-                  1: 'Staaten'
-                }
+            'de': {
+              localeName: 'de',
+              translations: {
+                '_translation/apple-de': 1,
+                '_translation/state-de': 1
+              }
+            }
+          },
+          _translation: {
+            'apple-en-us': {
+              originalString: 'apple',
+              pluralForms: {
+                0: 'apple',
+                1: 'apples'
+              }
+            },
+            'state-en-us': {
+              originalString: 'state',
+              context: 'geography',
+              pluralForms: {
+                0: 'state',
+                1: 'states'
+              }
+            },
+            'apple-de': {
+              originalString: 'apple',
+              pluralForms: {
+                0: 'Apfel',
+                1: 'Äpfel'
+              }
+            },
+            'state-de': {
+              originalString: 'state',
+              context: 'geography',
+              pluralForms: {
+                0: 'Staat',
+                1: 'Staaten'
               }
             }
           }
-        };
+        });
         $entity.index.data = {};
       });
 
