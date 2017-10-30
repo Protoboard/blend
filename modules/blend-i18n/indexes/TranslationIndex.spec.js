@@ -215,9 +215,16 @@ describe("$i18n", function () {
     });
 
     describe("onTranslationsChange()", function () {
+      var translationIndexInstanceLookup;
+
       beforeEach(function () {
+        translationIndexInstanceLookup = $i18n.TranslationIndex.__instanceLookup;
         $i18n.TranslationIndex.__instanceLookup = {};
         $i18n.TranslationIndex.create();
+      });
+
+      afterEach(function () {
+        $i18n.TranslationIndex.__instanceLookup = translationIndexInstanceLookup;
       });
 
       describe("when adding translation document", function () {
