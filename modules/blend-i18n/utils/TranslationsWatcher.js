@@ -7,30 +7,10 @@
 
 /**
  * @class $i18n.TranslationsWatcher
- * @extends $event.EventListener
- * @extends $event.EventSubscriber
  */
 $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
 .blend($oop.Singleton)
-.blend($event.EventListener)
-.blend($event.EventSubscriber)
-.implement($utils.Destructible)
 .define(/** @lends $i18n.TranslationsWatcher# */{
-  /** @ignore */
-  spread: function () {
-    this.subscriberId = this.__classId;
-  },
-
-  /** @ignore */
-  init: function () {
-    var listeningPath = $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
-    .unshift('entity').toString();
-
-    this
-    .setListeningPath(listeningPath)
-    .on($entity.EVENT_ENTITY_CHANGE, this, this.onTranslationsFieldChange);
-  },
-
   /**
    * @param {$entity.EntityChangeEvent} event
    * @ignore
@@ -51,3 +31,12 @@ $oop.copyProperties($i18n, /** @lends $i18n */{
    */
   EVENT_TRANSLATIONS_CHANGE: 'i18n.change.translations'
 });
+
+$event.EventSpace.create()
+.on($entity.EVENT_ENTITY_CHANGE,
+    $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
+    .unshift('entity').toString(),
+    $i18n.TranslationsWatcher.__classId,
+    function (event) {
+      return $i18n.TranslationsWatcher.create().onTranslationsFieldChange(event);
+    });

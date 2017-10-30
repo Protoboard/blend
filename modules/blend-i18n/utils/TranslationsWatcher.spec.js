@@ -18,20 +18,6 @@ describe("$i18n", function () {
       expect(TranslationsWatcher.create()).toBe(TranslationsWatcher.create());
     });
 
-    describe("create()", function () {
-      it("should initialize subscriberId", function () {
-        translationsWatcher = TranslationsWatcher.create();
-        expect(translationsWatcher.subscriberId)
-        .toBe('test.$i18n.TranslationsWatcher.TranslationsWatcher');
-      });
-
-      it("should initialize listeningPath", function () {
-        translationsWatcher = TranslationsWatcher.create();
-        expect(translationsWatcher.listeningPath)
-        .toBe('entity.document.__field._locale/translations');
-      });
-    });
-
     describe("onTranslationsFieldChange()", function () {
       beforeEach(function () {
         translationsWatcher = TranslationsWatcher.create();
