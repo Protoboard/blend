@@ -9,7 +9,6 @@
  * @class $i18n.TranslationsWatcher
  * @extends $event.EventListener
  * @extends $event.EventSubscriber
- * @implements $utils.Destructible
  */
 $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
 .blend($oop.Singleton)
@@ -29,14 +28,14 @@ $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
 
     this
     .setListeningPath(listeningPath)
-    .on($entity.EVENT_ENTITY_CHANGE, this, this.onTranslationsChange);
+    .on($entity.EVENT_ENTITY_CHANGE, this, this.onTranslationsFieldChange);
   },
 
   /**
    * @param {$entity.EntityChangeEvent} event
    * @ignore
    */
-  onTranslationsChange: function (event) {
+  onTranslationsFieldChange: function (event) {
     var translationsField = event.sender,
         localeDocumentKey = translationsField.entityKey.documentKey;
 

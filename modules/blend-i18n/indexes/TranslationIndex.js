@@ -26,7 +26,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
     this.on(
         $entity.EVENT_ENTITY_CHANGE,
         $i18n.TranslationsWatcher.create(),
-        this.onTranslationsChange);
+        this.onTranslationsFieldChange);
   },
 
   /**
@@ -123,7 +123,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
    * @param {$entity.EntityChangeEvent} event
    * @ignore
    */
-  onTranslationsChange: function (event) {
+  onTranslationsFieldChange: function (event) {
     var that = this,
         translationsFieldKey = event.sender.entityKey,
         localeKey = translationsFieldKey.documentKey,

@@ -214,7 +214,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("onTranslationsChange()", function () {
+    describe("onTranslationsFieldChange()", function () {
       beforeEach(function () {
         $i18n.TranslationIndex.create();
       });

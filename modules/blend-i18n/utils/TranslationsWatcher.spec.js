@@ -32,7 +32,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("onTranslationsChange()", function () {
+    describe("onTranslationsFieldChange()", function () {
       beforeEach(function () {
         translationsWatcher = TranslationsWatcher.create();
         '_translation/foo-en-us'.toDocument().deleteNode();
