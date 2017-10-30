@@ -9,13 +9,24 @@
  * Maintains a lookup of translations indexed by locale, original strings,
  * context, and plural information.
  * @class $i18n.TranslationIndex
+ * @extends $event.EventSubscriber
  */
 $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
 .blend($oop.Singleton)
+.blend($event.EventSubscriber)
 .define(/** @lends $i18n.TranslationIndex# */{
+  /** @ignore */
+  spread: function () {
+    this.subscriberId = this.__classId;
+  },
+
   /** @ignore */
   init: function () {
     this._initTranslationIndex();
+    this.on(
+        $entity.EVENT_ENTITY_CHANGE,
+        $i18n.TranslationsWatcher.create(),
+        this.onTranslationsChange);
   },
 
   /**
@@ -132,12 +143,3 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
     });
   }
 });
-
-$event.EventSpace.create()
-.on($entity.EVENT_ENTITY_CHANGE,
-    $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
-    .unshift('entity'),
-    $i18n.TranslationIndex.__classId,
-    function (event) {
-      return $i18n.TranslationIndex.create().onTranslationsChange(event);
-    });

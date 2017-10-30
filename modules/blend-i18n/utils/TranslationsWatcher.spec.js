@@ -47,12 +47,13 @@ describe("$i18n", function () {
           pluralForms: ['foo', 'foo']
         });
         '_locale/en-us/translations'.toField().appendNode({
-          '_translation/foo-en-us': 1,
-          '_translation/foo-de': 1
+          '_translation/foo-en-us': 1
         });
 
         var calls = $i18n.LocaleDocument.trigger.calls.all();
-        expect(calls.length).toBe(1);
+        // there may be multiple triggers as we're working w/ override
+        // vs. original class instantiated (and subscribed by) other parts
+        // of the framework
         expect(calls[0].object).toEqual('_locale/en-us'.toDocument());
         expect(calls[0].args).toEqual(['i18n.change.translations']);
       });

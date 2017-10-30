@@ -215,23 +215,15 @@ describe("$i18n", function () {
     });
 
     describe("onTranslationsChange()", function () {
-      var translationIndexInstanceLookup;
-
       beforeEach(function () {
-        translationIndexInstanceLookup = $i18n.TranslationIndex.__instanceLookup;
-        $i18n.TranslationIndex.__instanceLookup = {};
         $i18n.TranslationIndex.create();
-      });
-
-      afterEach(function () {
-        $i18n.TranslationIndex.__instanceLookup = translationIndexInstanceLookup;
       });
 
       describe("when adding translation document", function () {
         beforeEach(function () {
-          $entity.index.data._translation = {};
           '_translation/foo-en-us'.toDocument().deleteNode();
           '_locale/en-us/translations'.toField().deleteNode();
+          $entity.index.data._translation = {};
         });
 
         it("should add new entry to index", function () {
