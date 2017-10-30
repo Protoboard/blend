@@ -55,13 +55,13 @@ describe("$event", function () {
       });
 
       it("should return self", function () {
-        result = eventSpace.on('eventName', 'foo.bar'.toPath(), 'foo', callback);
+        result = eventSpace.on('eventName', 'foo.bar', 'foo', callback);
         expect(result).toBe(eventSpace);
       });
 
       describe("with subscriptionId", function () {
         beforeEach(function () {
-          result = eventSpace.on('eventName', 'foo.bar'.toPath(), 'foo', callback);
+          result = eventSpace.on('eventName', 'foo.bar', 'foo', callback);
         });
 
         it("should add to subscriptions", function () {
@@ -92,7 +92,7 @@ describe("$event", function () {
 
         describe("then subscribing again", function () {
           it("should not change subscriptions", function () {
-            eventSpace.on('eventName', 'foo.bar'.toPath(), 'foo', callback);
+            eventSpace.on('eventName', 'foo.bar', 'foo', callback);
             expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {
@@ -130,20 +130,20 @@ describe("$event", function () {
         callback3 = function () {};
         callback4 = function () {};
         result = eventSpace
-        .on('event1', 'foo.bar'.toPath(), 'subscriber3', callback4)
-        .on('event1', 'foo.bar.baz'.toPath(), 'subscriber1', callback1)
-        .on('event1', 'foo.bar.quux'.toPath(), 'subscriber2', callback2)
-        .on('event2', 'foo.baz'.toPath(), 'subscriber1', callback3);
+        .on('event1', 'foo.bar', 'subscriber3', callback4)
+        .on('event1', 'foo.bar.baz', 'subscriber1', callback1)
+        .on('event1', 'foo.bar.quux', 'subscriber2', callback2)
+        .on('event2', 'foo.baz', 'subscriber1', callback3);
       });
 
       it("should return self", function () {
-        result = eventSpace.off('event1', 'foo.bar.baz'.toPath(), 'subscriber1');
+        result = eventSpace.off('event1', 'foo.bar.baz', 'subscriber1');
         expect(result).toBe(eventSpace);
       });
 
       describe("when all arguments are specified", function () {
         it("should remove entries from registry", function () {
-          eventSpace.off('event1', 'foo.bar.baz'.toPath(), 'subscriber1');
+          eventSpace.off('event1', 'foo.bar.baz', 'subscriber1');
           expect(eventSpace.subscriptions.data).toEqual({
             callbacks: {
               bySubscription: {
@@ -270,7 +270,7 @@ describe("$event", function () {
 
         describe("when targetPath is also specified", function () {
           it("should remove entries from registry", function () {
-            eventSpace.off('event1', 'foo.bar.baz'.toPath());
+            eventSpace.off('event1', 'foo.bar.baz');
             expect(eventSpace.subscriptions.data).toEqual({
               callbacks: {
                 bySubscription: {

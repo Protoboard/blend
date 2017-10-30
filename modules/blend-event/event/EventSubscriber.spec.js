@@ -77,7 +77,7 @@ describe("$event", function () {
 
       beforeEach(function () {
         eventSpace = $event.EventSpace.create();
-        eventListener = {listeningPath: 'path'.toPath()};
+        eventListener = {listeningPath: 'path'};
         eventName = 'event1';
         callback = function () {};
         spyOn(eventSpace, 'on');
@@ -102,7 +102,7 @@ describe("$event", function () {
 
       beforeEach(function () {
         eventSpace = $event.EventSpace.create();
-        eventListener = {listeningPath: 'path'.toPath()};
+        eventListener = {listeningPath: 'path'};
         eventName = 'event1';
         spyOn(eventSpace, 'off');
 

@@ -7,14 +7,14 @@ describe("$event", function () {
 
   describe("spreadPathForBubbling()", function () {
     it("should return array", function () {
-      result = $event.spreadPathForBubbling('foo.bar.baz'.toPath());
+      result = $event.spreadPathForBubbling('foo.bar.baz');
       expect(result instanceof Array).toBeTruthy();
     });
 
     it("should break down path to subpaths", function () {
-      expect($event.spreadPathForBubbling('foo.bar.baz'.toPath())).toEqual([
-        'foo.bar'.toPath(),
-        'foo'.toPath()
+      expect($event.spreadPathForBubbling('foo.bar.baz')).toEqual([
+        'foo.bar',
+        'foo'
       ]);
     });
   });
@@ -27,12 +27,12 @@ describe("$event", function () {
       $event.EventSpace.create().subscriptions.data = {};
 
       $event.EventSpace.create()
-      .on('event1', 'foo.bar.baz'.toPath(), 'subscriber1', function () {})
-      .on('event1', 'foo.bar.baz'.toPath(), 'subscriber2', function () {})
-      .on('event1', 'foo.baz'.toPath(), 'subscriber2', function () {})
-      .on('event2', 'foo.bar'.toPath(), 'subscriber3', function () {})
-      .on('event1', 'bar.baz'.toPath(), 'subscriber4', function () {})
-      .on('event1', 'foo'.toPath(), 'subscriber5', function () {});
+      .on('event1', 'foo.bar.baz', 'subscriber1', function () {})
+      .on('event1', 'foo.bar.baz', 'subscriber2', function () {})
+      .on('event1', 'foo.baz', 'subscriber2', function () {})
+      .on('event2', 'foo.bar', 'subscriber3', function () {})
+      .on('event1', 'bar.baz', 'subscriber4', function () {})
+      .on('event1', 'foo', 'subscriber5', function () {});
     });
 
     afterEach(function () {
@@ -40,14 +40,14 @@ describe("$event", function () {
     });
 
     it("should return array", function () {
-      result = $event.spreadPathForBroadcast('foo'.toPath(), 'event1');
+      result = $event.spreadPathForBroadcast('foo', 'event1');
       expect(result instanceof Array).toBeTruthy();
     });
 
     it("should retrieve all relative paths", function () {
-      expect($event.spreadPathForBroadcast('foo'.toPath(), 'event1')).toEqual([
-        'foo.bar.baz'.toPath(),
-        'foo.baz'.toPath()
+      expect($event.spreadPathForBroadcast('foo', 'event1')).toEqual([
+        'foo.bar.baz',
+        'foo.baz'
       ]);
     });
   });

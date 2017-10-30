@@ -92,8 +92,8 @@ describe("$event", function () {
 
       beforeEach(function () {
         targetPaths = [
-          'foo.bar'.toPath(),
-          'baz.quux'.toPath()
+          'foo.bar',
+          'baz.quux'
         ];
         result = event.addTargetPaths(targetPaths);
       });
@@ -104,8 +104,8 @@ describe("$event", function () {
 
       it("should add paths to targetPaths", function () {
         expect(event.targetPaths).toEqual([
-          'foo.bar'.toPath(),
-          'baz.quux'.toPath()
+          'foo.bar',
+          'baz.quux'
         ]);
       });
     });
@@ -114,7 +114,7 @@ describe("$event", function () {
       var targetPath;
 
       beforeEach(function () {
-        targetPath = 'foo.bar'.toPath();
+        targetPath = 'foo.bar';
         result = event.addTargetPath(targetPath);
       });
 
@@ -124,7 +124,7 @@ describe("$event", function () {
 
       it("should add path to targetPaths", function () {
         expect(event.targetPaths).toEqual([
-          'foo.bar'.toPath()
+          'foo.bar'
         ]);
       });
     });
@@ -133,7 +133,7 @@ describe("$event", function () {
       var bubblingPath;
 
       beforeEach(function () {
-        bubblingPath = 'foo.bar.baz'.toPath();
+        bubblingPath = 'foo.bar.baz';
         result = event.addBubblingPath(bubblingPath);
       });
 
@@ -143,8 +143,8 @@ describe("$event", function () {
 
       it("should add bubble paths to targetPaths", function () {
         expect(event.targetPaths).toEqual([
-          'foo.bar'.toPath(),
-          'foo'.toPath()
+          'foo.bar',
+          'foo'
         ]);
       });
     });
@@ -157,12 +157,12 @@ describe("$event", function () {
         subscriptionData = $event.EventSpace.create().subscriptions.data;
         $event.EventSpace.create().subscriptions.data = {};
 
-        broadcastPath = 'foo.bar'.toPath();
+        broadcastPath = 'foo.bar';
         $event.EventSpace.create()
-        .on('event1', 'foo.bar.baz.quux'.toPath(), '1', function () {})
-        .on('event1', 'foo.bar.baz.quux'.toPath(), '2', function () {})
-        .on('event1', 'foo.bar'.toPath(), '3', function () {})
-        .on('event1', 'foo'.toPath(), '4', function () {});
+        .on('event1', 'foo.bar.baz.quux', '1', function () {})
+        .on('event1', 'foo.bar.baz.quux', '2', function () {})
+        .on('event1', 'foo.bar', '3', function () {})
+        .on('event1', 'foo', '4', function () {});
         result = event.addBroadcastPath(broadcastPath);
       });
 
@@ -176,7 +176,7 @@ describe("$event", function () {
 
       it("should add broadcast paths to targetPaths", function () {
         expect(event.targetPaths).toEqual([
-          'foo.bar.baz.quux'.toPath()
+          'foo.bar.baz.quux'
         ]);
       });
     });
@@ -228,9 +228,9 @@ describe("$event", function () {
         callback3 = jasmine.createSpy();
 
         $event.EventSpace.create()
-        .on('event1', 'foo.bar.baz'.toPath(), '1', callback1)
-        .on('event1', 'foo.bar.baz'.toPath(), '2', callback2)
-        .on('event1', 'foo'.toPath(), '3', callback3);
+        .on('event1', 'foo.bar.baz', '1', callback1)
+        .on('event1', 'foo.bar.baz', '2', callback2)
+        .on('event1', 'foo', '3', callback3);
 
         lastEvent = Event.create({
           eventName: 'event2',
@@ -241,9 +241,9 @@ describe("$event", function () {
         .push(lastEvent);
 
         event.addTargetPaths([
-          'foo.bar.baz'.toPath(),
-          'foo.bar'.toPath(),
-          'foo'.toPath()]);
+          'foo.bar.baz',
+          'foo.bar',
+          'foo']);
 
         result = event.trigger();
       });

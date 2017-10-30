@@ -35,26 +35,25 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
   /**
    * @param {string} eventName
-   * @param {$data.Path} targetPath
+   * @param {string} targetPath
    * @param {string} subscriberId
    * @private
    */
   _offSingleSubscription: function (eventName, targetPath, subscriberId) {
-    var subscriptions = this.subscriptions,
-        targetPathPc = targetPath && targetPath.toString();
+    var subscriptions = this.subscriptions;
 
     // `deleteNode` does not clean up the registry nicely, but is
     // functionally sufficient and also much faster than `deletePath`
     subscriptions
     .deleteNode($data.Path.fromComponents([
-      'callbacks', 'bySubscription', eventName, targetPathPc, subscriberId]))
+      'callbacks', 'bySubscription', eventName, targetPath, subscriberId]))
     .deleteNode($data.Path.fromComponents([
-      'callbacks', 'bySubscriber', subscriberId, eventName, targetPathPc]));
+      'callbacks', 'bySubscriber', subscriberId, eventName, targetPath]));
 
     subscriptions
     .getNodeWrapped($data.Path.fromComponents(['paths', eventName]))
     .asOrderedStringList()
-    .deleteItem(targetPathPc);
+    .deleteItem(targetPath);
   },
 
   /**
@@ -84,9 +83,9 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     .mapValues(function (/**$data.Path*/callbackPath) {
       var components = callbackPath.components,
           eventName = components[3],
-          targetPathStr = components[4];
+          targetPath = components[4];
       return $data.Path.fromComponents([
-        'callbacks', 'bySubscription', eventName, targetPathStr, subscriberId]);
+        'callbacks', 'bySubscription', eventName, targetPath, subscriberId]);
     })
     .passEachValueTo(subscriptions.deletePath, subscriptions);
 
@@ -95,25 +94,24 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     .forEachItem(function (/**$data.Path*/callbackPath) {
       var components = callbackPath.components,
           eventName = components[3],
-          targetPathStr = components[4];
+          targetPath = components[4];
 
       subscriptions.getNodeWrapped(
           $data.Path.fromComponents(['paths', eventName]))
       .asOrderedStringList()
-      .deleteItem(targetPathStr);
+      .deleteItem(targetPath);
     });
   },
 
   /**
    * @param {string} eventName
-   * @param {$data.Path} targetPath
+   * @param {string} targetPath
    * @private
    */
   _offByEventName: function (eventName, targetPath) {
     var subscriptions = this.subscriptions,
-        targetPathPc = targetPath && targetPath.toString(),
         targetPathQc = targetPath ?
-            $data.escapeQueryComponent(targetPathPc) : '*',
+            $data.escapeQueryComponent(targetPath) : '*',
         callbacksQuery = $data.Query.fromComponents([
           'callbacks', 'bySubscription', eventName, targetPathQc, '*']),
         callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
@@ -123,12 +121,12 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     if (targetPath) {
       subscriptions
       .deleteNode($data.Path.fromComponents([
-        'callbacks', 'bySubscription', eventName, targetPathPc]));
+        'callbacks', 'bySubscription', eventName, targetPath]));
 
       subscriptions
       .getNodeWrapped($data.Path.fromComponents(['paths', eventName]))
       .asOrderedStringList()
-      .deleteItem(targetPathPc);
+      .deleteItem(targetPath);
     } else {
       subscriptions
       .deleteNode($data.Path.fromComponents([
@@ -140,10 +138,10 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     callbackPaths
     .mapValues(function (/**$data.Path*/callbackPath) {
       var components = callbackPath.components,
-          targetPathStr = components[3],
+          targetPath = components[3],
           subscriberId = components[4];
       return $data.Path.fromComponents([
-        'callbacks', 'bySubscriber', subscriberId, eventName, targetPathStr]);
+        'callbacks', 'bySubscriber', subscriberId, eventName, targetPath]);
     })
     .passEachValueTo(subscriptions.deleteNode, subscriptions);
   },
@@ -160,19 +158,18 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
    * Subscribes specified callback to the event `eventName` being triggered on
    * the path `targetPath`.
    * @param {string} eventName Identifies event type
-   * @param {$data.Path} targetPath Path on which to listen to event
+   * @param {string} targetPath Path on which to listen to event
    * @param {string} subscriberId Identifies subscriber
    * @param {function} callback Function to be invoked when event is triggered
    * @returns {$event.EventSpace}
    */
   on: function (eventName, targetPath, subscriberId, callback) {
     var subscriptions = this.subscriptions,
-        targetPathStr = targetPath.toString(),
 
         // intended to be used for looking up callbacks when triggering /
         // broadcasting event
         callbackByTargetPath = $data.Path.fromComponents([
-          'callbacks', 'bySubscription', eventName, targetPathStr,
+          'callbacks', 'bySubscription', eventName, targetPath,
           subscriberId]),
 
         // intended to be used for looking up callbacks for a specific
@@ -184,7 +181,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
     if (!subscriptions.hasPath(callbackByTargetPath)) {
       callbackBySubscriptionPath = $data.Path.fromComponents([
-        'callbacks', 'bySubscriber', subscriberId, eventName, targetPathStr]);
+        'callbacks', 'bySubscriber', subscriberId, eventName, targetPath]);
       pathsPath = $data.Path.fromComponents(['paths', eventName]);
 
       // callback is not registered yet
@@ -197,7 +194,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
       subscriptions
       .getInitializedNodeWrapped(pathsPath, this._pathsInitializer)
       .asOrderedStringList()
-      .setItem(targetPathStr);
+      .setItem(targetPath);
     }
 
     return this;

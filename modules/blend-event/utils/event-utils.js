@@ -4,15 +4,15 @@ $oop.copyProperties($event, /** @lends $event */{
   /**
    * Spreads specified path to its sub-paths. Result will not include
    * original path.
-   * @param {$data.Path} path Path to be spread.
-   * @returns {Array.<$data.Path>}
+   * @param {string} path Path to be spread.
+   * @returns {Array.<string>}
    */
   spreadPathForBubbling: function (path) {
-    var components = path.components,
+    var components = $data.Path.fromString(path).components,
         result = [],
         i;
     for (i = components.length - 1; i > 0; i--) {
-      result.push($data.Path.fromComponents(components.slice(0, i)));
+      result.push($data.Path.fromComponentsToString(components.slice(0, i)));
     }
     return result;
   },
@@ -20,25 +20,21 @@ $oop.copyProperties($event, /** @lends $event */{
   /**
    * Spreads specified path to relative, subscribed paths. Result will not
    * include original path.
-   * @param {$data.Path} path Path to be spread.
+   * @param {string} path Path to be spread.
    * @param {string} eventName Event name matching subscriptions.
    * @returns {Array.<string>}
    */
   spreadPathForBroadcast: function (path, eventName) {
-    var eventSpace = $event.EventSpace.create(),
-        pathStr = path.toString();
+    var eventSpace = $event.EventSpace.create();
 
     return eventSpace.subscriptions
     .getNodeWrapped(['paths', eventName].toPath())
     .asOrderedStringList()
-    .getRangeByPrefixWrapped(pathStr, 1)
+    .getRangeByPrefixWrapped(path, 1)
     .asCollection()
     .toStringDictionary()
     .swapKeysAndValues()
     .asCollection()
-    .getKeysWrapped()
-    // todo Use .passEachKeyTo() Instead of .getKeysWrapped().passEachValueTo()
-    .passEachValueTo($data.Path.fromString)
-        .data;
+    .getKeys();
   }
 });
