@@ -20,12 +20,16 @@ $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
   /** @ignore */
   spread: function () {
     this.subscriberId = this.__classId;
-    this.listeningPath = 'entity.document.__field._locale/translations';
   },
 
   /** @ignore */
   init: function () {
-    this.on($entity.EVENT_ENTITY_CHANGE, this, this.onTranslationsChange);
+    var listeningPath = $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
+    .unshift('entity').toString();
+
+    this
+    .setListeningPath(listeningPath)
+    .on($entity.EVENT_ENTITY_CHANGE, this, this.onTranslationsChange);
   },
 
   /**
