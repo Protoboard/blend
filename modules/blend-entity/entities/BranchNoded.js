@@ -11,6 +11,7 @@ $entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
 .define(/** @lends $entity.BranchNoded# */{
   /** @ignore */
   init: function () {
+    // todo Remove
     var entityKey = this.entityKey,
         attributeDocumentKey = entityKey.getAttributeDocumentKey(),
         entityType = attributeDocumentKey.documentType,
@@ -19,7 +20,6 @@ $entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
           'entity', 'document', '__field', nodeTypeKey.toString(), 'options',
           'branch']);
 
-    // todo Not 100% certain this is justified
     this.addTriggerPath(nodeTypePath);
   },
 
