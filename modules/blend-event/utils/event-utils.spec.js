@@ -20,7 +20,12 @@ describe("$event", function () {
   });
 
   describe("spreadPathForBroadcast()", function () {
+    var subscriptionData;
+
     beforeEach(function () {
+      subscriptionData = $event.EventSpace.create().subscriptions.data;
+      $event.EventSpace.create().subscriptions.data = {};
+
       $event.EventSpace.create()
       .on('event1', 'foo.bar.baz'.toPath(), 'subscriber1', function () {})
       .on('event1', 'foo.bar.baz'.toPath(), 'subscriber2', function () {})
@@ -28,6 +33,10 @@ describe("$event", function () {
       .on('event2', 'foo.bar'.toPath(), 'subscriber3', function () {})
       .on('event1', 'bar.baz'.toPath(), 'subscriber4', function () {})
       .on('event1', 'foo'.toPath(), 'subscriber5', function () {});
+    });
+
+    afterEach(function () {
+      $event.EventSpace.create().subscriptions.data = subscriptionData;
     });
 
     it("should return array", function () {

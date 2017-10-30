@@ -5,7 +5,8 @@ var $oop = window['blend-oop'],
 
 describe("$event", function () {
   describe("EventSubscriber", function () {
-    var Subscriber,
+    var eventSpaceInstanceLookup,
+        Subscriber,
         subscriber,
         result;
 
@@ -24,8 +25,13 @@ describe("$event", function () {
     });
 
     beforeEach(function () {
+      eventSpaceInstanceLookup = $event.EventSpace.__instanceLookup;
       $event.EventSpace.__instanceLookup = {};
       subscriber = Subscriber.create({subscriberId: 'foo'});
+    });
+
+    afterEach(function () {
+      $event.EventSpace.__instanceLookup = eventSpaceInstanceLookup;
     });
 
     describe("create()", function () {

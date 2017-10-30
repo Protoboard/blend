@@ -150,17 +150,24 @@ describe("$event", function () {
     });
 
     describe("addBroadcastPath()", function () {
-      var broadcastPath;
+      var subscriptionData,
+          broadcastPath;
 
       beforeEach(function () {
+        subscriptionData = $event.EventSpace.create().subscriptions.data;
+        $event.EventSpace.create().subscriptions.data = {};
+
         broadcastPath = 'foo.bar'.toPath();
         $event.EventSpace.create()
-        .destroy()
         .on('event1', 'foo.bar.baz.quux'.toPath(), '1', function () {})
         .on('event1', 'foo.bar.baz.quux'.toPath(), '2', function () {})
         .on('event1', 'foo.bar'.toPath(), '3', function () {})
         .on('event1', 'foo'.toPath(), '4', function () {});
         result = event.addBroadcastPath(broadcastPath);
+      });
+
+      afterEach(function () {
+        $event.EventSpace.create().subscriptions.data = subscriptionData;
       });
 
       it("should return self", function () {
@@ -204,12 +211,16 @@ describe("$event", function () {
     });
 
     describe("trigger()", function () {
-      var deferred,
+      var subscriptionData,
+          deferred,
           callback1, callback2, callback3,
           eventTrail,
           lastEvent;
 
       beforeEach(function () {
+        subscriptionData = $event.EventSpace.create().subscriptions.data;
+        $event.EventSpace.create().subscriptions.data = {};
+
         deferred = $utils.Deferred.create();
 
         callback1 = jasmine.createSpy().and.returnValue(deferred.promise);
@@ -217,7 +228,6 @@ describe("$event", function () {
         callback3 = jasmine.createSpy();
 
         $event.EventSpace.create()
-        .destroy()
         .on('event1', 'foo.bar.baz'.toPath(), '1', callback1)
         .on('event1', 'foo.bar.baz'.toPath(), '2', callback2)
         .on('event1', 'foo'.toPath(), '3', callback3);
@@ -236,6 +246,10 @@ describe("$event", function () {
           'foo'.toPath()]);
 
         result = event.trigger();
+      });
+
+      afterEach(function () {
+        $event.EventSpace.create().subscriptions.data = subscriptionData;
       });
 
       it("should return pending promise", function () {
