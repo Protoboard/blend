@@ -16,18 +16,18 @@ $i18n.LocaleEnvironmentDocument = $oop.getClass('$i18n.LocaleEnvironmentDocument
 .define(/** @lends $i18n.LocaleEnvironmentDocument# */{
   /**
    * Sets active locale key.
-   * @param {string} activeLocaleKey
+   * @param {$entity.DocumentKey} activeLocaleKey
    * @returns {$i18n.LocaleEnvironmentDocument}
    */
   setActiveLocaleKey: function (activeLocaleKey) {
-    var activeLocaleRef = activeLocaleKey.toString();
+    var activeLocaleRef = activeLocaleKey && activeLocaleKey.toString();
     this.getField('activeLocale').setNode(activeLocaleRef);
     return this;
   },
 
   /**
    * Retrieves active locale key.
-   * @returns {string}
+   * @returns {$entity.DocumentKey}
    */
   getActiveLocaleKey: function () {
     var activeLocaleRef = this.getField('activeLocale').getNode();
