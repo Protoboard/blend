@@ -57,11 +57,15 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
       var localeName = localeNode.localeName;
 
       // cycling through all translations for locale
-      $data.StringSet.fromData(localeNode.translations)
-      .forEachItem(function (translationRef) {
+      $data.Collection.fromData(localeNode.translations)
+      .mapValues(function (placeholder, translationRef) {
         var translationKey = $entity.DocumentKey.fromString(translationRef),
             translationDocument = $entity.Document.fromEntityKey(translationKey);
-        that._addTranslationNode(translationDocument.getNode(), localeName);
+        return translationDocument.getNode();
+      })
+      .filterByValueType(Object)
+      .forEachItem(function (translationNode) {
+        that._addTranslationNode(translationNode, localeName);
       });
     });
   },
@@ -115,9 +119,13 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
         localeDocument = $entity.Document.fromEntityKey(localeKey),
         localeName = localeDocument.getLocaleName();
 
+    // adding translation documents to index for valid translation references
     event.propertiesAdded
     .map(function (translationRef) {
       return $entity.Document.fromString(translationRef).getNode();
+    })
+    .filter(function (translationNode) {
+      return !!translationNode;
     })
     .forEach(function (translationNode) {
       that._addTranslationNode(translationNode, localeName);
@@ -126,8 +134,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
 });
 
 $event.EventSpace.create()
-.on(
-    $entity.EVENT_ENTITY_CHANGE,
+.on($entity.EVENT_ENTITY_CHANGE,
     $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
     .unshift('entity'),
     $i18n.TranslationIndex.__classId,

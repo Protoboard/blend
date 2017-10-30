@@ -229,7 +229,9 @@ describe("$i18n", function () {
 
       describe("when adding translation document", function () {
         beforeEach(function () {
-          $entity.index.data = {};
+          $entity.index.data._translation = {};
+          '_translation/foo-en-us'.toDocument().deleteNode();
+          '_locale/en-us/translations'.toField().deleteNode();
         });
 
         it("should add new entry to index", function () {
@@ -242,14 +244,12 @@ describe("$i18n", function () {
             '_translation/foo-en-us': 1
           });
 
-          expect($entity.index.data).toEqual({
-            _translation: {
-              'en-us': {
-                'foo': {
-                  '': {
-                    0: "foo",
-                    1: "foo"
-                  }
+          expect($entity.index.data._translation).toEqual({
+            'en-us': {
+              'foo': {
+                '': {
+                  0: "foo",
+                  1: "foo"
                 }
               }
             }
