@@ -19,6 +19,29 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
   },
 
   /**
+   * @param {Object} translationNode
+   * @param {string} localeName
+   * @private
+   */
+  _addTranslationNode: function (translationNode, localeName) {
+    var that = this,
+        originalString = translationNode.originalString,
+        context = translationNode.context;
+
+    // cycling through all plural forms for translation
+    $data.Collection.fromData(translationNode.pluralForms)
+    .forEachItem(function (translatedString, pluralIndex) {
+      // adding translation in index
+      that.addTranslation(
+          localeName,
+          originalString,
+          context,
+          pluralIndex,
+          translatedString);
+    });
+  },
+
+  /**
    * Initializes index based on current contents of locale and translation
    * documents.
    * @private
@@ -37,22 +60,8 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
       $data.StringSet.fromData(localeNode.translations)
       .forEachItem(function (translationRef) {
         var translationKey = $entity.DocumentKey.fromString(translationRef),
-            translationDocument = $entity.Document.fromEntityKey(translationKey),
-            translationNode = translationDocument.getNode(),
-            originalString = translationNode.originalString,
-            context = translationNode.context;
-
-        // cycling through all plural forms for translation
-        $data.Collection.fromData(translationNode.pluralForms)
-        .forEachItem(function (translatedString, pluralIndex) {
-          // adding translation in index
-          that.addTranslation(
-              localeName,
-              originalString,
-              context,
-              pluralIndex,
-              translatedString);
-        });
+            translationDocument = $entity.Document.fromEntityKey(translationKey);
+        that._addTranslationNode(translationDocument.getNode(), localeName);
       });
     });
   },
@@ -93,5 +102,37 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
     var indexPath = $data.Path.fromComponents([
       '_translation', localeName, originalString, context, pluralIndex]);
     return $entity.index.getNode(indexPath);
+  },
+
+  /**
+   * @param {$entity.EntityChangeEvent} event
+   * @ignore
+   */
+  onTranslationsChange: function (event) {
+    console.log("translations change");
+
+    var that = this,
+        translationsFieldKey = event.sender.entityKey,
+        localeKey = translationsFieldKey.documentKey,
+        localeDocument = $entity.Document.fromEntityKey(localeKey),
+        localeName = localeDocument.getLocaleName();
+
+    event.propertiesAdded
+    .map(function (translationRef) {
+      return $entity.Document.fromString(translationRef).getNode();
+    })
+    .forEach(function (translationNode) {
+      that._addTranslationNode(translationNode, localeName);
+    });
   }
 });
+
+$event.EventSpace.create()
+.on(
+    $entity.EVENT_ENTITY_CHANGE,
+    $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
+    .unshift('entity'),
+    $i18n.TranslationIndex.__classId,
+    function (event) {
+      return $i18n.TranslationIndex.create().onTranslationsChange(event);
+    });

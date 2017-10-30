@@ -213,5 +213,42 @@ describe("$i18n", function () {
         });
       });
     });
+
+    describe("onTranslationsChange()", function () {
+      beforeEach(function () {
+        $i18n.TranslationIndex.__instanceLookup = {};
+        $i18n.TranslationIndex.create();
+      });
+
+      describe("when adding translation document", function () {
+        beforeEach(function () {
+          $entity.index.data = {};
+        });
+
+        it("should add new entry to index", function () {
+          '_translation/foo-en-us'.toDocument().setNode({
+            locale: '_locale/en-us',
+            originalString: 'foo',
+            pluralForms: ['foo', 'foo']
+          });
+          '_locale/en-us/translations'.toField().appendNode({
+            '_translation/foo-en-us': 1
+          });
+
+          expect($entity.index.data).toEqual({
+            _translation: {
+              'en-us': {
+                'foo': {
+                  '': {
+                    0: "foo",
+                    1: "foo"
+                  }
+                }
+              }
+            }
+          });
+        });
+      });
+    });
   });
 });
