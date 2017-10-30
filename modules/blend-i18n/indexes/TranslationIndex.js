@@ -109,8 +109,6 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
    * @ignore
    */
   onTranslationsChange: function (event) {
-    console.log("translations change");
-
     var that = this,
         translationsFieldKey = event.sender.entityKey,
         localeKey = translationsFieldKey.documentKey,
