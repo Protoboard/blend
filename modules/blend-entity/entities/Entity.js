@@ -37,9 +37,8 @@ $entity.Entity = $oop.getClass('$entity.Entity')
         .clone().unshift('entity').toString(),
         attributeDocumentKey = entityKey.getAttributeDocumentKey();
 
-    this.setListeningPath(listeningPath);
-
     this
+    .setListeningPath(listeningPath)
     .addTriggerPath(listeningPath)
     .addTriggerPath('entity')
     .addTriggerPath(

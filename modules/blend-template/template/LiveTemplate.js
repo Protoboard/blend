@@ -31,9 +31,8 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
     var listeningPath = $data.Path.fromComponentsToString([
       'template', String(this.instanceId)]);
 
-    this.setListeningPath(listeningPath);
-
     this
+    .setListeningPath(listeningPath)
     .addTriggerPath(listeningPath)
     .addTriggerPath('template');
 
