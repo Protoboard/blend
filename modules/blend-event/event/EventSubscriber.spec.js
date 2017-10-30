@@ -54,6 +54,21 @@ describe("$event", function () {
       });
     });
 
+    describe("destroy()", function () {
+      beforeEach(function () {
+        spyOn(subscriber, 'off');
+        result = subscriber.destroy();
+      });
+
+      it("should return self", function () {
+        expect(result).toBe(subscriber);
+      });
+
+      it("should unsubscribe from all paths", function () {
+        expect(subscriber.off).toHaveBeenCalled();
+      });
+    });
+
     describe("on()", function () {
       var eventSpace,
           eventListener,

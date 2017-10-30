@@ -5,8 +5,10 @@
  * Host is responsible for implementing property spread and lifecycle
  * methods. (When necessary)
  * @mixin $event.EventSubscriber
+ * @implements $utils.Destructible
  */
 $event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
+.implement($utils.Destructible)
 .define(/** @lends $event.EventSubscriber# */{
   /**
    * Identifies instance in the context of event subscriptions.
@@ -17,6 +19,12 @@ $event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
   init: function () {
     $assert.isDefined(this.subscriberId, "Invalid subscriber ID");
     this._elevateEventHandlers();
+  },
+
+  /** @ignore */
+  destroy: function () {
+    this.off();
+    return this;
   },
 
   /**
