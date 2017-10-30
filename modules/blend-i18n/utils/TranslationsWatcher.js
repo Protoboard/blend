@@ -7,14 +7,12 @@
 
 /**
  * @class $i18n.TranslationsWatcher
- * @extends $event.EventSender
  * @extends $event.EventListener
  * @extends $event.EventSubscriber
  * @implements $utils.Destructible
  */
 $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
 .blend($oop.Singleton)
-.blend($event.EventSender)
 .blend($event.EventListener)
 .blend($event.EventSubscriber)
 .implement($utils.Destructible)
