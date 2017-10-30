@@ -19,13 +19,6 @@ describe("$entity", function () {
       leafNodedField = LeafNodedField.fromComponents('foo', 'bar', 'baz');
     });
 
-    describe("create()", function () {
-      it("should initialize triggerPaths", function () {
-        var nodeTypePath = 'entity.document.__field.__field/nodeType.options.leaf';
-        expect(leafNodedField.triggerPaths.list).toContain(nodeTypePath);
-      });
-    });
-
     describe("spawnEntityChangeEvents()", function () {
       var nodeBefore,
           nodeAfter;

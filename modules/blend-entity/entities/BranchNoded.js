@@ -9,20 +9,6 @@
 $entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
 .expect($oop.getClass('$entity.Entity'))
 .define(/** @lends $entity.BranchNoded# */{
-  /** @ignore */
-  init: function () {
-    // todo Remove
-    var entityKey = this.entityKey,
-        attributeDocumentKey = entityKey.getAttributeDocumentKey(),
-        entityType = attributeDocumentKey.documentType,
-        nodeTypeKey = $entity.DocumentKey.fromComponents(entityType, 'nodeType'),
-        nodeTypePath = $data.Path.fromComponentsToString([
-          'entity', 'document', '__field', nodeTypeKey.toString(), 'options',
-          'branch']);
-
-    this.addTriggerPath(nodeTypePath);
-  },
-
   /**
    * Extracts a node of affected properties reflecting the entity's current
    * state.

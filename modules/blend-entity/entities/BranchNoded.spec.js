@@ -21,13 +21,6 @@ describe("$entity", function () {
       branchNoded = BranchNoded.fromEntityKey('foo/bar'.toDocumentKey());
     });
 
-    describe("create()", function () {
-      it("should initialize triggerPaths", function () {
-        var nodeTypePath = 'entity.document.__field.__document/nodeType.options.branch';
-        expect(branchNoded.triggerPaths.list).toContain(nodeTypePath);
-      });
-    });
-
     describe("setNodeAsLeaf()", function () {
       var documentKey,
           documentPath,

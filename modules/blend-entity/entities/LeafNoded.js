@@ -7,20 +7,6 @@
 $entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
 .expect($oop.getClass('$entity.Entity'))
 .define(/** @lends $entity.LeafNoded# */{
-  /** @ignore */
-  init: function () {
-    // todo Remove
-    var entityKey = this.entityKey,
-        attributeDocumentKey = entityKey.getAttributeDocumentKey(),
-        entityType = attributeDocumentKey.documentType,
-        nodeTypeKey = $entity.DocumentKey.fromComponents(entityType, 'nodeType'),
-        nodeTypePath = $data.Path.fromComponentsToString([
-          'entity', 'document', '__field', nodeTypeKey.toString(), 'options',
-          'leaf']);
-
-    this.addTriggerPath(nodeTypePath);
-  },
-
   /**
    * Spawns a single event if there is a change in node value.
    * @param {*} nodeBefore
