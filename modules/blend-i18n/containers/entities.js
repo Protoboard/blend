@@ -1,6 +1,31 @@
 "use strict";
 
 $entity.entities
+.appendNode($data.Path.fromString('document.__document'), {
+  _localeEnvironment: {
+    fields: [
+      'activeLocale'
+    ]
+  },
+
+  _locale: {
+    fields: [
+      'localeName',
+      'countryCode',
+      'languageCode',
+      'pluralFormula',
+      'translations'
+    ]
+  },
+
+  _translation: {
+    fields: [
+      'originalString',
+      'pluralForms',
+      'context'
+    ]
+  }
+})
 .appendNode($data.Path.fromString('document.__field'), {
   '_localeEnvironment/activeLocale': {
     valueType: 'reference'
