@@ -97,15 +97,14 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
    */
   getTranslation: function (originalString, context, multiplicity) {
     var translationIndex = $i18n.TranslationIndex.create(),
-        localeDocument = this.localeKey.toDocument(),
-        localeName = localeDocument.getLocaleName(),
+        localeId = this.localeKey.documentId,
         pluralIndex = this.getPluralIndex(multiplicity);
 
     // when specified translation is not found,
     // falling back to default context
     // then falling back to original string
-    return translationIndex.getTranslation(localeName, originalString, context, pluralIndex) ||
-        translationIndex.getTranslation(localeName, originalString, null, pluralIndex) ||
+    return translationIndex.getTranslation(localeId, originalString, context, pluralIndex) ||
+        translationIndex.getTranslation(localeId, originalString, null, pluralIndex) ||
         originalString;
   },
 

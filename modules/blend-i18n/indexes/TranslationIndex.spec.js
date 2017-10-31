@@ -26,14 +26,14 @@ describe("$i18n", function () {
         $entity.entities.appendNode('document'.toPath(), {
           _locale: {
             'en-us': {
-              localeName: 'en-us',
+              localeName: 'US English',
               translations: {
                 '_translation/apple-en-us': 1,
                 '_translation/state-en-us': 1
               }
             },
             'de': {
-              localeName: 'de',
+              localeName: 'German',
               translations: {
                 '_translation/apple-de': 1,
                 '_translation/state-de': 1

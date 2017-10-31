@@ -20,10 +20,10 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
 
   /**
    * @param {Object} translationNode
-   * @param {string} localeName
+   * @param {string} localeId
    * @private
    */
-  _addTranslationNode: function (translationNode, localeName) {
+  _addTranslationNode: function (translationNode, localeId) {
     var that = this,
         originalString = translationNode.originalString,
         context = translationNode.context;
@@ -33,7 +33,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
     .forEachItem(function (translatedString, pluralIndex) {
       // adding translation in index
       that.addTranslation(
-          localeName,
+          localeId,
           originalString,
           context,
           pluralIndex,
@@ -53,9 +53,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
     // cycling through all locale documents
     $entity.entities.getNodeWrapped(localeDocumentsPath)
     .asCollection()
-    .forEachItem(function (localeNode) {
-      var localeName = localeNode.localeName;
-
+    .forEachItem(function (localeNode, localeId) {
       // cycling through all translations for locale
       $data.Collection.fromData(localeNode.translations)
       .mapValues(function (placeholder, translationRef) {
@@ -65,46 +63,46 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
       })
       .filterByValueType(Object)
       .forEachItem(function (translationNode) {
-        that._addTranslationNode(translationNode, localeName);
+        that._addTranslationNode(translationNode, localeId);
       });
     });
   },
 
   /**
-   * Associates and stores translation with the specified `localeName`,
+   * Associates and stores translation with the specified `localeId`,
    * `originalString`, `context`, and `pluralIndex`.
-   * @param {string} localeName
+   * @param {string} localeId
    * @param {string} originalString
    * @param {string} [context='']
    * @param {number} [pluralIndex=0]
    * @param {string} translatedString
    * @returns {$i18n.TranslationIndex}
    */
-  addTranslation: function (localeName, originalString, context, pluralIndex,
+  addTranslation: function (localeId, originalString, context, pluralIndex,
       translatedString
   ) {
     context = context || '';
     pluralIndex = pluralIndex || 0;
     var indexPath = $data.Path.fromComponents([
-      '_translation', localeName, originalString, context, pluralIndex]);
+      '_translation', localeId, originalString, context, pluralIndex]);
     $entity.index.setNode(indexPath, translatedString);
     return this;
   },
 
   /**
-   * Retrieves translation for the specified `localeName`, `originalString`,
+   * Retrieves translation for the specified `localeId`, `originalString`,
    * `context`, and `pluralIndex`.
-   * @param {string} localeName
+   * @param {string} localeId
    * @param {string} originalString
    * @param {string} [context='']
    * @param {number} [pluralIndex=0]
    * @returns {*}
    */
-  getTranslation: function (localeName, originalString, context, pluralIndex) {
+  getTranslation: function (localeId, originalString, context, pluralIndex) {
     context = context || '';
     pluralIndex = pluralIndex || 0;
     var indexPath = $data.Path.fromComponents([
-      '_translation', localeName, originalString, context, pluralIndex]);
+      '_translation', localeId, originalString, context, pluralIndex]);
     return $entity.index.getNode(indexPath);
   },
 
@@ -116,8 +114,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
     var that = this,
         translationsFieldKey = event.sender.entityKey,
         localeKey = translationsFieldKey.documentKey,
-        localeDocument = $entity.Document.fromEntityKey(localeKey),
-        localeName = localeDocument.getLocaleName();
+        localeId = localeKey.documentId;
 
     // adding translation documents to index for valid translation references
     event.propertiesAdded
@@ -128,7 +125,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
       return !!translationNode;
     })
     .forEach(function (translationNode) {
-      that._addTranslationNode(translationNode, localeName);
+      that._addTranslationNode(translationNode, localeId);
     });
   }
 });
