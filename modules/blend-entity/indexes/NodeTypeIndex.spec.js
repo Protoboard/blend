@@ -5,17 +5,14 @@ var $oop = window['blend-oop'],
 
 describe("$entity", function () {
   describe("NodeTypeIndex", function () {
-    var NodeTypeIndex,
+    var indexData,
+        NodeTypeIndex,
         nodeTypeIndex,
         result;
 
-    beforeAll(function () {
-    });
-
     beforeEach(function () {
-      $entity.index
-      .deleteNode('__fieldName.byFieldType'.toPath())
-      .deleteNode('__fieldRef.byFieldType'.toPath());
+      indexData = $entity.index.data;
+      $entity.index.data = {};
 
       // NodeTypeIndex (re-)initializes index when instantiated
       delete $oop.classByClassId['test.$entity.NodeTypeIndex.NodeTypeIndex'];
@@ -25,45 +22,35 @@ describe("$entity", function () {
       nodeTypeIndex = NodeTypeIndex.create();
     });
 
+    afterEach(function () {
+      $entity.index.data = indexData;
+    });
+
     describe("create()", function () {
       it("should add fieldRef entries", function () {
-        expect($entity.index.data.__fieldRef.byFieldType).toEqual({
-          "branch": {
-            "__field/valueOptions": 1,
-            "__field/itemIdOptions": 1,
-            "__field/itemValueOptions": 1
-          },
-          "leaf": {
-            "__document/fields": 1,
-            "__field/nodeType": 1,
-            "__field/valueType": 1,
-            "__field/itemIdType": 1,
-            "__field/itemValueType": 1
-          }
-        });
+        var byFieldType = $entity.index.data.__fieldRef.byFieldType;
+
+        expect(byFieldType.branch["__field/valueOptions"]).toBe(1);
+        expect(byFieldType.branch["__field/itemIdOptions"]).toBe(1);
+        expect(byFieldType.branch["__field/itemValueOptions"]).toBe(1);
+        expect(byFieldType.leaf["__document/fields"]).toBe(1);
+        expect(byFieldType.leaf["__field/nodeType"]).toBe(1);
+        expect(byFieldType.leaf["__field/valueType"]).toBe(1);
+        expect(byFieldType.leaf["__field/itemIdType"]).toBe(1);
+        expect(byFieldType.leaf["__field/itemValueType"]).toBe(1);
       });
 
       it("should add fieldName entries", function () {
-        expect($entity.index.data.__fieldName.byFieldType).toEqual({
-          "branch": {
-            "__field": {
-              "valueOptions": 1,
-              "itemIdOptions": 1,
-              "itemValueOptions": 1
-            }
-          },
-          "leaf": {
-            "__document": {
-              "fields": 1
-            },
-            "__field": {
-              "nodeType": 1,
-              "valueType": 1,
-              "itemIdType": 1,
-              "itemValueType": 1
-            }
-          }
-        });
+        var byFieldType = $entity.index.data.__fieldName.byFieldType;
+
+        expect(byFieldType.branch.__field.valueOptions).toBe(1);
+        expect(byFieldType.branch.__field.itemIdOptions).toBe(1);
+        expect(byFieldType.branch.__field.itemValueOptions).toBe(1);
+        expect(byFieldType.leaf.__document.fields).toBe(1);
+        expect(byFieldType.leaf.__field.nodeType).toBe(1);
+        expect(byFieldType.leaf.__field.valueType).toBe(1);
+        expect(byFieldType.leaf.__field.itemIdType).toBe(1);
+        expect(byFieldType.leaf.__field.itemValueType).toBe(1);
       });
     });
 
@@ -74,13 +61,12 @@ describe("$entity", function () {
       });
 
       it("should return field references", function () {
-        expect(result.sort()).toEqual([
-          "__document/fields",
-          "__field/nodeType",
-          "__field/valueType",
-          "__field/itemIdType",
-          "__field/itemValueType"
-        ].sort());
+        expect(result.sort()).toContain(
+            "__document/fields",
+            "__field/nodeType",
+            "__field/valueType",
+            "__field/itemIdType",
+            "__field/itemValueType");
       });
     });
 
