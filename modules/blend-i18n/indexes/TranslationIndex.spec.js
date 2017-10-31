@@ -19,6 +19,8 @@ describe("$i18n", function () {
     });
 
     describe("create()", function () {
+      var translationIndexData;
+
       beforeEach(function () {
         TranslationIndex.__instanceLookup = {};
         $entity.entities.appendNode('document'.toPath(), {
@@ -71,39 +73,43 @@ describe("$i18n", function () {
             }
           }
         });
-        $entity.index.data = {};
+
+        translationIndexData = $entity.index.data._translation;
+        $entity.index.data._translation = {};
+      });
+
+      afterEach(function () {
+        $entity.index.data._translation = translationIndexData;
       });
 
       it("should initialize index", function () {
         TranslationIndex.create();
-        expect($entity.index.data).toEqual({
-          _translation: {
-            'en-us': {
-              'apple': {
-                '': {
-                  0: 'apple',
-                  1: 'apples'
-                }
-              },
-              'state': {
-                'geography': {
-                  0: 'state',
-                  1: 'states'
-                }
+        expect($entity.index.data._translation).toEqual({
+          'en-us': {
+            'apple': {
+              '': {
+                0: 'apple',
+                1: 'apples'
               }
             },
-            'de': {
-              'apple': {
-                '': {
-                  0: 'Apfel',
-                  1: 'Äpfel'
-                }
-              },
-              'state': {
-                'geography': {
-                  0: 'Staat',
-                  1: 'Staaten'
-                }
+            'state': {
+              'geography': {
+                0: 'state',
+                1: 'states'
+              }
+            }
+          },
+          'de': {
+            'apple': {
+              '': {
+                0: 'Apfel',
+                1: 'Äpfel'
+              }
+            },
+            'state': {
+              'geography': {
+                0: 'Staat',
+                1: 'Staaten'
               }
             }
           }
@@ -112,9 +118,17 @@ describe("$i18n", function () {
     });
 
     describe("addTranslation()", function () {
+      var translationIndexData;
+
       beforeEach(function () {
         translationIndex = TranslationIndex.create();
-        $entity.index.deleteNode('_translation'.toPath());
+
+        translationIndexData = $entity.index.data._translation;
+        $entity.index.data._translation = {};
+      });
+
+      afterEach(function () {
+        $entity.index.data._translation = translationIndexData;
       });
 
       it("should return self", function () {
@@ -126,7 +140,7 @@ describe("$i18n", function () {
       it("should add translation to index", function () {
         translationIndex.addTranslation(
             'en-us', 'state', 'geography', 1, "states");
-        expect($entity.index.getNode('_translation'.toPath())).toEqual({
+        expect($entity.index.data._translation).toEqual({
           'en-us': {
             'state': {
               'geography': {
@@ -141,7 +155,7 @@ describe("$i18n", function () {
         it("should use default context", function () {
           translationIndex.addTranslation(
               'en-us', 'state', null, 1, "states");
-          expect($entity.index.getNode('_translation'.toPath())).toEqual({
+          expect($entity.index.data._translation).toEqual({
             'en-us': {
               'state': {
                 '': {
@@ -157,7 +171,7 @@ describe("$i18n", function () {
         it("should use default pluralIndex", function () {
           translationIndex.addTranslation(
               'en-us', 'state', 'geography', null, "state");
-          expect($entity.index.getNode('_translation'.toPath())).toEqual({
+          expect($entity.index.data._translation).toEqual({
             'en-us': {
               'state': {
                 'geography': {
@@ -171,9 +185,13 @@ describe("$i18n", function () {
     });
 
     describe("getTranslation()", function () {
+      var translationIndexData;
+
       beforeEach(function () {
         translationIndex = TranslationIndex.create();
-        $entity.index.setNode('_translation'.toPath(), {
+
+        translationIndexData = $entity.index.data._translation;
+        $entity.index.data._translation = {
           'en-us': {
             'state': {
               'geography': {
@@ -188,7 +206,11 @@ describe("$i18n", function () {
               }
             }
           }
-        });
+        };
+      });
+
+      afterEach(function () {
+        $entity.index.data._translation = translationIndexData;
       });
 
       it("should return translation matching parameters", function () {
@@ -220,10 +242,18 @@ describe("$i18n", function () {
       });
 
       describe("when adding translation document", function () {
+        var translationIndexData;
+
         beforeEach(function () {
           '_translation/foo-en-us'.toDocument().deleteNode();
           '_locale/en-us/translations'.toField().deleteNode();
+
+          translationIndexData = $entity.index.data._translation;
           $entity.index.data._translation = {};
+        });
+
+        afterEach(function () {
+          $entity.index.data._translation = translationIndexData;
         });
 
         it("should add new entry to index", function () {
