@@ -54,7 +54,7 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
   /**
    * @private
    */
-  _resolveGetPluralIndex: function () {
+  _compileGetPluralIndex: function () {
     /*jshint evil:true*/
     var localeDocument = this.localeKey.toDocument(),
         pluralFormula = localeDocument.getPluralFormula();
@@ -73,32 +73,32 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
   },
 
   /**
-   * Resolves multiplicity to a plural index, using the locale's *plural
+   * Resolves count to a plural index, using the locale's *plural
    * formula*. Defaults to 0 plural index.
-   * @param {number} multiplicity
+   * @param {number} count
    * @returns {number}
    */
-  getPluralIndex: function (multiplicity) {
+  getPluralIndex: function (count) {
     if (!this._getPluralIndex) {
-      this._resolveGetPluralIndex();
+      this._compileGetPluralIndex();
     }
     return this._getPluralIndex ?
-        this._getPluralIndex(multiplicity) :
+        this._getPluralIndex(count) :
         0;
   },
 
   /**
    * Retrieves translation for specified `originalString`, `context`, and
-   * `multiplicity` according to the current locale.
+   * `count` according to the current locale.
    * @param {string} originalString
    * @param {string} context
-   * @param {number} multiplicity
+   * @param {number} count
    * @returns {string}
    */
-  getTranslation: function (originalString, context, multiplicity) {
+  getTranslation: function (originalString, context, count) {
     var translationIndex = $i18n.TranslationIndex.create(),
         localeId = this.localeKey.documentId,
-        pluralIndex = this.getPluralIndex(multiplicity);
+        pluralIndex = this.getPluralIndex(count);
 
     // when specified translation is not found,
     // falling back to default context
