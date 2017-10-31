@@ -74,16 +74,6 @@ $i18n.LocaleEnvironment = $oop.getClass('$i18n.LocaleEnvironment')
   }
 });
 
-$oop.copyProperties($i18n, /** @lends $i18n */{
-  /**
-   * Signals that translations associated with the active locale have
-   * changed. Listen to this event on `$i18n.ActiveTranslationsWatcher` to
-   * update components depending on translated strings.
-   * @constant
-   */
-  EVENT_ACTIVE_LOCALE_CHANGE: 'i18n.change.locale'
-});
-
 $event.EventSpace.create()
 .on($entity.EVENT_ENTITY_CHANGE,
     $entity.FieldAttributePath.fromAttributeRef('_localeEnvironment/activeLocale')

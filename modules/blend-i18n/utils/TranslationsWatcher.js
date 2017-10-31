@@ -24,14 +24,6 @@ $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
   }
 });
 
-$oop.copyProperties($i18n, /** @lends $i18n */{
-  /**
-   * Signals that translations associated with a locale have changed.
-   * @constant
-   */
-  EVENT_TRANSLATIONS_CHANGE: 'i18n.change.translations'
-});
-
 $event.EventSpace.create()
 .on($entity.EVENT_ENTITY_CHANGE,
     $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
