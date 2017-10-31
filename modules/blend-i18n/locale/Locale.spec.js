@@ -46,24 +46,82 @@ describe("$i18n", function () {
           }).toThrow();
         });
       });
-
-      it("should initialize listeningPath", function () {
-        locale = Locale.create({
-          localeKey: 'foo/bar'.toDocumentKey()
-        });
-        expect(locale.listeningPath).toBe('locale.bar');
-      });
-
-      it("should initialize triggerPaths", function () {
-        locale = Locale.create({
-          localeKey: 'foo/bar'.toDocumentKey()
-        });
-        expect(locale.triggerPaths.list).toContain('locale.bar');
-      });
     });
 
-    xdescribe("getTranslation()", function () {
+    describe("getTranslation()", function () {
+      var translationIndexData;
 
+      beforeEach(function () {
+        translationIndexData = $entity.index.data._translation;
+        $entity.index.data._translation = {};
+        $i18n.TranslationIndex.__instanceLookup = {};
+        $i18n.Locale.__instanceLookup = {};
+
+        '_translation/bill-1-de'.toDocument().setNode({
+          originalString: "bill",
+          pluralForms: ["Gesetzentwurf", "Gesetzentwürfe"],
+          context: "legislation"
+        });
+        '_translation/bill-2-de'.toDocument().setNode({
+          originalString: "bill",
+          pluralForms: ["Rechnung", "Rechnungen"]
+        });
+        '_locale/de'.toDocument().setNode({
+          localeName: 'German',
+          pluralFormula: 'nplurals=2; plural=(n != 1);',
+          translations: {
+            '_translation/bill-1-de': 1,
+            '_translation/bill-2-de': 1
+          }
+        });
+        '_locale/fr'.toDocument().deleteNode();
+
+        locale = 'de'.toLocale();
+      });
+
+      afterEach(function () {
+        $entity.index.data._translation = translationIndexData;
+      });
+
+      it("should retrieve translation from index", function () {
+        expect(locale.getTranslation('bill', 'legislation', 1))
+        .toBe("Gesetzentwurf");
+        expect(locale.getTranslation('bill', 'legislation', 10))
+        .toBe("Gesetzentwürfe");
+        expect(locale.getTranslation('bill', null, 1)).toBe("Rechnung");
+        expect(locale.getTranslation('bill', null, 10)).toBe("Rechnungen");
+      });
+
+      describe("when plural formula is not specified", function () {
+        beforeEach(function () {
+          '_locale/de/pluralFormula'.toField().deleteNode();
+        });
+
+        it("should return pluralIndex 0", function () {
+          expect(locale.getTranslation('bill', 'legislation', 10))
+          .toBe("Gesetzentwurf");
+          expect(locale.getTranslation('bill', null, 10))
+          .toBe("Rechnung");
+        });
+      });
+
+      describe("when specified context is not found", function () {
+        it("should return translation for default context", function () {
+          expect(locale.getTranslation('bill', 'restaurant', 1))
+          .toBe("Rechnung");
+          expect(locale.getTranslation('bill', 'restaurant', 10))
+          .toBe("Rechnungen");
+        });
+      });
+
+      describe("when translation is not found", function () {
+        it("should return originalString", function () {
+          expect('fr'.toLocale().getTranslation('bill', 'legislation', 1))
+          .toBe("bill");
+          expect('fr'.toLocale().getTranslation('bill', 'legislation', 10))
+          .toBe("bill");
+        });
+      });
     });
 
     describe("setAsActiveLocale()", function () {

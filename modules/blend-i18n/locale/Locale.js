@@ -9,16 +9,12 @@
 
 /**
  * @class $i18n.Locale
- * @extend $event.EventSender
- * @extend $event.EventListener
  */
 $i18n.Locale = $oop.getClass('$i18n.Locale')
 .cache(function (properties) {
   var localeKey = properties && properties.localeKey;
   return localeKey && localeKey.toString();
 })
-.blend($event.EventSender)
-.blend($event.EventListener)
 .define(/** @lends $i18n.Locale# */{
   /**
    * @member {$entity.DocumentKey} $i18n.Locale#localeKey
@@ -45,34 +41,72 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
 
   /** @ignore */
   init: function () {
-    var localeKey = this.localeKey;
+    $assert.isDocumentKey(this.localeKey, "Invalid locale key");
+  },
 
-    $assert.isDocumentKey(localeKey, "Invalid locale key");
+  /**
+   * @function $i18n.Locale#_getPluralIndex
+   * @param {number} n
+   * @returns {number}
+   * @private
+   */
 
-    var localeId = localeKey.documentId,
-        listeningPath = $data.Path.fromComponentsToString(['locale', localeId]);
+  /**
+   * @private
+   */
+  _resolveGetPluralIndex: function () {
+    /*jshint evil:true*/
+    var localeDocument = this.localeKey.toDocument(),
+        pluralFormula = localeDocument.getPluralFormula();
 
-    this
-    .setListeningPath(listeningPath)
-    .addTriggerPath(listeningPath);
+    if (pluralFormula) {
+      eval([
+        //@formatter:off
+        'this._getPluralIndex = function (n) {',
+          'var nplurals, plural;',
+          pluralFormula,
+          'return Number(plural);',
+        '}'
+        //@formatter:on
+      ].join('\n'));
+    }
+  },
+
+  /**
+   * Resolves multiplicity to a plural index, using the locale's *plural
+   * formula*. Defaults to 0 plural index.
+   * @param {number} multiplicity
+   * @returns {number}
+   */
+  getPluralIndex: function (multiplicity) {
+    if (!this._getPluralIndex) {
+      this._resolveGetPluralIndex();
+    }
+    return this._getPluralIndex ?
+        this._getPluralIndex(multiplicity) :
+        0;
   },
 
   /**
    * Retrieves translation for specified `originalString`, `context`, and
-   * `multiplicity` in the current locale.
+   * `multiplicity` according to the current locale.
    * @param {string} originalString
    * @param {string} context
    * @param {number} multiplicity
    * @returns {string}
-   * @todo Accept Stringifiable for originalString?
    */
   getTranslation: function (originalString, context, multiplicity) {
-    var localeDocument = this.localeKey.toDocument(),
+    var translationIndex = $i18n.TranslationIndex.create(),
+        localeDocument = this.localeKey.toDocument(),
         localeName = localeDocument.getLocaleName(),
-        pluralIndex; // todo
+        pluralIndex = this.getPluralIndex(multiplicity);
 
-    return $i18n.TranslationIndex.create()
-    .getTranslation(localeName, originalString, context, pluralIndex);
+    // when specified translation is not found,
+    // falling back to default context
+    // then falling back to original string
+    return translationIndex.getTranslation(localeName, originalString, context, pluralIndex) ||
+        translationIndex.getTranslation(localeName, originalString, null, pluralIndex) ||
+        originalString;
   },
 
   /**
