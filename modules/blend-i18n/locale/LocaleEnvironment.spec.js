@@ -15,12 +15,6 @@ describe("$i18n", function () {
     });
 
     describe("create()", function () {
-      it("should initialize subscriberId", function () {
-        localeEnvironment = LocaleEnvironment.create();
-        expect(localeEnvironment.subscriberId)
-        .toBe('test.$i18n.LocaleEnvironment.LocaleEnvironment');
-      });
-
       it("should initialize localeEnvironmentKey", function () {
         localeEnvironment = LocaleEnvironment.create();
         expect($entity.DocumentKey.mixedBy(localeEnvironment.localeEnvironmentKey))

@@ -9,22 +9,15 @@
  * @class $i18n.LocaleEnvironment
  * @extends $event.EventSender
  * @extends $event.EventListener
- * @extends $event.EventSubscriber
  */
 $i18n.LocaleEnvironment = $oop.getClass('$i18n.LocaleEnvironment')
 .blend($oop.Singleton)
 .blend($event.EventSender)
 .blend($event.EventListener)
-.blend($event.EventSubscriber)
 .define(/** @lends $i18n.LocaleEnvironment# */{
   /**
    * @member {$entity.DocumentKey} $i18n.LocaleEnvironment#localeEnvironmentKey
    */
-
-  /** @ignore */
-  spread: function () {
-    this.subscriberId = this.__classId;
-  },
 
   /** @ignore */
   init: function () {
