@@ -1,0 +1,26 @@
+{
+  "name": "blend-module",
+  "version": "0.1.0",
+  "description": "Module management module for Blend",
+  "keywords": [
+    "module"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2017 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/blend.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "blend-assert": "~0.1.0",
+    "blend-data": "~0.1.0",
+    "blend-entity": "~0.1.0",
+    "blend-event": "~0.1.0",
+    "blend-oop": "~0.1.0",
+    "blend-utils": "~0.1.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "browser": true,
+  "node": true,
+  "jasmine": true,
+  "globalstrict": true,
+  "globals": {
+    "$assert": true,
+    "$oop": true,
+    "$utils": true,
+    "$data": true,
+    "$event": true,
+    "$entity": true,
+    "$module": true
+  }
+}

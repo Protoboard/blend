@@ -11,19 +11,15 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'dist/blend-assert.js',
-      'dist/blend-oop.js',
-      'dist/blend-utils.js',
-      'dist/blend-data.js',
-      'dist/blend-event.js',
-      'dist/blend-template.js',
-      'dist/blend-entity.js',
-      'dist/blend-module.js',
-      'dist/blend-i18n.js',
-      'dist/blend-widget.js',
-      'dist/blend-widgets.js',
-      'test/*.js',
-      'modules/**/*.spec.js'
+      '../../dist/blend-assert.js',
+      '../../dist/blend-oop.js',
+      '../../dist/blend-utils.js',
+      '../../dist/blend-data.js',
+      '../../dist/blend-event.js',
+      '../../dist/blend-entity.js',
+      '../../dist/blend-module.js',
+      '../../test/*.js',
+      '**/*.spec.js'
     ],
 
     // list of files to exclude
@@ -32,22 +28,12 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors:
     // https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      // source files, that you wanna generate coverage for
-      // do not include tests or libraries
-      // (these files will be instrumented by Istanbul)
-      'dist/*.js': ['coverage']
-    },
+    preprocessors: {},
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
-
-    coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
-    },
+    reporters: ['progress'],
 
     // web server port
     port: 9876,
