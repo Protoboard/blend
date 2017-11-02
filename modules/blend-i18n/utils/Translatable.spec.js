@@ -48,6 +48,38 @@ describe("$i18n", function () {
       });
     });
 
+    describe("setCount()", function () {
+      beforeEach(function () {
+        translatable = Translatable.fromString('foo');
+      });
+
+      it("should return self", function () {
+        var result = translatable.setCount(5);
+        expect(result).toBe(translatable);
+      });
+
+      it("should set context", function () {
+        translatable.setCount(5);
+        expect(translatable.count).toBe(5);
+      });
+    });
+
+    describe("setContext()", function () {
+      beforeEach(function () {
+        translatable = Translatable.fromString('foo');
+      });
+
+      it("should return self", function () {
+        var result = translatable.setContext('bar');
+        expect(result).toBe(translatable);
+      });
+
+      it("should set context", function () {
+        translatable.setContext('bar');
+        expect(translatable.context).toBe('bar');
+      });
+    });
+
     describe("toString()", function () {
       var translationIndexData;
 
@@ -90,6 +122,33 @@ describe("$i18n", function () {
           expect(translatable.toString()).toBe("apple");
         });
       });
+    });
+  });
+});
+
+describe("String", function () {
+  var result;
+
+  describe("toTranslatable()", function () {
+    var translatable;
+
+    beforeEach(function () {
+      translatable = $i18n.Translatable.fromString('foo');
+      spyOn($i18n.Translatable, 'create').and.returnValue(translatable);
+    });
+
+    it("should create a Translatable instance", function () {
+      result = 'foo'.toTranslatable();
+      expect($i18n.Translatable.create).toHaveBeenCalledWith({
+        originalString: 'foo',
+        context: undefined,
+        count: undefined
+      });
+    });
+
+    it("should return created instance", function () {
+      result = 'foo'.toTranslatable();
+      expect(result).toBe(translatable);
     });
   });
 });
