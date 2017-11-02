@@ -9,7 +9,6 @@
     "$utils": true,
     "$data": true,
     "$event": true,
-    "$entity": true,
     "$module": true
   }
 }

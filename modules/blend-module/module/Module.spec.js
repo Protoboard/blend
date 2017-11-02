@@ -54,9 +54,16 @@ describe("$module", function () {
     });
 
     describe("markAsAvailable()", function () {
+      var modulesData;
+
       beforeEach(function () {
+        modulesData = $module.modules.data;
+        $module.modules.data = {};
         module = Module.create({moduleId: 'foo'});
-        spyOn($module.ModuleEnvironment, 'markModuleAsAvailable');
+      });
+
+      afterEach(function () {
+        $module.modules.data = modulesData;
       });
 
       it("should return self", function () {
@@ -64,86 +71,41 @@ describe("$module", function () {
         expect(result).toBe(module);
       });
 
-      it("should invoke ModuleEnvironment#markModuleAsAvailable", function () {
+      it("should store module in container", function () {
         module.markAsAvailable();
-        expect($module.ModuleEnvironment.markModuleAsAvailable)
-        .toHaveBeenCalledWith(module);
-      });
-    });
-
-    describe("markAsUnavailable()", function () {
-      beforeEach(function () {
-        module = Module.create({moduleId: 'foo'});
-        spyOn($module.ModuleEnvironment, 'markModuleAsUnavailable');
-      });
-
-      it("should return self", function () {
-        var result = module.markAsUnavailable();
-        expect(result).toBe(module);
-      });
-
-      it("should invoke ModuleEnvironment#markModuleAsUnavailable", function () {
-        module.markAsUnavailable();
-        expect($module.ModuleEnvironment.markModuleAsUnavailable)
-        .toHaveBeenCalledWith(module);
+        expect($module.modules.data).toEqual({
+          foo: {}
+        });
       });
     });
 
     describe("isAvailable()", function () {
-      var result;
+      var modulesData;
 
       beforeEach(function () {
+        modulesData = $module.modules.data;
+        $module.modules.data = {};
         module = Module.create({moduleId: 'foo'});
-        result = {};
-        spyOn($module.ModuleEnvironment, 'isModuleAvailable').and
-        .returnValue(result);
-      });
-
-      it("should return self", function () {
-        var result = module.markAsUnavailable();
-        expect(result).toBe(module);
-      });
-
-      it("should invoke ModuleEnvironment#isModuleAvailable", function () {
-        expect(module.isAvailable()).toBe(result);
-        expect($module.ModuleEnvironment.isModuleAvailable)
-        .toHaveBeenCalledWith(module);
-      });
-    });
-
-    describe("onAvailableModulesChange()", function () {
-      var moduleEnvironmentNode;
-
-      beforeEach(function () {
-        moduleEnvironmentNode = '_moduleEnvironment/'.toDocument().getNode();
-        '_moduleEnvironment/'.toDocument().setNode({
-          availableModules: {
-            foo: 1,
-            bar: 1
-          }
-        });
-        spyOn($module.Module, 'trigger');
       });
 
       afterEach(function () {
-        '_moduleEnvironment/'.toDocument().setNode(moduleEnvironmentNode);
+        $module.modules.data = modulesData;
       });
 
-      it("should trigger appropriate events", function () {
-        '_moduleEnvironment//availableModules'.toField().setNode({
-          baz: 1,
-          quux: 1
+      describe("when module is present", function () {
+        beforeEach(function () {
+          module.markAsAvailable();
         });
-        var calls = $module.Module.trigger.calls.all();
-        expect(calls.length).toBe(4);
-        expect(calls[0].object).toEqual('foo'.toModule());
-        expect(calls[0].args).toEqual(['module.unavailable']);
-        expect(calls[1].object).toEqual('bar'.toModule());
-        expect(calls[1].args).toEqual(['module.unavailable']);
-        expect(calls[2].object).toEqual('baz'.toModule());
-        expect(calls[2].args).toEqual(['module.available']);
-        expect(calls[3].object).toEqual('quux'.toModule());
-        expect(calls[3].args).toEqual(['module.available']);
+
+        it("should return truthy", function () {
+          expect(module.isAvailable()).toBeTruthy();
+        });
+      });
+
+      describe("when module is absent", function () {
+        it("should return falsy", function () {
+          expect(module.isAvailable()).toBeFalsy();
+        });
       });
     });
   });

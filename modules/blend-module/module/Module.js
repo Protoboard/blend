@@ -53,16 +53,17 @@ $module.Module = $oop.getClass('$module.Module')
    * @returns {$module.Module}
    */
   markAsAvailable: function () {
-    $module.ModuleEnvironment.create().markModuleAsAvailable(this);
-    return this;
-  },
+    var modulePath;
 
-  /**
-   * Marks module as unavailable.
-   * @returns {$module.Module}
-   */
-  markAsUnavailable: function () {
-    $module.ModuleEnvironment.create().markModuleAsUnavailable(this);
+    if (!this.isAvailable()) {
+      // storing module information in container
+      modulePath = $data.Path.fromString(this.moduleId);
+      $module.modules.setNode(modulePath, {});
+
+      // triggering event about change
+      this.trigger($module.EVENT_MODULE_AVAILABLE);
+    }
+
     return this;
   },
 
@@ -71,26 +72,8 @@ $module.Module = $oop.getClass('$module.Module')
    * @returns {boolean}
    */
   isAvailable: function () {
-    return $module.ModuleEnvironment.create().isModuleAvailable(this);
-  },
-
-  /**
-   * @memberOf $module.Module
-   * @param {$entity.EntityChangeEvent} event
-   * @ignore
-   */
-  onAvailableModulesChange: function (event) {
-    event.propertiesRemoved
-    .forEach(function (moduleId) {
-      $module.Module.fromModuleId(moduleId)
-      .trigger($module.EVENT_MODULE_UNAVAILABLE);
-    });
-
-    event.propertiesAdded
-    .forEach(function (moduleId) {
-      $module.Module.fromModuleId(moduleId)
-      .trigger($module.EVENT_MODULE_AVAILABLE);
-    });
+    var modulePath = $data.Path.fromString(this.moduleId);
+    return !!$module.modules.getNode(modulePath);
   }
 });
 
@@ -102,9 +85,3 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
     return $module.Module.fromModuleId(this.valueOf());
   }
 });
-
-$event.EventSpace.create()
-.on($entity.EVENT_ENTITY_CHANGE,
-    'entity.document._moduleEnvironment..availableModules',
-    $module.Module.__classId,
-    $module.Module.onAvailableModulesChange);

@@ -18,7 +18,6 @@
   "dependencies": {
     "blend-assert": "~0.1.0",
     "blend-data": "~0.1.0",
-    "blend-entity": "~0.1.0",
     "blend-event": "~0.1.0",
     "blend-oop": "~0.1.0",
     "blend-utils": "~0.1.0"
