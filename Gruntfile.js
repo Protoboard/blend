@@ -1,12 +1,12 @@
 "use strict";
 
 module.exports = function (grunt) {
-  var moduleNames = grunt.file.expand({cwd: 'modules/'}, '*'),
-      manifests = moduleNames.map(function (moduleName) {
-        return grunt.file.readJSON('modules/' + moduleName + '/manifest.json');
+  var moduleIds = grunt.file.expand({cwd: 'modules/'}, '*'),
+      manifests = moduleIds.map(function (moduleId) {
+        return grunt.file.readJSON('modules/' + moduleId + '/manifest.json');
       }),
-      packages = moduleNames.map(function (moduleName) {
-        return grunt.file.readJSON('modules/' + moduleName + '/package.json');
+      packages = moduleIds.map(function (moduleId) {
+        return grunt.file.readJSON('modules/' + moduleId + '/package.json');
       });
 
   /**
@@ -16,16 +16,16 @@ module.exports = function (grunt) {
   function buildConcatConfig(config) {
     config = config || {};
 
-    moduleNames.forEach(function (moduleName, i) {
+    moduleIds.forEach(function (moduleId, i) {
       var assets = manifests[i].assets,
           pkg = packages[i];
 
-      config[moduleName] = {
+      config[moduleId] = {
         src: grunt.file.expand({
-          cwd: ['modules', moduleName].join('/')
+          cwd: ['modules', moduleId].join('/')
         }, assets.js)
         .map(function (relativePath) {
-          return ['modules', moduleName, relativePath].join('/');
+          return ['modules', moduleId, relativePath].join('/');
         }),
         dest: ['dist', pkg.name + '.js'].join('/'),
         options: {
@@ -40,8 +40,10 @@ module.exports = function (grunt) {
             '}',
             'var n="' + pkg.name + '",e',
             '/* istanbul ignore next */',
+            // node require - falling back to file in same folder
             'function rn(p){try{return require(p)}catch(e){return require("./"+p)}}',
             '/* istanbul ignore next */',
+            // browser require
             'function rw(p){return window[p]}',
             '/* istanbul ignore next */',
             'if(typeof module=="object")d(rn,exports,module)',
@@ -63,9 +65,9 @@ module.exports = function (grunt) {
   function buildKarmaConfig(config) {
     config = config || {};
 
-    moduleNames.forEach(function (moduleName) {
-      config[moduleName] = {
-        configFile: ['modules', moduleName, 'karma.conf.js'].join('/')
+    moduleIds.forEach(function (moduleId) {
+      config[moduleId] = {
+        configFile: ['modules', moduleId, 'karma.conf.js'].join('/')
       };
     });
 
@@ -79,13 +81,13 @@ module.exports = function (grunt) {
   function buildWatchConfig(config) {
     config = config || {};
 
-    moduleNames.forEach(function (moduleName) {
-      config[moduleName] = {
+    moduleIds.forEach(function (moduleId) {
+      config[moduleId] = {
         files: [
-          'modules/' + moduleName + '/**/*@(.js|.css|.less)',
-          '!modules/' + moduleName + '/**/*.spec.js',
-          'modules/' + moduleName + '/@(package|manifest).json'],
-        tasks: ['concat:' + moduleName, 'notify:build-' + moduleName]
+          'modules/' + moduleId + '/**/*@(.js|.css|.less)',
+          '!modules/' + moduleId + '/**/*.spec.js',
+          'modules/' + moduleId + '/@(package|manifest).json'],
+        tasks: ['concat:' + moduleId, 'notify:build-' + moduleId]
       };
     });
 
@@ -99,10 +101,10 @@ module.exports = function (grunt) {
   function buildNotifyConfig(config) {
     config = config || {};
 
-    moduleNames.forEach(function (moduleName) {
-      config['build-' + moduleName] = {
+    moduleIds.forEach(function (moduleId) {
+      config['build-' + moduleId] = {
         options: {
-          message: 'Module "' + moduleName + '" built'
+          message: 'Module "' + moduleId + '" built'
         }
       };
     });
