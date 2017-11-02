@@ -110,3 +110,26 @@ describe("$module", function () {
     });
   });
 });
+
+describe("String", function () {
+  describe("toModule()", function () {
+    var module;
+
+    beforeEach(function () {
+      module = $module.Module.fromModuleId('foo');
+      spyOn($module.Module, 'create').and.returnValue(module);
+    });
+
+    it("should create a Module instance", function () {
+      var result = 'foo'.toModule();
+      expect($module.Module.create).toHaveBeenCalledWith({
+        moduleId: 'foo'
+      });
+    });
+
+    it("should return created instance", function () {
+      var result = 'foo'.toModule();
+      expect(result).toBe(module);
+    });
+  });
+});
