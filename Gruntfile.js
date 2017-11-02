@@ -38,7 +38,7 @@ module.exports = function (grunt) {
             ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
             '(function(){',
             'function d(require,exports,module){',
-            dependencies
+            dependencyIds
             .map(function (packageName) {
               return 'require("' + packageName + '")';
             })
