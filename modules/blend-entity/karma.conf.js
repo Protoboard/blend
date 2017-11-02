@@ -16,6 +16,7 @@ module.exports = function (config) {
       '../../dist/blend-utils.js',
       '../../dist/blend-data.js',
       '../../dist/blend-event.js',
+      '../../dist/blend-module.js',
       '../../dist/blend-entity.js',
       '../../test/*.js',
       '**/*.spec.js'

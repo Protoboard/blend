@@ -20,7 +20,8 @@ module.exports = function (grunt) {
       var manifest = manifests[i],
           assets = manifest.assets,
           pkg = packages[i],
-          dependencies = Object.keys(pkg.dependencies || {});
+          dependencies = pkg.dependencies,
+          dependencyIds = Object.keys(dependencies || {});
 
       config[moduleId] = {
         src: grunt.file.expand({
@@ -51,8 +52,11 @@ module.exports = function (grunt) {
             ''
           ].join('\n'),
           footer: [
+            dependencies && dependencies['blend-module'] ?
+                'require("blend-module").Module.fromModuleId("' + moduleId + '").markAsAvailable()' :
+                undefined,
             '}',
-            'var n="' + pkg.name + '",e',
+            'var n="' + moduleId + '",e',
             '/* istanbul ignore next */',
             // node require - falling back to file in same folder
             'function rn(p){try{return require(p)}catch(e){return require("./"+p)}}',
