@@ -9,6 +9,6 @@
     "$utils": true,
     "$data": true,
     "$event": true,
-    "$routing": true
+    "$router": true
   }
 }
