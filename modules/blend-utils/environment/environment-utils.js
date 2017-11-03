@@ -1,12 +1,12 @@
 "use strict";
 
-$oop.copyProperties($widget, /** @lends $widget */{
+$oop.copyProperties($utils, /** @lends $utils */{
   /**
    * Detects whether we are running in a browser environment.
    * @returns {boolean}
-   * @todo Need detection that includes Node.js.
+   * @todo Need better (but still fast) detection.
    */
-  isHtml: function () {
+  isBrowser: function () {
     return typeof window === 'object';
   }
 });

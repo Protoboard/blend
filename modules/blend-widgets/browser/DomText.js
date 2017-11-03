@@ -26,4 +26,4 @@ $widgets.DomText = $oop.getClass('$widgets.DomText')
 });
 
 $oop.getClass('$widgets.Text')
-.forwardBlend($widgets.DomText, $widget.isBrowser);
+.forwardBlend($widgets.DomText, $utils.isBrowser);

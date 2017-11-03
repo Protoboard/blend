@@ -28,4 +28,4 @@ $widget.DomWidget = $oop.getClass('$widget.DomWidget')
 });
 
 $oop.getClass('$widget.Widget')
-.forwardBlend($widget.DomWidget, $widget.isBrowser);
+.forwardBlend($widget.DomWidget, $utils.isBrowser);
