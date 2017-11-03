@@ -21,6 +21,7 @@ $router.Router = $oop.getClass('$router.Router')
     return this;
   },
 
+  /** @ignore */
   onRouteChange: function () {
   }
 });
@@ -29,6 +30,6 @@ $event.EventSpace.create()
 .on($router.EVENT_ROUTE_CHANGE,
     'route',
     $router.Router.__classId,
-    function () {
+    function (event) {
       return $router.Router.create().onRouteChange(event);
     });
