@@ -20,8 +20,7 @@ module.exports = function (grunt) {
       var manifest = manifests[i],
           assets = manifest.assets,
           pkg = packages[i],
-          dependencies = pkg.dependencies,
-          dependencyIds = Object.keys(dependencies || {});
+          dependencies = pkg.dependencies;
 
       config[moduleId] = {
         src: grunt.file.expand({
@@ -38,20 +37,10 @@ module.exports = function (grunt) {
             ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
             '(function(){',
             'function d(require,exports,module){',
-            dependencyIds
-            .map(function (packageName) {
-              return 'require("' + packageName + '")';
-            })
-            .concat([
-              'Object.defineProperty(exports,"__moduleId",{enumerable:false,value:' +
-              JSON.stringify(moduleId) + '})',
-              'Object.defineProperty(exports,"__manifest",{enumerable:false,value:' +
-              JSON.stringify(manifest) + '})'
-            ])
-            .join('\n'),
             ''
           ].join('\n'),
           footer: [
+            // signaling module availability to app
             dependencies && dependencies['blend-module'] ?
                 'require("blend-module").Module.fromModuleId("' + moduleId + '").markAsAvailable()' :
                 undefined,
