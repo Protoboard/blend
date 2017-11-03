@@ -6,6 +6,9 @@
  */
 
 /**
+ * Keeps track of the active locale, as well as translation changes, and
+ * triggers event when the translations for the active locale have changed.
+ * Listen on this singleton for updating localized text.
  * @class $i18n.ActiveTranslationsWatcher
  * @extends $event.EventListener
  */

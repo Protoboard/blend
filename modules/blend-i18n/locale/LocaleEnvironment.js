@@ -6,6 +6,8 @@
  */
 
 /**
+ * Keeps track of active locale, triggering high-level event when active
+ * locale changes.
  * @class $i18n.LocaleEnvironment
  * @extends $event.EventSender
  * @extends $event.EventListener
@@ -29,6 +31,7 @@ $i18n.LocaleEnvironment = $oop.getClass('$i18n.LocaleEnvironment')
   },
 
   /**
+   * Sets specified `locale` as the new active locale.
    * @param {$i18n.Locale} locale
    * @returns {$i18n.LocaleEnvironment}
    */
@@ -40,6 +43,7 @@ $i18n.LocaleEnvironment = $oop.getClass('$i18n.LocaleEnvironment')
   },
 
   /**
+   * Retrieves `Locale` instance representing the active locale.
    * @returns {$i18n.Locale}
    */
   getActiveLocale: function () {

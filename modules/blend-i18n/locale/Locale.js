@@ -8,6 +8,7 @@
  */
 
 /**
+ * Represents a locale. Provides access to translations specific to the locale.
  * @class $i18n.Locale
  * @extends $event.EventListener
  * @extends $event.EventSender

@@ -2,10 +2,14 @@
 
 /**
  * @function $i18n.LocalizedModule.create
+ * @param {Object} properties
+ * @param {string} properties.moduleId
  * @returns {$i18n.LocalizedModule}
  */
 
 /**
+ * Application module that is associated with one or more locales, for which
+ * the module has localized text.
  * @class $i18n.LocalizedModule
  * @extends $module.Module
  */
