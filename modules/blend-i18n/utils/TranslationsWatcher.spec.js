@@ -44,5 +44,24 @@ describe("$i18n", function () {
         expect(calls[0].args).toEqual(['i18n.change.translations']);
       });
     });
+
+    describe("onTranslationsFieldAbsent()", function () {
+      beforeEach(function () {
+        translationsWatcher = TranslationsWatcher.create();
+        '_locale/en-us/translations'.toField().deleteNode();
+        spyOn($i18n.Locale, 'trigger');
+      });
+
+      it("should trigger EVENT_TRANSLATIONS_ABSENT on locale", function () {
+        '_locale/en-us/translations'.toField().getNode();
+
+        var calls = $i18n.Locale.trigger.calls.all();
+        // there may be multiple triggers as we're working w/ override
+        // vs. original class instantiated (and subscribed by) other parts
+        // of the framework
+        expect(calls[0].object).toEqual('en-us'.toLocale());
+        expect(calls[0].args).toEqual(['i18n.absent.translations']);
+      });
+    });
   });
 });

@@ -21,6 +21,7 @@ $i18n.ActiveTranslationsWatcher = $oop.getClass('$i18n.ActiveTranslationsWatcher
 
   /**
    * @param {$event.Event} event
+   * @returns {$utils.Promise}
    * @ignore
    */
   onTranslationsChange: function (event) {
@@ -35,6 +36,7 @@ $i18n.ActiveTranslationsWatcher = $oop.getClass('$i18n.ActiveTranslationsWatcher
   },
 
   /**
+   * @returns {$utils.Promise}
    * @ignore
    */
   onLocaleChange: function () {

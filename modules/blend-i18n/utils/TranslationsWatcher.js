@@ -6,14 +6,16 @@
  */
 
 /**
+ * Listens to events originating from `_locale/translations` collection and
+ * triggers appropriate high-level events on affected `Locale` instances.
  * @class $i18n.TranslationsWatcher
- * @todo Add translation-absent handler
  */
 $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
 .blend($oop.Singleton)
 .define(/** @lends $i18n.TranslationsWatcher# */{
   /**
    * @param {$entity.EntityChangeEvent} event
+   * @returns {$utils.Promise}
    * @ignore
    */
   onTranslationsFieldChange: function (event) {
@@ -22,6 +24,19 @@ $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
 
     return $i18n.Locale.fromLocaleKey(localeKey)
     .trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
+  },
+
+  /**
+   * @param {$event.Event} event
+   * @returns {$utils.Promise}
+   * @ignore
+   */
+  onTranslationsFieldAbsent: function (event) {
+    var translationsField = event.sender,
+        localeKey = translationsField.entityKey.documentKey;
+
+    return $i18n.Locale.fromLocaleKey(localeKey)
+    .trigger($i18n.EVENT_TRANSLATIONS_ABSENT);
   }
 });
 
@@ -33,4 +48,12 @@ $event.EventSpace.create()
     function (event) {
       return $i18n.TranslationsWatcher.create()
       .onTranslationsFieldChange(event);
+    })
+.on($entity.EVENT_ENTITY_ABSENT,
+    $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
+    .unshift('entity').toString(),
+    $i18n.TranslationsWatcher.__classId,
+    function (event) {
+      return $i18n.TranslationsWatcher.create()
+      .onTranslationsFieldAbsent(event);
     });

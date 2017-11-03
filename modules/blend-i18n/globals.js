@@ -27,6 +27,13 @@ $oop.copyProperties($i18n, /** @lends $i18n */{
   EVENT_TRANSLATIONS_CHANGE: 'i18n.change.translations',
 
   /**
+   * Signals that translations associated with a locale have been accessed
+   * but not found.
+   * @constant
+   */
+  EVENT_TRANSLATIONS_ABSENT: 'i18n.absent.translations',
+
+  /**
    * Signals that translations associated with the active locale have
    * changed. Listen to this event on `$i18n.LocaleEnvironment` to
    * update components depending on translated strings.
