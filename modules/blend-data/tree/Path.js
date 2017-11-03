@@ -85,8 +85,13 @@ $data.Path = $oop.getClass('$data.Path')
    * @returns {boolean}
    */
   equals: function equals(path) {
-    var result = equals.returned,
-        componentsLeft = this.components,
+    var result = equals.returned;
+
+    if (!result) {
+      return result;
+    }
+
+    var componentsLeft = this.components,
         componentsRight = path.components,
         componentCount = componentsRight.length,
         i;

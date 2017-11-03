@@ -155,6 +155,12 @@ describe("$data", function () {
           expect(path.equals(path2)).toBeFalsy();
         });
       });
+
+      describe("for undefined Path", function () {
+        it("should return false", function () {
+          expect(path.equals(undefined)).toBeFalsy();
+        });
+      });
     });
 
     describe("lessThan()", function () {
