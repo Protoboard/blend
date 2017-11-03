@@ -20,6 +20,7 @@ module.exports = function (config) {
       'dist/blend-template.js',
       'dist/blend-entity.js',
       'dist/blend-i18n.js',
+      'dist/blend-router.js',
       'dist/blend-widget.js',
       'dist/blend-widgets.js',
       'test/*.js',

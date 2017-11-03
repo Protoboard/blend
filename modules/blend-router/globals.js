@@ -16,5 +16,5 @@ $oop.copyProperties($router, /** @lends $router */{
    * Signals that the application route has changed.
    * @constant
    */
-  EVENT_ROUTE_CHANGE: 'route.change'
+  EVENT_ROUTE_CHANGE: 'router.change.route'
 });
