@@ -24,12 +24,11 @@ $i18n.ActiveTranslationsWatcher = $oop.getClass('$i18n.ActiveTranslationsWatcher
    * @ignore
    */
   onTranslationsChange: function (event) {
-    var affectedLocaleKey = event.sender.entityKey,
+    var affectedLocale = event.sender,
         localeEnvironment = $i18n.LocaleEnvironment.create(),
-        activeLocale = localeEnvironment.getActiveLocale(),
-        activeLocaleKey = activeLocale && activeLocale.localeKey;
+        activeLocale = localeEnvironment.getActiveLocale();
 
-    if (affectedLocaleKey.equals(activeLocaleKey)) {
+    if (affectedLocale === activeLocale) {
       // translations changed in active locale
       return localeEnvironment.trigger($i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE);
     }
@@ -46,7 +45,7 @@ $i18n.ActiveTranslationsWatcher = $oop.getClass('$i18n.ActiveTranslationsWatcher
 
 $event.EventSpace.create()
 .on($i18n.EVENT_TRANSLATIONS_CHANGE,
-    'entity.document.__document._locale',
+    'locale',
     $i18n.ActiveTranslationsWatcher.__classId,
     function (event) {
       return $i18n.ActiveTranslationsWatcher.create()

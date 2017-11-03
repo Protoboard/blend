@@ -7,6 +7,7 @@
 
 /**
  * @class $i18n.TranslationsWatcher
+ * @todo Add translation-absent handler
  */
 $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
 .blend($oop.Singleton)
@@ -17,9 +18,9 @@ $i18n.TranslationsWatcher = $oop.getClass('$i18n.TranslationsWatcher')
    */
   onTranslationsFieldChange: function (event) {
     var translationsField = event.sender,
-        localeDocumentKey = translationsField.entityKey.documentKey;
+        localeKey = translationsField.entityKey.documentKey;
 
-    return localeDocumentKey.toDocument()
+    return $i18n.Locale.fromLocaleKey(localeKey)
     .trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
   }
 });
@@ -30,5 +31,6 @@ $event.EventSpace.create()
     .unshift('entity').toString(),
     $i18n.TranslationsWatcher.__classId,
     function (event) {
-      return $i18n.TranslationsWatcher.create().onTranslationsFieldChange(event);
+      return $i18n.TranslationsWatcher.create()
+      .onTranslationsFieldChange(event);
     });

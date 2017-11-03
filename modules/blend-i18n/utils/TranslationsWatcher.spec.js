@@ -23,7 +23,7 @@ describe("$i18n", function () {
         translationsWatcher = TranslationsWatcher.create();
         '_translation/foo-en-us'.toDocument().deleteNode();
         '_locale/en-us/translations'.toField().deleteNode();
-        spyOn($i18n.LocaleDocument, 'trigger');
+        spyOn($i18n.Locale, 'trigger');
       });
 
       it("should trigger EVENT_TRANSLATIONS_CHANGE on locale", function () {
@@ -36,11 +36,11 @@ describe("$i18n", function () {
           '_translation/foo-en-us': 1
         });
 
-        var calls = $i18n.LocaleDocument.trigger.calls.all();
+        var calls = $i18n.Locale.trigger.calls.all();
         // there may be multiple triggers as we're working w/ override
         // vs. original class instantiated (and subscribed by) other parts
         // of the framework
-        expect(calls[0].object).toEqual('_locale/en-us'.toDocument());
+        expect(calls[0].object).toEqual('en-us'.toLocale());
         expect(calls[0].args).toEqual(['i18n.change.translations']);
       });
     });

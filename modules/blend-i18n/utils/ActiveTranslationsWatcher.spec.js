@@ -46,7 +46,7 @@ describe("$i18n", function () {
         });
 
         it("should trigger EVENT_ACTIVE_TRANSLATIONS_CHANGE", function () {
-          '_locale/en-us'.toDocument().trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
+          'en-us'.toLocale().trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
           expect(localeEnvironment.trigger)
           .toHaveBeenCalledWith('i18n.change.activeTranslations');
         });
@@ -62,7 +62,7 @@ describe("$i18n", function () {
         });
 
         it("should not trigger EVENT_ACTIVE_TRANSLATIONS_CHANGE", function () {
-          '_locale/en-us'.toDocument().trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
+          'en-us'.toLocale().trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
           expect(localeEnvironment.trigger)
           .not.toHaveBeenCalledWith('i18n.change.activeTranslations');
         });

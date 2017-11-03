@@ -9,12 +9,16 @@
 
 /**
  * @class $i18n.Locale
+ * @extends $event.EventListener
+ * @extends $event.EventSender
  */
 $i18n.Locale = $oop.getClass('$i18n.Locale')
 .cache(function (properties) {
   var localeKey = properties && properties.localeKey;
   return localeKey && localeKey.toString();
 })
+.blend($event.EventListener)
+.blend($event.EventSender)
 .define(/** @lends $i18n.Locale# */{
   /**
    * @member {$entity.DocumentKey} $i18n.Locale#localeKey
@@ -42,6 +46,14 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
   /** @ignore */
   init: function () {
     $assert.isDocumentKey(this.localeKey, "Invalid locale key");
+
+    var listeningPath = $data.Path.fromComponentsToString([
+      'locale', this.localeKey.documentId]);
+
+    this
+    .setListeningPath(listeningPath)
+    .addTriggerPath(listeningPath)
+    .addTriggerPath('locale');
   },
 
   /**

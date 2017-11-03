@@ -46,6 +46,19 @@ describe("$i18n", function () {
           }).toThrow();
         });
       });
+
+      it("should initialize listeningPath", function () {
+        locale = Locale.create({localeKey: 'foo/bar'.toDocumentKey()});
+        expect(locale.listeningPath).toBe('locale.bar');
+      });
+
+      it("should initialize triggerPaths", function () {
+        locale = Locale.create({localeKey: 'foo/bar'.toDocumentKey()});
+        expect(locale.triggerPaths.list).toEqual([
+          'locale.bar',
+          'locale'
+        ]);
+      });
     });
 
     describe("getTranslation()", function () {
