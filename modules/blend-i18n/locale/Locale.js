@@ -109,6 +109,20 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
   },
 
   /**
+   * Retrieves list of modules that have translations for current locale.
+   * @returns {Array.<$module.Module>}
+   */
+  getModules: function () {
+    var localeId = this.localeKey.documentId;
+
+    return $i18n.ModuleLocaleIndex.create()
+    .getModuleIdsForLocale(localeId)
+    .map(function (moduleId) {
+      return $module.Module.fromModuleId(moduleId);
+    });
+  },
+
+  /**
    * Sets current locale as active locale.
    * @returns {$i18n.Locale}
    */

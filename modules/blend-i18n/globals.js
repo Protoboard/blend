@@ -5,6 +5,7 @@ var $assert = require('blend-assert'),
     $utils = require('blend-utils'),
     $data = require('blend-data'),
     $event = require('blend-event'),
+    $module = require('blend-module'),
     $entity = require('blend-entity'),
     $i18n = exports;
 

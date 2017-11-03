@@ -124,6 +124,35 @@ describe("$i18n", function () {
       });
     });
 
+    describe("getModules()", function () {
+      var localesByModuleNode,
+          modulesByLocaleNode;
+
+      beforeEach(function () {
+        localesByModuleNode = $entity.index.data._localesByModule;
+        $entity.index.data._localesByModule = {};
+        modulesByLocaleNode = $entity.index.data._modulesByLocale;
+        $entity.index.data._modulesByLocale = {};
+        locale = Locale.fromLocaleId('foo');
+        $i18n.ModuleLocaleIndex.create()
+        .addLocaleForModule('bar', 'foo')
+        .addLocaleForModule('baz', 'foo');
+      });
+
+      afterEach(function () {
+        $entity.index.data._localesByModule = localesByModuleNode;
+        $entity.index.data._modulesByLocale = modulesByLocaleNode;
+      });
+
+      it("should return list of Module instances", function () {
+        var result = locale.getModules();
+        expect(result).toEqual([
+          'bar'.toModule(),
+          'baz'.toModule()
+        ]);
+      });
+    });
+
     describe("setAsActiveLocale()", function () {
       var localeEnvironment;
 

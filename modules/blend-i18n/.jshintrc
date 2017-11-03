@@ -9,6 +9,7 @@
     "$utils": true,
     "$data": true,
     "$event": true,
+    "$module": true,
     "$entity": true,
     "$i18n": true
   }
