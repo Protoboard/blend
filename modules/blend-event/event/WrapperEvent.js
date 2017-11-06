@@ -2,7 +2,8 @@
 
 /**
  * @function $event.WrapperEvent#create
- * @param {string} eventName
+ * @param {Object} properties
+ * @param {string} properties.eventName
  * @returns {$event.WrapperEvent}
  */
 
@@ -16,10 +17,17 @@
  * @extends $event.Wrapper
  * @example
  * window.addEventListener('click', function (event) {
- *   var clickWrapper = $event.WrapperEvent.create('clickWrapper').wrap(event);
+ *   var clickWrapper = $event.WrapperEvent.fromEventName('clickWrapper')
+ *   .wrap(event);
  *   $event.EventTrail.create().push(clickWrapper);
  * });
  */
 $event.WrapperEvent = $oop.getClass('$event.WrapperEvent')
 .blend($oop.getClass('$event.Event'))
 .blend($oop.getClass('$event.Wrapper'));
+
+/**
+ * @function $event.WrapperEvent.fromEventName
+ * @param {string} eventName
+ * @returns {$event.WrapperEvent}
+ */
