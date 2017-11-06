@@ -2,7 +2,7 @@
 
 /**
  * Binds host widget class to module loading events through a predefined
- * event handler method (`onModuleAvailable`).
+ * event handler method.
  * @mixin $widgets.ModuleBound
  * @augments $widget.Widget
  */
@@ -10,17 +10,24 @@ $widgets.ModuleBound = $oop.getClass('$widgets.ModuleBound')
 .expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widgets.ModuleBound# */{
   /**
-   * @function $widgets.ModuleBound#onModuleAvailable
-   * @param {$event.Event} event
+   * Updates parts of the widget's state that depend on the available modules.
+   * To be optionally implemented by host class.
+   * @function $widgets.ModuleBound#updateByAvailableModules
    */
 
   /** @ignore */
   onAttach: function () {
-    if (this.onModuleAvailable) {
+    if (this.updateByAvailableModules) {
+      this.updateByAvailableModules();
       this.on(
           $module.EVENT_MODULE_AVAILABLE,
           $module.ModuleEnvironment.create(),
           this.onModuleAvailable);
     }
+  },
+
+  /** @ignore */
+  onModuleAvailable: function () {
+    this.updateByAvailableModules();
   }
 });

@@ -13,28 +13,35 @@ describe("$widgets", function () {
     beforeAll(function () {
       ModuleBound = $oop.getClass('test.$widgets.ModuleBound.ModuleBound')
       .blend($widget.Widget)
-      .blend($widgets.ModuleBound)
-      .define({
-        onModuleAvailable: function () {
-        }
-      });
+      .blend($widgets.ModuleBound);
       ModuleBound.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("onAttach()", function () {
-      beforeEach(function () {
-        moduleBound = ModuleBound.create();
-        spyOn(moduleBound, 'onModuleAvailable');
-        moduleBound.onAttach();
-      });
+      describe("when updateByAvailableModules is defined", function () {
+        beforeEach(function () {
+          ModuleBound.define({
+            updateByAvailableModules: function () {}
+          });
+          moduleBound = ModuleBound.create();
+        });
 
-      afterEach(function () {
-        moduleBound.destroy();
-      });
+        afterEach(function () {
+          moduleBound.destroy();
+        });
 
-      it("should subscribe to EVENT_MODULE_AVAILABLE", function () {
-        'foo'.toModule().markAsAvailable();
-        expect(moduleBound.onModuleAvailable).toHaveBeenCalled();
+        it("should invoke updateByAvailableModules", function () {
+          spyOn(moduleBound, 'updateByAvailableModules');
+          moduleBound.onAttach();
+          expect(moduleBound.updateByAvailableModules).toHaveBeenCalled();
+        });
+
+        it("should subscribe to EVENT_LOCALE_CHANGE", function () {
+          moduleBound.onAttach();
+          spyOn(moduleBound, 'updateByAvailableModules');
+          'foo'.toModule().trigger($module.EVENT_MODULE_AVAILABLE);
+          expect(moduleBound.updateByAvailableModules).toHaveBeenCalled();
+        });
       });
     });
   });
