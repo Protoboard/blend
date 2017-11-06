@@ -18,6 +18,7 @@ module.exports = function (config) {
       '../../dist/blend-event.js',
       '../../dist/blend-module.js',
       '../../dist/blend-template.js',
+      '../../dist/blend-router.js',
       '../../dist/blend-entity.js',
       '../../dist/blend-i18n.js',
       '../../dist/blend-widget.js',

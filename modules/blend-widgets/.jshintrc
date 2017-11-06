@@ -10,8 +10,9 @@
     "$data": true,
     "$event": true,
     "$module": true,
-    "$i18n": true,
     "$template": true,
+    "$router": true,
+    "$i18n": true,
     "$widget": true,
     "$widgets": true
   }
