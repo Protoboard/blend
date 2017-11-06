@@ -6,6 +6,7 @@
  */
 
 /**
+ * Maintains application route state.
  * @class $router.Router
  */
 $router.Router = $oop.getClass('$router.Router')
@@ -21,7 +22,10 @@ $router.Router = $oop.getClass('$router.Router')
     return this;
   },
 
-  /** @ignore */
+  /**
+   * Reserved for extensions.
+   * @ignore
+   */
   onRouteChange: function () {
   }
 });
