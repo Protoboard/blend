@@ -9,7 +9,6 @@
     "$utils": true,
     "$data": true,
     "$event": true,
-    "$template": true,
     "$widget": true
   }
 }
