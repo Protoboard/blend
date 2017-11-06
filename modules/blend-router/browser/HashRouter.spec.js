@@ -14,6 +14,7 @@ describe("$router", function () {
       HashRouter = $oop.getClass('test.$router.HashRouter.HashRouter')
       .blend($router.HashRouter);
       HashRouter.__forwards = {list: [], sources: [], lookup: {}};
+      $router.routingMode = 'hash';
     });
 
     beforeEach(function () {
@@ -106,7 +107,9 @@ describe("$router", function () {
 
       describe("when hash is different than activeRoute", function () {
         beforeEach(function () {
+          $router.routingMode = undefined;
           routeEnvironment.setActiveRoute('foo/baz'.toRoute());
+          $router.routingMode = 'hash';
         });
 
         it("should set active route", function () {

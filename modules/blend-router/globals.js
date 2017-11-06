@@ -22,5 +22,5 @@ $oop.copyProperties($router, /** @lends $router */{
    * Possible values: undefined, 'hash', 'pushState'
    * @type {string}
    */
-  routingMode: undefined
+  routingMode: 'pushState'
 });
