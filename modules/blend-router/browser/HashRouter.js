@@ -72,18 +72,18 @@ $router.HashRouter = $oop.getClass('$router.HashRouter')
 
 $oop.getClass('$router.Router')
 .forwardBlend($router.HashRouter, function () {
-  return $router.routingMode === 'hash' && $utils.isBrowser();
+  return $router.browserRoutingMethod === 'hash' && $utils.isBrowser();
 });
 
 if ($utils.isBrowser()) {
   document.addEventListener('DOMContentLoaded', function (event) {
-    if ($router.routingMode === 'hash') {
+    if ($router.browserRoutingMethod === 'hash') {
       $router.HashRouter.create().onDocumentLoad(event);
     }
   }, false);
 
   window.addEventListener('hashchange', function (event) {
-    if ($router.routingMode === 'hash') {
+    if ($router.browserRoutingMethod === 'hash') {
       $router.HashRouter.create().onHashChange(event);
     }
   });

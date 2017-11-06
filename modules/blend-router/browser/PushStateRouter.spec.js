@@ -12,7 +12,7 @@ describe("$router", function () {
       PushStateRouter = $oop.getClass('test.$router.PushStateRouter.PushStateRouter')
       .blend($router.PushStateRouter);
       PushStateRouter.__forwards = {list: [], sources: [], lookup: {}};
-      $router.routingMode = 'pushState';
+      $router.browserRoutingMethod = 'pushState';
     });
 
     beforeEach(function () {
@@ -73,9 +73,9 @@ describe("$router", function () {
 
       describe("when pushing different state than activeRoute", function () {
         beforeEach(function () {
-          $router.routingMode = undefined;
+          $router.browserRoutingMethod = undefined;
           routeEnvironment.setActiveRoute('foo/baz'.toRoute());
-          $router.routingMode = 'pushState';
+          $router.browserRoutingMethod = 'pushState';
         });
 
         it("should set active route", function () {
@@ -111,13 +111,13 @@ describe("$router", function () {
     describe("create()", function () {
       var router;
 
-      describe("when in browser env and routingMode is 'pushState'", function () {
+      describe("when in browser env and browserRoutingMethod is 'pushState'", function () {
         beforeEach(function () {
-          $router.routingMode = 'pushState';
+          $router.browserRoutingMethod = 'pushState';
         });
 
         afterEach(function () {
-          $router.routingMode = undefined;
+          $router.browserRoutingMethod = undefined;
         });
 
         it("should return PushStateRouter instance", function () {
@@ -134,11 +134,11 @@ describe("window", function () {
 
   beforeEach(function () {
     pushStateRouter = $router.PushStateRouter.create();
-    $router.routingMode = 'pushState';
+    $router.browserRoutingMethod = 'pushState';
   });
 
   afterEach(function () {
-    $router.routingMode = undefined;
+    $router.browserRoutingMethod = undefined;
   });
 
   describe("on popstate", function () {

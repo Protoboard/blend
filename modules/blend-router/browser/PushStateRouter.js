@@ -60,12 +60,12 @@ $router.PushStateRouter = $oop.getClass('$router.PushStateRouter')
 
 $oop.getClass('$router.Router')
 .forwardBlend($router.PushStateRouter, function () {
-  return $router.routingMode === 'pushState' && $utils.isBrowser();
+  return $router.browserRoutingMethod === 'pushState' && $utils.isBrowser();
 });
 
 if ($utils.isBrowser()) {
   window.addEventListener('popstate', function (event) {
-    if ($router.routingMode === 'pushState') {
+    if ($router.browserRoutingMethod === 'pushState') {
       $router.PushStateRouter.create().onPopState(event);
     }
   });

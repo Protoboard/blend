@@ -14,7 +14,7 @@ describe("$router", function () {
       HashRouter = $oop.getClass('test.$router.HashRouter.HashRouter')
       .blend($router.HashRouter);
       HashRouter.__forwards = {list: [], sources: [], lookup: {}};
-      $router.routingMode = 'hash';
+      $router.browserRoutingMethod = 'hash';
     });
 
     beforeEach(function () {
@@ -107,9 +107,9 @@ describe("$router", function () {
 
       describe("when hash is different than activeRoute", function () {
         beforeEach(function () {
-          $router.routingMode = undefined;
+          $router.browserRoutingMethod = undefined;
           routeEnvironment.setActiveRoute('foo/baz'.toRoute());
-          $router.routingMode = 'hash';
+          $router.browserRoutingMethod = 'hash';
         });
 
         it("should set active route", function () {
@@ -145,13 +145,13 @@ describe("$router", function () {
     describe("create()", function () {
       var router;
 
-      describe("when in browser env and routingMode is 'hash'", function () {
+      describe("when in browser env and browserRoutingMethod is 'hash'", function () {
         beforeEach(function () {
-          $router.routingMode = 'hash';
+          $router.browserRoutingMethod = 'hash';
         });
 
         afterEach(function () {
-          $router.routingMode = undefined;
+          $router.browserRoutingMethod = undefined;
         });
 
         it("should return HashRouter instance", function () {
@@ -168,11 +168,11 @@ describe("document", function () {
 
   beforeEach(function () {
     hashRouter = $router.HashRouter.create();
-    $router.routingMode = 'hash';
+    $router.browserRoutingMethod = 'hash';
   });
 
   afterEach(function () {
-    $router.routingMode = undefined;
+    $router.browserRoutingMethod = undefined;
   });
 
   describe("on DOMContentLoaded", function () {
@@ -192,11 +192,11 @@ describe("window", function () {
 
   beforeEach(function () {
     hashRouter = $router.HashRouter.create();
-    $router.routingMode = 'hash';
+    $router.browserRoutingMethod = 'hash';
   });
 
   afterEach(function () {
-    $router.routingMode = undefined;
+    $router.browserRoutingMethod = undefined;
   });
 
   describe("on hashchange", function () {

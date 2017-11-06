@@ -19,8 +19,9 @@ $oop.copyProperties($router, /** @lends $router */{
   EVENT_ROUTE_CHANGE: 'router.change.route',
 
   /**
+   * Determines how routing manifests in the browser.
    * Possible values: undefined, 'hash', 'pushState'
    * @type {string}
    */
-  routingMode: 'pushState'
+  browserRoutingMethod: 'pushState'
 });
