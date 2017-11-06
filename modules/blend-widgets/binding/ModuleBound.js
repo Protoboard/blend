@@ -12,13 +12,13 @@ $widgets.ModuleBound = $oop.getClass('$widgets.ModuleBound')
   /**
    * Updates parts of the widget's state that depend on the available modules.
    * To be optionally implemented by host class.
-   * @function $widgets.ModuleBound#updateByAvailableModules
+   * @function $widgets.ModuleBound#syncToAvailableModules
    */
 
   /** @ignore */
   onAttach: function () {
-    if (this.updateByAvailableModules) {
-      this.updateByAvailableModules();
+    if (this.syncToAvailableModules) {
+      this.syncToAvailableModules();
       this.on(
           $module.EVENT_MODULE_AVAILABLE,
           $module.ModuleEnvironment.create(),
@@ -28,6 +28,6 @@ $widgets.ModuleBound = $oop.getClass('$widgets.ModuleBound')
 
   /** @ignore */
   onModuleAvailable: function () {
-    this.updateByAvailableModules();
+    this.syncToAvailableModules();
   }
 });

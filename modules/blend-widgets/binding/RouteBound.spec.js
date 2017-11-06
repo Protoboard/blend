@@ -18,10 +18,10 @@ describe("$widgets", function () {
     });
 
     describe("onAttach()", function () {
-      describe("when updateByActiveRoute is defined", function () {
+      describe("when syncToActiveRoute is defined", function () {
         beforeEach(function () {
           RouteBound.define({
-            updateByActiveRoute: function () {}
+            syncToActiveRoute: function () {}
           });
           routeBound = RouteBound.create();
         });
@@ -30,17 +30,17 @@ describe("$widgets", function () {
           routeBound.destroy();
         });
 
-        it("should invoke updateByActiveRoute", function () {
-          spyOn(routeBound, 'updateByActiveRoute');
+        it("should invoke syncToActiveRoute", function () {
+          spyOn(routeBound, 'syncToActiveRoute');
           routeBound.onAttach();
-          expect(routeBound.updateByActiveRoute).toHaveBeenCalled();
+          expect(routeBound.syncToActiveRoute).toHaveBeenCalled();
         });
 
         it("should subscribe to EVENT_ROUTE_CHANGE", function () {
           routeBound.onAttach();
-          spyOn(routeBound, 'updateByActiveRoute');
+          spyOn(routeBound, 'syncToActiveRoute');
           $router.RouteEnvironment.create().trigger($router.EVENT_ROUTE_CHANGE);
-          expect(routeBound.updateByActiveRoute).toHaveBeenCalled();
+          expect(routeBound.syncToActiveRoute).toHaveBeenCalled();
         });
       });
     });

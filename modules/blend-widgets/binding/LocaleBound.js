@@ -12,29 +12,29 @@ $widgets.LocaleBound = $oop.getClass('$widgets.LocaleBound')
   /**
    * Updates parts of the widget's state that depend on the active locale.
    * To be optionally implemented by host class.
-   * @function $widgets.LocaleBound#updateByActiveLocale
+   * @function $widgets.LocaleBound#syncToActiveLocale
    */
 
   /**
    * Updates parts of the widget's state that depend on the active translations.
    * To be optionally implemented by host class.
-   * @function $widgets.LocaleBound#updateByActiveTranslations
+   * @function $widgets.LocaleBound#syncToActiveTranslations
    */
 
   /** @ignore */
   onAttach: function () {
     var localeEnvironment = $i18n.LocaleEnvironment.create();
 
-    if (this.updateByActiveLocale) {
-      this.updateByActiveLocale();
+    if (this.syncToActiveLocale) {
+      this.syncToActiveLocale();
       this.on(
           $i18n.EVENT_LOCALE_CHANGE,
           localeEnvironment,
           this.onLocaleChange);
     }
 
-    if (this.updateByActiveTranslations) {
-      this.updateByActiveTranslations();
+    if (this.syncToActiveTranslations) {
+      this.syncToActiveTranslations();
       this.on(
           $i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE,
           localeEnvironment,
@@ -44,11 +44,11 @@ $widgets.LocaleBound = $oop.getClass('$widgets.LocaleBound')
 
   /** @ignore */
   onLocaleChange: function () {
-    this.updateByActiveLocale();
+    this.syncToActiveLocale();
   },
 
   /** @ignore */
   onActiveTranslationsChange: function () {
-    this.updateByActiveTranslations();
+    this.syncToActiveTranslations();
   }
 });

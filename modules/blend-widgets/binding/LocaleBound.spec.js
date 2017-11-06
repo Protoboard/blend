@@ -18,10 +18,10 @@ describe("$widgets", function () {
     });
 
     describe("onAttach()", function () {
-      describe("when updateByActiveLocale is defined", function () {
+      describe("when syncToActiveLocale is defined", function () {
         beforeEach(function () {
           LocaleBound.define({
-            updateByActiveLocale: function () {}
+            syncToActiveLocale: function () {}
           });
           localeBound = LocaleBound.create();
         });
@@ -30,24 +30,24 @@ describe("$widgets", function () {
           localeBound.destroy();
         });
 
-        it("should invoke updateByActiveLocale", function () {
-          spyOn(localeBound, 'updateByActiveLocale');
+        it("should invoke syncToActiveLocale", function () {
+          spyOn(localeBound, 'syncToActiveLocale');
           localeBound.onAttach();
-          expect(localeBound.updateByActiveLocale).toHaveBeenCalled();
+          expect(localeBound.syncToActiveLocale).toHaveBeenCalled();
         });
 
         it("should subscribe to EVENT_LOCALE_CHANGE", function () {
           localeBound.onAttach();
-          spyOn(localeBound, 'updateByActiveLocale');
+          spyOn(localeBound, 'syncToActiveLocale');
           'foo'.toLocale().trigger($i18n.EVENT_LOCALE_CHANGE);
-          expect(localeBound.updateByActiveLocale).toHaveBeenCalled();
+          expect(localeBound.syncToActiveLocale).toHaveBeenCalled();
         });
       });
 
-      describe("when updateByActiveTranslations is defined", function () {
+      describe("when syncToActiveTranslations is defined", function () {
         beforeEach(function () {
           LocaleBound.define({
-            updateByActiveTranslations: function () {}
+            syncToActiveTranslations: function () {}
           });
           localeBound = LocaleBound.create();
         });
@@ -56,17 +56,17 @@ describe("$widgets", function () {
           localeBound.destroy();
         });
 
-        it("should invoke updateByActiveTranslations", function () {
-          spyOn(localeBound, 'updateByActiveTranslations');
+        it("should invoke syncToActiveTranslations", function () {
+          spyOn(localeBound, 'syncToActiveTranslations');
           localeBound.onAttach();
-          expect(localeBound.updateByActiveTranslations).toHaveBeenCalled();
+          expect(localeBound.syncToActiveTranslations).toHaveBeenCalled();
         });
 
         it("should subscribe to EVENT_ACTIVE_TRANSLATIONS_CHANGE", function () {
           localeBound.onAttach();
-          spyOn(localeBound, 'updateByActiveTranslations');
+          spyOn(localeBound, 'syncToActiveTranslations');
           'foo'.toLocale().trigger($i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE);
-          expect(localeBound.updateByActiveTranslations).toHaveBeenCalled();
+          expect(localeBound.syncToActiveTranslations).toHaveBeenCalled();
         });
       });
     });
