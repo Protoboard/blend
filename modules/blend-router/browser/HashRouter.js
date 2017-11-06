@@ -13,6 +13,21 @@
 $router.HashRouter = $oop.getClass('$router.HashRouter')
 .blend($oop.getClass('$router.Router'))
 .define(/** @lends $router.HashRouter# */{
+  /** @ignore */
+  init: function () {
+    this._syncActiveRouteToHash();
+  },
+
+  /**
+   * @private
+   */
+  _syncActiveRouteToHash: function () {
+    var hash = window.location.hash,
+        route = $router.Route.fromUrlPath(hash.substr(1));
+    $router.RouteEnvironment.create()
+    .setActiveRoute(route);
+  },
+
   /**
    * @param {$router.RouteChangeEvent} event
    * @ignore
@@ -29,13 +44,10 @@ $router.HashRouter = $oop.getClass('$router.HashRouter')
   onDocumentLoad: function (event) {
     var eventTrail = $event.EventTrail.create(),
         wrapperEvent = $event.WrapperEvent.fromEventName('documentLoadWrapper')
-        .wrap(event),
-        hash = window.location.hash,
-        routeEnvironment = $router.RouteEnvironment.create(),
-        route = $router.Route.fromUrlPath(hash.substr(1));
+        .wrap(event);
 
     eventTrail.push(wrapperEvent);
-    routeEnvironment.setActiveRoute(route);
+    this._syncActiveRouteToHash();
   },
 
   /**
@@ -53,7 +65,7 @@ $router.HashRouter = $oop.getClass('$router.HashRouter')
 
     if (!routeBefore.equals(routeAfter)) {
       eventTrail.push(wrapperEvent);
-      routeEnvironment.setActiveRoute(routeAfter);
+      this._syncActiveRouteToHash();
     }
   }
 });

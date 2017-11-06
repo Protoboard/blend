@@ -24,6 +24,21 @@ describe("$router", function () {
       expect(HashRouter.create()).toBe(HashRouter.create());
     });
 
+    describe("create()", function () {
+      var routeEnvironment;
+
+      beforeEach(function () {
+        routeEnvironment = $router.RouteEnvironment.create();
+        routeEnvironment.setActiveRoute([].toRoute());
+        window.location.hash = '#foo/bar';
+      });
+
+      it("should initialize activeRoute", function () {
+        HashRouter.create();
+        expect(routeEnvironment.activeRoute).toEqual('foo/bar'.toRoute());
+      });
+    });
+
     describe("onRouteChange()", function () {
       var event;
 
@@ -141,6 +156,54 @@ describe("$router", function () {
           expect($router.HashRouter.mixedBy(router)).toBeTruthy();
         });
       });
+    });
+  });
+});
+
+describe("document", function () {
+  var hashRouter;
+
+  beforeEach(function () {
+    hashRouter = $router.HashRouter.create();
+    $router.routingMode = 'hash';
+  });
+
+  afterEach(function () {
+    $router.routingMode = undefined;
+  });
+
+  describe("on DOMContentLoaded", function () {
+    beforeEach(function () {
+      spyOn(hashRouter, 'onDocumentLoad');
+    });
+
+    it("should invoke HashRouter#onDocumentLoad", function () {
+      document.dispatchEvent(new Event('DOMContentLoaded'));
+      expect(hashRouter.onDocumentLoad).toHaveBeenCalled();
+    });
+  });
+});
+
+describe("window", function () {
+  var hashRouter;
+
+  beforeEach(function () {
+    hashRouter = $router.HashRouter.create();
+    $router.routingMode = 'hash';
+  });
+
+  afterEach(function () {
+    $router.routingMode = undefined;
+  });
+
+  describe("on hashchange", function () {
+    beforeEach(function () {
+      spyOn(hashRouter, 'onHashChange');
+    });
+
+    it("should invoke HashRouter#onDocumentLoad", function () {
+      window.dispatchEvent(new Event('hashchange'));
+      expect(hashRouter.onHashChange).toHaveBeenCalled();
     });
   });
 });
