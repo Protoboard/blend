@@ -32,5 +32,43 @@ $oop.copyProperties($utils, /** @lends $utils */{
 
       return deferred.promise;
     };
+  },
+
+  /**
+   * @param {function} originalFunction
+   * @param {number} delay
+   * @returns {function}
+   */
+  throttle: function (originalFunction, delay) {
+    delay = delay || 0;
+
+    var deferred = $utils.Deferred.create(),
+        callCount,
+        timer;
+
+    return function throttled() {
+      if (!timer) {
+        callCount = 1;
+        timer = $utils.setInterval(delay);
+        timer.timerPromise.then(
+            null,
+            function () {
+              deferred.reject();
+            },
+            function () {
+              if (callCount > 0) {
+                deferred.notify(originalFunction.apply(null, throttled.args));
+                callCount = 0;
+              }
+            });
+        throttled.timer = timer;
+      } else {
+        callCount++;
+      }
+
+      throttled.args = arguments;
+
+      return deferred.promise;
+    };
   }
 });

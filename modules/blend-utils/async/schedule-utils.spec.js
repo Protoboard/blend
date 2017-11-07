@@ -98,4 +98,99 @@ describe("$utils", function () {
       });
     });
   });
+
+  describe("throttle()", function () {
+    var originalFunction,
+        throttled;
+
+    beforeEach(function () {
+      originalFunction = jasmine.createSpy().and.callFake(function () {
+        return 'foo';
+      });
+    });
+
+    it("should return function", function () {
+      throttled = $utils.throttle(originalFunction);
+      expect(typeof throttled).toBe("function");
+    });
+
+    describe("on invoking throttled function", function () {
+      beforeEach(function () {
+        throttled = $utils.throttle(originalFunction, 50);
+      });
+
+      it("should return pending Promise", function () {
+        var result = throttled();
+        expect($utils.Promise.mixedBy(result)).toBeTruthy();
+        expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
+      });
+
+      it("should set timer property on returned function", function () {
+        throttled();
+        expect($utils.Timer.mixedBy(throttled.timer)).toBeTruthy();
+      });
+
+      it("should set args property on returned function", function () {
+        throttled('bar');
+        expect(throttled.args[0]).toEqual('bar');
+      });
+
+      describe("when invoking again within delay", function () {
+        var promise;
+
+        beforeEach(function () {
+          promise = throttled('foo', 'bar');
+          jasmine.clock().tick(49);
+        });
+
+        it("should update args", function () {
+          throttled('quux');
+          expect(throttled.args[0]).toBe('quux');
+        });
+      });
+
+      describe("when delay elapses", function () {
+        describe("when throttled was called", function () {
+          var promise;
+
+          beforeEach(function () {
+            throttled('foo', 'bar');
+            promise = throttled('baz', 'quux');
+          });
+
+          it("should invoke original function with last arguments", function () {
+            jasmine.clock().tick(51);
+            expect(originalFunction).toHaveBeenCalledTimes(1);
+            expect(originalFunction).toHaveBeenCalledWith('baz', 'quux');
+          });
+
+          it("should notify returned Promise with return value", function () {
+            jasmine.clock().tick(51);
+            expect(promise.notificationArguments.pop()[0]).toBe('foo');
+          });
+        });
+
+        describe("when throttled was not called", function () {
+          it("should invoke original function", function () {
+            jasmine.clock().tick(51);
+            expect(originalFunction).not.toHaveBeenCalled();
+          });
+        });
+      });
+
+      describe("when user cancels timer", function () {
+        var promise;
+
+        beforeEach(function () {
+          promise = throttled();
+        });
+
+        it("should reject the promise", function () {
+          jasmine.clock().tick(49);
+          throttled.timer.clearTimer();
+          expect(promise.promiseState).toBe($utils.PROMISE_STATE_REJECTED);
+        });
+      });
+    });
+  });
 });
