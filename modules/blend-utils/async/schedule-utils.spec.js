@@ -42,6 +42,11 @@ describe("$utils", function () {
         expect($utils.Timer.mixedBy(debounced.timer)).toBeTruthy();
       });
 
+      it("should set args property on returned function", function () {
+        debounced('bar');
+        expect(debounced.args[0]).toEqual('bar');
+      });
+
       describe("when invoking again within delay", function () {
         var promise,
             timer;
@@ -67,6 +72,7 @@ describe("$utils", function () {
 
         it("should invoke original function", function () {
           jasmine.clock().tick(51);
+          expect(originalFunction).toHaveBeenCalledTimes(1);
           expect(originalFunction).toHaveBeenCalledWith('foo', 'bar');
         });
 

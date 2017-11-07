@@ -16,19 +16,18 @@ $oop.copyProperties($utils, /** @lends $utils */{
         timer;
 
     return function debounced() {
-      var args = slice.call(arguments);
-
       // (re-)starting timer
       if (timer) {
         timer.clearTimer();
       }
       timer = $utils.setTimeout(delay);
       timer.timerPromise.then(function () {
-        deferred.resolve(originalFunction.apply(null, args));
+        deferred.resolve(originalFunction.apply(null, debounced.args));
       }, function () {
         deferred.reject();
       });
 
+      debounced.args = arguments;
       debounced.timer = timer;
 
       return deferred.promise;
