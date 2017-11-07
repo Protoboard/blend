@@ -1173,5 +1173,28 @@ $oop.copyProperties($assert, /** @lends $assert */{
     return $assert.assert(
         expr === undefined ||
         $oop.Class.isPrototypeOf(expr), message);
+  },
+
+  /**
+   * @param {$oop.Class} expr
+   * @param {$oop.Class} Class
+   * @param {string} [message]
+   * @returns {$assert}
+   */
+  isInstanceOf: function (expr, Class, message) {
+    return $assert.assert(
+        Class.mixedBy(expr), message);
+  },
+
+  /**
+   * @param {$oop.Class} [expr]
+   * @param {$oop.Class} Class
+   * @param {string} [message]
+   * @returns {$assert}
+   */
+  isInstanceOfOptional: function (expr, Class, message) {
+    return $assert.assert(
+        expr === undefined ||
+        Class.mixedBy(expr), message);
   }
 });

@@ -1663,4 +1663,73 @@ describe("$assert", function () {
       });
     });
   });
+
+  describe("isInstanceOf()", function () {
+    var Class,
+        instance;
+
+    beforeEach(function () {
+      Class = $oop.getClass('test.$assert.isInstanceOf.Class');
+      instance = Class.create();
+      spyOn($assert, 'assert').and.callThrough();
+    });
+
+    it("should pass message to assert", function () {
+      $assert.isInstanceOf(instance, Class, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-instance", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isInstanceOf(undefined, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOf(null, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOf(1, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOf({}, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOf($oop.getClass('test.$assert.isInstanceOf.Class2'), Class);
+        }).toThrow();
+      });
+    });
+  });
+
+  describe("isInstanceOfOptional()", function () {
+    var Class,
+        instance;
+
+    beforeEach(function () {
+      Class = $oop.getClass('test.$assert.isInstanceOf.Class');
+      instance = Class.create();
+      spyOn($assert, 'assert').and.callThrough();
+    });
+
+    it("should pass message to assert", function () {
+      $assert.isInstanceOfOptional(undefined, Class, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-instance", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isInstanceOfOptional(null, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOfOptional(1, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOfOptional({}, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOfOptional($oop.getClass('test.$assert.isInstanceOf.Class2'), Class);
+        }).toThrow();
+      });
+    });
+  });
 });
