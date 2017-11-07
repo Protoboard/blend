@@ -245,7 +245,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         that[methodName] = compactedMethods[0];
       } else if (methodCount > 1) {
         // decorating & wrapping individual methods
-        that[methodName] = function wrapper() {
+        that[methodName] = function wrapped() {
           var i, method, result;
 
           // calling functions in order of contributions
