@@ -10,29 +10,22 @@
       });
       // todo Require blend-router only as soon as ready.
       require([
-        'blend-assert',
-        'blend-oop',
-        'blend-utils',
-        'blend-data',
-        'blend-event',
-        'blend-entity',
-        'blend-module',
-        'blend-i18n',
-        'blend-template',
-        'blend-widget',
-        'blend-widgets'
-      ], function (assert, oop, utils, data, event, entity, module, i18n,
-          template, widget, widgets
+        'blend-assert', 'blend-oop', 'blend-utils', 'blend-data', 'blend-event',
+        'blend-module', 'blend-template', 'blend-entity', 'blend-i18n',
+        'blend-router', 'blend-widget', 'blend-widgets'
+      ], function (assert, oop, utils, data, event, module, template, entity,
+          i18n, router, widget, widgets
       ) {
         $assert = assert;
         $oop = oop;
         $utils = utils;
         $data = data;
         $event = event;
-        $entity = entity;
         $module = module;
-        $i18n = i18n;
         $template = template;
+        $entity = entity;
+        $i18n = i18n;
+        $router = router;
         $widget = widget;
         $widgets = widgets;
       });
