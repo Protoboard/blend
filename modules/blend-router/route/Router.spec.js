@@ -23,6 +23,14 @@ describe("$router", function () {
       expect(Router.create()).toBe(Router.create());
     });
 
+    describe("create()", function () {
+      it("should debounce method navigateToRoute", function () {
+        router = Router.create();
+        expect(typeof router.navigateToRouteDebounced).toBe('function');
+        expect(router.navigateToRouteDebounced.name).toBe('debounced');
+      });
+    });
+
     describe("getActiveRoute()", function () {
       beforeEach(function () {
         router = Router.create();

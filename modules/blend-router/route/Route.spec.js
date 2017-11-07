@@ -67,6 +67,28 @@ describe("$router", function () {
       });
     });
 
+    describe("navigateToDebounced()", function () {
+      var router,
+          promise;
+
+      beforeEach(function () {
+        route = Route.fromComponents(['foo/', 'bar', 'baz']);
+        router = $router.Router.create();
+        promise = {};
+        spyOn(router, 'navigateToRouteDebounced').and.returnValue(promise);
+      });
+
+      it("should invoke Router#navigateToRouteDebounced", function () {
+        route.navigateToDebounced();
+        expect(router.navigateToRouteDebounced).toHaveBeenCalledWith(route);
+      });
+
+      it("should return Promise", function () {
+        var result = route.navigateToDebounced();
+        expect(result).toBe(promise);
+      });
+    });
+
     describe("toUrlPath()", function () {
       beforeEach(function () {
         route = Route.create({components: ['foo/', 'bar', 'baz']});

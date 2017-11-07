@@ -49,6 +49,13 @@ $router.Route = $oop.getClass('$router.Route')
   },
 
   /**
+   * @returns {$utils.Promise}
+   */
+  navigateToDebounced: function () {
+    return $router.Router.create().navigateToRouteDebounced(this);
+  },
+
+  /**
    * @returns {string}
    */
   toUrlPath: function () {

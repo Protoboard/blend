@@ -12,6 +12,12 @@
 $router.Router = $oop.getClass('$router.Router')
 .blend($oop.Singleton)
 .define(/** @lends $router.Router# */{
+  /** @ignore */
+  init: function () {
+    this.elevateMethods('navigateToRoute');
+    this.navigateToRouteDebounced = $utils.debounce(this.navigateToRoute);
+  },
+
   /**
    * @returns {$router.Route}
    */
@@ -20,7 +26,7 @@ $router.Router = $oop.getClass('$router.Router')
   },
 
   /**
-   * Navigates to the specified route.
+   * Navigates to the specified route synchronously.
    * @param {$router.Route} route
    * @returns {$router.Router}
    */
@@ -28,6 +34,13 @@ $router.Router = $oop.getClass('$router.Router')
     $router.RouteEnvironment.create().setActiveRoute(route);
     return this;
   },
+
+  /**
+   * Navigates to the specified route debounced.
+   * @function $router.Router#navigateToRouteDebounced
+   * @param {$router.Route} route
+   * @returns {$utils.Promise}
+   */
 
   /**
    * Reserved for extensions.
