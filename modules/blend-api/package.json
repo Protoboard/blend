@@ -1,0 +1,30 @@
+{
+  "name": "blend-api",
+  "version": "0.1.0",
+  "description": "API intergration module for Blend",
+  "keywords": [
+    "api",
+    "endpoint",
+    "request",
+    "response",
+    "ajax"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2014-2017 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/blend.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "blend-assert": "~0.1.0",
+    "blend-data": "~0.1.0",
+    "blend-event": "~0.1.0",
+    "blend-module": "~0.1.0",
+    "blend-oop": "~0.1.0",
+    "blend-utils": "~0.1.0"
+  }
+}
