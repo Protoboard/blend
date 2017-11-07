@@ -17,6 +17,10 @@ $router.RouteEnvironment = $oop.getClass('$router.RouteEnvironment')
 .blend($event.EventListener)
 .define(/** @lends $router.RouteEnvironment# */{
   /**
+   * Active route as registered by RouteEnvironment. It does not always
+   * reflect the *actual* route manifested eg. in the browser. Use
+   * `$router.getActiveRoute()` to get the route that is in sync with the
+   * manifestation.
    * @member {$router.Route} $router.RouteEnvironment#activeRoute
    */
 

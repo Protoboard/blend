@@ -23,6 +23,17 @@ describe("$router", function () {
       expect(Router.create()).toBe(Router.create());
     });
 
+    describe("getActiveRoute()", function () {
+      beforeEach(function () {
+        router = Router.create();
+      });
+
+      it("should return activeRoute", function () {
+        var result = router.getActiveRoute();
+        expect(result).toEqual([].toRoute());
+      });
+    });
+
     describe("navigateToRoute()", function () {
       var routeEnvironment,
           route;

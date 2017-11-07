@@ -13,6 +13,13 @@ $router.Router = $oop.getClass('$router.Router')
 .blend($oop.Singleton)
 .define(/** @lends $router.Router# */{
   /**
+   * @returns {$router.Route}
+   */
+  getActiveRoute: function () {
+    return $router.RouteEnvironment.create().activeRoute;
+  },
+
+  /**
    * Navigates to the specified route.
    * @param {$router.Route} route
    * @returns {$router.Router}
