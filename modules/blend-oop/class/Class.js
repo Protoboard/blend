@@ -822,6 +822,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       ].join(" "));
     }
 
+    // caching instance (if necessary)
+    if (instanceId !== undefined) {
+      instances[instanceId] = instance;
+    }
+
     // setting defaults
     if (typeof instance.defaults === 'function') {
       instance.defaults();
@@ -835,11 +840,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     // initializing instance
     if (typeof instance.init === 'function') {
       instance.init();
-    }
-
-    // caching instance (if necessary)
-    if (instanceId !== undefined) {
-      instances[instanceId] = instance;
     }
 
     return instance;
