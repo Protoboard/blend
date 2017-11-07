@@ -76,10 +76,9 @@ describe("$utils", function () {
           expect(originalFunction).toHaveBeenCalledWith('foo', 'bar');
         });
 
-        it("should resolve returned Promise with return value", function () {
+        it("should notify returned Promise with return value", function () {
           jasmine.clock().tick(51);
-          expect(promise.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
-          expect(promise.deferredArguments[0]).toBe('foo');
+          expect(promise.notificationArguments.pop()[0]).toBe('foo');
         });
       });
 
