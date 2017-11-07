@@ -11,7 +11,6 @@
  * @class $module.Module
  * @extends $event.EventSender
  * @extends $event.EventListener
- * @todo Add manifest
  */
 $module.Module = $oop.getClass('$module.Module')
 .cache(function (properties) {
