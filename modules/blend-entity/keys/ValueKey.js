@@ -32,26 +32,3 @@ $entity.ValueKey = $oop.getClass('$entity.ValueKey')
     return this.getAttribute('valueOptions');
   }
 });
-
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$entity.ValueKey} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isValueKey: function (expr, message) {
-    return $assert.assert(
-        $entity.ValueKey.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$entity.ValueKey} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isValueKeyOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $entity.ValueKey.mixedBy(expr), message);
-  }
-});

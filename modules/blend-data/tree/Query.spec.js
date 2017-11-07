@@ -2,45 +2,6 @@
 
 var $data = window['blend-data'];
 
-describe("$assert", function () {
-  var query;
-
-  beforeEach(function () {
-    query = $data.Query.create({components: ['foo', 'bar']});
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isQuery()", function () {
-    it("should pass message to assert", function () {
-      $assert.isQuery(query, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-query", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isQuery({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isQueryOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isQueryOptional(query, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-qpuery", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isQueryOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$data", function () {
   describe("Query", function () {
     var Query,

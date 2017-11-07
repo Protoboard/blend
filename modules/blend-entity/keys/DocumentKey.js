@@ -180,26 +180,3 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
     return $entity.DocumentKey.fromComponents(this[0], this[1]);
   }
 });
-
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$entity.DocumentKey} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isDocumentKey: function (expr, message) {
-    return $assert.assert(
-        $entity.DocumentKey.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$entity.DocumentKey} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isDocumentKeyOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $entity.DocumentKey.mixedBy(expr), message);
-  }
-});

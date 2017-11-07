@@ -5,45 +5,6 @@ var $assert = window['blend-assert'],
     $data = window['blend-data'],
     $entity = window['blend-entity'];
 
-describe("$assert", function () {
-  var documentKey;
-
-  beforeEach(function () {
-    documentKey = $entity.DocumentKey.fromComponents('foo', 'bar');
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isDocumentKey()", function () {
-    it("should pass message to assert", function () {
-      $assert.isDocumentKey(documentKey, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-DocumentKey", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isDocumentKey({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isDocumentKeyOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isDocumentKeyOptional(documentKey, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-DocumentKey", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isDocumentKeyOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$entity", function () {
   describe("DocumentKey", function () {
     var DocumentKey,

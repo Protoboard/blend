@@ -514,29 +514,6 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$data.Tree} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isTree: function (expr, message) {
-    return $assert.assert(
-        $data.Tree.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$data.Tree} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isTreeOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $data.Tree.mixedBy(expr), message);
-  }
-});
-
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.Tree}

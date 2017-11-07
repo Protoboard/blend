@@ -201,29 +201,6 @@ $data.Path = $oop.getClass('$data.Path')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$data.Path} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isPath: function (expr, message) {
-    return $assert.assert(
-        $data.Path.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$data.Path} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isPathOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $data.Path.mixedBy(expr), message);
-  }
-});
-
 $oop.copyProperties($data, /** @lends $data */{
   /**
    * Separates path components.

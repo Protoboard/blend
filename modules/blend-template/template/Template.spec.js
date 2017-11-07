@@ -1,48 +1,8 @@
 "use strict";
 
-var $assert = window['blend-assert'],
-    $oop = window['blend-oop'],
+var $oop = window['blend-oop'],
     $utils = window['blend-utils'],
     $template = window['blend-template'];
-
-describe("$assert", function () {
-  var template;
-
-  beforeEach(function () {
-    template = $template.Template.fromString('foo');
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isTemplate()", function () {
-    it("should pass message to assert", function () {
-      $assert.isTemplate(template, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-Template", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isTemplate({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isTemplateOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isTemplateOptional(template, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-Template", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isTemplateOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
 
 describe("$template", function () {
   describe("Template", function () {

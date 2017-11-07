@@ -4,45 +4,6 @@ var $oop = window['blend-oop'],
     $event = window['blend-event'],
     $template = window['blend-template'];
 
-describe("$assert", function () {
-  var liveTemplate;
-
-  beforeEach(function () {
-    liveTemplate = $template.LiveTemplate.fromString('foo');
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isLiveTemplate()", function () {
-    it("should pass message to assert", function () {
-      $assert.isLiveTemplate(liveTemplate, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-LiveTemplate", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isLiveTemplate({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isLiveTemplateOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isLiveTemplateOptional(liveTemplate, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-LiveTemplate", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isLiveTemplateOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$template", function () {
   describe("LiveTemplate", function () {
     var LiveTemplate,

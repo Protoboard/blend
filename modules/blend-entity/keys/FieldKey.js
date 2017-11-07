@@ -184,26 +184,3 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
     return $entity.FieldKey.fromComponents(this[0], this[1], this[2]);
   }
 });
-
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$entity.FieldKey} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isFieldKey: function (expr, message) {
-    return $assert.assert(
-        $entity.FieldKey.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$entity.FieldKey} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isFieldKeyOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $entity.FieldKey.mixedBy(expr), message);
-  }
-});

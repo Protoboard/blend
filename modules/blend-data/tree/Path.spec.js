@@ -2,45 +2,6 @@
 
 var $data = window['blend-data'];
 
-describe("$assert", function () {
-  var path;
-
-  beforeEach(function () {
-    path = $data.Path.create({components: ['foo', 'bar']});
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isPath()", function () {
-    it("should pass message to assert", function () {
-      $assert.isPath(path, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-path", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isPath({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isPathOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isPathOptional(path, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-path", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isPathOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$data", function () {
   describe("Path", function () {
     var Path,

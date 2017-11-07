@@ -159,26 +159,3 @@ $oop.copyProperties($utils, /** @lends $utils */{
   /** @constant */
   PROMISE_STATE_REJECTED: 'rejected'
 });
-
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$utils.Promise} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isPromise: function (expr, message) {
-    return $assert.assert(
-        $utils.Promise.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$utils.Promise} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isPromiseOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $utils.Promise.mixedBy(expr), message);
-  }
-});

@@ -114,29 +114,6 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$template.LiveTemplate} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isLiveTemplate: function (expr, message) {
-    return $assert.assert(
-        $template.LiveTemplate.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$template.LiveTemplate} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isLiveTemplateOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $template.LiveTemplate.mixedBy(expr), message);
-  }
-});
-
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /** @returns {$template.LiveTemplate} */
   toLiveTemplate: function () {

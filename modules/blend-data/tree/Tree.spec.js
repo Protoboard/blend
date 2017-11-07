@@ -2,45 +2,6 @@
 
 var $data = window['blend-data'];
 
-describe("$assert", function () {
-  var tree;
-
-  beforeEach(function () {
-    tree = $data.Tree.create({data: ['foo', 'bar']});
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isTree()", function () {
-    it("should pass message to assert", function () {
-      $assert.isTree(tree, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-tree", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isTree("foo");
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isTreeOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isTreeOptional(tree, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-tree", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isTreeOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$data", function () {
   describe("Tree", function () {
     var Tree,

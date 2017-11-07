@@ -4,52 +4,6 @@ var $oop = window['blend-oop'],
     $data = window['blend-data'],
     $entity = window['blend-entity'];
 
-describe("$assert", function () {
-  var ValueKey,
-      valueKey;
-
-  beforeAll(function () {
-    ValueKey = $oop.getClass('test.$entity.ValueKey.ValueKey')
-    .blend($entity.EntityKey)
-    .blend($entity.ValueKey);
-  });
-
-  beforeEach(function () {
-    valueKey = ValueKey.create();
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isValueKey()", function () {
-    it("should pass message to assert", function () {
-      $assert.isValueKey(valueKey, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-ValueKey", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isValueKey({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isValueKeyOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isValueKeyOptional(valueKey, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-chain", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isValueKeyOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$entity", function () {
   describe("ValueKey", function () {
     var ValueKey,

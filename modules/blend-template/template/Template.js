@@ -167,29 +167,6 @@ $template.Template = $oop.getClass('$template.Template')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$template.Template} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isTemplate: function (expr, message) {
-    return $assert.assert(
-        $template.Template.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$template.Template} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isTemplateOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $template.Template.mixedBy(expr), message);
-  }
-});
-
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /** @returns {$template.Template} */
   toTemplate: function () {

@@ -4,45 +4,6 @@ var $oop = window['blend-oop'],
     $data = window['blend-data'],
     $entity = window['blend-entity'];
 
-describe("$assert", function () {
-  var itemKey;
-
-  beforeEach(function () {
-    itemKey = $entity.ItemKey.fromComponents('foo', 'bar', 'baz');
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isItemKey()", function () {
-    it("should pass message to assert", function () {
-      $assert.isItemKey(itemKey, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-ItemKey", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isItemKey({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isItemKeyOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isItemKeyOptional(itemKey, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-chain", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isItemKeyOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$entity", function () {
   describe("ItemKey", function () {
     var ItemKey,

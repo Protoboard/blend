@@ -46,7 +46,8 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
 
   /** @ignore */
   init: function () {
-    $assert.isDocumentKey(this.localeKey, "Invalid locale key");
+    $assert.isInstanceOf(
+        this.localeKey, $entity.DocumentKey, "Invalid locale key");
 
     var listeningPath = $data.Path.fromComponentsToString([
       'locale', this.localeKey.documentId]);

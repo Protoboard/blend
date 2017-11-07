@@ -146,29 +146,6 @@ $data.Query = $oop.getClass('$data.Query')
   }
 });
 
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$data.Query} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isQuery: function (expr, message) {
-    return $assert.assert(
-        $data.Query.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$data.Query} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isQueryOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $data.Query.mixedBy(expr), message);
-  }
-});
-
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$data.Query}

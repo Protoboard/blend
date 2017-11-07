@@ -3,45 +3,6 @@
 var $oop = window['blend-oop'],
     $data = window['blend-data'];
 
-describe("$assert", function () {
-  var chain;
-
-  beforeEach(function () {
-    chain = $data.Chain.create();
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isChain()", function () {
-    it("should pass message to assert", function () {
-      $assert.isChain(chain, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-chain", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isChain({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isChainOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isChainOptional(chain, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-chain", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isChainOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
-
 describe("$data", function () {
   var result;
 

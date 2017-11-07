@@ -182,26 +182,3 @@ $oop.getClass('$data.KeyValueContainer')
     return this.to($data.Chain);
   }
 });
-
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$data.Chain} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isChain: function (expr, message) {
-    return $assert.assert(
-        $data.Chain.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$data.Chain} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isChainOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $data.Chain.mixedBy(expr), message);
-  }
-});

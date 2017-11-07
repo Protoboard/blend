@@ -32,7 +32,7 @@ $data.MasterLink = $oop.getClass('$data.MasterLink')
 
   /** @ignore */
   init: function () {
-    $assert.isChain(this.chain, "Invalid chain");
+    $assert.isInstanceOf(this.chain, $data.Chain, "Invalid chain");
 
     this.previousLink = this;
     this.nextLink = this;

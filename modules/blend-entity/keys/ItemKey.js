@@ -184,26 +184,3 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
     return $entity.ItemKey.fromComponents(this[0], this[1], this[2], this[3]);
   }
 });
-
-$oop.copyProperties($assert, /** @lends $assert */{
-  /**
-   * @param {$entity.ItemKey} expr
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isItemKey: function (expr, message) {
-    return $assert.assert(
-        $entity.ItemKey.mixedBy(expr), message);
-  },
-
-  /**
-   * @param {$entity.ItemKey} [expr]
-   * @param {string} [message]
-   * @returns {$assert}
-   */
-  isItemKeyOptional: function (expr, message) {
-    return $assert.assert(
-        expr === undefined ||
-        $entity.ItemKey.mixedBy(expr), message);
-  }
-});

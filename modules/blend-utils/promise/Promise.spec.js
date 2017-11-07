@@ -1,47 +1,7 @@
 "use strict";
 
-var $assert = window['blend-assert'],
-    $oop = window['blend-oop'],
+var $oop = window['blend-oop'],
     $utils = window['blend-utils'];
-
-describe("$assert", function () {
-  var promise;
-
-  beforeEach(function () {
-    promise = $utils.Promise.create();
-    spyOn($assert, 'assert').and.callThrough();
-  });
-
-  describe("isPromise()", function () {
-    it("should pass message to assert", function () {
-      $assert.isPromise(promise, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-promise", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isPromise({});
-        }).toThrow();
-      });
-    });
-  });
-
-  describe("isPromiseOptional()", function () {
-    it("should pass message to assert", function () {
-      $assert.isPromiseOptional(promise, "bar");
-      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
-    });
-
-    describe("when passing non-promise", function () {
-      it("should throw", function () {
-        expect(function () {
-          $assert.isPromiseOptional({});
-        }).toThrow();
-      });
-    });
-  });
-});
 
 describe("$utils", function () {
   describe("Promise", function () {
