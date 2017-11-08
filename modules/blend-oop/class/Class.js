@@ -1175,7 +1175,7 @@ $oop.copyProperties($assert, /** @lends $assert */{
   },
 
   /**
-   * @param {$oop.Class} expr
+   * @param {*} expr
    * @param {$oop.Class} Class
    * @param {string} [message]
    * @returns {$assert}
@@ -1186,7 +1186,7 @@ $oop.copyProperties($assert, /** @lends $assert */{
   },
 
   /**
-   * @param {$oop.Class} [expr]
+   * @param {*} [expr]
    * @param {$oop.Class} Class
    * @param {string} [message]
    * @returns {$assert}
