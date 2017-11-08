@@ -61,7 +61,7 @@ $data.Path = $oop.getClass('$data.Path')
   fromString: function (pathStr) {
     var components = $utils.safeSplit(pathStr, $data.PATH_COMPONENT_SEPARATOR)
     .map($data.unescapePathComponent);
-    return $data.Path.create({components: components});
+    return this.create({components: components});
   },
 
   /** @ignore */
