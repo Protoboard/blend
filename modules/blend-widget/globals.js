@@ -10,3 +10,12 @@ var $assert = require('blend-assert'),
 /**
  * @namespace $widget
  */
+
+$oop.copyProperties($widget, /** @lends $widget */{
+  /**
+   * Determines how widgets manifest in Node.js.
+   * Possible values: undefined, 'html'
+   * @constant
+   */
+  nodeWidgetRenderMethod: 'html'
+});

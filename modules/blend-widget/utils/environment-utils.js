@@ -4,9 +4,9 @@ $oop.copyProperties($widget, /** @lends $widget */{
   /**
    * Detects whether we are running in a browser environment.
    * @returns {boolean}
-   * @todo Need detection that includes Node.js.
    */
   isHtml: function () {
-    return typeof window === 'object';
+    return $utils.isBrowser() ||
+        $utils.isNode() && $widget.nodeWidgetRenderMethod === 'html';
   }
 });
