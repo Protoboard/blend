@@ -13,7 +13,6 @@
  * @extends $utils.Identifiable
  * @extends $event.EventSender
  * @extends $event.EventListener
- * @todo Parameter list?
  */
 $api.Endpoint = $oop.getClass('$api.Endpoint')
 .blend($utils.Identifiable)
