@@ -12,9 +12,9 @@
       require([
         'blend-assert', 'blend-oop', 'blend-utils', 'blend-data', 'blend-event',
         'blend-module', 'blend-template', 'blend-entity', 'blend-i18n',
-        'blend-router', 'blend-widget', 'blend-widgets'
+        'blend-router', 'blend-api', 'blend-widget', 'blend-widgets'
       ], function (assert, oop, utils, data, event, module, template, entity,
-          i18n, router, widget, widgets
+          i18n, router, api, widget, widgets
       ) {
         $assert = assert;
         $oop = oop;
@@ -26,6 +26,7 @@
         $entity = entity;
         $i18n = i18n;
         $router = router;
+        $api = api;
         $widget = widget;
         $widgets = widgets;
       });
