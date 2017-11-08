@@ -9,7 +9,7 @@
 
 /**
  * Identifies a remote source of data.
- * @mixin $api.Endpoint
+ * @class $api.Endpoint
  * @extends $utils.Identifiable
  * @extends $event.EventSender
  * @extends $event.EventListener
