@@ -6,6 +6,6 @@
  * @mixin $utils.StringifyCached
  */
 $utils.StringifyCached = $oop.getClass('$utils.StringifyCached')
-.cache(function (properties) {
+.cacheBy(function (properties) {
   return this.toString.call(properties);
 });

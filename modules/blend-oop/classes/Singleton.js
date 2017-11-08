@@ -8,6 +8,6 @@
  * .blend($oop.Singleton)
  */
 $oop.Singleton = $oop.getClass('$oop.Singleton')
-.cache(function () {
+.cacheBy(function () {
   return 'singleton';
 });

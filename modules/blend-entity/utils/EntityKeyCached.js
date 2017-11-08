@@ -7,7 +7,7 @@
  * @augments $entity.EntityKeyHost
  */
 $entity.EntityKeyCached = $oop.getClass('$entity.EntityKeyCached')
-.cache(function (properties) {
+.cacheBy(function (properties) {
   var entityKey = properties && properties.entityKey;
   return entityKey && entityKey.toString();
 })

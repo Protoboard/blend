@@ -699,7 +699,7 @@ describe("$oop", function () {
         beforeEach(function () {
           Class.mix(Mixin);
           mapper = function () {};
-          Mixin.cache(mapper);
+          Mixin.cacheBy(mapper);
         });
 
         it("should transfer mapper to blender", function () {
@@ -1107,19 +1107,19 @@ describe("$oop", function () {
       });
     });
 
-    describe("cache()", function () {
+    describe("cacheBy()", function () {
       var mapper;
 
       beforeEach(function () {
         mapper = function () {
         };
-        result = Class.cache(mapper);
+        result = Class.cacheBy(mapper);
       });
 
       describe("when passing invalid argument", function () {
         it("should throw", function () {
           expect(function () {
-            Class.cache();
+            Class.cacheBy();
           }).toThrow();
         });
       });
@@ -1425,7 +1425,7 @@ describe("$oop", function () {
         var context;
 
         beforeEach(function () {
-          Class.cache(function (args) {
+          Class.cacheBy(function (args) {
             context = this;
             return args.foo && // return undefined when args.foo is undefined
                 '_' + args.foo; // otherwise a prefixed version of it
@@ -1508,7 +1508,7 @@ describe("$oop", function () {
 
           beforeEach(function () {
             Forward2 = $oop.getClass('Forward2')
-            .cache(function (args) {
+            .cacheBy(function (args) {
               return '_' + args.foo;
             })
             .mix(Class);

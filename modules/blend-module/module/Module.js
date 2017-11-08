@@ -13,7 +13,7 @@
  * @extends $event.EventListener
  */
 $module.Module = $oop.getClass('$module.Module')
-.cache(function (properties) {
+.cacheBy(function (properties) {
   return properties && properties.moduleId;
 })
 .blend($event.EventSender)

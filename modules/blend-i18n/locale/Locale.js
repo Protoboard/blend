@@ -14,7 +14,7 @@
  * @extends $event.EventSender
  */
 $i18n.Locale = $oop.getClass('$i18n.Locale')
-.cache(function (properties) {
+.cacheBy(function (properties) {
   var localeKey = properties && properties.localeKey;
   return localeKey && localeKey.toString();
 })

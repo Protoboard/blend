@@ -1044,12 +1044,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
   /**
    * Specifies a mapper function to be used to build a registry.
-   * @todo Rename
    * @param {function} mapper
    * @returns {$oop.Class}
    */
-  cache: function (mapper) {
-    $assert.isFunction(mapper, "Class#cache expects function argument.");
+  cacheBy: function (mapper) {
+    $assert.isFunction(mapper, "Class#cacheBy expects function argument.");
 
     this._setInstanceMapper(mapper);
 
