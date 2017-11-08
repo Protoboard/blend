@@ -2,7 +2,7 @@
 
 $oop.copyProperties($widget, /** @lends $widget */{
   /**
-   * Detects whether we are running in a browser environment.
+   * Detects whether HTML rendering is available and is set as default.
    * @returns {boolean}
    */
   isHtml: function () {
