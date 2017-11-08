@@ -38,7 +38,7 @@ describe("$api", function () {
 
 describe("$data", function () {
   describe("Path", function () {
-    describe("toAjaxEndpoint()", function () {
+    describe("toHttpEndpoint()", function () {
       var path,
           ajaxEndpoint;
 
@@ -48,12 +48,12 @@ describe("$data", function () {
       });
 
       it("should return a HttpEndpoint instance", function () {
-        ajaxEndpoint = path.toAjaxEndpoint();
+        ajaxEndpoint = path.toHttpEndpoint();
         expect($api.HttpEndpoint.mixedBy(ajaxEndpoint)).toBeTruthy();
       });
 
       it("should set components", function () {
-        ajaxEndpoint = path.toAjaxEndpoint();
+        ajaxEndpoint = path.toHttpEndpoint();
         expect(ajaxEndpoint.components).toBe(path.components);
       });
     });
@@ -61,16 +61,16 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  describe("toAjaxEndpoint()", function () {
+  describe("toHttpEndpoint()", function () {
     var ajaxEndpoint;
 
     it("should return a HttpEndpoint instance", function () {
-      ajaxEndpoint = 'foo.bar.baz'.toAjaxEndpoint();
+      ajaxEndpoint = 'foo.bar.baz'.toHttpEndpoint();
       expect($api.HttpEndpoint.mixedBy(ajaxEndpoint)).toBeTruthy();
     });
 
     it("should set components property", function () {
-      ajaxEndpoint = 'foo.bar.baz'.toAjaxEndpoint();
+      ajaxEndpoint = 'foo.bar.baz'.toHttpEndpoint();
       expect(ajaxEndpoint.components).toEqual([
         'foo', 'bar', 'baz'
       ]);
@@ -79,17 +79,17 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toAjaxEndpoint()", function () {
+  describe("toHttpEndpoint()", function () {
     var ajaxEndpoint,
         array = ['1', '2', '3'];
 
     it("should return a HttpEndpoint instance", function () {
-      ajaxEndpoint = array.toAjaxEndpoint();
+      ajaxEndpoint = array.toHttpEndpoint();
       expect($api.HttpEndpoint.mixedBy(ajaxEndpoint)).toBeTruthy();
     });
 
     it("should set components property", function () {
-      ajaxEndpoint = array.toAjaxEndpoint();
+      ajaxEndpoint = array.toHttpEndpoint();
       expect(ajaxEndpoint.components).toBe(array);
     });
   });

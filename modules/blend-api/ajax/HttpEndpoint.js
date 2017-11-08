@@ -42,7 +42,7 @@ $data.Path
   /**
    * @returns {$api.HttpEndpoint}
    */
-  toAjaxEndpoint: function () {
+  toHttpEndpoint: function () {
     return $api.HttpEndpoint.create({components: this.components});
   }
 });
@@ -51,7 +51,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$api.HttpEndpoint}
    */
-  toAjaxEndpoint: function () {
+  toHttpEndpoint: function () {
     return $api.HttpEndpoint.fromString(this.valueOf());
   }
 });
@@ -60,7 +60,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$api.HttpEndpoint}
    */
-  toAjaxEndpoint: function () {
+  toHttpEndpoint: function () {
     return $api.HttpEndpoint.create({components: this});
   }
 });
