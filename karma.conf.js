@@ -21,6 +21,7 @@ module.exports = function (config) {
       'dist/blend-entity.js',
       'dist/blend-i18n.js',
       'dist/blend-router.js',
+      'dist/blend-api.js',
       'dist/blend-widget.js',
       'dist/blend-widgets.js',
       'test/*.js',
