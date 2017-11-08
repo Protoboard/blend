@@ -3,7 +3,8 @@
     "js": [
       "utils/environment-utils.js",
       "**/*.js",
-      "!**/*.*.js"
+      "!**/*.*.js",
+      "!*.js"
     ]
   }
 }
