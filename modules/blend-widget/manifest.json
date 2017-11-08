@@ -1,7 +1,6 @@
 {
   "assets": {
     "js": [
-      "globals.js",
       "utils/environment-utils.js",
       "**/*.js",
       "!**/*.*.js"

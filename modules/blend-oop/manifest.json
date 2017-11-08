@@ -1,7 +1,6 @@
 {
   "assets": {
     "js": [
-      "globals.js",
       "utils/class-utils.js",
       "utils/uuid-utils.js",
       "utils/string-utils.js",

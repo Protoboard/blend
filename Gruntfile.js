@@ -33,16 +33,14 @@ module.exports = function (grunt) {
         options: {
           separator: '\n',
           process: function (src, filepath) {
-            return filepath.indexOf('globals.js') === -1 ?
-                ['(function () {', src, '}());'].join('\n') :
-                src;
+            return ['(function () {', src, '}());'].join('\n');
           },
           banner: [
             '/*! ' + pkg.name + ' - v' + pkg.version +
             ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
             '(function(){',
             'function d(require,exports,module){',
-            ''
+            grunt.file.read(['modules', moduleId, 'globals.js'].join('/'))
           ].join('\n'),
           footer: [
             // signaling module availability to app
