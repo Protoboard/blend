@@ -32,6 +32,11 @@ module.exports = function (grunt) {
         dest: ['dist', pkg.name + '.js'].join('/'),
         options: {
           separator: '\n',
+          process: function (src, filepath) {
+            return filepath.indexOf('globals.js') === -1 ?
+                ['(function () {', src, '}());'].join('\n') :
+                src;
+          },
           banner: [
             '/*! ' + pkg.name + ' - v' + pkg.version +
             ' - <%= grunt.template.today("yyyy-mm-dd") %> */',

@@ -1,4 +1,4 @@
-"use strict";
+/* jshint strict:false */
 
 var $assert = require('blend-assert'),
     $oop = require('blend-oop'),
