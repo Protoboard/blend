@@ -10,21 +10,3 @@ var $assert = require('blend-assert'),
 /**
  * @namespace $api
  */
-
-$oop.copyProperties($api, /** @lends $api */{
-  /**
-   * Determines how endpoints manifest in the browser by default.
-   * Possible values: undefined, 'ajax', 'custom'
-   * @constant
-   * @todo Add 'function' option.
-   */
-  browserEndpointMethod: 'ajax',
-
-  /**
-   * Determines how endpoints manifest in Node by default.
-   * Possible values: undefined, 'ajax', 'custom'
-   * @constant
-   * @todo Add 'function' option.
-   */
-  nodeEndpointMethod: 'ajax'
-});
