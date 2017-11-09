@@ -12,7 +12,7 @@
  * Identifies an HTTP endpoint.
  * @class $api.HttpEndpoint
  * @extends $api.Endpoint
- * @extends $data.Path
+ * @extends $api.LocationPath
  */
 $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
 .cacheBy(function (parameters) {
@@ -20,33 +20,13 @@ $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
   return endpointId || $api.HttpEndpoint.toUrlPath.call(parameters);
 })
 .blend($oop.getClass('$api.Endpoint'))
-.blend($data.Path)
+.blend($oop.getClass('$api.LocationPath'))
 .define(/** @lends $api.HttpEndpoint# */{
-  /**
-   * @memberOf $api.HttpEndpoint
-   * @param {string} urlPath
-   * @returns {$api.HttpEndpoint}
-   */
-  fromUrlPath: function (urlPath) {
-    var components = urlPath.split('/')
-    .map(decodeURIComponent);
-    return this.create({components: components});
-  },
-
   /** @ignore */
   spread: function () {
     if (this.endpointId === undefined) {
       this.endpointId = this.toUrlPath();
     }
-  },
-
-  /**
-   * @returns {string}
-   */
-  toUrlPath: function () {
-    return this.components
-    .map(encodeURIComponent)
-    .join('/');
   }
 });
 

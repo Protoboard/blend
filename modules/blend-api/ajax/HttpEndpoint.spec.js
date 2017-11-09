@@ -35,35 +35,10 @@ describe("$api", function () {
       .not.toBe(HttpEndpoint.fromComponents(['foo', 'baz']));
     });
 
-    describe("fromUrlPath()", function () {
-      it("should return HttpEndpoint instance", function () {
-        httpEndpoint = HttpEndpoint.fromUrlPath('foo/bar');
-        expect(HttpEndpoint.mixedBy(httpEndpoint)).toBeTruthy();
-      });
-
-      it("should initialize components", function () {
-        httpEndpoint = HttpEndpoint.fromUrlPath('foo/bar');
-        expect(httpEndpoint.components).toEqual(['foo', 'bar']);
-      });
-    });
-
     describe("create()", function () {
       it("should initialize endpointId", function () {
         httpEndpoint = HttpEndpoint.fromComponents(['foo', 'bar']);
         expect(httpEndpoint.endpointId).toBe('foo/bar');
-      });
-    });
-
-    describe("toUrlPath()", function () {
-      beforeEach(function () {
-        httpEndpoint = HttpEndpoint.create({
-          components: ['foo/', 'bar', 'baz']
-        });
-      });
-
-      it("should escape URI component strings", function () {
-        var result = httpEndpoint.toUrlPath();
-        expect(result).toBe('foo%2F/bar/baz');
       });
     });
   });
