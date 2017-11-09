@@ -13,7 +13,6 @@
  * @class $api.HttpEndpoint
  * @extends $api.Endpoint
  * @extends $data.Path
- * @todo Add #fromUrlPath, #toUrlPath, as in $router.Route
  */
 $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
 .cacheBy(function (parameters) {
@@ -24,17 +23,37 @@ $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
 .blend($oop.getClass('$api.Endpoint'))
 .blend($data.Path)
 .define(/** @lends $api.HttpEndpoint# */{
+  /**
+   * @memberOf $api.HttpEndpoint
+   * @param {string} urlPath
+   * @returns {$api.HttpEndpoint}
+   */
+  fromUrlPath: function (urlPath) {
+    var components = urlPath.split('/')
+    .map(decodeURIComponent);
+    return this.create({components: components});
+  },
+
   /** @ignore */
   spread: function () {
     var components = this.components,
         endpointId = this.endpointId;
 
     if (endpointId === undefined) {
-      this.endpointId = this.toString();
+      this.endpointId = this.toUrlPath();
     } else if (components === undefined) {
-      this.components = $utils.safeSplit(endpointId, $data.PATH_COMPONENT_SEPARATOR)
-      .map($data.unescapePathComponent);
+      this.components = endpointId.split('/')
+      .map(decodeURIComponent);
     }
+  },
+
+  /**
+   * @returns {string}
+   */
+  toUrlPath: function () {
+    return this.components
+    .map(encodeURIComponent)
+    .join('/');
   }
 });
 

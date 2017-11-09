@@ -6,7 +6,7 @@ var $oop = window['blend-oop'],
 describe("$api", function () {
   describe("HttpEndpoint", function () {
     var HttpEndpoint,
-        ajaxEndpoint;
+        httpEndpoint;
 
     beforeAll(function () {
       HttpEndpoint = $oop.getClass('test.$api.HttpEndpoint.HttpEndpoint')
@@ -18,6 +18,13 @@ describe("$api", function () {
       HttpEndpoint.__instanceLookup = {};
     });
 
+    it("should be cached by endpointId", function () {
+      expect(HttpEndpoint.fromEndpointId('foo/bar'))
+      .toBe(HttpEndpoint.fromEndpointId('foo/bar'));
+      expect(HttpEndpoint.fromEndpointId('foo/bar'))
+      .not.toBe(HttpEndpoint.fromEndpointId('foo/baz'));
+    });
+
     it("should be cached by components", function () {
       expect(HttpEndpoint.fromComponents(['foo', 'bar']))
       .toBe(HttpEndpoint.fromComponents(['foo', 'bar']));
@@ -25,15 +32,40 @@ describe("$api", function () {
       .not.toBe(HttpEndpoint.fromComponents(['foo', 'baz']));
     });
 
-    describe("create", function () {
-      it("should initialize endpointId", function () {
-        ajaxEndpoint = HttpEndpoint.fromComponents(['foo', 'bar']);
-        expect(ajaxEndpoint.endpointId).toBe('foo.bar');
+    describe("fromUrlPath()", function () {
+      it("should return HttpEndpoint instance", function () {
+        httpEndpoint = HttpEndpoint.fromUrlPath('foo/bar');
+        expect(HttpEndpoint.mixedBy(httpEndpoint)).toBeTruthy();
       });
 
       it("should initialize components", function () {
-        ajaxEndpoint = HttpEndpoint.fromEndpointId('foo.bar');
-        expect(ajaxEndpoint.components).toEqual(['foo', 'bar']);
+        httpEndpoint = HttpEndpoint.fromUrlPath('foo/bar');
+        expect(httpEndpoint.components).toEqual(['foo', 'bar']);
+      });
+    });
+
+    describe("create()", function () {
+      it("should initialize endpointId", function () {
+        httpEndpoint = HttpEndpoint.fromComponents(['foo', 'bar']);
+        expect(httpEndpoint.endpointId).toBe('foo/bar');
+      });
+
+      it("should initialize components", function () {
+        httpEndpoint = HttpEndpoint.fromEndpointId('foo/bar');
+        expect(httpEndpoint.components).toEqual(['foo', 'bar']);
+      });
+    });
+
+    describe("toUrlPath()", function () {
+      beforeEach(function () {
+        httpEndpoint = HttpEndpoint.create({
+          components: ['foo/', 'bar', 'baz']
+        });
+      });
+
+      it("should escape URI component strings", function () {
+        var result = httpEndpoint.toUrlPath();
+        expect(result).toBe('foo%2F/bar/baz');
       });
     });
   });
