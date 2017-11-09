@@ -60,15 +60,13 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
         locationPath = $api.LocationPath.fromComponents(pathComponents),
 
         queryParams = this._extractParametersByType('query:'),
-        queryParamData = $data.Collection.fromData(queryParams)
+        urlQuery = $data.Collection.fromData(queryParams)
         .mapValues(function (queryParamValue) {
           return queryParamValue instanceof Array ?
               queryParamValue :
               [queryParamValue];
         })
-        .asDictionary()
-            .data,
-        urlQuery = $api.UrlQuery.fromData(queryParamData);
+        .as($api.UrlQuery);
 
     return locationPath.toUrlPath() + '?' + urlQuery.toString();
   }
