@@ -16,11 +16,11 @@ describe("$api", function () {
 
     describe("fromEndpoint()", function () {
       var endpoint,
-          parameterValues;
+          parameters;
 
       beforeEach(function () {
         endpoint = 'foo/bar'.toHttpEndpoint();
-        parameterValues = {};
+        parameters = {};
       });
 
       it("should return Request instance", function () {
@@ -33,9 +33,9 @@ describe("$api", function () {
         expect(request.endpoint).toBe(endpoint);
       });
 
-      it("should set parameterValues", function () {
-        request = Request.fromEndpoint(endpoint, parameterValues);
-        expect(request.parameterValues).toBe(parameterValues);
+      it("should set parameters", function () {
+        request = Request.fromEndpoint(endpoint, parameters);
+        expect(request.parameters).toBe(parameters);
       });
     });
 
@@ -51,12 +51,12 @@ describe("$api", function () {
         });
       });
 
-      it("should initialize parameterValues", function () {
+      it("should initialize parameters", function () {
         request = Request.create({
           endpoint: 'foo/bar'.toHttpEndpoint(),
           requestId: '1'
         });
-        expect(request.parameterValues).toEqual({});
+        expect(request.parameters).toEqual({});
       });
 
       it("should initialize listeningPath", function () {
@@ -79,11 +79,11 @@ describe("$api", function () {
 
   describe("Endpoint", function () {
     var endpoint,
-        parameterValues;
+        parameters;
 
     beforeEach(function () {
       endpoint = 'foo/bar'.toHttpEndpoint();
-      parameterValues = {};
+      parameters = {};
     });
 
     describe("toRequest()", function () {
@@ -99,9 +99,9 @@ describe("$api", function () {
         expect(request.endpoint).toBe(endpoint);
       });
 
-      it("should set parameterValues", function () {
-        request = endpoint.toRequest(parameterValues);
-        expect(request.parameterValues).toBe(parameterValues);
+      it("should set parameters", function () {
+        request = endpoint.toRequest(parameters);
+        expect(request.parameters).toBe(parameters);
       });
     });
   });

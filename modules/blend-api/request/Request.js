@@ -24,19 +24,20 @@ $api.Request = $oop.getClass('$api.Request')
    */
 
   /**
-   * @member {Object} $api.Request#parameterValues
+   * @member {Object} $api.Request#parameters
+   * @todo Should be Collection?
    */
 
   /**
    * @memberOf $api.Request
    * @param {$api.Endpoint} endpoint
-   * @param {Object} [parameterValues]
+   * @param {Object} [parameters]
    * @returns {$api.Request}
    */
-  fromEndpoint: function (endpoint, parameterValues) {
+  fromEndpoint: function (endpoint, parameters) {
     return this.create({
       endpoint: endpoint,
-      parameterValues: parameterValues
+      parameters: parameters
     });
   },
 
@@ -45,13 +46,13 @@ $api.Request = $oop.getClass('$api.Request')
     $assert.isInstanceOf(this.endpoint, $api.Endpoint, "Invalid endpoint");
 
     var endpoint = this.endpoint,
-        parameterValues = this.parameterValues || {},
+        parameters = this.parameters || {},
         listeningPath = $data.Path.fromComponentsToString([
           'endpoint',
           endpoint.endpointId,
-          JSON.stringify(parameterValues)]);
+          JSON.stringify(parameters)]);
 
-    this.parameterValues = parameterValues;
+    this.parameters = parameters;
 
     this
     .setListeningPath(listeningPath)
@@ -65,10 +66,10 @@ $oop.getClass('$api.Endpoint')
    * Converts endpoint to a request.
    * @returns {$api.Request}
    */
-  toRequest: function (parameterValues) {
+  toRequest: function (parameters) {
     return $api.Request.create({
       endpoint: this,
-      parameterValues: parameterValues
+      parameters: parameters
     });
   }
 });
