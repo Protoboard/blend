@@ -16,9 +16,8 @@
  */
 $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
 .cacheBy(function (parameters) {
-  var endpointId = parameters && parameters.endpointId,
-      components = parameters && parameters.components;
-  return endpointId || components && $data.Path.fromComponentsToString(components);
+  var endpointId = parameters && parameters.endpointId;
+  return endpointId || $api.HttpEndpoint.toUrlPath.call(parameters);
 })
 .blend($oop.getClass('$api.Endpoint'))
 .blend($data.Path)
@@ -36,14 +35,8 @@ $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
 
   /** @ignore */
   spread: function () {
-    var components = this.components,
-        endpointId = this.endpointId;
-
-    if (endpointId === undefined) {
+    if (this.endpointId === undefined) {
       this.endpointId = this.toUrlPath();
-    } else if (components === undefined) {
-      this.components = endpointId.split('/')
-      .map(decodeURIComponent);
     }
   },
 
@@ -72,7 +65,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$api.HttpEndpoint}
    */
   toHttpEndpoint: function () {
-    return $api.HttpEndpoint.fromEndpointId(this.valueOf());
+    return $api.HttpEndpoint.fromUrlPath(this.valueOf());
   }
 });
 

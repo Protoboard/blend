@@ -2,6 +2,7 @@
 
 /**
  * @function $api.ObjectEndpoint.create
+ * @param {Object} properties
  * @param {string} [properties.endpointProperties]
  * @param {string} [properties.endpointId]
  * @returns {$api.ObjectEndpoint}
@@ -41,13 +42,8 @@ $api.ObjectEndpoint = $oop.getClass('$api.ObjectEndpoint')
 
   /** @ignore */
   spread: function () {
-    var endpointProperties = this.endpointProperties,
-        endpointId = this.endpointId;
-
-    if (endpointId === undefined) {
-      this.endpointId = JSON.stringify(endpointProperties);
-    } else if (endpointProperties === undefined) {
-      this.endpointProperties = JSON.parse(endpointId);
+    if (this.endpointId === undefined) {
+      this.endpointId = JSON.stringify(this.endpointProperties);
     }
   }
 });

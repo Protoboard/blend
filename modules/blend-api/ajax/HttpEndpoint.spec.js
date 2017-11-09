@@ -19,6 +19,9 @@ describe("$api", function () {
     });
 
     it("should be cached by endpointId", function () {
+      HttpEndpoint.fromComponents(['foo', 'bar']);
+      HttpEndpoint.fromComponents(['foo', 'baz']);
+
       expect(HttpEndpoint.fromEndpointId('foo/bar'))
       .toBe(HttpEndpoint.fromEndpointId('foo/bar'));
       expect(HttpEndpoint.fromEndpointId('foo/bar'))
@@ -49,11 +52,6 @@ describe("$api", function () {
         httpEndpoint = HttpEndpoint.fromComponents(['foo', 'bar']);
         expect(httpEndpoint.endpointId).toBe('foo/bar');
       });
-
-      it("should initialize components", function () {
-        httpEndpoint = HttpEndpoint.fromEndpointId('foo/bar');
-        expect(httpEndpoint.components).toEqual(['foo', 'bar']);
-      });
     });
 
     describe("toUrlPath()", function () {
@@ -75,7 +73,7 @@ describe("$data", function () {
   describe("Path", function () {
     describe("toHttpEndpoint()", function () {
       var path,
-          ajaxEndpoint;
+          httpEndpoint;
 
       beforeEach(function () {
         $api.HttpEndpoint.__instanceLookup = {};
@@ -83,13 +81,13 @@ describe("$data", function () {
       });
 
       it("should return a HttpEndpoint instance", function () {
-        ajaxEndpoint = path.toHttpEndpoint();
-        expect($api.HttpEndpoint.mixedBy(ajaxEndpoint)).toBeTruthy();
+        httpEndpoint = path.toHttpEndpoint();
+        expect($api.HttpEndpoint.mixedBy(httpEndpoint)).toBeTruthy();
       });
 
       it("should set components", function () {
-        ajaxEndpoint = path.toHttpEndpoint();
-        expect(ajaxEndpoint.components).toBe(path.components);
+        httpEndpoint = path.toHttpEndpoint();
+        expect(httpEndpoint.components).toBe(path.components);
       });
     });
   });
@@ -97,16 +95,20 @@ describe("$data", function () {
 
 describe("String", function () {
   describe("toHttpEndpoint()", function () {
-    var ajaxEndpoint;
+    var httpEndpoint;
+
+    beforeEach(function () {
+      $api.HttpEndpoint.__instanceLookup = {};
+    });
 
     it("should return a HttpEndpoint instance", function () {
-      ajaxEndpoint = 'foo.bar.baz'.toHttpEndpoint();
-      expect($api.HttpEndpoint.mixedBy(ajaxEndpoint)).toBeTruthy();
+      httpEndpoint = 'foo/bar/baz'.toHttpEndpoint();
+      expect($api.HttpEndpoint.mixedBy(httpEndpoint)).toBeTruthy();
     });
 
     it("should set components property", function () {
-      ajaxEndpoint = 'foo.bar.baz'.toHttpEndpoint();
-      expect(ajaxEndpoint.components).toEqual([
+      httpEndpoint = 'foo/bar/baz'.toHttpEndpoint();
+      expect(httpEndpoint.components).toEqual([
         'foo', 'bar', 'baz'
       ]);
     });
@@ -115,17 +117,21 @@ describe("String", function () {
 
 describe("Array", function () {
   describe("toHttpEndpoint()", function () {
-    var ajaxEndpoint,
+    var httpEndpoint,
         array = ['1', '2', '3'];
 
+    beforeEach(function () {
+      $api.HttpEndpoint.__instanceLookup = {};
+    });
+
     it("should return a HttpEndpoint instance", function () {
-      ajaxEndpoint = array.toHttpEndpoint();
-      expect($api.HttpEndpoint.mixedBy(ajaxEndpoint)).toBeTruthy();
+      httpEndpoint = array.toHttpEndpoint();
+      expect($api.HttpEndpoint.mixedBy(httpEndpoint)).toBeTruthy();
     });
 
     it("should set components property", function () {
-      ajaxEndpoint = array.toHttpEndpoint();
-      expect(ajaxEndpoint.components).toBe(array);
+      httpEndpoint = array.toHttpEndpoint();
+      expect(httpEndpoint.components).toBe(array);
     });
   });
 });

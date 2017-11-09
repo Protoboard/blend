@@ -19,6 +19,9 @@ describe("$api", function () {
     });
 
     it("should be cached by endpointId", function () {
+      ObjectEndpoint.create({endpointProperties: {foo: "bar"}});
+      ObjectEndpoint.create({endpointProperties: {foo: "baz"}});
+
       expect(ObjectEndpoint.fromEndpointId('{"foo":"bar"}'))
       .toBe(ObjectEndpoint.fromEndpointId('{"foo":"bar"}'));
       expect(ObjectEndpoint.fromEndpointId('{"foo":"bar"}'))
@@ -80,16 +83,21 @@ describe("$api", function () {
 
 describe("String", function () {
   describe("toObjectEndpoint()", function () {
-    var ajaxEndpoint;
+    var objectEndpoint;
+
+    beforeEach(function () {
+      $api.ObjectEndpoint.__instanceLookup = {};
+      $api.ObjectEndpoint.create({endpointProperties: {foo: "bar"}});
+    });
 
     it("should return a ObjectEndpoint instance", function () {
-      ajaxEndpoint = '{"foo":"bar"}'.toObjectEndpoint();
-      expect($api.ObjectEndpoint.mixedBy(ajaxEndpoint)).toBeTruthy();
+      objectEndpoint = '{"foo":"bar"}'.toObjectEndpoint();
+      expect($api.ObjectEndpoint.mixedBy(objectEndpoint)).toBeTruthy();
     });
 
     it("should set endpointProperties property", function () {
-      ajaxEndpoint = '{"foo":"bar"}'.toObjectEndpoint();
-      expect(ajaxEndpoint.endpointProperties).toEqual({
+      objectEndpoint = '{"foo":"bar"}'.toObjectEndpoint();
+      expect(objectEndpoint.endpointProperties).toEqual({
         foo: 'bar'
       });
     });
