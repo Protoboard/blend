@@ -8,7 +8,7 @@
  */
 
 /**
- * Identifies a remote source of data.
+ * Identifies a remote resource.
  * @class $api.Endpoint
  * @extends $utils.Identifiable
  * @extends $event.EventSender
