@@ -12,6 +12,9 @@ describe("$api", function () {
       HttpEndpoint = $oop.getClass('test.$api.HttpEndpoint.HttpEndpoint')
       .blend($api.HttpEndpoint);
       HttpEndpoint.__forwards = {list: [], sources: [], lookup: {}};
+    });
+
+    beforeEach(function () {
       HttpEndpoint.__instanceLookup = {};
     });
 

@@ -29,9 +29,7 @@ $api.Endpoint = $oop.getClass('$api.Endpoint')
    * @returns {$api.Endpoint}
    */
   fromEndpointId: function (endpointId) {
-    return this.create({
-      endpointId: endpointId
-    });
+    return this.create({endpointId: endpointId});
   },
 
   /** @ignore */
