@@ -53,8 +53,7 @@ describe("$api", function () {
 
       it("should initialize parameters", function () {
         request = Request.create({
-          endpoint: 'foo/bar'.toHttpEndpoint(),
-          requestId: '1'
+          endpoint: 'foo/bar'.toHttpEndpoint()
         });
         expect(request.parameters).toEqual({});
       });
@@ -68,11 +67,22 @@ describe("$api", function () {
 
       it("should initialize triggerPaths", function () {
         request = Request.create({
-          endpoint: 'foo/bar'.toHttpEndpoint(),
-          requestId: '1'
+          endpoint: 'foo/bar'.toHttpEndpoint()
         });
         expect(request.triggerPaths.list).toContain(
             'endpoint.foo/bar.{}', 'endpoint.foo/bar', 'endpoint');
+      });
+    });
+
+    describe("toString()", function () {
+      it("should serialize Request", function () {
+        request = Request.create({
+          endpoint: 'foo/bar'.toHttpEndpoint(),
+          parameters: {
+            baz: "quux"
+          }
+        });
+        expect(request.toString()).toBe('foo/bar{"baz":"quux"}');
       });
     });
   });

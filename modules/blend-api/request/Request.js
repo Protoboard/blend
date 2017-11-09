@@ -4,7 +4,6 @@
  * @function $api.Request.create
  * @param {Object} properties
  * @param {$api.Endpoint} properties.endpoint
- * @param {$api.Endpoint} properties.requestId
  * @returns {$api.Request}
  */
 
@@ -50,6 +49,7 @@ $api.Request = $oop.getClass('$api.Request')
         listeningPath = $data.Path.fromComponentsToString([
           'endpoint',
           endpoint.endpointId,
+          // todo Need safe stringify that preserves property order
           JSON.stringify(parameters)]);
 
     this.parameters = parameters;
@@ -57,6 +57,14 @@ $api.Request = $oop.getClass('$api.Request')
     this
     .setListeningPath(listeningPath)
     .addTriggerPaths([listeningPath].concat(endpoint.triggerPaths));
+  },
+
+  /**
+   * @returns {string}
+   */
+  toString: function () {
+    // todo Need safe stringify that preserves property order
+    return this.endpoint.endpointId + JSON.stringify(this.parameters);
   }
 });
 
