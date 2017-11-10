@@ -62,7 +62,7 @@ describe("$api", function () {
         request = Request.create({
           endpoint: 'foo/bar'.toHttpEndpoint()
         });
-        expect(request.listeningPath).toBe('endpoint.foo/bar.{}');
+        expect(request.listeningPath).toBe('endpoint.foo/bar.["object"]');
       });
 
       it("should initialize triggerPaths", function () {
@@ -70,7 +70,7 @@ describe("$api", function () {
           endpoint: 'foo/bar'.toHttpEndpoint()
         });
         expect(request.triggerPaths.list).toContain(
-            'endpoint.foo/bar.{}', 'endpoint.foo/bar', 'endpoint');
+            'endpoint.foo/bar.["object"]', 'endpoint.foo/bar', 'endpoint');
       });
     });
 
@@ -82,7 +82,7 @@ describe("$api", function () {
             baz: "quux"
           }
         });
-        expect(request.toString()).toBe('foo/bar{"baz":"quux"}');
+        expect(request.toString()).toBe('foo/bar["object",["baz","quux"]]');
       });
     });
   });

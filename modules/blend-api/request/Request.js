@@ -49,8 +49,7 @@ $api.Request = $oop.getClass('$api.Request')
         listeningPath = $data.TreePath.fromComponentsToString([
           'endpoint',
           endpoint.endpointId,
-          // todo Need safe stringify that preserves property order
-          JSON.stringify(parameters)]);
+          JSON.stringify($utils.jsonToSafeJson(parameters))]);
 
     this.parameters = parameters;
 
@@ -63,8 +62,8 @@ $api.Request = $oop.getClass('$api.Request')
    * @returns {string}
    */
   toString: function () {
-    // todo Need safe stringify that preserves property order
-    return this.endpoint.endpointId + JSON.stringify(this.parameters);
+    return this.endpoint.endpointId +
+        JSON.stringify($utils.jsonToSafeJson(this.parameters));
   }
 });
 
