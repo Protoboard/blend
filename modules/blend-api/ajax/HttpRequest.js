@@ -19,9 +19,8 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
   /**
    * @param {string} prefix
    * @returns {Object}
-   * @private
    */
-  _extractParametersByType: function (prefix) {
+  extractParametersByPrefix: function (prefix) {
     var prefixLength = prefix.length;
     return $data.Collection.fromData(this.parameters)
     .filterByKeyPrefix(prefix)
@@ -50,7 +49,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
    * @returns {Object}
    */
   getHeaderObject: function () {
-    return this._extractParametersByType('header:');
+    return this.extractParametersByPrefix('header:');
   },
 
   /**
@@ -61,7 +60,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
    * @returns {string}
    */
   getUrlPathQuery: function () {
-    var endpointParams = this._extractParametersByType('endpoint:'),
+    var endpointParams = this.extractParametersByPrefix('endpoint:'),
         pathComponents = this.endpoint.components
         .map(function (endpointComponent) {
           return endpointComponent[0] === ':' ?
@@ -70,7 +69,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
         }),
         uriPath = $utils.UriPath.fromComponents(pathComponents),
 
-        queryParams = this._extractParametersByType('query:'),
+        queryParams = this.extractParametersByPrefix('query:'),
         urlQuery = $data.Collection.fromData(queryParams)
         .mapValues(function (queryParamValue) {
           return queryParamValue instanceof Array ?
