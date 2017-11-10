@@ -8,12 +8,13 @@
  */
 
 /**
+ * Dispatches an XMLHttpRequest request.
  * @class $api.XhrDispatcher
- * @extends $api.Dispatcher
+ * @extends $api.RequestDispatcher
  * @todo Check IE / Edge, and create specific dispatcher if necessary.
  */
 $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
-.blend($oop.getClass('$api.Dispatcher'))
+.blend($oop.getClass('$api.RequestDispatcher'))
 .define(/** @lends $api.XhrDispatcher# */{
   /**
    * @param {XMLHttpRequest} xhr
@@ -104,7 +105,7 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
   }
 });
 
-$oop.getClass('$api.Dispatcher')
+$oop.getClass('$api.RequestDispatcher')
 .forwardBlend($api.XhrDispatcher, function (properties) {
   var request = properties && properties.request;
   return request &&

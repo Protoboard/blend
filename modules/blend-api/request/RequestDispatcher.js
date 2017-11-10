@@ -1,28 +1,28 @@
 "use strict";
 
 /**
- * @function $api.Dispatcher.create
+ * @function $api.RequestDispatcher.create
  * @param {Object} properties
  * @param {$api.Request} properties.request
- * @returns {$api.Dispatcher}
+ * @returns {$api.RequestDispatcher}
  */
 
 /**
- * @class $api.Dispatcher
+ * Dispatches a request to a remote resource.
+ * @class $api.RequestDispatcher
  * @implements $api.Dispatchable
- * @todo Rename to RequestDispatcher
  */
-$api.Dispatcher = $oop.getClass('$api.Dispatcher')
+$api.RequestDispatcher = $oop.getClass('$api.RequestDispatcher')
 .implement($oop.getClass('$api.Dispatchable'))
-.define(/** @lends $api.Dispatcher# */{
+.define(/** @lends $api.RequestDispatcher# */{
   /**
-   * @member {$api.Request} $api.Dispatcher#request
+   * @member {$api.Request} $api.RequestDispatcher#request
    */
 
   /**
-   * @memberOf $api.Dispatcher
+   * @memberOf $api.RequestDispatcher
    * @param {$api.Request} request
-   * @returns {$api.Dispatcher}
+   * @returns {$api.RequestDispatcher}
    */
   fromRequest: function (request) {
     return this.create({request: request});
@@ -44,7 +44,7 @@ $oop.getClass('$api.Request')
   /**
    * @returns {$api.Request}
    */
-  toDispatcher: function () {
-    return $api.Dispatcher.create({request: this});
+  toRequestDispatcher: function () {
+    return $api.RequestDispatcher.create({request: this});
   }
 });

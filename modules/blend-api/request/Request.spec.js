@@ -80,12 +80,12 @@ describe("$api", function () {
       beforeEach(function () {
         request = 'foo/bar'.toHttpEndpoint().toRequest();
         promise = {};
-        spyOn($api.Dispatcher, 'dispatch').and.returnValue(promise);
+        spyOn($api.RequestDispatcher, 'dispatch').and.returnValue(promise);
       });
 
       it("should invoke Dispatcher#dispatch", function () {
         request.send();
-        expect($api.Dispatcher.dispatch).toHaveBeenCalled();
+        expect($api.RequestDispatcher.dispatch).toHaveBeenCalled();
       });
 
       it("should forward promise from dispatch", function () {

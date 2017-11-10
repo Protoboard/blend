@@ -67,7 +67,7 @@ $api.Request = $oop.getClass('$api.Request')
    * @returns {$utils.Promise}
    */
   send: function () {
-    return this.toDispatcher().dispatch();
+    return this.toRequestDispatcher().dispatch();
   },
 
   /**

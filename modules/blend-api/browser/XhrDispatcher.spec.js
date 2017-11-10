@@ -26,7 +26,7 @@ describe("$api", function () {
           'header:Content-Type': "application:json",
           'body:': "Rick"
         });
-        xhrDispatcher = request.toDispatcher();
+        xhrDispatcher = request.toRequestDispatcher();
         spyOn(XMLHttpRequest.prototype, 'open');
         spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
         spyOn(XMLHttpRequest.prototype, 'send');
@@ -212,7 +212,7 @@ describe("$api", function () {
         });
 
         it("should return XhrDispatcher instance", function () {
-          dispatcher = $api.Dispatcher.create({request: request});
+          dispatcher = $api.RequestDispatcher.create({request: request});
           expect($api.XhrDispatcher.mixedBy(dispatcher)).toBeTruthy();
         });
       });
