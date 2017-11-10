@@ -22,7 +22,7 @@ $data.Tree = $oop.getClass('$data.Tree')
 .implement($oop.getClass('$data.Queryable'))
 .define(/** @lends $data.Tree# */{
   /**
-   * @param {$data.QueryComponent[]} components Query components
+   * @param {$data.TreeQueryComponent[]} components Query components
    * @param {function} callback Function to invoke on matched paths
    * @param {string[]} path Current path
    * @param {*} node Current node
@@ -109,7 +109,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * Traverses tree and invokes specified callback on paths that match the
    * query.
    * @todo Compare performance w/ Giant 0.4 Tree
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @param {function} callback
    * @returns {$data.Tree}
    */
@@ -410,7 +410,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   /**
    * Queries nodes from the tree matching the specified query. Order of items
    * in the resulting array is non-deterministic.
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {Array}
    */
   queryNodes: function (query) {
@@ -422,7 +422,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {$data.Collection}
    */
   queryNodesWrapped: function (query) {
@@ -432,7 +432,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   /**
    * Queries keys from the tree matching the specified query. Order of items in
    * the resulting array is non-deterministic.
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {string[]}
    */
   queryKeys: function (query) {
@@ -446,7 +446,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {$data.StringCollection}
    */
   queryKeysWrapped: function (query) {
@@ -456,7 +456,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   /**
    * Queries paths from the tree matching the specified query. Order of items
    * in the resulting array is non-deterministic.
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {$data.TreePath[]}
    */
   queryPaths: function (query) {
@@ -468,7 +468,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {$data.Collection}
    */
   queryPathsWrapped: function (query) {
@@ -477,7 +477,7 @@ $data.Tree = $oop.getClass('$data.Tree')
 
   /**
    * Queries key-node pairs from the tree matching the specified query.
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {$data.PairList}
    */
   queryKeyNodePairs: function (query) {
@@ -492,7 +492,7 @@ $data.Tree = $oop.getClass('$data.Tree')
 
   /**
    * Queries path-node pairs from the tree matching the specified query.
-   * @param {$data.Query} query
+   * @param {$data.TreeQuery} query
    * @returns {$data.PairList}
    */
   queryPathNodePairs: function (query) {

@@ -65,7 +65,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     var subscriptions = this.subscriptions,
         eventNameQc = eventName !== undefined ?
             $data.escapeQueryComponent(eventName) : '*',
-        callbacksQuery = $data.Query.fromComponents([
+        callbacksQuery = $data.TreeQuery.fromComponents([
           'callbacks', 'bySubscriber', subscriberId, eventNameQc, '*']),
         callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 
@@ -112,7 +112,7 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
     var subscriptions = this.subscriptions,
         targetPathQc = targetPath ?
             $data.escapeQueryComponent(targetPath) : '*',
-        callbacksQuery = $data.Query.fromComponents([
+        callbacksQuery = $data.TreeQuery.fromComponents([
           'callbacks', 'bySubscription', eventName, targetPathQc, '*']),
         callbackPaths = subscriptions.queryPathsWrapped(callbacksQuery);
 

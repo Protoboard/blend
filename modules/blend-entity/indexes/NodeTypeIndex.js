@@ -22,8 +22,8 @@ $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
   _initNodeTypeIndex: function () {
     // querying all nodeType paths
     var that = this,
-        fieldsQuery = $data.Query.fromString('document.__document.*.fields.*'),
-        branchFieldsQuery = $data.Query.fromString('document.__field.*.nodeType:branch'),
+        fieldsQuery = $data.TreeQuery.fromString('document.__document.*.fields.*'),
+        branchFieldsQuery = $data.TreeQuery.fromString('document.__field.*.nodeType:branch'),
 
         // attribute ref:key lookup for all documented fields
         fieldAttributeKeys = $entity.entities.queryPathNodePairs(fieldsQuery)

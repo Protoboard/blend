@@ -8,8 +8,8 @@
  */
 
 /**
- * Unambiguously identifies a node in a tree-like structure. A path is composed
- * of path components (strings), identifying keys in nodes along the path. In
+ * Unambiguously identifies a node in a tree structure. A path is composed of
+ * path components (strings), identifying keys in nodes along the path. In
  * string representation of the path, components are separated by the character
  * '`.`' (period).
  * @class $data.TreePath

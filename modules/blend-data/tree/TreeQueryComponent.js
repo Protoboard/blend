@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * @function $data.QueryComponent.create
+ * @function $data.TreeQueryComponent.create
  * @param {Object}   [properties]
  * @param {string}   [properties.componentString] String representation of query
  * component
@@ -14,12 +14,12 @@
  * @param {boolean}  [properties.isValueExcluded]
  * @param {boolean}  [properties.matchesAnyValue]
  * @param {Array}    [properties.valueOptions]
- * @returns {$data.QueryComponent}
+ * @returns {$data.TreeQueryComponent}
  */
 
 /**
  * Matches a single key-value pair. An array of `QueryComponent`s make up a
- * {@link $data.Query}.
+ * {@link $data.TreeQuery}.
  * Special characters in query components:
  * - `*` (Asterisk) Matches any key or value. When doubled, (`**`) will match
  * any key plus skip forward on the  path until next query component is
@@ -29,93 +29,93 @@
  * - `!` (Exclamation mark) Excludes key or value options
  * - `$` (Dollar sign) Matches primitive values (string, number, boolean,
  * `null`, `undefined`)
- * @class $data.QueryComponent
+ * @class $data.TreeQueryComponent
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
  * @implements $data.Matchable
  * @todo Add return marker.
  * @example
- * $data.QueryComponent.fromString("foo:bar")
+ * $data.TreeQueryComponent.fromString("foo:bar")
  * // matches a specific pair
- * $data.QueryComponent.fromString("*:bar")
+ * $data.TreeQueryComponent.fromString("*:bar")
  * // matches pair where value is "bar"
  */
-$data.QueryComponent = $oop.getClass('$data.QueryComponent')
+$data.TreeQueryComponent = $oop.getClass('$data.TreeQueryComponent')
 .blend($utils.Cloneable)
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
-.define(/** @lends $data.QueryComponent# */{
+.define(/** @lends $data.TreeQueryComponent# */{
   /**
-   * @member {string} $data.QueryComponent#componentString
+   * @member {string} $data.TreeQueryComponent#componentString
    * @constant
    */
 
   /**
    * Whether to skip matching path components (keys) until next path
    * component is matched by the next `QueryComponent` in a
-   * {@link $data.Query}.
-   * @member {boolean} $data.QueryComponent#isSkipper
+   * {@link $data.TreeQuery}.
+   * @member {boolean} $data.TreeQueryComponent#isSkipper
    * @constant
    */
 
   /**
    * Whether to exclude specified key options.
-   * @member {boolean} $data.QueryComponent#isKeyExcluded
+   * @member {boolean} $data.TreeQueryComponent#isKeyExcluded
    * @constant
-   * @see $data.QueryComponent#keyOptions
+   * @see $data.TreeQueryComponent#keyOptions
    */
 
   /**
    * Whether `QueryComponent` matches any key in a key-value pair.
-   * @member {boolean} $data.QueryComponent#matchesAnyKey
+   * @member {boolean} $data.TreeQueryComponent#matchesAnyKey
    * @constant
    */
 
   /**
    * List of keys to be matched. For iterating over options and access to
    * option count.
-   * @member {string[]} $data.QueryComponent#keyOptions
+   * @member {string[]} $data.TreeQueryComponent#keyOptions
    * @constant
    */
 
   /**
    * List of keys to be matched. For checking whether a key option is present.
-   * @member {Object} $data.QueryComponent#keyOptionLookup
+   * @member {Object} $data.TreeQueryComponent#keyOptionLookup
    * @constant
    */
 
   /**
    * Whether `QueryComponent` matches primitive values only. (String, number,
    * boolean, & `null`.)
-   * @member {boolean} $data.QueryComponent#matchesPrimitiveValues
+   * @member {boolean} $data.TreeQueryComponent#matchesPrimitiveValues
    * @constant
    */
 
   /**
    * Whether to exclude specified value options.
-   * @member {boolean} $data.QueryComponent#isValueExcluded
+   * @member {boolean} $data.TreeQueryComponent#isValueExcluded
    * @constant
-   * @see $data.QueryComponent#valueOptions
+   * @see $data.TreeQueryComponent#valueOptions
    */
 
   /**
    * Whether `QueryComponent` matches any value in a key-value pair. Query
    * components except for the last one in a query usually have this flag set.
-   * @member {boolean} $data.QueryComponent#matchesAnyValue
+   * @member {boolean} $data.TreeQueryComponent#matchesAnyValue
    * @constant
    */
 
   /**
    * List of keys to be matched.
-   * @member {Array} $data.QueryComponent#valueOptions
+   * @member {Array} $data.TreeQueryComponent#valueOptions
    * @constant
    */
 
   /**
    * Creates a `QueryComponent` instance based on the specified string.
-   * @memberOf $data.QueryComponent
+   * @memberOf $data.TreeQueryComponent
    * @param {string} componentString
-   * @returns {$data.QueryComponent}
+   * @returns {$data.TreeQueryComponent}
    */
   fromString: function (componentString) {
     return this.create({componentString: componentString});
@@ -123,9 +123,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 
   /**
    * Creates a `QueryComponent` instance based on the specified key options.
-   * @memberOf $data.QueryComponent
+   * @memberOf $data.TreeQueryComponent
    * @param {Array.<string>} keyOptions
-   * @returns {$data.QueryComponent}
+   * @returns {$data.TreeQueryComponent}
    */
   fromKeyOptions: function (keyOptions) {
     return this.create({keyOptions: keyOptions});
@@ -233,7 +233,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
   },
 
   /**
-   * @returns {$data.QueryComponent}
+   * @returns {$data.TreeQueryComponent}
    * @private
    */
   _spreadValueOptions: function () {
@@ -244,7 +244,7 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
 
   /**
    * @inheritDoc
-   * @returns {$data.QueryComponent}
+   * @returns {$data.TreeQueryComponent}
    */
   clone: function clone() {
     var cloned = clone.returned;
@@ -290,9 +290,9 @@ $data.QueryComponent = $oop.getClass('$data.QueryComponent')
    * @param {*} [value] Value to be matched
    * @returns {boolean}
    * @example
-   * $data.QueryComponent.fromString('*:foo')
+   * $data.TreeQueryComponent.fromString('*:foo')
    * .matches('bar', 'foo') // true
-   * $data.QueryComponent.fromString('*:!foo')
+   * $data.TreeQueryComponent.fromString('*:!foo')
    * .matches('bar', 'foo') // false
    */
   matches: function (key, value) {
@@ -356,9 +356,9 @@ $oop.copyProperties($data, /** @lends $data */{
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
-   * @returns {$data.QueryComponent}
+   * @returns {$data.TreeQueryComponent}
    */
-  toQueryComponent: function () {
-    return $data.QueryComponent.create({componentString: this});
+  toTreeQueryComponent: function () {
+    return $data.TreeQueryComponent.create({componentString: this});
   }
 });

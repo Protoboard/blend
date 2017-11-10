@@ -3,32 +3,32 @@
 var $data = window['blend-data'];
 
 describe("$data", function () {
-  describe("Query", function () {
-    var Query,
-        query,
+  describe("TreeQuery", function () {
+    var TreeQuery,
+        treeQuery,
         result;
 
     beforeAll(function () {
-      Query = $oop.getClass('test.$data.Query.Query')
-      .blend($data.Query);
+      TreeQuery = $oop.getClass('test.$data.TreeQuery.TreeQuery')
+      .blend($data.TreeQuery);
     });
 
     beforeEach(function () {
-      query = Query.create({
+      treeQuery = TreeQuery.create({
         components: [
           'foo',
           'bar',
-          $data.QueryComponent.fromString('*')
+          $data.TreeQueryComponent.fromString('*')
         ]
       });
     });
 
     describe("create()", function () {
       it("should initialize components property", function () {
-        expect(query.components).toEqual([
-          $data.QueryComponent.fromString('foo'),
-          $data.QueryComponent.fromString('bar'),
-          $data.QueryComponent.fromString('*')
+        expect(treeQuery.components).toEqual([
+          $data.TreeQueryComponent.fromString('foo'),
+          $data.TreeQueryComponent.fromString('bar'),
+          $data.TreeQueryComponent.fromString('*')
         ]);
       });
     });
@@ -40,12 +40,12 @@ describe("$data", function () {
       beforeEach(function () {
         query = {};
         components = ['foo', 'bar', 'baz'];
-        spyOn(Query, 'create').and.returnValue(query);
-        result = Query.fromComponents(components);
+        spyOn(TreeQuery, 'create').and.returnValue(query);
+        result = TreeQuery.fromComponents(components);
       });
 
       it("should pass components to create()", function () {
-        expect(Query.create).toHaveBeenCalledWith({components: components});
+        expect(TreeQuery.create).toHaveBeenCalledWith({components: components});
       });
 
       it("should return created instance", function () {
@@ -58,12 +58,12 @@ describe("$data", function () {
 
       beforeEach(function () {
         query = {};
-        spyOn(Query, 'create').and.returnValue(query);
-        result = Query.fromString('foo.*.bar:!baz');
+        spyOn(TreeQuery, 'create').and.returnValue(query);
+        result = TreeQuery.fromString('foo.*.bar:!baz');
       });
 
-      it("should create a Query instance", function () {
-        expect(Query.create).toHaveBeenCalledWith({
+      it("should create a TreeQuery instance", function () {
+        expect(TreeQuery.create).toHaveBeenCalledWith({
           components: ['foo', '*', 'bar:!baz']
         });
       });
@@ -75,19 +75,19 @@ describe("$data", function () {
 
     describe("clone()", function () {
       beforeEach(function () {
-        result = query.clone();
+        result = treeQuery.clone();
       });
 
       it("should initialize properties", function () {
-        expect(result.components).not.toBe(query.components);
-        expect(result.components).toEqual(query.components);
+        expect(result.components).not.toBe(treeQuery.components);
+        expect(result.components).toEqual(treeQuery.components);
       });
     });
 
     describe("toString()", function () {
       beforeEach(function () {
-        query = Query.create({components: ['foo.baz', 'bar', '*']});
-        result = query.toString();
+        treeQuery = TreeQuery.create({components: ['foo.baz', 'bar', '*']});
+        result = treeQuery.toString();
       });
 
       it("should return string", function () {
@@ -102,40 +102,40 @@ describe("$data", function () {
     describe("matches()", function () {
       describe("for matching path", function () {
         it("should return true", function () {
-          expect('foo.bar.baz'.toQuery()
+          expect('foo.bar.baz'.toTreeQuery()
           .matches('foo.bar.baz'.toTreePath())).toBeTruthy();
-          expect('foo.*.baz'.toQuery()
+          expect('foo.*.baz'.toTreeQuery()
           .matches('foo.bar.baz'.toTreePath())).toBeTruthy();
-          expect('foo.!bar.baz'.toQuery()
+          expect('foo.!bar.baz'.toTreeQuery()
           .matches('foo.quux.baz'.toTreePath())).toBeTruthy();
-          expect('foo.**.baz'.toQuery()
+          expect('foo.**.baz'.toTreeQuery()
           .matches('foo.bar.baz'.toTreePath())).toBeTruthy();
-          expect('foo.**.baz'.toQuery()
+          expect('foo.**.baz'.toTreeQuery()
           .matches('foo.baz'.toTreePath())).toBeTruthy();
-          expect('foo.**.baz'.toQuery()
+          expect('foo.**.baz'.toTreeQuery()
           .matches('foo.bar.quux.baz'.toTreePath())).toBeTruthy();
-          expect('foo.bar.**'.toQuery()
+          expect('foo.bar.**'.toTreeQuery()
           .matches('foo.bar.quux.baz'.toTreePath())).toBeTruthy();
-          expect('**!foo.baz'.toQuery()
+          expect('**!foo.baz'.toTreeQuery()
           .matches('bar.quux.baz'.toTreePath())).toBeTruthy();
         });
       });
 
       describe("for non-matching path", function () {
         it("should return false", function () {
-          expect('foo.bar.baz'.toQuery()
+          expect('foo.bar.baz'.toTreeQuery()
           .matches('foo.bar.baz.quux'.toTreePath())).toBeFalsy();
-          expect('foo.bar.baz.quux'.toQuery()
+          expect('foo.bar.baz.quux'.toTreeQuery()
           .matches('foo.bar.baz'.toTreePath())).toBeFalsy();
-          expect('foo.bar.baz'.toQuery()
+          expect('foo.bar.baz'.toTreeQuery()
           .matches('foo.bar.quux'.toTreePath())).toBeFalsy();
-          expect('foo.*.baz'.toQuery()
+          expect('foo.*.baz'.toTreeQuery()
           .matches('foo.bar.quux'.toTreePath())).toBeFalsy();
-          expect('foo.!bar.baz'.toQuery()
+          expect('foo.!bar.baz'.toTreeQuery()
           .matches('foo.bar.baz'.toTreePath())).toBeFalsy();
-          expect('foo.**.baz'.toQuery()
+          expect('foo.**.baz'.toTreeQuery()
           .matches('foo.bar.quux'.toTreePath())).toBeFalsy();
-          expect('**!foo.baz'.toQuery()
+          expect('**!foo.baz'.toTreeQuery()
           .matches('bar.foo.baz'.toTreePath())).toBeFalsy();
         });
       });
@@ -146,17 +146,17 @@ describe("$data", function () {
 describe("String", function () {
   var result;
 
-  describe("toQuery()", function () {
+  describe("toTreeQuery()", function () {
     var query;
 
     beforeEach(function () {
-      query = $data.Query.create({components: []});
-      spyOn($data.Query, 'create').and.returnValue(query);
-      result = 'foo.*.bar:!baz'.toQuery();
+      query = $data.TreeQuery.create({components: []});
+      spyOn($data.TreeQuery, 'create').and.returnValue(query);
+      result = 'foo.*.bar:!baz'.toTreeQuery();
     });
 
-    it("should create a Query instance", function () {
-      expect($data.Query.create.calls.allArgs()).toEqual([
+    it("should create a TreeQuery instance", function () {
+      expect($data.TreeQuery.create.calls.allArgs()).toEqual([
         [{components: ['foo', '*', 'bar:!baz']}]
       ]);
     });
@@ -170,20 +170,21 @@ describe("String", function () {
 describe("Array", function () {
   var result;
 
-  describe("toQuery()", function () {
+  describe("toTreeQuery()", function () {
     var components,
         query;
 
     beforeEach(function () {
       components = ['!foo', '*:baz'];
-      query = $data.Query.create({components: components});
-      spyOn($data.Query, 'create').and
+      query = $data.TreeQuery.create({components: components});
+      spyOn($data.TreeQuery, 'create').and
       .returnValue(query);
-      result = components.toQuery();
+      result = components.toTreeQuery();
     });
 
-    it("should create a Query instance", function () {
-      expect($data.Query.create).toHaveBeenCalledWith({components: components});
+    it("should create a TreeQuery instance", function () {
+      expect($data.TreeQuery.create)
+      .toHaveBeenCalledWith({components: components});
     });
 
     it("should return created instance", function () {

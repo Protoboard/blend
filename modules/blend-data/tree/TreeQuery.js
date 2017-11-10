@@ -1,41 +1,41 @@
 "use strict";
 
 /**
- * @function $data.Query.create
+ * @function $data.TreeQuery.create
  * @param {Object} properties
  * @param {string[]} properties.components Series of patterns to match
  * corresponding path components.
- * @returns {$data.Query}
+ * @returns {$data.TreeQuery}
  */
 
 /**
- * Matches paths that identify nodes in a tree-like structure. A query is
- * composed of query components, each matching path component(s) in the
- * corresponding paths. Much like with `Path`, query components in the string
- * representation of the query are separated by the character '`.`' (period).
- * @class $data.Query
+ * Matches paths that identify nodes in a tree structure. A query is composed
+ * of query components, each matching path component(s) in the corresponding
+ * paths. Much like with `Path`, query components in the string representation
+ * of the query are separated by the character '`.`' (period).
+ * @class $data.TreeQuery
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
  * @implements $data.Matchable
- * @see $data.QueryComponent
+ * @see $data.TreeQueryComponent
  * @example
- * $data.Query.create(['foo', '*', 'bar:!baz,quux'])
+ * $data.TreeQuery.create(['foo', '*', 'bar:!baz,quux'])
  */
-$data.Query = $oop.getClass('$data.Query')
+$data.TreeQuery = $oop.getClass('$data.TreeQuery')
 .blend($utils.Cloneable)
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Matchable'))
-.define(/** @lends $data.Query# */{
+.define(/** @lends $data.TreeQuery# */{
   /**
    * Query components.
-   * @member {Array.<$data.QueryComponent>} $data.Query#components
+   * @member {Array.<$data.TreeQueryComponent>} $data.TreeQuery#components
    */
 
   /**
    * Creates a `Query` instance based on the specified component array.
-   * @memberOf $data.Query
-   * @param {Array.<$data.QueryComponent|string>} components
-   * @returns {$data.Query}
+   * @memberOf $data.TreeQuery
+   * @param {Array.<$data.TreeQueryComponent|string>} components
+   * @returns {$data.TreeQuery}
    */
   fromComponents: function (components) {
     return this.create({components: components});
@@ -43,9 +43,9 @@ $data.Query = $oop.getClass('$data.Query')
 
   /**
    * Creates a `Query` instance based on the specified string.
-   * @memberOf $data.Query
+   * @memberOf $data.TreeQuery
    * @param {string} queryStr
-   * @returns {$data.Query}
+   * @returns {$data.TreeQuery}
    */
   fromString: function (queryStr) {
     var components = $utils.safeSplit(queryStr, $data.PATH_COMPONENT_SEPARATOR);
@@ -56,9 +56,10 @@ $data.Query = $oop.getClass('$data.Query')
   init: function () {
     $assert.isArray(this.components, "Invalid component list");
 
-    var QueryComponent = $data.QueryComponent;
+    var QueryComponent = $data.TreeQueryComponent;
 
-    // making sure all components are actually instances of $data.QueryComponent
+    // making sure all components are actually instances of
+    // $data.TreeQueryComponent
     this.components = this.components
     .map(function (component) {
       return QueryComponent.mixedBy(component) ?
@@ -72,7 +73,7 @@ $data.Query = $oop.getClass('$data.Query')
    * components will be escaped.
    * @returns {string}
    * @example
-   * $data.Query.create(['foo.bar', '*:!baz.quux'])+''
+   * $data.TreeQuery.create(['foo.bar', '*:!baz.quux'])+''
    * // 'foo\.bar.*:!baz\.quux'
    */
   toString: function () {
@@ -87,9 +88,9 @@ $data.Query = $oop.getClass('$data.Query')
    * @param {$data.TreePath} path
    * @returns {boolean}
    * @example
-   * $data.Query.create(['**', 'baz'])
+   * $data.TreeQuery.create(['**', 'baz'])
    *      .matches($data.TreePath.create(['foo', 'bar', 'baz'])) // true
-   * $data.Query.create(['!foo', 'bar,baz'])
+   * $data.TreeQuery.create(['!foo', 'bar,baz'])
    *      .matches($data.TreePath.create(['foo', 'baz'])) // false
    */
   matches: function (path) {
@@ -148,18 +149,18 @@ $data.Query = $oop.getClass('$data.Query')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
-   * @returns {$data.Query}
+   * @returns {$data.TreeQuery}
    */
-  toQuery: function () {
-    return $data.Query.fromString(this.valueOf());
+  toTreeQuery: function () {
+    return $data.TreeQuery.fromString(this.valueOf());
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
-   * @returns {$data.Query}
+   * @returns {$data.TreeQuery}
    */
-  toQuery: function () {
-    return $data.Query.create({components: this});
+  toTreeQuery: function () {
+    return $data.TreeQuery.create({components: this});
   }
 });

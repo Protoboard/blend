@@ -112,13 +112,13 @@ describe("$data", function () {
       });
 
       it("should return self", function () {
-        result = tree.query('foo.*.bar'.toQuery(), callback);
+        result = tree.query('foo.*.bar'.toTreeQuery(), callback);
         expect(result).toBe(tree);
       });
 
       describe("with single path", function () {
         it("should invoke single path only", function () {
-          tree.query('data.0.from.name'.toQuery(), callback);
+          tree.query('data.0.from.name'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ['data.0.from.name'.toTreePath(), "Tom Brady"]
           ]);
@@ -127,14 +127,14 @@ describe("$data", function () {
 
       describe("for no matching path", function () {
         it("should not invoke callback", function () {
-          tree.query('data.2.*.name'.toQuery(), callback);
+          tree.query('data.2.*.name'.toTreeQuery(), callback);
           expect(callback).not.toHaveBeenCalled();
         });
       });
 
       describe("with key wildcard", function () {
         it("should iterate over wildcard", function () {
-          tree.query('data.*.id'.toQuery(), callback);
+          tree.query('data.*.id'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ['data.0.id'.toTreePath(), "X999_Y999"],
             ['data.1.id'.toTreePath(), "X998_Y998"]
@@ -144,7 +144,7 @@ describe("$data", function () {
 
       describe("with key options", function () {
         it("should iterate over wildcard", function () {
-          tree.query('data.0.id,type'.toQuery(), callback);
+          tree.query('data.0.id,type'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ['data.0.id'.toTreePath(), "X999_Y999"],
             ['data.0.type'.toTreePath(), "status"]
@@ -154,7 +154,7 @@ describe("$data", function () {
 
       describe("with key exclusion", function () {
         it("should iterate over wildcard", function () {
-          tree.query('data.!0.id'.toQuery(), callback);
+          tree.query('data.!0.id'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ['data.1.id'.toTreePath(), "X998_Y998"]
           ]);
@@ -163,7 +163,7 @@ describe("$data", function () {
 
       describe("with value options", function () {
         it("should iterate over wildcard", function () {
-          tree.query('data.*.*.*.name:Like'.toQuery(), callback);
+          tree.query('data.*.*.*.name:Like'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ['data.0.actions.1.name'.toTreePath(), "Like"],
             ['data.1.actions.1.name'.toTreePath(), "Like"]
@@ -173,7 +173,7 @@ describe("$data", function () {
 
       describe("with value exclusion", function () {
         it("should iterate over wildcard", function () {
-          tree.query('data.*.*.id:!X12'.toQuery(), callback);
+          tree.query('data.*.*.id:!X12'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ['data.1.from.id'.toTreePath(), "X18"]
           ]);
@@ -182,7 +182,7 @@ describe("$data", function () {
 
       describe("with primitive value matching", function () {
         it("should iterate over wildcard", function () {
-          tree.query('data.0.*:$'.toQuery(), callback);
+          tree.query('data.0.*:$'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ["data.0.id".toTreePath(), "X999_Y999"],
             ["data.0.message".toTreePath(), "Looking forward to 2010!"],
@@ -195,7 +195,7 @@ describe("$data", function () {
 
       describe("with skipping", function () {
         it("should invoke callback", function () {
-          tree.query('data.**.name'.toQuery(), callback);
+          tree.query('data.**.name'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ["data.0.from.name".toTreePath(), "Tom Brady"],
             ["data.0.actions.0.name".toTreePath(), "Comment"],
@@ -209,7 +209,7 @@ describe("$data", function () {
 
       describe("with trail skipping", function () {
         it("should invoke callback", function () {
-          tree.query('data.0.actions.**'.toQuery(), callback);
+          tree.query('data.0.actions.**'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ["data.0.actions.0.name".toTreePath(), "Comment"],
             ["data.0.actions.0.link".toTreePath(),
@@ -223,7 +223,7 @@ describe("$data", function () {
 
       describe("with skipping all the way", function () {
         it("should traverse all leaf nodes", function () {
-          tree.query('**'.toQuery(), callback);
+          tree.query('**'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ["data.0.id".toTreePath(), "X999_Y999"],
             ["data.0.from.name".toTreePath(), "Tom Brady"],
@@ -257,7 +257,7 @@ describe("$data", function () {
 
       describe("with skipping with key exclusion", function () {
         it("should invoke callback", function () {
-          tree.query('data.**!actions.name'.toQuery(), callback);
+          tree.query('data.**!actions.name'.toTreeQuery(), callback);
           expect(callback.calls.allArgs()).toEqual([
             ["data.0.from.name".toTreePath(), "Tom Brady"],
             ["data.1.from.name".toTreePath(), "Peyton Manning"]
@@ -753,7 +753,7 @@ describe("$data", function () {
       var query;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         spyOn(tree, 'query').and.callThrough();
         result = tree.queryNodes(query);
       });
@@ -774,7 +774,7 @@ describe("$data", function () {
           data;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         data = [];
         spyOn(tree, 'queryNodes').and.returnValue(data);
         result = tree.queryNodesWrapped(query);
@@ -797,7 +797,7 @@ describe("$data", function () {
       var query;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         spyOn(tree, 'query').and.callThrough();
         result = tree.queryKeys(query);
       });
@@ -816,7 +816,7 @@ describe("$data", function () {
           data;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         data = [];
         spyOn(tree, 'queryKeys').and.returnValue(data);
         result = tree.queryKeysWrapped(query);
@@ -839,7 +839,7 @@ describe("$data", function () {
       var query;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         spyOn(tree, 'query').and.callThrough();
         result = tree.queryPaths(query);
       });
@@ -861,7 +861,7 @@ describe("$data", function () {
           data;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         data = [];
         spyOn(tree, 'queryPaths').and.returnValue(data);
         result = tree.queryPathsWrapped(query);
@@ -884,7 +884,7 @@ describe("$data", function () {
       var query;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         spyOn(tree, 'query').and.callThrough();
         result = tree.queryKeyNodePairs(query);
       });
@@ -909,7 +909,7 @@ describe("$data", function () {
       var query;
 
       beforeEach(function () {
-        query = 'foo.bar.*'.toQuery();
+        query = 'foo.bar.*'.toTreeQuery();
         spyOn(tree, 'query').and.callThrough();
         result = tree.queryPathNodePairs(query);
       });
