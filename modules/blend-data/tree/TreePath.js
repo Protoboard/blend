@@ -39,7 +39,7 @@ $data.TreePath = $oop.getClass('$data.TreePath')
    * @returns {string}
    */
   fromComponentsToString: function (components) {
-    return components.map($data.escapePathComponent).join('.');
+    return components.map($data.escapeTreePathComponent).join('.');
   },
 
   /**
@@ -49,8 +49,8 @@ $data.TreePath = $oop.getClass('$data.TreePath')
    * @returns {$data.TreePath}
    */
   fromString: function (pathStr) {
-    var components = $utils.safeSplit(pathStr, $data.PATH_COMPONENT_SEPARATOR)
-    .map($data.unescapePathComponent);
+    var components = $utils.safeSplit(pathStr, $data.TREE_PATH_DELIMITER)
+    .map($data.unescapeTreePathComponent);
     return this.create({components: components});
   },
 
@@ -142,8 +142,8 @@ $data.TreePath = $oop.getClass('$data.TreePath')
    * $data.TreePath.create(['foo', 'bar.baz'])+'' // 'foo.bar\.baz'
    */
   toString: function () {
-    return this.components.map($data.escapePathComponent)
-    .join($data.PATH_COMPONENT_SEPARATOR);
+    return this.components.map($data.escapeTreePathComponent)
+    .join($data.TREE_PATH_DELIMITER);
   }
 });
 
@@ -152,15 +152,15 @@ $oop.copyProperties($data, /** @lends $data */{
    * Separates path components.
    * @constant
    */
-  PATH_COMPONENT_SEPARATOR: '.',
+  TREE_PATH_DELIMITER: '.',
 
   /**
    * Escapes special characters in path components.
    * @param {string} pathComponentStr
    * @returns {string}
    */
-  escapePathComponent: function (pathComponentStr) {
-    return $utils.escape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
+  escapeTreePathComponent: function (pathComponentStr) {
+    return $utils.escape(pathComponentStr, $data.TREE_PATH_DELIMITER);
   },
 
   /**
@@ -168,8 +168,8 @@ $oop.copyProperties($data, /** @lends $data */{
    * @param {string} pathComponentStr
    * @returns {string}
    */
-  unescapePathComponent: function (pathComponentStr) {
-    return $utils.unescape(pathComponentStr, $data.PATH_COMPONENT_SEPARATOR);
+  unescapeTreePathComponent: function (pathComponentStr) {
+    return $utils.unescape(pathComponentStr, $data.TREE_PATH_DELIMITER);
   }
 });
 

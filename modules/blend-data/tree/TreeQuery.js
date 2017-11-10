@@ -48,7 +48,7 @@ $data.TreeQuery = $oop.getClass('$data.TreeQuery')
    * @returns {$data.TreeQuery}
    */
   fromString: function (queryStr) {
-    var components = $utils.safeSplit(queryStr, $data.PATH_COMPONENT_SEPARATOR);
+    var components = $utils.safeSplit(queryStr, $data.TREE_PATH_DELIMITER);
     return this.create({components: components});
   },
 
@@ -79,8 +79,8 @@ $data.TreeQuery = $oop.getClass('$data.TreeQuery')
   toString: function () {
     return this.components
     .map(String)
-    .map($data.escapePathComponent)
-    .join($data.PATH_COMPONENT_SEPARATOR);
+    .map($data.escapeTreePathComponent)
+    .join($data.TREE_PATH_DELIMITER);
   },
 
   /**
