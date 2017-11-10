@@ -23,7 +23,7 @@ $router.PushStateRouter = $oop.getClass('$router.PushStateRouter')
    */
   _syncActiveRouteToHistory: function () {
     var pathName = window.location.pathname,
-        route = $router.Route.fromUrlPath(pathName.substr(1));
+        route = $router.Route.fromString(pathName.substr(1));
     $router.RouteEnvironment.create()
     .setActiveRoute(route);
   },
@@ -34,7 +34,7 @@ $router.PushStateRouter = $oop.getClass('$router.PushStateRouter')
    */
   onRouteChange: function (event) {
     var routeAfter = event.routeAfter,
-        pathNameAfter = '/' + routeAfter.toUrlPath();
+        pathNameAfter = '/' + routeAfter.toString();
     window.history.pushState(routeAfter, '', pathNameAfter);
   },
 
@@ -48,7 +48,7 @@ $router.PushStateRouter = $oop.getClass('$router.PushStateRouter')
         .wrap(event),
         pathName = window.location.pathname,
         routeEnvironment = $router.RouteEnvironment.create(),
-        routeAfter = $router.Route.fromUrlPath(pathName.substr(1)),
+        routeAfter = $router.Route.fromString(pathName.substr(1)),
         routeBefore = routeEnvironment.activeRoute;
 
     if (!routeBefore.equals(routeAfter)) {

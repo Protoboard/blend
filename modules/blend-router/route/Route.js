@@ -50,7 +50,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$router.Route}
    */
   toRoute: function () {
-    return $router.Route.fromUrlPath(this.valueOf());
+    return $router.Route.fromString(this.valueOf());
   }
 });
 

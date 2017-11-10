@@ -68,7 +68,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
         })
         .as($api.UrlQuery);
 
-    return locationPath.toUrlPath() + '?' + urlQuery.toString();
+    return locationPath.toString() + '?' + urlQuery.toString();
   }
 });
 

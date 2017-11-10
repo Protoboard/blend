@@ -23,7 +23,7 @@ $router.HashRouter = $oop.getClass('$router.HashRouter')
    */
   _syncActiveRouteToHash: function () {
     var hash = window.location.hash,
-        route = $router.Route.fromUrlPath(hash.substr(1));
+        route = $router.Route.fromString(hash.substr(1));
     $router.RouteEnvironment.create()
     .setActiveRoute(route);
   },
@@ -34,7 +34,7 @@ $router.HashRouter = $oop.getClass('$router.HashRouter')
    */
   onRouteChange: function (event) {
     var routeAfter = event.routeAfter;
-    window.location.hash = '#' + routeAfter.toUrlPath();
+    window.location.hash = '#' + routeAfter.toString();
   },
 
   /**
@@ -60,7 +60,7 @@ $router.HashRouter = $oop.getClass('$router.HashRouter')
         .wrap(event),
         hash = window.location.hash,
         routeEnvironment = $router.RouteEnvironment.create(),
-        routeAfter = $router.Route.fromUrlPath(hash.substr(1)),
+        routeAfter = $router.Route.fromString(hash.substr(1)),
         routeBefore = routeEnvironment.activeRoute;
 
     if (!routeBefore.equals(routeAfter)) {

@@ -14,20 +14,20 @@ describe("$router", function () {
       Route.__forwards = {list: [], sources: [], lookup: {}};
     });
 
-    describe("fromUrlPath()", function () {
+    describe("fromString()", function () {
       it("should return Route instance", function () {
-        route = Route.fromUrlPath('foo/bar/baz');
+        route = Route.fromString('foo/bar/baz');
         expect(Route.mixedBy(route)).toBeTruthy();
       });
 
       it("should set Path components", function () {
-        route = Route.fromUrlPath('foo/bar/baz');
+        route = Route.fromString('foo/bar/baz');
         expect(route.components).toEqual(['foo', 'bar', 'baz']);
       });
 
       describe("when URL has encoded characters", function () {
         it("should decode encoded characters", function () {
-          route = Route.fromUrlPath('foo%2F/bar/baz');
+          route = Route.fromString('foo%2F/bar/baz');
           expect(route.components).toEqual(['foo/', 'bar', 'baz']);
         });
       });
@@ -89,13 +89,13 @@ describe("$router", function () {
       });
     });
 
-    describe("toUrlPath()", function () {
+    describe("toString()", function () {
       beforeEach(function () {
         route = Route.create({components: ['foo/', 'bar', 'baz']});
       });
 
       it("should escape URI component strings", function () {
-        var result = route.toUrlPath();
+        var result = route.toString();
         expect(result).toBe('foo%2F/bar/baz');
       });
     });
@@ -107,7 +107,7 @@ describe("String", function () {
     var route;
 
     beforeEach(function () {
-      route = $router.Route.fromUrlPath('foo/bar/baz');
+      route = $router.Route.fromString('foo/bar/baz');
       spyOn($router.Route, 'create').and.returnValue(route);
     });
 
@@ -130,7 +130,7 @@ describe("Array", function () {
     var route;
 
     beforeEach(function () {
-      route = $router.Route.fromUrlPath('foo/bar/baz');
+      route = $router.Route.fromString('foo/bar/baz');
       spyOn($router.Route, 'create').and.returnValue(route);
     });
 
