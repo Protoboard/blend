@@ -1,26 +1,26 @@
 "use strict";
 
 /**
- * @function $utils.LocationPath.create
+ * @function $utils.UriPath.create
  * @param {Object} [properties]
  * @param {string[]} [properties.components] Identifiable 'steps' along the
  * path.
- * @returns {$utils.LocationPath}
+ * @returns {$utils.UriPath}
  */
 
 /**
- * @class $utils.LocationPath
+ * @class $utils.UriPath
  * @extends $utils.Path
  * @implements $utils.Stringifiable
  */
-$utils.LocationPath = $oop.getClass('$utils.LocationPath')
+$utils.UriPath = $oop.getClass('$utils.UriPath')
 .blend($oop.getClass('$utils.Path'))
 .implement($oop.getClass('$utils.Stringifiable'))
-.define(/** @lends $utils.LocationPath# */{
+.define(/** @lends $utils.UriPath# */{
   /**
-   * @memberOf $utils.LocationPath
+   * @memberOf $utils.UriPath
    * @param {string} urlPath
-   * @returns {$utils.LocationPath}
+   * @returns {$utils.UriPath}
    */
   fromString: function (urlPath) {
     var components = urlPath.split($utils.LOCATION_PATH_DELIMITER)
@@ -50,8 +50,8 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
    * @returns {$data.TreePath}
    */
-  toLocationPath: function () {
-    return $utils.LocationPath.fromString(this.valueOf());
+  toUriPath: function () {
+    return $utils.UriPath.fromString(this.valueOf());
   }
 });
 
@@ -59,7 +59,7 @@ $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
    * @returns {$data.TreePath}
    */
-  toLocationPath: function () {
-    return $utils.LocationPath.create({components: this});
+  toUriPath: function () {
+    return $utils.UriPath.create({components: this});
   }
 });

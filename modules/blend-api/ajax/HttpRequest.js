@@ -68,7 +68,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
               endpointParams[endpointComponent.substr(1)] :
               endpointComponent;
         }),
-        locationPath = $utils.LocationPath.fromComponents(pathComponents),
+        uriPath = $utils.UriPath.fromComponents(pathComponents),
 
         queryParams = this._extractParametersByType('query:'),
         urlQuery = $data.Collection.fromData(queryParams)
@@ -79,7 +79,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
         })
         .as($api.UrlQuery);
 
-    return locationPath.toString() + '?' + urlQuery.toString();
+    return uriPath.toString() + '?' + urlQuery.toString();
   }
 });
 

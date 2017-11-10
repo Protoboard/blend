@@ -9,12 +9,12 @@
 
 /**
  * @class $router.Route
- * @extends $utils.LocationPath
+ * @extends $utils.UriPath
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
 $router.Route = $oop.getClass('$router.Route')
-.blend($utils.LocationPath)
+.blend($utils.UriPath)
 .blend($event.EventSender)
 .blend($event.EventListener)
 .define(/** @lends $router.Route# */{
