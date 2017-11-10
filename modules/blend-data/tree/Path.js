@@ -22,6 +22,7 @@
  */
 $data.Path = $oop.getClass('$data.Path')
 .blend($utils.Cloneable)
+.blend($utils.Equatable)
 .blend($oop.getClass('$data.Comparable'))
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Stackable'))

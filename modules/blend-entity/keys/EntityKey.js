@@ -3,9 +3,11 @@
 /**
  * Common functionality for entity keys.
  * @class $entity.EntityKey
+ * @extends $utils.Equatable
  * @extends $data.Comparable
  */
 $entity.EntityKey = $oop.getClass('$entity.EntityKey')
+.blend($utils.Equatable)
 .blend($data.Comparable)
 .define(/** @lends $entity.EntityKey# */{
   /**
