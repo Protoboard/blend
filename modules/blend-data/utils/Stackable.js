@@ -4,6 +4,7 @@
  * Describes classes that behave like stacks, ie. are only modifiable at their
  * ends.
  * @interface $data.Stackable
+ * @todo Move to utils?
  */
 $data.Stackable = $oop.getClass('$data.Stackable')
 .define(/** @lends $data.Stackable# */{
