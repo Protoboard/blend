@@ -45,3 +45,21 @@ $oop.copyProperties($utils, /** @lends $utils */{
    */
   LOCATION_PATH_DELIMITER: '/'
 });
+
+$oop.copyProperties(String.prototype, /** @lends String# */{
+  /**
+   * @returns {$data.TreePath}
+   */
+  toLocationPath: function () {
+    return $utils.LocationPath.fromString(this.valueOf());
+  }
+});
+
+$oop.copyProperties(Array.prototype, /** @lends Array# */{
+  /**
+   * @returns {$data.TreePath}
+   */
+  toLocationPath: function () {
+    return $utils.LocationPath.create({components: this});
+  }
+});

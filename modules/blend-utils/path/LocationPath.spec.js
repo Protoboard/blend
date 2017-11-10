@@ -40,3 +40,40 @@ describe("$utils", function () {
     });
   });
 });
+
+describe("String", function () {
+  describe("toPath()", function () {
+    var locationPath;
+
+    it("should return a Path instance", function () {
+      locationPath = 'foo/bar/baz/quux'.toLocationPath();
+      expect($utils.LocationPath.mixedBy(locationPath)).toBeTruthy();
+    });
+
+    it("should set components property with unescaped components", function () {
+      locationPath = 'foo/bar%2Fbaz/quux'.toLocationPath();
+      expect(locationPath.components).toEqual(['foo', 'bar/baz', 'quux']);
+    });
+  });
+});
+
+describe("Array", function () {
+  describe("toPath()", function () {
+    var locationPath,
+        array;
+
+    beforeEach(function () {
+      array = [1, 2, 3];
+    });
+
+    it("should return a Path instance", function () {
+      locationPath = array.toLocationPath();
+      expect($utils.LocationPath.mixedBy(locationPath)).toBeTruthy();
+    });
+
+    it("should set components property", function () {
+      locationPath = array.toLocationPath();
+      expect(locationPath.components).toBe(array);
+    });
+  });
+});
