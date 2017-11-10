@@ -52,7 +52,7 @@ describe("$api", function () {
     });
 
     describe("getUrlPathQuery()", function () {
-      beforeEach(function () {
+      it("should return URL with endpoint & query string", function () {
         httpRequest = HttpRequest.create({
           endpoint: ':foo/bar'.toHttpEndpoint(),
           parameters: {
@@ -62,11 +62,40 @@ describe("$api", function () {
             "query:bar": ["baz", "quux"]
           }
         });
-      });
-
-      it("should return URL with endpoint & query string", function () {
         var result = httpRequest.getUrlPathQuery();
         expect(result).toBe("FOO/bar?bar=baz&bar=quux");
+      });
+
+      describe("when there are no query params", function () {
+        it("should exclude query string", function () {
+          httpRequest = HttpRequest.create({
+            endpoint: ':foo/bar'.toHttpEndpoint(),
+            parameters: {
+              "method:": "GET",
+              "header:foo": "bar",
+              "endpoint:foo": "FOO"
+            }
+          });
+          var result = httpRequest.getUrlPathQuery();
+          expect(result).toBe("FOO/bar");
+        });
+      });
+    });
+
+    describe("getBody()", function () {
+      beforeEach(function () {
+        httpRequest = HttpRequest.create({
+          endpoint: 'foo/bar'.toHttpEndpoint(),
+          parameters: {
+            "method:": "GET",
+            "body:": "bar",
+            "baz": "quux"
+          }
+        });
+      });
+
+      it("should return method parameter", function () {
+        expect(httpRequest.getBody()).toBe("bar");
       });
     });
   });

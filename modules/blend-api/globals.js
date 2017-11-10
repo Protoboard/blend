@@ -10,3 +10,17 @@ var $assert = require('blend-assert'),
 /**
  * @namespace $api
  */
+
+$oop.copyProperties($api, /** @lends $api */{
+  /** @constant */
+  EVENT_REQUEST_OPEN: 'request.open',
+
+  /** @constant */
+  EVENT_REQUEST_SEND: 'request.send',
+
+  /** @constant */
+  EVENT_RESPONSE_PROGRESS: 'response.progress',
+
+  /** @constant */
+  EVENT_RESPONSE_RECEIVE: 'response.receive'
+});

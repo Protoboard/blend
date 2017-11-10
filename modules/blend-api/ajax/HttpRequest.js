@@ -12,6 +12,7 @@
  * method, header, and URL (path & query) to be used by `Dispatcher`.
  * @class $api.HttpRequest
  * @extends $api.Request
+ * @todo Use methods for setting HTTP specific parameters?
  */
 $api.HttpRequest = $oop.getClass('$api.HttpRequest')
 .blend($oop.getClass('$api.Request'))
@@ -67,7 +68,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
               endpointParams[endpointComponent.substr(1)] :
               endpointComponent;
         }),
-        uriPath = $utils.UriPath.fromComponents(pathComponents),
+        urlPath = $utils.UriPath.fromComponents(pathComponents).toString(),
 
         queryParams = this.extractParametersByPrefix('query:'),
         urlQuery = $data.Collection.fromData(queryParams)
@@ -76,9 +77,21 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
               queryParamValue :
               [queryParamValue];
         })
-        .as($api.UrlQuery);
+        .as($api.UrlQuery)
+        .toString();
 
-    return uriPath.toString() + '?' + urlQuery.toString();
+    return urlPath + (urlQuery && ('?' + urlQuery));
+  },
+
+  /**
+   * Extracts request body.
+   * @returns {*}
+   * @todo Add test
+   */
+  getBody: function () {
+    return $data.Collection.fromData(this.parameters)
+    .filterByKeyPrefix('body:')
+    .getFirstValue();
   }
 });
 
