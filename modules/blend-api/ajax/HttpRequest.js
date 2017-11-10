@@ -57,7 +57,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
               endpointParams[endpointComponent.substr(1)] :
               endpointComponent;
         }),
-        locationPath = $api.LocationPath.fromComponents(pathComponents),
+        locationPath = $utils.LocationPath.fromComponents(pathComponents),
 
         queryParams = this._extractParametersByType('query:'),
         urlQuery = $data.Collection.fromData(queryParams)

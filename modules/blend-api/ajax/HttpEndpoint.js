@@ -12,7 +12,7 @@
  * Identifies an HTTP endpoint.
  * @class $api.HttpEndpoint
  * @extends $api.Endpoint
- * @extends $api.LocationPath
+ * @extends $utils.LocationPath
  */
 $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
 .cacheBy(function (parameters) {
@@ -20,7 +20,7 @@ $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
   return endpointId || $api.HttpEndpoint.toUrlPath.call(parameters);
 })
 .blend($oop.getClass('$api.Endpoint'))
-.blend($oop.getClass('$api.LocationPath'))
+.blend($oop.getClass('$utils.LocationPath'))
 .define(/** @lends $api.HttpEndpoint# */{
   /** @ignore */
   spread: function () {

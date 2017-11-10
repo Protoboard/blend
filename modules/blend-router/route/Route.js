@@ -9,26 +9,15 @@
 
 /**
  * @class $router.Route
- * @extends $data.TreePath
+ * @extends $utils.LocationPath
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
 $router.Route = $oop.getClass('$router.Route')
-.blend($data.TreePath)
+.blend($utils.LocationPath)
 .blend($event.EventSender)
 .blend($event.EventListener)
 .define(/** @lends $router.Route# */{
-  /**
-   * @memberOf $router.Route
-   * @param {string} urlPath
-   * @returns {$router.Route}
-   */
-  fromUrlPath: function (urlPath) {
-    var components = urlPath.split('/')
-    .map(decodeURIComponent);
-    return this.create({components: components});
-  },
-
   /** @ignore */
   init: function () {
     var listeningPath = $data.TreePath.fromComponentsToString(
@@ -53,15 +42,6 @@ $router.Route = $oop.getClass('$router.Route')
    */
   navigateToDebounced: function () {
     return $router.Router.create().navigateToRouteDebounced(this);
-  },
-
-  /**
-   * @returns {string}
-   */
-  toUrlPath: function () {
-    return this.components
-    .map(encodeURIComponent)
-    .join('/');
   }
 });
 

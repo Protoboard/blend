@@ -1,27 +1,27 @@
 "use strict";
 
 /**
- * @function $api.LocationPath.create
+ * @function $utils.LocationPath.create
  * @param {Object} [properties]
  * @param {string[]} [properties.components] Identifiable 'steps' along the
  * path.
- * @returns {$api.LocationPath}
+ * @returns {$utils.LocationPath}
  */
 
 /**
- * @class $api.LocationPath
- * @extends $data.TreePath
- * @todo Move to $utils, or an intermediate module.
+ * @class $utils.LocationPath
+ * @extends $utils.Path
  * @todo Rename .fromUrlPath() / #toUrlPath to .fromString / #toString once
  * Path has no string manifestation of its own.
+ * @todo Add global escape / unescape methods. (See $data.TreePath)
  */
-$api.LocationPath = $oop.getClass('$api.LocationPath')
-.blend($data.TreePath)
-.define(/** @lends $api.LocationPath# */{
+$utils.LocationPath = $oop.getClass('$utils.LocationPath')
+.blend($oop.getClass('$utils.Path'))
+.define(/** @lends $utils.LocationPath# */{
   /**
-   * @memberOf $api.LocationPath
+   * @memberOf $utils.LocationPath
    * @param {string} urlPath
-   * @returns {$api.LocationPath}
+   * @returns {$utils.LocationPath}
    */
   fromUrlPath: function (urlPath) {
     var components = urlPath.split('/')

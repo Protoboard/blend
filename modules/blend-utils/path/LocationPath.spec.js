@@ -1,16 +1,16 @@
 "use strict";
 
 var $oop = window['blend-oop'],
-    $api = window['blend-api'];
+    $utils = window['blend-utils'];
 
-describe("$api", function () {
+describe("$utils", function () {
   describe("LocationPath", function () {
     var LocationPath,
         locationPath;
 
     beforeAll(function () {
-      LocationPath = $oop.getClass('test.$api.LocationPath.LocationPath')
-      .blend($api.LocationPath);
+      LocationPath = $oop.getClass('test.$utils.LocationPath.LocationPath')
+      .blend($utils.LocationPath);
       LocationPath.__forwards = {list: [], sources: [], lookup: {}};
     });
 
