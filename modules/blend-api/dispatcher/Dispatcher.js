@@ -9,8 +9,11 @@
 
 /**
  * @class $api.Dispatcher
+ * @implements $api.Dispatchable
+ * @todo Rename to RequestDispatcher
  */
 $api.Dispatcher = $oop.getClass('$api.Dispatcher')
+.implement($oop.getClass('$api.Dispatchable'))
 .define(/** @lends $api.Dispatcher# */{
   /**
    * @member {$api.Request} $api.Dispatcher#request
@@ -28,12 +31,12 @@ $api.Dispatcher = $oop.getClass('$api.Dispatcher')
   /** @ignore */
   init: function () {
     $assert.isInstanceOf(this.request, $api.Request, "Invalid request");
-  }
+  },
 
   /**
-   * @function $api.Dispatcher#dispatch
    * @returns {$utils.Promise}
    */
+  dispatch: function () {}
 });
 
 $oop.getClass('$api.Request')

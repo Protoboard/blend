@@ -13,11 +13,12 @@
  * @class $api.Request
  * @extends $event.EventSender
  * @extends $event.EventListener
- * @todo Add #send()
+ * @implements $api.Sendable
  */
 $api.Request = $oop.getClass('$api.Request')
 .blend($event.EventSender)
 .blend($event.EventListener)
+.implement($oop.getClass('$api.Sendable'))
 .define(/** @lends $api.Request# */{
   /**
    * Identifies endpoint the request will be sent to.
@@ -59,6 +60,14 @@ $api.Request = $oop.getClass('$api.Request')
     this
     .setListeningPath(listeningPath)
     .addTriggerPaths([listeningPath].concat(endpoint.triggerPaths));
+  },
+
+  /**
+   * Sends request using a fitting default dispatcher.
+   * @returns {$utils.Promise}
+   */
+  send: function () {
+    return this.toDispatcher().dispatch();
   },
 
   /**

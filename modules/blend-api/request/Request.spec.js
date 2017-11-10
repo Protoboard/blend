@@ -74,6 +74,26 @@ describe("$api", function () {
       });
     });
 
+    describe("send()", function () {
+      var promise;
+
+      beforeEach(function () {
+        request = 'foo/bar'.toHttpEndpoint().toRequest();
+        promise = {};
+        spyOn($api.Dispatcher, 'dispatch').and.returnValue(promise);
+      });
+
+      it("should invoke Dispatcher#dispatch", function () {
+        request.send();
+        expect($api.Dispatcher.dispatch).toHaveBeenCalled();
+      });
+
+      it("should forward promise from dispatch", function () {
+        var result = request.send();
+        expect(result).toBe(promise);
+      });
+    });
+
     describe("toString()", function () {
       it("should serialize Request", function () {
         request = Request.create({
