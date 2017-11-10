@@ -8,6 +8,8 @@
  */
 
 /**
+ * Bundles HTTP endpoint with request parameters. Allows extraction of HTTP
+ * method, header, and URL (path & query) to be used by `Dispatcher`.
  * @class $api.HttpRequest
  * @extends $api.Request
  */
@@ -31,6 +33,9 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
   },
 
   /**
+   * Extracts HTTP method from `parameters`. Method parameter is expected to
+   * be prefixed with "method:". When there are multiple such parameters in
+   * the request, one will be selected randomly.
    * @returns {string}
    */
   getMethod: function () {
@@ -40,6 +45,8 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
   },
 
   /**
+   * Extracts header object from `parameters`. Header attributes are expected
+   * to be prefixed with "header:".
    * @returns {Object}
    */
   getHeaderObject: function () {
@@ -47,6 +54,10 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
   },
 
   /**
+   * Extracts URL path and query string from `parameters`. Endpoint parameters
+   * (manifesting in URL path) are expected to be prefixed with "endpoint:".
+   * Query parameters are expected to be prefixed with "query:". Query
+   * parameters can take array values.
    * @returns {string}
    */
   getUrlPathQuery: function () {

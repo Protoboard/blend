@@ -8,7 +8,8 @@
  */
 
 /**
- *
+ * Bundles endpoint with parameters. These two together define a request to
+ * be sent to a remote resource.
  * @class $api.Request
  * @extends $event.EventSender
  * @extends $event.EventListener
@@ -19,10 +20,12 @@ $api.Request = $oop.getClass('$api.Request')
 .blend($event.EventListener)
 .define(/** @lends $api.Request# */{
   /**
+   * Identifies endpoint the request will be sent to.
    * @member {$api.Endpoint} $api.Request#endpoint
    */
 
   /**
+   * Request parameters.
    * @member {Object} $api.Request#parameters
    * @todo Should be Collection?
    */
