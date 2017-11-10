@@ -23,7 +23,7 @@ describe("$i18n", function () {
 
       beforeEach(function () {
         TranslationIndex.__instanceLookup = {};
-        $entity.entities.appendNode('document'.toPath(), {
+        $entity.entities.appendNode('document'.toTreePath(), {
           _locale: {
             'en-us': {
               localeName: 'US English',

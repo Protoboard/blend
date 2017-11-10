@@ -36,7 +36,7 @@ $api.Endpoint = $oop.getClass('$api.Endpoint')
   init: function () {
     $assert.isString(this.endpointId, "Invalid endpoint ID");
 
-    var listeningPath = $data.Path.fromComponentsToString([
+    var listeningPath = $data.TreePath.fromComponentsToString([
       'endpoint', this.endpointId]);
     this
     .setListeningPath(listeningPath)

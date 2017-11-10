@@ -8,11 +8,11 @@ $oop.copyProperties($event, /** @lends $event */{
    * @returns {Array.<string>}
    */
   spreadPathForBubbling: function (path) {
-    var components = $data.Path.fromString(path).components,
+    var components = $data.TreePath.fromString(path).components,
         result = [],
         i;
     for (i = components.length - 1; i > 0; i--) {
-      result.push($data.Path.fromComponentsToString(components.slice(0, i)));
+      result.push($data.TreePath.fromComponentsToString(components.slice(0, i)));
     }
     return result;
   },
@@ -28,7 +28,7 @@ $oop.copyProperties($event, /** @lends $event */{
     var eventSpace = $event.EventSpace.create();
 
     return eventSpace.subscriptions
-    .getNodeWrapped(['paths', eventName].toPath())
+    .getNodeWrapped(['paths', eventName].toTreePath())
     .asOrderedStringList()
     .getRangeByPrefixWrapped(path, 1)
     .asCollection()

@@ -76,7 +76,7 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setLocaleName('baz');
-        var path = 'document.foo.bar.localeName'.toPath();
+        var path = 'document.foo.bar.localeName'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
@@ -107,7 +107,7 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setCountryCode('baz');
-        var path = 'document.foo.bar.countryCode'.toPath();
+        var path = 'document.foo.bar.countryCode'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
@@ -138,7 +138,7 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setLanguageCode('baz');
-        var path = 'document.foo.bar.languageCode'.toPath();
+        var path = 'document.foo.bar.languageCode'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
@@ -180,7 +180,7 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setPluralFormula(pluralFormula);
-        var path = 'document.foo.bar.pluralFormula'.toPath();
+        var path = 'document.foo.bar.pluralFormula'.toTreePath();
         expect($entity.entities.getNode(path)).toBe(pluralFormula);
       });
     });
@@ -214,7 +214,7 @@ describe("$i18n", function () {
 
       it("should set reference in translations field", function () {
         localeDocument.addTranslationKey('baz/quux'.toDocumentKey());
-        var path = 'document.foo.bar.translations'.toPath();
+        var path = 'document.foo.bar.translations'.toTreePath();
         expect($entity.entities.getNode(path)).toEqual({
           'baz/quux': 1
         });

@@ -27,7 +27,7 @@ describe("$i18n", function () {
 
       it("should set originalString field", function () {
         translationDocument.setOriginalString('baz');
-        var path = 'document.foo.bar.originalString'.toPath();
+        var path = 'document.foo.bar.originalString'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
@@ -58,7 +58,7 @@ describe("$i18n", function () {
 
       it("should set item in pluralForm field", function () {
         translationDocument.setPluralForm(0, 'baz');
-        var path = 'document.foo.bar.pluralForms'.toPath();
+        var path = 'document.foo.bar.pluralForms'.toTreePath();
         expect($entity.entities.getNode(path)).toEqual({
           0: 'baz'
         });
@@ -94,7 +94,7 @@ describe("$i18n", function () {
 
       it("should set context field", function () {
         translationDocument.setContext('baz');
-        var path = 'document.foo.bar.context'.toPath();
+        var path = 'document.foo.bar.context'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });

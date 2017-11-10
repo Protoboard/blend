@@ -48,7 +48,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
    */
   _initTranslationIndex: function () {
     var that = this,
-        localeDocumentsPath = $data.Path.fromString('document._locale');
+        localeDocumentsPath = $data.TreePath.fromString('document._locale');
 
     // cycling through all locale documents
     $entity.entities.getNodeWrapped(localeDocumentsPath)
@@ -83,7 +83,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
   ) {
     context = context || '';
     pluralIndex = pluralIndex || 0;
-    var indexPath = $data.Path.fromComponents([
+    var indexPath = $data.TreePath.fromComponents([
       '_translation', localeId, originalString, context, pluralIndex]);
     $entity.index.setNode(indexPath, translatedString);
     return this;
@@ -101,7 +101,7 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
   getTranslation: function (localeId, originalString, context, pluralIndex) {
     context = context || '';
     pluralIndex = pluralIndex || 0;
-    var indexPath = $data.Path.fromComponents([
+    var indexPath = $data.TreePath.fromComponents([
       '_translation', localeId, originalString, context, pluralIndex]);
     return $entity.index.getNode(indexPath);
   },

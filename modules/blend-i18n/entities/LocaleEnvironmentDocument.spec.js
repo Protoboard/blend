@@ -31,7 +31,7 @@ describe("$i18n", function () {
 
       it("should set activeLocale field", function () {
         localeEnvironmentDocument.setActiveLocaleKey('baz/quux'.toDocumentKey());
-        var path = 'document.foo.bar.activeLocale'.toPath();
+        var path = 'document.foo.bar.activeLocale'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz/quux');
       });
     });

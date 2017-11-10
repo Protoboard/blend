@@ -66,12 +66,12 @@ describe("$entity", function () {
     describe("create()", function () {
       describe("when valueType is collection", function () {
         beforeEach(function () {
-          $entity.entities.setNode('document.__field.foo/baz.valueType'.toPath(), 'collection');
+          $entity.entities.setNode('document.__field.foo/baz.valueType'.toTreePath(), 'collection');
           result = 'foo/bar/baz'.toFieldKey();
         });
 
         afterEach(function () {
-          $entity.entities.deleteNode('document.__field.foo/baz.valueType'.toPath());
+          $entity.entities.deleteNode('document.__field.foo/baz.valueType'.toTreePath());
         });
 
         it("should return CollectionFieldKey instance", function () {

@@ -57,7 +57,7 @@ $oop.getClass('$entity.FieldKey')
             documentKey.documentType,
             fieldName
           ]),
-      valueTypePath = attributeDocumentKey && $data.Path.fromComponents([
+      valueTypePath = attributeDocumentKey && $data.TreePath.fromComponents([
         'document',
         '__field',
         attributeDocumentKey.documentId,

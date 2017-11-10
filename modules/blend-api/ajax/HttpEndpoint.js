@@ -30,8 +30,8 @@ $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
   }
 });
 
-$data.Path
-.delegate(/** @lends $data.Path */{
+$data.TreePath
+.delegate(/** @lends $data.TreePath */{
   /**
    * @returns {$api.HttpEndpoint}
    */

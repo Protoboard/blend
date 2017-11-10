@@ -19,9 +19,9 @@ $i18n.ModuleLocaleIndex = $oop.getClass('$i18n.ModuleLocaleIndex')
    */
   addLocaleForModule: function (moduleId, localeId) {
     $entity.index
-    .setNode($data.Path.fromComponents([
+    .setNode($data.TreePath.fromComponents([
       '_localesByModule', moduleId, localeId]), 1)
-    .setNode($data.Path.fromComponents([
+    .setNode($data.TreePath.fromComponents([
       '_modulesByLocale', localeId, moduleId]), 1);
     return this;
   },
@@ -33,7 +33,8 @@ $i18n.ModuleLocaleIndex = $oop.getClass('$i18n.ModuleLocaleIndex')
    */
   getModuleIdsForLocale: function (localeId) {
     return $entity.index
-    .getNodeWrapped($data.Path.fromComponents(['_modulesByLocale', localeId]))
+    .getNodeWrapped($data.TreePath.fromComponents([
+      '_modulesByLocale', localeId]))
     .asCollection()
     .getKeys();
   },
@@ -45,7 +46,8 @@ $i18n.ModuleLocaleIndex = $oop.getClass('$i18n.ModuleLocaleIndex')
    */
   getLocaleIdsForModule: function (moduleId) {
     return $entity.index
-    .getNodeWrapped($data.Path.fromComponents(['_localesByModule', moduleId]))
+    .getNodeWrapped($data.TreePath.fromComponents([
+      '_localesByModule', moduleId]))
     .asCollection()
     .getKeys();
   }

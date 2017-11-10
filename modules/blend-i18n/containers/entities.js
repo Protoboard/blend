@@ -1,7 +1,7 @@
 "use strict";
 
 $entity.entities
-.appendNode($data.Path.fromString('document.__document'), {
+.appendNode($data.TreePath.fromString('document.__document'), {
   _localeEnvironment: {
     fields: [
       'activeLocale'
@@ -26,7 +26,7 @@ $entity.entities
     ]
   }
 })
-.appendNode($data.Path.fromString('document.__field'), {
+.appendNode($data.TreePath.fromString('document.__field'), {
   '_localeEnvironment/activeLocale': {
     valueType: 'reference'
   },

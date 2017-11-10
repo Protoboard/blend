@@ -114,12 +114,12 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
 
   /**
    * @inheritDoc
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
   getEntityPath: function () {
     var documentKey = this.documentKey;
     if (!hOP.call(this, '_entityPath')) {
-      this._entityPath = $data.Path.fromComponents([
+      this._entityPath = $data.TreePath.fromComponents([
         'document',
         String(documentKey.documentType),
         String(documentKey.documentId),

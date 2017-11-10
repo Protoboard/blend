@@ -96,22 +96,18 @@ describe("$utils", function () {
   });
 });
 
-//describe("Array", function () {
-//  var result;
-//
-//  describe("toPath()", function () {
-//    var array = [1, 2, 3];
-//
-//    beforeEach(function () {
-//      result = array.toPath();
-//    });
-//
-//    it("should return a Path instance", function () {
-//      expect($utils.Path.mixedBy(result)).toBeTruthy();
-//    });
-//
-//    it("should set components property", function () {
-//      expect(result.components).toBe(array);
-//    });
-//  });
-//});
+describe("Array", function () {
+  describe("toPath()", function () {
+    var array = [1, 2, 3],
+        path;
+
+    it("should return a Path instance", function () {
+      path = array.toPath();
+      expect($utils.Path.mixedBy(path)).toBeTruthy();
+    });
+
+    it("should set components property", function () {
+      expect(path.components).toBe(array);
+    });
+  });
+});

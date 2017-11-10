@@ -78,11 +78,11 @@ $utils.Path = $oop.getClass('$utils.Path')
   }
 });
 
-//$oop.copyProperties(Array.prototype, /** @lends Array# */{
-//  /**
-//   * @returns {$utils.Path}
-//   */
-//  toPath: function () {
-//    return $utils.Path.create({components: this});
-//  }
-//});
+$oop.copyProperties(Array.prototype, /** @lends Array# */{
+  /**
+   * @returns {$utils.Path}
+   */
+  toPath: function () {
+    return $utils.Path.create({components: this});
+  }
+});

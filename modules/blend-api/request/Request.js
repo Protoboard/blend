@@ -46,7 +46,7 @@ $api.Request = $oop.getClass('$api.Request')
 
     var endpoint = this.endpoint,
         parameters = this.parameters || {},
-        listeningPath = $data.Path.fromComponentsToString([
+        listeningPath = $data.TreePath.fromComponentsToString([
           'endpoint',
           endpoint.endpointId,
           // todo Need safe stringify that preserves property order

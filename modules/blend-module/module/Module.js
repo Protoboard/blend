@@ -38,7 +38,7 @@ $module.Module = $oop.getClass('$module.Module')
   init: function () {
     $assert.isString(this.moduleId, "Invalid module ID");
 
-    var listeningPath = $data.Path.fromComponentsToString([
+    var listeningPath = $data.TreePath.fromComponentsToString([
       'module', this.moduleId]);
 
     this
@@ -56,7 +56,7 @@ $module.Module = $oop.getClass('$module.Module')
 
     if (!this.isAvailable()) {
       // storing module information in container
-      modulePath = $data.Path.fromString(this.moduleId);
+      modulePath = $data.TreePath.fromString(this.moduleId);
       $module.modules.setNode(modulePath, {});
 
       // triggering event about change
@@ -71,7 +71,7 @@ $module.Module = $oop.getClass('$module.Module')
    * @returns {boolean}
    */
   isAvailable: function () {
-    var modulePath = $data.Path.fromString(this.moduleId);
+    var modulePath = $data.TreePath.fromString(this.moduleId);
     return !!$module.modules.getNode(modulePath);
   }
 });

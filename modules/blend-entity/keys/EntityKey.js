@@ -12,7 +12,7 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
 .define(/** @lends $entity.EntityKey# */{
   /**
    * Identifies the entity's data node in the entity store.
-   * @member {$data.Path} $entity.EntityKey#_entityPath
+   * @member {$data.TreePath} $entity.EntityKey#_entityPath
    * @protected
    */
 
@@ -20,7 +20,7 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    * Subclasses are expected to spread the entity path onto key-specific
    * properties.
    * @memberOf $entity.EntityKey
-   * @param {$data.Path} entityPath
+   * @param {$data.TreePath} entityPath
    * @returns {$entity.EntityKey}
    */
   fromEntityPath: function (entityPath) {
@@ -32,7 +32,7 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
   /**
    * Retrieves a `Path` instance identifying the entity's data node in the
    * entity store.
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
   getEntityPath: function () {
     return this._entityPath;
@@ -74,8 +74,8 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    */
 });
 
-$oop.getClass('$data.Path')
-.delegate(/** @lends $data.Path# */{
+$oop.getClass('$data.TreePath')
+.delegate(/** @lends $data.TreePath# */{
   /** @returns {$entity.EntityKey} */
   toEntityKey: function () {
     return $entity.EntityKey.fromEntityPath(this);

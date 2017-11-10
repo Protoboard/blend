@@ -52,7 +52,7 @@ describe("$data", function () {
 
       beforeEach(function () {
         $api.HttpEndpoint.__instanceLookup = {};
-        path = 'foo.bar.baz'.toPath();
+        path = 'foo.bar.baz'.toTreePath();
       });
 
       it("should return a HttpEndpoint instance", function () {

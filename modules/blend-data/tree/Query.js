@@ -84,13 +84,13 @@ $data.Query = $oop.getClass('$data.Query')
 
   /**
    * Matches query against a path.
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @returns {boolean}
    * @example
    * $data.Query.create(['**', 'baz'])
-   *      .matches($data.Path.create(['foo', 'bar', 'baz'])) // true
+   *      .matches($data.TreePath.create(['foo', 'bar', 'baz'])) // true
    * $data.Query.create(['!foo', 'bar,baz'])
-   *      .matches($data.Path.create(['foo', 'baz'])) // false
+   *      .matches($data.TreePath.create(['foo', 'baz'])) // false
    */
   matches: function (path) {
     var queryComponents = this.components,

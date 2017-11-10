@@ -20,7 +20,7 @@ $widget.RootWidget = $oop.getClass('$widget.RootWidget')
 
   /** @ignore */
   init: function () {
-    var listeningPath = $data.Path.fromComponentsToString([
+    var listeningPath = $data.TreePath.fromComponentsToString([
       'widget', this.nodeName]);
 
     this

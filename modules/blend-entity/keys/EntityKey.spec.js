@@ -29,7 +29,7 @@ describe("$entity", function () {
 
       beforeEach(function () {
         entityKey = {};
-        entityPath = 'document.foo.bar'.toPath();
+        entityPath = 'document.foo.bar'.toTreePath();
         spyOn(EntityKey, 'create').and.returnValue(entityKey);
         result = EntityKey.fromEntityPath(entityPath);
       });
@@ -50,7 +50,7 @@ describe("$entity", function () {
         var entityPath;
 
         beforeEach(function () {
-          entityPath = 'foo.bar'.toPath();
+          entityPath = 'foo.bar'.toTreePath();
           entityKey = EntityKey.fromEntityPath(entityPath);
           result = entityKey.getEntityPath();
         });
@@ -110,7 +110,7 @@ describe("$data", function () {
 
     beforeAll(function () {
       Path = $oop.getClass('test.$entity.EntityKey.Path')
-      .blend($data.Path);
+      .blend($data.TreePath);
     });
 
     beforeEach(function () {

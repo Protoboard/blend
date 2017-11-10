@@ -12,15 +12,15 @@
  * container. Its primary purpose is to simplify event subscription by item
  * value type.
  * @class $entity.ItemValueTypePath
- * @extends $data.Path
+ * @extends $data.TreePath
  */
 $entity.ItemValueTypePath = $oop.getClass('$entity.ItemValueTypePath')
-.blend($data.Path)
+.blend($data.TreePath)
 .define(/** @lends $entity.ItemValueTypePath# */{
   /**
    * @memberOf $entity.ItemValueTypePath
    * @param valueType
-   * @returns {*|$data.Path}
+   * @returns {*|$data.TreePath}
    */
   fromItemValueType: function (valueType) {
     return this.create({

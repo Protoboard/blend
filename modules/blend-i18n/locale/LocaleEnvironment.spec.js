@@ -38,13 +38,13 @@ describe("$i18n", function () {
       var localeEnvironmentNode;
 
       beforeEach(function () {
-        localeEnvironmentNode = $entity.entities.getNode('document._localeEnvironment.'.toPath());
-        $entity.entities.setNode('document._localeEnvironment.'.toPath(), {});
+        localeEnvironmentNode = $entity.entities.getNode('document._localeEnvironment.'.toTreePath());
+        $entity.entities.setNode('document._localeEnvironment.'.toTreePath(), {});
         localeEnvironment = LocaleEnvironment.create();
       });
 
       afterEach(function () {
-        $entity.entities.setNode('document._localeEnvironment.'.toPath(), localeEnvironmentNode);
+        $entity.entities.setNode('document._localeEnvironment.'.toTreePath(), localeEnvironmentNode);
       });
 
       it("should return self", function () {
@@ -81,14 +81,14 @@ describe("$i18n", function () {
       var localeEnvironmentNode;
 
       beforeEach(function () {
-        localeEnvironmentNode = $entity.entities.getNode('document._localeEnvironment.'.toPath());
-        $entity.entities.setNode('document._localeEnvironment.'.toPath(), {});
+        localeEnvironmentNode = $entity.entities.getNode('document._localeEnvironment.'.toTreePath());
+        $entity.entities.setNode('document._localeEnvironment.'.toTreePath(), {});
         localeEnvironment = $i18n.LocaleEnvironment.create();
         spyOn($i18n.LocaleChangeEvent, 'trigger');
       });
 
       afterEach(function () {
-        $entity.entities.setNode('document._localeEnvironment.'.toPath(), localeEnvironmentNode);
+        $entity.entities.setNode('document._localeEnvironment.'.toTreePath(), localeEnvironmentNode);
       });
 
       it("should trigger EVENT_LOCALE_CHANGE", function () {

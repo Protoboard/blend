@@ -56,7 +56,7 @@ describe("$entity", function () {
       describe("from _entityPath", function () {
         beforeEach(function () {
           fieldKey = FieldKey.create({
-            _entityPath: 'document.foo.bar.baz'.toPath()
+            _entityPath: 'document.foo.bar.baz'.toTreePath()
           });
         });
 
@@ -133,11 +133,11 @@ describe("$entity", function () {
       });
 
       it("should return a Path", function () {
-        expect($data.Path.mixedBy(result)).toBeTruthy();
+        expect($data.TreePath.mixedBy(result)).toBeTruthy();
       });
 
       it("should return entity path to the field", function () {
-        expect(result.equals('document.foo.bar.baz'.toPath()));
+        expect(result.equals('document.foo.bar.baz'.toTreePath()));
       });
 
       it("should set _entityPath property", function () {
@@ -182,7 +182,7 @@ describe("$entity", function () {
       describe("when passing field entity path", function () {
         beforeEach(function () {
           result = $entity.EntityKey.create({
-            _entityPath: 'document.foo.bar.baz'.toPath()
+            _entityPath: 'document.foo.bar.baz'.toTreePath()
           });
         });
 

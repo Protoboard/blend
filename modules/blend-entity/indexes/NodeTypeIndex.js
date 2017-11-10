@@ -76,7 +76,7 @@ $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
    * @private
    */
   _addFieldRef: function (nodeType, fieldRef) {
-    var indexPath = $data.Path.fromComponents([
+    var indexPath = $data.TreePath.fromComponents([
       '__fieldRef', 'byFieldType', nodeType, fieldRef]);
     $entity.index.setNode(indexPath, 1);
     return this;
@@ -90,7 +90,7 @@ $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
    * @private
    */
   _addFieldName: function (nodeType, documentType, fieldName) {
-    var indexPath = $data.Path.fromComponents([
+    var indexPath = $data.TreePath.fromComponents([
       '__fieldName', 'byFieldType', nodeType, documentType, fieldName]);
     $entity.index.setNode(indexPath, 1);
     return this;
@@ -103,7 +103,7 @@ $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
    * @returns {Array.<reference>} List of field names
    */
   getFieldRefsByFieldType: function (nodeType) {
-    var indexPath = $data.Path.fromComponents([
+    var indexPath = $data.TreePath.fromComponents([
           '__fieldRef', 'byFieldType', nodeType]),
         fieldRefLookup = $entity.index.getNode(indexPath);
     return fieldRefLookup && Object.keys(fieldRefLookup);
@@ -117,7 +117,7 @@ $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
    * @returns {Array.<string>} List of field names
    */
   getFieldNamesByFieldType: function (documentType, nodeType) {
-    var indexPath = $data.Path.fromComponents([
+    var indexPath = $data.TreePath.fromComponents([
           '__fieldName', 'byFieldType', nodeType, documentType]),
         fieldRefLookup = $entity.index.getNode(indexPath);
     return fieldRefLookup && Object.keys(fieldRefLookup);

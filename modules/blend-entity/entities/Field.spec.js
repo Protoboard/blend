@@ -51,7 +51,7 @@ describe("$entity", function () {
       it("should initialize triggerPaths", function () {
         it("should initialize triggerPaths", function () {
           expect(field.triggerPaths).toContain(
-              'entity.document.__field.__field/valueType.options.string'.toPath());
+              'entity.document.__field.__field/valueType.options.string'.toTreePath());
         });
       });
 
@@ -82,7 +82,7 @@ describe("$entity", function () {
       describe("when nodeType is leaf", function () {
         beforeEach(function () {
           $entity.entities
-          .appendNode('document.__field'.toPath(), {
+          .appendNode('document.__field'.toTreePath(), {
             'foo/baz': {
               nodeType: 'leaf'
             }
@@ -93,7 +93,7 @@ describe("$entity", function () {
 
         afterEach(function () {
           $entity.entities
-          .deleteNode('document.__field.foo/baz'.toPath());
+          .deleteNode('document.__field.foo/baz'.toTreePath());
         });
 
         it("should return LeafNoded instance", function () {

@@ -11,15 +11,15 @@
  * Path identifying a field attribute node in the entity container. Its primary
  * purpose is to simplify event subscription by field.
  * @class $entity.FieldAttributePath
- * @extends $data.Path
+ * @extends $data.TreePath
  */
 $entity.FieldAttributePath = $oop.getClass('$entity.FieldAttributePath')
-.blend($data.Path)
+.blend($data.TreePath)
 .define(/** @lends $entity.FieldAttributePath# */{
   /**
    * @memberOf $entity.FieldAttributePath
    * @param attributeRef
-   * @returns {*|$data.Path}
+   * @returns {*|$data.TreePath}
    */
   fromAttributeRef: function (attributeRef) {
     return this.create({

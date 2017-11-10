@@ -230,7 +230,7 @@ $widget.Node = $oop.getClass('$widget.Node')
   },
 
   /**
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
   getNodePath: function () {
     var node = this,
@@ -241,7 +241,7 @@ $widget.Node = $oop.getClass('$widget.Node')
       node = node.parentNode;
     }
 
-    return $data.Path.fromComponents(components);
+    return $data.TreePath.fromComponents(components);
   },
 
   /**

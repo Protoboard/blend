@@ -22,12 +22,13 @@ describe("$template", function () {
     describe("create()", function () {
       it("should initialize listeningPath property", function () {
         expect(liveTemplate.listeningPath)
-        .toEqual(['template', '' + liveTemplate.instanceId].toPath().toString());
+        .toEqual(['template', '' + liveTemplate.instanceId].toTreePath()
+        .toString());
       });
 
       it("should initialize triggerPaths property", function () {
         expect(liveTemplate.triggerPaths.list).toContain(
-            ['template', '' + liveTemplate.instanceId].toPath().toString(),
+            ['template', '' + liveTemplate.instanceId].toTreePath().toString(),
             'template');
       });
 

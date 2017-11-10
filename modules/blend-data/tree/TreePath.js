@@ -1,10 +1,10 @@
 "use strict";
 
 /**
- * @function $data.Path.create
+ * @function $data.TreePath.create
  * @param {Object} properties
  * @param {string[]} properties.components Identifiable 'steps' along the path.
- * @returns {$data.Path}
+ * @returns {$data.TreePath}
  */
 
 /**
@@ -12,40 +12,29 @@
  * of path components (strings), identifying keys in nodes along the path. In
  * string representation of the path, components are separated by the character
  * '`.`' (period).
- * @class $data.Path
- * @mixes $utils.Cloneable
- * @mixes $data.Comparable
+ * @class $data.TreePath
+ * @extends $utils.Path
+ * @extends $data.Comparable
  * @implements $utils.Stringifiable
  * @implements $data.Stackable
  * @example
- * $data.Path.create(['foo', 'bar', 'baz'])
+ * $data.TreePath.create(['foo', 'bar', 'baz'])
  */
-$data.Path = $oop.getClass('$data.Path')
-.blend($utils.Cloneable)
-.blend($utils.Equatable)
+$data.TreePath = $oop.getClass('$data.TreePath')
+.blend($utils.Path)
 .blend($oop.getClass('$data.Comparable'))
 .implement($utils.Stringifiable)
 .implement($oop.getClass('$data.Stackable'))
-.define(/** @lends $data.Path# */{
+.define(/** @lends $data.TreePath# */{
   /**
    * Path components.
-   * @member {Array.<string>} $data.Path#components
+   * @member {Array.<string>} $data.TreePath#components
    */
-
-  /**
-   * Creates a `Path` instance based on the specified component array.
-   * @memberOf $data.Path
-   * @param {Array.<string>} components
-   * @returns {$data.Path}
-   */
-  fromComponents: function (components) {
-    return this.create({components: components});
-  },
 
   /**
    * Converts `Path` components directly to string. Escapes components the
-   * same way as `$data.Path.fromComponents([...]).toString()`.
-   * @memberOf $data.Path
+   * same way as `$data.TreePath.fromComponents([...]).toString()`.
+   * @memberOf $data.TreePath
    * @param {Array.<string>} components
    * @returns {string}
    */
@@ -55,9 +44,9 @@ $data.Path = $oop.getClass('$data.Path')
 
   /**
    * Creates a `Path` instance based on the specified string.
-   * @memberOf $data.Path
+   * @memberOf $data.TreePath
    * @param {string} pathStr
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
   fromString: function (pathStr) {
     var components = $utils.safeSplit(pathStr, $data.PATH_COMPONENT_SEPARATOR)
@@ -65,53 +54,9 @@ $data.Path = $oop.getClass('$data.Path')
     return this.create({components: components});
   },
 
-  /** @ignore */
-  init: function () {
-    $assert.isArray(this.components, "Invalid component list");
-  },
-
-  /**
-   * @inheritDoc
-   * @returns {$data.Path}
-   */
-  clone: function clone() {
-    var cloned = clone.returned;
-    cloned.components = this.components.concat();
-    return cloned;
-  },
-
-  /**
-   * Tests whether specified path is equivalent to current path.
-   * @param {$data.Path} path
-   * @returns {boolean}
-   */
-  equals: function equals(path) {
-    var result = equals.returned;
-
-    if (!result) {
-      return result;
-    }
-
-    var componentsLeft = this.components,
-        componentsRight = path.components,
-        componentCount = componentsRight.length,
-        i;
-
-    if (componentsLeft.length !== componentsRight.length) {
-      return false;
-    } else {
-      for (i = 0; i < componentCount; i++) {
-        if (componentsLeft[i] !== componentsRight[i]) {
-          return false;
-        }
-      }
-      return result;
-    }
-  },
-
   /**
    * Tests whether specified path includes current path. (From start)
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @returns {boolean}
    */
   lessThan: function lessThan(path) {
@@ -120,7 +65,7 @@ $data.Path = $oop.getClass('$data.Path')
 
   /**
    * Tests whether specified path is included in current path. (From start)
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @returns {boolean}
    */
   greaterThan: function greaterThan(path) {
@@ -146,7 +91,7 @@ $data.Path = $oop.getClass('$data.Path')
   /**
    * Appends a path component to the path.
    * @param {string} component
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
   push: function (component) {
     this.components.push(component);
@@ -164,7 +109,7 @@ $data.Path = $oop.getClass('$data.Path')
   /**
    * Prepends a path component to the path.
    * @param {string} component
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
   unshift: function (component) {
     this.components.unshift(component);
@@ -181,8 +126,8 @@ $data.Path = $oop.getClass('$data.Path')
 
   /**
    * Appends specified path to current path.
-   * @param {$data.Path} path
-   * @returns {$data.Path}
+   * @param {$data.TreePath} path
+   * @returns {$data.TreePath}
    */
   concat: function (path) {
     var components = this.components.concat(path.components);
@@ -194,7 +139,7 @@ $data.Path = $oop.getClass('$data.Path')
    * components will be escaped.
    * @returns {string}
    * @example
-   * $data.Path.create(['foo', 'bar.baz'])+'' // 'foo.bar\.baz'
+   * $data.TreePath.create(['foo', 'bar.baz'])+'' // 'foo.bar\.baz'
    */
   toString: function () {
     return this.components.map($data.escapePathComponent)
@@ -230,18 +175,18 @@ $oop.copyProperties($data, /** @lends $data */{
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
-  toPath: function () {
-    return $data.Path.fromString(this.valueOf());
+  toTreePath: function () {
+    return $data.TreePath.fromString(this.valueOf());
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
-   * @returns {$data.Path}
+   * @returns {$data.TreePath}
    */
-  toPath: function () {
-    return $data.Path.create({components: this});
+  toTreePath: function () {
+    return $data.TreePath.create({components: this});
   }
 });

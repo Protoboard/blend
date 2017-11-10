@@ -10,13 +10,13 @@
 
 /**
  * @class $api.LocationPath
- * @extends $data.Path
+ * @extends $data.TreePath
  * @todo Move to $utils, or an intermediate module.
  * @todo Rename .fromUrlPath() / #toUrlPath to .fromString / #toString once
  * Path has no string manifestation of its own.
  */
 $api.LocationPath = $oop.getClass('$api.LocationPath')
-.blend($data.Path)
+.blend($data.TreePath)
 .define(/** @lends $api.LocationPath# */{
   /**
    * @memberOf $api.LocationPath

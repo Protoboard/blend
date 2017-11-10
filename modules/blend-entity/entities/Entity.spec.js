@@ -21,7 +21,7 @@ describe("$entity", function () {
           return '__foo/bar'.toDocumentKey();
         },
         getChildKey: function (childId) {
-          return EntityKey.fromEntityPath(['foo', childId].toPath());
+          return EntityKey.fromEntityPath(['foo', childId].toTreePath());
         }
       });
       Entity = $oop.getClass('test.$entity.Entity.Entity')
@@ -29,7 +29,7 @@ describe("$entity", function () {
     });
 
     beforeEach(function () {
-      entityKey = EntityKey.fromEntityPath('foo.bar.baz'.toPath());
+      entityKey = EntityKey.fromEntityPath('foo.bar.baz'.toTreePath());
       entity = Entity.fromEntityKey(entityKey);
     });
 
@@ -77,7 +77,7 @@ describe("$entity", function () {
 
         beforeEach(function () {
           entityKey = EntityKey.create({
-            _entityPath: 'foo'.toPath()
+            _entityPath: 'foo'.toTreePath()
           });
           entity = $entity.Entity.fromEntityKey(entityKey);
 
@@ -95,12 +95,12 @@ describe("$entity", function () {
 
       beforeEach(function () {
         node = {};
-        $entity.entities.setNode('foo.bar.baz'.toPath(), node);
+        $entity.entities.setNode('foo.bar.baz'.toTreePath(), node);
         result = entity.getNode();
       });
 
       afterEach(function () {
-        $entity.entities.deletePath('foo.bar.baz'.toPath());
+        $entity.entities.deletePath('foo.bar.baz'.toTreePath());
       });
 
       it("should return entity node", function () {
@@ -110,7 +110,7 @@ describe("$entity", function () {
       describe("when entity node is absent", function () {
         beforeEach(function () {
           spyOn(entity, 'trigger');
-          $entity.entities.deleteNode('foo.bar.baz'.toPath());
+          $entity.entities.deleteNode('foo.bar.baz'.toTreePath());
           result = entity.getNode();
         });
 
@@ -147,12 +147,12 @@ describe("$entity", function () {
 
       beforeEach(function () {
         node = {};
-        $entity.entities.setNode('foo.bar.baz'.toPath(), node);
+        $entity.entities.setNode('foo.bar.baz'.toTreePath(), node);
         result = entity.getSilentNode();
       });
 
       afterEach(function () {
-        $entity.entities.deletePath('foo.bar.baz'.toPath());
+        $entity.entities.deletePath('foo.bar.baz'.toTreePath());
       });
 
       it("should return entity node", function () {
@@ -183,12 +183,12 @@ describe("$entity", function () {
 
       beforeEach(function () {
         node = {};
-        $entity.entities.setNode('foo.bar.baz'.toPath(), node);
+        $entity.entities.setNode('foo.bar.baz'.toTreePath(), node);
         result = entity.touchNode();
       });
 
       afterEach(function () {
-        $entity.entities.deletePath('foo.bar.baz'.toPath());
+        $entity.entities.deletePath('foo.bar.baz'.toTreePath());
       });
 
       it("should return self", function () {
@@ -198,7 +198,7 @@ describe("$entity", function () {
       describe("when entity node is absent", function () {
         beforeEach(function () {
           spyOn(entity, 'trigger');
-          $entity.entities.deleteNode('foo.bar.baz'.toPath());
+          $entity.entities.deleteNode('foo.bar.baz'.toTreePath());
           result = entity.getNode();
         });
 

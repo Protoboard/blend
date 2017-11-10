@@ -23,7 +23,7 @@ describe("$entity", function () {
 
     beforeEach(function () {
       valueKey = ValueKey.create({
-        _entityPath: 'baz'.toPath()
+        _entityPath: 'baz'.toTreePath()
       });
     });
 

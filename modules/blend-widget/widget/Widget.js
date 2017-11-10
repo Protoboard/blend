@@ -85,7 +85,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   },
 
   /**
-   * @param {$data.Path} parentNodePath
+   * @param {$data.TreePath} parentNodePath
    * @returns {$widget.Widget}
    * @ignore
    */
@@ -106,7 +106,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   },
 
   /**
-   * @param {$data.Path} parentNodePath
+   * @param {$data.TreePath} parentNodePath
    * @returns {$widget.Widget}
    * @ignore
    */

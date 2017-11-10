@@ -99,7 +99,7 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param {$data.Path} targetPath
+   * @param {$data.TreePath} targetPath
    * @returns {$event.Event}
    */
   addTargetPath: function (targetPath) {
@@ -108,7 +108,7 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param {$data.Path} targetPath
+   * @param {$data.TreePath} targetPath
    * @returns {$event.Event}
    */
   addBubblingPath: function (targetPath) {
@@ -117,7 +117,7 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
-   * @param {$data.Path} targetPath
+   * @param {$data.TreePath} targetPath
    * @returns {$event.Event}
    */
   addBroadcastPath: function (targetPath) {
@@ -173,7 +173,7 @@ $event.Event = $oop.getClass('$event.Event')
     traversal:
         for (i = 0; i < targetPathCount; i++) {
           targetPath = targetPaths[i];
-          callbacksPath = $data.Path.fromComponents([
+          callbacksPath = $data.TreePath.fromComponents([
             'callbacks', 'bySubscription', eventName, targetPath]);
           callbacks = eventSpace.subscriptions.getNode(callbacksPath);
           subscriberIds = callbacks && Object.keys(callbacks);

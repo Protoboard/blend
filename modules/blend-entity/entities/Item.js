@@ -52,13 +52,13 @@ $entity.Item = $oop.getClass('$entity.Item')
         idType = itemKey.getIdType() || 'string',
         // same as $entity.ItemIdTypePath.fromItemIdType() but skipping a few
         // steps
-        idTypePath = $data.Path.fromComponentsToString([
+        idTypePath = $data.TreePath.fromComponentsToString([
           'entity', 'document', '__field', '__field/itemIdType', 'options',
           idType]),
         valueType = itemKey.getValueType() || 'string',
         // same as $entity.ItemValueTypePath.fromItemValueType() but skipping a
         // few steps
-        valueTypePath = $data.Path.fromComponentsToString([
+        valueTypePath = $data.TreePath.fromComponentsToString([
           'entity', 'document', '__field', '__field/itemValueType', 'options',
           valueType]);
 

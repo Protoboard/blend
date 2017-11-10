@@ -20,13 +20,13 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
         itemIdType = collectionFieldKey.getItemIdType() || 'string',
         // same as $entity.ItemIdTypePath.fromItemIdType() but skipping a few
         // steps
-        itemIdTypePath = $data.Path.fromComponentsToString([
+        itemIdTypePath = $data.TreePath.fromComponentsToString([
           'entity', 'document', '__field', '__field/itemIdType', 'options',
           itemIdType]),
         itemValueType = collectionFieldKey.getItemValueType() || 'string',
         // same as $entity.ItemValueTypePath.fromItemValueType() but skipping a
         // few steps
-        itemValueTypePath = $data.Path.fromComponentsToString([
+        itemValueTypePath = $data.TreePath.fromComponentsToString([
           'entity', 'document', '__field', '__field/itemValueType', 'options',
           itemValueType]);
 

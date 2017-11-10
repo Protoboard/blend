@@ -9,12 +9,12 @@
 
 /**
  * @class $router.Route
- * @extends $data.Path
+ * @extends $data.TreePath
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
 $router.Route = $oop.getClass('$router.Route')
-.blend($data.Path)
+.blend($data.TreePath)
 .blend($event.EventSender)
 .blend($event.EventListener)
 .define(/** @lends $router.Route# */{
@@ -31,7 +31,7 @@ $router.Route = $oop.getClass('$router.Route')
 
   /** @ignore */
   init: function () {
-    var listeningPath = $data.Path.fromComponentsToString(
+    var listeningPath = $data.TreePath.fromComponentsToString(
         ['route'].concat(this.components));
 
     this

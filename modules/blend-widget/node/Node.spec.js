@@ -477,8 +477,8 @@ describe("$widget", function () {
 
       it("should retrieve path to node", function () {
         var result = node3.getNodePath();
-        expect($data.Path.mixedBy(result)).toBeTruthy();
-        expect(result).toEqual('foo.bar.baz'.toPath());
+        expect($data.TreePath.mixedBy(result)).toBeTruthy();
+        expect(result).toEqual('foo.bar.baz'.toTreePath());
       });
     });
 

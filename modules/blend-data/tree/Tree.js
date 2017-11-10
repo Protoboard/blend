@@ -38,7 +38,7 @@ $data.Tree = $oop.getClass('$data.Tree')
     if (i === components.length) {
       // reached end of query
       // invoking callback with whatever path & node we're at
-      callback($data.Path.fromComponents(path), node);
+      callback($data.TreePath.fromComponents(path), node);
       return;
     } else if (!(node instanceof Object)) {
       // reached leaf node mid-query
@@ -47,7 +47,7 @@ $data.Tree = $oop.getClass('$data.Tree')
       ) {
         // current q.c. is a trailing skipper
         // invoking callback w/ leaf node
-        callback($data.Path.fromComponents(path), node);
+        callback($data.TreePath.fromComponents(path), node);
       }
       return;
     }
@@ -120,7 +120,7 @@ $data.Tree = $oop.getClass('$data.Tree')
 
   /**
    * Tests whether a node exists in the tree on the specified path.
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @returns {boolean}
    */
   hasPath: function (path) {
@@ -149,8 +149,8 @@ $data.Tree = $oop.getClass('$data.Tree')
    * Retrieves a path to an existing node in the tree where the specified path
    * would fork off. For paths that already exist in the tree, this is the
    * 1st-degree parent.
-   * @param {$data.Path} path
-   * @returns {$data.Path}
+   * @param {$data.TreePath} path
+   * @returns {$data.TreePath}
    */
   getParentPath: function (path) {
     var pathComponents = path.components,
@@ -170,14 +170,14 @@ $data.Tree = $oop.getClass('$data.Tree')
       parentNode = childNode;
     }
 
-    return $data.Path.fromComponents(result);
+    return $data.TreePath.fromComponents(result);
   },
 
   /**
    * Returns path to the last forking node (node with more than 1 keys) on the
    * specified path.
-   * @param {$data.Path} path
-   * @returns {$data.Path}
+   * @param {$data.TreePath} path
+   * @returns {$data.TreePath}
    */
   getLastForkPath: function (path) {
     var pathComponents = path.components,
@@ -210,14 +210,14 @@ $data.Tree = $oop.getClass('$data.Tree')
       }
     }
 
-    return $data.Path.fromComponents(
+    return $data.TreePath.fromComponents(
         pathComponents.slice(0, parentNodeCount - i));
   },
 
   /**
    * Retrieves node from the tree at the specified path. If the path does not
    * exist in the tree, returns `undefined`.
-   * @param {$data.Path} path Path to node
+   * @param {$data.TreePath} path Path to node
    * @returns {*} Whatever value is found at path
    */
   getNode: function (path) {
@@ -241,7 +241,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   /**
    * Retrieves node from the tree at the specified path, wrapped in a `Tree`
    * instance. For absent paths, returns an empty `Tree`.
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @returns {$data.Tree}
    * @todo Wrap primitives in DataContainer
    */
@@ -253,7 +253,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * Retrieves node from the tree at the specified path. If the path does not
    * exist in the tree, runs `initializer`, stores its return value as new
    * node, and returns the initialized node.
-   * @param {$data.Path} path Path to node
+   * @param {$data.TreePath} path Path to node
    * @param {function} initializer Function that initializes the node when path
    *     is absent
    * @returns {*} Existing or initialized node
@@ -268,7 +268,7 @@ $data.Tree = $oop.getClass('$data.Tree')
   },
 
   /**
-   * @param {$data.Path} path Path to node
+   * @param {$data.TreePath} path Path to node
    * @param {function} initializer Function that initializes the node
    * @returns {$data.Tree}
    */
@@ -281,7 +281,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * Sets the specified node at the specified path. When the path already
    * exists in the tree, it will be overwritten. When there's a primitive node
    * along the specified path, it will be overwritten.
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @param {*} node
    * @returns {$data.Tree}
    */
@@ -310,7 +310,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * will be concatenated to existing array nodes. When path does not exist in
    * tree, `appendNode` is equivalent to `setNode`.
    * @see $data.Tree#setNode
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @param {Object|Array} node
    * @returns {$data.Tree}
    */
@@ -355,7 +355,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * Removes a single node (with key) from its parent node. For array parent
    * nodes, it is possible to use splicing for removal. When path does not
    * exist in tree, `deleteNode` has no effect.
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @param {boolean} [splice=false]
    * @returns {$data.Tree}
    */
@@ -381,7 +381,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * Removes all non-forking nodes along the specified path, even if the whole
    * path doesn't exist in the tree. When `path` points to an existing forking
    * node, `deletePath` is equivalent to `deleteNode`.
-   * @param {$data.Path} path
+   * @param {$data.TreePath} path
    * @param {boolean} [splice=false]
    * @returns {$data.Tree}
    */
@@ -415,7 +415,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    */
   queryNodes: function (query) {
     var result = [];
-    this.query(query, function (/**$data.Path*/path, node) {
+    this.query(query, function (/**$data.TreePath*/path, node) {
       result.push(node);
     });
     return result;
@@ -437,7 +437,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    */
   queryKeys: function (query) {
     var result = [];
-    this.query(query, function (/**$data.Path*/path) {
+    this.query(query, function (/**$data.TreePath*/path) {
       var pathComponents = path.components,
           key = pathComponents[pathComponents.length - 1];
       result.push(key);
@@ -457,11 +457,11 @@ $data.Tree = $oop.getClass('$data.Tree')
    * Queries paths from the tree matching the specified query. Order of items
    * in the resulting array is non-deterministic.
    * @param {$data.Query} query
-   * @returns {$data.Path[]}
+   * @returns {$data.TreePath[]}
    */
   queryPaths: function (query) {
     var result = [];
-    this.query(query, function (/**$data.Path*/path) {
+    this.query(query, function (/**$data.TreePath*/path) {
       result.push(path);
     });
     return result;
@@ -482,7 +482,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    */
   queryKeyNodePairs: function (query) {
     var result = [];
-    this.query(query, function (/**$data.Path*/path, node) {
+    this.query(query, function (/**$data.TreePath*/path, node) {
       var pathComponents = path.components,
           key = pathComponents[pathComponents.length - 1];
       result.push({key: key, value: node});
@@ -497,7 +497,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    */
   queryPathNodePairs: function (query) {
     var result = [];
-    this.query(query, function (/**$data.Path*/path, node) {
+    this.query(query, function (/**$data.TreePath*/path, node) {
       result.push({key: path, value: node});
     });
     return $data.PairList.create({data: result});

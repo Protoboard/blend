@@ -103,40 +103,40 @@ describe("$data", function () {
       describe("for matching path", function () {
         it("should return true", function () {
           expect('foo.bar.baz'.toQuery()
-          .matches('foo.bar.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.baz'.toTreePath())).toBeTruthy();
           expect('foo.*.baz'.toQuery()
-          .matches('foo.bar.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.baz'.toTreePath())).toBeTruthy();
           expect('foo.!bar.baz'.toQuery()
-          .matches('foo.quux.baz'.toPath())).toBeTruthy();
+          .matches('foo.quux.baz'.toTreePath())).toBeTruthy();
           expect('foo.**.baz'.toQuery()
-          .matches('foo.bar.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.baz'.toTreePath())).toBeTruthy();
           expect('foo.**.baz'.toQuery()
-          .matches('foo.baz'.toPath())).toBeTruthy();
+          .matches('foo.baz'.toTreePath())).toBeTruthy();
           expect('foo.**.baz'.toQuery()
-          .matches('foo.bar.quux.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.quux.baz'.toTreePath())).toBeTruthy();
           expect('foo.bar.**'.toQuery()
-          .matches('foo.bar.quux.baz'.toPath())).toBeTruthy();
+          .matches('foo.bar.quux.baz'.toTreePath())).toBeTruthy();
           expect('**!foo.baz'.toQuery()
-          .matches('bar.quux.baz'.toPath())).toBeTruthy();
+          .matches('bar.quux.baz'.toTreePath())).toBeTruthy();
         });
       });
 
       describe("for non-matching path", function () {
         it("should return false", function () {
           expect('foo.bar.baz'.toQuery()
-          .matches('foo.bar.baz.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.baz.quux'.toTreePath())).toBeFalsy();
           expect('foo.bar.baz.quux'.toQuery()
-          .matches('foo.bar.baz'.toPath())).toBeFalsy();
+          .matches('foo.bar.baz'.toTreePath())).toBeFalsy();
           expect('foo.bar.baz'.toQuery()
-          .matches('foo.bar.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.quux'.toTreePath())).toBeFalsy();
           expect('foo.*.baz'.toQuery()
-          .matches('foo.bar.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.quux'.toTreePath())).toBeFalsy();
           expect('foo.!bar.baz'.toQuery()
-          .matches('foo.bar.baz'.toPath())).toBeFalsy();
+          .matches('foo.bar.baz'.toTreePath())).toBeFalsy();
           expect('foo.**.baz'.toQuery()
-          .matches('foo.bar.quux'.toPath())).toBeFalsy();
+          .matches('foo.bar.quux'.toTreePath())).toBeFalsy();
           expect('**!foo.baz'.toQuery()
-          .matches('bar.foo.baz'.toPath())).toBeFalsy();
+          .matches('bar.foo.baz'.toTreePath())).toBeFalsy();
         });
       });
     });
