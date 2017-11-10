@@ -2,17 +2,19 @@
 
 /**
  * @function $api.XhrDispatcher.create
+ * @param {Object} properties
+ * @param {$api.Request} properties.request
  * @returns {$api.XhrDispatcher}
  */
 
 /**
  * @class $api.XhrDispatcher
- * @implements $api.RequestDispatcher
+ * @extends $api.Dispatcher
  * @todo Check IE / Edge, and create specific dispatcher if necessary.
  */
 $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
-.implement($oop.getClass('$api.RequestDispatcher'))
-.define(/** @lends $api.XhrDispatcher */{
+.blend($oop.getClass('$api.Dispatcher'))
+.define(/** @lends $api.XhrDispatcher# */{
   /**
    * @param {XMLHttpRequest} xhr
    * @returns {number}
@@ -25,15 +27,13 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
 
   /**
    * Dispatches Ajax request.
-   * @param {$api.HttpRequest} request
    * @returns {$utils.Promise}
    */
-  dispatchRequest: function (request) {
-    $assert.isInstanceOf(request, $api.HttpRequest, "Invalid HTTP request");
-
+  dispatch: function () {
     var that = this,
         xhr = new XMLHttpRequest(),
         deferred = $utils.Deferred.create(),
+        request = this.request,
         method = request.getMethod() || 'GET',
         headerObject = request.getHeaderObject() || {},
         url = request.getUrlPathQuery();
@@ -102,4 +102,12 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
 
     return deferred.promise;
   }
+});
+
+$oop.getClass('$api.Dispatcher')
+.forwardBlend($api.XhrDispatcher, function (properties) {
+  var request = properties && properties.request;
+  return request &&
+      $utils.isBrowser() &&
+      $api.HttpRequest.mixedBy(request);
 });

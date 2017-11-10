@@ -7,14 +7,16 @@ var $oop = window['blend-oop'],
 
 describe("$api", function () {
   describe("XhrDispatcher", function () {
-    var XhrDispatcher;
+    var XhrDispatcher,
+        xhrDispatcher;
 
     beforeAll(function () {
       XhrDispatcher = $oop.getClass('test.$api.XhrDispatcher.XhrDispatcher')
       .blend($api.XhrDispatcher);
+      XhrDispatcher.__forwards = {list: [], sources: [], lookup: {}};
     });
 
-    describe("dispatchRequest()", function () {
+    describe("dispatch()", function () {
       var request;
 
       beforeEach(function () {
@@ -24,42 +26,31 @@ describe("$api", function () {
           'header:Content-Type': "application:json",
           'body:': "Rick"
         });
+        xhrDispatcher = request.toDispatcher();
         spyOn(XMLHttpRequest.prototype, 'open');
         spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
         spyOn(XMLHttpRequest.prototype, 'send');
       });
 
-      describe("on invalid HTTP request", function () {
-        it("should throw", function () {
-          expect(function () {
-            XhrDispatcher.dispatchRequest();
-          }).toThrow();
-          expect(function () {
-            XhrDispatcher.dispatchRequest($api.ObjectEndpoint.fromEndpointProperties({})
-            .toRequest());
-          }).toThrow();
-        });
-      });
-
       it('should return Promise', function () {
-        var result = XhrDispatcher.dispatchRequest(request);
+        var result = xhrDispatcher.dispatch(request);
         expect($utils.Promise.mixedBy(result)).toBeTruthy();
       });
 
       it("should open XHR", function () {
-        XhrDispatcher.dispatchRequest(request);
+        xhrDispatcher.dispatch(request);
         expect(XMLHttpRequest.prototype.open)
         .toHaveBeenCalledWith('PUT', 'user/rick123/name', true);
       });
 
       it("should add header params", function () {
-        XhrDispatcher.dispatchRequest(request);
+        xhrDispatcher.dispatch(request);
         expect(XMLHttpRequest.prototype.setRequestHeader)
         .toHaveBeenCalledWith('Content-Type', 'application:json');
       });
 
       it("should send XHR request", function () {
-        XhrDispatcher.dispatchRequest(request);
+        xhrDispatcher.dispatch(request);
         expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith("Rick");
       });
 
@@ -73,7 +64,7 @@ describe("$api", function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(1);
-          promise = XhrDispatcher.dispatchRequest(request);
+          promise = xhrDispatcher.dispatch(request);
         });
 
         it("should trigger EVENT_REQUEST_OPEN", function () {
@@ -109,7 +100,7 @@ describe("$api", function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(2);
-          promise = XhrDispatcher.dispatchRequest(request);
+          promise = xhrDispatcher.dispatch(request);
         });
 
         it("should trigger EVENT_REQUEST_SEND", function () {
@@ -145,7 +136,7 @@ describe("$api", function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(3);
-          promise = XhrDispatcher.dispatchRequest(request);
+          promise = xhrDispatcher.dispatch(request);
         });
 
         it("should trigger EVENT_RESPONSE_PROGRESS", function () {
@@ -181,7 +172,7 @@ describe("$api", function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'resolve');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(4);
-          promise = XhrDispatcher.dispatchRequest(request);
+          promise = xhrDispatcher.dispatch(request);
         });
 
         it("should trigger EVENT_RESPONSE_PROGRESS", function () {
@@ -204,6 +195,25 @@ describe("$api", function () {
           expect(event.eventName).toBe('response.receive');
           expect(event.request).toBe(request);
           expect(event.xhr).toBe(xhr);
+        });
+      });
+    });
+  });
+
+  describe("Dispatcher", function () {
+    var dispatcher;
+
+    describe("create()", function () {
+      describe("when passing HttpRequest", function () {
+        var request;
+
+        beforeEach(function () {
+          request = 'foo/bar'.toHttpEndpoint().toRequest();
+        });
+
+        it("should return XhrDispatcher instance", function () {
+          dispatcher = $api.Dispatcher.create({request: request});
+          expect($api.XhrDispatcher.mixedBy(dispatcher)).toBeTruthy();
         });
       });
     });
