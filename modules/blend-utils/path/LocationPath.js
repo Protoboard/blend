@@ -12,7 +12,6 @@
  * @class $utils.LocationPath
  * @extends $utils.Path
  * @implements $utils.Stringifiable
- * @todo Add global escape / unescape methods. (See $data.TreePath)
  */
 $utils.LocationPath = $oop.getClass('$utils.LocationPath')
 .blend($oop.getClass('$utils.Path'))
@@ -24,7 +23,7 @@ $utils.LocationPath = $oop.getClass('$utils.LocationPath')
    * @returns {$utils.LocationPath}
    */
   fromString: function (urlPath) {
-    var components = urlPath.split('/')
+    var components = urlPath.split($utils.LOCATION_PATH_DELIMITER)
     .map(decodeURIComponent);
     return this.create({components: components});
   },
@@ -35,6 +34,14 @@ $utils.LocationPath = $oop.getClass('$utils.LocationPath')
   toString: function () {
     return this.components
     .map(encodeURIComponent)
-    .join('/');
+    .join($utils.LOCATION_PATH_DELIMITER);
   }
+});
+
+$oop.copyProperties($utils, /** @lends $utils */{
+  /**
+   * Separates LocationPath components.
+   * @constant
+   */
+  LOCATION_PATH_DELIMITER: '/'
 });
