@@ -123,6 +123,53 @@ $oop.copyProperties($utils, /** @lends $utils */{
   },
 
   /**
+   * Converts a JSON object to a nested array with properties in
+   * alphabetical order. Mostly used as identifier when stringified.
+   * @param {Object} json
+   * @returns {Array|*}
+   */
+  jsonToSafeJson: function (json) {
+    if (json instanceof Array) {
+      return ['array'].concat(json.map($utils.jsonToSafeJson));
+    } else if (json instanceof Object) {
+      return ['object'].concat(Object.keys(json)
+      .sort()
+      .map(function (key) {
+        return [key, $utils.jsonToSafeJson(json[key])];
+      }));
+    } else {
+      return json;
+    }
+  },
+
+  /**
+   * Converts a nested array back to its original form. Safe JSON is mostly
+   * used as identifier when stringified.
+   * @param {Array|*} safeJson
+   * @returns {Object|Array|*}
+   */
+  safeJsonToJson: function (safeJson) {
+    var nodeType;
+    if (safeJson instanceof Array) {
+      nodeType = safeJson.shift();
+      switch (nodeType) {
+      case 'array':
+        return safeJson.map($utils.safeJsonToJson);
+
+      case 'object':
+        return safeJson.reduce(function (json, safeChildNode) {
+          var key = safeChildNode[0],
+              value = safeChildNode[1];
+          json[key] = $utils.safeJsonToJson(value);
+          return json;
+        }, {});
+      }
+    } else {
+      return safeJson;
+    }
+  },
+
+  /**
    * Tests whether the specified string matches the specified prefix.
    * @param {string} string
    * @param {string} prefix

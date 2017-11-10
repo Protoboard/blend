@@ -95,6 +95,94 @@ describe("$utils", function () {
     });
   });
 
+  describe("jsonToSafeJson()", function () {
+    it("return nested array", function () {
+      var result = $utils.jsonToSafeJson({
+        foo: {
+          bar: "baz"
+        }
+      });
+      expect(result).toEqual([
+        'object',
+        ['foo',
+          ['object',
+            ['bar', 'baz']
+          ]
+        ]
+      ]);
+    });
+
+    it("should store properties in alphabetical order", function () {
+      var result = $utils.jsonToSafeJson({
+        foo: 'bar',
+        baz: 'quux'
+      });
+      expect(result).toEqual([
+        'object',
+        ['baz', 'quux'],
+        ['foo', 'bar']
+      ]);
+    });
+
+    it("should distinguish arrays and objects", function () {
+      var result = $utils.jsonToSafeJson([{
+        foo: 'bar'
+      }, {
+        baz: 'quux'
+      }]);
+      expect(result).toEqual([
+        'array',
+        [
+          'object',
+          ['foo', 'bar']
+        ],
+        [
+          'object',
+          ['baz', 'quux']
+        ]
+      ]);
+    });
+
+    describe("when passing primitive", function () {
+      it("should return input", function () {
+        expect($utils.jsonToSafeJson(1)).toBe(1);
+        expect($utils.jsonToSafeJson("foo")).toBe("foo");
+        expect($utils.jsonToSafeJson(true)).toBe(true);
+        expect($utils.jsonToSafeJson(null)).toBe(null);
+      });
+    });
+  });
+
+  describe("safeJsonToJson()", function () {
+    it("should restore original JSON", function () {
+      var result = $utils.safeJsonToJson([
+        'array',
+        [
+          'object',
+          ['foo', 'bar']
+        ],
+        [
+          'object',
+          ['baz', 'quux']
+        ]
+      ]);
+      expect(result).toEqual([{
+        foo: 'bar'
+      }, {
+        baz: 'quux'
+      }]);
+    });
+
+    describe("when passing primitive", function () {
+      it("should return input", function () {
+        expect($utils.safeJsonToJson(1)).toBe(1);
+        expect($utils.safeJsonToJson("foo")).toBe("foo");
+        expect($utils.safeJsonToJson(true)).toBe(true);
+        expect($utils.safeJsonToJson(null)).toBe(null);
+      });
+    });
+  });
+
   describe("matchesPrefix()", function () {
     describe("on matching string", function () {
       it("should return truthy", function () {
