@@ -741,33 +741,40 @@ describe("$oop", function () {
           Mixin2;
 
       beforeEach(function () {
-        Mixin1 = $oop.getClass("Mixin1")
+        Mixin1 = $oop.getClass("test.$oop.Class.Mixin1")
         .define({
           BAR: "BAR",
           bar: function () {}
         });
-        Mixin2 = $oop.getClass("Mixin2")
+        Mixin2 = $oop.getClass("test.$oop.Class.Mixin2")
         .mix(Mixin1)
         .define({
           BAZ: "BAZ",
           baz: function () {}
         });
+      });
 
+      it("should add all dependencies", function () {
         Class
         .blend(Mixin2)
         .define({
           BAR: "QUUX",
           foo: function () {}
         });
-      });
 
-      it("should add all dependencies", function () {
         expect(Class.__contributors.list).toEqual([
           Mixin1, Mixin2, Class
         ]);
       });
 
       it("should add class to blenders", function () {
+        Class
+        .blend(Mixin2)
+        .define({
+          BAR: "QUUX",
+          foo: function () {}
+        });
+
         expect(Mixin1.__blenders.list).toEqual([Class]);
         expect(Mixin2.__blenders.list).toEqual([Class]);
       });
@@ -777,32 +784,39 @@ describe("$oop", function () {
             Mixin4;
 
         beforeEach(function () {
-          Mixin3 = $oop.getClass("Mixin3")
+          Mixin3 = $oop.getClass("test.$oop.Class.Mixin3")
           .define({
             QUUX: "QUUX",
             quux: function () {}
           });
-          Mixin4 = $oop.getClass("Mixin4")
+          Mixin4 = $oop.getClass("test.$oop.Class.Mixin4")
           .define({
             FOO: "FOO",
             foo: function () {}
           });
-          Mixin1
-          .mix(Mixin3)
-          .mix(Mixin4);
+
+          Class
+          .blend(Mixin2)
+          .define({
+            BAR: "QUUX",
+            foo: function () {}
+          });
         });
 
         it("should propagate to blenders", function () {
+          Mixin1
+          .mix(Mixin3)
+          .mix(Mixin4);
           expect(Class.__mixins.downstream.list).toEqual([
             Mixin1, Mixin2, Mixin3, Mixin4
           ]);
           expect(Class.__contributors).toEqual({
             list: [Mixin3, Mixin4, Mixin1, Mixin2, Class],
             lookup: {
-              Mixin3: 0,
-              Mixin4: 1,
-              Mixin1: 2,
-              Mixin2: 3,
+              'test.$oop.Class.Mixin3': 0,
+              'test.$oop.Class.Mixin4': 1,
+              'test.$oop.Class.Mixin1': 2,
+              'test.$oop.Class.Mixin2': 3,
               Class: 4
             }
           });
