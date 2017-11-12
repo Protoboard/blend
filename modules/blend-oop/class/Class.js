@@ -512,14 +512,15 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
    * Transfers specified class as mixin to all blenders of the current class.
    * @param {$oop.Class} Class
+   * @param {$oop.Class} Through
    * @private
    */
-  _transferMixinToBlenders: function (Class) {
+  _transferMixinToBlenders: function (Class, Through) {
     var that = this;
     this.__blenders.list
     .forEach(function (Blender) {
       Class._addToBlenders(Blender);
-      Blender.mix(Class, that);
+      Blender.mix(Class, Through || that);
     });
   },
 
@@ -921,7 +922,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     this._addToContributors(Mixin, Through);
     this._removeMetExpectations(Mixin);
     this._transferExpectedFrom(Mixin);
-    this._transferMixinToBlenders(Mixin);
+    this._transferMixinToBlenders(Mixin, Through);
     this._transferForwardsFrom(Mixin);
 
     // updating members in class

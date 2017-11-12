@@ -867,6 +867,27 @@ describe("$oop", function () {
           });
         });
       });
+
+      describe("when 2nd-degree mixin blends mixins", function () {
+        var Mixin1st,
+            Mixin2nd,
+            Mixin3rd;
+
+        beforeEach(function () {
+          Mixin1st = $oop.getClass('test.$oop.Class.Mixin1st');
+          Mixin2nd = $oop.getClass('test.$oop.Class.Mixin2nd');
+          Mixin3rd = $oop.getClass('test.$oop.Class.Mixin3rd');
+          Mixin1st.blend(Mixin2nd);
+          Class.blend(Mixin1st);
+        });
+
+        it("should mix 3rd-degree mixins before 2nd", function () {
+          Mixin2nd.blend(Mixin3rd);
+          expect(Class.__contributors.list).toEqual([
+            Mixin3rd, Mixin2nd, Mixin1st
+          ]);
+        });
+      });
     });
 
     describe("blendWhen()", function () {
