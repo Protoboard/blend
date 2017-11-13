@@ -80,6 +80,11 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
         event = request.spawnEvent({
           eventName: $api.EVENT_REQUEST_SEND,
           request: request,
+          response: $api.HttpResponse.create({
+            httpStatus: xhr.status,
+            responseHeaders: xhr.getAllResponseHeaders(),
+            responseBody: xhr.response
+          }),
           xhr: xhr
         });
         event.trigger();
@@ -90,8 +95,12 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
         event = request.spawnEvent({
           eventName: $api.EVENT_RESPONSE_PROGRESS,
           request: request,
+          response: $api.HttpResponse.create({
+            httpStatus: xhr.status,
+            responseHeaders: xhr.getAllResponseHeaders(),
+            responseBody: xhr.response
+          }),
           xhr: xhr
-          // todo Add response
         });
         event.trigger();
         deferred.notify(event);
@@ -101,8 +110,12 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
         event = request.spawnEvent({
           eventName: $api.EVENT_RESPONSE_RECEIVE,
           request: request,
+          response: $api.HttpResponse.create({
+            httpStatus: xhr.status,
+            responseHeaders: xhr.getAllResponseHeaders(),
+            responseBody: xhr.response
+          }),
           xhr: xhr
-          // todo Add response
         });
         event.trigger();
         deferred.resolve(event);

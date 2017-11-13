@@ -17,11 +17,11 @@ describe("$api", function () {
     });
 
     describe("dispatch()", function () {
-      var xhrStub,
+      var xhr,
           request;
 
       beforeEach(function () {
-        xhrStub = new XMLHttpRequest();
+        xhr = new XMLHttpRequest();
         request = 'user/:userId/name'.toHttpEndpoint().toRequest({
           httpMethod: 'PUT',
           endpointParams: {userId: 'rick123'},
@@ -32,10 +32,11 @@ describe("$api", function () {
           }
         });
         xhrDispatcher = request.toRequestDispatcher();
-        spyOn(window, 'XMLHttpRequest').and.returnValue(xhrStub);
-        spyOn(xhrStub, 'open');
-        spyOn(xhrStub, 'setRequestHeader');
-        spyOn(xhrStub, 'send');
+        spyOn(window, 'XMLHttpRequest').and.returnValue(xhr);
+        spyOn(xhr, 'open');
+        spyOn(xhr, 'setRequestHeader');
+        spyOn(xhr, 'send');
+        spyOn(xhr, 'getAllResponseHeaders').and.returnValue('');
       });
 
       it('should return Promise', function () {
@@ -45,24 +46,24 @@ describe("$api", function () {
 
       it("should open XHR", function () {
         xhrDispatcher.dispatch(request);
-        expect(xhrStub.open)
+        expect(xhr.open)
         .toHaveBeenCalledWith('PUT', 'user/rick123/name', true);
       });
 
       it("should apply XHR properties", function () {
         xhrDispatcher.dispatch(request);
-        expect(xhrStub.timeout).toEqual(1000);
+        expect(xhr.timeout).toEqual(1000);
       });
 
       it("should add header params", function () {
         xhrDispatcher.dispatch(request);
-        expect(xhrStub.setRequestHeader)
+        expect(xhr.setRequestHeader)
         .toHaveBeenCalledWith('Content-Type', 'application:json');
       });
 
       it("should send XHR request", function () {
         xhrDispatcher.dispatch(request);
-        expect(xhrStub.send).toHaveBeenCalledWith("Rick");
+        expect(xhr.send).toHaveBeenCalledWith("Rick");
       });
 
       describe("when readyState advances to 1", function () {
@@ -76,25 +77,27 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_REQUEST_OPEN", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
-          expect(event.eventName).toBe('request.open');
+          expect(event.eventName).toBe('api.request.open');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect(event.response).toBeUndefined();
         });
 
         it("should notify promise", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $utils.Deferred.notify.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
           expect(deferred.promise).toBe(promise);
           expect($event.Event.mixedBy(event)).toBeTruthy();
-          expect(event.eventName).toBe('request.open');
+          expect(event.eventName).toBe('api.request.open');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect(event.response).toBeUndefined();
         });
       });
 
@@ -109,25 +112,27 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_REQUEST_SEND", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
-          expect(event.eventName).toBe('request.send');
+          expect(event.eventName).toBe('api.request.send');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
         });
 
         it("should notify promise", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $utils.Deferred.notify.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
           expect(deferred.promise).toBe(promise);
           expect($event.Event.mixedBy(event)).toBeTruthy();
-          expect(event.eventName).toBe('request.send');
+          expect(event.eventName).toBe('api.request.send');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
         });
       });
 
@@ -142,25 +147,27 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_RESPONSE_PROGRESS", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
-          expect(event.eventName).toBe('response.progress');
+          expect(event.eventName).toBe('api.response.progress');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
         });
 
         it("should notify promise", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $utils.Deferred.notify.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
           expect(deferred.promise).toBe(promise);
           expect($event.Event.mixedBy(event)).toBeTruthy();
-          expect(event.eventName).toBe('response.progress');
+          expect(event.eventName).toBe('api.response.progress');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
         });
       });
 
@@ -175,25 +182,27 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_RESPONSE_PROGRESS", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
-          expect(event.eventName).toBe('response.receive');
+          expect(event.eventName).toBe('api.response.receive');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
         });
 
         it("should resolve promise", function () {
-          xhrStub.onreadystatechange();
+          xhr.onreadystatechange();
           var calls = $utils.Deferred.resolve.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
           expect(deferred.promise).toBe(promise);
           expect($event.Event.mixedBy(event)).toBeTruthy();
-          expect(event.eventName).toBe('response.receive');
+          expect(event.eventName).toBe('api.response.receive');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhrStub);
+          expect(event.xhr).toBe(xhr);
+          expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
         });
       });
     });
