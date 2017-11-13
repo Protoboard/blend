@@ -199,25 +199,22 @@ describe("$template", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toTemplate()", function () {
     var template;
 
-    beforeEach(function () {
-      template = $template.Template.fromString('foo');
-      spyOn($template.Template, 'create').and.returnValue(template);
-      result = 'foo'.toTemplate();
-    });
-
     it("should create a Template instance", function () {
-      expect($template.Template.create).toHaveBeenCalledWith({
-        templateString: 'foo'
-      });
+      template = 'foo'.toTemplate();
+      expect($template.Template.mixedBy(template)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(template);
+    it("should set templateString property", function () {
+      template = 'foo'.toTemplate();
+      expect(template.templateString).toBe('foo');
+    });
+
+    it("should pass additional properties to create", function () {
+      template = 'foo'.toTemplate({bar: 'baz'});
+      expect(template.bar).toBe('baz');
     });
   });
 });

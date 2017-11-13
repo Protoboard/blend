@@ -80,27 +80,31 @@ $oop.getClass('$entity.Entity')
 $oop.getClass('$entity.ItemKey')
 .delegate(/** @lends $entity.ItemKey# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Item}
    */
-  toItem: function () {
-    return $entity.Item.fromEntityKey(this);
+  toItem: function (properties) {
+    return $entity.Item.fromEntityKey(this, properties);
   }
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Item}
    */
-  toItem: function () {
-    return $entity.Item.fromString(this.valueOf());
+  toItem: function (properties) {
+    return $entity.Item.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Item}
    */
-  toItem: function () {
-    return $entity.Item.fromComponents(this[0], this[1], this[2], this[3]);
+  toItem: function (properties) {
+    return $entity.Item.fromComponents(
+        this[0], this[1], this[2], this[3], properties);
   }
 });

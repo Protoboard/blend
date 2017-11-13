@@ -64,6 +64,11 @@ describe("$data", function () {
         httpEndpoint = path.toHttpEndpoint();
         expect(httpEndpoint.components).toBe(path.components);
       });
+
+      it("should pass additional properties to create", function () {
+        httpEndpoint = path.toHttpEndpoint({bar: 'baz'});
+        expect(httpEndpoint.bar).toBe('baz');
+      });
     });
   });
 });
@@ -87,6 +92,11 @@ describe("String", function () {
         'foo', 'bar', 'baz'
       ]);
     });
+
+    it("should pass additional properties to create", function () {
+      httpEndpoint = 'foo/bar/baz'.toHttpEndpoint({bar: 'baz'});
+      expect(httpEndpoint.bar).toBe('baz');
+    });
   });
 });
 
@@ -107,6 +117,11 @@ describe("Array", function () {
     it("should set components property", function () {
       httpEndpoint = array.toHttpEndpoint();
       expect(httpEndpoint.components).toBe(array);
+    });
+
+    it("should pass additional properties to create", function () {
+      httpEndpoint = array.toHttpEndpoint({bar: 'baz'});
+      expect(httpEndpoint.bar).toBe('baz');
     });
   });
 });

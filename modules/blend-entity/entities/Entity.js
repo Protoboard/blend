@@ -175,9 +175,10 @@ $entity.Entity
 $oop.getClass('$entity.EntityKey')
 .delegate(/** @lends $entity.EntityKey# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Entity}
    */
-  toEntity: function () {
-    return $entity.Entity.fromEntityKey(this);
+  toEntity: function (properties) {
+    return $entity.Entity.fromEntityKey(this, properties);
   }
 });

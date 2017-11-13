@@ -167,18 +167,20 @@ $oop.getClass('$entity.EntityKey')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.DocumentKey}
    */
-  toDocumentKey: function () {
-    return $entity.DocumentKey.fromString(this.valueOf());
+  toDocumentKey: function (properties) {
+    return $entity.DocumentKey.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.DocumentKey}
    */
-  toDocumentKey: function () {
-    return $entity.DocumentKey.fromComponents(this[0], this[1]);
+  toDocumentKey: function (properties) {
+    return $entity.DocumentKey.fromComponents(this[0], this[1], properties);
   }
 });

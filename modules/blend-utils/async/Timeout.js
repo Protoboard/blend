@@ -30,9 +30,10 @@ $utils.Timeout = $oop.getClass('$utils.Timeout')
 $oop.copyProperties(Number.prototype, /** @lends Number# */{
   /**
    * Converts `Number` to `Timeout` instance.
+   * @param {Object} [properties]
    * @returns {$utils.Timeout}
    */
-  toTimeout: function () {
-    return $utils.Timeout.create({timerId: this.valueOf()});
+  toTimeout: function (properties) {
+    return $utils.Timeout.create({timerId: this.valueOf()}, properties);
   }
 });

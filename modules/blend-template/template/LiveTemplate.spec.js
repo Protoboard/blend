@@ -124,20 +124,19 @@ describe("String", function () {
   describe("toLiveTemplate()", function () {
     var liveTemplate;
 
-    beforeEach(function () {
-      liveTemplate = $template.LiveTemplate.fromString('foo');
-      spyOn($template.LiveTemplate, 'create').and.returnValue(liveTemplate);
-      result = 'foo'.toLiveTemplate();
-    });
-
     it("should create a LiveTemplate instance", function () {
-      expect($template.LiveTemplate.create).toHaveBeenCalledWith({
-        templateString: 'foo'
-      });
+      liveTemplate = 'foo'.toLiveTemplate();
+      expect($template.LiveTemplate.mixedBy(liveTemplate)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(liveTemplate);
+    it("should set templateString property", function () {
+      liveTemplate = 'foo'.toLiveTemplate();
+      expect(liveTemplate.templateString).toBe('foo');
+    });
+
+    it("should pass additional properties to create", function () {
+      liveTemplate = 'foo'.toLiveTemplate({bar: 'baz'});
+      expect(liveTemplate.bar).toBe('baz');
     });
   });
 });

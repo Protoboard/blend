@@ -242,6 +242,11 @@ describe("String", function () {
       expect(documentKey.documentType).toBe('foo');
       expect(documentKey.documentId).toBe('bar');
     });
+
+    it("should pass additional properties to create", function () {
+      documentKey = 'foo/bar'.toDocumentKey({bar: 'baz'});
+      expect(documentKey.bar).toBe('baz');
+    });
   });
 });
 
@@ -263,6 +268,11 @@ describe("Array", function () {
       documentKey = components.toDocumentKey();
       expect(documentKey.documentType).toBe('foo');
       expect(documentKey.documentId).toBe('bar');
+    });
+
+    it("should pass additional properties to create", function () {
+      documentKey = components.toDocumentKey({bar: 'baz'});
+      expect(documentKey.bar).toBe('baz');
     });
   });
 });

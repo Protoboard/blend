@@ -220,6 +220,11 @@ describe("String", function () {
       expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
       expect(itemKey.itemId).toBe('quux');
     });
+
+    it("should pass additional properties to create", function () {
+      itemKey = 'foo/bar/baz/quux'.toItemKey({bar: 'baz'});
+      expect(itemKey.bar).toBe('baz');
+    });
   });
 });
 
@@ -241,6 +246,11 @@ describe("Array", function () {
       itemKey = components.toItemKey();
       expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
       expect(itemKey.itemId).toBe('quux');
+    });
+
+    it("should pass additional properties to create", function () {
+      itemKey = components.toItemKey({bar: 'baz'});
+      expect(itemKey.bar).toBe('baz');
     });
   });
 });

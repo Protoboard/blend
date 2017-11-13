@@ -31,9 +31,10 @@ $entity.FieldAttributePath = $oop.getClass('$entity.FieldAttributePath')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.FieldAttributePath}
    */
-  toFieldAttributePath: function () {
-    return $entity.FieldAttributePath.fromAttributeRef(this.valueOf());
+  toFieldAttributePath: function (properties) {
+    return $entity.FieldAttributePath.fromAttributeRef(this.valueOf(), properties);
   }
 });

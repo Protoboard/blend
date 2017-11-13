@@ -49,18 +49,20 @@ $oop.copyProperties($utils, /** @lends $utils */{
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$data.TreePath}
    */
-  toUriPath: function () {
-    return $utils.UriPath.fromString(this.valueOf());
+  toUriPath: function (properties) {
+    return $utils.UriPath.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$data.TreePath}
    */
-  toUriPath: function () {
-    return $utils.UriPath.create({components: this});
+  toUriPath: function (properties) {
+    return $utils.UriPath.create({components: this}, properties);
   }
 });

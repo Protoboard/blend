@@ -33,27 +33,30 @@ $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
 $data.TreePath
 .delegate(/** @lends $data.TreePath */{
   /**
+   * @param {Object} [properties]
    * @returns {$api.HttpEndpoint}
    */
-  toHttpEndpoint: function () {
-    return $api.HttpEndpoint.create({components: this.components});
+  toHttpEndpoint: function (properties) {
+    return $api.HttpEndpoint.create({components: this.components}, properties);
   }
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$api.HttpEndpoint}
    */
-  toHttpEndpoint: function () {
-    return $api.HttpEndpoint.fromString(this.valueOf());
+  toHttpEndpoint: function (properties) {
+    return $api.HttpEndpoint.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$api.HttpEndpoint}
    */
-  toHttpEndpoint: function () {
-    return $api.HttpEndpoint.create({components: this});
+  toHttpEndpoint: function (properties) {
+    return $api.HttpEndpoint.create({components: this}, properties);
   }
 });

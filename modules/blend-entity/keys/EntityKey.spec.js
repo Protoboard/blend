@@ -106,27 +106,30 @@ describe("$entity", function () {
 });
 
 describe("$data", function () {
-  describe("Path", function () {
-    var Path,
-        path,
-        result;
+  describe("TreePath", function () {
+    var TreePath,
+        treePath,
+        entityKey;
 
     beforeAll(function () {
-      Path = $oop.getClass('test.$entity.EntityKey.Path')
+      TreePath = $oop.getClass('test.$entity.EntityKey.TreePath')
       .blend($data.TreePath);
-    });
-
-    beforeEach(function () {
-      path = Path.fromComponents(['document', 'foo', 'bar']);
+      TreePath.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("toEntityKey()", function () {
       beforeEach(function () {
-        result = path.toEntityKey();
+        treePath = TreePath.fromComponents(['document', 'foo', 'bar']);
       });
 
       it("should return EntityKey instance", function () {
-        expect($entity.EntityKey.mixedBy(result)).toBeTruthy();
+        entityKey = treePath.toEntityKey();
+        expect($entity.EntityKey.mixedBy(entityKey)).toBeTruthy();
+      });
+
+      it("should pass additional properties to create", function () {
+        entityKey = treePath.toEntityKey({bar: 'baz'});
+        expect(entityKey.bar).toBe('baz');
       });
     });
   });

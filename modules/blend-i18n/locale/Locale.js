@@ -150,9 +150,10 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$i18n.Locale}
    */
-  toLocale: function () {
-    return $i18n.Locale.fromLocaleId(this.valueOf());
+  toLocale: function (properties) {
+    return $i18n.Locale.fromLocaleId(this.valueOf(), properties);
   }
 });

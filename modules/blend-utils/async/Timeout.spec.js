@@ -6,19 +6,21 @@ describe("Number", function () {
   describe("toTimeout()", function () {
     var timeout;
 
-    beforeEach(function () {
-      timeout = (12345).toTimeout();
-    });
-
     it("should return Timeout instance", function () {
+      timeout = (12345).toTimeout();
       expect($utils.Timeout.mixedBy(timeout)).toBeTruthy();
     });
 
     it("should set timerId property", function () {
+      timeout = (12345).toTimeout();
       expect(timeout.timerId).toBe(12345);
     });
-  });
 
+    it("should pass additional properties to create", function () {
+      timeout = (12345).toTimeout({bar: 'baz'});
+      expect(timeout.bar).toBe('baz');
+    });
+  });
 });
 
 describe("$utils", function () {

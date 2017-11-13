@@ -170,9 +170,12 @@ $template.Template = $oop.getClass('$template.Template')
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
-  /** @returns {$template.Template} */
-  toTemplate: function () {
-    return $template.Template.create({templateString: this.valueOf()});
+  /**
+   * @param {Object} [properties]
+   * @returns {$template.Template}
+   */
+  toTemplate: function (properties) {
+    return $template.Template.create({templateString: this.valueOf()}, properties);
   }
 });
 

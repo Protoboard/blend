@@ -33,9 +33,10 @@ $entity.ItemIdTypePath = $oop.getClass('$entity.ItemIdTypePath')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.ItemIdTypePath}
    */
-  toItemIdTypePath: function () {
-    return $entity.ItemIdTypePath.fromItemIdType(this.valueOf());
+  toItemIdTypePath: function (properties) {
+    return $entity.ItemIdTypePath.fromItemIdType(this.valueOf(), properties);
   }
 });

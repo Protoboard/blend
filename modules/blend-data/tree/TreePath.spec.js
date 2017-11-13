@@ -187,44 +187,48 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toPath()", function () {
-    var string = 'foo\\.bar.baz\\\\quux';
-
-    beforeEach(function () {
-      result = string.toTreePath();
-    });
+    var string = 'foo\\.bar.baz\\\\quux',
+        treePath;
 
     it("should return a Path instance", function () {
-      expect($data.TreePath.mixedBy(result)).toBeTruthy();
+      treePath = string.toTreePath();
+      expect($data.TreePath.mixedBy(treePath)).toBeTruthy();
     });
 
     it("should set components property with unescaped components", function () {
-      expect(result.components).toEqual([
+      treePath = string.toTreePath();
+      expect(treePath.components).toEqual([
         'foo.bar',
         'baz\\quux'
       ]);
+    });
+
+    it("should pass additional properties to create", function () {
+      treePath = string.toTreePath({bar: 'baz'});
+      expect(treePath.bar).toBe('baz');
     });
   });
 });
 
 describe("Array", function () {
-  var result;
-
-  describe("toPath()", function () {
-    var array = [1, 2, 3];
-
-    beforeEach(function () {
-      result = array.toTreePath();
-    });
+  describe("toTreePath()", function () {
+    var array = [1, 2, 3],
+        treePath;
 
     it("should return a Path instance", function () {
-      expect($data.TreePath.mixedBy(result)).toBeTruthy();
+      treePath = array.toTreePath();
+      expect($data.TreePath.mixedBy(treePath)).toBeTruthy();
     });
 
     it("should set components property", function () {
-      expect(result.components).toBe(array);
+      treePath = array.toTreePath();
+      expect(treePath.components).toBe(array);
+    });
+
+    it("should pass additional properties to create", function () {
+      treePath = array.toTreePath({bar: 'baz'});
+      expect(treePath.bar).toBe('baz');
     });
   });
 });

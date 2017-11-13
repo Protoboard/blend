@@ -21,14 +21,12 @@ describe("$i18n", function () {
       });
 
       it("should set properties", function () {
-        translatable = Translatable.fromString('foo', 2, 'bar');
+        translatable = Translatable.fromString('foo');
         expect(translatable.originalString).toBe('foo');
-        expect(translatable.context).toBe('bar');
-        expect(translatable.count).toBe(2);
       });
 
       it("should pass additional properties to create", function () {
-        translatable = Translatable.fromString('foo', 2, 'bar', {bar: 'baz'});
+        translatable = Translatable.fromString('foo', {bar: 'baz'});
         expect(translatable.bar).toBe('baz');
       });
     });
@@ -113,7 +111,7 @@ describe("$i18n", function () {
       });
 
       it("should return translated string", function () {
-        translatable = Translatable.fromString('apple', 2);
+        translatable = Translatable.fromString('apple', {count: 2});
         expect(translatable.toString()).toBe("Äpfel");
       });
 
@@ -123,7 +121,7 @@ describe("$i18n", function () {
         });
 
         it("should return originalString", function () {
-          translatable = Translatable.fromString('apple', 2);
+          translatable = Translatable.fromString('apple', {count: 2});
           expect(translatable.toString()).toBe("apple");
         });
       });
@@ -143,6 +141,11 @@ describe("String", function () {
     it("should set Translatable properties", function () {
       translatable = 'foo'.toTranslatable();
       expect(translatable.originalString).toBe('foo');
+    });
+
+    it("should pass additional properties to create", function () {
+      translatable = 'foo'.toTranslatable({bar: 'baz'});
+      expect(translatable.bar).toBe('baz');
     });
   });
 });

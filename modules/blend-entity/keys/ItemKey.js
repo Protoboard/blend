@@ -173,18 +173,21 @@ $oop.getClass('$entity.EntityKey')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.ItemKey}
    */
-  toItemKey: function () {
-    return $entity.ItemKey.fromString(this.valueOf());
+  toItemKey: function (properties) {
+    return $entity.ItemKey.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.ItemKey}
    */
-  toItemKey: function () {
-    return $entity.ItemKey.fromComponents(this[0], this[1], this[2], this[3]);
+  toItemKey: function (properties) {
+    return $entity.ItemKey.fromComponents(
+        this[0], this[1], this[2], this[3], properties);
   }
 });

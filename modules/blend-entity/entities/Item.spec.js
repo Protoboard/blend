@@ -85,20 +85,26 @@ describe("$entity", function () {
 
   describe("ItemKey", function () {
     var itemKey,
-        result;
+        item;
 
     describe("toItem()", function () {
       beforeEach(function () {
         itemKey = 'foo/bar/baz/quux'.toItemKey();
-        result = itemKey.toItem();
       });
 
       it("should return Item instance", function () {
-        expect($entity.Item.mixedBy(result)).toBeTruthy();
+        item = itemKey.toItem();
+        expect($entity.Item.mixedBy(item)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
-        expect(result.entityKey).toBe(itemKey);
+        item = itemKey.toItem();
+        expect(item.entityKey).toBe(itemKey);
+      });
+
+      it("should pass additional properties to create", function () {
+        item = itemKey.toItem({bar: 'baz'});
+        expect(item.bar).toBe('baz');
       });
     });
   });
@@ -135,6 +141,11 @@ describe("String", function () {
       entityKey.getEntityPath();
       expect(item.entityKey).toEqual(entityKey);
     });
+
+    it("should pass additional properties to create", function () {
+      item = 'foo/bar/baz/quux'.toItem({bar: 'baz'});
+      expect(item.bar).toBe('baz');
+    });
   });
 });
 
@@ -157,6 +168,11 @@ describe("Array", function () {
       var entityKey = 'foo/bar/baz/quux'.toItemKey();
       entityKey.getEntityPath();
       expect(item.entityKey).toEqual(entityKey);
+    });
+
+    it("should pass additional properties to create", function () {
+      item = components.toItem({bar: 'baz'});
+      expect(item.bar).toBe('baz');
     });
   });
 });

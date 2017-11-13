@@ -105,7 +105,13 @@ describe("Array", function () {
     });
 
     it("should set components property", function () {
+      path = array.toPath();
       expect(path.components).toBe(array);
+    });
+
+    it("should pass additional properties to create", function () {
+      path = array.toPath({bar: 'baz'});
+      expect(path.bar).toBe('baz');
     });
   });
 });

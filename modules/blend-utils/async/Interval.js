@@ -30,9 +30,10 @@ $utils.Interval = $oop.getClass('$utils.Interval')
 $oop.copyProperties(Number.prototype, /** @lends Number# */{
   /**
    * Converts `Number` to `Interval` instance.
+   * @param {Object} [properties]
    * @returns {$utils.Interval}
    */
-  toInterval: function () {
-    return $utils.Interval.create({timerId: this.valueOf()});
+  toInterval: function (properties) {
+    return $utils.Interval.create({timerId: this.valueOf()}, properties);
   }
 });

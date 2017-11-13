@@ -51,5 +51,10 @@ describe("String", function () {
       .toEqual(['document', '__field', '__field/valueType', 'options',
         'reference']);
     });
+
+    it("should pass additional properties to create", function () {
+      fieldValueTypePath = 'reference'.toFieldValueTypePath({bar: 'baz'});
+      expect(fieldValueTypePath.bar).toBe('baz');
+    });
   });
 });

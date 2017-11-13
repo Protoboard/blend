@@ -219,20 +219,26 @@ describe("$entity", function () {
 
   describe("DocumentKey", function () {
     var documentKey,
-        result;
+        document;
 
     describe("toDocument()", function () {
       beforeEach(function () {
         documentKey = 'foo/bar'.toDocumentKey();
-        result = documentKey.toDocument();
       });
 
       it("should return Document instance", function () {
-        expect($entity.Document.mixedBy(result)).toBeTruthy();
+        document = documentKey.toDocument();
+        expect($entity.Document.mixedBy(document)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
-        expect(result.entityKey).toBe(documentKey);
+        document = documentKey.toDocument();
+        expect(document.entityKey).toBe(documentKey);
+      });
+
+      it("should pass additional properties to create", function () {
+        document = documentKey.toDocument({bar: 'baz'});
+        expect(document.bar).toBe('baz');
       });
     });
   });
@@ -269,6 +275,11 @@ describe("String", function () {
       entityKey.getEntityPath();
       expect(document.entityKey).toEqual(entityKey);
     });
+
+    it("should pass additional properties to create", function () {
+      document = 'foo/bar'.toDocument({bar: 'baz'});
+      expect(document.bar).toBe('baz');
+    });
   });
 });
 
@@ -292,6 +303,11 @@ describe("Array", function () {
       var entityKey = 'foo/bar'.toDocumentKey();
       entityKey.getEntityPath();
       expect(document.entityKey).toEqual(entityKey);
+    });
+
+    it("should pass additional properties to create", function () {
+      document = components.toDocument({bar: 'baz'});
+      expect(document.bar).toBe('baz');
     });
   });
 });

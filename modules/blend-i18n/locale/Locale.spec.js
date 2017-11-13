@@ -208,6 +208,10 @@ describe("String", function () {
   describe("toLocale()", function () {
     var locale;
 
+    beforeEach(function () {
+      $i18n.Locale.__instanceLookup = {};
+    });
+
     it("should create a Locale instance", function () {
       locale = 'foo'.toLocale();
       expect($i18n.Locale.mixedBy(locale)).toBeTruthy();
@@ -216,6 +220,11 @@ describe("String", function () {
     it("should set localeKey property", function () {
       locale = 'foo'.toLocale();
       expect(locale.localeKey).toEqual('_locale/foo'.toDocumentKey());
+    });
+
+    it("should pass additional properties to create", function () {
+      locale = 'foo'.toLocale({bar: 'baz'});
+      expect(locale.bar).toBe('baz');
     });
   });
 });

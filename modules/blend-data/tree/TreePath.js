@@ -176,18 +176,20 @@ $oop.copyProperties($data, /** @lends $data */{
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$data.TreePath}
    */
-  toTreePath: function () {
-    return $data.TreePath.fromString(this.valueOf());
+  toTreePath: function (properties) {
+    return $data.TreePath.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$data.TreePath}
    */
-  toTreePath: function () {
-    return $data.TreePath.create({components: this});
+  toTreePath: function (properties) {
+    return $data.TreePath.create({components: this}, properties);
   }
 });

@@ -79,27 +79,30 @@ $oop.getClass('$entity.Entity')
 $oop.getClass('$entity.FieldKey')
 .delegate(/** @lends $entity.FieldKey# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Field}
    */
-  toField: function () {
-    return $entity.Field.fromEntityKey(this);
+  toField: function (properties) {
+    return $entity.Field.fromEntityKey(this, properties);
   }
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Field}
    */
-  toField: function () {
-    return $entity.Field.fromString(this.valueOf());
+  toField: function (properties) {
+    return $entity.Field.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Field}
    */
-  toField: function () {
-    return $entity.Field.fromComponents(this[0], this[1], this[2]);
+  toField: function (properties) {
+    return $entity.Field.fromComponents(this[0], this[1], this[2], properties);
   }
 });

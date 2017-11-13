@@ -151,18 +151,20 @@ $data.TreeQuery = $oop.getClass('$data.TreeQuery')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$data.TreeQuery}
    */
-  toTreeQuery: function () {
-    return $data.TreeQuery.fromString(this.valueOf());
+  toTreeQuery: function (properties) {
+    return $data.TreeQuery.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$data.TreeQuery}
    */
-  toTreeQuery: function () {
-    return $data.TreeQuery.create({components: this});
+  toTreeQuery: function (properties) {
+    return $data.TreeQuery.create({components: this}, properties);
   }
 });

@@ -77,8 +77,11 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
 
 $oop.getClass('$data.TreePath')
 .delegate(/** @lends $data.TreePath# */{
-  /** @returns {$entity.EntityKey} */
-  toEntityKey: function () {
-    return $entity.EntityKey.fromEntityPath(this);
+  /**
+   * @param {Object} [properties]
+   * @returns {$entity.EntityKey}
+   */
+  toEntityKey: function (properties) {
+    return $entity.EntityKey.fromEntityPath(this, properties);
   }
 });

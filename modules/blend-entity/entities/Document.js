@@ -125,27 +125,30 @@ $oop.getClass('$entity.Entity')
 $oop.getClass('$entity.DocumentKey')
 .delegate(/** @lends $entity.DocumentKey# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Document}
    */
-  toDocument: function () {
-    return $entity.Document.fromEntityKey(this);
+  toDocument: function (properties) {
+    return $entity.Document.fromEntityKey(this, properties);
   }
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Document}
    */
-  toDocument: function () {
-    return $entity.Document.fromString(this.valueOf());
+  toDocument: function (properties) {
+    return $entity.Document.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$entity.Document}
    */
-  toDocument: function () {
-    return $entity.Document.fromComponents(this[0], this[1]);
+  toDocument: function (properties) {
+    return $entity.Document.fromComponents(this[0], this[1], properties);
   }
 });

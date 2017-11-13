@@ -47,18 +47,20 @@ $router.Route = $oop.getClass('$router.Route')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$router.Route}
    */
-  toRoute: function () {
-    return $router.Route.fromString(this.valueOf());
+  toRoute: function (properties) {
+    return $router.Route.fromString(this.valueOf(), properties);
   }
 });
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**
+   * @param {Object} [properties]
    * @returns {$router.Route}
    */
-  toRoute: function () {
-    return $router.Route.create({components: this});
+  toRoute: function (properties) {
+    return $router.Route.create({components: this}, properties);
   }
 });

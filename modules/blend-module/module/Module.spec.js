@@ -124,6 +124,10 @@ describe("String", function () {
   describe("toModule()", function () {
     var module;
 
+    beforeEach(function () {
+      $module.Module.__instanceLookup = {};
+    });
+
     it("should create a Module instance", function () {
       module = 'foo'.toModule();
       expect($module.Module.mixedBy(module)).toBeTruthy();
@@ -132,6 +136,11 @@ describe("String", function () {
     it("should set moduleId property", function () {
       module = 'foo'.toModule();
       expect(module.moduleId).toBe('foo');
+    });
+
+    it("should pass additional properties to create", function () {
+      module = 'foo'.toModule({bar: 'baz'});
+      expect(module.bar).toBe('baz');
     });
   });
 });

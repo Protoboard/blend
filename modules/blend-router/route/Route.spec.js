@@ -115,28 +115,36 @@ describe("String", function () {
       route = 'foo/bar/baz'.toRoute();
       expect(route.components).toEqual(['foo', 'bar', 'baz']);
     });
+
+    it("should pass additional properties to create", function () {
+      route = 'foo/bar/baz'.toRoute({bar: 'baz'});
+      expect(route.bar).toBe('baz');
+    });
   });
 });
 
 describe("Array", function () {
   describe("toRoute()", function () {
-    var route;
+    var route,
+        components;
 
     beforeEach(function () {
-      route = $router.Route.fromString('foo/bar/baz');
-      spyOn($router.Route, 'create').and.returnValue(route);
+      components = ['foo', 'bar', 'baz'];
     });
 
     it("should create a Route instance", function () {
-      ['foo', 'bar', 'baz'].toRoute();
-      expect($router.Route.create).toHaveBeenCalledWith({
-        components: ['foo', 'bar', 'baz']
-      });
+      route = components.toRoute();
+      expect($router.Route.mixedBy(route)).toBeTruthy();
     });
 
     it("should return created instance", function () {
-      var result = ['foo', 'bar', 'baz'].toRoute();
-      expect(result).toBe(route);
+      route = components.toRoute();
+      expect(route.components).toBe(components);
+    });
+
+    it("should pass additional properties to create", function () {
+      route = components.toRoute({bar: 'baz'});
+      expect(route.bar).toBe('baz');
     });
   });
 });

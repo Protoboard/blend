@@ -152,9 +152,9 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  var treeQuery;
-
   describe("toTreeQuery()", function () {
+    var treeQuery;
+
     it("should create a TreeQuery instance", function () {
       treeQuery = 'foo.*.bar:!baz'.toTreeQuery();
       expect($data.TreeQuery.mixedBy(treeQuery)).toBeTruthy();
@@ -172,27 +172,25 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  var result;
-
   describe("toTreeQuery()", function () {
     var components,
         query;
 
     beforeEach(function () {
       components = ['!foo', '*:baz'];
-      query = $data.TreeQuery.create({components: components});
-      spyOn($data.TreeQuery, 'create').and
-      .returnValue(query);
-      result = components.toTreeQuery();
     });
 
     it("should create a TreeQuery instance", function () {
-      expect($data.TreeQuery.create)
-      .toHaveBeenCalledWith({components: components});
+      query = components.toTreeQuery();
+      expect($data.TreeQuery.mixedBy(query)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(query);
+    it("should set components property", function () {
+      query = components.toTreeQuery();
+      expect(query.components).toEqual([
+        '!foo'.toTreeQueryComponent(),
+        '*:baz'.toTreeQueryComponent()
+      ]);
     });
   });
 });

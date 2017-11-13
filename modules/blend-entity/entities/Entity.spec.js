@@ -330,30 +330,27 @@ describe("$entity", function () {
   });
 
   describe("EntityKey", function () {
-    var EntityKey,
-        entityKey,
-        result;
-
-    beforeAll(function () {
-      EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
-      .blend($entity.EntityKey);
-    });
+    var entityKey,
+        entity;
 
     beforeEach(function () {
       entityKey = 'foo/bar'.toDocumentKey();
     });
 
     describe("toEntity()", function () {
-      beforeEach(function () {
-        result = entityKey.toEntity();
-      });
-
       it("should return Entity instance", function () {
-        expect($entity.Entity.mixedBy(result)).toBeTruthy();
+        entity = entityKey.toEntity();
+        expect($entity.Entity.mixedBy(entity)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
-        expect(result.entityKey.equals('foo/bar'.toDocumentKey())).toBeTruthy();
+        entity = entityKey.toEntity();
+        expect(entity.entityKey.equals('foo/bar'.toDocumentKey())).toBeTruthy();
+      });
+
+      it("should pass additional properties to create", function () {
+        entity = entityKey.toEntity({bar: 'baz'});
+        expect(entity.bar).toBe('baz');
       });
     });
   });

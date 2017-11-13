@@ -79,9 +79,10 @@ $module.Module = $oop.getClass('$module.Module')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$module.Module}
    */
-  toModule: function () {
-    return $module.Module.fromModuleId(this.valueOf());
+  toModule: function (properties) {
+    return $module.Module.fromModuleId(this.valueOf(), properties);
   }
 });

@@ -37,16 +37,12 @@ $i18n.Translatable = $oop.getClass('$i18n.Translatable')
   /**
    * @memberOf $i18n.Translatable
    * @param {string|$utils.Stringifiable} string
-   * @param {number} [count]
-   * @param {string} [context]
    * @param {Object} [properties]
    * @returns {$i18n.Translatable}
    */
-  fromString: function (string, count, context, properties) {
+  fromString: function (string, properties) {
     return this.create({
-      originalString: string,
-      context: context,
-      count: count
+      originalString: string
     }, properties);
   },
 
@@ -97,9 +93,10 @@ $i18n.Translatable = $oop.getClass('$i18n.Translatable')
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$i18n.Translatable}
    */
-  toTranslatable: function () {
-    return $i18n.Translatable.fromString(this.valueOf());
+  toTranslatable: function (properties) {
+    return $i18n.Translatable.fromString(this.valueOf(), properties);
   }
 });

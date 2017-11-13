@@ -214,6 +214,11 @@ describe("String", function () {
       expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
       expect(fieldKey.fieldName).toBe('baz');
     });
+
+    it("should pass additional properties to create", function () {
+      fieldKey = 'foo/bar/baz'.toFieldKey({bar: 'baz'});
+      expect(fieldKey.bar).toBe('baz');
+    });
   });
 });
 
@@ -235,6 +240,11 @@ describe("Array", function () {
       fieldKey = components.toFieldKey();
       expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
       expect(fieldKey.fieldName).toBe('baz');
+    });
+
+    it("should pass additional properties to create", function () {
+      fieldKey = components.toFieldKey({bar: 'baz'});
+      expect(fieldKey.bar).toBe('baz');
     });
   });
 });

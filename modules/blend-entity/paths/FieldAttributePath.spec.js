@@ -49,5 +49,10 @@ describe("String", function () {
       expect(fieldAttributePath.components)
       .toEqual(['document', '__field', 'foo/bar']);
     });
+
+    it("should pass additional properties to create", function () {
+      fieldAttributePath = 'foo/bar'.toFieldAttributePath({bar: 'baz'});
+      expect(fieldAttributePath.bar).toBe('baz');
+    });
   });
 });

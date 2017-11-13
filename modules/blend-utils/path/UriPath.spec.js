@@ -59,6 +59,11 @@ describe("String", function () {
       uriPath = 'foo/bar%2Fbaz/quux'.toUriPath();
       expect(uriPath.components).toEqual(['foo', 'bar/baz', 'quux']);
     });
+
+    it("should pass additional properties to create", function () {
+      uriPath = 'foo/bar%2Fbaz/quux'.toUriPath({bar: 'baz'});
+      expect(uriPath.bar).toBe('baz');
+    });
   });
 });
 
@@ -79,6 +84,11 @@ describe("Array", function () {
     it("should set components property", function () {
       uriPath = array.toUriPath();
       expect(uriPath.components).toBe(array);
+    });
+
+    it("should pass additional properties to create", function () {
+      uriPath = array.toUriPath({bar: 'baz'});
+      expect(uriPath.bar).toBe('baz');
     });
   });
 });

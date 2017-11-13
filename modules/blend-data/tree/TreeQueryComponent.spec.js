@@ -353,28 +353,27 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toTreeQueryComponent()", function () {
     var string,
         queryComponent;
 
     beforeEach(function () {
       string = 'foo:!bar';
-      queryComponent = $data.TreeQueryComponent.fromString(string);
-      spyOn($data.TreeQueryComponent, 'create').and
-      .returnValue(queryComponent);
-      result = string.toTreeQueryComponent();
     });
 
     it("should create a TreeQueryComponent instance", function () {
-      expect($data.TreeQueryComponent.create).toHaveBeenCalledWith({
-        componentString: string
-      });
+      queryComponent = string.toTreeQueryComponent();
+      expect($data.TreeQueryComponent.mixedBy(queryComponent)).toBeTruthy();
     });
 
     it("should return created instance", function () {
-      expect(result).toBe(queryComponent);
+      queryComponent = string.toTreeQueryComponent();
+      expect(queryComponent.componentString).toBe(string);
+    });
+
+    it("should pass additional properties to create", function () {
+      queryComponent = string.toTreeQueryComponent({bar: 'baz'});
+      expect(queryComponent.bar).toBe('baz');
     });
   });
 });

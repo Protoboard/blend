@@ -115,9 +115,12 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
-  /** @returns {$template.LiveTemplate} */
-  toLiveTemplate: function () {
-    return $template.LiveTemplate.create({templateString: this.valueOf()});
+  /**
+   * @param {Object} [properties]
+   * @returns {$template.LiveTemplate}
+   */
+  toLiveTemplate: function (properties) {
+    return $template.LiveTemplate.create({templateString: this.valueOf()}, properties);
   }
 });
 

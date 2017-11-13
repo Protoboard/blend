@@ -358,9 +358,10 @@ $oop.copyProperties($data, /** @lends $data */{
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
+   * @param {Object} [properties]
    * @returns {$data.TreeQueryComponent}
    */
-  toTreeQueryComponent: function () {
-    return $data.TreeQueryComponent.create({componentString: this});
+  toTreeQueryComponent: function (properties) {
+    return $data.TreeQueryComponent.create({componentString: this}, properties);
   }
 });
