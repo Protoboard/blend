@@ -86,6 +86,68 @@ describe("$event", function () {
       });
     });
 
+    describe("addTriggerPathBefore()", function () {
+      var triggerPath,
+          nextTriggerPath;
+
+      beforeEach(function () {
+        eventSender
+        .addTriggerPath('foo.bar')
+        .addTriggerPath('foo');
+        triggerPath = 'foo.bar.baz';
+        nextTriggerPath = 'foo.bar';
+      });
+
+      it("should return self", function () {
+        var result = eventSender.addTriggerPath(triggerPath);
+        expect(result).toBe(eventSender);
+      });
+
+      it("should insert before nextTriggerPath", function () {
+        eventSender.addTriggerPathBefore(triggerPath, nextTriggerPath);
+        expect(eventSender.triggerPaths).toEqual({
+          list: [triggerPath, 'foo.bar', 'foo'],
+          lookup: {
+            'foo.bar.baz': 1,
+            'foo.bar': 1,
+            'foo': 1
+          }
+        });
+      });
+
+      describe("when nextTriggerPath is not present", function () {
+        it("should append to triggerPaths", function () {
+          eventSender.addTriggerPathBefore(triggerPath, 'xyz');
+          expect(eventSender.triggerPaths).toEqual({
+            list: ['foo.bar', 'foo', triggerPath],
+            lookup: {
+              'foo.bar.baz': 1,
+              'foo.bar': 1,
+              'foo': 1
+            }
+          });
+        });
+      });
+
+      describe("when adding existing triggerPath", function () {
+        beforeEach(function () {
+          eventSender.addTriggerPath(triggerPath);
+        });
+
+        it("should not add path again", function () {
+          eventSender.addTriggerPathBefore(triggerPath, nextTriggerPath);
+          expect(eventSender.triggerPaths).toEqual({
+            list: ['foo.bar', 'foo', triggerPath],
+            lookup: {
+              'foo.bar.baz': 1,
+              'foo.bar': 1,
+              'foo': 1
+            }
+          });
+        });
+      });
+    });
+
     describe("addTriggerPaths()", function () {
       var triggerPaths;
 

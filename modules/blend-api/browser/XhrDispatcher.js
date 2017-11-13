@@ -17,6 +17,10 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
 .blend($oop.getClass('$api.RequestDispatcher'))
 .define(/** @lends $api.XhrDispatcher# */{
   /**
+   * @member {$api.HttpRequest} $api.XhrDispatcher#request
+   */
+
+  /**
    * @param {XMLHttpRequest} xhr
    * @returns {number}
    * @private
@@ -35,16 +39,16 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
         xhr = new XMLHttpRequest(),
         deferred = $utils.Deferred.create(),
         request = this.request,
-        method = request.getMethod() || 'GET',
-        headerObject = request.getHeaderObject() || {},
-        url = request.getUrlPathQuery();
+        httpMethod = request.httpMethod || 'GET',
+        requestHeaders = request.requestHeaders || {},
+        requestUrl = request.requestUrl;
 
     // opening connection
     // todo Deal with user / password later
-    xhr.open(method, url, true);
+    xhr.open(httpMethod, requestUrl, true);
 
     // setting up headers
-    $data.Collection.fromData(headerObject)
+    $data.Collection.fromData(requestHeaders)
     .forEachItem(function (value, header) {
       xhr.setRequestHeader(header, value);
     });
@@ -99,7 +103,7 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
       }
     };
 
-    xhr.send(request.getBody());
+    xhr.send(request.requestBody);
 
     return deferred.promise;
   }

@@ -15,12 +15,10 @@ describe("$api", function () {
     });
 
     describe("fromEndpoint()", function () {
-      var endpoint,
-          parameters;
+      var endpoint;
 
       beforeEach(function () {
         endpoint = 'foo/bar'.toHttpEndpoint();
-        parameters = {};
       });
 
       it("should return Request instance", function () {
@@ -33,9 +31,11 @@ describe("$api", function () {
         expect(request.endpoint).toBe(endpoint);
       });
 
-      it("should set parameters", function () {
-        request = Request.fromEndpoint(endpoint, parameters);
-        expect(request.parameters).toBe(parameters);
+      it("should set properties", function () {
+        request = Request.fromEndpoint(endpoint, {
+          foo: 'bar'
+        });
+        expect(request.foo).toEqual('bar');
       });
     });
 
@@ -51,26 +51,12 @@ describe("$api", function () {
         });
       });
 
-      it("should initialize parameters", function () {
-        request = Request.create({
-          endpoint: 'foo/bar'.toHttpEndpoint()
-        });
-        expect(request.parameters).toEqual({});
-      });
-
-      it("should initialize listeningPath", function () {
-        request = Request.create({
-          endpoint: 'foo/bar'.toHttpEndpoint()
-        });
-        expect(request.listeningPath).toBe('endpoint.foo/bar.["object"]');
-      });
-
       it("should initialize triggerPaths", function () {
         request = Request.create({
           endpoint: 'foo/bar'.toHttpEndpoint()
         });
         expect(request.triggerPaths.list).toContain(
-            'endpoint.foo/bar.["object"]', 'endpoint.foo/bar', 'endpoint');
+            'endpoint.foo/bar', 'endpoint');
       });
     });
 
@@ -93,27 +79,13 @@ describe("$api", function () {
         expect(result).toBe(promise);
       });
     });
-
-    describe("toString()", function () {
-      it("should serialize Request", function () {
-        request = Request.create({
-          endpoint: 'foo/bar'.toHttpEndpoint(),
-          parameters: {
-            baz: "quux"
-          }
-        });
-        expect(request.toString()).toBe('foo/bar["object",["baz","quux"]]');
-      });
-    });
   });
 
   describe("Endpoint", function () {
-    var endpoint,
-        parameters;
+    var endpoint;
 
     beforeEach(function () {
       endpoint = 'foo/bar'.toHttpEndpoint();
-      parameters = {};
     });
 
     describe("toRequest()", function () {
@@ -129,9 +101,11 @@ describe("$api", function () {
         expect(request.endpoint).toBe(endpoint);
       });
 
-      it("should set parameters", function () {
-        request = endpoint.toRequest(parameters);
-        expect(request.parameters).toBe(parameters);
+      it("should set properties", function () {
+        request = endpoint.toRequest({
+          foo: 'bar'
+        });
+        expect(request.foo).toBe('bar');
       });
     });
   });

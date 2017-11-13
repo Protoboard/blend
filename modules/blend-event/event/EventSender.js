@@ -9,7 +9,6 @@
  * Associates instance with a list of paths on which each triggered event
  * will be invoked.
  * @class $event.EventSender
- * @todo Add path removal methods
  */
 $event.EventSender = $oop.getClass('$event.EventSender')
 .define(/** @lends $event.EventSender# */{
@@ -46,6 +45,32 @@ $event.EventSender = $oop.getClass('$event.EventSender')
 
     if (!hOP.call(triggerPathLookup, triggerPath)) {
       triggerPaths.list.push(triggerPath);
+      triggerPathLookup[triggerPath] = 1;
+    }
+
+    return this;
+  },
+
+  /**
+   * Adds `triggerPath` before specified `nextTriggerPath`.
+   * @param {string} triggerPath
+   * @param {string} nextTriggerPath
+   * @returns {$event.EventSender}
+   */
+  addTriggerPathBefore: function (triggerPath, nextTriggerPath) {
+    var triggerPaths = this.triggerPaths,
+        triggerPathList,
+        triggerPathLookup = triggerPaths.lookup,
+        nextTriggerPathIndex;
+
+    if (!hOP.call(triggerPathLookup, triggerPath)) {
+      triggerPathList = triggerPaths.list;
+      nextTriggerPathIndex = triggerPathList.indexOf(nextTriggerPath);
+      if (nextTriggerPathIndex > -1) {
+        triggerPathList.splice(nextTriggerPathIndex, 0, triggerPath);
+      } else {
+        triggerPathList.push(triggerPath);
+      }
       triggerPathLookup[triggerPath] = 1;
     }
 

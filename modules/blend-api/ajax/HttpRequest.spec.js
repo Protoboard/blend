@@ -14,88 +14,76 @@ describe("$api", function () {
       HttpRequest.__forwards = {list: [], sources: [], lookup: {}};
     });
 
-    describe("getMethod()", function () {
-      beforeEach(function () {
-        httpRequest = HttpRequest.create({
-          endpoint: 'foo/bar'.toHttpEndpoint(),
-          parameters: {
-            "method:": "GET",
-            "header:foo": "bar",
-            "baz": "quux"
-          }
-        });
-      });
-
-      it("should return method parameter", function () {
-        expect(httpRequest.getMethod()).toBe("GET");
-      });
-    });
-
-    describe("getHeaderObject()", function () {
-      beforeEach(function () {
-        httpRequest = HttpRequest.create({
-          endpoint: 'foo/bar'.toHttpEndpoint(),
-          parameters: {
-            "method:": "GET",
-            "header:foo": "bar",
-            "baz": "quux"
-          }
-        });
-      });
-
-      it("should return header parameters", function () {
-        var result = httpRequest.getHeaderObject();
-        expect(result).toEqual({
-          foo: "bar"
-        });
-      });
-    });
-
-    describe("getUrlPathQuery()", function () {
-      it("should return URL with endpoint & query string", function () {
+    describe("create()", function () {
+      it("should initialize requestUrl", function () {
         httpRequest = HttpRequest.create({
           endpoint: ':foo/bar'.toHttpEndpoint(),
-          parameters: {
-            "method:": "GET",
-            "header:foo": "bar",
-            "endpoint:foo": "FOO",
-            "query:bar": ["baz", "quux"]
-          }
+          httpMethod: "GET",
+          requestHeaders: {foo: "bar"},
+          endpointParams: {foo: "FOO"},
+          queryParams: {bar: ["baz", "quux"]}
         });
-        var result = httpRequest.getUrlPathQuery();
-        expect(result).toBe("FOO/bar?bar=baz&bar=quux");
+        expect(httpRequest.requestUrl).toBe("FOO/bar?bar=baz&bar=quux");
       });
 
       describe("when there are no query params", function () {
         it("should exclude query string", function () {
           httpRequest = HttpRequest.create({
             endpoint: ':foo/bar'.toHttpEndpoint(),
-            parameters: {
-              "method:": "GET",
-              "header:foo": "bar",
-              "endpoint:foo": "FOO"
-            }
+            httpMethod: "GET",
+            requestHeaders: {foo: "bar"},
+            endpointParams: {foo: "FOO"}
           });
-          var result = httpRequest.getUrlPathQuery();
-          expect(result).toBe("FOO/bar");
+          expect(httpRequest.requestUrl).toBe("FOO/bar");
         });
+      });
+
+      it("should initialize listeningPath", function () {
+        httpRequest = HttpRequest.create({
+          endpoint: ':foo/bar'.toHttpEndpoint(),
+          httpMethod: "GET",
+          requestHeaders: {foo: "bar"},
+          endpointParams: {foo: "FOO"}
+        });
+        expect(httpRequest.listeningPath)
+        .toBe('endpoint.' +
+            '%3Afoo/bar.' +
+            '["object",["httpMethod","GET"],' +
+            '["requestBody",null],' +
+            '["requestHeaders",["object",["foo","bar"]]],["requestUrl","FOO/bar"]]');
+      });
+
+      it("should initialize triggerPaths", function () {
+        httpRequest = HttpRequest.create({
+          endpoint: ':foo/bar'.toHttpEndpoint(),
+          httpMethod: "GET",
+          requestHeaders: {foo: "bar"},
+          endpointParams: {foo: "FOO"}
+        });
+        expect(httpRequest.triggerPaths.list)
+        .toContain('endpoint.' +
+            '%3Afoo/bar.' +
+            '["object",["httpMethod","GET"],' +
+            '["requestBody",null],' +
+            '["requestHeaders",["object",["foo","bar"]]],["requestUrl","FOO/bar"]]');
       });
     });
 
-    describe("getBody()", function () {
-      beforeEach(function () {
+    describe("toString()", function () {
+      it("should return stringified properties", function () {
         httpRequest = HttpRequest.create({
-          endpoint: 'foo/bar'.toHttpEndpoint(),
-          parameters: {
-            "method:": "GET",
-            "body:": "bar",
-            "baz": "quux"
-          }
+          endpoint: ':foo/bar'.toHttpEndpoint(),
+          httpMethod: "GET",
+          requestHeaders: {foo: "bar"},
+          endpointParams: {foo: "FOO"},
+          queryParams: {bar: ["baz", "quux"]},
+          requestBody: {hello: "world"}
         });
-      });
-
-      it("should return method parameter", function () {
-        expect(httpRequest.getBody()).toBe("bar");
+        expect(httpRequest.toString())
+        .toBe('["object",["httpMethod","GET"],' +
+            '["requestBody",["object",["hello","world"]]],' +
+            '["requestHeaders",["object",["foo","bar"]]],' +
+            '["requestUrl","FOO/bar?bar=baz&bar=quux"]]');
       });
     });
   });

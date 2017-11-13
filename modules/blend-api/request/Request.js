@@ -26,40 +26,29 @@ $api.Request = $oop.getClass('$api.Request')
    */
 
   /**
-   * Request parameters.
-   * @member {Object} $api.Request#parameters
-   * @todo Should be Collection?
+   * @member {Object.<string,string>} $api.HttpRequest#endpointParams
    */
 
   /**
    * @memberOf $api.Request
    * @param {$api.Endpoint} endpoint
-   * @param {Object} [parameters]
+   * @param {Object} [properties]
    * @returns {$api.Request}
    */
-  fromEndpoint: function (endpoint, parameters) {
-    return this.create({
-      endpoint: endpoint,
-      parameters: parameters
+  fromEndpoint: function (endpoint, properties) {
+    properties = properties || {};
+    $oop.copyProperties(properties, {
+      endpoint: endpoint
     });
+    return this.create(properties);
   },
 
   /** @ignore */
   init: function () {
     $assert.isInstanceOf(this.endpoint, $api.Endpoint, "Invalid endpoint");
 
-    var endpoint = this.endpoint,
-        parameters = this.parameters || {},
-        listeningPath = $data.TreePath.fromComponentsToString([
-          'endpoint',
-          endpoint.endpointId,
-          JSON.stringify($utils.jsonToSafeJson(parameters))]);
-
-    this.parameters = parameters;
-
     this
-    .setListeningPath(listeningPath)
-    .addTriggerPaths([listeningPath].concat(endpoint.triggerPaths));
+    .addTriggerPaths(this.endpoint.triggerPaths.list);
   },
 
   /**
@@ -68,27 +57,16 @@ $api.Request = $oop.getClass('$api.Request')
    */
   send: function () {
     return this.toRequestDispatcher().dispatch();
-  },
-
-  /**
-   * @returns {string}
-   */
-  toString: function () {
-    return this.endpoint.endpointId +
-        JSON.stringify($utils.jsonToSafeJson(this.parameters));
   }
 });
 
 $oop.getClass('$api.Endpoint')
 .delegate(/** @lends $api.Endpoint# */{
   /**
-   * Converts endpoint to a request.
+   * @param {Object} [properties]
    * @returns {$api.Request}
    */
-  toRequest: function (parameters) {
-    return $api.Request.create({
-      endpoint: this,
-      parameters: parameters
-    });
+  toRequest: function (properties) {
+    return $api.Request.fromEndpoint(this, properties);
   }
 });

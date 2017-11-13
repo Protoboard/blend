@@ -21,10 +21,10 @@ describe("$api", function () {
 
       beforeEach(function () {
         request = 'user/:userId/name'.toHttpEndpoint().toRequest({
-          'method:': 'PUT',
-          'endpoint:userId': 'rick123',
-          'header:Content-Type': "application:json",
-          'body:': "Rick"
+          httpMethod: 'PUT',
+          endpointParams: {userId: 'rick123'},
+          requestHeaders: {'Content-Type': "application:json"},
+          requestBody: "Rick"
         });
         xhrDispatcher = request.toRequestDispatcher();
         spyOn(XMLHttpRequest.prototype, 'open');

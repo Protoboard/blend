@@ -4,64 +4,71 @@
  * @function $api.HttpRequest.create
  * @param {Object} properties
  * @param {$api.Endpoint} properties.endpoint
+ * @param {string} properties.httpMethod
+ * @param {Object.<string,string>} properties.requestHeaders
+ * @param {Object.<string,string|Array.<string>>} properties.queryParams
+ * @param {*} properties.requestBody
  * @returns {$api.HttpRequest}
  */
 
 /**
- * Bundles HTTP endpoint with request parameters. Allows extraction of HTTP
- * method, header, and URL (path & query) to be used by `Dispatcher`.
+ * Describes a request that may be sent over HTTP.
  * @class $api.HttpRequest
  * @extends $api.Request
- * @todo Use methods for setting HTTP specific parameters?
+ * @todo Host in URL?
  */
 $api.HttpRequest = $oop.getClass('$api.HttpRequest')
 .blend($oop.getClass('$api.Request'))
 .define(/** @lends $api.HttpRequest# */{
   /**
-   * @param {string} prefix
-   * @returns {Object}
+   * Target URL of request.
+   * @member {string} $api.HttpRequest#requestUrl
    */
-  extractParametersByPrefix: function (prefix) {
-    var prefixLength = prefix.length;
-    return $data.Collection.fromData(this.parameters)
-    .filterByKeyPrefix(prefix)
-    .mapKeys(function (value, key) {
-      return key.substr(prefixLength);
-    })
-    .toCollection()
-        .data;
+
+  /**
+   * HTTP method to be used when sending request.
+   * @member {string} $api.HttpRequest#httpMethod
+   */
+
+  /**
+   * Request headers.
+   * @member {Object.<string,string>} $api.HttpRequest#requestHeaders
+   */
+
+  /**
+   * URL query parameters.
+   * @member {Object.<string,string|Array.<string>>}
+   * $api.HttpRequest#queryParams
+   */
+
+  /**
+   * Body (data) carried by request.
+   * @member {*} $api.HttpRequest#requestBody
+   */
+
+  /** @ignore */
+  spread: function () {
+    this.requestUrl = this._getUrlPathQuery();
+  },
+
+  /** @ignore */
+  init: function () {
+    var endpoint = this.endpoint,
+        listeningPath = $data.TreePath.fromComponentsToString([
+          'endpoint', endpoint.endpointId, this.toString()]);
+
+    this
+    .setListeningPath(listeningPath)
+    .addTriggerPathBefore(listeningPath, endpoint.listeningPath);
   },
 
   /**
-   * Extracts HTTP method from `parameters`. Method parameter is expected to
-   * be prefixed with "method:". When there are multiple such parameters in
-   * the request, one will be selected randomly.
+   * Extracts URL path and query string from parameters. Query parameters can
+   * take array values.
    * @returns {string}
    */
-  getMethod: function () {
-    return $data.Collection.fromData(this.parameters)
-    .filterByKeyPrefix('method:')
-    .getFirstValue();
-  },
-
-  /**
-   * Extracts header object from `parameters`. Header attributes are expected
-   * to be prefixed with "header:".
-   * @returns {Object}
-   */
-  getHeaderObject: function () {
-    return this.extractParametersByPrefix('header:');
-  },
-
-  /**
-   * Extracts URL path and query string from `parameters`. Endpoint parameters
-   * (manifesting in URL path) are expected to be prefixed with "endpoint:".
-   * Query parameters are expected to be prefixed with "query:". Query
-   * parameters can take array values.
-   * @returns {string}
-   */
-  getUrlPathQuery: function () {
-    var endpointParams = this.extractParametersByPrefix('endpoint:'),
+  _getUrlPathQuery: function () {
+    var endpointParams = this.endpointParams,
         pathComponents = this.endpoint.components
         .map(function (endpointComponent) {
           return endpointComponent[0] === ':' ?
@@ -70,7 +77,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
         }),
         urlPath = $utils.UriPath.fromComponents(pathComponents).toString(),
 
-        queryParams = this.extractParametersByPrefix('query:'),
+        queryParams = this.queryParams,
         urlQuery = $data.Collection.fromData(queryParams)
         .mapValues(function (queryParamValue) {
           return queryParamValue instanceof Array ?
@@ -84,14 +91,15 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
   },
 
   /**
-   * Extracts request body.
-   * @returns {*}
-   * @todo Add test
+   * @returns {string}
    */
-  getBody: function () {
-    return $data.Collection.fromData(this.parameters)
-    .filterByKeyPrefix('body:')
-    .getFirstValue();
+  toString: function () {
+    return JSON.stringify($utils.jsonToSafeJson({
+      requestUrl: this.requestUrl,
+      httpMethod: this.httpMethod,
+      requestHeaders: this.requestHeaders,
+      requestBody: this.requestBody
+    }));
   }
 });
 
