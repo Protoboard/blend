@@ -17,7 +17,7 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
 .blend($oop.getClass('$api.RequestDispatcher'))
 .define(/** @lends $api.XhrDispatcher# */{
   /**
-   * @member {$api.HttpRequest} $api.XhrDispatcher#request
+   * @member {$api.XhrRequest} $api.XhrDispatcher#request
    */
 
   /**
@@ -41,11 +41,18 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
         request = this.request,
         httpMethod = request.httpMethod || 'GET',
         requestHeaders = request.requestHeaders || {},
-        requestUrl = request.requestUrl;
+        requestUrl = request.requestUrl,
+        xhrParams = request.xhrProperties;
 
     // opening connection
     // todo Deal with user / password later
     xhr.open(httpMethod, requestUrl, true);
+
+    // applying XHR properties
+    $data.Collection.fromData(xhrParams)
+    .forEachItem(function (value, property) {
+      xhr[property] = value;
+    });
 
     // setting up headers
     $data.Collection.fromData(requestHeaders)

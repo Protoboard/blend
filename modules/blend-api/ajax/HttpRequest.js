@@ -48,7 +48,7 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
 
   /** @ignore */
   spread: function () {
-    this.requestUrl = this._getUrlPathQuery();
+    this.requestUrl = this.requestUrl || this._getUrlPathQuery();
   },
 
   /** @ignore */

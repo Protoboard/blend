@@ -17,19 +17,25 @@ describe("$api", function () {
     });
 
     describe("dispatch()", function () {
-      var request;
+      var xhrStub,
+          request;
 
       beforeEach(function () {
+        xhrStub = new XMLHttpRequest();
         request = 'user/:userId/name'.toHttpEndpoint().toRequest({
           httpMethod: 'PUT',
           endpointParams: {userId: 'rick123'},
           requestHeaders: {'Content-Type': "application:json"},
-          requestBody: "Rick"
+          requestBody: "Rick",
+          xhrProperties: {
+            timeout: 1000
+          }
         });
         xhrDispatcher = request.toRequestDispatcher();
-        spyOn(XMLHttpRequest.prototype, 'open');
-        spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
-        spyOn(XMLHttpRequest.prototype, 'send');
+        spyOn(window, 'XMLHttpRequest').and.returnValue(xhrStub);
+        spyOn(xhrStub, 'open');
+        spyOn(xhrStub, 'setRequestHeader');
+        spyOn(xhrStub, 'send');
       });
 
       it('should return Promise', function () {
@@ -39,28 +45,30 @@ describe("$api", function () {
 
       it("should open XHR", function () {
         xhrDispatcher.dispatch(request);
-        expect(XMLHttpRequest.prototype.open)
+        expect(xhrStub.open)
         .toHaveBeenCalledWith('PUT', 'user/rick123/name', true);
+      });
+
+      it("should apply XHR properties", function () {
+        xhrDispatcher.dispatch(request);
+        expect(xhrStub.timeout).toEqual(1000);
       });
 
       it("should add header params", function () {
         xhrDispatcher.dispatch(request);
-        expect(XMLHttpRequest.prototype.setRequestHeader)
+        expect(xhrStub.setRequestHeader)
         .toHaveBeenCalledWith('Content-Type', 'application:json');
       });
 
       it("should send XHR request", function () {
         xhrDispatcher.dispatch(request);
-        expect(XMLHttpRequest.prototype.send).toHaveBeenCalledWith("Rick");
+        expect(xhrStub.send).toHaveBeenCalledWith("Rick");
       });
 
       describe("when readyState advances to 1", function () {
-        var xhr,
-            promise;
+        var promise;
 
         beforeEach(function () {
-          xhr = new XMLHttpRequest();
-          spyOn(window, 'XMLHttpRequest').and.returnValue(xhr);
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(1);
@@ -68,17 +76,17 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_REQUEST_OPEN", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
           expect(event.eventName).toBe('request.open');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
 
         it("should notify promise", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $utils.Deferred.notify.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
@@ -86,17 +94,14 @@ describe("$api", function () {
           expect($event.Event.mixedBy(event)).toBeTruthy();
           expect(event.eventName).toBe('request.open');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
       });
 
       describe("when readyState advances to 2", function () {
-        var xhr,
-            promise;
+        var promise;
 
         beforeEach(function () {
-          xhr = new XMLHttpRequest();
-          spyOn(window, 'XMLHttpRequest').and.returnValue(xhr);
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(2);
@@ -104,17 +109,17 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_REQUEST_SEND", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
           expect(event.eventName).toBe('request.send');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
 
         it("should notify promise", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $utils.Deferred.notify.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
@@ -122,17 +127,14 @@ describe("$api", function () {
           expect($event.Event.mixedBy(event)).toBeTruthy();
           expect(event.eventName).toBe('request.send');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
       });
 
       describe("when readyState advances to 3", function () {
-        var xhr,
-            promise;
+        var promise;
 
         beforeEach(function () {
-          xhr = new XMLHttpRequest();
-          spyOn(window, 'XMLHttpRequest').and.returnValue(xhr);
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(3);
@@ -140,17 +142,17 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_RESPONSE_PROGRESS", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
           expect(event.eventName).toBe('response.progress');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
 
         it("should notify promise", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $utils.Deferred.notify.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
@@ -158,17 +160,14 @@ describe("$api", function () {
           expect($event.Event.mixedBy(event)).toBeTruthy();
           expect(event.eventName).toBe('response.progress');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
       });
 
       describe("when readyState advances to 4", function () {
-        var xhr,
-            promise;
+        var promise;
 
         beforeEach(function () {
-          xhr = new XMLHttpRequest();
-          spyOn(window, 'XMLHttpRequest').and.returnValue(xhr);
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'resolve');
           spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(4);
@@ -176,17 +175,17 @@ describe("$api", function () {
         });
 
         it("should trigger EVENT_RESPONSE_PROGRESS", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $event.Event.trigger.calls.all(),
               event = calls[0].object;
           expect(calls.length).toBe(1);
           expect(event.eventName).toBe('response.receive');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
 
         it("should resolve promise", function () {
-          xhr.onreadystatechange();
+          xhrStub.onreadystatechange();
           var calls = $utils.Deferred.resolve.calls.all(),
               deferred = calls[0].object,
               event = calls[0].args[0];
@@ -194,7 +193,7 @@ describe("$api", function () {
           expect($event.Event.mixedBy(event)).toBeTruthy();
           expect(event.eventName).toBe('response.receive');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
+          expect(event.xhr).toBe(xhrStub);
         });
       });
     });
