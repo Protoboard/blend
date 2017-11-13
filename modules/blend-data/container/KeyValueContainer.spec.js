@@ -80,7 +80,7 @@ describe("$data", function () {
         result = KeyValueContainer.fromKeyValueContainer(keyValueContainer2);
       });
 
-      it("should return instance of appropriate class", function () {
+      it("should return KeyValueContainer instance", function () {
         expect(KeyValueContainer.mixedBy(result)).toBeTruthy();
       });
 
@@ -89,6 +89,11 @@ describe("$data", function () {
           1: "foo",
           2: "bar"
         });
+      });
+
+      it("should pass additional properties to create", function () {
+        result = KeyValueContainer.fromKeyValueContainer(keyValueContainer2, {bar: 'baz'});
+        expect(result.bar).toBe('baz');
       });
     });
 
@@ -118,7 +123,7 @@ describe("$data", function () {
         result = KeyValueContainer.fromSetContainer(setContainer);
       });
 
-      it("should return instance of appropriate class", function () {
+      it("should return KeyValueContainer instance", function () {
         expect(KeyValueContainer.mixedBy(result)).toBeTruthy();
       });
 
@@ -129,6 +134,11 @@ describe("$data", function () {
           2: 3,
           3: 4
         });
+      });
+
+      it("should pass additional properties to create", function () {
+        result = KeyValueContainer.fromSetContainer(setContainer, {bar: 'baz'});
+        expect(result.bar).toBe('baz');
       });
     });
 

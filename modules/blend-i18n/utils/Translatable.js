@@ -39,14 +39,15 @@ $i18n.Translatable = $oop.getClass('$i18n.Translatable')
    * @param {string|$utils.Stringifiable} string
    * @param {number} [count]
    * @param {string} [context]
+   * @param {Object} [properties]
    * @returns {$i18n.Translatable}
    */
-  fromString: function (string, count, context) {
+  fromString: function (string, count, context, properties) {
     return this.create({
       originalString: string,
       context: context,
       count: count
-    });
+    }, properties);
   },
 
   /** @ignore */

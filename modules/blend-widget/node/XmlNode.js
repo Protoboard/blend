@@ -22,10 +22,11 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   /**
    * @memberOf $widget.XmlNode
    * @param {string} elementName
+   * @param {Object} [properties]
    * @returns {$widget.XmlNode}
    */
-  fromElementName: function (elementName) {
-    return this.create({elementName: elementName});
+  fromElementName: function (elementName, properties) {
+    return this.create({elementName: elementName}, properties);
   },
 
   /** @ignore */

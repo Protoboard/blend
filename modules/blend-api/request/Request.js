@@ -36,11 +36,7 @@ $api.Request = $oop.getClass('$api.Request')
    * @returns {$api.Request}
    */
   fromEndpoint: function (endpoint, properties) {
-    properties = properties || {};
-    $oop.copyProperties(properties, {
-      endpoint: endpoint
-    });
-    return this.create(properties);
+    return this.create({endpoint: endpoint}, properties);
   },
 
   /** @ignore */

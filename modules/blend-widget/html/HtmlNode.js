@@ -27,10 +27,11 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
   /**
    * @memberOf $widget.HtmlNode
    * @param {string} elementId
+   * @param {Object} [properties]
    * @returns {$widget.HtmlNode}
    */
-  fromElementId: function (elementId) {
-    return this.create({elementId: elementId});
+  fromElementId: function (elementId, properties) {
+    return this.create({elementId: elementId}, properties);
   },
 
   /** @ignore */

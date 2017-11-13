@@ -22,12 +22,13 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   /**
    * @memberOf $entity.Entity
    * @param {$entity.EntityKey} entityKey
+   * @param {Object} [properties]
    * @returns {$entity.Entity}
    */
-  fromEntityKey: function (entityKey) {
+  fromEntityKey: function (entityKey, properties) {
     return this.create({
       entityKey: entityKey
-    });
+    }, properties);
   },
 
   /** @ignore */

@@ -37,22 +37,26 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
    * @param {string} documentId
    * @param {string} fieldName
    * @param {string} itemId
+   * @param {Object} [properties]
    * @returns {$entity.ItemKey}
    */
-  fromComponents: function (documentType, documentId, fieldName, itemId) {
+  fromComponents: function (documentType, documentId, fieldName, itemId,
+      properties
+  ) {
     return this.create({
       fieldKey: $entity.FieldKey.fromComponents(
           documentType, documentId, fieldName),
       itemId: itemId
-    });
+    }, properties);
   },
 
   /**
    * @memberOf $entity.ItemKey
    * @param {string} itemRef
+   * @param {Object} [properties]
    * @returns {$entity.ItemKey}
    */
-  fromString: function (itemRef) {
+  fromString: function (itemRef, properties) {
     var components = $utils.safeSplit(itemRef, '/')
     .map(function (component) {
       return $utils.unescape(component, '/');
@@ -61,7 +65,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
       fieldKey: $entity.FieldKey.fromComponents(
           components[0], components[1], components[2]),
       itemId: components[3]
-    });
+    }, properties);
   },
 
   /** @ignore */

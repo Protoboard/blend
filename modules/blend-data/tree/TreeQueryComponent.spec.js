@@ -20,17 +20,21 @@ describe("$data", function () {
       beforeEach(function () {
         queryComponent = {};
         componentString = 'foo';
-        spyOn(TQC, 'create').and.returnValue(queryComponent);
-        result = TQC.fromString(componentString);
       });
 
-      it("should pass string to create()", function () {
-        expect(TQC.create)
-        .toHaveBeenCalledWith({componentString: componentString});
+      it("should return TreeQueryComponent instance", function () {
+        tQC = TQC.fromString(componentString);
+        expect(TQC.mixedBy(tQC)).toBeTruthy();
       });
 
-      it("should return created instance", function () {
-        expect(result).toBe(queryComponent);
+      it("should set componentString", function () {
+        tQC = TQC.fromString(componentString);
+        expect(tQC.componentString).toBe(componentString);
+      });
+
+      it("should pass additional properties to create", function () {
+        tQC = TQC.fromString(componentString, {bar: 'baz'});
+        expect(tQC.bar).toBe('baz');
       });
     });
 
@@ -41,17 +45,21 @@ describe("$data", function () {
       beforeEach(function () {
         queryComponent = {};
         keyOptions = ['foo', 'bar', 'baz'];
-        spyOn(TQC, 'create').and.returnValue(queryComponent);
-        result = TQC.fromKeyOptions(keyOptions);
       });
 
-      it("should pass string to create()", function () {
-        expect(TQC.create)
-        .toHaveBeenCalledWith({keyOptions: keyOptions});
+      it("should return TreeQueryComponent instance", function () {
+        tQC = TQC.fromKeyOptions(keyOptions);
+        expect(TQC.mixedBy(tQC)).toBeTruthy();
       });
 
-      it("should return created instance", function () {
-        expect(result).toBe(queryComponent);
+      it("should set keyOptions property", function () {
+        tQC = TQC.fromKeyOptions(keyOptions);
+        expect(tQC.keyOptions).toEqual(keyOptions);
+      });
+
+      it("should pass additional properties to create", function () {
+        tQC = TQC.fromKeyOptions(keyOptions, {bar: 'baz'});
+        expect(tQC.bar).toBe('baz');
       });
     });
 

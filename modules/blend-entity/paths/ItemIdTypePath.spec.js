@@ -26,33 +26,30 @@ describe("$entity", function () {
           'document', '__field', '__field/itemIdType', 'options',
           'reference']);
       });
+
+      it("should pass additional properties to create", function () {
+        itemIdTypePath = ItemIdTypePath.fromItemIdType('reference', {bar: 'baz'});
+        expect(itemIdTypePath.bar).toBe('baz');
+      });
     });
   });
 });
 
 describe("String", function () {
-  var result;
-
   describe("toItemIdTypePath()", function () {
     var itemIdTypePath;
 
-    beforeEach(function () {
-      itemIdTypePath = $entity.ItemIdTypePath.fromItemIdType('reference');
-      spyOn($entity.ItemIdTypePath, 'create').and
-      .returnValue(itemIdTypePath);
-    });
-
     it("should create a ItemIdTypePath instance", function () {
-      result = 'reference'.toItemIdTypePath();
-      expect($entity.ItemIdTypePath.create).toHaveBeenCalledWith({
-        components: ['document', '__field', '__field/itemIdType', 'options',
-          'reference']
-      });
+      itemIdTypePath = 'reference'.toItemIdTypePath();
+      expect($entity.ItemIdTypePath.mixedBy(itemIdTypePath))
+      .toBeTruthy();
     });
 
     it("should return created instance", function () {
-      result = 'reference'.toItemIdTypePath();
-      expect(result).toBe(itemIdTypePath);
+      itemIdTypePath = 'reference'.toItemIdTypePath();
+      expect(itemIdTypePath.components)
+      .toEqual(['document', '__field', '__field/itemIdType', 'options',
+        'reference']);
     });
   });
 });

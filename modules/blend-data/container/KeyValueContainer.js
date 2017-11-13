@@ -42,10 +42,11 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    * Transforms a `KeyValueContainer` to the current `KeyValueContainer` class.
    * @memberOf $data.KeyValueContainer
    * @param {$data.KeyValueContainer} keyValueContainer
+   * @param {Object} [properties]
    * @returns {$data.KeyValueContainer}
    */
-  fromKeyValueContainer: function (keyValueContainer) {
-    var result = this.create();
+  fromKeyValueContainer: function (keyValueContainer, properties) {
+    var result = this.create(properties);
     keyValueContainer.forEachItem(function (value, key) {
       result.setItem(key, value);
     });
@@ -57,12 +58,13 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    * using items in the set as values.
    * @memberOf $data.KeyValueContainer
    * @param {$data.SetContainer} setContainer
+   * @param {Object} [properties]
    * @returns {$data.KeyValueContainer}
    * @todo Might be a good idea to add separate key/value versions
    * @todo Move to separate file & delegate?
    */
-  fromSetContainer: function (setContainer) {
-    var result = this.create(),
+  fromSetContainer: function (setContainer, properties) {
+    var result = this.create(properties),
         i = 0;
     setContainer.forEachItem(function (item) {
       result.setItem(i++, item);

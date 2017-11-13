@@ -26,6 +26,11 @@ describe("$i18n", function () {
         expect(translatable.context).toBe('bar');
         expect(translatable.count).toBe(2);
       });
+
+      it("should pass additional properties to create", function () {
+        translatable = Translatable.fromString('foo', 2, 'bar', {bar: 'baz'});
+        expect(translatable.bar).toBe('baz');
+      });
     });
 
     describe("create()", function () {
@@ -127,28 +132,17 @@ describe("$i18n", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toTranslatable()", function () {
     var translatable;
 
-    beforeEach(function () {
-      translatable = $i18n.Translatable.fromString('foo');
-      spyOn($i18n.Translatable, 'create').and.returnValue(translatable);
-    });
-
     it("should create a Translatable instance", function () {
-      result = 'foo'.toTranslatable();
-      expect($i18n.Translatable.create).toHaveBeenCalledWith({
-        originalString: 'foo',
-        context: undefined,
-        count: undefined
-      });
+      translatable = 'foo'.toTranslatable();
+      expect($i18n.Translatable.mixedBy(translatable)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      result = 'foo'.toTranslatable();
-      expect(result).toBe(translatable);
+    it("should set Translatable properties", function () {
+      translatable = 'foo'.toTranslatable();
+      expect(translatable.originalString).toBe('foo');
     });
   });
 });

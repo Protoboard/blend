@@ -30,6 +30,11 @@ describe("$api", function () {
         requestDispatcher = RequestDispatcher.fromRequest(request);
         expect(requestDispatcher.request).toBe(request);
       });
+
+      it("should pass additional properties to create", function () {
+        requestDispatcher = RequestDispatcher.fromRequest(request, {bar: 'baz'});
+        expect(requestDispatcher.bar).toBe('baz');
+      });
     });
 
     describe("create()", function () {
@@ -62,6 +67,11 @@ describe("$api", function () {
       it("should set request property", function () {
         var result = request.toRequestDispatcher();
         expect(result.request).toBe(request);
+      });
+
+      it("should pass additional properties to create", function () {
+        var result = request.toRequestDispatcher({bar: 'baz'});
+        expect(result.bar).toBe('baz');
       });
     });
   });

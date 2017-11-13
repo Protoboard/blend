@@ -36,21 +36,23 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
    * @param {string} documentType
    * @param {string} documentId
    * @param {string} fieldName
+   * @param {Object} [properties]
    * @returns {$entity.FieldKey}
    */
-  fromComponents: function (documentType, documentId, fieldName) {
+  fromComponents: function (documentType, documentId, fieldName, properties) {
     return this.create({
       documentKey: $entity.DocumentKey.fromComponents(documentType, documentId),
       fieldName: fieldName
-    });
+    }, properties);
   },
 
   /**
    * @memberOf $entity.FieldKey
    * @param {string} fieldRef
+   * @param {Object} [properties]
    * @returns {$entity.FieldKey}
    */
-  fromString: function (fieldRef) {
+  fromString: function (fieldRef, properties) {
     var components = $utils.safeSplit(fieldRef, '/')
     .map(function (component) {
       return $utils.unescape(component, '/');
@@ -58,7 +60,7 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
     return this.create({
       documentKey: $entity.DocumentKey.fromComponents(components[0], components[1]),
       fieldName: components[2]
-    });
+    }, properties);
   },
 
   /** @ignore */

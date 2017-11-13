@@ -25,6 +25,11 @@ describe("$widget", function () {
         htmlNode = HtmlNode.fromElementId('foo');
         expect(htmlNode.elementId).toBe('foo');
       });
+
+      it("should pass additional properties to create", function () {
+        htmlNode = HtmlNode.fromElementId('foo', {bar: 'baz'});
+        expect(htmlNode.bar).toBe('baz');
+      });
     });
 
     describe("create()", function () {

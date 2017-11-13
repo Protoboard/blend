@@ -27,10 +27,11 @@ $utils.Path = $oop.getClass('$utils.Path')
    * Creates a `Path` instance based on the specified component array.
    * @memberOf $utils.Path
    * @param {Array.<string>} components
+   * @param {Object} [properties]
    * @returns {$utils.Path}
    */
-  fromComponents: function (components) {
-    return this.create({components: components});
+  fromComponents: function (components, properties) {
+    return this.create({components: components}, properties);
   },
 
   /** @ignore */

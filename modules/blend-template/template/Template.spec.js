@@ -27,16 +27,19 @@ describe("$template", function () {
     });
 
     describe("fromString()", function () {
-      beforeEach(function () {
-        result = Template.fromString("foo");
-      });
-
       it("should return Template instance", function () {
-        expect(Template.mixedBy(result)).toBeTruthy();
+        template = Template.fromString("foo");
+        expect(Template.mixedBy(template)).toBeTruthy();
       });
 
       it("should set templateString property", function () {
-        expect(result.templateString).toBe("foo");
+        template = Template.fromString("foo");
+        expect(template.templateString).toBe("foo");
+      });
+
+      it("should pass additional properties to create", function () {
+        template = Template.fromString("foo", {bar: 'baz'});
+        expect(template.bar).toBe('baz');
       });
     });
 

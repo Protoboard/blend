@@ -32,19 +32,22 @@ describe("$data", function () {
     describe("fromString()", function () {
       var string = 'foo\\.bar.baz\\\\quux';
 
-      beforeEach(function () {
-        result = $data.TreePath.fromString(string);
-      });
-
       it("should return a TreePath instance", function () {
-        expect($data.TreePath.mixedBy(result)).toBeTruthy();
+        treePath = TreePath.fromString(string);
+        expect(TreePath.mixedBy(treePath)).toBeTruthy();
       });
 
       it("should set components property with unescaped components", function () {
-        expect(result.components).toEqual([
+        treePath = TreePath.fromString(string);
+        expect(treePath.components).toEqual([
           'foo.bar',
           'baz\\quux'
         ]);
+      });
+
+      it("should pass additional properties to create", function () {
+        treePath = TreePath.fromString(string, {bar: 'baz'});
+        expect(treePath.bar).toBe('baz');
       });
     });
 

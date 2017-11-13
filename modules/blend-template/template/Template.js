@@ -18,18 +18,20 @@ $template.Template = $oop.getClass('$template.Template')
 
   /**
    * @param {string} templateString
+   * @param {Object} [properties]
    * @memberOf $template.Template
    */
-  fromString: function (templateString) {
-    return this.create({templateString: templateString});
+  fromString: function (templateString, properties) {
+    return this.create({templateString: templateString}, properties);
   },
 
   /**
    * @param {string|$utils.Stringifiable} templateString
+   * @param {Object} [properties]
    * @memberOf $template.Template
    */
-  fromStringifiable: function (templateString) {
-    return this.create({templateString: templateString});
+  fromStringifiable: function (templateString, properties) {
+    return this.create({templateString: templateString}, properties);
   },
 
   /**

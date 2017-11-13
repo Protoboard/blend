@@ -6,7 +6,7 @@ var $assert = window['blend-assert'],
 describe("$data", function () {
   describe("DataContainer", function () {
     var DataContainer,
-        container,
+        dataContainer,
         result;
 
     beforeAll(function () {
@@ -15,22 +15,25 @@ describe("$data", function () {
     });
 
     beforeEach(function () {
-      container = DataContainer.create({data: null});
+      dataContainer = DataContainer.create({data: null});
     });
 
     describe("fromData()", function () {
       var data = {};
-      beforeEach(function () {
-        spyOn(DataContainer, 'create').and.returnValue(container);
-        result = DataContainer.fromData(data);
+
+      it("should return DataContainer instance", function () {
+        dataContainer = DataContainer.fromData('foo');
+        expect(DataContainer.mixedBy(dataContainer)).toBeTruthy();
       });
 
-      it("should pass data to create()", function () {
-        expect(DataContainer.create).toHaveBeenCalledWith({data: data});
+      it("should set data", function () {
+        dataContainer = DataContainer.fromData(data);
+        expect(dataContainer.data).toBe(data);
       });
 
-      it("should return result of create()", function () {
-        expect(result).toBe(container);
+      it("should pass additional properties to create", function () {
+        dataContainer = DataContainer.fromData(data, {bar: 'baz'});
+        expect(dataContainer.bar).toBe('baz');
       });
     });
 
@@ -43,7 +46,7 @@ describe("$data", function () {
       });
 
       beforeEach(function () {
-        result = container.as(DataContainer2);
+        result = dataContainer.as(DataContainer2);
       });
 
       it("should return instance of specified class", function () {
@@ -57,50 +60,50 @@ describe("$data", function () {
 
     describe("create()", function () {
       it("should set data property", function () {
-        expect(container.data).toBe(null);
+        expect(dataContainer.data).toBe(null);
       });
     });
 
     describe("clone()", function () {
       beforeEach(function () {
-        result = container.clone();
+        result = dataContainer.clone();
       });
 
       it("should return cloned instance", function () {
-        expect(result).not.toBe(container);
+        expect(result).not.toBe(dataContainer);
       });
 
       it("should set data", function () {
-        expect(result.data).toBe(container.data);
+        expect(result.data).toBe(dataContainer.data);
       });
     });
 
     describe("destroy()", function () {
       beforeEach(function () {
-        spyOn(container, 'clear');
-        result = container.destroy();
+        spyOn(dataContainer, 'clear');
+        result = dataContainer.destroy();
       });
 
       it("should return self", function () {
-        expect(result).toBe(container);
+        expect(result).toBe(dataContainer);
       });
 
       it("should clear data", function () {
-        expect(container.clear).toHaveBeenCalled();
+        expect(dataContainer.clear).toHaveBeenCalled();
       });
     });
 
     describe("clear()", function () {
       beforeEach(function () {
-        result = container.clear();
+        result = dataContainer.clear();
       });
 
       it("should return self", function () {
-        expect(result).toBe(container);
+        expect(result).toBe(dataContainer);
       });
 
       it("should replace data with undefined", function () {
-        expect(container.data).toEqual(undefined);
+        expect(dataContainer.data).toEqual(undefined);
       });
     });
 
@@ -125,11 +128,11 @@ describe("$data", function () {
       beforeEach(function () {
         returnValue = {};
         callback = jasmine.createSpy().and.returnValue(returnValue);
-        result = container.passDataTo(callback);
+        result = dataContainer.passDataTo(callback);
       });
 
       it("should pass data to callback", function () {
-        expect(callback).toHaveBeenCalledWith(container.data);
+        expect(callback).toHaveBeenCalledWith(dataContainer.data);
       });
 
       it("should return return value of callback", function () {
@@ -144,11 +147,11 @@ describe("$data", function () {
       beforeEach(function () {
         returnValue = {};
         callback = jasmine.createSpy().and.returnValue(returnValue);
-        result = container.passSelfTo(callback);
+        result = dataContainer.passSelfTo(callback);
       });
 
       it("should pass data to callback", function () {
-        expect(callback).toHaveBeenCalledWith(container);
+        expect(callback).toHaveBeenCalledWith(dataContainer);
       });
 
       it("should return return value of callback", function () {

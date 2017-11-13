@@ -20,12 +20,13 @@ $utils.UriPath = $oop.getClass('$utils.UriPath')
   /**
    * @memberOf $utils.UriPath
    * @param {string} urlPath
+   * @param {Object} [properties]
    * @returns {$utils.UriPath}
    */
-  fromString: function (urlPath) {
+  fromString: function (urlPath, properties) {
     var components = urlPath.split($utils.LOCATION_PATH_DELIMITER)
     .map(decodeURIComponent);
-    return this.create({components: components});
+    return this.create({components: components}, properties);
   },
 
   /**

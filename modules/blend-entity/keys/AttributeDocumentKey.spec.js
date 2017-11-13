@@ -5,18 +5,31 @@ var $oop = window['blend-oop'],
 
 describe("$entity", function () {
   describe("AttributeDocumentKey", function () {
-    var AttributeDocumentKey;
+    var AttributeDocumentKey,
+        attributeDocumentKey;
 
     beforeAll(function () {
       AttributeDocumentKey = $oop.getClass('test.$entity.AttributeDocumentKey.AttributeDocumentKey')
       .blend($entity.AttributeDocumentKey);
+      AttributeDocumentKey.__forwards = {list: [], sources: [], lookup: {}};
+    });
+
+    beforeEach(function () {
+      AttributeDocumentKey.__instanceLookup = {};
     });
 
     describe("fromDocumentIdComponents()", function () {
       it("should join documentId components", function () {
-        expect(AttributeDocumentKey.fromDocumentIdComponents('foo', [
-          'bar', 'baz', 'quux']))
+        attributeDocumentKey = AttributeDocumentKey.fromDocumentIdComponents(
+            'foo', ['bar', 'baz', 'quux']);
+        expect(attributeDocumentKey)
         .toEqual(['foo', 'bar/baz/quux'].toDocumentKey());
+      });
+
+      it("should pass additional properties to create", function () {
+        attributeDocumentKey = AttributeDocumentKey.fromDocumentIdComponents(
+            'foo', ['bar', 'baz', 'quux'], {bar: 'baz'});
+        expect(attributeDocumentKey.bar).toBe('baz');
       });
     });
   });

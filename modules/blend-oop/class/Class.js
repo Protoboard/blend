@@ -726,17 +726,34 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
   /**
    * Creates a new instance.
-   * @param {Object} [properties]
+   * @param {...Object} [properties]
    * @returns {$oop.Class}
    */
   create: function (properties) {
     properties = properties || {};
 
+    // merging down properties
+    var argumentCount = arguments.length,
+        i, propertyBatch,
+        propertyNames, propertyCount,
+        j, propertyName;
+    for (i = 1; i < argumentCount; i++) {
+      propertyBatch = arguments[i];
+      if (propertyBatch) {
+        propertyNames = Object.keys(propertyBatch);
+        propertyCount = propertyNames.length;
+        for (j = 0; j < propertyCount; j++) {
+          propertyName = propertyNames[j];
+          properties[propertyName] = propertyBatch[propertyName];
+        }
+      }
+    }
+
     // finding forward class (if any)
     var that = this,
         forwards,
         forwardCount,
-        i, forward,
+        forward,
         mixins;
     while (true) {
       forwards = that.__forwards.list;
@@ -805,9 +822,6 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     instance = Object.create(that);
 
     // copying initial properties to instance
-    var propertyNames,
-        propertyCount,
-        propertyName;
     if (properties instanceof Object) {
       propertyNames = Object.getOwnPropertyNames(properties);
       propertyCount = propertyNames.length;

@@ -13,10 +13,28 @@ describe("$event", function () {
     beforeAll(function () {
       Event = $oop.getClass('test.$event.Event.Event')
       .blend($event.Event);
+      Event.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     beforeEach(function () {
       event = Event.create({eventName: 'event1'});
+    });
+
+    describe("fromEventName()", function () {
+      it("should return Event instance", function () {
+        event = Event.fromEventName('event1');
+        expect(Event.mixedBy(event)).toBeTruthy();
+      });
+
+      it("should set eventName property", function () {
+        event = Event.fromEventName('event1');
+        expect(event.eventName).toBe('event1');
+      });
+
+      it("should pass additional properties to create", function () {
+        event = Event.fromEventName('event1', {bar: 'baz'});
+        expect(event.bar).toBe('baz');
+      });
     });
 
     describe("create()", function () {
@@ -42,26 +60,6 @@ describe("$event", function () {
             Event.create({});
           }).toThrow();
         });
-      });
-    });
-
-    describe("fromEventName()", function () {
-      var event;
-
-      beforeEach(function () {
-        event = {};
-        spyOn(Event, 'create').and.returnValue(event);
-        result = Event.fromEventName('event1');
-      });
-
-      it("should pass eventName to create", function () {
-        expect(Event.create).toHaveBeenCalledWith({
-          eventName: 'event1'
-        });
-      });
-
-      it("should return created instance", function () {
-        expect(result).toBe(event);
       });
     });
 

@@ -26,10 +26,11 @@ $api.Endpoint = $oop.getClass('$api.Endpoint')
   /**
    * @memberOf $api.Endpoint
    * @param {string} endpointId
+   * @param {Object} [properties]
    * @returns {$api.Endpoint}
    */
-  fromEndpointId: function (endpointId) {
-    return this.create({endpointId: endpointId});
+  fromEndpointId: function (endpointId, properties) {
+    return this.create({endpointId: endpointId}, properties);
   },
 
   /** @ignore */

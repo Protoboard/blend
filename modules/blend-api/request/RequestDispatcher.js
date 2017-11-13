@@ -22,10 +22,11 @@ $api.RequestDispatcher = $oop.getClass('$api.RequestDispatcher')
   /**
    * @memberOf $api.RequestDispatcher
    * @param {$api.Request} request
+   * @param {Object} [properties]
    * @returns {$api.RequestDispatcher}
    */
-  fromRequest: function (request) {
-    return this.create({request: request});
+  fromRequest: function (request, properties) {
+    return this.create({request: request}, properties);
   },
 
   /** @ignore */
@@ -42,9 +43,10 @@ $api.RequestDispatcher = $oop.getClass('$api.RequestDispatcher')
 $oop.getClass('$api.Request')
 .delegate(/** @lends $api.Request# */{
   /**
+   * @param {Object} [properties]
    * @returns {$api.Request}
    */
-  toRequestDispatcher: function () {
-    return $api.RequestDispatcher.create({request: this});
+  toRequestDispatcher: function (properties) {
+    return $api.RequestDispatcher.create({request: this}, properties);
   }
 });

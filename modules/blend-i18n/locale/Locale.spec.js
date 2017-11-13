@@ -14,6 +14,10 @@ describe("$i18n", function () {
       Locale.__forwards = {list: [], sources: [], lookup: {}};
     });
 
+    beforeEach(function () {
+      Locale.__instanceLookup = {};
+    });
+
     describe("fromLocaleKey", function () {
       it("should return Locale instance", function () {
         locale = Locale.fromLocaleKey('foo/bar'.toDocumentKey());
@@ -23,6 +27,11 @@ describe("$i18n", function () {
       it("should set localeKey", function () {
         locale = Locale.fromLocaleKey('foo/bar'.toDocumentKey());
         expect(locale.localeKey).toEqual('foo/bar'.toDocumentKey());
+      });
+
+      it("should pass additional properties to create", function () {
+        locale = Locale.fromLocaleKey('foo/bar'.toDocumentKey(), {bar: 'baz'});
+        expect(locale.bar).toBe('baz');
       });
     });
 
@@ -35,6 +44,11 @@ describe("$i18n", function () {
       it("should set localeKey", function () {
         locale = Locale.fromLocaleId('foo');
         expect(locale.localeKey).toEqual('_locale/foo'.toDocumentKey());
+      });
+
+      it("should pass additional properties to create", function () {
+        locale = Locale.fromLocaleId('foo', {bar: 'baz'});
+        expect(locale.bar).toBe('baz');
       });
     });
 
@@ -191,26 +205,17 @@ describe("$i18n", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toLocale()", function () {
     var locale;
 
-    beforeEach(function () {
-      locale = $i18n.Locale.fromLocaleId('foo');
-      spyOn($i18n.Locale, 'create').and.returnValue(locale);
-    });
-
     it("should create a Locale instance", function () {
-      result = 'foo'.toLocale();
-      expect($i18n.Locale.create).toHaveBeenCalledWith({
-        localeKey: '_locale/foo'.toDocumentKey()
-      });
+      locale = 'foo'.toLocale();
+      expect($i18n.Locale.mixedBy(locale)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      result = 'foo'.toLocale();
-      expect(result).toBe(locale);
+    it("should set localeKey property", function () {
+      locale = 'foo'.toLocale();
+      expect(locale.localeKey).toEqual('_locale/foo'.toDocumentKey());
     });
   });
 });

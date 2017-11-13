@@ -18,6 +18,24 @@ describe("$utils", function () {
       path = Path.create({components: ['foo', 'bar', 'baz']});
     });
 
+    describe("fromComponents()", function () {
+      var components;
+
+      beforeEach(function () {
+        components = ['foo', 'bar', 'baz'];
+      });
+
+      it("should pass components to create()", function () {
+        path = Path.fromComponents(components);
+        expect(Path.mixedBy(path)).toBeTruthy();
+      });
+
+      it("should set components property", function () {
+        path = Path.fromComponents(components);
+        expect(path.components).toBe(components);
+      });
+    });
+
     describe("create()", function () {
       it("should set components property", function () {
         expect(path.components).toEqual(['foo', 'bar', 'baz']);
@@ -32,26 +50,6 @@ describe("$utils", function () {
             Path.create({components: 'foo'});
           }).toThrow();
         });
-      });
-    });
-
-    describe("fromComponents()", function () {
-      var path,
-          components;
-
-      beforeEach(function () {
-        path = {};
-        components = ['foo', 'bar', 'baz'];
-        spyOn(Path, 'create').and.returnValue(path);
-        result = Path.fromComponents(components);
-      });
-
-      it("should pass components to create()", function () {
-        expect(Path.create).toHaveBeenCalledWith({components: components});
-      });
-
-      it("should return a created instance", function () {
-        expect(result).toBe(path);
       });
     });
 

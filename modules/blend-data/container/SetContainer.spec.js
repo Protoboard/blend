@@ -36,16 +36,22 @@ describe("$data", function () {
 
       beforeEach(function () {
         array = [1, 2, 3];
-        result = SetContainer.fromArray(array);
       });
 
       it("should return a SetContainer instance", function () {
-        expect(SetContainer.mixedBy(result)).toBeTruthy();
+        setContainer = SetContainer.fromArray(array);
+        expect(SetContainer.mixedBy(setContainer)).toBeTruthy();
       });
 
       it("should initialize data buffer", function () {
-        expect(result.data).not.toBe(array);
-        expect(result.data).toEqual([1, 2, 3]);
+        setContainer = SetContainer.fromArray(array);
+        expect(setContainer.data).not.toBe(array);
+        expect(setContainer.data).toEqual([1, 2, 3]);
+      });
+
+      it("should pass additional properties to create", function () {
+        setContainer = SetContainer.fromArray(array, {bar: 'baz'});
+        expect(setContainer.bar).toBe('baz');
       });
     });
 
@@ -74,16 +80,21 @@ describe("$data", function () {
           "foo": 1,
           "bar": 1
         });
-
-        result = SetContainer.fromSetContainer(setContainer2);
       });
 
       it("should return instance of appropriate class", function () {
-        expect(SetContainer.mixedBy(result)).toBeTruthy();
+        setContainer = SetContainer.fromSetContainer(setContainer2);
+        expect(SetContainer.mixedBy(setContainer)).toBeTruthy();
       });
 
       it("should transfer data", function () {
-        expect(result.data).toEqual(["foo", "bar"]);
+        setContainer = SetContainer.fromSetContainer(setContainer2);
+        expect(setContainer.data).toEqual(["foo", "bar"]);
+      });
+
+      it("should pass additional properties to create", function () {
+        setContainer = SetContainer.fromSetContainer(setContainer2, {bar: 'baz'});
+        expect(setContainer.bar).toBe('baz');
       });
     });
 
@@ -114,16 +125,21 @@ describe("$data", function () {
           [1, "foo"],
           [2, "bar"]
         ]);
-
-        result = SetContainer.fromKeyValueContainer(keyValueContainer);
       });
 
       it("should return instance of appropriate class", function () {
-        expect(SetContainer.mixedBy(result)).toBeTruthy();
+        setContainer = SetContainer.fromKeyValueContainer(keyValueContainer);
+        expect(SetContainer.mixedBy(setContainer)).toBeTruthy();
       });
 
       it("should transfer data", function () {
-        expect(result.data).toEqual(["foo", "bar"]);
+        setContainer = SetContainer.fromKeyValueContainer(keyValueContainer);
+        expect(setContainer.data).toEqual(["foo", "bar"]);
+      });
+
+      it("should pass additional properties to create", function () {
+        setContainer = SetContainer.fromKeyValueContainer(keyValueContainer, {bar: 'baz'});
+        expect(setContainer.bar).toBe('baz');
       });
     });
 

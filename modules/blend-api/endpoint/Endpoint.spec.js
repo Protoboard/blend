@@ -16,7 +16,18 @@ describe("$api", function () {
 
     describe("fromEndpointId()", function () {
       it("should return Endpoint instance", function () {
+        endpoint = Endpoint.fromEndpointId('foo');
+        expect(Endpoint.mixedBy(endpoint)).toBeTruthy();
+      });
 
+      it("should initialize endpointId", function () {
+        endpoint = Endpoint.fromEndpointId('foo');
+        expect(endpoint.endpointId).toBe('foo');
+      });
+
+      it("should pass additional properties to create", function () {
+        endpoint = Endpoint.fromEndpointId('foo', {bar: 'baz'});
+        expect(endpoint.bar).toBe('baz');
       });
     });
 

@@ -20,30 +20,36 @@ describe("$entity", function () {
     });
 
     describe("fromComponents()", function () {
-      beforeEach(function () {
-        field = Field.fromComponents('foo', 'bar', 'baz');
-      });
-
       it("should return Field instance", function () {
+        field = Field.fromComponents('foo', 'bar', 'baz');
         expect(Field.mixedBy(field)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
+        field = Field.fromComponents('foo', 'bar', 'baz');
         expect(field.entityKey.equals('foo/bar/baz'.toFieldKey()));
+      });
+
+      it("should pass additional properties to create", function () {
+        field = Field.fromComponents('foo', 'bar', 'baz', {bar: 'baz'});
+        expect(field.bar).toBe('baz');
       });
     });
 
     describe("fromString()", function () {
-      beforeEach(function () {
-        field = Field.fromString('foo/bar/baz');
-      });
-
       it("should return Field instance", function () {
+        field = Field.fromString('foo/bar/baz');
         expect(Field.mixedBy(field)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
+        field = Field.fromString('foo/bar/baz');
         expect(field.entityKey.equals('foo/bar/baz'.toFieldKey()));
+      });
+
+      it("should pass additional properties to create", function () {
+        field = Field.fromString('foo/bar/baz', {bar: 'baz'});
+        expect(field.bar).toBe('baz');
       });
     });
 
@@ -159,51 +165,42 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toField()", function () {
     var field;
 
-    beforeEach(function () {
-      field = $entity.Field.fromString('foo/bar/baz');
-      spyOn($entity.Field, 'create').and.returnValue(field);
-      result = 'foo/bar/baz'.toField();
-    });
-
     it("should create a Field instance", function () {
-      expect($entity.Field.create).toHaveBeenCalledWith({
-        entityKey: 'foo/bar/baz'.toFieldKey()
-      });
+      field = 'foo/bar/baz'.toField();
+      expect($entity.Field.mixedBy(field)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(field);
+    it("should set entityKey property", function () {
+      field = 'foo/bar/baz'.toField();
+      var entityKey = 'foo/bar/baz'.toFieldKey();
+      entityKey.getEntityPath();
+      expect(field.entityKey).toEqual(entityKey);
     });
   });
 });
 
 describe("Array", function () {
-  var result;
-
   describe("toField()", function () {
     var components,
         field;
 
     beforeEach(function () {
       components = ['foo', 'bar', 'baz'];
-      field = $entity.Field.fromComponents('foo', 'bar', 'baz');
-      spyOn($entity.Field, 'create').and.returnValue(field);
-      result = components.toField();
     });
 
     it("should create a Field instance", function () {
-      expect($entity.Field.create).toHaveBeenCalledWith({
-        entityKey: 'foo/bar/baz'.toFieldKey()
-      });
+      field = components.toField();
+      expect($entity.Field.mixedBy(field)).toBeTruthy();
     });
 
     it("should return created instance", function () {
-      expect(result).toBe(field);
+      field = components.toField();
+      var entityKey = 'foo/bar/baz'.toFieldKey();
+      entityKey.getEntityPath();
+      expect(field.entityKey).toEqual(entityKey);
     });
   });
 });

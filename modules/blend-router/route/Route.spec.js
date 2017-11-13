@@ -106,21 +106,14 @@ describe("String", function () {
   describe("toRoute()", function () {
     var route;
 
-    beforeEach(function () {
-      route = $router.Route.fromString('foo/bar/baz');
-      spyOn($router.Route, 'create').and.returnValue(route);
-    });
-
     it("should create a Route instance", function () {
-      'foo/bar/baz'.toRoute();
-      expect($router.Route.create).toHaveBeenCalledWith({
-        components: ['foo', 'bar', 'baz']
-      });
+      route = 'foo/bar/baz'.toRoute();
+      expect($router.Route.mixedBy(route)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      var result = 'foo/bar/baz'.toRoute();
-      expect(result).toBe(route);
+    it("should set components property", function () {
+      route = 'foo/bar/baz'.toRoute();
+      expect(route.components).toEqual(['foo', 'bar', 'baz']);
     });
   });
 });

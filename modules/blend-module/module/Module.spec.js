@@ -14,6 +14,10 @@ describe("$module", function () {
       Module.__forwards = {list: [], sources: [], lookup: {}};
     });
 
+    beforeEach(function () {
+      Module.__instanceLookup = {};
+    });
+
     describe("fromModuleId()", function () {
       it("should return Module instance", function () {
         module = Module.fromModuleId('foo');
@@ -23,6 +27,11 @@ describe("$module", function () {
       it("should set moduleId", function () {
         module = Module.fromModuleId('foo');
         expect(module.moduleId).toBe('foo');
+      });
+
+      it("should pass additional properties to create", function () {
+        module = Module.fromModuleId('foo', {bar: 'baz'});
+        expect(module.bar).toBe('baz');
       });
     });
 
@@ -115,21 +124,14 @@ describe("String", function () {
   describe("toModule()", function () {
     var module;
 
-    beforeEach(function () {
-      module = $module.Module.fromModuleId('foo');
-      spyOn($module.Module, 'create').and.returnValue(module);
-    });
-
     it("should create a Module instance", function () {
-      var result = 'foo'.toModule();
-      expect($module.Module.create).toHaveBeenCalledWith({
-        moduleId: 'foo'
-      });
+      module = 'foo'.toModule();
+      expect($module.Module.mixedBy(module)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      var result = 'foo'.toModule();
-      expect(result).toBe(module);
+    it("should set moduleId property", function () {
+      module = 'foo'.toModule();
+      expect(module.moduleId).toBe('foo');
     });
   });
 });

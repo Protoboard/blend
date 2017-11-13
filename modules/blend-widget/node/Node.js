@@ -43,10 +43,11 @@ $widget.Node = $oop.getClass('$widget.Node')
   /**
    * @memberOf $widget.Node
    * @param {string} nodeName
+   * @param {Object} [properties]
    * @returns {$widget.Node}
    */
-  fromNodeName: function (nodeName) {
-    return this.create({nodeName: nodeName});
+  fromNodeName: function (nodeName, properties) {
+    return this.create({nodeName: nodeName}, properties);
   },
 
   /** @ignore */

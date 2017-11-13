@@ -115,20 +115,22 @@ $data.TreeQueryComponent = $oop.getClass('$data.TreeQueryComponent')
    * Creates a `QueryComponent` instance based on the specified string.
    * @memberOf $data.TreeQueryComponent
    * @param {string} componentString
+   * @param {Object} [properties]
    * @returns {$data.TreeQueryComponent}
    */
-  fromString: function (componentString) {
-    return this.create({componentString: componentString});
+  fromString: function (componentString, properties) {
+    return this.create({componentString: componentString}, properties);
   },
 
   /**
    * Creates a `QueryComponent` instance based on the specified key options.
    * @memberOf $data.TreeQueryComponent
    * @param {Array.<string>} keyOptions
+   * @param {Object} [properties]
    * @returns {$data.TreeQueryComponent}
    */
-  fromKeyOptions: function (keyOptions) {
-    return this.create({keyOptions: keyOptions});
+  fromKeyOptions: function (keyOptions, properties) {
+    return this.create({keyOptions: keyOptions}, properties);
   },
 
   /** @ignore */

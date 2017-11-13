@@ -1365,9 +1365,35 @@ describe("$oop", function () {
       var instance;
 
       it("should copy properties", function () {
-        instance = Class.create({foo: 'FOO', bar: 'BAR'});
+        instance = Class.create({
+          foo: 'FOO',
+          bar: 'BAR'
+        }, {
+          bar: "Bar",
+          baz: "Baz"
+        });
         expect(instance.foo).toBe('FOO');
-        expect(instance.bar).toBe('BAR');
+        expect(instance.bar).toBe('Bar');
+        expect(instance.baz).toBe('Baz');
+      });
+
+      describe("when any of the arguments is falsy", function () {
+        it("should discard falsy arguments", function () {
+          instance = Class.create(
+              null,
+              {
+                foo: 'FOO',
+                bar: 'BAR'
+              },
+              undefined,
+              {
+                bar: "Bar",
+                baz: "Baz"
+              });
+          expect(instance.foo).toBe('FOO');
+          expect(instance.bar).toBe('Bar');
+          expect(instance.baz).toBe('Baz');
+        });
       });
 
       describe("on invalid argument", function () {

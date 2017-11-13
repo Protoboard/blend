@@ -18,30 +18,33 @@ describe("$entity", function () {
           return '__field/foo'.toDocumentKey();
         }
       });
+      EntityKey.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     beforeEach(function () {
-       entityKey = EntityKey.create();
+      entityKey = EntityKey.create();
     });
 
     describe("fromEntityPath()", function () {
       var entityPath;
 
       beforeEach(function () {
-        entityKey = {};
         entityPath = 'document.foo.bar'.toTreePath();
-        spyOn(EntityKey, 'create').and.returnValue(entityKey);
-        result = EntityKey.fromEntityPath(entityPath);
       });
 
       it("should create new EntityKey instance", function () {
-        expect(EntityKey.create).toHaveBeenCalledWith({
-          _entityPath: entityPath
-        });
+        entityKey = EntityKey.fromEntityPath(entityPath);
+        expect(EntityKey.mixedBy(entityKey)).toBeTruthy();
       });
 
-      it("should return the created instance", function () {
-        expect(result).toBe(entityKey);
+      it("should set _entityPath", function () {
+        entityKey = EntityKey.fromEntityPath(entityPath);
+        expect(entityKey._entityPath).toBe(entityPath);
+      });
+
+      it("should pass additional properties to create", function () {
+        entityKey = EntityKey.fromEntityPath(entityPath, {bar: 'baz'});
+        expect(entityKey.bar).toBe('baz');
       });
     });
 

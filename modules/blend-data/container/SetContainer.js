@@ -22,11 +22,12 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
   /**
    * @memberOf $data.SetContainer
    * @param {Array.<string>} array
+   * @param {Object} [properties]
    * @returns {$data.SetContainer}
    * @todo Optimize in StringSet & Chain once optimize() is available.
    */
-  fromArray: function (array) {
-    var result = this.create();
+  fromArray: function (array, properties) {
+    var result = this.create(properties);
     array.forEach(function (item) {
       result.setItem(item);
     });
@@ -37,10 +38,11 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
    * Transforms a `SetContainer` to the current `SetContainer` class.
    * @memberOf $data.SetContainer
    * @param {$data.SetContainer} setContainer
+   * @param {Object} [properties]
    * @returns {$data.SetContainer}
    */
-  fromSetContainer: function (setContainer) {
-    var result = this.create();
+  fromSetContainer: function (setContainer, properties) {
+    var result = this.create(properties);
     setContainer.forEachItem(function (item) {
       result.setItem(item);
     });
@@ -56,8 +58,8 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
    * @todo Might be a good idea to add separate key/value versions
    * @todo Move to separate file & delegate?
    */
-  fromKeyValueContainer: function (keyValueContainer) {
-    var result = this.create();
+  fromKeyValueContainer: function (keyValueContainer, properties) {
+    var result = this.create(properties);
     keyValueContainer.forEachItem(function (value) {
       result.setItem(value);
     });

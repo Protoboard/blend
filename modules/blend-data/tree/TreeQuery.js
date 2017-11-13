@@ -35,21 +35,23 @@ $data.TreeQuery = $oop.getClass('$data.TreeQuery')
    * Creates a `Query` instance based on the specified component array.
    * @memberOf $data.TreeQuery
    * @param {Array.<$data.TreeQueryComponent|string>} components
+   * @param {Object} [properties]
    * @returns {$data.TreeQuery}
    */
-  fromComponents: function (components) {
-    return this.create({components: components});
+  fromComponents: function (components, properties) {
+    return this.create({components: components}, properties);
   },
 
   /**
    * Creates a `Query` instance based on the specified string.
    * @memberOf $data.TreeQuery
    * @param {string} queryStr
+   * @param {Object} [properties]
    * @returns {$data.TreeQuery}
    */
-  fromString: function (queryStr) {
+  fromString: function (queryStr, properties) {
     var components = $utils.safeSplit(queryStr, $data.TREE_PATH_DELIMITER);
-    return this.create({components: components});
+    return this.create({components: components}, properties);
   },
 
   /** @ignore */

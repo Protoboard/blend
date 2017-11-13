@@ -25,6 +25,11 @@ describe("$widget", function () {
         node = Node.fromNodeName('foo');
         expect(node.nodeName).toBe('foo');
       });
+
+      it("should pass additional properties to create", function () {
+        node = Node.fromNodeName('foo', {bar: 'baz'});
+        expect(node.bar).toBe('baz');
+      });
     });
 
     describe("create()", function () {

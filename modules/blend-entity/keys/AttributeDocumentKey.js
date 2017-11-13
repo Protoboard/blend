@@ -22,9 +22,10 @@ $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
    * @memberOf $entity.AttributeDocumentKey
    * @param {string} documentType
    * @param {Array.<string>} components
+   * @param {Object} [properties]
    * @returns {$entity.AttributeDocumentKey}
    */
-  fromDocumentIdComponents: function (documentType, components) {
+  fromDocumentIdComponents: function (documentType, components, properties) {
     return this.create({
       documentType: documentType,
       documentId: components
@@ -32,7 +33,7 @@ $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
         return $utils.escape(component, '/');
       })
       .join('/')
-    });
+    }, properties);
   }
 });
 

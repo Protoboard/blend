@@ -57,10 +57,11 @@ $event.Event = $oop.getClass('$event.Event')
    * Creates a `Event` instance based on the specified event name.
    * @memberOf $event.Event
    * @param {string} eventName
+   * @param {Object} [properties]
    * @returns {$event.Event}
    */
-  fromEventName: function (eventName) {
-    return this.create({eventName: eventName});
+  fromEventName: function (eventName, properties) {
+    return this.create({eventName: eventName}, properties);
   },
 
   /** @ignore */

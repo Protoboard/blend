@@ -23,22 +23,24 @@ $entity.Document = $oop.getClass('$entity.Document')
   /**
    * @param {string} documentType
    * @param {string} documentId
+   * @param {Object} [properties]
    * @returns {$entity.Document}
    */
-  fromComponents: function (documentType, documentId) {
+  fromComponents: function (documentType, documentId, properties) {
     return this.create({
       entityKey: $entity.DocumentKey.fromComponents(documentType, documentId)
-    });
+    }, properties);
   },
 
   /**
    * @param {string} documentRef
+   * @param {Object} [properties]
    * @returns {$entity.Document}
    */
-  fromString: function (documentRef) {
+  fromString: function (documentRef, properties) {
     return this.create({
       entityKey: $entity.DocumentKey.fromString(documentRef)
-    });
+    }, properties);
   },
 
   /**

@@ -30,10 +30,11 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
    * Creates a `DataContainer` based with the data provided.
    * @memberOf $data.DataContainer
    * @param {*} data
+   * @param {Object} [properties]
    * @returns {$data.DataContainer}
    */
-  fromData: function (data) {
-    return this.create({data: data});
+  fromData: function (data, properties) {
+    return this.create({data: data}, properties);
   },
 
   /**

@@ -24,6 +24,11 @@ describe("$utils", function () {
         uriPath = UriPath.fromString('foo/bar');
         expect(uriPath.components).toEqual(['foo', 'bar']);
       });
+
+      it("should pass additional properties to create", function () {
+        uriPath = UriPath.fromString('foo/bar', {bar: 'baz'});
+        expect(uriPath.bar).toBe('baz');
+      });
     });
 
     describe("toString()", function () {

@@ -30,6 +30,11 @@ describe("$api", function () {
           baz: ['quux']
         });
       });
+
+      it("should pass additional properties to create", function () {
+        urlQuery = UrlQuery.fromString('foo%3D=bar%26&baz=quux', {bar: 'baz'});
+        expect(urlQuery.bar).toBe('baz');
+      });
     });
 
     describe("toString()", function () {

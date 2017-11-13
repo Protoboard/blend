@@ -21,12 +21,13 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    * properties.
    * @memberOf $entity.EntityKey
    * @param {$data.TreePath} entityPath
+   * @param {Object} [properties]
    * @returns {$entity.EntityKey}
    */
-  fromEntityPath: function (entityPath) {
+  fromEntityPath: function (entityPath, properties) {
     return this.create({
       _entityPath: entityPath
-    });
+    }, properties);
   },
 
   /**

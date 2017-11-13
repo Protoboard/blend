@@ -14,6 +14,7 @@ describe("$entity", function () {
     beforeAll(function () {
       DocumentKey = $oop.getClass('test.$entity.DocumentKey.DocumentKey')
       .blend($entity.DocumentKey);
+      DocumentKey.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     beforeEach(function () {
@@ -24,32 +25,38 @@ describe("$entity", function () {
     });
 
     describe("fromComponents()", function () {
-      beforeEach(function () {
-        documentKey = DocumentKey.fromComponents('foo', 'bar');
-      });
-
       it("should return a DocumentKey instance", function () {
+        documentKey = DocumentKey.fromComponents('foo', 'bar');
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
       });
 
       it("should set documentType & documentId properties", function () {
+        documentKey = DocumentKey.fromComponents('foo', 'bar');
         expect(documentKey.documentType).toBe('foo');
         expect(documentKey.documentId).toBe('bar');
+      });
+
+      it("should pass additional properties to create", function () {
+        documentKey = DocumentKey.fromComponents('foo', 'bar', {bar: 'baz'});
+        expect(documentKey.bar).toBe('baz');
       });
     });
 
     describe("fromString()", function () {
-      beforeEach(function () {
-        documentKey = DocumentKey.fromString('\\/bar/baz');
-      });
-
       it("should return a DocumentKey instance", function () {
+        documentKey = DocumentKey.fromString('\\/bar/baz');
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
       });
 
       it("should set documentType & documentId properties", function () {
+        documentKey = DocumentKey.fromString('\\/bar/baz');
         expect(documentKey.documentType).toBe('/bar');
         expect(documentKey.documentId).toBe('baz');
+      });
+
+      it("should pass additional properties to create", function () {
+        documentKey = DocumentKey.fromString('\\/bar/baz', {bar: 'baz'});
+        expect(documentKey.bar).toBe('baz');
       });
     });
 
@@ -222,53 +229,40 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toDocumentKey()", function () {
     var documentKey;
 
-    beforeEach(function () {
-      documentKey = $entity.DocumentKey.fromString('foo/bar');
-      spyOn($entity.DocumentKey, 'create').and.returnValue(documentKey);
-      result = 'foo/bar'.toDocumentKey();
-    });
-
     it("should create a DocumentKey instance", function () {
-      expect($entity.DocumentKey.create).toHaveBeenCalledWith({
-        documentType: 'foo',
-        documentId: 'bar'
-      });
+      documentKey = 'foo/bar'.toDocumentKey();
+      expect($entity.DocumentKey.mixedBy(documentKey)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(documentKey);
+    it("should set DocumentKey properties", function () {
+      documentKey = 'foo/bar'.toDocumentKey();
+      expect(documentKey.documentType).toBe('foo');
+      expect(documentKey.documentId).toBe('bar');
     });
   });
 });
 
 describe("Array", function () {
-  var result;
-
   describe("toDocumentKey()", function () {
     var components,
         documentKey;
 
     beforeEach(function () {
       components = ['foo', 'bar'];
-      documentKey = 'foo/bar'.toDocumentKey();
-      spyOn($entity.DocumentKey, 'create').and.returnValue(documentKey);
-      result = components.toDocumentKey();
     });
 
     it("should create a DocumentKey instance", function () {
-      expect($entity.DocumentKey.create).toHaveBeenCalledWith({
-        documentType: 'foo',
-        documentId: 'bar'
-      });
+      documentKey = components.toDocumentKey();
+      expect($entity.DocumentKey.mixedBy(documentKey)).toBeTruthy();
     });
 
     it("should return created instance", function () {
-      expect(result).toBe(documentKey);
+      documentKey = components.toDocumentKey();
+      expect(documentKey.documentType).toBe('foo');
+      expect(documentKey.documentId).toBe('bar');
     });
   });
 });

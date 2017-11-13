@@ -25,31 +25,29 @@ describe("$entity", function () {
         expect(fieldAttributePath.components).toEqual([
           'document', '__field', 'foo/bar']);
       });
+
+      it("should pass additional properties to create", function () {
+        fieldAttributePath = FieldAttributePath.fromAttributeRef('foo/bar', {bar: 'baz'});
+        expect(fieldAttributePath.bar).toBe('baz');
+      });
     });
   });
 });
 
 describe("String", function () {
-  var result;
-
   describe("toFieldAttributePath()", function () {
     var fieldAttributePath;
 
-    beforeEach(function () {
-      fieldAttributePath = $entity.FieldAttributePath.fromAttributeRef('foo/bar');
-      spyOn($entity.FieldAttributePath, 'create').and.returnValue(fieldAttributePath);
-    });
-
     it("should create a FieldAttributePath instance", function () {
-      result = 'foo/bar'.toFieldAttributePath();
-      expect($entity.FieldAttributePath.create).toHaveBeenCalledWith({
-        components: ['document', '__field', 'foo/bar']
-      });
+      fieldAttributePath = 'foo/bar'.toFieldAttributePath();
+      expect($entity.FieldAttributePath.mixedBy(fieldAttributePath))
+      .toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      result = 'foo/bar'.toFieldAttributePath();
-      expect(result).toBe(fieldAttributePath);
+    it("should set components", function () {
+      fieldAttributePath = 'foo/bar'.toFieldAttributePath();
+      expect(fieldAttributePath.components)
+      .toEqual(['document', '__field', 'foo/bar']);
     });
   });
 });

@@ -25,6 +25,11 @@ describe("$widget", function () {
         xmlNode = XmlNode.fromElementName('Tag');
         expect(xmlNode.elementName).toBe('Tag');
       });
+
+      it("should pass additional properties to create", function () {
+        xmlNode = XmlNode.fromElementName('Tag', {bar: 'baz'});
+        expect(xmlNode.bar).toBe('baz');
+      });
     });
 
     describe("create()", function () {

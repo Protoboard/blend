@@ -35,11 +35,18 @@ describe("$entity", function () {
 
     describe("fromEntityKey()", function () {
       it("should return an Entity instance", function () {
+        entity = Entity.fromEntityKey(entityKey);
         expect(Entity.mixedBy(entity)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
+        entity = Entity.fromEntityKey(entityKey);
         expect(entity.entityKey).toBe(entityKey);
+      });
+
+      it("should pass additional properties to create", function () {
+        entity = Entity.fromEntityKey(entityKey, {bar: 'baz'});
+        expect(entity.bar).toBe('baz');
       });
     });
 

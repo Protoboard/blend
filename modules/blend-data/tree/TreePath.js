@@ -46,12 +46,13 @@ $data.TreePath = $oop.getClass('$data.TreePath')
    * Creates a `Path` instance based on the specified string.
    * @memberOf $data.TreePath
    * @param {string} pathStr
+   * @param {Object} [properties]
    * @returns {$data.TreePath}
    */
-  fromString: function (pathStr) {
+  fromString: function (pathStr, properties) {
     var components = $utils.safeSplit(pathStr, $data.TREE_PATH_DELIMITER)
     .map($data.unescapeTreePathComponent);
-    return this.create({components: components});
+    return this.create({components: components}, properties);
   },
 
   /**

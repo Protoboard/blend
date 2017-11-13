@@ -32,21 +32,23 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
    * @memberOf $entity.DocumentKey
    * @param {string} documentType
    * @param {string} documentId
+   * @param {Object} [properties]
    * @returns {$entity.DocumentKey}
    */
-  fromComponents: function (documentType, documentId) {
+  fromComponents: function (documentType, documentId, properties) {
     return this.create({
       documentType: documentType,
       documentId: documentId
-    });
+    }, properties);
   },
 
   /**
    * @memberOf $entity.DocumentKey
    * @param {string} documentRef
+   * @param {Object} [properties]
    * @returns {$entity.DocumentKey}
    */
-  fromString: function (documentRef) {
+  fromString: function (documentRef, properties) {
     var components = $utils.safeSplit(documentRef, '/')
     .map(function (component) {
       return $utils.unescape(component, '/');
@@ -54,7 +56,7 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
     return this.create({
       documentType: components[0],
       documentId: components[1]
-    });
+    }, properties);
   },
 
   /** @ignore */

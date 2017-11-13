@@ -23,22 +23,24 @@ $entity.Field = $oop.getClass('$entity.Field')
    * @param {string} documentType
    * @param {string} documentId
    * @param {string} fieldName
+   * @param {Object} [properties]
    * @returns {$entity.Field}
    */
-  fromComponents: function (documentType, documentId, fieldName) {
+  fromComponents: function (documentType, documentId, fieldName, properties) {
     return this.create({
       entityKey: $entity.FieldKey.fromComponents(documentType, documentId, fieldName)
-    });
+    }, properties);
   },
 
   /**
    * @param {string} fieldRef
+   * @param {Object} [properties]
    * @returns {$entity.Field}
    */
-  fromString: function (fieldRef) {
+  fromString: function (fieldRef, properties) {
     return this.create({
       entityKey: $entity.FieldKey.fromString(fieldRef)
-    });
+    }, properties);
   },
 
   /** @ignore */

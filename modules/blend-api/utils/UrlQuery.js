@@ -17,9 +17,10 @@ $api.UrlQuery = $oop.getClass('$api.UrlQuery')
   /**
    * @memberOf $api.UrlQuery
    * @param {string} urlQueryStr
+   * @param {Object} [parameters]
    * @returns {$api.UrlQuery}
    */
-  fromString: function (urlQueryStr) {
+  fromString: function (urlQueryStr, parameters) {
     var data = urlQueryStr
     .split('&')
     .map(function (attributeValuePairStr) {
@@ -38,7 +39,7 @@ $api.UrlQuery = $oop.getClass('$api.UrlQuery')
       }
       return data;
     }, {});
-    return this.create({data: data});
+    return this.create({data: data}, parameters);
   },
 
   /**

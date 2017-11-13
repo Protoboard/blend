@@ -25,33 +25,31 @@ describe("$entity", function () {
         expect(fieldValueTypePath.components).toEqual([
           'document', '__field', '__field/valueType', 'options', 'reference']);
       });
+
+      it("should pass additional properties to create", function () {
+        fieldValueTypePath = FieldValueTypePath.fromFieldValueType('reference', {bar: 'baz'});
+        expect(fieldValueTypePath.bar).toBe('baz');
+      });
     });
   });
 });
 
 describe("String", function () {
-  var result;
-
   describe("toFieldValueTypePath()", function () {
     var fieldValueTypePath;
 
-    beforeEach(function () {
-      fieldValueTypePath = $entity.FieldValueTypePath.fromFieldValueType('reference');
-      spyOn($entity.FieldValueTypePath, 'create').and
-      .returnValue(fieldValueTypePath);
-    });
-
     it("should create a FieldValueTypePath instance", function () {
-      result = 'reference'.toFieldValueTypePath();
-      expect($entity.FieldValueTypePath.create).toHaveBeenCalledWith({
-        components: ['document', '__field', '__field/valueType', 'options',
-          'reference']
-      });
+      fieldValueTypePath = 'reference'.toFieldValueTypePath();
+      expect($entity.FieldValueTypePath.mixedBy(fieldValueTypePath))
+      .toBeTruthy();
     });
 
     it("should return created instance", function () {
-      result = 'reference'.toFieldValueTypePath();
-      expect(result).toBe(fieldValueTypePath);
+      fieldValueTypePath = 'reference'.toFieldValueTypePath();
+      expect(fieldValueTypePath).toBe(fieldValueTypePath);
+      expect(fieldValueTypePath.components)
+      .toEqual(['document', '__field', '__field/valueType', 'options',
+        'reference']);
     });
   });
 });

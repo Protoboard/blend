@@ -20,13 +20,14 @@ $entity.ItemIdTypePath = $oop.getClass('$entity.ItemIdTypePath')
   /**
    * @memberOf $entity.ItemIdTypePath
    * @param idType
+   * @param {Object} [properties]
    * @returns {*|$data.TreePath}
    */
-  fromItemIdType: function (idType) {
+  fromItemIdType: function (idType, properties) {
     return this.create({
       components: [
         'document', '__field', '__field/itemIdType', 'options', idType]
-    });
+    }, properties);
   }
 });
 

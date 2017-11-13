@@ -20,13 +20,14 @@ $entity.ItemValueTypePath = $oop.getClass('$entity.ItemValueTypePath')
   /**
    * @memberOf $entity.ItemValueTypePath
    * @param valueType
+   * @param {Object} [properties]
    * @returns {*|$data.TreePath}
    */
-  fromItemValueType: function (valueType) {
+  fromItemValueType: function (valueType, properties) {
     return this.create({
       components: [
         'document', '__field', '__field/itemValueType', 'options', valueType]
-    });
+    }, properties);
   }
 });
 

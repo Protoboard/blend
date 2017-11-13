@@ -18,13 +18,14 @@ $entity.FieldAttributePath = $oop.getClass('$entity.FieldAttributePath')
 .define(/** @lends $entity.FieldAttributePath# */{
   /**
    * @memberOf $entity.FieldAttributePath
-   * @param attributeRef
+   * @param {string} attributeRef
+   * @param {Object} [properties]
    * @returns {*|$data.TreePath}
    */
-  fromAttributeRef: function (attributeRef) {
+  fromAttributeRef: function (attributeRef, properties) {
     return this.create({
       components: ['document', '__field', attributeRef]
-    });
+    }, properties);
   }
 });
 

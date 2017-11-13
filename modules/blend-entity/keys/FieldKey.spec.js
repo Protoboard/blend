@@ -23,32 +23,38 @@ describe("$entity", function () {
     });
 
     describe("fromComponents()", function () {
-      beforeEach(function () {
-        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
-      });
-
       it("should return a FieldKey instance", function () {
+        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
         expect(FieldKey.mixedBy(fieldKey)).toBeTruthy();
       });
 
       it("should set documentKey & fieldName properties", function () {
+        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
         expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
         expect(fieldKey.fieldName).toBe('baz');
+      });
+
+      it("should pass additional properties to create", function () {
+        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz', {bar: 'baz'});
+        expect(fieldKey.bar).toBe('baz');
       });
     });
 
     describe("fromString()", function () {
-      beforeEach(function () {
-        fieldKey = FieldKey.fromString('foo/bar/\\/baz');
-      });
-
       it("should return a FieldKey instance", function () {
+        fieldKey = FieldKey.fromString('foo/bar/\\/baz');
         expect(FieldKey.mixedBy(fieldKey)).toBeTruthy();
       });
 
       it("should set documentKey & fieldName properties", function () {
+        fieldKey = FieldKey.fromString('foo/bar/\\/baz');
         expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
         expect(fieldKey.fieldName).toBe('/baz');
+      });
+
+      it("should pass additional properties to create", function () {
+        fieldKey = FieldKey.fromString('foo/bar/\\/baz', {bar: 'baz'});
+        expect(fieldKey.bar).toBe('baz');
       });
     });
 
@@ -195,53 +201,40 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toFieldKey()", function () {
     var fieldKey;
 
-    beforeEach(function () {
-      fieldKey = $entity.FieldKey.fromString('foo/bar/baz');
-      spyOn($entity.FieldKey, 'create').and.returnValue(fieldKey);
-      result = 'foo/bar/baz'.toFieldKey();
-    });
-
     it("should create a FieldKey instance", function () {
-      expect($entity.FieldKey.create).toHaveBeenCalledWith({
-        documentKey: 'foo/bar'.toDocumentKey(),
-        fieldName: 'baz'
-      });
+      fieldKey = 'foo/bar/baz'.toFieldKey();
+      expect($entity.FieldKey.mixedBy(fieldKey)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(fieldKey);
+    it("should set FieldKey properties", function () {
+      fieldKey = 'foo/bar/baz'.toFieldKey();
+      expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
+      expect(fieldKey.fieldName).toBe('baz');
     });
   });
 });
 
 describe("Array", function () {
-  var result;
-
   describe("toFieldKey()", function () {
     var components,
         fieldKey;
 
     beforeEach(function () {
       components = ['foo', 'bar', 'baz'];
-      fieldKey = $entity.FieldKey.fromComponents('foo', 'bar', 'baz');
-      spyOn($entity.FieldKey, 'create').and.returnValue(fieldKey);
-      result = components.toFieldKey();
     });
 
     it("should create a FieldKey instance", function () {
-      expect($entity.FieldKey.create).toHaveBeenCalledWith({
-        documentKey: 'foo/bar'.toDocumentKey(),
-        fieldName: 'baz'
-      });
+      fieldKey = components.toFieldKey();
+      expect($entity.FieldKey.mixedBy(fieldKey)).toBeTruthy()
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(fieldKey);
+    it("should set FieldKey properties", function () {
+      fieldKey = components.toFieldKey();
+      expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
+      expect(fieldKey.fieldName).toBe('baz');
     });
   });
 });

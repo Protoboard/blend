@@ -121,51 +121,42 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toItem()", function () {
     var item;
 
-    beforeEach(function () {
-      item = $entity.Item.fromString('foo/bar/baz/quux');
-      spyOn($entity.Item, 'create').and.returnValue(item);
-      result = 'foo/bar/baz/quux'.toItem();
-    });
-
     it("should create a Item instance", function () {
-      expect($entity.Item.create).toHaveBeenCalledWith({
-        entityKey: 'foo/bar/baz/quux'.toItemKey()
-      });
+      item = 'foo/bar/baz/quux'.toItem();
+      expect($entity.Item.mixedBy(item)).toBeTruthy();
     });
 
     it("should return created instance", function () {
-      expect(result).toBe(item);
+      item = 'foo/bar/baz/quux'.toItem();
+      var entityKey = 'foo/bar/baz/quux'.toItemKey();
+      entityKey.getEntityPath();
+      expect(item.entityKey).toEqual(entityKey);
     });
   });
 });
 
 describe("Array", function () {
-  var result;
-
   describe("toItem()", function () {
     var components,
         item;
 
     beforeEach(function () {
       components = ['foo', 'bar', 'baz', 'quux'];
-      item = $entity.Item.fromComponents('foo', 'bar', 'baz', 'quux');
-      spyOn($entity.Item, 'create').and.returnValue(item);
-      result = components.toItem();
     });
 
     it("should create a Item instance", function () {
-      expect($entity.Item.create).toHaveBeenCalledWith({
-        entityKey: 'foo/bar/baz/quux'.toItemKey()
-      });
+      item = components.toItem();
+      expect($entity.Item.mixedBy(item)).toBeTruthy();
     });
 
     it("should return created instance", function () {
-      expect(result).toBe(item);
+      item = components.toItem();
+      var entityKey = 'foo/bar/baz/quux'.toItemKey();
+      entityKey.getEntityPath();
+      expect(item.entityKey).toEqual(entityKey);
     });
   });
 });

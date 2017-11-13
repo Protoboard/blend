@@ -28,20 +28,22 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
   /**
    * @memberOf $i18n.Locale
    * @param {$entity.DocumentKey} localeKey
+   * @param {Object} [properties]
    * @returns {$i18n.Locale}
    */
-  fromLocaleKey: function (localeKey) {
-    return this.create({localeKey: localeKey});
+  fromLocaleKey: function (localeKey, properties) {
+    return this.create({localeKey: localeKey}, properties);
   },
 
   /**
    * @memberOf $i18n.Locale
    * @param {string} localeId
+   * @param {Object} [properties]
    * @returns {$i18n.Locale}
    */
-  fromLocaleId: function (localeId) {
+  fromLocaleId: function (localeId, properties) {
     var localeKey = $entity.DocumentKey.fromComponents('_locale', localeId);
-    return this.create({localeKey: localeKey});
+    return this.create({localeKey: localeKey}, properties);
   },
 
   /** @ignore */

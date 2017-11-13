@@ -26,12 +26,13 @@ $module.Module = $oop.getClass('$module.Module')
   /**
    * @memberOf $module.Module
    * @param moduleId
+   * @param {Object} [properties]
    * @returns {$module.Module}
    */
-  fromModuleId: function (moduleId) {
+  fromModuleId: function (moduleId, properties) {
     return this.create({
       moduleId: moduleId
-    });
+    }, properties);
   },
 
   /** @ignore */

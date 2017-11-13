@@ -23,32 +23,38 @@ describe("$entity", function () {
     });
 
     describe("fromComponents()", function () {
-      beforeEach(function () {
-        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
-      });
-
       it("should return a ItemKey instance", function () {
+        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
         expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
       });
 
       it("should set fieldKey & itemId properties", function () {
+        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
         expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
         expect(itemKey.itemId).toBe('quux');
+      });
+
+      it("should pass additional properties to create", function () {
+        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux', {bar: 'baz'});
+        expect(itemKey.bar).toBe('baz');
       });
     });
 
     describe("fromString()", function () {
-      beforeEach(function () {
-        itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
-      });
-
       it("should return a ItemKey instance", function () {
+        itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
         expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
       });
 
       it("should set fieldKey & itemId properties", function () {
+        itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
         expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
         expect(itemKey.itemId).toBe('/quux');
+      });
+
+      it("should pass additional properties to create", function () {
+        itemKey = ItemKey.fromString('foo/bar/baz/\\/quux', {bar: 'baz'});
+        expect(itemKey.bar).toBe('baz');
       });
     });
 
@@ -201,53 +207,40 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  var result;
-
   describe("toItemKey()", function () {
     var itemKey;
 
-    beforeEach(function () {
-      itemKey = $entity.ItemKey.fromString('foo/bar/baz/quux');
-      spyOn($entity.ItemKey, 'create').and.returnValue(itemKey);
-      result = 'foo/bar/baz/quux'.toItemKey();
-    });
-
     it("should create a ItemKey instance", function () {
-      expect($entity.ItemKey.create).toHaveBeenCalledWith({
-        fieldKey: 'foo/bar/baz'.toFieldKey(),
-        itemId: 'quux'
-      });
+      itemKey = 'foo/bar/baz/quux'.toItemKey();
+      expect($entity.ItemKey.mixedBy(itemKey)).toBeTruthy();
     });
 
-    it("should return created instance", function () {
-      expect(result).toBe(itemKey);
+    it("should set ItemKeyProperties", function () {
+      itemKey = 'foo/bar/baz/quux'.toItemKey();
+      expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
+      expect(itemKey.itemId).toBe('quux');
     });
   });
 });
 
 describe("Array", function () {
-  var result;
-
   describe("toItemKey()", function () {
     var components,
-        fieldKey;
+        itemKey;
 
     beforeEach(function () {
       components = ['foo', 'bar', 'baz', 'quux'];
-      fieldKey = $entity.ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
-      spyOn($entity.ItemKey, 'create').and.returnValue(fieldKey);
-      result = components.toItemKey();
     });
 
     it("should create a ItemKey instance", function () {
-      expect($entity.ItemKey.create).toHaveBeenCalledWith({
-        fieldKey: 'foo/bar/baz'.toFieldKey(),
-        itemId: 'quux'
-      });
+      itemKey = components.toItemKey();
+      expect($entity.ItemKey.mixedBy(itemKey)).toBeTruthy();
     });
 
     it("should return created instance", function () {
-      expect(result).toBe(fieldKey);
+      itemKey = components.toItemKey();
+      expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
+      expect(itemKey.itemId).toBe('quux');
     });
   });
 });
