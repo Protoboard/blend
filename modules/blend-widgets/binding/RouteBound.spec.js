@@ -15,6 +15,11 @@ describe("$widgets", function () {
       .blend($widget.Widget)
       .blend($widgets.RouteBound);
       RouteBound.__forwards = {list: [], sources: [], lookup: {}};
+      $router.browserRoutingMethod = undefined;
+    });
+
+    afterAll(function () {
+      $router.browserRoutingMethod = 'hash';
     });
 
     describe("onAttach()", function () {
