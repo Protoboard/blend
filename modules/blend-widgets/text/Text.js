@@ -26,7 +26,7 @@ $widgets.Text = $oop.getClass('$widgets.Text')
    * @private
    */
   _updateEmptyState: function () {
-    this.setStateValue('empty', !this.textString);
+    this.setStateValue('empty', this.textString ? undefined : true);
   },
 
   /**

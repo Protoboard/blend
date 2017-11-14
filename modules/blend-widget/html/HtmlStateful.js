@@ -16,11 +16,16 @@ $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
    */
   setStateValue: function setStateValue(stateName, stateValue) {
     var stateValueBefore = setStateValue.shared.stateValueBefore;
-    if (stateValue === true && !stateValueBefore) {
+    if (stateValue === true &&
+        (stateValueBefore === undefined || stateValueBefore === true)) {
+      // state changed from false or undefined to true
       this.addCssClass(stateName);
-    } else if (stateValueBefore === true && !stateValue) {
+    } else if (stateValue === false &&
+        (stateValueBefore === true || stateValueBefore === undefined)) {
+      // state changed from true or undefined to false
       this.removeCssClass(stateName);
     } else {
+      // state changed between arbitrary values
       if (stateValueBefore !== undefined) {
         this.removeCssClass(stateName + '-' + stateValueBefore);
       }

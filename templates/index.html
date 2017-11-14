@@ -43,9 +43,29 @@
       // todo Extend to include all basic widgets
       require(['blend-widget', 'blend-widgets'
       ], function ($widget, $widgets) {
+        // simple text
         $widget.RootWidget.create()
-        .addChildNode($widget.Widget.create()
-        .addChildNode($widgets.Text.create({textString: "Hello World!"})))
+        .addChildNode($widgets.Text.create({textString: "Hello World!"}));
+
+        // translatable text
+        '_translation/helloworld-de'.toDocument().setNode({
+          originalString: "Hello World!",
+          pluralForms: ["Hallo Welt!"]
+        });
+        '_locale/de'.toDocument().setNode({
+          localeName: 'German',
+          pluralFormula: 'nplurals=2; plural=(n != 1);',
+          translations: {
+            '_translation/helloworld-de': 1
+          }
+        });
+        $widget.RootWidget.create()
+        .addChildNode($widgets.LocaleText.create({
+          textString: "Hello World!".toTranslatable()
+        }));
+
+        // first render
+        $widget.RootWidget.create()
         .renderInto(document.body);
       });
     </script>
