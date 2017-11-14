@@ -17,10 +17,10 @@
     </script>
     <script>
       // todo Insert from Gruntfile when in debug / dev mode
-      require([
-        'blend-assert', 'blend-oop', 'blend-utils', 'blend-data', 'blend-event',
-        'blend-module', 'blend-template', 'blend-entity', 'blend-i18n',
-        'blend-router', 'blend-api', 'blend-widget', 'blend-widgets'
+      require(['blend-assert', 'blend-oop', 'blend-utils', 'blend-data',
+        'blend-event', 'blend-module', 'blend-template', 'blend-entity',
+        'blend-i18n', 'blend-router', 'blend-api', 'blend-widget',
+        'blend-widgets'
       ], function (assert, oop, utils, data, event, module, template, entity,
           i18n, router, api, widget, widgets
       ) {
@@ -37,6 +37,16 @@
         $api = api;
         $widget = widget;
         $widgets = widgets;
+      });
+    </script>
+    <script>
+      // todo Extend to include all basic widgets
+      require(['blend-widget', 'blend-widgets'
+      ], function ($widget, $widgets) {
+        $widget.RootWidget.create()
+        .addChildNode($widget.Widget.create()
+        .addChildNode($widgets.Text.create({textString: "Hello World!"})))
+        .renderInto(document.body);
       });
     </script>
 </head>
