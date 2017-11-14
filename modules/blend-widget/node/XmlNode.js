@@ -30,6 +30,11 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   },
 
   /** @ignore */
+  defaults: function () {
+    this.attributes = this.attributes || $widget.XmlAttributes.create();
+  },
+
+  /** @ignore */
   init: function () {
     $assert.isString(this.elementName, "Invalid elementName");
 
@@ -37,8 +42,6 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
     this.childNodes = childNodes ?
         childNodes.as($widget.XmlNodes) :
         $widget.XmlNodes.create();
-
-    this.attributes = this.attributes || $widget.XmlAttributes.create();
   },
 
   /**

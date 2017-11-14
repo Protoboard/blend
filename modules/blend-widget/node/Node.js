@@ -58,10 +58,6 @@ $widget.Node = $oop.getClass('$widget.Node')
   /** @ignore */
   spread: function () {
     this.nodeName = this.nodeName || String(this.instanceId);
-  },
-
-  /** @ignore */
-  init: function () {
     this.childNodes = this.childNodes || $widget.Nodes.create();
     this.childNodeLookup = this.childNodeLookup || $data.Collection.create();
   },

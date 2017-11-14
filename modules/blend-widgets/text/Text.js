@@ -9,7 +9,6 @@
  * @class $widgets.Text
  * @extends $widget.Widget
  * @todo Add formatting when ready
- * @todo Add binary states when ready (escaped)
  */
 $widgets.Text = $oop.getClass('$widgets.Text')
 .blend($widget.Widget)
