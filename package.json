@@ -39,5 +39,8 @@
     "phantomjs-prebuilt": "^2.1.16",
     "requirejs": "^2.3.5"
   },
-  "false": {}
+  "false": {},
+  "dependencies": {
+    "require-css": "^0.1.10"
+  }
 }

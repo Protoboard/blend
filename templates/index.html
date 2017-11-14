@@ -5,10 +5,18 @@
     <title>Title</title>
     <script src="../node_modules/requirejs/require.js"></script>
     <script>
+      // todo Insert from Gruntfile
       require.config({
-        baseUrl: "../dist"
+        baseUrl: "../dist",
+        map: {
+          '*': {
+            css: '../node_modules/require-css/css'
+          }
+        }
       });
-      // todo Require blend-router only as soon as ready.
+    </script>
+    <script>
+      // todo Insert from Gruntfile when in debug / dev mode
       require([
         'blend-assert', 'blend-oop', 'blend-utils', 'blend-data', 'blend-event',
         'blend-module', 'blend-template', 'blend-entity', 'blend-i18n',
