@@ -9,7 +9,7 @@
  * @class $widgets.Text
  * @extends $widget.Widget
  * @todo Add formatting when ready
- * @todo Add binary states when ready (escaped, empty)
+ * @todo Add binary states when ready (escaped)
  */
 $widgets.Text = $oop.getClass('$widgets.Text')
 .blend($widget.Widget)
@@ -17,6 +17,18 @@ $widgets.Text = $oop.getClass('$widgets.Text')
   /**
    * @member {string|$utils.Stringifiable} $widgets.Text#textString
    */
+
+  /** @ignore */
+  init: function () {
+    this._updateEmptyState();
+  },
+
+  /**
+   * @private
+   */
+  _updateEmptyState: function () {
+    this.setStateValue('empty', !this.textString);
+  },
 
   /**
    * @param {string|$utils.Stringifiable} textString
@@ -26,6 +38,7 @@ $widgets.Text = $oop.getClass('$widgets.Text')
     var textStringBefore = this.textString;
     if (textString !== textStringBefore) {
       this.textString = textString;
+      this._updateEmptyState();
     }
     setTextString.shared.textStringBefore = textStringBefore;
     return this;

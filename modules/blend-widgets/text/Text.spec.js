@@ -14,6 +14,13 @@ describe("$widgets", function () {
       Text.__forwards = {list: [], sources: [], lookup: {}};
     });
 
+    describe("create()", function () {
+      it("should initialize empty state", function () {
+        text = Text.create();
+        expect(text.getStateValue('empty')).toBeTruthy();
+      });
+    });
+
     describe("setTextString()", function () {
       beforeEach(function () {
         text = Text.create();
@@ -27,6 +34,18 @@ describe("$widgets", function () {
       it("should set textString", function () {
         text.setTextString('foo');
         expect(text.textString).toBe('foo');
+      });
+
+      it("should update empty state", function () {
+        text.setTextString('foo');
+        expect(text.getStateValue('empty')).toBeFalsy();
+      });
+
+      describe("when passing empty string", function () {
+        it("should update empty state", function () {
+          text.setTextString('');
+          expect(text.getStateValue('empty')).toBeTruthy();
+        });
       });
 
       it("should save beforeState", function () {
