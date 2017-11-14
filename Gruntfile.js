@@ -16,16 +16,27 @@ module.exports = function (grunt) {
   function buildConcatConfig(config) {
     config = config || {};
 
-    moduleIds.forEach(function (moduleId, i) {
-      var manifest = manifests[i],
-          assets = manifest.assets,
-          pkg = packages[i],
+    moduleIds
+    .map(function (moduleId, i) {
+      return {
+        moduleId: moduleId,
+        assets: manifests[i].assets.js,
+        pkg: packages[i]
+      };
+    })
+    .filter(function (moduleInfo) {
+      return moduleInfo.assets;
+    })
+    .forEach(function (moduleInfo, i) {
+      var moduleId = moduleInfo.moduleId,
+          assets = moduleInfo.assets,
+          pkg = moduleInfo.pkg,
           dependencies = pkg.dependencies;
 
       config[moduleId] = {
         src: grunt.file.expand({
           cwd: ['modules', moduleId].join('/')
-        }, assets.js)
+        }, assets)
         .map(function (relativePath) {
           return ['modules', moduleId, relativePath].join('/');
         }),
@@ -72,9 +83,48 @@ module.exports = function (grunt) {
    * @param {Object} config Holds module-independent configuration.
    * @returns {Object} Task configuration with modules.
    */
+  function buildLessConfig(config) {
+    config = config || {};
+
+    moduleIds
+    .map(function (moduleId, i) {
+      return {
+        moduleId: moduleId,
+        assets: manifests[i].assets.less,
+        pkg: packages[i]
+      };
+    })
+    .filter(function (moduleInfo) {
+      return moduleInfo.assets;
+    })
+    .forEach(function (moduleInfo) {
+      var moduleId = moduleInfo.moduleId,
+          assets = moduleInfo.assets,
+          pkg = moduleInfo.pkg;
+
+      config[moduleId] = {
+        src: grunt.file.expand({
+          cwd: ['modules', moduleId].join('/')
+        }, assets)
+        .map(function (relativePath) {
+          return ['modules', moduleId, relativePath].join('/');
+        }),
+        dest: ['dist', pkg.name + '.css'].join('/'),
+        options: {}
+      };
+    });
+
+    return config;
+  }
+
+  /**
+   * @param {Object} config Holds module-independent configuration.
+   * @returns {Object} Task configuration with modules.
+   */
   function buildKarmaConfig(config) {
     config = config || {};
 
+    // todo Filter by config file presence.
     moduleIds.forEach(function (moduleId) {
       config[moduleId] = {
         configFile: ['modules', moduleId, 'karma.conf.js'].join('/')
@@ -131,6 +181,12 @@ module.exports = function (grunt) {
     concat: buildConcatConfig({
       options: {
         separator: ';',
+        sourceMap: true
+      }
+    }),
+
+    less: buildLessConfig({
+      options: {
         sourceMap: true
       }
     }),
@@ -207,6 +263,7 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-string-replace');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-karma');
@@ -218,8 +275,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['jshint', 'karma']);
   grunt.registerTask('coverage', ['karma:coverage']);
   grunt.registerTask('build-quick', ['clean:build', 'string-replace', 'concat',
-    'notify:build-quick']);
-  grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'test',
-    'jsdoc', 'notify:build-full']);
+    'less', 'notify:build-quick']);
+  grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'less',
+    'test', 'jsdoc', 'notify:build-full']);
   grunt.registerTask('default', ['build-quick', 'watch']);
 };
