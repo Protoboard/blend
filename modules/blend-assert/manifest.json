@@ -1,8 +1,6 @@
 {
-  "assets": {
-    "js": [
-      "assert/assert.js",
-      "assert/assertions.js"
-    ]
-  }
+  "js": [
+    "assert/assert.js",
+    "assert/assertions.js"
+  ]
 }

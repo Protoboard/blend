@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     .map(function (moduleId, i) {
       return {
         moduleId: moduleId,
-        assets: manifests[i].assets.js,
+        assets: manifests[i].js,
         pkg: packages[i]
       };
     })
@@ -90,7 +90,7 @@ module.exports = function (grunt) {
     .map(function (moduleId, i) {
       return {
         moduleId: moduleId,
-        assets: manifests[i].assets.less,
+        assets: manifests[i].less,
         pkg: packages[i]
       };
     })
