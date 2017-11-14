@@ -1,6 +1,7 @@
 {
   "assets": {
     "js": [
+      "containers/*.js",
       "**/*.js",
       "!**/*.*.js",
       "!*.js"

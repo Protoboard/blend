@@ -24,6 +24,10 @@ $api.ApiEvent = $oop.getClass('$api.ApiEvent')
  * @member {$api.Response} $api.ApiEvent#response
  */
 
+/**
+ * @member {$utils.Thenable} $api.ApiEvent#promise
+ */
+
 $event.Event
 .forwardBlend($api.ApiEvent, function (properties) {
   var eventName = properties && properties.eventName;

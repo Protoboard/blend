@@ -83,8 +83,9 @@ describe("$api", function () {
           expect(calls.length).toBe(1);
           expect(event.eventName).toBe('api.request.open');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
           expect(event.response).toBeUndefined();
+          expect(event.promise).toBe(promise);
+          expect(event.xhr).toBe(xhr);
         });
 
         it("should notify promise", function () {
@@ -96,8 +97,9 @@ describe("$api", function () {
           expect($event.Event.mixedBy(event)).toBeTruthy();
           expect(event.eventName).toBe('api.request.open');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
           expect(event.response).toBeUndefined();
+          expect(event.promise).toBe(promise);
+          expect(event.xhr).toBe(xhr);
         });
       });
 
@@ -118,8 +120,9 @@ describe("$api", function () {
           expect(calls.length).toBe(1);
           expect(event.eventName).toBe('api.request.send');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
           expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
+          expect(event.promise).toBe(promise);
+          expect(event.xhr).toBe(xhr);
         });
 
         it("should notify promise", function () {
@@ -131,8 +134,9 @@ describe("$api", function () {
           expect($event.Event.mixedBy(event)).toBeTruthy();
           expect(event.eventName).toBe('api.request.send');
           expect(event.request).toBe(request);
-          expect(event.xhr).toBe(xhr);
           expect($api.HttpResponse.mixedBy(event.response)).toBeTruthy();
+          expect(event.promise).toBe(promise);
+          expect(event.xhr).toBe(xhr);
         });
       });
 

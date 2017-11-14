@@ -70,6 +70,7 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
         event = request.spawnEvent({
           eventName: $api.EVENT_REQUEST_OPEN,
           request: request,
+          promise: deferred.promise,
           xhr: xhr
         });
         event.trigger();
@@ -85,6 +86,7 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
             responseHeaders: xhr.getAllResponseHeaders(),
             responseBody: xhr.response
           }),
+          promise: deferred.promise,
           xhr: xhr
         });
         event.trigger();
@@ -100,6 +102,7 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
             responseHeaders: xhr.getAllResponseHeaders(),
             responseBody: xhr.response
           }),
+          promise: deferred.promise,
           xhr: xhr
         });
         event.trigger();
@@ -115,6 +118,7 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
             responseHeaders: xhr.getAllResponseHeaders(),
             responseBody: xhr.response
           }),
+          promise: deferred.promise,
           xhr: xhr
         });
         event.trigger();

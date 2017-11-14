@@ -14,6 +14,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  * @implements $api.Sendable
+ * @todo Make Request abortable? (Implementation dependent)
  */
 $api.Request = $oop.getClass('$api.Request')
 .blend($event.EventSender)
