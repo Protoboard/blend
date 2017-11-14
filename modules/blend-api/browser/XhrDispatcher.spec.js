@@ -39,6 +39,29 @@ describe("$api", function () {
         spyOn(xhr, 'getAllResponseHeaders').and.returnValue('');
       });
 
+      describe("when request is already in flight", function () {
+        var indexData,
+            promise,
+            activeRequestIndex;
+
+        beforeEach(function () {
+          indexData = $api.index.data;
+          $api.index.data = {};
+          promise = $utils.Deferred.create().promise;
+          activeRequestIndex = $api.ActiveRequestIndex.create();
+          activeRequestIndex.addPromiseForRequest(request, promise);
+        });
+
+        afterEach(function () {
+          $api.index.data = indexData;
+        });
+
+        it("should return promise for in-flight request", function () {
+          var result = xhrDispatcher.dispatch();
+          expect(result).toBe(promise);
+        });
+      });
+
       it('should return Promise', function () {
         var result = xhrDispatcher.dispatch(request);
         expect($utils.Promise.mixedBy(result)).toBeTruthy();

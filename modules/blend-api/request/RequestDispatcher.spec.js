@@ -49,6 +49,32 @@ describe("$api", function () {
         });
       });
     });
+
+    describe("dispatch()", function () {
+      var indexData,
+          request,
+          promise,
+          activeRequestIndex;
+
+      beforeEach(function () {
+        indexData = $api.index.data;
+        $api.index.data = {};
+        request = 'foo/bar'.toHttpEndpoint().toRequest();
+        promise = $utils.Deferred.create().promise;
+        requestDispatcher = RequestDispatcher.fromRequest(request);
+        activeRequestIndex = $api.ActiveRequestIndex.create();
+        activeRequestIndex.addPromiseForRequest(request, promise);
+      });
+
+      afterEach(function () {
+        $api.index.data = indexData;
+      });
+
+      it("should return stored promise", function () {
+        var result = requestDispatcher.dispatch();
+        expect(result).toBe(promise);
+      });
+    });
   });
 
   describe("Request", function () {

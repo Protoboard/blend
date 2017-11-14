@@ -6,13 +6,15 @@
  */
 
 /**
- * Maintains an lookup of
+ * Maintains associations between requests and promises returned by
+ * corresponding `Dispatcher`.
  * @class $api.ActiveRequestIndex
  */
 $api.ActiveRequestIndex = $oop.getClass('$api.ActiveRequestIndex')
 .blend($oop.Singleton)
 .define(/** @lends $api.ActiveRequestIndex# */{
   /**
+   * Associates promise with request.
    * @param {$api.Request} request
    * @param {$utils.Thenable} promise
    * @returns {$api.ActiveRequestIndex}
@@ -25,6 +27,7 @@ $api.ActiveRequestIndex = $oop.getClass('$api.ActiveRequestIndex')
   },
 
   /**
+   * Disassociates promise from request.
    * @param {$api.Request} request
    * @returns {$api.ActiveRequestIndex}
    */
@@ -36,6 +39,7 @@ $api.ActiveRequestIndex = $oop.getClass('$api.ActiveRequestIndex')
   },
 
   /**
+   * Retrieves promise associated with specified `request`.
    * @param {$api.Request} request
    * @returns {$utils.Thenable}
    */

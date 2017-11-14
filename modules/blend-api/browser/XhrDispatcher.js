@@ -34,7 +34,14 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
    * Dispatches Ajax request.
    * @returns {$utils.Promise}
    */
-  dispatch: function () {
+  dispatch: function dispatch() {
+    var promise = dispatch.returned;
+
+    if (promise) {
+      // returning promise associated with matching in-flight request
+      return promise;
+    }
+
     var that = this,
         xhr = new XMLHttpRequest(),
         deferred = $utils.Deferred.create(),

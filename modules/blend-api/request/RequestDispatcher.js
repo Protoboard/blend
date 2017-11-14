@@ -16,6 +16,7 @@ $api.RequestDispatcher = $oop.getClass('$api.RequestDispatcher')
 .implement($oop.getClass('$api.Dispatchable'))
 .define(/** @lends $api.RequestDispatcher# */{
   /**
+   * Request to be dispatched.
    * @member {$api.Request} $api.RequestDispatcher#request
    */
 
@@ -35,9 +36,13 @@ $api.RequestDispatcher = $oop.getClass('$api.RequestDispatcher')
   },
 
   /**
+   * Dispatches associated request.
    * @returns {$utils.Promise}
    */
-  dispatch: function () {}
+  dispatch: function () {
+    var activeRequestIndex = $api.ActiveRequestIndex.create();
+    return activeRequestIndex.getPromiseForRequest(this.request);
+  }
 });
 
 $oop.getClass('$api.Request')
