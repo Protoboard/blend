@@ -20,23 +20,23 @@ module.exports = function (grunt) {
     .map(function (moduleId, i) {
       return {
         moduleId: moduleId,
-        assets: manifests[i].js,
+        manifest: manifests[i],
         pkg: packages[i]
       };
     })
     .filter(function (moduleInfo) {
-      return moduleInfo.assets;
+      return moduleInfo.manifest.js;
     })
     .forEach(function (moduleInfo, i) {
       var moduleId = moduleInfo.moduleId,
-          assets = moduleInfo.assets,
+          manifest = moduleInfo.manifest,
           pkg = moduleInfo.pkg,
           dependencies = pkg.dependencies;
 
       config[moduleId] = {
         src: grunt.file.expand({
           cwd: ['modules', moduleId].join('/')
-        }, assets)
+        }, manifest.js)
         .map(function (relativePath) {
           return ['modules', moduleId, relativePath].join('/');
         }),
@@ -47,30 +47,38 @@ module.exports = function (grunt) {
             return ['(function () {', src, '}());'].join('\n');
           },
           banner: [
+            //@formatter:off
             '/*! ' + pkg.name + ' - v' + pkg.version +
             ' - <%= grunt.template.today("yyyy-mm-dd") %> */',
             '(function(){',
-            'function d(require,exports,module){',
-            grunt.file.read(['modules', moduleId, 'globals.js'].join('/'))
+              'function d(require,exports,module){',
+                // requiring CSS
+                manifest.less || manifest.css ?
+                    'try {window && require("css!' + moduleId + '")} catch (e) {}' :
+                    undefined,
+                grunt.file.read(['modules', moduleId, 'globals.js'].join('/'))
+            //@formatter:on
           ].join('\n'),
           footer: [
-            // signaling module availability to app
-            dependencies && dependencies['blend-module'] ?
-                'require("blend-module").Module.fromModuleId("' + moduleId + '").markAsAvailable()' :
-                undefined,
-            '}',
-            'var n="' + moduleId + '",e',
-            '/* istanbul ignore next */',
-            // node require - falling back to file in same folder
-            'function rn(p){try{return require(p)}catch(e){return require("./"+p)}}',
-            '/* istanbul ignore next */',
-            // browser require
-            'function rw(p){return window[p]}',
-            '/* istanbul ignore next */',
-            'if(typeof module=="object")d(rn,exports,module)',
-            'else if(typeof define=="function")define(d)',
-            'else d(rw,e=window[n]={},{exports:e})',
+            //@formatter:off
+                // signaling module availability to app
+                dependencies && dependencies['blend-module'] ?
+                    'require("blend-module").Module.fromModuleId("' + moduleId + '").markAsAvailable();' :
+                    undefined,
+              '}',
+              'var n="' + moduleId + '",e',
+              '/* istanbul ignore next */',
+              // node require - falling back to file in same folder
+              'function rn(p){try{return require(p)}catch(e){return require("./"+p)}}',
+              '/* istanbul ignore next */',
+              // browser require
+              'function rw(p){return window[p]}',
+              '/* istanbul ignore next */',
+              'if(typeof module=="object")d(rn,exports,module)',
+              'else if(typeof define=="function")define(d)',
+              'else d(rw,e=window[n]={},{exports:e});',
             '}())'
+            //@formatter:on
           ].join('\n')
         }
       };
@@ -90,22 +98,22 @@ module.exports = function (grunt) {
     .map(function (moduleId, i) {
       return {
         moduleId: moduleId,
-        assets: manifests[i].less,
+        manifest: manifests[i],
         pkg: packages[i]
       };
     })
     .filter(function (moduleInfo) {
-      return moduleInfo.assets;
+      return moduleInfo.manifest.less;
     })
     .forEach(function (moduleInfo) {
       var moduleId = moduleInfo.moduleId,
-          assets = moduleInfo.assets,
+          manifest = moduleInfo.manifest,
           pkg = moduleInfo.pkg;
 
       config[moduleId] = {
         src: grunt.file.expand({
           cwd: ['modules', moduleId].join('/')
-        }, assets)
+        }, manifest.less)
         .map(function (relativePath) {
           return ['modules', moduleId, relativePath].join('/');
         }),
