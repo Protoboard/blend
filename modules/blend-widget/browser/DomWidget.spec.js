@@ -10,8 +10,6 @@ describe("$widget", function () {
 
     beforeAll(function () {
       DomWidget = $oop.getClass('test.$widget.DomWidget.DomWidget')
-      .blend($widget.Widget)
-      .blend($widget.HtmlWidget)
       .blend($widget.DomWidget);
       DomWidget.__forwards = {list: [], sources: [], lookup: {}};
     });
@@ -170,6 +168,19 @@ describe("$widget", function () {
       it("should invoke onRender()", function () {
         domWidget.reRenderContents();
         expect(domWidget.onRender).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe("HtmlWidget", function () {
+    var htmlWidget;
+
+    describe("create()", function () {
+      describe("in browser environment", function () {
+        it("should return DomWidget instance", function () {
+          htmlWidget = $widget.HtmlWidget.create();
+          expect($widget.DomWidget.mixedBy(htmlWidget)).toBeTruthy();
+        });
       });
     });
   });

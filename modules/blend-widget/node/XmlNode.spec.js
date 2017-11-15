@@ -10,7 +10,6 @@ describe("$widget", function () {
 
     beforeAll(function () {
       XmlNode = $oop.getClass('test.$widget.XmlNode.XmlNode')
-      .blend($widget.Node)
       .blend($widget.XmlNode);
       XmlNode.__forwards = {list: [], sources: [], lookup: {}};
     });

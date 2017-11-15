@@ -10,8 +10,6 @@ describe("$widget", function () {
 
     beforeAll(function () {
       HtmlWidget = $oop.getClass('test.$widget.HtmlWidget.HtmlWidget')
-      .blend($widget.Widget)
-      .blend($widget.HtmlNode)
       .blend($widget.HtmlWidget);
       HtmlWidget.__forwards = {list: [], sources: [], lookup: {}};
     });
@@ -32,6 +30,19 @@ describe("$widget", function () {
           '$widget.Widget': 1,
           '$widget.HtmlWidget': 1,
           'test.$widget.HtmlWidget.HtmlWidget': 1
+        });
+      });
+    });
+  });
+
+  describe("Widget", function () {
+    var widget;
+
+    describe("create()", function () {
+      describe("in browser environment", function () {
+        it("should return HtmlWidget instance", function () {
+          widget = $widget.Widget.create();
+          expect($widget.HtmlWidget.mixedBy(widget)).toBeTruthy();
         });
       });
     });

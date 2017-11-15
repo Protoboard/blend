@@ -1,18 +1,23 @@
 "use strict";
 
 /**
+ * @function $widget.DomNode.create
+ * @param {Object} [properties]
+ * @param {string} [properties.nodeName]
+ * @returns {$widget.DomNode}
+ */
+
+/**
  * DOM manifest behavior for `Node` classes. Expects to be added to `Node`
  * classes that also have the `XmlNode` mixin.
  * Requires browser environment.
- * @mixin $widget.DomNode
- * @augments $widget.Node
- * @augments $widget.XmlNode
+ * @class $widget.DomNode
+ * @extends $widget.HtmlNode
  * @implements $widget.Renderable
  * @todo Wrap element modifications in requestAnimationFrame()
  */
 $widget.DomNode = $oop.getClass('$widget.DomNode')
-.expect($oop.getClass('$widget.Node'))
-.expect($oop.getClass('$widget.XmlNode'))
+.blend($oop.getClass('$widget.HtmlNode'))
 .implement($oop.getClass('$widget.Renderable'))
 .define(/** @lends $widget.DomNode# */{
   /**
@@ -186,5 +191,5 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   }
 });
 
-$oop.getClass('$widget.Node')
+$oop.getClass('$widget.HtmlNode')
 .forwardBlend($widget.DomNode, $utils.isBrowser);

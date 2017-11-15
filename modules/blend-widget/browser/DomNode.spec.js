@@ -10,8 +10,6 @@ describe("$widget", function () {
 
     beforeAll(function () {
       DomNode = $oop.getClass('test.$widget.DomNode.DomNode')
-      .blend($widget.Node)
-      .blend($widget.HtmlNode)
       .blend($widget.DomNode)
       .define({
         getContentMarkup: function fn() {
@@ -335,6 +333,19 @@ describe("$widget", function () {
         domNode.reRenderContents();
         expect(element.innerHTML).toBe('<div>FOO</div>FOO');
         expect(element.childNodes[0]).not.toBe(childElement);
+      });
+    });
+  });
+
+  describe("HtmlNode", function () {
+    var htmlNode;
+
+    describe("create()", function () {
+      describe("in browser environment", function () {
+        it("should return DomNode instance", function () {
+          htmlNode = $widget.HtmlNode.create();
+          expect($widget.DomNode.mixedBy(htmlNode)).toBeTruthy();
+        });
       });
     });
   });

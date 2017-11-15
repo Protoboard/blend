@@ -2,12 +2,12 @@
 
 /**
  * @mixin $widget.HtmlStateful
+ * @extends $widget.Stateful
  * @augments $widget.HtmlNode
- * @augments $widget.Stateful
  */
 $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
+.blend($oop.getClass('$widget.Stateful'))
 .expect($oop.getClass('$widget.HtmlNode'))
-.expect($oop.getClass('$widget.Stateful'))
 .define(/** @lends $widget.HtmlStateful# */{
   /**
    * @param {string} stateName
@@ -37,7 +37,7 @@ $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
   }
 });
 
-$oop.getClass('$widget.Node')
+$oop.getClass('$widget.Stateful')
 .forwardBlend($widget.HtmlStateful, function () {
-  return this.mixes($widget.Stateful) && $widget.isHtml();
+  return $widget.isHtml();
 });

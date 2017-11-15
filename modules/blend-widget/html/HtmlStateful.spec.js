@@ -10,9 +10,7 @@ describe("$widget", function () {
 
     beforeAll(function () {
       HtmlStateful = $oop.getClass('test.$widget.HtmlStateful.HtmlStateful')
-      .blend($widget.Node)
       .blend($widget.HtmlNode)
-      .blend($widget.Stateful)
       .blend($widget.HtmlStateful);
       HtmlStateful.__forwards = {list: [], sources: [], lookup: {}};
     });
@@ -75,6 +73,26 @@ describe("$widget", function () {
         it("should not add CSS class", function () {
           htmlStateful.setStateValue('foo', undefined);
           expect(htmlStateful.cssClasses.data).toEqual({});
+        });
+      });
+    });
+  });
+
+  describe("Stateful", function () {
+    var Stateful,
+        stateful;
+
+    beforeAll(function () {
+      Stateful = $oop.getClass('test.$widget.HtmlStateful.Stateful')
+      .blend($widget.HtmlNode)
+      .blend($widget.Stateful);
+    });
+
+    describe("create()", function () {
+      describe("in HTML environment", function () {
+        it("should return HtmlStateful instance", function () {
+          stateful = Stateful.create();
+          expect($widget.HtmlStateful.mixedBy(stateful)).toBeTruthy();
         });
       });
     });

@@ -1,13 +1,21 @@
 "use strict";
 
 /**
- * @mixin $widget.DomWidget
+ * @function $widget.DomNode.create
+ * @param {Object} [properties]
+ * @param {string} [properties.nodeName]
+ * @param {string} [properties.subscriberId]
+ * @returns {$widget.DomNode}
+ */
+
+/**
+ * @class $widget.DomWidget
  * @extends $widget.DomNode
- * @augments $widget.Widget
+ * @extends $widget.HtmlWidget
  */
 $widget.DomWidget = $oop.getClass('$widget.DomWidget')
 .blend($oop.getClass('$widget.DomNode'))
-.expect($oop.getClass('$widget.Widget'))
+.blend($oop.getClass('$widget.HtmlWidget'))
 .define(/** @lends $widget.DomWidget# */{
   /**
    * @param {$widget.DomWidget} node
@@ -59,5 +67,5 @@ $widget.DomWidget = $oop.getClass('$widget.DomWidget')
   }
 });
 
-$oop.getClass('$widget.Widget')
+$oop.getClass('$widget.HtmlWidget')
 .forwardBlend($widget.DomWidget, $utils.isBrowser);
