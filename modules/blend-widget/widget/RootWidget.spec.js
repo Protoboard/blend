@@ -14,7 +14,19 @@ describe("$widget", function () {
       RootWidget.__forwards = {list: [], sources: [], lookup: {}};
     });
 
+    beforeEach(function () {
+      RootWidget.__instanceLookup = {};
+    });
+
+    it("should be singleton", function () {
+      expect(RootWidget.create()).toBe(RootWidget.create());
+    });
+
     describe("create()", function () {
+      beforeEach(function () {
+        spyOn(RootWidget, 'onAttach');
+      });
+
       it("should initialize nodeName", function () {
         rootWidget = RootWidget.create();
         expect(rootWidget.nodeName).toBe('root');
@@ -28,6 +40,11 @@ describe("$widget", function () {
       it("should initialize triggerPaths", function () {
         rootWidget = RootWidget.create();
         expect(rootWidget.triggerPaths.list).toContain('widget.root', 'widget');
+      });
+
+      it("should invoke onAttach()", function () {
+        rootWidget = RootWidget.create();
+        expect(RootWidget.onAttach).toHaveBeenCalled();
       });
     });
   });

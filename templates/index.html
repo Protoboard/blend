@@ -44,7 +44,7 @@
       require(['blend-widget', 'blend-widgets'
       ], function ($widget, $widgets) {
         // simple text
-        $widget.RootWidget.create()
+        $widgets.Application.create()
         .addChildNode($widgets.Text.create({textString: "Hello World!"}));
 
         // translatable text
@@ -59,13 +59,13 @@
             '_translation/helloworld-de': 1
           }
         });
-        $widget.RootWidget.create()
+        $widgets.Application.create()
         .addChildNode($widgets.LocaleText.create({
           textString: "Hello World!".toTranslatable()
         }));
 
         // first render
-        $widget.RootWidget.create()
+        $widgets.Application.create()
         .renderInto(document.body);
       });
     </script>

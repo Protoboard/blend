@@ -27,5 +27,7 @@ $widget.RootWidget = $oop.getClass('$widget.RootWidget')
     .setListeningPath(listeningPath)
     .addTriggerPath(listeningPath)
     .addTriggerPath('widget');
+
+    this.onAttach();
   }
 });
