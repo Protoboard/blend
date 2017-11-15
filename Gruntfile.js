@@ -155,7 +155,8 @@ module.exports = function (grunt) {
           'modules/' + moduleId + '/**/*@(.js|.css|.less)',
           '!modules/' + moduleId + '/**/*.spec.js',
           'modules/' + moduleId + '/@(package|manifest).json'],
-        tasks: ['concat:' + moduleId, 'notify:build-' + moduleId]
+        tasks: ['concat:' + moduleId, 'less:' + moduleId,
+          'notify:build-' + moduleId]
       };
     });
 
