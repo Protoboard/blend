@@ -44,9 +44,6 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
     .map($oop.getClassId)
     // including self
     .concat(this.__classId)
-    .map(function (classId) {
-      return classId.replace($widget.RE_CSS_CLASS_FILTER, '');
-    })
     .forEach(function (classId) {
       that.addCssClass(classId);
     });
@@ -55,11 +52,3 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
 
 $oop.getClass('$widget.Widget')
 .forwardBlend($widget.HtmlWidget, $widget.isHtml);
-
-$oop.copyProperties($widget, /** @lends $widget */{
-  /**
-   * @type {RegExp}
-   * @constant
-   */
-  RE_CSS_CLASS_FILTER: /[^a-zA-Z0-9-_]/g
-});
