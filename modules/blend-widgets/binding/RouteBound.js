@@ -10,7 +10,7 @@ $widgets.RouteBound = $oop.getClass('$widgets.RouteBound')
   /**
    * Updates parts of the widget's state that depend on the active route.
    * To be optionally implemented by host class.
-   * @function $widgets.ModuleBound#syncToActiveRoute
+   * @function $widgets.RouteBound#syncToActiveRoute
    */
 
   /** @ignore */
