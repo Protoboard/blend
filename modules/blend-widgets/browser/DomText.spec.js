@@ -10,8 +10,6 @@ describe("$widgets", function () {
 
     beforeAll(function () {
       DomText = $oop.getClass('test.$widgets.DomText.DomText')
-      .blend($widgets.Text)
-      .blend($widgets.XmlText)
       .blend($widgets.DomText);
       DomText.__forwards = {list: [], sources: [], lookup: {}};
     });
@@ -39,6 +37,19 @@ describe("$widgets", function () {
       it("should update element contents", function () {
         domText.setTextString(stringifiable);
         expect(element.innerHTML).toBe('foo');
+      });
+    });
+  });
+
+  describe("HtmlText", function () {
+    var text;
+
+    describe("create()", function () {
+      describe("in browser environment", function () {
+        it("should return DomText instance", function () {
+          text = $widgets.HtmlText.create();
+          expect($widgets.DomText.mixedBy(text)).toBeTruthy();
+        });
       });
     });
   });

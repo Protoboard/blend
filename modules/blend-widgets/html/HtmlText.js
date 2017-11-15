@@ -1,15 +1,21 @@
 "use strict";
 
 /**
- * @mixin $widgets.HtmlText
- * @extends $widget.HtmlWidget
+ * @function $widget.HtmlText.create
+ * @param {Object} [properties]
+ * @param {string} [properties.nodeName]
+ * @param {string|$utils.Stringifiable} [properties.textString]
+ * @returns {$widget.HtmlText}
+ */
+
+/**
+ * @class $widgets.HtmlText
  * @extends $widgets.XmlText
- * @augments $widgets.Text
+ * @extends $widget.HtmlWidget
  */
 $widgets.HtmlText = $oop.getClass('$widgets.HtmlText')
-.blend($widget.HtmlWidget)
 .blend($oop.getClass('$widgets.XmlText'))
-.expect($oop.getClass('$widgets.Text'))
+.blend($widget.HtmlWidget)
 .define(/** @lends $widgets.HtmlText# */{
   /** @ignore */
   defaults: function () {
@@ -17,5 +23,5 @@ $widgets.HtmlText = $oop.getClass('$widgets.HtmlText')
   }
 });
 
-$oop.getClass('$widgets.Text')
+$oop.getClass('$widgets.XmlText')
 .forwardBlend($widgets.HtmlText, $widget.isHtml);

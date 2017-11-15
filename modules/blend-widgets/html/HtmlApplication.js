@@ -7,12 +7,12 @@
 
 /**
  * @class $widgets.HtmlApplication
- * @extends $widget.HtmlWidget
  * @extends $widgets.Application
+ * @extends $widget.HtmlWidget
  */
 $widgets.HtmlApplication = $oop.getClass('$widgets.HtmlApplication')
-.blend($widget.HtmlWidget)
 .blend($oop.getClass('$widgets.Application'))
+.blend($widget.HtmlWidget)
 .define(/** @lends $widgets.HtmlApplication# */{
   /**
    * @member {$router.Route} $widgets.HtmlApplication#activeRoute

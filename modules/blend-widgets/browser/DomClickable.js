@@ -2,12 +2,12 @@
 
 /**
  * @mixin $widgets.DomClickable
- * @extends $widget.DomWidget
  * @extends $widgets.Clickable
+ * @augments $widget.DomWidget
  */
 $widgets.DomClickable = $oop.getClass('$widgets.DomClickable')
-.blend($widget.DomWidget)
 .blend($oop.getClass('$widgets.Clickable'))
+.expect($widget.DomWidget)
 .define(/** @lends $widgets.DomClickable# */{
   /** @ignore */
   onRender: function () {

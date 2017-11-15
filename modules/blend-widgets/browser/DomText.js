@@ -3,14 +3,12 @@
 /**
  * Implements DOM-specific behavior for `Text` widgets.
  * @mixin $widgets.DomText
+ * @extends $widgets.HtmlText
  * @extends $widget.DomWidget
- * @augments $widgets.Text
- * @augments $widgets.XmlText
  */
 $widgets.DomText = $oop.getClass('$widgets.DomText')
+.blend($oop.getClass('$widgets.HtmlText'))
 .blend($widget.DomWidget)
-.expect($oop.getClass('$widgets.Text'))
-.expect($oop.getClass('$widgets.XmlText'))
 .define(/** @lends $widgets.DomText# */{
   /**
    * @param {string|$utils.Stringifiable} textString
@@ -25,5 +23,5 @@ $widgets.DomText = $oop.getClass('$widgets.DomText')
   }
 });
 
-$oop.getClass('$widgets.Text')
+$oop.getClass('$widgets.HtmlText')
 .forwardBlend($widgets.DomText, $utils.isBrowser);

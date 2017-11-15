@@ -30,4 +30,17 @@ describe("$widgets", function () {
       });
     });
   });
+
+  describe("LocaleText", function () {
+    var localeText;
+
+    describe("create()", function () {
+      describe("when browser is available", function () {
+        it("should return DomLocaleText instance", function () {
+          localeText = $widgets.LocaleText.create();
+          expect($widgets.DomLocaleText.mixedBy(localeText)).toBeTruthy();
+        });
+      });
+    });
+  });
 });

@@ -2,6 +2,9 @@
 
 /**
  * @function $widgets.Text.create
+ * @param {Object} [properties]
+ * @param {string} [properties.nodeName]
+ * @param {string|$utils.Stringifiable} [properties.textString]
  * @returns {$widgets.Text}
  */
 

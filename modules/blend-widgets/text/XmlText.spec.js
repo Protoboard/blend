@@ -32,4 +32,17 @@ describe("$widgets", function () {
       });
     });
   });
+
+  describe("Text", function () {
+    var text;
+
+    describe("create()", function () {
+      describe("in HTML environment", function () {
+        it("should return XmlText instance", function () {
+          text = $widgets.Text.create();
+          expect($widgets.XmlText.mixedBy(text)).toBeTruthy();
+        });
+      });
+    });
+  });
 });

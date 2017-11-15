@@ -22,4 +22,17 @@ describe("$widgets", function () {
       });
     });
   });
+
+  describe("XmlText", function () {
+    var text;
+
+    describe("create()", function () {
+      describe("in HTML environment", function () {
+        it("should return HtmlText instance", function () {
+          text = $widgets.XmlText.create();
+          expect($widgets.HtmlText.mixedBy(text)).toBeTruthy();
+        });
+      });
+    });
+  });
 });
