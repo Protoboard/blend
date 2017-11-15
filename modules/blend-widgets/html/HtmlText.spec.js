@@ -24,13 +24,20 @@ describe("$widgets", function () {
   });
 
   describe("XmlText", function () {
-    var text;
+    var XmlText,
+        xmlText;
+
+    beforeAll(function () {
+      XmlText = $oop.getClass('test.$widgets.HtmlText.XmlText')
+      .blend($widgets.Text)
+      .blend($widgets.XmlText);
+    });
 
     describe("create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlText instance", function () {
-          text = $widgets.XmlText.create();
-          expect($widgets.HtmlText.mixedBy(text)).toBeTruthy();
+          xmlText = XmlText.create();
+          expect($widgets.HtmlText.mixedBy(xmlText)).toBeTruthy();
         });
       });
     });

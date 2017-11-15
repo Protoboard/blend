@@ -10,7 +10,7 @@ describe("$widget", function () {
 
     beforeAll(function () {
       HtmlStateful = $oop.getClass('test.$widget.HtmlStateful.HtmlStateful')
-      .blend($widget.HtmlNode)
+      .blend($widget.Node)
       .blend($widget.HtmlStateful);
       HtmlStateful.__forwards = {list: [], sources: [], lookup: {}};
     });
@@ -84,7 +84,7 @@ describe("$widget", function () {
 
     beforeAll(function () {
       Stateful = $oop.getClass('test.$widget.HtmlStateful.Stateful')
-      .blend($widget.HtmlNode)
+      .blend($widget.Node)
       .blend($widget.Stateful);
     });
 

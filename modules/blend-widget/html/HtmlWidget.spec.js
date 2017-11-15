@@ -10,6 +10,7 @@ describe("$widget", function () {
 
     beforeAll(function () {
       HtmlWidget = $oop.getClass('test.$widget.HtmlWidget.HtmlWidget')
+      .blend($widget.Widget)
       .blend($widget.HtmlWidget);
       HtmlWidget.__forwards = {list: [], sources: [], lookup: {}};
     });

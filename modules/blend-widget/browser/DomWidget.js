@@ -1,15 +1,7 @@
 "use strict";
 
 /**
- * @function $widget.DomNode.create
- * @param {Object} [properties]
- * @param {string} [properties.nodeName]
- * @param {string} [properties.subscriberId]
- * @returns {$widget.DomNode}
- */
-
-/**
- * @class $widget.DomWidget
+ * @mixin $widget.DomWidget
  * @extends $widget.DomNode
  * @extends $widget.HtmlWidget
  */

@@ -10,6 +10,7 @@ describe("$widget", function () {
 
     beforeAll(function () {
       HtmlNode = $oop.getClass('test.$widget.HtmlNode.HtmlNode')
+      .blend($widget.Node)
       .blend($widget.HtmlNode);
       HtmlNode.__forwards = {list: [], sources: [], lookup: {}};
     });
@@ -226,12 +227,19 @@ describe("$widget", function () {
   });
 
   describe("XmlNode", function () {
-    var xmlNode;
+    var XmlNode,
+        xmlNode;
+
+    beforeAll(function () {
+      XmlNode = $oop.getClass('test.$widget.HtmlNode.XmlNode')
+      .blend($widget.Node)
+      .blend($widget.XmlNode);
+    });
 
     describe("create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlNode instance", function () {
-          xmlNode = $widget.XmlNode.create();
+          xmlNode = XmlNode.create();
           expect($widget.HtmlNode.mixedBy(xmlNode)).toBeTruthy();
         });
       });

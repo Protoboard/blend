@@ -11,7 +11,6 @@ describe("$widgets", function () {
     beforeAll(function () {
       DomLocaleText = $oop.getClass('test.$widgets.DomLocaleText.DomLocaleText')
       .blend($widgets.LocaleText)
-      .blend($widgets.HtmlText)
       .blend($widgets.DomLocaleText);
       DomLocaleText.__forwards = {list: [], sources: [], lookup: {}};
     });

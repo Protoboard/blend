@@ -2,12 +2,12 @@
 
 /**
  * @mixin $widgets.DomLocaleText
- * @extends $widgets.LocaleText
  * @extends $widgets.DomText
+ * @augments $widgets.LocaleText
  */
 $widgets.DomLocaleText = $oop.getClass('$widgets.DomLocaleText')
-.blend($oop.getClass('$widgets.LocaleText'))
 .blend($oop.getClass('$widgets.DomText'))
+.expect($oop.getClass('$widgets.LocaleText'))
 .define(/** @lends $widgets.DomLocaleText# */{
   /** @ignore */
   syncToActiveLocale: function () {

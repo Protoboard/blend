@@ -1,20 +1,14 @@
 "use strict";
 
 /**
- * @function $widget.XmlNode.create
- * @param {Object} [properties]
- * @param {string} [properties.nodeName]
- * @returns {$widget.XmlNode}
- */
-
-/**
  * XML manifest behavior for `Node` classes.
  * @class $widget.XmlNode
+ * @extends $widget.Node
  * @extends $widget.Node
  * @implements $utils.Stringifiable
  */
 $widget.XmlNode = $oop.getClass('$widget.XmlNode')
-.blend($oop.getClass('$widget.Node'))
+.expect($oop.getClass('$widget.Node'))
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.XmlNode# */{
   /**

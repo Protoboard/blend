@@ -10,6 +10,7 @@ describe("$widgets", function () {
 
     beforeAll(function () {
       HtmlApplication = $oop.getClass('test.$widgets.HtmlApplication.HtmlApplication')
+      .blend($widgets.Application)
       .blend($widgets.HtmlApplication);
       HtmlApplication.__forwards = {list: [], sources: [], lookup: {}};
       $router.browserRoutingMethod = undefined;

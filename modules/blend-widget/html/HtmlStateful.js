@@ -3,11 +3,11 @@
 /**
  * @mixin $widget.HtmlStateful
  * @extends $widget.Stateful
- * @augments $widget.HtmlNode
+ * @extends $widget.HtmlNode
  */
 $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
 .blend($oop.getClass('$widget.Stateful'))
-.expect($oop.getClass('$widget.HtmlNode'))
+.blend($oop.getClass('$widget.HtmlNode'))
 .define(/** @lends $widget.HtmlStateful# */{
   /**
    * @param {string} stateName

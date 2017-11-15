@@ -1,18 +1,13 @@
 "use strict";
 
 /**
- * @function $widgets.HtmlApplication.create
- * @returns {$widgets.HtmlApplication}
- */
-
-/**
- * @class $widgets.HtmlApplication
- * @extends $widgets.Application
+ * @mixin $widgets.HtmlApplication
  * @extends $widget.HtmlWidget
+ * @augments $widgets.Application
  */
 $widgets.HtmlApplication = $oop.getClass('$widgets.HtmlApplication')
-.blend($oop.getClass('$widgets.Application'))
 .blend($widget.HtmlWidget)
+.expect($oop.getClass('$widgets.Application'))
 .define(/** @lends $widgets.HtmlApplication# */{
   /**
    * @member {$router.Route} $widgets.HtmlApplication#activeRoute

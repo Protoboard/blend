@@ -11,7 +11,7 @@ describe("$widgets", function () {
 
     beforeAll(function () {
       DomClickable = $oop.getClass('test.$widgets.DomClickable.DomClickable')
-      .blend($widget.DomWidget)
+      .blend($widget.Widget)
       .blend($widgets.DomClickable);
       DomClickable.__forwards = {list: [], sources: [], lookup: {}};
     });

@@ -1,21 +1,13 @@
 "use strict";
 
 /**
- * @function $widget.HtmlWidget.create
- * @param {Object} [properties]
- * @param {string} [properties.nodeName]
- * @param {string} [properties.subscriberId]
- * @returns {$widget.HtmlWidget}
- */
-
-/**
  * @class $widget.HtmlWidget
  * @extends $widget.HtmlNode
- * @extends $widget.Widget
+ * @augments $widget.Widget
  */
 $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
 .blend($oop.getClass('$widget.HtmlNode'))
-.blend($oop.getClass('$widget.Widget'))
+.expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widget.HtmlWidget# */{
   /** @ignore */
   spread: function () {

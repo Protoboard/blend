@@ -1,17 +1,10 @@
 "use strict";
 
 /**
- * @function $widget.DomNode.create
- * @param {Object} [properties]
- * @param {string} [properties.nodeName]
- * @returns {$widget.DomNode}
- */
-
-/**
  * DOM manifest behavior for `Node` classes. Expects to be added to `Node`
  * classes that also have the `XmlNode` mixin.
  * Requires browser environment.
- * @class $widget.DomNode
+ * @mixin $widget.DomNode
  * @extends $widget.HtmlNode
  * @implements $widget.Renderable
  * @todo Wrap element modifications in requestAnimationFrame()

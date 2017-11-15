@@ -1,15 +1,8 @@
 "use strict";
 
 /**
- * @function $widget.HtmlNode.create
- * @param {Object} [properties]
- * @param {string} [properties.nodeName]
- * @returns {$widget.HtmlNode}
- */
-
-/**
  * HTML manifest behavior for `Node` classes.
- * @class $widget.HtmlNode
+ * @mixin $widget.HtmlNode
  * @extends $widget.XmlNode
  * @todo Maintaining reference count for CSS classes?
  */

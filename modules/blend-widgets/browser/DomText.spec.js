@@ -10,6 +10,7 @@ describe("$widgets", function () {
 
     beforeAll(function () {
       DomText = $oop.getClass('test.$widgets.DomText.DomText')
+      .blend($widgets.Text)
       .blend($widgets.DomText);
       DomText.__forwards = {list: [], sources: [], lookup: {}};
     });
@@ -42,13 +43,20 @@ describe("$widgets", function () {
   });
 
   describe("HtmlText", function () {
-    var text;
+    var HtmlText,
+        htmlText;
+
+    beforeAll(function () {
+      HtmlText = $oop.getClass('test.$widgets.DomText.HtmlText')
+      .blend($widgets.Text)
+      .blend($widgets.HtmlText);
+    });
 
     describe("create()", function () {
       describe("in browser environment", function () {
         it("should return DomText instance", function () {
-          text = $widgets.HtmlText.create();
-          expect($widgets.DomText.mixedBy(text)).toBeTruthy();
+          htmlText = HtmlText.create();
+          expect($widgets.DomText.mixedBy(htmlText)).toBeTruthy();
         });
       });
     });
