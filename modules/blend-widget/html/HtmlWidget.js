@@ -4,6 +4,7 @@
  * @mixin $widget.HtmlWidget
  * @extends $widget.HtmlNode
  * @augments $widget.Widget
+ * @todo Extend Widget?
  */
 $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
 .blend($oop.getClass('$widget.HtmlNode'))

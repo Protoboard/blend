@@ -16,3 +16,11 @@ var $assert = require('blend-assert'),
 /**
  * @namespace $widgets
  */
+
+$oop.copyProperties($widgets, /** @lends $widgets */{
+  /**
+   * Signals that a `Clickable` widget was clicked.
+   * @constant
+   */
+  EVENT_CLICKABLE_CLICK: 'widget.clickable.click'
+});
