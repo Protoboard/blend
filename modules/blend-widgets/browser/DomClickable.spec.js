@@ -44,4 +44,24 @@ describe("$widgets", function () {
       });
     });
   });
+
+  describe("Clickable", function () {
+    var Clickable,
+        clickable;
+
+    beforeEach(function () {
+      Clickable = $oop.getClass('test.$widgets.DomClickable.Clickable')
+      .blend($widget.Widget)
+      .blend($widgets.Clickable);
+    });
+
+    describe("create()", function () {
+      describe("when browser is available", function () {
+        it("should return DomClickable instance", function () {
+          clickable = Clickable.create();
+          expect($widgets.DomClickable.mixedBy(clickable)).toBeTruthy();
+        });
+      });
+    });
+  });
 });
