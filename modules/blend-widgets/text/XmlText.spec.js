@@ -30,6 +30,14 @@ describe("$widgets", function () {
       it("should append textString to contents", function () {
         expect(xmlText.getContentMarkup()).toBe("foo");
       });
+
+      describe("when textString has XML markup", function () {
+        it("should encode XML entities", function () {
+          xmlText.setTextString("<script>alert('Foo')</script>");
+          expect(xmlText.getContentMarkup())
+          .toBe("&lt;script&gt;alert(&apos;Foo&apos;)&lt;/script&gt;");
+        });
+      });
     });
   });
 

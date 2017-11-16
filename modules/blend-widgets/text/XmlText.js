@@ -13,7 +13,8 @@ $widgets.XmlText = $oop.getClass('$widgets.XmlText')
    * @returns {string}
    */
   getContentMarkup: function getContentMarkup() {
-    return getContentMarkup.returned + $utils.stringify(this.textString);
+    return getContentMarkup.returned +
+        $widget.escapeXmlEntities($utils.stringify(this.textString));
   }
 });
 
