@@ -4,11 +4,11 @@
   "jasmine": true,
   "globalstrict": true,
   "globals": {
+    "$api": true,
     "$assert": true,
-    "$oop": true,
-    "$utils": true,
     "$data": true,
     "$event": true,
-    "$api": true
+    "$oop": true,
+    "$utils": true
   }
 }

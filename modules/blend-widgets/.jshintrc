@@ -5,14 +5,14 @@
   "globalstrict": true,
   "globals": {
     "$assert": true,
-    "$oop": true,
-    "$utils": true,
     "$data": true,
     "$event": true,
-    "$module": true,
-    "$template": true,
-    "$router": true,
     "$i18n": true,
+    "$module": true,
+    "$oop": true,
+    "$router": true,
+    "$template": true,
+    "$utils": true,
     "$widget": true,
     "$widgets": true
   }

@@ -5,12 +5,12 @@
   "globalstrict": true,
   "globals": {
     "$assert": true,
-    "$oop": true,
-    "$utils": true,
     "$data": true,
-    "$event": true,
-    "$module": true,
     "$entity": true,
-    "$i18n": true
+    "$event": true,
+    "$i18n": true,
+    "$module": true,
+    "$oop": true,
+    "$utils": true
   }
 }

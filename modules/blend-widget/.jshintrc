@@ -5,10 +5,10 @@
   "globalstrict": true,
   "globals": {
     "$assert": true,
-    "$oop": true,
-    "$utils": true,
     "$data": true,
     "$event": true,
+    "$oop": true,
+    "$utils": true,
     "$widget": true
   }
 }

@@ -5,9 +5,9 @@
   "globalstrict": true,
   "globals": {
     "$assert": true,
+    "$data": true,
     "$oop": true,
     "$utils": true,
-    "$data": true,
     "hOP": true,
     "slice": true
   }
