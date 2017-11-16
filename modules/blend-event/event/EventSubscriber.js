@@ -68,5 +68,21 @@ $event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
         listeningPath = eventListener && eventListener.listeningPath;
     eventSpace.off(eventName, listeningPath, this.subscriberId);
     return this;
+  },
+
+  /**
+   * Tells whether the current subscriber subscribes to the event
+   * `eventName` on the path associated with `eventListener`.
+   * @param {string} eventName
+   * @param {$event.EventListener} eventListener
+   * @returns {boolean}
+   */
+  subscribes: function (eventName, eventListener) {
+    var eventSpace = $event.EventSpace.create(),
+        listeningPath = eventListener && eventListener.listeningPath,
+        callbackPath = $data.TreePath.fromComponents([
+          'callbacks', 'bySubscription', eventName, listeningPath,
+          this.subscriberId]);
+    return !!eventSpace.subscriptions.getNode(callbackPath);
   }
 });

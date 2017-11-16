@@ -8,7 +8,9 @@ describe("$event", function () {
     var eventSpaceInstanceLookup,
         Subscriber,
         subscriber,
-        result;
+        Listener,
+        listener,
+        eventSpace;
 
     beforeAll(function () {
       Subscriber = $oop.getClass('test.$event.EventSubscriber.Subscriber')
@@ -22,12 +24,19 @@ describe("$event", function () {
           return this;
         }
       });
+      Listener = $oop.getClass('test.$event.EventSubscriber.Listener')
+      .blend($event.EventListener)
+      .define({
+        init: function () {
+          this.setListeningPath('path');
+        }
+      });
     });
 
     beforeEach(function () {
       eventSpaceInstanceLookup = $event.EventSpace.__instanceLookup;
       $event.EventSpace.__instanceLookup = {};
-      subscriber = Subscriber.create({subscriberId: 'foo'});
+      eventSpace = $event.EventSpace.create();
     });
 
     afterEach(function () {
@@ -56,66 +65,87 @@ describe("$event", function () {
 
     describe("destroy()", function () {
       beforeEach(function () {
+        subscriber = Subscriber.create({subscriberId: 'foo'});
         spyOn(subscriber, 'off');
-        result = subscriber.destroy();
       });
 
       it("should return self", function () {
+        var result = subscriber.destroy();
         expect(result).toBe(subscriber);
       });
 
       it("should unsubscribe from all paths", function () {
+        subscriber.destroy();
         expect(subscriber.off).toHaveBeenCalled();
       });
     });
 
     describe("on()", function () {
-      var eventSpace,
-          eventListener,
-          eventName,
-          callback;
+      var callback;
 
       beforeEach(function () {
-        eventSpace = $event.EventSpace.create();
-        eventListener = {listeningPath: 'path'};
-        eventName = 'event1';
+        subscriber = Subscriber.create({subscriberId: 'foo'});
+        listener = Listener.create();
         callback = function () {};
         spyOn(eventSpace, 'on');
-
-        result = subscriber.on(eventName, eventListener, callback);
       });
 
       it("should return self", function () {
+        var result = subscriber.on('event1', listener, callback);
         expect(result).toBe(subscriber);
       });
 
       it("should subscribe on EventSpace", function () {
+        subscriber.on('event1', listener, callback);
         expect(eventSpace.on)
-        .toHaveBeenCalledWith(eventName, eventListener.listeningPath, 'foo', callback);
+        .toHaveBeenCalledWith('event1', listener.listeningPath, 'foo', callback);
       });
     });
 
     describe("off()", function () {
-      var eventSpace,
-          eventListener,
-          eventName;
-
       beforeEach(function () {
-        eventSpace = $event.EventSpace.create();
-        eventListener = {listeningPath: 'path'};
-        eventName = 'event1';
+        subscriber = Subscriber.create({subscriberId: 'foo'});
+        listener = Listener.create();
         spyOn(eventSpace, 'off');
-
-        result = subscriber.off(eventName, eventListener);
       });
 
       it("should return self", function () {
+        var result = subscriber.off('event1', listener);
         expect(result).toBe(subscriber);
       });
 
       it("should unsubscribe on EventSpace", function () {
+        subscriber.off('event1', listener);
         expect(eventSpace.off)
-        .toHaveBeenCalledWith(eventName, eventListener.listeningPath, 'foo');
+        .toHaveBeenCalledWith('event1', listener.listeningPath, 'foo');
+      });
+    });
+
+    describe("subscribes()", function () {
+      var callback;
+
+      beforeEach(function () {
+        subscriber = Subscriber.create({subscriberId: 'foo'});
+        listener = Listener.create();
+        callback = function () {};
+      });
+
+      describe("when subscribed", function () {
+        beforeEach(function () {
+          subscriber.on('event1', listener, callback);
+        });
+
+        it("should return truthy", function () {
+          var result = subscriber.subscribes('event1', listener);
+          expect(result).toBeTruthy();
+        });
+      });
+
+      describe("when not subscribed", function () {
+        it("should return falsy", function () {
+          var result = subscriber.subscribes('event1', listener);
+          expect(result).toBeFalsy();
+        });
       });
     });
   });
