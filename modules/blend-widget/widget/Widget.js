@@ -134,7 +134,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
     while (parentWidget.parentNode) {
       parentWidget = parentWidget.parentNode;
     }
-    return parentWidget === $widget.RootWidget.create();
+    return $widget.RootWidget.mixedBy(parentWidget);
   },
 
   /** @ignore */
