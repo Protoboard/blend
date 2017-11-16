@@ -49,6 +49,7 @@ $entity.Field = $oop.getClass('$entity.Field')
         valueType = fieldKey.getValueType() || 'string',
         // same as $entity.FieldValueTypePath.fromFieldValueType() but
         // skipping a few steps
+        // todo We don't need this for all field value types
         valueTypePath = $data.TreePath.fromComponentsToString([
           'entity', 'document', '__field', '__field/valueType', 'options',
           valueType]);

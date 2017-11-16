@@ -17,7 +17,7 @@ $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
   setStateValue: function setStateValue(stateName, stateValue) {
     var stateValueBefore = setStateValue.shared.stateValueBefore;
     if (stateValue === true &&
-        (stateValueBefore === undefined || stateValueBefore === true)) {
+        (stateValueBefore === undefined || stateValueBefore === false)) {
       // state changed from false or undefined to true
       this.addCssClass(stateName);
     } else if (stateValue === false &&
@@ -26,6 +26,7 @@ $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
       this.removeCssClass(stateName);
     } else {
       // state changed between arbitrary values
+      // todo Use Attributes instead of CSS class?
       if (stateValueBefore !== undefined) {
         this.removeCssClass(stateName + '-' + stateValueBefore);
       }

@@ -9,6 +9,7 @@
  * Maintains a lookup of field references by document type and field type.
  * @class $entity.NodeTypeIndex
  * @todo Create nodeType enum for documentation.
+ * @todo Keeping this up to date?
  */
 $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
 .blend($oop.Singleton)
