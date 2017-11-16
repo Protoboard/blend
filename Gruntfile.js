@@ -150,13 +150,18 @@ module.exports = function (grunt) {
     config = config || {};
 
     moduleIds.forEach(function (moduleId) {
-      config[moduleId] = {
+      config[moduleId + '-js'] = {
         files: [
-          'modules/' + moduleId + '/**/*@(.js|.css|.less)',
+          'modules/' + moduleId + '/**/*.js',
           '!modules/' + moduleId + '/**/*.spec.js',
           'modules/' + moduleId + '/@(package|manifest).json'],
-        tasks: ['concat:' + moduleId, 'less:' + moduleId,
-          'notify:build-' + moduleId]
+        tasks: ['concat:' + moduleId, 'notify:build-' + moduleId]
+      };
+      config[moduleId + '-less'] = {
+        files: [
+          'modules/' + moduleId + '/**/*@(.css|.less)',
+          'modules/' + moduleId + '/@(package|manifest).json'],
+        tasks: ['less:' + moduleId, 'notify:build-' + moduleId]
       };
     });
 
