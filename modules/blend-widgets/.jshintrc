@@ -6,6 +6,7 @@
   "globals": {
     "$assert": true,
     "$data": true,
+    "$entity": true,
     "$event": true,
     "$i18n": true,
     "$module": true,

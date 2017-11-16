@@ -41,8 +41,13 @@
     </script>
     <script>
       // todo Extend to include all basic widgets
-      require(['blend-widget', 'blend-widgets'
-      ], function ($widget, $widgets) {
+      require(['blend-widget', 'blend-widgets', 'blend-entity'
+      ], function ($widget, $widgets, $entity) {
+        $entity.entities
+        .appendNode('document.__document.character'.toTreePath(), {
+          fields: ['name']
+        });
+
         // simple text
         $widgets.Application.create()
         .addChildNode($widgets.Text.create({textString: "Hello World!"}));
@@ -63,6 +68,11 @@
         .addChildNode($widgets.LocaleText.create({
           textString: "Hello World!".toTranslatable()
         }));
+
+        // data-bound text
+        'character/rick/name'.toField().setNode("Rick Shanchez");
+        $widgets.Application.create()
+        .addChildNode($widgets.DataText.fromTextKey('character/rick/name'.toFieldKey()));
 
         // first render
         $widgets.Application.create()
