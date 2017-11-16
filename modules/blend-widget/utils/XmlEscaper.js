@@ -18,15 +18,15 @@ $widget.XmlEscaper = $oop.getClass('$widget.XmlEscaper')
   escapeCharacterForXml: function (char) {
     switch (char) {
     case '"':
-      return '&quot';
+      return '&quot;';
     case '\'':
-      return '&apos';
+      return '&apos;';
     case '<':
-      return '&lt';
+      return '&lt;';
     case '>':
-      return '&gt';
+      return '&gt;';
     case '&':
-      return '&amp';
+      return '&amp;';
     }
   },
 

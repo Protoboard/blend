@@ -34,8 +34,8 @@ describe("$widget", function () {
         });
 
         it("should escape XML entities", function () {
-          expect(attributes.toString()).toBe("&ampfoo=\"&aposbar&apos\"" +
-              " &lthello&gt=\"&quotworld&quot\"");
+          expect(attributes.toString()).toBe("&amp;foo=\"&apos;bar&apos;\"" +
+              " &lt;hello&gt;=\"&quot;world&quot;\"");
         });
       });
     });

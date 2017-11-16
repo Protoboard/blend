@@ -134,7 +134,7 @@ describe("$widget", function () {
           xmlNode = XmlNode.fromElementName('"Tag"')
           .setAttribute('foo', 'bar');
           expect(xmlNode + '')
-          .toBe('<&quotTag&quot foo="bar"></&quotTag&quot>');
+          .toBe('<&quot;Tag&quot; foo="bar"></&quot;Tag&quot;>');
         });
       });
 
