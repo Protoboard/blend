@@ -10,7 +10,6 @@
 /**
  * @class $widgets.DataText
  * @extends $widgets.Text
- * @todo Use textEntity as textString?
  */
 $widgets.DataText = $oop.getClass('$widgets.DataText')
 .blend($oop.getClass('$widgets.Text'))
