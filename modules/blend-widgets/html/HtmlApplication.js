@@ -29,6 +29,11 @@ $widgets.HtmlApplication = $oop.getClass('$widgets.HtmlApplication')
     .addCssClass('route-' + activeRouteAfter);
 
     this.activeRoute = activeRouteAfter;
+  },
+
+  /** @ignore */
+  onRouteChange: function () {
+    this.syncToActiveRoute();
   }
 });
 

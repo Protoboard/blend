@@ -8,24 +8,17 @@ $widgets.RouteBound = $oop.getClass('$widgets.RouteBound')
 .expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widgets.RouteBound# */{
   /**
-   * Updates parts of the widget's state that depend on the active route.
    * To be optionally implemented by host class.
-   * @function $widgets.RouteBound#syncToActiveRoute
+   * @function $widgets.RouteBound#onRouteChange
    */
 
   /** @ignore */
   onAttach: function () {
-    if (this.syncToActiveRoute) {
-      this.syncToActiveRoute();
+    if (this.onRouteChange) {
       this.on(
           $router.EVENT_ROUTE_CHANGE,
           $router.RouteEnvironment.create(),
           this.onRouteChange);
     }
-  },
-
-  /** @ignore */
-  onRouteChange: function () {
-    this.syncToActiveRoute();
   }
 });
