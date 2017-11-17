@@ -88,6 +88,13 @@
           textTemplate: liveTemplate
         }));
 
+        // hyperlink
+        $widgets.Application.create()
+        .addChildNode($widgets.Hyperlink.create({
+          textString: "Rick and Morty",
+          targetUrl: 'http://www.adultswim.com/videos/rick-and-morty/'
+        }));
+
         // first render
         // todo Should happen on routing event.
         $widgets.Application.create()
