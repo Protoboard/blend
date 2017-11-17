@@ -28,6 +28,36 @@ describe("$widgets", function () {
       expect(Application.create()).toBe(Application.create());
     });
 
+    describe("setActivePage()", function () {
+      var page;
+
+      beforeEach(function () {
+        application = Application.create();
+        page = $widgets.Page.create();
+        spyOn($widgets.PageChangeEvent, 'trigger');
+      });
+
+      it("should return self", function () {
+        var result = application.setActivePage(page);
+        expect(result).toBe(application);
+      });
+
+      it("should add page as child", function () {
+        application.setActivePage(page);
+        expect(application.getChildNode('page')).toBe(page);
+      });
+
+      it("should trigger EVENT_PAGE_CHANGE", function () {
+        application.setActivePage(page);
+        var calls = $widgets.PageChangeEvent.trigger.calls.all(),
+            event = calls[0].object;
+        expect(event.eventName).toBe('widgets.page.change');
+        expect(event.sender).toBe(application);
+        expect(event.pageAfter).toBe(page);
+        expect(event.pageBefore).toBeUndefined();
+      });
+    });
+
     describe("onRouteChange()", function () {
       beforeEach(function () {
         application = Application.create();

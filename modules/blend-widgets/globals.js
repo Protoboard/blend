@@ -19,8 +19,14 @@ var $assert = require('blend-assert'),
 
 $oop.copyProperties($widgets, /** @lends $widgets */{
   /**
+   * Signals that the application's active page changed.
+   * @constant
+   */
+  EVENT_PAGE_CHANGE: 'widgets.page.change',
+
+  /**
    * Signals that a `Clickable` widget was clicked.
    * @constant
    */
-  EVENT_CLICKABLE_CLICK: 'widget.clickable.click'
+  EVENT_CLICKABLE_CLICK: 'widgets.clickable.click'
 });

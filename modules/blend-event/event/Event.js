@@ -14,6 +14,7 @@
  * @class $event.Event
  * @extends $utils.Cloneable
  * @extends $data.Link
+ * @todo Add getter functions for causingEvents
  */
 $event.Event = $oop.getClass('$event.Event')
 .blend($utils.Cloneable)

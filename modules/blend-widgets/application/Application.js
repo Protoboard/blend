@@ -41,6 +41,25 @@ $widgets.Application = $oop.getClass('$widgets.Application')
     this.activeRoute = activeRouteAfter;
   },
 
+  /**
+   * @param {$widgets.Page} page
+   * @returns {$widgets.Application}
+   */
+  setActivePage: function setActivePage(page) {
+    var pageBefore = this.getChildNode(page.nodeName);
+    if (page !== pageBefore) {
+      this.addChildNode(page);
+      this.spawnEvent({
+        eventName: $widgets.EVENT_PAGE_CHANGE,
+        pageBefore: pageBefore,
+        pageAfter: page
+      })
+      .trigger();
+    }
+    setActivePage.shared.activePageBefore = pageBefore;
+    return this;
+  },
+
   /** @ignore */
   onRouteChange: function () {
     this.syncToActiveRoute();
