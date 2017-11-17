@@ -66,8 +66,7 @@ $widgets.DataText = $oop.getClass('$widgets.DataText')
     return this;
   },
 
-  /**
-   */
+  /** @ignore */
   syncToTextEntity: function () {
     this.setTextString(this.textKey.toEntity().getNode());
   },

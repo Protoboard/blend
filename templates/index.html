@@ -50,7 +50,9 @@
 
         // simple text
         $widgets.Application.create()
-        .addChildNode($widgets.Text.create({textString: "Hello World!"}));
+        .addChildNode($widgets.Text.create({
+          textString: "<b>Hello World!</b>"
+        }));
 
         // translatable text
         '_translation/helloworld-de'.toDocument().setNode({
@@ -72,9 +74,22 @@
         // data-bound text
         'character/rick/name'.toField().setNode("Rick Shanchez");
         $widgets.Application.create()
-        .addChildNode($widgets.DataText.fromTextKey('character/rick/name'.toFieldKey()));
+        .addChildNode(
+            $widgets.DataText.fromTextKey('character/rick/name'.toFieldKey()));
+
+        // template text
+        'character/jerry/name'.toField().setNode("Jerry");
+        var liveTemplate = "What's up, {{name}}?".toLiveTemplate()
+        .setParameterValues({
+          name: 'character/jerry/name'.toField()
+        });
+        $widgets.Application.create()
+        .addChildNode($widgets.TemplateText.create({
+          textTemplate: liveTemplate
+        }));
 
         // first render
+        // todo Should happen on routing event.
         $widgets.Application.create()
         .renderInto(document.body);
       });
