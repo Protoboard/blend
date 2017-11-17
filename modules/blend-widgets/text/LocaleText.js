@@ -20,13 +20,14 @@ $widgets.LocaleText = $oop.getClass('$widgets.LocaleText')
 
   /**
    * @memberOf $widgets.LocaleText
-   * @param textTranslatable
+   * @param {$i18n.Translatable} textTranslatable
+   * @param {Object} [properties]
    * @returns {$widgets.LocaleText}
    */
-  fromTextTranslatable: function (textTranslatable) {
+  fromTextTranslatable: function (textTranslatable, properties) {
     return this.create({
       textTranslatable: textTranslatable
-    });
+    }, properties);
   },
 
   /** @ignore */
