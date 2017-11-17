@@ -3,10 +3,12 @@
 /**
  * @mixin $widgets.HtmlApplication
  * @extends $widget.HtmlWidget
+ * @extends $widgets.RouteBound
  * @augments $widgets.Application
  */
 $widgets.HtmlApplication = $oop.getClass('$widgets.HtmlApplication')
 .blend($widget.HtmlWidget)
+.blend($oop.getClass('$widgets.RouteBound'))
 .expect($oop.getClass('$widgets.Application'))
 .define(/** @lends $widgets.HtmlApplication# */{
   /**
