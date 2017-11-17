@@ -167,6 +167,21 @@ describe("$utils", function () {
         expect($utils.Promise.mixedBy(promise)).toBeTruthy();
       });
 
+      describe("when passing empty list", function () {
+        var successHandler;
+
+        beforeEach(function () {
+          promise = $utils.Promise.when([]);
+          successHandler = jasmine.createSpy();
+
+          promise.then(successHandler);
+        });
+
+        it("should resolve aggregate promise", function () {
+          expect(successHandler).toHaveBeenCalledWith();
+        });
+      });
+
       describe("when all promises are fulfilled", function () {
         var successHandler,
             progressHandler;

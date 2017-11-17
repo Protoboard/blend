@@ -133,17 +133,21 @@ $utils.Promise = $oop.getClass('$utils.Promise')
       }
     }
 
-    promises.forEach(function (promise) {
-      if (promise && typeof promise.then === 'function') {
-        // latching on to next promise in array
-        promise.then(
-            tryResolving,
-            deferred.reject.bind(deferred));
-      } else {
-        // passing non-promise to resolution
-        tryResolving(promise);
-      }
-    });
+    if (promiseCount) {
+      promises.forEach(function (promise) {
+        if (promise && typeof promise.then === 'function') {
+          // latching on to next promise in array
+          promise.then(
+              tryResolving,
+              deferred.reject.bind(deferred));
+        } else {
+          // passing non-promise to resolution
+          tryResolving(promise);
+        }
+      });
+    } else {
+      deferred.resolve();
+    }
 
     return deferred.promise;
   }
