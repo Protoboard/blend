@@ -3,9 +3,11 @@
 /**
  * @mixin $entity.LeafNoded
  * @augments $entity.Entity
+ * @implements $utils.Stringifiable
  */
 $entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
 .expect($oop.getClass('$entity.Entity'))
+.implement($utils.Stringifiable)
 .define(/** @lends $entity.LeafNoded# */{
   /**
    * Spawns a single event if there is a change in node value.
@@ -27,5 +29,12 @@ $entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
     } else {
       return events;
     }
+  },
+
+  /**
+   * @returns {string}
+   */
+  toString: function () {
+    return $utils.stringify(this.getNode());
   }
 });

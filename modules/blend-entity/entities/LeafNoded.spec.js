@@ -15,13 +15,13 @@ describe("$entity", function () {
       .blend($entity.LeafNoded);
     });
 
-    beforeEach(function () {
-      leafNodedField = LeafNodedField.fromComponents('foo', 'bar', 'baz');
-    });
-
     describe("spawnEntityChangeEvents()", function () {
       var nodeBefore,
           nodeAfter;
+
+      beforeEach(function () {
+        leafNodedField = LeafNodedField.fromComponents('foo', 'bar', 'baz');
+      });
 
       describe("when node has changed", function () {
         beforeEach(function () {
@@ -52,6 +52,21 @@ describe("$entity", function () {
           expect(result instanceof Array).toBeTruthy();
           expect(result.length).toBe(0);
         });
+      });
+    });
+
+    describe("toString()", function () {
+      beforeEach(function () {
+        leafNodedField = LeafNodedField.fromComponents('foo', 'bar', 'baz');
+        leafNodedField.setNode("Hello");
+      });
+
+      afterEach(function () {
+        leafNodedField.deleteNode();
+      });
+
+      it("should return stringified entity value", function () {
+        expect(leafNodedField + '').toBe("Hello");
       });
     });
   });
