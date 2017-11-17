@@ -7,41 +7,42 @@ describe("$utils", function () {
   describe("Promise", function () {
     var promise;
 
-    beforeEach(function () {
-      promise = $utils.Promise.create();
-    });
-
     describe("create()", function () {
       it("should initialize state property", function () {
+        promise = $utils.Promise.create();
         expect(promise.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
 
       it("should initialize notificationArguments property", function () {
+        promise = $utils.Promise.create();
         expect(promise.notificationArguments).toEqual([]);
       });
 
       it("should initialize successHandlers property", function () {
+        promise = $utils.Promise.create();
         expect(promise.successHandlers).toEqual([]);
       });
 
       it("should initialize failureHandlers property", function () {
+        promise = $utils.Promise.create();
         expect(promise.failureHandlers).toEqual([]);
       });
 
       it("should initialize progressHandlers property", function () {
+        promise = $utils.Promise.create();
         expect(promise.progressHandlers).toEqual([]);
       });
     });
 
     describe("then()", function () {
-      var result,
-          handlers;
+      var handlers;
 
       beforeEach(function () {
-        result = promise.then();
+        promise = $utils.Promise.create();
       });
 
       it("should return self", function () {
+        var result = promise.then();
         expect(result).toBe(promise);
       });
 
@@ -52,13 +53,13 @@ describe("$utils", function () {
             failureHandler: function () {},
             progressHandler: function () {}
           };
+        });
+
+        it("should add handlers", function () {
           promise.then(
               handlers.successHandler,
               handlers.failureHandler,
               handlers.progressHandler);
-        });
-
-        it("should add handlers", function () {
           expect(promise.successHandlers).toEqual([handlers.successHandler]);
           expect(promise.failureHandlers).toEqual([handlers.failureHandler]);
           expect(promise.progressHandlers).toEqual([handlers.progressHandler]);
@@ -71,13 +72,13 @@ describe("$utils", function () {
               ["baz", "quux"]
             ];
             spyOn(handlers, 'progressHandler');
+          });
+
+          it("should call handler with recorded arguments", function () {
             promise.then(
                 handlers.successHandler,
                 handlers.failureHandler,
                 handlers.progressHandler);
-          });
-
-          it("should call handler with recorded arguments", function () {
             expect(handlers.progressHandler.calls.allArgs())
             .toEqual(promise.notificationArguments);
           });
@@ -155,14 +156,14 @@ describe("$utils", function () {
             };
           }
         };
+      });
+
+      it("should return a promise", function () {
         promise = $utils.Promise.when([
           deferred.promise,
           "foo",
           thenable
         ]);
-      });
-
-      it("should return a promise", function () {
         expect($utils.Promise.mixedBy(promise)).toBeTruthy();
       });
 
@@ -171,6 +172,11 @@ describe("$utils", function () {
             progressHandler;
 
         beforeEach(function () {
+          promise = $utils.Promise.when([
+            deferred.promise,
+            "foo",
+            thenable
+          ]);
           successHandler = jasmine.createSpy();
           progressHandler = jasmine.createSpy();
 
@@ -178,16 +184,17 @@ describe("$utils", function () {
               successHandler,
               null,
               progressHandler);
-
-          thenableResolve("foo", "bar");
-          deferred.resolve("baz", "quux");
         });
 
         it("should notify aggregate promise", function () {
+          thenableResolve("foo", "bar");
+          deferred.resolve("baz", "quux");
           expect(progressHandler).toHaveBeenCalledWith("foo", "bar");
         });
 
         it("should resolve aggregate promise", function () {
+          thenableResolve("foo", "bar");
+          deferred.resolve("baz", "quux");
           // first argument of the first call to successHandler
           // ... is an array of Arguments
           expect(successHandler.calls.argsFor(0)[0]
@@ -207,13 +214,17 @@ describe("$utils", function () {
 
         beforeEach(function () {
           failureHandler = jasmine.createSpy();
-
+          promise = $utils.Promise.when([
+            deferred.promise,
+            "foo",
+            thenable
+          ]);
           promise.then(null, failureHandler);
-
-          thenableReject("foo", "bar");
         });
 
         it("should reject the aggregate promise", function () {
+          deferred.resolve("baz", "quux");
+          thenableReject("foo", "bar");
           expect(failureHandler).toHaveBeenCalledWith("foo", "bar");
         });
       });
