@@ -24,7 +24,7 @@ $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
         (stateValueBefore === true || stateValueBefore === undefined)) {
       // state changed from true or undefined to false
       this.removeCssClass(stateName);
-    } else {
+    } else if (stateValue !== stateValueBefore) {
       // state changed between arbitrary values
       // todo Use Attributes instead of CSS class?
       if (stateValueBefore !== undefined) {

@@ -75,6 +75,19 @@ describe("$widget", function () {
           expect(htmlStateful.cssClasses.data).toEqual({});
         });
       });
+
+      describe("when passing same value", function () {
+        beforeEach(function () {
+          htmlStateful.setStateValue('foo', true);
+        });
+
+        it("should not change CSS classes", function () {
+          htmlStateful.setStateValue('foo', true);
+          expect(htmlStateful.cssClasses.data).toEqual({
+            'foo': 1
+          });
+        });
+      });
     });
   });
 
