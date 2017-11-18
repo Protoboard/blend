@@ -16,16 +16,8 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
 
   /** @ignore */
   init: function () {
-    this._updateNodeNameClass();
-    this._updateMixinClasses();
-  },
-
-  /** @private */
-  _updateNodeNameClass: function () {
-    var nodeName = this.nodeName;
-    if (nodeName) {
-      this.addCssClass(nodeName);
-    }
+    this.addCssClass(this.nodeName);
+    this._addMixinClasses();
   },
 
   /**
@@ -33,7 +25,7 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
    * mix or expect `$widget.Widget`.
    * @private
    */
-  _updateMixinClasses: function () {
+  _addMixinClasses: function () {
     var that = this,
         Widget = $widget.Widget;
 
@@ -47,6 +39,20 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
     .forEach(function (classId) {
       that.addCssClass(classId);
     });
+  },
+
+  /**
+   * @param {string} nodeName
+   * @returns {$widget.HtmlWidget}
+   */
+  setNodeName: function setChildName(nodeName) {
+    var nodeNameBefore = setChildName.shared.nodeNameBefore;
+    if (nodeName !== nodeNameBefore) {
+      this
+      .removeCssClass(nodeNameBefore)
+      .addCssClass(nodeName);
+    }
+    return this;
   }
 });
 

@@ -34,6 +34,29 @@ describe("$widget", function () {
         });
       });
     });
+
+    describe("setNodeName()", function () {
+      beforeEach(function () {
+        htmlWidget = HtmlWidget.create({
+          nodeName: 'foo'
+        });
+      });
+
+      it("should return self", function () {
+        var result = htmlWidget.setNodeName('bar');
+        expect(result).toBe(htmlWidget);
+      });
+
+      it("should remove CSS class for old nodeName", function () {
+        htmlWidget.setNodeName('bar');
+        expect(htmlWidget.hasCssClass('foo')).toBeFalsy();
+      });
+
+      it("should add CSS class for new nodeName", function () {
+        htmlWidget.setNodeName('bar');
+        expect(htmlWidget.hasCssClass('bar')).toBeTruthy();
+      });
+    });
   });
 
   describe("Widget", function () {

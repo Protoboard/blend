@@ -248,6 +248,59 @@ describe("$widget", function () {
       });
     });
 
+    describe("setChildName()", function () {
+      var childNode;
+
+      beforeEach(function () {
+        node = Node.create();
+        childNode = Node.create({
+          nodeName: 'foo'
+        });
+        spyOn(childNode, 'setNodeName').and.callThrough();
+
+        node
+        .addChildNode(childNode);
+      });
+
+      it("should return self", function () {
+        var result = node.setChildName(childNode, 'bar');
+        expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        node.setChildName(childNode, 'bar');
+        expect(node.setChildName.shared.nodeNameBefore)
+        .toBe('foo');
+      });
+
+      it("should move child node in childNodeLookup", function () {
+        node.setChildName(childNode, 'bar');
+        expect(node.childNodeLookup.data).toEqual({
+          bar: childNode
+        });
+      });
+
+      it("should invoke setNodeName on childNode", function () {
+        node.setChildName(childNode, 'bar');
+        expect(childNode.setNodeName).toHaveBeenCalledWith('bar');
+      });
+
+      describe("when passing non-child node", function () {
+        var node2;
+
+        beforeEach(function () {
+          node2 = Node.create({
+            nodeName: 'foo'
+          });
+        });
+
+        it("should not change name", function () {
+          node.setChildName(node2, 'bar');
+          expect(node2.nodeName).toBe('foo');
+        });
+      });
+    });
+
     describe("setChildOrder()", function () {
       var childNode,
           childNode2;
@@ -369,6 +422,39 @@ describe("$widget", function () {
       });
     });
 
+    describe("setNodeName()", function () {
+      var parentNode;
+
+      beforeEach(function () {
+        node = Node.create({
+          nodeName: 'foo'
+        });
+        parentNode = Node.create();
+        parentNode.addChildNode(node);
+        spyOn(parentNode, 'setChildName').and.callThrough();
+      });
+
+      it("should return self", function () {
+        var result = node.setNodeName('bar');
+        expect(result).toBe(node);
+      });
+
+      it("should save before state", function () {
+        node.setNodeName('bar');
+        expect(node.setNodeName.shared.nodeNameBefore).toBe('foo');
+      });
+
+      it("should update nodeName property", function () {
+        node.setNodeName('bar');
+        expect(node.nodeName).toBe('bar');
+      });
+
+      it("should invoke setChildName on parentNode", function () {
+        node.setNodeName('bar');
+        expect(parentNode.setChildName).toHaveBeenCalledWith(node, 'bar');
+      });
+    });
+
     describe("setNodeOrder()", function () {
       var parentNode;
 
@@ -390,7 +476,7 @@ describe("$widget", function () {
         expect(node.setNodeOrder.shared.nodeOrderBefore).toBe(11);
       });
 
-      it("should update nodeName property", function () {
+      it("should update nodeOrder property", function () {
         node.setNodeOrder(12);
         expect(node.nodeOrder).toBe(12);
       });
