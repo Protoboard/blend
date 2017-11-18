@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Blend Demo</title>
     <script src="../node_modules/requirejs/require.js"></script>
     <script>
       // todo Insert from Gruntfile
@@ -40,65 +40,8 @@
       });
     </script>
     <script>
-      // todo Extend to include all basic widgets
-      require(['blend-widget', 'blend-widgets', 'blend-entity'
-      ], function ($widget, $widgets, $entity) {
-        $entity.entities
-        .appendNode('document.__document.character'.toTreePath(), {
-          fields: ['name']
-        });
-
-        // simple text
-        $widgets.Application.create()
-        .addChildNode($widgets.Text.create({
-          textString: "<b>Hello World!</b>"
-        }));
-
-        // translatable text
-        '_translation/helloworld-de'.toDocument().setNode({
-          originalString: "Hello World!",
-          pluralForms: ["Hallo Welt!"]
-        });
-        '_locale/de'.toDocument().setNode({
-          localeName: 'German',
-          pluralFormula: 'nplurals=2; plural=(n != 1);',
-          translations: {
-            '_translation/helloworld-de': 1
-          }
-        });
-        $widgets.Application.create()
-        .addChildNode($widgets.LocaleText.create({
-          textTranslatable: "Hello World!".toTranslatable()
-        }));
-
-        // data-bound text
-        'character/rick/name'.toField().setNode("Rick Shanchez");
-        $widgets.Application.create()
-        .addChildNode(
-            $widgets.DataText.fromTextKey('character/rick/name'.toFieldKey()));
-
-        // template text
-        'character/jerry/name'.toField().setNode("Jerry");
-        var liveTemplate = "What's up, {{name}}?".toLiveTemplate()
-        .setParameterValues({
-          name: 'character/jerry/name'.toField()
-        });
-        $widgets.Application.create()
-        .addChildNode($widgets.TemplateText.create({
-          textTemplate: liveTemplate
-        }));
-
-        // hyperlink
-        $widgets.Application.create()
-        .addChildNode($widgets.Hyperlink.create({
-          textString: "Rick and Morty",
-          targetUrl: 'http://www.adultswim.com/videos/rick-and-morty/'
-        }));
-
-        // first render
-        // todo Should happen on routing event.
-        $widgets.Application.create()
-        .renderInto(document.body);
+      require(['blend-widgets', 'blend-demo'], function ($widgets) {
+        $widgets.Application.create();
       });
     </script>
 </head>
