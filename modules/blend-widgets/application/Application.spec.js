@@ -60,7 +60,14 @@ describe("$widgets", function () {
 
     describe("onRouteChange()", function () {
       beforeEach(function () {
+        jasmine.clock().install();
+        [].toRoute().navigateTo();
         application = Application.create();
+        jasmine.clock().tick(1);
+      });
+
+      afterEach(function () {
+        jasmine.clock().uninstall();
       });
 
       it("should set route states", function () {

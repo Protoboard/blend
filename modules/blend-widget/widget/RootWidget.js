@@ -28,6 +28,8 @@ $widget.RootWidget = $oop.getClass('$widget.RootWidget')
     .addTriggerPath(listeningPath)
     .addTriggerPath('widget');
 
-    this.onAttach();
+    $utils.setTimeout(0)
+    .timerPromise
+    .then(this.onAttach);
   }
 });
