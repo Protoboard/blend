@@ -145,6 +145,47 @@ $event.Event = $oop.getClass('$event.Event')
   },
 
   /**
+   * Retrieves a list of events that led to the triggering of the current
+   * event, in causal order.
+   * @returns {Array.<$event.Event|*>}
+   */
+  getCausingEvents: function () {
+    var causingEvent = this.causingEvent,
+        result = [];
+    while (causingEvent) {
+      result.unshift(causingEvent);
+      causingEvent = causingEvent.causingEvent;
+    }
+    return result;
+  },
+
+  /**
+   * Retrieves the last event on the chain of causing events that match the
+   * specified `eventName`.
+   * @param {string} eventName
+   * @returns {$event.Event|*}
+   */
+  getLastCausingEventByName: function (eventName) {
+    var causingEvent = this.causingEvent;
+    while (causingEvent && causingEvent.eventName !== eventName) {
+      causingEvent = causingEvent.causingEvent;
+    }
+    return causingEvent;
+  },
+
+  /**
+   * @param {$oop.Class} Class
+   * @returns {$event.Event|*}
+   */
+  getLastCausingEventByClass: function (Class) {
+    var causingEvent = this.causingEvent;
+    while (causingEvent && !Class.mixedBy(causingEvent)) {
+      causingEvent = causingEvent.causingEvent;
+    }
+    return causingEvent;
+  },
+
+  /**
    * Invokes callbacks subscribed to `eventName`, on each of
    * `targetPaths`. Callbacks on a certain path will be invoked in an
    * unspecified order. The returned promise resolves when all subscribed

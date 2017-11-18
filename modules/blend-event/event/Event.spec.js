@@ -219,6 +219,82 @@ describe("$event", function () {
       });
     });
 
+    describe("getCausingEvents()", function () {
+      var event2, event3;
+
+      beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
+        event2 = Event.create({eventName: 'event2'});
+        event3 = Event.create({eventName: 'event3'});
+        event.causingEvent = event2;
+        event2.causingEvent = event3;
+      });
+
+      it("should return Array of causingEvents", function () {
+        var result = event.getCausingEvents();
+        expect(result).toEqual([event3, event2]);
+      });
+    });
+
+    describe("getLastCausingEventByName()", function () {
+      var event2, event3, event4;
+
+      beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
+        event2 = Event.create({eventName: 'foo'});
+        event3 = Event.create({eventName: 'bar'});
+        event4 = Event.create({eventName: 'foo'});
+        event.causingEvent = event2;
+        event2.causingEvent = event3;
+        event3.causingEvent = event4;
+      });
+
+      describe("when there is a match", function () {
+        it("should return last event matching eventName", function () {
+          var result = event.getLastCausingEventByName('foo');
+          expect(result).toBe(event2);
+        });
+      });
+
+      describe("when there is no match", function () {
+        it("should return undefined", function () {
+          var result = event.getLastCausingEventByName('baz');
+          expect(result).toBeUndefined();
+        });
+      });
+    });
+
+    describe("getLastCausingEventByClass()", function () {
+      var Event2,
+          Event3,
+          event2,
+          event3;
+
+      beforeEach(function () {
+        Event2 = $oop.getClass('test.$event.Event.Event2');
+        Event3 = $oop.getClass('test.$event.Event.Event3');
+        event = Event.create({eventName: 'event1'});
+        event2 = Event2.create({eventName: 'event2'});
+        event3 = Event.create({eventName: 'event3'});
+        event.causingEvent = event2;
+        event2.causingEvent = event3;
+      });
+
+      describe("when there is a match", function () {
+        it("should return last event matching Class", function () {
+          var result = event.getLastCausingEventByClass(Event2);
+          expect(result).toBe(event2);
+        });
+      });
+
+      describe("when there is no match", function () {
+        it("should return undefined", function () {
+          var result = event.getLastCausingEventByClass(Event3);
+          expect(result).toBeUndefined();
+        });
+      });
+    });
+
     describe("trigger()", function () {
       var subscriptionData,
           deferred,
