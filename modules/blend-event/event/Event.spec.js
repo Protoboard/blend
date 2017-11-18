@@ -7,17 +7,12 @@ var $oop = window['blend-oop'],
 describe("$event", function () {
   describe("Event", function () {
     var Event,
-        event,
-        result;
+        event;
 
     beforeAll(function () {
       Event = $oop.getClass('test.$event.Event.Event')
       .blend($event.Event);
       Event.__forwards = {list: [], sources: [], lookup: {}};
-    });
-
-    beforeEach(function () {
-      event = Event.create({eventName: 'event1'});
     });
 
     describe("fromEventName()", function () {
@@ -39,18 +34,22 @@ describe("$event", function () {
 
     describe("create()", function () {
       it("should set eventName", function () {
+        event = Event.create({eventName: 'event1'});
         expect(event.eventName).toBe('event1');
       });
 
       it("should elevate unlink()", function () {
+        event = Event.create({eventName: 'event1'});
         expect(event.hasOwnProperty('unlink')).toBeTruthy();
       });
 
       it("should initialize propagates flag to default", function () {
+        event = Event.create({eventName: 'event1'});
         expect(event.propagates).toBe(true);
       });
 
       it("should initialize targetPaths array", function () {
+        event = Event.create({eventName: 'event1'});
         expect(event.targetPaths).toEqual([]);
       });
 
@@ -65,19 +64,20 @@ describe("$event", function () {
 
     describe("clone()", function () {
       beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
         event.causingEvent = Event.create({
           eventName: 'event2',
           sender: {}
         });
-
-        result = event.clone();
       });
 
       it("should return cloned instance", function () {
+        var result = event.clone();
         expect(result).not.toBe(event);
       });
 
       it("should be equivalent", function () {
+        var result = event.clone();
         expect(result.eventName).toEqual(event.eventName);
         expect(result.causingEvent).toEqual(event.causingEvent);
         expect(result.sender).toEqual(event.sender);
@@ -89,18 +89,20 @@ describe("$event", function () {
       var targetPaths;
 
       beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
         targetPaths = [
           'foo.bar',
           'baz.quux'
         ];
-        result = event.addTargetPaths(targetPaths);
       });
 
       it("should return self", function () {
+        var result = event.addTargetPaths(targetPaths);
         expect(result).toBe(event);
       });
 
       it("should add paths to targetPaths", function () {
+        event.addTargetPaths(targetPaths);
         expect(event.targetPaths).toEqual([
           'foo.bar',
           'baz.quux'
@@ -112,15 +114,17 @@ describe("$event", function () {
       var targetPath;
 
       beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
         targetPath = 'foo.bar';
-        result = event.addTargetPath(targetPath);
       });
 
       it("should return self", function () {
+        var result = event.addTargetPath(targetPath);
         expect(result).toBe(event);
       });
 
       it("should add path to targetPaths", function () {
+        event.addTargetPath(targetPath);
         expect(event.targetPaths).toEqual([
           'foo.bar'
         ]);
@@ -131,15 +135,17 @@ describe("$event", function () {
       var bubblingPath;
 
       beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
         bubblingPath = 'foo.bar.baz';
-        result = event.addBubblingPath(bubblingPath);
       });
 
       it("should return self", function () {
+        var result = event.addBubblingPath(bubblingPath);
         expect(result).toBe(event);
       });
 
       it("should add bubble paths to targetPaths", function () {
+        event.addBubblingPath(bubblingPath);
         expect(event.targetPaths).toEqual([
           'foo.bar',
           'foo'
@@ -152,6 +158,7 @@ describe("$event", function () {
           broadcastPath;
 
       beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
         subscriptionData = $event.EventSpace.create().subscriptions.data;
         $event.EventSpace.create().subscriptions.data = {};
 
@@ -161,7 +168,6 @@ describe("$event", function () {
         .on('event1', 'foo.bar.baz.quux', '2', function () {})
         .on('event1', 'foo.bar', '3', function () {})
         .on('event1', 'foo', '4', function () {});
-        result = event.addBroadcastPath(broadcastPath);
       });
 
       afterEach(function () {
@@ -169,10 +175,12 @@ describe("$event", function () {
       });
 
       it("should return self", function () {
+        var result = event.addBroadcastPath(broadcastPath);
         expect(result).toBe(event);
       });
 
       it("should add broadcast paths to targetPaths", function () {
+        event.addBroadcastPath(broadcastPath);
         expect(event.targetPaths).toEqual([
           'foo.bar.baz.quux'
         ]);
@@ -181,29 +189,32 @@ describe("$event", function () {
 
     describe("setPropagates()", function () {
       beforeEach(function () {
-        result = event.setPropagates(false);
+        event = Event.create({eventName: 'event1'});
       });
 
       it("should return self", function () {
+        var result = event.setPropagates(false);
         expect(result).toBe(event);
       });
 
       it("should set causingEvent", function () {
+        event.setPropagates(false);
         expect(event.propagates).toBe(false);
       });
     });
 
     describe("stopPropagation()", function () {
       beforeEach(function () {
-        result = event
-        .stopPropagation();
+        event = Event.create({eventName: 'event1'});
       });
 
       it("should return self", function () {
+        var result = event.stopPropagation();
         expect(result).toBe(event);
       });
 
       it("should set bubbles", function () {
+        event.stopPropagation();
         expect(event.bubbles).toBeFalsy();
       });
     });
@@ -216,6 +227,7 @@ describe("$event", function () {
           lastEvent;
 
       beforeEach(function () {
+        event = Event.create({eventName: 'event1'});
         subscriptionData = $event.EventSpace.create().subscriptions.data;
         $event.EventSpace.create().subscriptions.data = {};
 
@@ -242,8 +254,6 @@ describe("$event", function () {
           'foo.bar.baz',
           'foo.bar',
           'foo']);
-
-        result = event.trigger();
       });
 
       afterEach(function () {
@@ -251,29 +261,36 @@ describe("$event", function () {
       });
 
       it("should return pending promise", function () {
+        var result = event.trigger();
         expect($utils.Promise.mixedBy(result)).toBeTruthy();
         expect(result.promiseState).toBe($utils.PROMISE_STATE_PENDING);
       });
 
       it("should push event to chain", function () {
+        event.trigger();
         expect(eventTrail.data.previousLink).toBe(event);
       });
 
       it("should add last event in EventTrail as causingEvent", function () {
+        event.trigger();
         expect(event.causingEvent).toBe(lastEvent);
       });
 
       describe("when callbacks complete", function () {
+        var promise;
+
         beforeEach(function () {
-          deferred.resolve();
+          promise = event.trigger();
         });
 
         it("should unlink event", function () {
+          deferred.resolve();
           expect(eventTrail.data.previousLink).not.toBe(event);
         });
 
         it("should resolve returned promise", function () {
-          expect(result.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
+          deferred.resolve();
+          expect(promise.promiseState).toBe($utils.PROMISE_STATE_FULFILLED);
         });
       });
     });
