@@ -39,6 +39,7 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
     }))
     .addChildNode(
         this.contentWidget
+        .setNodeName('widget')
         .setNodeOrder(1));
   }
 });
