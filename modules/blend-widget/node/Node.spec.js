@@ -40,7 +40,7 @@ describe("$widget", function () {
 
       it("should initialize nodeOrder", function () {
         node = Node.create();
-        expect(node.nodeOrder).toBe(0);
+        expect(node.nodeOrder).toBe(node.instanceId);
       });
 
       it("should initialize childNodeLookup", function () {
@@ -274,7 +274,8 @@ describe("$widget", function () {
 
       it("should save before state", function () {
         node.setChildOrder(childNode, 2);
-        expect(node.setChildOrder.shared.nodeOrderBefore).toBe(0);
+        expect(node.setChildOrder.shared.nodeOrderBefore)
+        .toBe(childNode.instanceId);
       });
 
       it("should move child node in childNodes", function () {

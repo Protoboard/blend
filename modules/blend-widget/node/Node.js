@@ -51,13 +51,17 @@ $widget.Node = $oop.getClass('$widget.Node')
   },
 
   /** @ignore */
-  defaults: function () {
-    this.nodeOrder = this.nodeOrder || 0;
-  },
-
-  /** @ignore */
   spread: function () {
-    this.nodeName = this.nodeName || String(this.instanceId);
+    var instanceId = this.instanceId,
+        nodeName = this.nodeName,
+        nodeOrder = this.nodeOrder;
+
+    this.nodeName = nodeName === undefined ?
+        String(instanceId) :
+        nodeName;
+    this.nodeOrder = nodeOrder === undefined ?
+        instanceId :
+        nodeOrder;
     this.childNodes = this.childNodes || $widget.Nodes.create();
     this.childNodeLookup = this.childNodeLookup || $data.Collection.create();
   },
