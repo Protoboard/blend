@@ -69,27 +69,38 @@ $widgets.EntityPropertyBound = $oop.getClass('$widgets.EntityPropertyBound')
    */
   setEntityProperty: function (entityProperty, entity) {
     var entityProperties = this.entityProperties,
-        entityBefore = this[entityProperty];
+        entityPropertiesByEntityKeys = this.entityPropertiesByEntityKeys,
+        entityBefore = this[entityProperty],
+        entityKeyBefore = entityBefore && entityBefore.entityKey,
+        entityKeyAfter = entity && entity.entityKey;
 
-    $assert.isTruthy(entityProperties.hasItem(entityProperty),
-        "Attempting to mutate unregistered entity property");
+    if (!entityProperties.hasItem(entityProperty)) {
+      entityProperties.setItem(entityProperty);
+    }
 
-    if (!entityBefore.entityKey.equals(entity.entityKey)) {
+    if (entityKeyAfter && !entityKeyAfter.equals(entityKeyBefore) ||
+        !entityKeyAfter && entity !== entityBefore
+    ) {
       this[entityProperty] = entity;
 
-      this.entityPropertiesByEntityKeys
-      .deleteItem(entityBefore.entityKey.toString(), entityProperty)
-      .setItem(entity.entityKey.toString(), entityProperty);
+      if (entityBefore) {
+        entityPropertiesByEntityKeys
+        .deleteItem(entityBefore.entityKey.toString(), entityProperty);
+        this.off(
+            $entity.EVENT_ENTITY_CHANGE,
+            entityBefore);
+      }
+
+      if (entityKeyAfter) {
+        entityPropertiesByEntityKeys
+        .setItem(entity.entityKey.toString(), entityProperty);
+        this.on(
+            $entity.EVENT_ENTITY_CHANGE,
+            entity,
+            this.onEntityChange);
+      }
 
       this.syncToEntityProperty(entityProperty);
-      this
-      .off(
-          $entity.EVENT_ENTITY_CHANGE,
-          entityBefore)
-      .on(
-          $entity.EVENT_ENTITY_CHANGE,
-          entity,
-          this.onEntityChange);
     }
 
     return this;
@@ -99,9 +110,12 @@ $widgets.EntityPropertyBound = $oop.getClass('$widgets.EntityPropertyBound')
   onAttach: function () {
     var that = this;
     this.entityProperties
-    .forEachItem(function (entityKeyProperty) {
-      var entity = that[entityKeyProperty];
-      that.syncToEntityProperty(entityKeyProperty);
+    .filter(function (entityProperty) {
+      return that[entityProperty];
+    })
+    .forEachItem(function (entityProperty) {
+      var entity = that[entityProperty];
+      that.syncToEntityProperty(entityProperty);
       that.on(
           $entity.EVENT_ENTITY_CHANGE,
           entity,

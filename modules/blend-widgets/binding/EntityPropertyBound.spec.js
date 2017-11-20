@@ -45,11 +45,10 @@ describe("$widgets", function () {
     });
 
     describe("setEntityProperty()", function () {
-      var field1 = 'foo/1/bar'.toField(),
-          field2 = 'baz/1/quux'.toField();
+      var field = 'foo/1/bar'.toField();
 
       beforeEach(function () {
-        entityPropertyBound = EntityPropertyBound.create({field: field1});
+        entityPropertyBound = EntityPropertyBound.create();
         spyOn(entityPropertyBound, 'syncToEntityProperty');
       });
 
@@ -58,38 +57,62 @@ describe("$widgets", function () {
       });
 
       it("should return self", function () {
-        var result = entityPropertyBound.setEntityProperty('field', field2);
+        var result = entityPropertyBound.setEntityProperty('field', field);
         expect(result).toBe(entityPropertyBound);
       });
 
-      it("should set entity property", function () {
-        entityPropertyBound.setEntityProperty('field', field2);
-        expect(entityPropertyBound.field).toBe(field2);
+      it("should add property to entityProperties", function () {
+        entityPropertyBound.setEntityProperty('field', field);
+        expect(entityPropertyBound.entityProperties.data).toEqual({
+          'field': 1
+        });
       });
 
-      it("should update entityPropertiesByEntityKeys", function () {
-        entityPropertyBound.setEntityProperty('field', field2);
+      it("should set entity property", function () {
+        entityPropertyBound.setEntityProperty('field', field);
+        expect(entityPropertyBound.field).toBe(field);
+      });
+
+      it("should set entityPropertiesByEntityKeys", function () {
+        entityPropertyBound.setEntityProperty('field', field);
         expect(entityPropertyBound.entityPropertiesByEntityKeys.data).toEqual({
-          'baz/1/quux': 'field'
+          'foo/1/bar': 'field'
         });
       });
 
       it("should invoke syncToEntityProperty", function () {
-        entityPropertyBound.setEntityProperty('field', field2);
+        entityPropertyBound.setEntityProperty('field', field);
         expect(entityPropertyBound.syncToEntityProperty)
         .toHaveBeenCalledWith('field');
       });
 
-      it("should unsubscribe from old property value", function () {
-        entityPropertyBound.setEntityProperty('field', field2);
-        expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field1))
-        .toBeFalsy();
+      it("should subscribe to new property value", function () {
+        entityPropertyBound.setEntityProperty('field', field);
+        expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field))
+        .toBeTruthy();
       });
 
-      it("should subscribe to new property value", function () {
-        entityPropertyBound.setEntityProperty('field', field2);
-        expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field2))
-        .toBeTruthy();
+      describe("when entity property has previous value", function () {
+        var field2;
+
+        beforeEach(function () {
+          field2 = 'baz/1/quux'.toField();
+          entityPropertyBound.setEntityProperty('field', field2);
+        });
+
+        it("should update entityPropertiesByEntityKeys", function () {
+          entityPropertyBound.setEntityProperty('field', field);
+          expect(entityPropertyBound.entityPropertiesByEntityKeys.data)
+          .toEqual({
+            'foo/1/bar': 'field'
+          });
+        });
+
+        it("should unsubscribe from old property value", function () {
+          entityPropertyBound.setEntityProperty('field', field);
+          expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field2))
+          .toBeFalsy();
+        });
       });
     });
 
