@@ -253,6 +253,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
             method = compactedMethods[i];
             method.shared = shared;
             method.returned = result;
+            // todo Pass first n args instead of apply for performance?
             result = method.apply(this, arguments);
           }
 
