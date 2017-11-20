@@ -9,18 +9,23 @@
 $widgets.ModuleBound = $oop.getClass('$widgets.ModuleBound')
 .expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widgets.ModuleBound# */{
-  /**
-   * To be optionally implemented by host class.
-   * @function $widgets.ModuleBound#onModuleAvailable
-   */
-
   /** @ignore */
   onAttach: function () {
-    if (this.onModuleAvailable) {
-      this.on(
-          $module.EVENT_MODULE_AVAILABLE,
-          $module.ModuleEnvironment.create(),
-          this.onModuleAvailable);
-    }
+    this.syncToAvailableModules();
+    this.on(
+        $module.EVENT_MODULE_AVAILABLE,
+        $module.ModuleEnvironment.create(),
+        this.onModuleAvailable);
+  },
+
+  /**
+   * Updates parts of the widget's state that depend on the available modules.
+   * @ignore
+   */
+  syncToAvailableModules: function () {},
+
+  /** @ignore */
+  onModuleAvailable: function () {
+    this.syncToAvailableModules();
   }
 });

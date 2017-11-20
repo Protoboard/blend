@@ -19,9 +19,6 @@ describe("$widgets", function () {
 
     describe("onAttach()", function () {
       beforeEach(function () {
-        ModuleBound.define({
-          onModuleAvailable: function () {}
-        });
         moduleBound = ModuleBound.create();
       });
 
@@ -29,11 +26,17 @@ describe("$widgets", function () {
         moduleBound.destroy();
       });
 
+      it("should invoke syncToAvailableModules", function () {
+        spyOn(moduleBound, 'syncToAvailableModules');
+        moduleBound.onAttach();
+        expect(moduleBound.syncToAvailableModules).toHaveBeenCalled();
+      });
+
       it("should subscribe to EVENT_LOCALE_CHANGE", function () {
         moduleBound.onAttach();
-        expect(moduleBound.subscribes(
-            $module.EVENT_MODULE_AVAILABLE,
-            $module.ModuleEnvironment.create())).toBeTruthy();
+        spyOn(moduleBound, 'syncToAvailableModules');
+        'foo'.toModule().trigger($module.EVENT_MODULE_AVAILABLE);
+        expect(moduleBound.syncToAvailableModules).toHaveBeenCalled();
       });
     });
   });

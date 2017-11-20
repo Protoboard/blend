@@ -24,9 +24,6 @@ describe("$widgets", function () {
 
     describe("onAttach()", function () {
       beforeEach(function () {
-        RouteBound.define({
-          onRouteChange: function () {}
-        });
         routeBound = RouteBound.create();
       });
 
@@ -34,11 +31,17 @@ describe("$widgets", function () {
         routeBound.destroy();
       });
 
+      it("should invoke syncToActiveRoute", function () {
+        spyOn(routeBound, 'syncToActiveRoute');
+        routeBound.onAttach();
+        expect(routeBound.syncToActiveRoute).toHaveBeenCalled();
+      });
+
       it("should subscribe to EVENT_ROUTE_CHANGE", function () {
         routeBound.onAttach();
-        expect(routeBound.subscribes(
-            $router.EVENT_ROUTE_CHANGE,
-            $router.RouteEnvironment.create())).toBeTruthy();
+        spyOn(routeBound, 'syncToActiveRoute');
+        $router.RouteEnvironment.create().trigger($router.EVENT_ROUTE_CHANGE);
+        expect(routeBound.syncToActiveRoute).toHaveBeenCalled();
       });
     });
   });

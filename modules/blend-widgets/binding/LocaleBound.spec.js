@@ -19,10 +19,6 @@ describe("$widgets", function () {
 
     describe("onAttach()", function () {
       beforeEach(function () {
-        LocaleBound.define({
-          onLocaleChange: function () {},
-          onActiveTranslationsChange: function () {}
-        });
         localeBound = LocaleBound.create();
       });
 
@@ -30,18 +26,38 @@ describe("$widgets", function () {
         localeBound.destroy();
       });
 
+      it("should invoke syncToActiveLocale", function () {
+        spyOn(localeBound, 'syncToActiveLocale');
+        localeBound.onAttach();
+        expect(localeBound.syncToActiveLocale).toHaveBeenCalled();
+      });
+
       it("should subscribe to EVENT_LOCALE_CHANGE", function () {
         localeBound.onAttach();
-        expect(localeBound.subscribes(
-            $i18n.EVENT_LOCALE_CHANGE,
-            $i18n.LocaleEnvironment.create())).toBeTruthy();
+        spyOn(localeBound, 'syncToActiveLocale');
+        'foo'.toLocale().trigger($i18n.EVENT_LOCALE_CHANGE);
+        expect(localeBound.syncToActiveLocale).toHaveBeenCalled();
+      });
+
+      beforeEach(function () {
+        localeBound = LocaleBound.create();
+      });
+
+      afterEach(function () {
+        localeBound.destroy();
+      });
+
+      it("should invoke syncToActiveTranslations", function () {
+        spyOn(localeBound, 'syncToActiveTranslations');
+        localeBound.onAttach();
+        expect(localeBound.syncToActiveTranslations).toHaveBeenCalled();
       });
 
       it("should subscribe to EVENT_ACTIVE_TRANSLATIONS_CHANGE", function () {
         localeBound.onAttach();
-        expect(localeBound.subscribes(
-            $i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE,
-            $i18n.LocaleEnvironment.create())).toBeTruthy();
+        spyOn(localeBound, 'syncToActiveTranslations');
+        'foo'.toLocale().trigger($i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE);
+        expect(localeBound.syncToActiveTranslations).toHaveBeenCalled();
       });
     });
   });

@@ -39,15 +39,5 @@ $widgets.LocaleText = $oop.getClass('$widgets.LocaleText')
   /** @ignore */
   syncToActiveLocale: function () {
     this.setTextString(this.textTranslatable.toString());
-  },
-
-  /** @ignore */
-  onAttach: function () {
-    this.syncToActiveLocale();
-  },
-
-  /** @ignore */
-  onActiveTranslationsChange: function () {
-    this.syncToActiveLocale();
   }
 });

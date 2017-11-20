@@ -87,7 +87,6 @@ $widgets.TemplateText = $oop.getClass('$widgets.TemplateText')
   /** @ignore */
   onAttach: function () {
     var textTemplate = this.textTemplate;
-    this.syncTextString();
     this._addTemplateBindings(textTemplate);
     this._addEntityBindings(textTemplate);
   },
@@ -99,7 +98,7 @@ $widgets.TemplateText = $oop.getClass('$widgets.TemplateText')
   setTextTemplate: function setTextTemplate(textTemplate) {
     var textTemplateBefore = this.textTemplate;
 
-    this.syncTextString();
+    this.syncToTextTemplate();
 
     // unsubscribing from old LiveTemplate and contained Entities
     this._removeTemplateBindings(textTemplateBefore);
@@ -115,22 +114,22 @@ $widgets.TemplateText = $oop.getClass('$widgets.TemplateText')
   },
 
   /** @ignore */
-  syncTextString: function () {
+  syncToTextTemplate: function () {
     this.setTextString(this.textTemplate.toString());
   },
 
   /** @ignore */
-  onActiveTranslationsChange: function () {
-    this.syncTextString();
+  syncToActiveTranslations: function () {
+    this.syncToTextTemplate();
   },
 
   /** @ignore */
   onTemplateParameterChange: function () {
-    this.syncTextString();
+    this.syncToTextTemplate();
   },
 
   /** @ignore */
   onEntityParameterChange: function () {
-    this.syncTextString();
+    this.syncToTextTemplate();
   }
 });

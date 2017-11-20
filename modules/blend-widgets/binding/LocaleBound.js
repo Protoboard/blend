@@ -9,32 +9,42 @@
 $widgets.LocaleBound = $oop.getClass('$widgets.LocaleBound')
 .expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widgets.LocaleBound# */{
-  /**
-   * To be optionally implemented by host class.
-   * @function $widgets.LocaleBound#onLocaleChange
-   */
-
-  /**
-   * To be optionally implemented by host class.
-   * @function $widgets.LocaleBound#onActiveTranslationsChange
-   */
-
   /** @ignore */
   onAttach: function () {
     var localeEnvironment = $i18n.LocaleEnvironment.create();
 
-    if (this.onLocaleChange) {
-      this.on(
-          $i18n.EVENT_LOCALE_CHANGE,
-          localeEnvironment,
-          this.onLocaleChange);
-    }
+    this.syncToActiveLocale();
+    this.on(
+        $i18n.EVENT_LOCALE_CHANGE,
+        localeEnvironment,
+        this.onLocaleChange);
 
-    if (this.onActiveTranslationsChange) {
-      this.on(
-          $i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE,
-          localeEnvironment,
-          this.onActiveTranslationsChange);
-    }
+    this.syncToActiveTranslations();
+    this.on(
+        $i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE,
+        localeEnvironment,
+        this.onActiveTranslationsChange);
+  },
+
+  /**
+   * Updates parts of the widget's state that depend on the active locale.
+   * @ignore
+   */
+  syncToActiveLocale: function () {},
+
+  /**
+   * Updates parts of the widget's state that depend on the active translations.
+   * @ignore
+   */
+  syncToActiveTranslations: function () {},
+
+  /** @ignore */
+  onLocaleChange: function () {
+    this.syncToActiveLocale();
+  },
+
+  /** @ignore */
+  onActiveTranslationsChange: function () {
+    this.syncToActiveTranslations();
   }
 });
