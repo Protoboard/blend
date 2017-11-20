@@ -3,76 +3,58 @@
 /**
  * @function $widgets.DataText.create
  * @param {Object} properties
- * @param {$entity.ValueKey} properties.textKey
+ * @param {$entity.ValueKey} properties.textEntity
  * @returns {$widgets.DataText}
  */
 
 /**
  * @class $widgets.DataText
  * @extends $widgets.Text
+ * @extends $widgets.EntityPropertyBound
  */
 $widgets.DataText = $oop.getClass('$widgets.DataText')
 .blend($oop.getClass('$widgets.Text'))
+.blend($oop.getClass('$widgets.EntityPropertyBound'))
 .define(/** @lends $widgets.DataText# */{
   /**
-   * @member {$entity.ValueKey|$entity.ItemKey} $widgets.DataText#textKey
+   * @member {$entity.ValueKey|$entity.ItemKey} $widgets.DataText#textEntity
    */
 
   /**
    * @memberOf $widgets.DataText
-   * @param {$entity.ValueKey} textKey
+   * @param {$entity.LeafNoded} textEntity
    * @param {Object} [properties]
    */
-  fromTextKey: function (textKey, properties) {
+  fromTextEntity: function (textEntity, properties) {
     return this.create({
-      textKey: textKey
+      textEntity: textEntity
     }, properties);
   },
 
   /** @ignore */
   init: function () {
-    $assert.isInstanceOf(
-        this.textKey, $entity.ValueKey, "Invalid textKey");
-  },
-
-  /** @ignore */
-  onAttach: function () {
-    this.syncToTextEntity();
-    this.on(
-        $entity.EVENT_ENTITY_CHANGE,
-        this.textKey.toEntity(),
-        this.onTextEntityChange);
+    var textEntity = this.textEntity;
+    $assert
+    .isInstanceOf(textEntity, $entity.LeafNoded, "Invalid textEntity")
+    .isInstanceOf(
+        textEntity.entityKey, $entity.ValueKey, "Invalid textEntity key");
   },
 
   /**
-   * @param {$entity.ValueKey} textKey
+   * @param {$entity.LeafNoded} textEntity
    * @returns {$widgets.DataText}
    */
-  setTextKey: function (textKey) {
-    var textKeyBefore = this.textKey;
-    if (!textKeyBefore.equals(textKey)) {
-      this.off(
-          $entity.EVENT_ENTITY_CHANGE,
-          textKeyBefore.toEntity());
-
-      this.textKey = textKey;
-
-      this.syncToTextEntity();
-      this.on(
-          $entity.EVENT_ENTITY_CHANGE,
-          textKey.toEntity(),
-          this.onTextEntityChange);
-    }
+  setTextEntity: function (textEntity) {
+    this.setEntityProperty('textEntity', textEntity);
     return this;
   },
 
   /** @ignore */
-  syncToTextEntity: function () {
-    this.setTextString(this.textKey.toEntity().getNode());
-  },
-
-  /** @ignore */
-  onTextEntityChange: function () {
-    this.syncToTextEntity();
+  syncToEntityProperty: function (entityProperty) {
+    switch (entityProperty) {
+    case 'textEntity':
+      this.setTextString(this.textEntity.getNode());
+      break;
+    }
   }
 });

@@ -71,7 +71,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     'character/rick/name'.toField().setNode("Rick Shanchez");
     $demo.DemoItem.create({
       itemTitle: $widgets.DataText.__classId,
-      contentWidget: $widgets.DataText.fromTextKey('character/rick/name'.toFieldKey())
+      contentWidget: $widgets.DataText.fromTextEntity('character/rick/name'.toField())
     })
     .addToParentNode(this);
   },

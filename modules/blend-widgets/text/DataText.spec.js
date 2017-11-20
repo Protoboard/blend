@@ -15,125 +15,75 @@ describe("$widgets", function () {
       DataText.__forwards = {list: [], sources: [], lookup: {}};
     });
 
-    describe("fromTextKey()", function () {
-      var textKey;
+    describe("fromTextEntity()", function () {
+      var textEntity;
 
       beforeEach(function () {
-        textKey = 'foo/bar/baz'.toFieldKey();
+        textEntity = 'foo/bar/baz'.toField();
       });
 
       it("should return DataText instance", function () {
-        dataText = DataText.fromTextKey(textKey);
+        dataText = DataText.fromTextEntity(textEntity);
         expect(DataText.mixedBy(dataText)).toBeTruthy();
       });
 
-      it("should initialize textKey", function () {
-        dataText = DataText.fromTextKey(textKey);
-        expect(dataText.textKey).toBe(textKey);
+      it("should initialize textEntity", function () {
+        dataText = DataText.fromTextEntity(textEntity);
+        expect(dataText.textEntity).toBe(textEntity);
       });
     });
 
     describe("create()", function () {
-      describe("on invalid textKey", function () {
+      describe("on invalid textEntity", function () {
         it("should throw", function () {
           expect(function () {
             dataText = DataText.create();
           }).toThrow();
           expect(function () {
-            dataText = DataText.create('foo/bar'.toDocumentKey());
+            dataText = DataText.create('foo/bar'.toDocument());
           }).toThrow();
         });
       });
     });
 
-    describe("onAttach()", function () {
-      var textKey;
+    describe("setTextEntity()", function () {
+      var textEntity;
 
       beforeEach(function () {
-        textKey = 'foo/bar/baz'.toFieldKey();
-        textKey.toField().setNode("Hello");
-        dataText = DataText.fromTextKey(textKey);
-      });
-
-      afterEach(function () {
-        dataText.onDetach();
-        textKey.toField().deleteNode();
-      });
-
-      it("should sync text entity to textString", function () {
-        dataText.onAttach();
-        expect(dataText.textString).toBe("Hello");
-      });
-
-      it("should subscribe to textKey", function () {
-        dataText.onAttach();
-        expect(dataText.subscribes($entity.EVENT_ENTITY_CHANGE, textKey.toField()))
-        .toBeTruthy();
-      });
-    });
-
-    describe("setTextKey()", function () {
-      var textKey1,
-          textKey2;
-
-      beforeEach(function () {
-        textKey1 = 'foo/bar/baz'.toFieldKey();
-        textKey2 = 'foo/bar/quux'.toFieldKey();
-        textKey1.toField().setNode("Hello");
-        textKey2.toField().setNode("World");
-        dataText = DataText.fromTextKey(textKey1);
-      });
-
-      afterEach(function () {
-        textKey1.toField().deleteNode();
-        textKey2.toField().deleteNode();
+        textEntity = 'baz/1/quux'.toField();
+        dataText = DataText.fromTextEntity('foo/1/bar'.toField());
+        spyOn(dataText, 'setEntityProperty');
       });
 
       it("should return self", function () {
-        var result = dataText.setTextKey(textKey2);
+        var result = dataText.setTextEntity(textEntity);
         expect(result).toBe(dataText);
       });
 
-      it("should set textKey", function () {
-        dataText.setTextKey(textKey2);
-        expect(dataText.textKey).toBe(textKey2);
-      });
-
-      it("should sync text entity to textString", function () {
-        dataText.setTextKey(textKey2);
-        expect(dataText.textString).toBe("World");
-      });
-
-      it("should re-subscribe to new key", function () {
-        dataText.setTextKey(textKey2);
-        expect(dataText.subscribes($entity.EVENT_ENTITY_CHANGE, textKey1.toField()))
-        .toBeFalsy();
-        expect(dataText.subscribes($entity.EVENT_ENTITY_CHANGE, textKey2.toField()))
-        .toBeTruthy();
+      it("should invoke setEntityProperty", function () {
+        dataText.setTextEntity(textEntity);
+        expect(dataText.setEntityProperty)
+        .toHaveBeenCalledWith('textEntity', textEntity);
       });
     });
 
-    describe("onTextEntityChange()", function () {
-      var textKey;
+    describe("syncToEntityProperty()", function () {
+      var textEntity;
 
       beforeEach(function () {
-        textKey = 'foo/bar/baz'.toFieldKey();
-        textKey.toField().setNode("Hello");
-        dataText = DataText.fromTextKey(textKey);
+        textEntity = 'foo/bar/baz'.toField();
+        textEntity.setNode("Hello");
+        dataText = DataText.fromTextEntity(textEntity);
         dataText.onAttach();
       });
 
       afterEach(function () {
         dataText.onDetach();
-        textKey.toField().deleteNode();
+        textEntity.deleteNode();
       });
 
       it("should sync text entity to textString", function () {
-        textKey.toField()
-        .spawnEvent({
-          eventName: $entity.EVENT_ENTITY_CHANGE
-        })
-        .trigger();
+        dataText.syncToEntityProperty('textEntity');
         expect(dataText.textString).toBe("Hello");
       });
     });
