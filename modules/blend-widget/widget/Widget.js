@@ -91,7 +91,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
    */
   addEventPaths: function (parentNodePath) {
     var parentNodePathStr = parentNodePath.toString(),
-        nodePath = parentNodePath.push(String(this.nodeName)),
+        nodePath = parentNodePath.clone().push(String(this.instanceId)),
         nodePathStr = nodePath.toString();
 
     this
@@ -112,7 +112,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
    */
   removeEventPaths: function (parentNodePath) {
     var parentNodePathStr = parentNodePath.toString(),
-        nodePath = parentNodePath.push(String(this.nodeName)),
+        nodePath = parentNodePath.clone().push(String(this.instanceId)),
         nodePathStr = nodePath.toString();
 
     this

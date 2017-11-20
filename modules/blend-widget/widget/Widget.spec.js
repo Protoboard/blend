@@ -199,13 +199,19 @@ describe("$widget", function () {
           });
 
           it("should set event paths on children", function () {
+            var listeningPath = ['widget', widget.instanceId].join('.'),
+                listeningPath1 = ['widget', widget.instanceId,
+                  childWidget1.instanceId].join('.'),
+                listeningPath2 = ['widget', widget.instanceId,
+                  childWidget1.instanceId, childWidget2.instanceId].join('.');
+
             childWidget1.addToParentNode(widget);
-            expect(childWidget1.listeningPath).toBe('widget.foo.bar');
+            expect(childWidget1.listeningPath).toBe(listeningPath1);
             expect(childWidget1.triggerPaths.list)
-            .toContain('widget.foo.bar', 'widget.foo', 'widget');
-            expect(childWidget2.listeningPath).toBe('widget.foo.bar.baz');
+            .toContain(listeningPath1, listeningPath, 'widget');
+            expect(childWidget2.listeningPath).toBe(listeningPath2);
             expect(childWidget2.triggerPaths.list)
-            .toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+            .toContain(listeningPath2, listeningPath1, 'widget');
           });
         });
 
@@ -249,13 +255,19 @@ describe("$widget", function () {
             });
 
             it("should not remove old event paths", function () {
+              var listeningPath = ['widget', widget.instanceId].join('.'),
+                  listeningPath1 = ['widget', widget.instanceId,
+                    childWidget1.instanceId].join('.'),
+                  listeningPath2 = ['widget', widget.instanceId,
+                    childWidget1.instanceId, childWidget2.instanceId].join('.');
+
               childWidget1.addToParentNode(widget2);
-              expect(childWidget1.listeningPath).toBe('widget.foo.bar');
+              expect(childWidget1.listeningPath).toBe(listeningPath1);
               expect(childWidget1.triggerPaths.list)
-              .toContain('widget.foo.bar', 'widget.foo', 'widget');
-              expect(childWidget2.listeningPath).toBe('widget.foo.bar.baz');
+              .toContain(listeningPath1, listeningPath, 'widget');
+              expect(childWidget2.listeningPath).toBe(listeningPath2);
               expect(childWidget2.triggerPaths.list)
-              .toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+              .toContain(listeningPath2, listeningPath1, 'widget');
             });
           });
         });
@@ -299,13 +311,19 @@ describe("$widget", function () {
           });
 
           it("should not remove old event paths", function () {
+            var listeningPath = ['widget', widget.instanceId].join('.'),
+                listeningPath1 = ['widget', widget.instanceId,
+                  childWidget1.instanceId].join('.'),
+                listeningPath2 = ['widget', widget.instanceId,
+                  childWidget1.instanceId, childWidget2.instanceId].join('.');
+
             childWidget1.addToParentNode(widget);
-            expect(childWidget1.listeningPath).toBe('widget.foo.bar');
+            expect(childWidget1.listeningPath).toBe(listeningPath1);
             expect(childWidget1.triggerPaths.list)
-            .toContain('widget.foo.bar', 'widget.foo', 'widget');
-            expect(childWidget2.listeningPath).toBe('widget.foo.bar.baz');
+            .toContain(listeningPath1, listeningPath, 'widget');
+            expect(childWidget2.listeningPath).toBe(listeningPath2);
             expect(childWidget2.triggerPaths.list)
-            .toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+            .toContain(listeningPath2, listeningPath1, 'widget');
           });
         });
       });

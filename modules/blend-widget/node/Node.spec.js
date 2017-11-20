@@ -570,7 +570,9 @@ describe("$widget", function () {
       it("should retrieve path to node", function () {
         var result = node3.getNodePath();
         expect($data.TreePath.mixedBy(result)).toBeTruthy();
-        expect(result).toEqual('foo.bar.baz'.toTreePath());
+        expect(result)
+        .toEqual([String(node.instanceId), String(node2.instanceId),
+          String(node3.instanceId)].toTreePath());
       });
     });
 

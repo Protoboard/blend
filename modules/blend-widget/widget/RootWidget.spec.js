@@ -39,12 +39,14 @@ describe("$widget", function () {
 
       it("should initialize listeningPath", function () {
         rootWidget = RootWidget.create();
-        expect(rootWidget.listeningPath).toBe('widget.root');
+        expect(rootWidget.listeningPath)
+        .toBe('widget.' + rootWidget.instanceId);
       });
 
       it("should initialize triggerPaths", function () {
         rootWidget = RootWidget.create();
-        expect(rootWidget.triggerPaths.list).toContain('widget.root', 'widget');
+        expect(rootWidget.triggerPaths.list)
+        .toContain('widget.' + rootWidget.instanceId, 'widget');
       });
 
       it("should invoke onAttach()", function () {
