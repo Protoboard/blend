@@ -1,27 +1,27 @@
 "use strict";
 
 /**
- * @function $widgets.DataText.create
+ * @function $widgets.EntityText.create
  * @param {Object} properties
  * @param {$entity.ValueKey} properties.textEntity
- * @returns {$widgets.DataText}
+ * @returns {$widgets.EntityText}
  */
 
 /**
- * @class $widgets.DataText
+ * @class $widgets.EntityText
  * @extends $widgets.Text
  * @extends $widgets.EntityPropertyBound
  */
-$widgets.DataText = $oop.getClass('$widgets.DataText')
+$widgets.EntityText = $oop.getClass('$widgets.EntityText')
 .blend($oop.getClass('$widgets.Text'))
 .blend($oop.getClass('$widgets.EntityPropertyBound'))
-.define(/** @lends $widgets.DataText# */{
+.define(/** @lends $widgets.EntityText# */{
   /**
-   * @member {$entity.ValueKey|$entity.ItemKey} $widgets.DataText#textEntity
+   * @member {$entity.ValueKey|$entity.ItemKey} $widgets.EntityText#textEntity
    */
 
   /**
-   * @memberOf $widgets.DataText
+   * @memberOf $widgets.EntityText
    * @param {$entity.LeafNoded} textEntity
    * @param {Object} [properties]
    */
@@ -42,7 +42,7 @@ $widgets.DataText = $oop.getClass('$widgets.DataText')
 
   /**
    * @param {$entity.LeafNoded} textEntity
-   * @returns {$widgets.DataText}
+   * @returns {$widgets.EntityText}
    */
   setTextEntity: function (textEntity) {
     this.setEntityProperty('textEntity', textEntity);

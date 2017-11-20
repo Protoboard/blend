@@ -70,8 +70,8 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
   _addDataText: function () {
     'character/rick/name'.toField().setNode("Rick Shanchez");
     $demo.DemoItem.create({
-      itemTitle: $widgets.DataText.__classId,
-      contentWidget: $widgets.DataText.fromTextEntity('character/rick/name'.toField())
+      itemTitle: $widgets.EntityText.__classId,
+      contentWidget: $widgets.EntityText.fromTextEntity('character/rick/name'.toField())
     })
     .addToParentNode(this);
   },

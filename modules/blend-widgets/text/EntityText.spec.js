@@ -5,14 +5,14 @@ var $oop = window['blend-oop'],
     $widgets = window['blend-widgets'];
 
 describe("$widgets", function () {
-  describe("DataText", function () {
-    var DataText,
-        dataText;
+  describe("EntityText", function () {
+    var EntityText,
+        entityText;
 
     beforeAll(function () {
-      DataText = $oop.getClass('test.$widgets.DataText.DataText')
-      .blend($widgets.DataText);
-      DataText.__forwards = {list: [], sources: [], lookup: {}};
+      EntityText = $oop.getClass('test.$widgets.EntityText.EntityText')
+      .blend($widgets.EntityText);
+      EntityText.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("fromTextEntity()", function () {
@@ -22,14 +22,14 @@ describe("$widgets", function () {
         textEntity = 'foo/bar/baz'.toField();
       });
 
-      it("should return DataText instance", function () {
-        dataText = DataText.fromTextEntity(textEntity);
-        expect(DataText.mixedBy(dataText)).toBeTruthy();
+      it("should return EntityText instance", function () {
+        entityText = EntityText.fromTextEntity(textEntity);
+        expect(EntityText.mixedBy(entityText)).toBeTruthy();
       });
 
       it("should initialize textEntity", function () {
-        dataText = DataText.fromTextEntity(textEntity);
-        expect(dataText.textEntity).toBe(textEntity);
+        entityText = EntityText.fromTextEntity(textEntity);
+        expect(entityText.textEntity).toBe(textEntity);
       });
     });
 
@@ -37,10 +37,10 @@ describe("$widgets", function () {
       describe("on invalid textEntity", function () {
         it("should throw", function () {
           expect(function () {
-            dataText = DataText.create();
+            entityText = EntityText.create();
           }).toThrow();
           expect(function () {
-            dataText = DataText.create('foo/bar'.toDocument());
+            entityText = EntityText.create('foo/bar'.toDocument());
           }).toThrow();
         });
       });
@@ -51,18 +51,18 @@ describe("$widgets", function () {
 
       beforeEach(function () {
         textEntity = 'baz/1/quux'.toField();
-        dataText = DataText.fromTextEntity('foo/1/bar'.toField());
-        spyOn(dataText, 'setEntityProperty');
+        entityText = EntityText.fromTextEntity('foo/1/bar'.toField());
+        spyOn(entityText, 'setEntityProperty');
       });
 
       it("should return self", function () {
-        var result = dataText.setTextEntity(textEntity);
-        expect(result).toBe(dataText);
+        var result = entityText.setTextEntity(textEntity);
+        expect(result).toBe(entityText);
       });
 
       it("should invoke setEntityProperty", function () {
-        dataText.setTextEntity(textEntity);
-        expect(dataText.setEntityProperty)
+        entityText.setTextEntity(textEntity);
+        expect(entityText.setEntityProperty)
         .toHaveBeenCalledWith('textEntity', textEntity);
       });
     });
@@ -73,18 +73,18 @@ describe("$widgets", function () {
       beforeEach(function () {
         textEntity = 'foo/bar/baz'.toField();
         textEntity.setNode("Hello");
-        dataText = DataText.fromTextEntity(textEntity);
-        dataText.onAttach();
+        entityText = EntityText.fromTextEntity(textEntity);
+        entityText.onAttach();
       });
 
       afterEach(function () {
-        dataText.onDetach();
+        entityText.onDetach();
         textEntity.deleteNode();
       });
 
       it("should sync text entity to textString", function () {
-        dataText.syncToEntityProperty('textEntity');
-        expect(dataText.textString).toBe("Hello");
+        entityText.syncToEntityProperty('textEntity');
+        expect(entityText.textString).toBe("Hello");
       });
     });
   });
