@@ -66,6 +66,7 @@ $widgets.EntityPropertyBound = $oop.getClass('$widgets.EntityPropertyBound')
    * @param {$entity.Entity} entity
    * @returns {$widgets.EntityPropertyBound}
    * @todo Should we allow mutating entity properties?
+   * @todo Throw when host class is cached?
    */
   setEntityProperty: function (entityProperty, entity) {
     var entityProperties = this.entityProperties,

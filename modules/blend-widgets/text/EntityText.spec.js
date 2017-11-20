@@ -37,10 +37,7 @@ describe("$widgets", function () {
       describe("on invalid textEntity", function () {
         it("should throw", function () {
           expect(function () {
-            entityText = EntityText.create();
-          }).toThrow();
-          expect(function () {
-            entityText = EntityText.create('foo/bar'.toDocument());
+            entityText = EntityText.create({textEntity: 'foo/bar'.toDocument()});
           }).toThrow();
         });
       });
