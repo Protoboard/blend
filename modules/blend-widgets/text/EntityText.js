@@ -33,9 +33,8 @@ $widgets.EntityText = $oop.getClass('$widgets.EntityText')
 
   /** @ignore */
   init: function () {
-    var textEntity = this.textEntity;
-    $assert
-    .isInstanceOfOptional(textEntity, $entity.LeafNoded, "Invalid textEntity");
+    $assert.isInstanceOfOptional(this.textEntity, $entity.LeafNoded,
+        "Invalid textEntity");
   },
 
   /**

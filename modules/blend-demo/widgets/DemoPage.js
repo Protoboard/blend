@@ -14,9 +14,13 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
 .define(/** @lends $demo.DemoPage# */{
   /** @ignore */
   init: function () {
+    // todo Move to respective _add method once $entity.NodeTypeIndex is fixed.
     $entity.entities
     .appendNode('document.__document.character'.toTreePath(), {
       fields: ['name']
+    })
+    .appendNode('document.__document.show'.toTreePath(), {
+      fields: ['title', 'url']
     });
 
     $widgets.Text.create({
@@ -30,6 +34,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     this._addDataText();
     this._addTemplateText();
     this._addHyperlink();
+    this._addDatHyperlink();
   },
 
   /** @private */
@@ -99,6 +104,22 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: $widgets.Hyperlink.create({
         textString: "Rick and Morty",
         targetUrl: 'http://www.adultswim.com/videos/rick-and-morty/'
+      })
+    })
+    .addToParentNode(this);
+  },
+
+  /** @private */
+  _addDatHyperlink: function () {
+    'show/rick-and-morty'.toDocument().setNode({
+      title: "Rick and Morty",
+      url: 'http://www.adultswim.com/videos/rick-and-morty/'
+    });
+    $demo.DemoItem.create({
+      itemTitle: $widgets.EntityHyperlink.__classId,
+      contentWidget: $widgets.EntityHyperlink.create({
+        textEntity: 'show/rick-and-morty/title'.toField(),
+        targetUrlEntity: 'show/rick-and-morty/url'.toField()
       })
     })
     .addToParentNode(this);
