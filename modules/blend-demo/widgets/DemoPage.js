@@ -76,6 +76,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: this._createDatHyperlink()
     })
     .addToParentNode(this);
+
+    // adding plain image
+    $demo.DemoItem.create({
+      code: this._createImage,
+      itemTitle: $widgets.Image.__classId,
+      contentWidget: this._createImage()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -140,6 +148,13 @@ _createDatHyperlink: function () {
   return $widgets.EntityHyperlink.create({
     textEntity: 'show/rick-and-morty/title'.toField(),
     targetUrlEntity: 'show/rick-and-morty/url'.toField()
+  });
+},
+
+/** @private */
+_createImage: function () {
+  return $widgets.Image.create({
+    imageUrl: 'https://i.cdn.turner.com/adultswim/big/video/meet-the-vindicators/rickandmorty_ep304_001_Meet_The_Vindicators.jpg'
   });
 }
   //@formatter:on

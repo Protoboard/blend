@@ -1,15 +1,7 @@
 "use strict";
 
 /**
- * @function $widget.HtmlText.create
- * @param {Object} [properties]
- * @param {string} [properties.nodeName]
- * @param {string|$utils.Stringifiable} [properties.textString]
- * @returns {$widget.HtmlText}
- */
-
-/**
- * @class $widgets.HtmlText
+ * @mixin $widgets.HtmlText
  * @extends $widgets.XmlText
  * @extends $widget.HtmlWidget
  */
