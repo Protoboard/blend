@@ -23,6 +23,10 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
    * @member {$widget.Widget} $demo.DemoItem#contentWidget
    */
 
+  defaults: function () {
+    this.code = this.code || "No code sample";
+  },
+
   /** @ignore */
   spread: function () {
     this.itemTitle = this.itemTitle || this.contentWidget.__classId;
@@ -40,6 +44,12 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
     .addChildNode(
         this.contentWidget
         .setNodeName('widget')
-        .setNodeOrder(1));
+        .setNodeOrder(1))
+    .addChildNode($widgets.Text.create({
+      elementName: 'pre',
+      nodeName: 'code',
+      nodeOrder: 2,
+      textString: String(this.code)
+    }));
   }
 });

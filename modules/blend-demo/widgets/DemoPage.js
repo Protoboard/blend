@@ -29,101 +29,120 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     })
     .addToParentNode(this);
 
-    this._addText();
-    this._addLocaleText();
-    this._addDataText();
-    this._addTemplateText();
-    this._addHyperlink();
-    this._addDatHyperlink();
-  },
-
-  /** @private */
-  _addText: function () {
+    // adding plain text
     $demo.DemoItem.create({
+      code: this._createText,
       itemTitle: $widgets.Text.__classId,
-      contentWidget: $widgets.Text.create({
-        textString: "<b>Hello World!</b>"
-      })
+      contentWidget: this._createText()
     })
     .addToParentNode(this);
-  },
 
-  /** @private */
-  _addLocaleText: function () {
-    // translatable text
-    '_translation/helloworld-de'.toDocument().setNode({
-      originalString: "Hello World!",
-      pluralForms: ["Hallo Welt!"]
-    });
-    '_locale/de'.toDocument().setNode({
-      localeName: 'German',
-      pluralFormula: 'nplurals=2; plural=(n != 1);',
-      translations: {
-        '_translation/helloworld-de': 1
-      }
-    });
+    // adding locale-bound text
     $demo.DemoItem.create({
+      code: this._createLocaleText,
       itemTitle: $widgets.LocaleText.__classId,
-      contentWidget: $widgets.LocaleText.create({
-        textTranslatable: "Hello World!".toTranslatable()
-      })
+      contentWidget: this._createLocaleText()
     })
     .addToParentNode(this);
-  },
 
-  /** @private */
-  _addDataText: function () {
-    'character/rick/name'.toField().setNode("Rick Shanchez");
+    // adding entity-bound text
     $demo.DemoItem.create({
+      code: this._createDataText,
       itemTitle: $widgets.EntityText.__classId,
-      contentWidget: $widgets.EntityText.fromTextEntity('character/rick/name'.toField())
+      contentWidget: this._createDataText()
     })
     .addToParentNode(this);
-  },
 
-  /** @private */
-  _addTemplateText: function () {
-    'character/jerry/name'.toField().setNode("Jerry");
-    var liveTemplate = "What's up, {{name}}?".toLiveTemplate()
-    .setParameterValues({
-      name: 'character/jerry/name'.toField()
-    });
+    // adding template text
     $demo.DemoItem.create({
+      code: this._createTemplateText,
       itemTitle: $widgets.TemplateText.__classId,
-      contentWidget: $widgets.TemplateText.create({
-        textTemplate: liveTemplate
-      })
+      contentWidget: this._createTemplateText()
     })
     .addToParentNode(this);
-  },
 
-  /** @private */
-  _addHyperlink: function () {
+    // adding plain hyperlink
     $demo.DemoItem.create({
+      code: this._createHyperlink,
       itemTitle: $widgets.Hyperlink.__classId,
-      contentWidget: $widgets.Hyperlink.create({
-        textString: "Rick and Morty",
-        targetUrl: 'http://www.adultswim.com/videos/rick-and-morty/'
-      })
+      contentWidget: this._createHyperlink()
+    })
+    .addToParentNode(this);
+
+    // adding entity-bound hyperlink
+    $demo.DemoItem.create({
+      code: this._createDatHyperlink,
+      itemTitle: $widgets.EntityHyperlink.__classId,
+      contentWidget: this._createDatHyperlink()
     })
     .addToParentNode(this);
   },
 
-  /** @private */
-  _addDatHyperlink: function () {
-    'show/rick-and-morty'.toDocument().setNode({
-      title: "Rick and Morty",
-      url: 'http://www.adultswim.com/videos/rick-and-morty/'
-    });
-    $demo.DemoItem.create({
-      itemTitle: $widgets.EntityHyperlink.__classId,
-      contentWidget: $widgets.EntityHyperlink.create({
-        textEntity: 'show/rick-and-morty/title'.toField(),
-        targetUrlEntity: 'show/rick-and-morty/url'.toField()
-      })
-    })
-    .addToParentNode(this);
-  }
+  //@formatter:off
+/** @private */
+_createText: function () {
+  return $widgets.Text.create({
+    textString: "<b>Hello World!</b>"
+  });
+},
+
+/** @private */
+_createLocaleText: function () {
+  // translatable text
+  '_translation/helloworld-de'.toDocument().setNode({
+    originalString: "Hello World!",
+    pluralForms: ["Hallo Welt!"]
+  });
+  '_locale/de'.toDocument().setNode({
+    localeName: 'German',
+    pluralFormula: 'nplurals=2; plural=(n != 1);',
+    translations: {
+      '_translation/helloworld-de': 1
+    }
+  });
+  return $widgets.LocaleText.create({
+    textTranslatable: "Hello World!".toTranslatable()
+  });
+},
+
+/** @private */
+_createDataText: function () {
+  'character/rick/name'.toField().setNode("Rick Shanchez");
+  return $widgets.EntityText.fromTextEntity('character/rick/name'.toField());
+},
+
+/** @private */
+_createTemplateText: function () {
+  'character/jerry/name'.toField().setNode("Jerry");
+  var liveTemplate = "What's up, {{name}}?".toLiveTemplate()
+  .setParameterValues({
+    name: 'character/jerry/name'.toField()
+  });
+  return $widgets.TemplateText.create({
+    textTemplate: liveTemplate
+  });
+},
+
+/** @private */
+_createHyperlink: function () {
+  return $widgets.Hyperlink.create({
+    textString: "Rick and Morty",
+    targetUrl: 'http://www.adultswim.com/videos/rick-and-morty/'
+  });
+},
+
+/** @private */
+_createDatHyperlink: function () {
+  'show/rick-and-morty'.toDocument().setNode({
+    title: "Rick and Morty",
+    url: 'http://www.adultswim.com/videos/rick-and-morty/'
+  });
+  return $widgets.EntityHyperlink.create({
+    textEntity: 'show/rick-and-morty/title'.toField(),
+    targetUrlEntity: 'show/rick-and-morty/url'.toField()
+  });
+}
+  //@formatter:on
 });
 
 $event.EventSpace.create()
