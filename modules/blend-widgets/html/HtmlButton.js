@@ -3,12 +3,12 @@
 /**
  * @mixin $widgets.HtmlButton
  * @extend $widget.HtmlWidget
- * @extend $widget.HtmlDisabledAttributeHost
+ * @extend $widget.DisabledAttributeHost
  * @augments $widgets.Button
  */
 $widgets.HtmlButton = $oop.getClass('$widgets.HtmlButton')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$widgets.HtmlDisabledAttributeHost'))
+.blend($oop.getClass('$widgets.DisabledAttributeHost'))
 .expect($oop.getClass('$widgets.Button'))
 .define(/** @lends $widgets.HtmlButton# */{
   /** @ignore */
