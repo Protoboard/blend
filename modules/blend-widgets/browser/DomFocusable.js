@@ -13,7 +13,7 @@ $widgets.DomFocusable = $oop.getClass('$widgets.DomFocusable')
    * Syncs DOM focus to `isFocused` property.
    * @protected
    */
-  _syncFocusedProperty: function () {
+  _syncElementFocus: function () {
     var element = this.getElement();
     if (this.isFocused) {
       element.focus();
@@ -26,7 +26,7 @@ $widgets.DomFocusable = $oop.getClass('$widgets.DomFocusable')
    * Syncs `isFocused` property to DOM focus.
    * @protected
    */
-  _syncIsFocused: function () {
+  _syncToElementFocus: function () {
     var element = this.getElement();
     if (document.activeElement === element) {
       this.focus();
@@ -41,7 +41,7 @@ $widgets.DomFocusable = $oop.getClass('$widgets.DomFocusable')
   focus: function focus() {
     var isFocusedBefore = focus.shared.isFocusedBefore;
     if (!isFocusedBefore) {
-      this._syncFocusedProperty();
+      this._syncElementFocus();
     }
     return this;
   },
@@ -52,15 +52,14 @@ $widgets.DomFocusable = $oop.getClass('$widgets.DomFocusable')
   blur: function blur() {
     var isFocusedBefore = blur.shared.isFocusedBefore;
     if (isFocusedBefore) {
-      this._syncFocusedProperty();
+      this._syncElementFocus();
     }
     return this;
   },
 
   /** @ignore */
   onRender: function () {
-    this._syncFocusedProperty();
-    this._syncIsFocused();
+    this._syncElementFocus();
 
     var element = this.getElement();
     element.addEventListener('focusin', this.onFocusIn);
@@ -77,7 +76,7 @@ $widgets.DomFocusable = $oop.getClass('$widgets.DomFocusable')
         .wrap(event);
 
     eventTrail.push(wrapperEvent);
-    this._syncIsFocused();
+    this._syncToElementFocus();
   },
 
   /**
@@ -90,7 +89,7 @@ $widgets.DomFocusable = $oop.getClass('$widgets.DomFocusable')
         .wrap(event);
 
     eventTrail.push(wrapperEvent);
-    this._syncIsFocused();
+    this._syncToElementFocus();
   }
 });
 

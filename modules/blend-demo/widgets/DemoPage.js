@@ -100,6 +100,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: this._createButton()
     })
     .addToParentNode(this);
+
+    // adding plain text input
+    $demo.DemoItem.create({
+      code: this._createTextInput,
+      itemTitle: $widgets.TextInput.__classId,
+      contentWidget: this._createTextInput()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -191,6 +199,13 @@ _createButton: function () {
       .addChildNode($widgets.Text.create({
         textString: "Open portal"
       }));
+},
+
+/** @private */
+_createTextInput: function () {
+  return $widgets.TextInput.create({
+        inputValue: "Rick"
+      });
 }
   //@formatter:on
 });
