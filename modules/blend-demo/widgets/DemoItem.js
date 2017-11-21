@@ -41,14 +41,20 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
       nodeOrder: 0,
       textString: this.itemTitle
     }))
+    .addChildNode($ui.Text.create({
+      elementName: 'p',
+      nodeName: 'widgetId',
+      nodeOrder: 1,
+      textString: this.contentWidget.getAttribute('id')
+    }))
     .addChildNode(
         this.contentWidget
         .setNodeName('widget')
-        .setNodeOrder(1))
+        .setNodeOrder(2))
     .addChildNode($ui.Text.create({
       elementName: 'pre',
       nodeName: 'code',
-      nodeOrder: 2,
+      nodeOrder: 3,
       textString: String(this.code)
     }));
   }
