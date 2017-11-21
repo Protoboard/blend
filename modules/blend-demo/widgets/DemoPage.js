@@ -84,6 +84,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: this._createImage()
     })
     .addToParentNode(this);
+
+    // adding entity-bound image
+    $demo.DemoItem.create({
+      code: this._createEntityImage,
+      itemTitle: $widgets.EntityImage.__classId,
+      contentWidget: this._createEntityImage()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -117,18 +125,19 @@ _createLocaleText: function () {
 /** @private */
 _createDataText: function () {
   'character/rick/name'.toField().setNode("Rick Shanchez");
-  return $widgets.EntityText.fromTextEntity('character/rick/name'.toField());
+  return $widgets.EntityText.create({
+    textEntity: 'character/rick/name'.toField()
+  });
 },
 
 /** @private */
 _createTemplateText: function () {
   'character/jerry/name'.toField().setNode("Jerry");
-  var liveTemplate = "What's up, {{name}}?".toLiveTemplate()
-  .setParameterValues({
-    name: 'character/jerry/name'.toField()
-  });
   return $widgets.TemplateText.create({
-    textTemplate: liveTemplate
+    textTemplate: "What's up, {{name}}?".toLiveTemplate()
+    .setParameterValues({
+      name: 'character/jerry/name'.toField()
+    })
   });
 },
 
@@ -156,6 +165,15 @@ _createDatHyperlink: function () {
 _createImage: function () {
   return $widgets.Image.create({
     imageUrl: 'https://i.cdn.turner.com/adultswim/big/video/meet-the-vindicators/rickandmorty_ep304_001_Meet_The_Vindicators.jpg'
+  });
+},
+
+/** @private */
+_createEntityImage: function () {
+  'show/rick-and-morty/image'.toField()
+  .setNode('https://i.cdn.turner.com/adultswim/big/video/morty-and-summer-on-trial/rickandmorty_ep301_003_Trial_Summer_And_Morty.jpg');
+  return $widgets.EntityImage.create({
+    imageUrlEntity: 'show/rick-and-morty/image'.toField()
   });
 }
   //@formatter:on
