@@ -20,9 +20,9 @@
       require(['blend-assert', 'blend-oop', 'blend-utils', 'blend-data',
         'blend-event', 'blend-module', 'blend-template', 'blend-entity',
         'blend-i18n', 'blend-router', 'blend-api', 'blend-widget',
-        'blend-widgets'
+        'blend-ui'
       ], function (assert, oop, utils, data, event, module, template, entity,
-          i18n, router, api, widget, widgets
+          i18n, router, api, widget, ui
       ) {
         $assert = assert;
         $oop = oop;
@@ -36,12 +36,12 @@
         $router = router;
         $api = api;
         $widget = widget;
-        $widgets = widgets;
+        $ui = ui;
       });
     </script>
     <script>
-      require(['blend-widgets', 'blend-demo'], function ($widgets) {
-        $widgets.Application.create();
+      require(['blend-ui', 'blend-demo'], function ($ui) {
+        $ui.Application.create();
       });
     </script>
 </head>

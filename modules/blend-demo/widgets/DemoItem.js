@@ -35,7 +35,7 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
   /** @ignore */
   init: function () {
     this
-    .addChildNode($widgets.Text.create({
+    .addChildNode($ui.Text.create({
       elementName: 'h3',
       nodeName: 'title',
       nodeOrder: 0,
@@ -45,7 +45,7 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
         this.contentWidget
         .setNodeName('widget')
         .setNodeOrder(1))
-    .addChildNode($widgets.Text.create({
+    .addChildNode($ui.Text.create({
       elementName: 'pre',
       nodeName: 'code',
       nodeOrder: 2,

@@ -6,7 +6,6 @@
   "globals": {
     "$assert": true,
     "$data": true,
-    "$demo": true,
     "$entity": true,
     "$event": true,
     "$i18n": true,
@@ -14,8 +13,8 @@
     "$oop": true,
     "$router": true,
     "$template": true,
+    "$ui": true,
     "$utils": true,
-    "$widget": true,
-    "$ui": true
+    "$widget": true
   }
 }

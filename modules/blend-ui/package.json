@@ -1,12 +1,15 @@
 {
-  "name": "blend-demo",
+  "name": "blend-ui",
   "version": "0.1.0",
-  "description": "Blend Demo",
+  "description": "UI widgets module for Blend",
   "keywords": [
-    "demo"
+    "ui",
+    "widget",
+    "component",
+    "text"
   ],
   "author": "Dan Stocker <dan@kwaia.com>",
-  "copyright": "Copyright (c) 2017 Dan Stocker",
+  "copyright": "Copyright (c) 2016-2017 Dan Stocker",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +29,6 @@
     "blend-router": "~0.1.0",
     "blend-template": "~0.1.0",
     "blend-utils": "~0.1.0",
-    "blend-widget": "~0.1.0",
-    "blend-ui": "~0.1.0"
+    "blend-widget": "~0.1.0"
   }
 }

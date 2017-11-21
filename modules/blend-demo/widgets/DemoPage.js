@@ -7,10 +7,10 @@
 
 /**
  * @class $demo.DemoPage
- * @extends $widgets.Page
+ * @extends $ui.Page
  */
 $demo.DemoPage = $oop.getClass('$demo.DemoPage')
-.blend($widgets.Page)
+.blend($ui.Page)
 .define(/** @lends $demo.DemoPage# */{
   /** @ignore */
   init: function () {
@@ -23,7 +23,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       fields: ['title', 'url']
     });
 
-    $widgets.Text.create({
+    $ui.Text.create({
       elementName: 'h1',
       textString: "Blend Demo"
     })
@@ -32,7 +32,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain text
     $demo.DemoItem.create({
       code: this._createText,
-      itemTitle: $widgets.Text.__classId,
+      itemTitle: $ui.Text.__classId,
       contentWidget: this._createText()
     })
     .addToParentNode(this);
@@ -40,7 +40,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding locale-bound text
     $demo.DemoItem.create({
       code: this._createLocaleText,
-      itemTitle: $widgets.LocaleText.__classId,
+      itemTitle: $ui.LocaleText.__classId,
       contentWidget: this._createLocaleText()
     })
     .addToParentNode(this);
@@ -48,7 +48,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound text
     $demo.DemoItem.create({
       code: this._createDataText,
-      itemTitle: $widgets.EntityText.__classId,
+      itemTitle: $ui.EntityText.__classId,
       contentWidget: this._createDataText()
     })
     .addToParentNode(this);
@@ -56,7 +56,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding template text
     $demo.DemoItem.create({
       code: this._createTemplateText,
-      itemTitle: $widgets.TemplateText.__classId,
+      itemTitle: $ui.TemplateText.__classId,
       contentWidget: this._createTemplateText()
     })
     .addToParentNode(this);
@@ -64,7 +64,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain hyperlink
     $demo.DemoItem.create({
       code: this._createHyperlink,
-      itemTitle: $widgets.Hyperlink.__classId,
+      itemTitle: $ui.Hyperlink.__classId,
       contentWidget: this._createHyperlink()
     })
     .addToParentNode(this);
@@ -72,7 +72,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound hyperlink
     $demo.DemoItem.create({
       code: this._createDatHyperlink,
-      itemTitle: $widgets.EntityHyperlink.__classId,
+      itemTitle: $ui.EntityHyperlink.__classId,
       contentWidget: this._createDatHyperlink()
     })
     .addToParentNode(this);
@@ -80,7 +80,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain image
     $demo.DemoItem.create({
       code: this._createImage,
-      itemTitle: $widgets.Image.__classId,
+      itemTitle: $ui.Image.__classId,
       contentWidget: this._createImage()
     })
     .addToParentNode(this);
@@ -88,7 +88,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound image
     $demo.DemoItem.create({
       code: this._createEntityImage,
-      itemTitle: $widgets.EntityImage.__classId,
+      itemTitle: $ui.EntityImage.__classId,
       contentWidget: this._createEntityImage()
     })
     .addToParentNode(this);
@@ -96,7 +96,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain button
     $demo.DemoItem.create({
       code: this._createButton,
-      itemTitle: $widgets.Button.__classId,
+      itemTitle: $ui.Button.__classId,
       contentWidget: this._createButton()
     })
     .addToParentNode(this);
@@ -104,7 +104,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain text input
     $demo.DemoItem.create({
       code: this._createTextInput,
-      itemTitle: $widgets.TextInput.__classId,
+      itemTitle: $ui.TextInput.__classId,
       contentWidget: this._createTextInput()
     })
     .addToParentNode(this);
@@ -113,7 +113,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
   //@formatter:off
 /** @private */
 _createText: function () {
-  return $widgets.Text.create({
+  return $ui.Text.create({
     textString: "<em>wubba lubba dub dub</em>"
   });
 },
@@ -133,7 +133,7 @@ _createLocaleText: function () {
     }
   });
   $i18n.Locale.fromLocaleId('birdperson').setAsActiveLocale();
-  return $widgets.LocaleText.create({
+  return $ui.LocaleText.create({
     textTranslatable: "I am in great pain, please help me".toTranslatable()
   });
 },
@@ -141,7 +141,7 @@ _createLocaleText: function () {
 /** @private */
 _createDataText: function () {
   'character/rick/name'.toField().setNode("Rick Shanchez");
-  return $widgets.EntityText.create({
+  return $ui.EntityText.create({
     textEntity: 'character/rick/name'.toField()
   });
 },
@@ -149,7 +149,7 @@ _createDataText: function () {
 /** @private */
 _createTemplateText: function () {
   'character/jerry/name'.toField().setNode("Jerry");
-  return $widgets.TemplateText.create({
+  return $ui.TemplateText.create({
     textTemplate: "What's up, {{name}}?".toLiveTemplate()
     .setParameterValues({
       name: 'character/jerry/name'.toField()
@@ -159,7 +159,7 @@ _createTemplateText: function () {
 
 /** @private */
 _createHyperlink: function () {
-  return $widgets.Hyperlink.create({
+  return $ui.Hyperlink.create({
     textString: "Rick and Morty",
     targetUrl: 'http://www.adultswim.com/videos/rick-and-morty/'
   });
@@ -171,7 +171,7 @@ _createDatHyperlink: function () {
     title: "Rick and Morty",
     url: 'http://www.adultswim.com/videos/rick-and-morty/'
   });
-  return $widgets.EntityHyperlink.create({
+  return $ui.EntityHyperlink.create({
     textEntity: 'show/rick-and-morty/title'.toField(),
     targetUrlEntity: 'show/rick-and-morty/url'.toField()
   });
@@ -179,7 +179,7 @@ _createDatHyperlink: function () {
 
 /** @private */
 _createImage: function () {
-  return $widgets.Image.create({
+  return $ui.Image.create({
     imageUrl: 'https://i.cdn.turner.com/adultswim/big/video/meet-the-vindicators/rickandmorty_ep304_001_Meet_The_Vindicators.jpg'
   });
 },
@@ -188,22 +188,22 @@ _createImage: function () {
 _createEntityImage: function () {
   'show/rick-and-morty/image'.toField()
   .setNode('https://i.cdn.turner.com/adultswim/big/video/morty-and-summer-on-trial/rickandmorty_ep301_003_Trial_Summer_And_Morty.jpg');
-  return $widgets.EntityImage.create({
+  return $ui.EntityImage.create({
     imageUrlEntity: 'show/rick-and-morty/image'.toField()
   });
 },
 
 /** @private */
 _createButton: function () {
-  return $widgets.Button.create()
-      .addChildNode($widgets.Text.create({
+  return $ui.Button.create()
+      .addChildNode($ui.Text.create({
         textString: "Open portal"
       }));
 },
 
 /** @private */
 _createTextInput: function () {
-  return $widgets.TextInput.create({
+  return $ui.TextInput.create({
         inputValue: "Rick"
       });
 }

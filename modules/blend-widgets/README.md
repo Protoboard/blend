@@ -1,2 +1,0 @@
-Blend Basic Widgets Module
-==========================

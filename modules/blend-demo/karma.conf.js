@@ -22,7 +22,7 @@ module.exports = function (config) {
       '../../dist/blend-entity.js',
       '../../dist/blend-i18n.js',
       '../../dist/blend-widget.js',
-      '../../dist/blend-widgets.js',
+      '../../dist/blend-ui.js',
       '../../dist/blend-demo.js',
       '../../test/*.js',
       '**/*.spec.js'
