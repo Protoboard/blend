@@ -21,6 +21,24 @@ describe("$widgets", function () {
         expect(htmlImage.elementName).toBe('img');
       });
     });
+
+    describe("setImageUrl()", function () {
+      beforeEach(function () {
+        htmlImage = HtmlImage.create({
+          imageUrl: 'foo'
+        });
+      });
+
+      it("should return self", function () {
+        var result = htmlImage.setImageUrl('bar');
+        expect(result).toBe(htmlImage);
+      });
+
+      it("should sync 'src' attribute", function () {
+        htmlImage.setImageUrl('bar');
+        expect(htmlImage.getAttribute('src')).toBe('bar');
+      });
+    });
   });
 
   describe("Image", function () {
