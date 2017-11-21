@@ -14,4 +14,5 @@
 $widgets.Button = $oop.getClass('$widgets.Button')
 .blend($widget.Widget)
 .blend($oop.getClass('$widgets.Clickable'))
-.blend($oop.getClass('$widgets.Disableable'));
+.blend($oop.getClass('$widgets.Disableable'))
+.blend($oop.getClass('$widgets.Focusable'));
