@@ -4,7 +4,7 @@
  * @mixin $widgets.DomInputElementHost
  * @extends $widget.DomWidget
  * @extends $widgets.InputElementHost
- * @todo Merge with
+ * @todo Merge with ValueAttributeHost?
  */
 $widgets.DomInputElementHost = $oop.getClass('$widgets.DomInputElementHost')
 .blend($widget.DomWidget)
