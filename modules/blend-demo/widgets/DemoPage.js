@@ -29,6 +29,34 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     })
     .addToParentNode(this);
 
+    $ui.TemplateText.create({
+      elementName: 'p',
+      textTemplate: "Current locale ID: {{localeId}}".toLiveTemplate()
+      .setParameterValues({
+        localeId: {
+          toString: function () {
+            return $utils.stringify($i18n.LocaleEnvironment.create()
+            .getActiveLocale());
+          }
+        }
+      })
+    })
+    .addToParentNode(this);
+
+    //// todo Have this update on route change
+    //$ui.TemplateText.create({
+    //  elementName: 'p',
+    //  textTemplate: "Current route: {{route}}".toLiveTemplate()
+    //  .setParameterValues({
+    //    route: {
+    //      toString: function () {
+    //        return $utils.stringify($router.Router.create().getActiveRoute());
+    //      }
+    //    }
+    //  })
+    //})
+    //.addToParentNode(this);
+
     // adding plain text
     $demo.DemoItem.create({
       code: this._createText,
