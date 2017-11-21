@@ -92,6 +92,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: this._createEntityImage()
     })
     .addToParentNode(this);
+
+    // adding plain button
+    $demo.DemoItem.create({
+      code: this._createButton,
+      itemTitle: $widgets.Button.__classId,
+      contentWidget: this._createButton()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -175,6 +183,14 @@ _createEntityImage: function () {
   return $widgets.EntityImage.create({
     imageUrlEntity: 'show/rick-and-morty/image'.toField()
   });
+},
+
+/** @private */
+_createButton: function () {
+  return $widgets.Button.create()
+      .addChildNode($widgets.Text.create({
+        textString: "Open portal"
+      }));
 }
   //@formatter:on
 });
