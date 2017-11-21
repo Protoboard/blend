@@ -12,6 +12,7 @@
  * @class $i18n.Locale
  * @extends $event.EventListener
  * @extends $event.EventSender
+ * @implements $utils.Stringifiable
  */
 $i18n.Locale = $oop.getClass('$i18n.Locale')
 .cacheBy(function (properties) {
@@ -145,6 +146,13 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
   setAsActiveLocale: function () {
     $i18n.LocaleEnvironment.create().setActiveLocale(this);
     return this;
+  },
+
+  /**
+   * @returns {string}
+   */
+  toString: function () {
+    return this.localeKey.documentId;
   }
 });
 

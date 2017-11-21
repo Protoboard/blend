@@ -201,6 +201,18 @@ describe("$i18n", function () {
         expect(localeEnvironment.setActiveLocale).toHaveBeenCalledWith(locale);
       });
     });
+
+    describe("toString()", function () {
+      beforeEach(function () {
+        locale = Locale.create({
+          localeKey: 'foo/bar'.toDocumentKey()
+        });
+      });
+
+      it("should return locale document ID", function () {
+        expect(locale.toString()).toBe('bar');
+      });
+    });
   });
 });
 
