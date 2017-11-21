@@ -90,26 +90,27 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
 /** @private */
 _createText: function () {
   return $widgets.Text.create({
-    textString: "<b>Hello World!</b>"
+    textString: "<em>wubba lubba dub dub</em>"
   });
 },
 
 /** @private */
 _createLocaleText: function () {
   // translatable text
-  '_translation/helloworld-de'.toDocument().setNode({
-    originalString: "Hello World!",
-    pluralForms: ["Hallo Welt!"]
+  '_translation/wubba-birdperson'.toDocument().setNode({
+    originalString: "I am in great pain, please help me",
+    pluralForms: ["wubba lubba dub dub"]
   });
-  '_locale/de'.toDocument().setNode({
-    localeName: 'German',
+  '_locale/birdperson'.toDocument().setNode({
+    localeName: 'Birdperson',
     pluralFormula: 'nplurals=2; plural=(n != 1);',
     translations: {
-      '_translation/helloworld-de': 1
+      '_translation/wubba-birdperson': 1
     }
   });
+  $i18n.Locale.fromLocaleId('birdperson').setAsActiveLocale();
   return $widgets.LocaleText.create({
-    textTranslatable: "Hello World!".toTranslatable()
+    textTranslatable: "I am in great pain, please help me".toTranslatable()
   });
 },
 
