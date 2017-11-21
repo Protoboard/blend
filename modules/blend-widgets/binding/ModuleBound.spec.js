@@ -26,17 +26,17 @@ describe("$widgets", function () {
         moduleBound.destroy();
       });
 
-      it("should invoke syncToAvailableModules", function () {
-        spyOn(moduleBound, 'syncToAvailableModules');
+      it("should invoke _syncToAvailableModules", function () {
+        spyOn(moduleBound, '_syncToAvailableModules');
         moduleBound.onAttach();
-        expect(moduleBound.syncToAvailableModules).toHaveBeenCalled();
+        expect(moduleBound._syncToAvailableModules).toHaveBeenCalled();
       });
 
       it("should subscribe to EVENT_LOCALE_CHANGE", function () {
         moduleBound.onAttach();
-        spyOn(moduleBound, 'syncToAvailableModules');
+        spyOn(moduleBound, '_syncToAvailableModules');
         'foo'.toModule().trigger($module.EVENT_MODULE_AVAILABLE);
-        expect(moduleBound.syncToAvailableModules).toHaveBeenCalled();
+        expect(moduleBound._syncToAvailableModules).toHaveBeenCalled();
       });
     });
   });

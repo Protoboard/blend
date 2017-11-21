@@ -18,13 +18,10 @@ $widgets.Application = $oop.getClass('$widgets.Application')
    * @member {$router.Route} $widgets.Application#activeRoute
    */
 
-  /** @ignore */
-  onAttach: function () {
-    this.syncToActiveRoute();
-  },
-
-  /** @ignore */
-  syncToActiveRoute: function () {
+  /**
+   * @protected
+   */
+  _syncToActiveRoute: function () {
     var activeRouteBefore = this.activeRoute,
         activeRouteAfter = $router.getActiveRoute();
 
@@ -61,7 +58,12 @@ $widgets.Application = $oop.getClass('$widgets.Application')
   },
 
   /** @ignore */
+  onAttach: function () {
+    this._syncToActiveRoute();
+  },
+
+  /** @ignore */
   onRouteChange: function () {
-    this.syncToActiveRoute();
+    this._syncToActiveRoute();
   }
 });

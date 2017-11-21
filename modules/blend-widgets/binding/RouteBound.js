@@ -7,23 +7,23 @@
 $widgets.RouteBound = $oop.getClass('$widgets.RouteBound')
 .expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widgets.RouteBound# */{
+  /**
+   * Updates parts of the widget's state that depend on the active route.
+   * @protected
+   */
+  _syncToActiveRoute: function () {},
+
   /** @ignore */
   onAttach: function () {
-    this.syncToActiveRoute();
+    this._syncToActiveRoute();
     this.on(
         $router.EVENT_ROUTE_CHANGE,
         $router.RouteEnvironment.create(),
         this.onRouteChange);
   },
 
-  /**
-   * Updates parts of the widget's state that depend on the active route.
-   * @ignore
-   */
-  syncToActiveRoute: function () {},
-
   /** @ignore */
   onRouteChange: function () {
-    this.syncToActiveRoute();
+    this._syncToActiveRoute();
   }
 });

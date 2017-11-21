@@ -84,11 +84,18 @@ $widgets.TemplateText = $oop.getClass('$widgets.TemplateText')
     });
   },
 
-  /** @ignore */
-  onAttach: function () {
-    var textTemplate = this.textTemplate;
-    this._addTemplateBindings(textTemplate);
-    this._addEntityBindings(textTemplate);
+  /**
+   * @protected
+   */
+  _syncToTextTemplate: function () {
+    this.setTextString(this.textTemplate.toString());
+  },
+
+  /**
+   * @protected
+   */
+  _syncToActiveTranslations: function () {
+    this._syncToTextTemplate();
   },
 
   /**
@@ -98,7 +105,7 @@ $widgets.TemplateText = $oop.getClass('$widgets.TemplateText')
   setTextTemplate: function setTextTemplate(textTemplate) {
     var textTemplateBefore = this.textTemplate;
 
-    this.syncToTextTemplate();
+    this._syncToTextTemplate();
 
     // unsubscribing from old LiveTemplate and contained Entities
     this._removeTemplateBindings(textTemplateBefore);
@@ -114,22 +121,19 @@ $widgets.TemplateText = $oop.getClass('$widgets.TemplateText')
   },
 
   /** @ignore */
-  syncToTextTemplate: function () {
-    this.setTextString(this.textTemplate.toString());
-  },
-
-  /** @ignore */
-  syncToActiveTranslations: function () {
-    this.syncToTextTemplate();
+  onAttach: function () {
+    var textTemplate = this.textTemplate;
+    this._addTemplateBindings(textTemplate);
+    this._addEntityBindings(textTemplate);
   },
 
   /** @ignore */
   onTemplateParameterChange: function () {
-    this.syncToTextTemplate();
+    this._syncToTextTemplate();
   },
 
   /** @ignore */
   onEntityParameterChange: function () {
-    this.syncToTextTemplate();
+    this._syncToTextTemplate();
   }
 });

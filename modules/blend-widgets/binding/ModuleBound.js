@@ -9,23 +9,23 @@
 $widgets.ModuleBound = $oop.getClass('$widgets.ModuleBound')
 .expect($oop.getClass('$widget.Widget'))
 .define(/** @lends $widgets.ModuleBound# */{
+  /**
+   * Updates parts of the widget's state that depend on the available modules.
+   * @protected
+   */
+  _syncToAvailableModules: function () {},
+
   /** @ignore */
   onAttach: function () {
-    this.syncToAvailableModules();
+    this._syncToAvailableModules();
     this.on(
         $module.EVENT_MODULE_AVAILABLE,
         $module.ModuleEnvironment.create(),
         this.onModuleAvailable);
   },
 
-  /**
-   * Updates parts of the widget's state that depend on the available modules.
-   * @ignore
-   */
-  syncToAvailableModules: function () {},
-
   /** @ignore */
   onModuleAvailable: function () {
-    this.syncToAvailableModules();
+    this._syncToAvailableModules();
   }
 });

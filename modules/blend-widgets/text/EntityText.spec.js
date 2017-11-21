@@ -64,7 +64,7 @@ describe("$widgets", function () {
       });
     });
 
-    describe("syncToEntityProperty()", function () {
+    describe("_syncToEntityProperty()", function () {
       var textEntity;
 
       beforeEach(function () {
@@ -80,7 +80,7 @@ describe("$widgets", function () {
       });
 
       it("should sync text entity to textString", function () {
-        entityText.syncToEntityProperty('textEntity');
+        entityText._syncToEntityProperty('textEntity');
         expect(entityText.textString).toBe("Hello");
       });
     });

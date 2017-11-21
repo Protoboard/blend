@@ -36,21 +36,21 @@ $widgets.EntityImage = $oop.getClass('$widgets.EntityImage')
   },
 
   /**
+   * @param {string} entityProperty
+   * @protected
+   */
+  _syncToEntityProperty: function (entityProperty) {
+    if (entityProperty === 'imageUrlEntity') {
+      this.setImageUrl(this.imageUrlEntity.getNode());
+    }
+  },
+
+  /**
    * @param {$entity.LeafNoded} imageUrlEntity
    * @returns {$widgets.EntityImage}
    */
   setImageUrlEntity: function (imageUrlEntity) {
     this.setEntityProperty('imageUrlEntity', imageUrlEntity);
     return this;
-  },
-
-  /**
-   * @param {string} entityProperty
-   * @ignore
-   */
-  syncToEntityProperty: function (entityProperty) {
-    if (entityProperty === 'imageUrlEntity') {
-      this.setImageUrl(this.imageUrlEntity.getNode());
-    }
   }
 });

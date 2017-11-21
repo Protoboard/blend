@@ -40,18 +40,20 @@ $widgets.EntityHyperlink = $oop.getClass('$widgets.EntityHyperlink')
   },
 
   /**
+   * @protected
+   */
+  _syncToEntityProperty: function (entityProperty) {
+    if (entityProperty === 'targetUrlEntity') {
+      this.setTargetUrl(this.targetUrlEntity.getNode());
+    }
+  },
+
+  /**
    * @param {$entity.LeafNoded} targetUrlEntity
    * @returns {$widgets.EntityText}
    */
   setTargetUrlEntity: function (targetUrlEntity) {
     this.setEntityProperty('targetUrlEntity', targetUrlEntity);
     return this;
-  },
-
-  /** @ignore */
-  syncToEntityProperty: function (entityProperty) {
-    if (entityProperty === 'targetUrlEntity') {
-      this.setTargetUrl(this.targetUrlEntity.getNode());
-    }
   }
 });

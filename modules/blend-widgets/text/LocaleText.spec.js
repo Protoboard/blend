@@ -53,7 +53,7 @@ describe("$widgets", function () {
       });
     });
 
-    describe("syncToActiveLocale()", function () {
+    describe("_syncToActiveLocale()", function () {
       beforeEach(function () {
         '_translation/helloworld-de'.toDocument().setNode({
           originalString: "Hello World!",
@@ -80,7 +80,7 @@ describe("$widgets", function () {
       });
 
       it("should set textString", function () {
-        localeText.syncToActiveLocale();
+        localeText._syncToActiveLocale();
         expect(localeText.textString).toBe("Hallo Welt!");
       });
     });

@@ -49,7 +49,7 @@ describe("$widgets", function () {
 
       beforeEach(function () {
         entityPropertyBound = EntityPropertyBound.create();
-        spyOn(entityPropertyBound, 'syncToEntityProperty');
+        spyOn(entityPropertyBound, '_syncToEntityProperty');
       });
 
       afterEach(function () {
@@ -80,9 +80,9 @@ describe("$widgets", function () {
         });
       });
 
-      it("should invoke syncToEntityProperty", function () {
+      it("should invoke _syncToEntityProperty", function () {
         entityPropertyBound.setEntityProperty('field', field);
-        expect(entityPropertyBound.syncToEntityProperty)
+        expect(entityPropertyBound._syncToEntityProperty)
         .toHaveBeenCalledWith('field');
       });
 
@@ -125,16 +125,16 @@ describe("$widgets", function () {
           field1: field1,
           field2: field2
         });
-        spyOn(entityPropertyBound, 'syncToEntityProperty');
+        spyOn(entityPropertyBound, '_syncToEntityProperty');
       });
 
       afterEach(function () {
         entityPropertyBound.destroy();
       });
 
-      it("should invoke syncToEntityProperty", function () {
+      it("should invoke _syncToEntityProperty", function () {
         entityPropertyBound.onAttach();
-        var allArgs = entityPropertyBound.syncToEntityProperty.calls.allArgs();
+        var allArgs = entityPropertyBound._syncToEntityProperty.calls.allArgs();
         expect(allArgs).toEqual([
           ['field1'],
           ['field2']
@@ -157,7 +157,7 @@ describe("$widgets", function () {
         'foo/1/bar'.toField().deleteNode();
         entityPropertyBound = EntityPropertyBound.create({field: field});
         entityPropertyBound.onAttach();
-        spyOn(entityPropertyBound, 'syncToEntityProperty');
+        spyOn(entityPropertyBound, '_syncToEntityProperty');
       });
 
       afterEach(function () {
@@ -166,7 +166,7 @@ describe("$widgets", function () {
 
       it("should be invoked on EVENT_ENTITY_CHANGE", function () {
         'foo/1/bar'.toField().setNode("Hello World!");
-        expect(entityPropertyBound.syncToEntityProperty)
+        expect(entityPropertyBound._syncToEntityProperty)
         .toHaveBeenCalledWith('field');
       });
     });

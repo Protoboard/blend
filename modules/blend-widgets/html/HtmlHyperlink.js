@@ -16,11 +16,13 @@ $widgets.HtmlHyperlink = $oop.getClass('$widgets.HtmlHyperlink')
 
   /** @ignore */
   init: function () {
-    this.syncHrefAttribute();
+    this._syncHrefAttribute();
   },
 
-  /** @ignore */
-  syncHrefAttribute: function () {
+  /**
+   * @protected
+   */
+  _syncHrefAttribute: function () {
     var targetUrl = this.targetUrl;
     if (targetUrl) {
       this.setAttribute('href', targetUrl);
@@ -33,7 +35,7 @@ $widgets.HtmlHyperlink = $oop.getClass('$widgets.HtmlHyperlink')
    * @returns {$widgets.HtmlHyperlink}
    */
   setTargetUrl: function (targetUrl) {
-    this.syncHrefAttribute();
+    this._syncHrefAttribute();
     return this;
   }
 });

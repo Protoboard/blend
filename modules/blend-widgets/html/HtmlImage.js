@@ -16,11 +16,13 @@ $widgets.HtmlImage = $oop.getClass('$widgets.HtmlImage')
 
   /** @ignore */
   init: function () {
-    this._syncSrcToImageUrl();
+    this._syncSrcAttribute();
   },
 
-  /** @private */
-  _syncSrcToImageUrl: function () {
+  /**
+   * @protected
+   */
+  _syncSrcAttribute: function () {
     this.setAttribute('src', $utils.stringify(this.imageUrl));
   },
 
@@ -31,7 +33,7 @@ $widgets.HtmlImage = $oop.getClass('$widgets.HtmlImage')
   setImageUrl: function setImageUrl(imageUrl) {
     var imageUrlBefore = setImageUrl.returned;
     if (imageUrl !== imageUrlBefore) {
-      this._syncSrcToImageUrl();
+      this._syncSrcAttribute();
     }
     return this;
   }

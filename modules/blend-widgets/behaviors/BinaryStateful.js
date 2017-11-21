@@ -18,41 +18,6 @@ $widgets.BinaryStateful = $oop.getClass('$widgets.BinaryStateful')
     this.binaryStates = this.binaryStates || $data.Collection.create();
   },
 
-  /** @ignore */
-  onAttach: function () {
-    var that = this;
-
-    this.binaryStates
-    // for cascading states...
-    .filter(function (binaryState) {
-      return binaryState.cascades;
-    })
-    // ...that have matching parents
-    .filter(function (binaryState, stateName) {
-      return that.getClosestParentNode(function (parentNode) {
-        return $widgets.BinaryStateful.mixedBy(parentNode) &&
-            parentNode.isStateOn(stateName);
-      });
-    })
-    // applying an imposed state
-    .forEachItem(function (binaryState, stateName) {
-      that.addBinaryStateSourceId(
-          stateName, $widgets.BINARY_STATE_SOURCE_ID_IMPOSED);
-    });
-  },
-
-  /** @ignore */
-  onDetach: function () {
-    var that = this;
-
-    // removing imposed states
-    this.binaryStates
-    .forEachItem(function (binaryState, stateName) {
-      that.removeBinaryStateSourceId(
-          stateName, $widgets.BINARY_STATE_SOURCE_ID_IMPOSED);
-    });
-  },
-
   /**
    * @param {string} stateName
    * @param {boolean} [cascades]
@@ -152,6 +117,41 @@ $widgets.BinaryStateful = $oop.getClass('$widgets.BinaryStateful')
   isStateOn: function (stateName) {
     var binaryState = this.binaryStates.getValue(stateName);
     return binaryState && binaryState.isStateOn();
+  },
+
+  /** @ignore */
+  onAttach: function () {
+    var that = this;
+
+    this.binaryStates
+    // for cascading states...
+    .filter(function (binaryState) {
+      return binaryState.cascades;
+    })
+    // ...that have matching parents
+    .filter(function (binaryState, stateName) {
+      return that.getClosestParentNode(function (parentNode) {
+        return $widgets.BinaryStateful.mixedBy(parentNode) &&
+            parentNode.isStateOn(stateName);
+      });
+    })
+    // applying an imposed state
+    .forEachItem(function (binaryState, stateName) {
+      that.addBinaryStateSourceId(
+          stateName, $widgets.BINARY_STATE_SOURCE_ID_IMPOSED);
+    });
+  },
+
+  /** @ignore */
+  onDetach: function () {
+    var that = this;
+
+    // removing imposed states
+    this.binaryStates
+    .forEachItem(function (binaryState, stateName) {
+      that.removeBinaryStateSourceId(
+          stateName, $widgets.BINARY_STATE_SOURCE_ID_IMPOSED);
+    });
   }
 });
 

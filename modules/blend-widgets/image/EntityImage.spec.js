@@ -64,12 +64,12 @@ describe("$widgets", function () {
       });
     });
 
-    describe("syncToEntityProperty()", function () {
+    describe("_syncToEntityProperty()", function () {
       var imageUrlEntity;
 
       beforeEach(function () {
         imageUrlEntity = 'foo/bar/baz'.toField();
-        imageUrlEntity.setNode("Hello");
+        imageUrlEntity.setNode("http://foo.com");
         entityImage = EntityImage.fromImageUrlEntity(imageUrlEntity);
         entityImage.onAttach();
       });
@@ -80,8 +80,8 @@ describe("$widgets", function () {
       });
 
       it("should sync text entity to textString", function () {
-        entityImage.syncToEntityProperty('imageUrlEntity');
-        expect(entityImage.imageUrl).toBe("Hello");
+        entityImage._syncToEntityProperty('imageUrlEntity');
+        expect(entityImage.imageUrl).toBe("http://foo.com");
       });
     });
   });

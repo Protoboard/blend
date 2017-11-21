@@ -30,14 +30,16 @@ $widgets.LocaleText = $oop.getClass('$widgets.LocaleText')
     }, properties);
   },
 
+  /**
+   * @protected
+   */
+  _syncToActiveLocale: function () {
+    this.setTextString(this.textTranslatable.toString());
+  },
+
   /** @ignore */
   init: function () {
     $assert.isInstanceOf(
         this.textTranslatable, $i18n.Translatable, "Invalid textTranslatable");
-  },
-
-  /** @ignore */
-  syncToActiveLocale: function () {
-    this.setTextString(this.textTranslatable.toString());
   }
 });

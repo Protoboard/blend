@@ -63,6 +63,12 @@ $widgets.EntityPropertyBound = $oop.getClass('$widgets.EntityPropertyBound')
 
   /**
    * @param {string} entityProperty
+   * @protected
+   */
+  _syncToEntityProperty: function (entityProperty) {},
+
+  /**
+   * @param {string} entityProperty
    * @param {$entity.Entity} entity
    * @returns {$widgets.EntityPropertyBound}
    * @todo Should we allow mutating entity properties?
@@ -101,7 +107,7 @@ $widgets.EntityPropertyBound = $oop.getClass('$widgets.EntityPropertyBound')
             this.onEntityChange);
       }
 
-      this.syncToEntityProperty(entityProperty);
+      this._syncToEntityProperty(entityProperty);
     }
 
     return this;
@@ -116,19 +122,13 @@ $widgets.EntityPropertyBound = $oop.getClass('$widgets.EntityPropertyBound')
     })
     .forEachItem(function (entityProperty) {
       var entity = that[entityProperty];
-      that.syncToEntityProperty(entityProperty);
+      that._syncToEntityProperty(entityProperty);
       that.on(
           $entity.EVENT_ENTITY_CHANGE,
           entity,
           that.onEntityChange);
     });
   },
-
-  /**
-   * @param {string} entityProperty
-   * @ignore
-   */
-  syncToEntityProperty: function (entityProperty) {},
 
   /**
    * Invoked when a relevant entity has changed.
@@ -139,6 +139,6 @@ $widgets.EntityPropertyBound = $oop.getClass('$widgets.EntityPropertyBound')
     var entityKey = event.sender.entityKey,
         entityProperty = this.entityPropertiesByEntityKeys
         .getValue(entityKey.toString());
-    this.syncToEntityProperty(entityProperty);
+    this._syncToEntityProperty(entityProperty);
   }
 });

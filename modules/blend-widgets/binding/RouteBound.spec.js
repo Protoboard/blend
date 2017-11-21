@@ -31,17 +31,17 @@ describe("$widgets", function () {
         routeBound.destroy();
       });
 
-      it("should invoke syncToActiveRoute", function () {
-        spyOn(routeBound, 'syncToActiveRoute');
+      it("should invoke _syncToActiveRoute", function () {
+        spyOn(routeBound, '_syncToActiveRoute');
         routeBound.onAttach();
-        expect(routeBound.syncToActiveRoute).toHaveBeenCalled();
+        expect(routeBound._syncToActiveRoute).toHaveBeenCalled();
       });
 
       it("should subscribe to EVENT_ROUTE_CHANGE", function () {
         routeBound.onAttach();
-        spyOn(routeBound, 'syncToActiveRoute');
+        spyOn(routeBound, '_syncToActiveRoute');
         $router.RouteEnvironment.create().trigger($router.EVENT_ROUTE_CHANGE);
-        expect(routeBound.syncToActiveRoute).toHaveBeenCalled();
+        expect(routeBound._syncToActiveRoute).toHaveBeenCalled();
       });
     });
   });

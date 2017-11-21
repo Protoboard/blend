@@ -38,20 +38,22 @@ $widgets.EntityText = $oop.getClass('$widgets.EntityText')
   },
 
   /**
+   * @protected
+   */
+  _syncToEntityProperty: function (entityProperty) {
+    switch (entityProperty) {
+    case 'textEntity':
+      this.setTextString(this.textEntity.getNode());
+      break;
+    }
+  },
+
+  /**
    * @param {$entity.LeafNoded} textEntity
    * @returns {$widgets.EntityText}
    */
   setTextEntity: function (textEntity) {
     this.setEntityProperty('textEntity', textEntity);
     return this;
-  },
-
-  /** @ignore */
-  syncToEntityProperty: function (entityProperty) {
-    switch (entityProperty) {
-    case 'textEntity':
-      this.setTextString(this.textEntity.getNode());
-      break;
-    }
   }
 });

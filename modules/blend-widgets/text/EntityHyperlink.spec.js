@@ -66,7 +66,7 @@ describe("$widgets", function () {
       });
     });
 
-    describe("syncToEntityProperty()", function () {
+    describe("_syncToEntityProperty()", function () {
       var targetUrlEntity;
 
       beforeEach(function () {
@@ -82,7 +82,7 @@ describe("$widgets", function () {
       });
 
       it("should sync text entity to targetUrlEntity", function () {
-        dataHyperlink.syncToEntityProperty('targetUrlEntity');
+        dataHyperlink._syncToEntityProperty('targetUrlEntity');
         expect(dataHyperlink.targetUrl).toBe("http://foo.com");
       });
     });
