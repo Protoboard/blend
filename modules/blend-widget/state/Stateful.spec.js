@@ -17,7 +17,7 @@ describe("$widget", function () {
     describe("create()", function () {
       it("should initialize state container", function () {
         stateful = Stateful.create();
-        expect($data.Collection.mixedBy(stateful.state)).toBeTruthy();
+        expect(stateful.state).toEqual({});
       });
     });
 
@@ -33,7 +33,7 @@ describe("$widget", function () {
 
       it("should set state value", function () {
         stateful.setStateValue('foo', 'bar');
-        expect(stateful.state.data).toEqual({
+        expect(stateful.state).toEqual({
           foo: 'bar'
         });
       });

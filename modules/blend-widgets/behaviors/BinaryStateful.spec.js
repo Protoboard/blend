@@ -94,7 +94,7 @@ describe("$widgets", function () {
 
       it("should set Stateful state to true", function () {
         binaryStateful.addBinaryStateSourceId('foo', 'bar');
-        expect(binaryStateful.state.getValue('foo')).toBe(true);
+        expect(binaryStateful.state.foo).toBe(true);
       });
 
       describe("when cascading BinaryStateful has subtree", function () {
@@ -138,7 +138,7 @@ describe("$widgets", function () {
 
       it("should set Stateful state to false", function () {
         binaryStateful.removeBinaryStateSourceId('foo', 'bar');
-        expect(binaryStateful.state.getValue('foo')).toBe(false);
+        expect(binaryStateful.state.foo).toBe(false);
       });
 
       describe("when cascading BinaryStateful has subtree", function () {

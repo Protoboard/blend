@@ -9,12 +9,12 @@ $widget.Stateful = $oop.getClass('$widget.Stateful')
 .define(/** @lends $widget.Stateful# */{
   /**
    * Contains state
-   * @member {$data.Collection} $widget.Stateful#state
+   * @member {Object} $widget.Stateful#state
    */
 
   /** @ignore */
-  init: function () {
-    this.state = $data.Collection.create();
+  defaults: function () {
+    this.state = this.state || {};
   },
 
   /**
@@ -24,9 +24,9 @@ $widget.Stateful = $oop.getClass('$widget.Stateful')
    */
   setStateValue: function setStateValue(stateName, stateValue) {
     var state = this.state,
-        stateValueBefore = state.getValue(stateName);
+        stateValueBefore = state[stateName];
     if (stateValue !== stateValueBefore) {
-      state.setItem(stateName, stateValue);
+      state[stateName] = stateValue;
     }
     setStateValue.shared.stateValueBefore = stateValueBefore;
     return this;
@@ -37,6 +37,6 @@ $widget.Stateful = $oop.getClass('$widget.Stateful')
    * @returns {*}
    */
   getStateValue: function (stateName) {
-    return this.state.getValue(stateName);
+    return this.state[stateName];
   }
 });
