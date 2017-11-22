@@ -2,6 +2,10 @@
 
 /**
  * @function $ui.TextInput.create
+ * @param {Object} [properties]
+ * @param {string} [properties.nodeName]
+ * @param {*} [properties.inputValue]
+ * @param {boolean} [properties.isFocused]
  * @returns {$ui.TextInput}
  */
 
@@ -19,5 +23,6 @@ $ui.TextInput = $oop.getClass('$ui.TextInput')
 .blend($oop.getClass('$ui.Focusable'));
 
 /**
+ * Determines whether TextInput is multi-line.
  * @member {boolean} $ui.TextInput#isMultiline
  */
