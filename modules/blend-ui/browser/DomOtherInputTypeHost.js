@@ -2,11 +2,11 @@
 
 /**
  * @mixin $ui.DomOtherInputTypeHost
- * @extends $ui.DomInputEventHost
+ * @extends $ui.DomInputEventBound
  * @extends $ui.OtherInputTypeHost
  */
 $ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
-.blend($oop.getClass('$ui.DomInputEventHost'))
+.blend($oop.getClass('$ui.DomInputEventBound'))
 .blend($oop.getClass('$ui.OtherInputTypeHost'))
 .define(/** @lends $ui.DomOtherInputTypeHost# */{
   /**

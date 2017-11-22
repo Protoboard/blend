@@ -4,16 +4,16 @@ var $oop = window['blend-oop'],
     $ui = window['blend-widget'];
 
 describe("$ui", function () {
-  describe("DomInputEventHost", function () {
-    var DomInputEventHost,
+  describe("DomInputEventBound", function () {
+    var DomInputEventBound,
         domInputEventHost;
 
     beforeAll(function () {
-      DomInputEventHost = $oop.getClass('test.$ui.DomInputEventHost.DomInputEventHost')
+      DomInputEventBound = $oop.getClass('test.$ui.DomInputEventBound.DomInputEventBound')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.DomInputEventHost);
-      DomInputEventHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomInputEventBound);
+      DomInputEventBound.__forwards = {list: [], sources: [], lookup: {}};
     });
 
     describe("onInput()", function () {
@@ -22,7 +22,7 @@ describe("$ui", function () {
 
       beforeEach(function () {
         element = document.createElement('input');
-        domInputEventHost = DomInputEventHost.create();
+        domInputEventHost = DomInputEventBound.create();
         spyOn(domInputEventHost, 'getElement').and.returnValue(element);
         domInputEventHost.onRender();
         element.value = 'foo';
@@ -44,7 +44,7 @@ describe("$ui", function () {
 
       beforeEach(function () {
         element = document.createElement('input');
-        domInputEventHost = DomInputEventHost.create();
+        domInputEventHost = DomInputEventBound.create();
         spyOn(domInputEventHost, 'getElement').and.returnValue(element);
         domInputEventHost.onRender();
         element.value = 'foo';

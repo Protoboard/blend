@@ -4,12 +4,12 @@
  * @mixin $ui.DomTextareaElementHost
  * @extends $widget.DomWidget
  * @extends $ui.TextareaElementHost
- * @extends $ui.DomInputEventHost
+ * @extends $ui.DomInputEventBound
  */
 $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
 .blend($widget.DomWidget)
 .blend($oop.getClass('$ui.TextareaElementHost'))
-.blend($oop.getClass('$ui.DomInputEventHost'))
+.blend($oop.getClass('$ui.DomInputEventBound'))
 .define(/** @lends $ui.DomTextareaElementHost# */{
   /**
    * @protected
