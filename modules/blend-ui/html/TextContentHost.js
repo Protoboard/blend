@@ -1,15 +1,12 @@
 "use strict";
 
 /**
- * @mixin $ui.XmlText
+ * @mixin $ui.TextContentHost
  * @extends $widget.XmlNode
- * @augments $ui.Text
- * @todo Rename to TextContentHost & move to /html
  */
-$ui.XmlText = $oop.getClass('$ui.XmlText')
+$ui.TextContentHost = $oop.getClass('$ui.TextContentHost')
 .blend($oop.getClass('$widget.XmlNode'))
-.expect($oop.getClass('$ui.Text'))
-.define(/** @lends $ui.XmlText# */{
+.define(/** @lends $ui.TextContentHost# */{
   /**
    * @returns {string}
    */
@@ -18,6 +15,3 @@ $ui.XmlText = $oop.getClass('$ui.XmlText')
         $widget.escapeXmlEntities($utils.stringify(this.textString));
   }
 });
-
-$oop.getClass('$ui.Text')
-.forwardBlend($ui.XmlText, $widget.isHtml);

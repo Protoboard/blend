@@ -2,12 +2,12 @@
 
 /**
  * @mixin $ui.HtmlText
- * @extends $ui.XmlText
  * @extends $widget.HtmlWidget
+ * @extends $ui.TextContentHost
  */
 $ui.HtmlText = $oop.getClass('$ui.HtmlText')
-.blend($oop.getClass('$ui.XmlText'))
 .blend($widget.HtmlWidget)
+.blend($oop.getClass('$ui.TextContentHost'))
 .define(/** @lends $ui.HtmlText# */{
   /** @ignore */
   defaults: function () {
@@ -15,5 +15,5 @@ $ui.HtmlText = $oop.getClass('$ui.HtmlText')
   }
 });
 
-$oop.getClass('$ui.XmlText')
+$oop.getClass('$ui.Text')
 .forwardBlend($ui.HtmlText, $widget.isHtml);

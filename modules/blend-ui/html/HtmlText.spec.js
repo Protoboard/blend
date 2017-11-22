@@ -23,21 +23,14 @@ describe("$ui", function () {
     });
   });
 
-  describe("XmlText", function () {
-    var XmlText,
-        xmlText;
-
-    beforeAll(function () {
-      XmlText = $oop.getClass('test.$ui.HtmlText.XmlText')
-      .blend($ui.Text)
-      .blend($ui.XmlText);
-    });
+  describe("Text", function () {
+    var text;
 
     describe("create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlText instance", function () {
-          xmlText = XmlText.create();
-          expect($ui.HtmlText.mixedBy(xmlText)).toBeTruthy();
+          text = $ui.Text.create();
+          expect($ui.HtmlText.mixedBy(text)).toBeTruthy();
         });
       });
     });
