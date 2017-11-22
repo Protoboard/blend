@@ -36,14 +36,18 @@ $ui.EntityInputable = $oop.getClass('$ui.EntityInputable')
    * @protected
    */
   _syncToEntityProperty: function (entityProperty) {
-    if (entityProperty === 'inputValueEntity') {
-      this.setInputValue(this.inputValueEntity.getNode());
+    var inputValueEntity = this.inputValueEntity;
+    if (entityProperty === 'inputValueEntity' && inputValueEntity) {
+      this.setInputValue(inputValueEntity.getNode());
     }
   },
 
   /** @private */
   _syncInputValueEntity: function () {
-    this.inputValueEntity.setNode(this.inputValue);
+    var inputValueEntity = this.inputValueEntity;
+    if (inputValueEntity) {
+      inputValueEntity.setNode(this.inputValue);
+    }
   },
 
   /**
