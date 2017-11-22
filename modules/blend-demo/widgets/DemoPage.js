@@ -232,24 +232,24 @@ _createEntityImage: function () {
 /** @private */
 _createButton: function () {
   return $ui.Button.create()
-      .addChildNode($ui.Text.create({
-        textString: "Open portal"
-      }));
+  .addChildNode($ui.Text.create({
+    textString: "Open portal"
+  }));
 },
 
 /** @private */
 _createTextInput: function () {
   return $ui.TextInput.create({
-        inputValue: "Rick"
-      });
+    inputValue: "Rick"
+  });
 },
 
 /** @private */
 _createMultilineTextInput: function () {
   return $ui.TextInput.create({
-        isMultiline: true,
-        inputValue: "Rick and Morty, forever and forever, a hundred years!"
-      });
+    isMultiline: true,
+    inputValue: "Rick and Morty, forever and forever, a hundred years!"
+  });
 }
   //@formatter:on
 });
