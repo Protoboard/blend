@@ -40,6 +40,15 @@ describe("$ui", function () {
           expect($ui.OtherInputTypeHost.mixedBy(htmlTextInput)).toBeTruthy();
         });
       });
+
+      describe("when multiline is truthy", function () {
+        it("should blend OtherInputTypeHost", function () {
+          htmlTextInput = HtmlTextInput.create({
+            multiline: true
+          });
+          expect($ui.TextareaElementHost.mixedBy(htmlTextInput)).toBeTruthy();
+        });
+      });
     });
   });
 

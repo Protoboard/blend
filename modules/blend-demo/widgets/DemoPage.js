@@ -136,6 +136,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: this._createTextInput()
     })
     .addToParentNode(this);
+
+    // adding plain multiline text input
+    $demo.DemoItem.create({
+      code: this._createMultilineTextInput,
+      itemTitle: $ui.TextInput.__classId,
+      contentWidget: this._createMultilineTextInput()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -232,6 +240,14 @@ _createButton: function () {
 /** @private */
 _createTextInput: function () {
   return $ui.TextInput.create({
+        inputValue: "Rick"
+      });
+},
+
+/** @private */
+_createMultilineTextInput: function () {
+  return $ui.TextInput.create({
+        multiline: true,
         inputValue: "Rick"
       });
 }

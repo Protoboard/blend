@@ -1,20 +1,22 @@
 "use strict";
 
 /**
- * @mixin $ui.DomOtherInputTypeHost
+ * @mixin $ui.DomTextareaElementHost
+ * @extends $widget.DomWidget
+ * @extends $ui.TextareaElementHost
  * @extends $ui.DomInputEventHost
- * @extends $ui.OtherInputTypeHost
  */
-$ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
+$ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
+.blend($widget.DomWidget)
+.blend($oop.getClass('$ui.TextareaElementHost'))
 .blend($oop.getClass('$ui.DomInputEventHost'))
-.blend($oop.getClass('$ui.OtherInputTypeHost'))
-.define(/** @lends $ui.DomOtherInputTypeHost# */{
+.define(/** @lends $ui.DomTextareaElementHost# */{
   /**
    * @protected
    */
   _syncElementValue: function () {
     var element = this.getElement();
-    element.value = this.inputValue;
+    element.value = $utils.stringify(this.inputValue);
   },
 
   /**
@@ -22,12 +24,12 @@ $ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
    */
   _syncToElementValue: function () {
     var element = this.getElement();
-    this.setInputValue(element.value);
+    this.inputValue = element.value;
   },
 
   /**
-   * @param {*} inputValue
-   * @returns {$ui.DomOtherInputTypeHost}
+   * @param inputValue
+   * @returns {$ui.DomTextareaElementHost}
    */
   setInputValue: function setInputValue(inputValue) {
     var inputValueBefore = setInputValue.shared.inputValueBefore;
@@ -59,7 +61,7 @@ $ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
   }
 });
 
-$oop.getClass('$ui.OtherInputTypeHost')
-.forwardBlend($ui.DomOtherInputTypeHost, function () {
+$oop.getClass('$ui.TextareaElementHost')
+.forwardBlend($ui.DomTextareaElementHost, function () {
   return $utils.isBrowser();
 });

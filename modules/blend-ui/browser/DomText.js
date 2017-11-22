@@ -17,6 +17,7 @@ $ui.DomText = $oop.getClass('$ui.DomText')
   setTextString: function setTextString(textString) {
     var textStringBefore = setTextString.shared.textStringBefore;
     if (textString !== textStringBefore) {
+      // todo Should be syncing to textContent instead?
       this.reRenderContents();
     }
     return this;

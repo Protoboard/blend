@@ -4,6 +4,7 @@
  * @mixin $ui.XmlText
  * @extends $widget.XmlNode
  * @augments $ui.Text
+ * @todo Rename to TextContentHost & move to /html
  */
 $ui.XmlText = $oop.getClass('$ui.XmlText')
 .blend($oop.getClass('$widget.XmlNode'))

@@ -18,8 +18,10 @@ $ui.HtmlTextInput = $oop.getClass('$ui.HtmlTextInput')
 $oop.getClass('$ui.TextInput')
 .forwardBlend($ui.HtmlTextInput, $widget.isHtml);
 
-// todo Add TextareaElementHost when multiline is truthy
 $ui.HtmlTextInput
 .forwardBlend($oop.getClass('$ui.OtherInputTypeHost'), function (properties) {
   return !properties || !properties.multiline;
+})
+.forwardBlend($oop.getClass('$ui.TextareaElementHost'), function (properties) {
+  return properties && properties.multiline;
 });

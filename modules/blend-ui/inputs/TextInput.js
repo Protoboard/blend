@@ -11,7 +11,6 @@
  * @extends $ui.Inputable
  * @extends $ui.Disableable
  * @extends $ui.Focusable
- * @todo Need multiline property w/ forwarding to $ui.Textarea.
  */
 $ui.TextInput = $oop.getClass('$ui.TextInput')
 .blend($widget.Widget)
@@ -21,4 +20,5 @@ $ui.TextInput = $oop.getClass('$ui.TextInput')
 
 /**
  * @member {boolean} $ui.TextInput#multiline
+ * @todo Rename to isMultiline
  */
