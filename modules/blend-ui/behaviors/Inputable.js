@@ -5,10 +5,12 @@
  * input value to be set by the user. Usually mixed to input widgets.
  * @mixin $ui.Inputable
  * @extends $ui.Disableable
+ * @extends $ui.Focusable
  * @augments $widget.Widget
  */
 $ui.Inputable = $oop.getClass('$ui.Inputable')
 .blend($oop.getClass('$ui.Disableable'))
+.blend($oop.getClass('$ui.Focusable'))
 .expect($widget.Widget)
 .define(/** @lends $ui.Inputable# */{
   /**
