@@ -25,6 +25,4 @@ $ui.DomApplication = $oop.getClass('$ui.DomApplication')
 });
 
 $oop.getClass('$ui.Application')
-.forwardBlend($ui.DomApplication, function () {
-  return $utils.isBrowser();
-});
+.forwardBlend($ui.DomApplication, $utils.isBrowser);

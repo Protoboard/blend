@@ -96,6 +96,4 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
 });
 
 $oop.getClass('$ui.Focusable')
-.forwardBlend($ui.DomFocusable, function () {
-  return $utils.isBrowser();
-});
+.forwardBlend($ui.DomFocusable, $utils.isBrowser);

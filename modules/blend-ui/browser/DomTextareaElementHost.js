@@ -66,6 +66,4 @@ $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
 });
 
 $oop.getClass('$ui.TextareaElementHost')
-.forwardBlend($ui.DomTextareaElementHost, function () {
-  return $utils.isBrowser();
-});
+.forwardBlend($ui.DomTextareaElementHost, $utils.isBrowser);

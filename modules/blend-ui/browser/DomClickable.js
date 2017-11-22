@@ -29,6 +29,4 @@ $ui.DomClickable = $oop.getClass('$ui.DomClickable')
 });
 
 $oop.getClass('$ui.Clickable')
-.forwardBlend($ui.DomClickable, function () {
-  return $utils.isBrowser();
-});
+.forwardBlend($ui.DomClickable, $utils.isBrowser);

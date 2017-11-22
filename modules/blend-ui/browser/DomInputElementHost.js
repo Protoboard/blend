@@ -12,6 +12,4 @@ $ui.DomInputElementHost = $oop.getClass('$ui.DomInputElementHost')
 .blend($oop.getClass('$ui.DomInputEventBound'));
 
 $oop.getClass('$ui.InputElementHost')
-.forwardBlend($ui.DomInputElementHost, function () {
-  return $utils.isBrowser();
-});
+.forwardBlend($ui.DomInputElementHost, $utils.isBrowser);

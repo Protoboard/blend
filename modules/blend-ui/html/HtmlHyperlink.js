@@ -41,6 +41,4 @@ $ui.HtmlHyperlink = $oop.getClass('$ui.HtmlHyperlink')
 });
 
 $oop.getClass('$ui.Hyperlink')
-.forwardBlend($ui.HtmlHyperlink, function () {
-  return $widget.isHtml();
-});
+.forwardBlend($ui.HtmlHyperlink, $widget.isHtml);

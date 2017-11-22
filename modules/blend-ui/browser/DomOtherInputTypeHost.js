@@ -64,6 +64,4 @@ $ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
 });
 
 $oop.getClass('$ui.OtherInputTypeHost')
-.forwardBlend($ui.DomOtherInputTypeHost, function () {
-  return $utils.isBrowser();
-});
+.forwardBlend($ui.DomOtherInputTypeHost, $utils.isBrowser);
