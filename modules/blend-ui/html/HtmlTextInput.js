@@ -20,8 +20,8 @@ $oop.getClass('$ui.TextInput')
 
 $ui.HtmlTextInput
 .forwardBlend($oop.getClass('$ui.OtherInputTypeHost'), function (properties) {
-  return !properties || !properties.multiline;
+  return !properties || !properties.isMultiline;
 })
 .forwardBlend($oop.getClass('$ui.TextareaElementHost'), function (properties) {
-  return properties && properties.multiline;
+  return properties && properties.isMultiline;
 });

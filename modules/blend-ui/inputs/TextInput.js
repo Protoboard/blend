@@ -19,6 +19,5 @@ $ui.TextInput = $oop.getClass('$ui.TextInput')
 .blend($oop.getClass('$ui.Focusable'));
 
 /**
- * @member {boolean} $ui.TextInput#multiline
- * @todo Rename to isMultiline
+ * @member {boolean} $ui.TextInput#isMultiline
  */

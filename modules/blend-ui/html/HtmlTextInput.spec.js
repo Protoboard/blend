@@ -34,17 +34,17 @@ describe("$ui", function () {
     });
 
     describe("create()", function () {
-      describe("when multiline is falsy", function () {
+      describe("when isMultiline is falsy", function () {
         it("should blend OtherInputTypeHost", function () {
           htmlTextInput = HtmlTextInput.create();
           expect($ui.OtherInputTypeHost.mixedBy(htmlTextInput)).toBeTruthy();
         });
       });
 
-      describe("when multiline is truthy", function () {
+      describe("when isMultiline is truthy", function () {
         it("should blend OtherInputTypeHost", function () {
           htmlTextInput = HtmlTextInput.create({
-            multiline: true
+            isMultiline: true
           });
           expect($ui.TextareaElementHost.mixedBy(htmlTextInput)).toBeTruthy();
         });

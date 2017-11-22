@@ -247,8 +247,8 @@ _createTextInput: function () {
 /** @private */
 _createMultilineTextInput: function () {
   return $ui.TextInput.create({
-        multiline: true,
-        inputValue: "Rick"
+        isMultiline: true,
+        inputValue: "Rick and Morty, forever and forever, a hundred years!"
       });
 }
   //@formatter:on
