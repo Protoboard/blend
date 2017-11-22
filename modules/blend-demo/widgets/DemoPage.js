@@ -145,11 +145,27 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     })
     .addToParentNode(this);
 
-    // adding plain multiline text input
+    // adding entity-bound text input
     $demo.DemoItem.create({
       code: this._createEntityTextInput,
       itemTitle: $ui.EntityTextInput.__classId,
       contentWidget: this._createEntityTextInput()
+    })
+    .addToParentNode(this);
+
+    // adding plain checkbox
+    $demo.DemoItem.create({
+      code: this._createCheckbox,
+      itemTitle: $ui.Checkbox.__classId,
+      contentWidget: this._createCheckbox()
+    })
+    .addToParentNode(this);
+
+    // adding plain checkbox
+    $demo.DemoItem.create({
+      code: this._createRadioButton,
+      itemTitle: $ui.RadioButton.__classId,
+      contentWidget: this._createRadioButton()
     })
     .addToParentNode(this);
   },
@@ -265,6 +281,21 @@ _createEntityTextInput: function () {
   'character/rick/name'.toField().setNode("Rick Shanchez");
   return $ui.EntityTextInput.create({
     inputValueEntity: 'character/rick/name'.toField()
+  });
+},
+
+/** @private */
+_createCheckbox: function () {
+  return $ui.Checkbox.create({
+    ownValue: "Rick",
+    isSelected: true
+  });
+},
+
+/** @private */
+_createRadioButton: function () {
+  return $ui.RadioButton.create({
+    ownValue: "Morty"
   });
 }
   //@formatter:on
