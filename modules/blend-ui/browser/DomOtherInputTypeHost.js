@@ -14,7 +14,9 @@ $ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
    */
   _syncElementValue: function () {
     var element = this.getElement();
-    element.value = this.inputValue;
+    if (element) {
+      element.value = this.inputValue;
+    }
   },
 
   /**
@@ -22,7 +24,9 @@ $ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
    */
   _syncToElementValue: function () {
     var element = this.getElement();
-    this.setInputValue(element.value);
+    if (element) {
+      this.setInputValue(element.value);
+    }
   },
 
   /**

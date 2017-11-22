@@ -16,7 +16,9 @@ $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
    */
   _syncElementValue: function () {
     var element = this.getElement();
-    element.value = $utils.stringify(this.inputValue);
+    if (element) {
+      element.value = $utils.stringify(this.inputValue);
+    }
   },
 
   /**
@@ -24,7 +26,9 @@ $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
    */
   _syncToElementValue: function () {
     var element = this.getElement();
-    this.inputValue = element.value;
+    if (element) {
+      this.inputValue = element.value;
+    }
   },
 
   /**

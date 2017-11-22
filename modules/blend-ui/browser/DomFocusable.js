@@ -15,10 +15,12 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
    */
   _syncElementFocus: function () {
     var element = this.getElement();
-    if (this.isFocused) {
-      element.focus();
-    } else {
-      element.blur();
+    if (element) {
+      if (this.isFocused) {
+        element.focus();
+      } else {
+        element.blur();
+      }
     }
   },
 
