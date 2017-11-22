@@ -144,6 +144,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: this._createMultilineTextInput()
     })
     .addToParentNode(this);
+
+    // adding plain multiline text input
+    $demo.DemoItem.create({
+      code: this._createEntityTextInput,
+      itemTitle: $ui.EntityTextInput.__classId,
+      contentWidget: this._createEntityTextInput()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -249,6 +257,14 @@ _createMultilineTextInput: function () {
   return $ui.TextInput.create({
     isMultiline: true,
     inputValue: "Rick and Morty, forever and forever, a hundred years!"
+  });
+},
+
+/** @private */
+_createEntityTextInput: function () {
+  'character/rick/name'.toField().setNode("Rick Shanchez");
+  return $ui.EntityTextInput.create({
+    inputValueEntity: 'character/rick/name'.toField()
   });
 }
   //@formatter:on
