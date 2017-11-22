@@ -1,8 +1,8 @@
 "use strict";
 
 /**
- * Binds the host widget to its `Entity` type properties. Whenever entities
- * associated with instance properties change, or when the host widget
+ * One-way binds the host widget to its `Entity` type properties. Whenever
+ * entities associated with instance properties change, or when the host widget
  * becomes attached, a relevant synchronization callback (`syncToEntity`) will
  * be invoked.
  * @mixin $ui.EntityPropertyBound
