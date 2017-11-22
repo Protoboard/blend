@@ -3,11 +3,11 @@
 /**
  * @mixin $ui.InputElementHost
  * @extends $widget.HtmlWidget
- * @extends $ui.ValueAttributeHost
+ * @extends $ui.DisabledAttributeHost
  */
 $ui.InputElementHost = $oop.getClass('$ui.InputElementHost')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.ValueAttributeHost'))
+.blend($oop.getClass('$ui.DisabledAttributeHost'))
 .define(/** @lends $ui.InputElementHost# */{
   /**
    * @member {string} $ui.HtmlTextInput#inputType

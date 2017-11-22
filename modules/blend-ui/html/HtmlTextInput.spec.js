@@ -23,6 +23,26 @@ describe("$ui", function () {
     });
   });
 
+  describe("HtmlTextInput", function () {
+    var HtmlTextInput,
+        htmlTextInput;
+
+    beforeAll(function () {
+      HtmlTextInput = $oop.getClass('test.$ui.HtmlTextInput.HtmlTextInput')
+      .blend($ui.TextInput)
+      .blend($ui.HtmlTextInput);
+    });
+
+    describe("create()", function () {
+      describe("when multiline is falsy", function () {
+        it("should blend OtherInputTypeHost", function () {
+          htmlTextInput = HtmlTextInput.create();
+          expect($ui.OtherInputTypeHost.mixedBy(htmlTextInput)).toBeTruthy();
+        });
+      });
+    });
+  });
+
   describe("TextInput", function () {
     var textInput;
 

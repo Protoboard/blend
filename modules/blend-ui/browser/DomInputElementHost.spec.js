@@ -16,43 +16,6 @@ describe("$ui", function () {
       DomInputElementHost.__forwards = {list: [], sources: [], lookup: {}};
     });
 
-    describe("setInputValue()", function () {
-      var element;
-
-      beforeEach(function () {
-        element = document.createElement('input');
-        domInputElementHost = DomInputElementHost.create();
-        spyOn(domInputElementHost, 'getElement').and.returnValue(element);
-      });
-
-      it("should return self", function () {
-        var result = domInputElementHost.setInputValue('foo');
-        expect(result).toBe(domInputElementHost);
-      });
-
-      it("should set element value", function () {
-        domInputElementHost.setInputValue('foo');
-        expect(element.value).toBe('foo');
-      });
-    });
-
-    describe("onRender()", function () {
-      var element;
-
-      beforeEach(function () {
-        element = document.createElement('input');
-        domInputElementHost = DomInputElementHost.create({
-          inputValue: 'foo'
-        });
-        spyOn(domInputElementHost, 'getElement').and.returnValue(element);
-      });
-
-      it("should sync element value to inputValue", function () {
-        domInputElementHost.onRender();
-        expect(element.value).toBe('foo');
-      });
-    });
-
     describe("onInput()", function () {
       var element,
           event;
@@ -64,11 +27,6 @@ describe("$ui", function () {
         domInputElementHost.onRender();
         element.value = 'foo';
         event = new Event('input');
-      });
-
-      it("should sync inputValue to element value", function () {
-        element.dispatchEvent(event);
-        expect(domInputElementHost.inputValue).toBe('foo');
       });
 
       it("should push wrapped DOM event to EventTrail", function () {
@@ -91,11 +49,6 @@ describe("$ui", function () {
         domInputElementHost.onRender();
         element.value = 'foo';
         event = new Event('change');
-      });
-
-      it("should sync inputValue to element value", function () {
-        element.dispatchEvent(event);
-        expect(domInputElementHost.inputValue).toBe('foo');
       });
 
       it("should push wrapped DOM event to EventTrail", function () {

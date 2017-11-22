@@ -1,15 +1,17 @@
 "use strict";
 
 /**
- * Manifests input value in "value" HTML attribute.
- * @mixin $ui.ValueAttributeHost
- * @extend $widget.HtmlWidget
+ * Assigned to input element widgets that are not of type 'checkbox' or
+ * 'radio'. Host widgets sync their `inputValue`s to their element's 'value'
+ * attribute.
+ * @mixin $ui.OtherInputTypeHost
+ * @extends $ui.InputElementHost
  * @augments $ui.Inputable
  */
-$ui.ValueAttributeHost = $oop.getClass('$ui.ValueAttributeHost')
-.blend($widget.HtmlWidget)
+$ui.OtherInputTypeHost = $oop.getClass('$ui.OtherInputTypeHost')
+.blend($oop.getClass('$ui.InputElementHost'))
 .expect($oop.getClass('$ui.Inputable'))
-.define(/** @lends $ui.ValueAttributeHost# */{
+.define(/** @lends $ui.OtherInputTypeHost# */{
   /** @ignore */
   init: function () {
     this._syncValueAttribute();
@@ -24,7 +26,7 @@ $ui.ValueAttributeHost = $oop.getClass('$ui.ValueAttributeHost')
 
   /**
    * @param {*} inputValue
-   * @returns {$ui.ValueAttributeHost}
+   * @returns {$ui.OtherInputTypeHost}
    */
   setInputValue: function setInputValue(inputValue) {
     var inputValueBefore = setInputValue.shared.inputValueBefore;
@@ -34,4 +36,3 @@ $ui.ValueAttributeHost = $oop.getClass('$ui.ValueAttributeHost')
     return this;
   }
 });
-

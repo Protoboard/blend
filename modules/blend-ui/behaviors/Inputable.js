@@ -1,12 +1,14 @@
 "use strict";
 
 /**
- * Associates host widget with an input value to be set by the user. Usually
- * mixed to input widgets.
+ * Endows widget with user input capabilities. Associates host widget with an
+ * input value to be set by the user. Usually mixed to input widgets.
  * @mixin $ui.Inputable
+ * @extends $ui.Disableable
  * @augments $widget.Widget
  */
 $ui.Inputable = $oop.getClass('$ui.Inputable')
+.blend($oop.getClass('$ui.Disableable'))
 .expect($widget.Widget)
 .define(/** @lends $ui.Inputable# */{
   /**

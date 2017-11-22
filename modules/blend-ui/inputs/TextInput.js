@@ -18,3 +18,7 @@ $ui.TextInput = $oop.getClass('$ui.TextInput')
 .blend($oop.getClass('$ui.Inputable'))
 .blend($oop.getClass('$ui.Disableable'))
 .blend($oop.getClass('$ui.Focusable'));
+
+/**
+ * @member {boolean} $ui.TextInput#multiline
+ */

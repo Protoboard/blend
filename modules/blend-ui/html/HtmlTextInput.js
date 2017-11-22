@@ -3,14 +3,10 @@
 /**
  * @mixin $ui.HtmlTextInput
  * @extend $widget.HtmlWidget
- * @extend $widget.DisabledAttributeHost
  * @augments $ui.TextInput
  */
 $ui.HtmlTextInput = $oop.getClass('$ui.HtmlTextInput')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.InputElementHost'))
-.blend($oop.getClass('$ui.DisabledAttributeHost'))
-.blend($oop.getClass('$ui.ValueAttributeHost'))
 .expect($oop.getClass('$ui.TextInput'))
 .define(/** @lends $ui.HtmlTextInput# */{
   /** @ignore */
@@ -21,3 +17,9 @@ $ui.HtmlTextInput = $oop.getClass('$ui.HtmlTextInput')
 
 $oop.getClass('$ui.TextInput')
 .forwardBlend($ui.HtmlTextInput, $widget.isHtml);
+
+// todo Add TextareaElementHost when multiline is truthy
+$ui.HtmlTextInput
+.forwardBlend($oop.getClass('$ui.OtherInputTypeHost'), function (properties) {
+  return !properties || !properties.multiline;
+});
