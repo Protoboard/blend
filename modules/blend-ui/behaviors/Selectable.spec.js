@@ -53,9 +53,9 @@ describe("$ui", function () {
         expect(result).toBe(selectable);
       });
 
-      it("should set selected", function () {
+      it("should set isSelected", function () {
         selectable.select();
-        expect(selectable.selected).toBeTruthy();
+        expect(selectable.isSelected).toBeTruthy();
       });
 
       it("should sync inputValue", function () {
@@ -76,9 +76,9 @@ describe("$ui", function () {
         expect(result).toBe(selectable);
       });
 
-      it("should set selected", function () {
+      it("should set isSelected", function () {
         selectable.deselect();
-        expect(selectable.selected).toBeFalsy();
+        expect(selectable.isSelected).toBeFalsy();
       });
 
       it("should sync inputValue", function () {

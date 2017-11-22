@@ -16,14 +16,14 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    */
 
   /**
-   * @member {boolean} $ui.Selectable#selected
+   * @member {boolean} $ui.Selectable#isSelected
    */
 
   /**
    * @protected
    */
   _syncToOwnValue: function () {
-    if (this.selected) {
+    if (this.isSelected) {
       this.setInputValue(this.ownValue);
     } else {
       this.setInputValue(undefined);
@@ -48,12 +48,12 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    * @returns {$ui.Selectable}
    */
   select: function select() {
-    var selectedBefore = this.selected;
-    if (!selectedBefore) {
-      this.selected = true;
+    var isSelectedBefore = this.isSelected;
+    if (!isSelectedBefore) {
+      this.isSelected = true;
       this._syncToOwnValue();
     }
-    select.shared.selectedBefore = selectedBefore;
+    select.shared.isSelectedBefore = isSelectedBefore;
     return this;
   },
 
@@ -61,12 +61,12 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    * @returns {$ui.Selectable}
    */
   deselect: function deselect() {
-    var selectedBefore = this.selected;
-    if (selectedBefore) {
-      this.selected = false;
+    var isSelectedBefore = this.isSelected;
+    if (isSelectedBefore) {
+      this.isSelected = false;
       this._syncToOwnValue();
     }
-    deselect.shared.selectedBefore = selectedBefore;
+    deselect.shared.isSelectedBefore = isSelectedBefore;
     return this;
   }
 });
