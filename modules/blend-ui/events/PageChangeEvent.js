@@ -22,5 +22,5 @@ $ui.PageChangeEvent = $oop.getClass('$ui.PageChangeEvent')
 
 $event.Event
 .forwardBlend($ui.PageChangeEvent, function (properties) {
-  return $utils.matchesPrefix(properties.eventName, 'widgets.page.change');
+  return $utils.matchesPrefix(properties.eventName, 'ui.page.change');
 });

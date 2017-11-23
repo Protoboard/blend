@@ -29,7 +29,7 @@ describe("$ui", function () {
       it("should trigger EVENT_CLICKABLE_CLICK", function () {
         clickable.click();
         expect(clickable.trigger)
-        .toHaveBeenCalledWith('widgets.clickable.click');
+        .toHaveBeenCalledWith('ui.clickable.click');
       });
     });
   });

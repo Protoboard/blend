@@ -62,7 +62,6 @@ describe("$ui", function () {
         element = document.createElement('input');
         domValidatable = DomValidatable.create();
         spyOn(domValidatable, 'getElement').and.returnValue(element);
-        spyOn(element, 'checkValidity').and.returnValue(false);
         event = new Event('invalid');
         domValidatable.onRender();
       });

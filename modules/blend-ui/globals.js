@@ -22,11 +22,11 @@ $oop.copyProperties($ui, /** @lends $ui */{
    * Signals that the application's active page changed.
    * @constant
    */
-  EVENT_PAGE_CHANGE: 'widgets.page.change',
+  EVENT_PAGE_CHANGE: 'ui.page.change',
 
   /**
    * Signals that a `Clickable` widget was clicked.
    * @constant
    */
-  EVENT_CLICKABLE_CLICK: 'widgets.clickable.click'
+  EVENT_CLICKABLE_CLICK: 'ui.clickable.click'
 });

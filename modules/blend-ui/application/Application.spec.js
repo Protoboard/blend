@@ -51,7 +51,7 @@ describe("$ui", function () {
         application.setActivePage(page);
         var calls = $ui.PageChangeEvent.trigger.calls.all(),
             event = calls[0].object;
-        expect(event.eventName).toBe('widgets.page.change');
+        expect(event.eventName).toBe('ui.page.change');
         expect(event.sender).toBe(application);
         expect(event.pageAfter).toBe(page);
         expect(event.pageBefore).toBeUndefined();
