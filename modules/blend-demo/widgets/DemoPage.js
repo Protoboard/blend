@@ -264,7 +264,9 @@ _createButton: function () {
 /** @private */
 _createTextInput: function () {
   return $ui.TextInput.create({
-    inputValue: "Rick"
+    // here we're assuming that widget will manifest as <input>
+    inputType: 'email',
+    inputValue: "rick@100timesrickandmorty.com"
   });
 },
 
