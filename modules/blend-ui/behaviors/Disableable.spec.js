@@ -54,7 +54,7 @@ describe("$ui", function () {
         expect(result).toBe(disableable);
       });
 
-      it("should add state source ID", function () {
+      it("should remove state source ID", function () {
         disableable.enableBy('foo');
         expect(disableable.binaryStates.getValue('disabled').stateSourceIds
         .hasItem('foo')).toBeFalsy();
