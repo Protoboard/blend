@@ -4,35 +4,61 @@ var $oop = window['blend-oop'],
     $ui = window['blend-widget'];
 
 describe("$ui", function () {
-  describe("DomOtherInputTypeHost", function () {
-    var DomOtherInputTypeHost,
-        domOtherInputTypeHost;
+  describe("DomBinaryInputTypeHost", function () {
+    var DomBinaryInputTypeHost,
+        domBinaryInputTypeHost;
 
     beforeAll(function () {
-      DomOtherInputTypeHost = $oop.getClass('test.$ui.DomOtherInputTypeHost.DomOtherInputTypeHost')
+      DomBinaryInputTypeHost = $oop.getClass('test.$ui.DomBinaryInputTypeHost.DomBinaryInputTypeHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
-      .blend($ui.DomOtherInputTypeHost);
-      DomOtherInputTypeHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Selectable)
+      .blend($ui.DomBinaryInputTypeHost);
+      DomBinaryInputTypeHost.__forwards = {list: [], sources: [], lookup: {}};
     });
 
-    describe("setInputValue()", function () {
+    describe("select()", function () {
       var element;
 
       beforeEach(function () {
         element = document.createElement('input');
-        domOtherInputTypeHost = DomOtherInputTypeHost.create();
-        spyOn(domOtherInputTypeHost, 'getElement').and.returnValue(element);
+        domBinaryInputTypeHost = DomBinaryInputTypeHost.create({
+          inputType: 'checkbox'
+        });
+        spyOn(domBinaryInputTypeHost, 'getElement').and.returnValue(element);
       });
 
       it("should return self", function () {
-        var result = domOtherInputTypeHost.setInputValue('foo');
-        expect(result).toBe(domOtherInputTypeHost);
+        var result = domBinaryInputTypeHost.select();
+        expect(result).toBe(domBinaryInputTypeHost);
       });
 
-      it("should set element value", function () {
-        domOtherInputTypeHost.setInputValue('foo');
-        expect(element.value).toBe('foo');
+      it("should sync element checked property", function () {
+        domBinaryInputTypeHost.select();
+        expect(element.checked).toBeTruthy();
+      });
+    });
+
+    describe("deselect()", function () {
+      var element;
+
+      beforeEach(function () {
+        element = document.createElement('input');
+        element.checked = true;
+        domBinaryInputTypeHost = DomBinaryInputTypeHost.create({
+          inputType: 'checkbox'
+        });
+        domBinaryInputTypeHost.select();
+        spyOn(domBinaryInputTypeHost, 'getElement').and.returnValue(element);
+      });
+
+      it("should return self", function () {
+        var result = domBinaryInputTypeHost.deselect();
+        expect(result).toBe(domBinaryInputTypeHost);
+      });
+
+      it("should sync element checked property", function () {
+        domBinaryInputTypeHost.deselect();
+        expect(element.checked).toBeFalsy();
       });
     });
 
@@ -41,15 +67,18 @@ describe("$ui", function () {
 
       beforeEach(function () {
         element = document.createElement('input');
-        domOtherInputTypeHost = DomOtherInputTypeHost.create({
-          inputValue: 'foo'
+        domBinaryInputTypeHost = DomBinaryInputTypeHost.create({
+          inputType: 'checkbox',
+          state: {
+            selected: true
+          }
         });
-        spyOn(domOtherInputTypeHost, 'getElement').and.returnValue(element);
+        spyOn(domBinaryInputTypeHost, 'getElement').and.returnValue(element);
       });
 
-      it("should sync element value to inputValue", function () {
-        domOtherInputTypeHost.onRender();
-        expect(element.value).toBe('foo');
+      it("should sync element checked property to 'selected' state", function () {
+        domBinaryInputTypeHost.onRender();
+        expect(element.checked).toBeTruthy();
       });
     });
 
@@ -59,16 +88,18 @@ describe("$ui", function () {
 
       beforeEach(function () {
         element = document.createElement('input');
-        domOtherInputTypeHost = DomOtherInputTypeHost.create();
-        spyOn(domOtherInputTypeHost, 'getElement').and.returnValue(element);
-        domOtherInputTypeHost.onRender();
-        element.value = 'foo';
+        domBinaryInputTypeHost = DomBinaryInputTypeHost.create({
+          inputType: 'checkbox'
+        });
+        spyOn(domBinaryInputTypeHost, 'getElement').and.returnValue(element);
+        domBinaryInputTypeHost.onRender();
+        element.checked = true;
         event = new Event('input');
       });
 
-      it("should sync inputValue to element value", function () {
+      it("should sync 'selected' state to element checked property", function () {
         element.dispatchEvent(event);
-        expect(domOtherInputTypeHost.inputValue).toBe('foo');
+        expect(domBinaryInputTypeHost.getStateValue('selected')).toBeTruthy();
       });
     });
 
@@ -78,36 +109,40 @@ describe("$ui", function () {
 
       beforeEach(function () {
         element = document.createElement('input');
-        domOtherInputTypeHost = DomOtherInputTypeHost.create();
-        spyOn(domOtherInputTypeHost, 'getElement').and.returnValue(element);
-        domOtherInputTypeHost.onRender();
-        element.value = 'foo';
+        domBinaryInputTypeHost = DomBinaryInputTypeHost.create({
+          inputType: 'checkbox'
+        });
+        spyOn(domBinaryInputTypeHost, 'getElement').and.returnValue(element);
+        domBinaryInputTypeHost.onRender();
+        element.checked = false;
         event = new Event('change');
       });
 
-      it("should sync inputValue to element value", function () {
+      it("should sync 'selected' state to element checked property", function () {
         element.dispatchEvent(event);
-        expect(domOtherInputTypeHost.inputValue).toBe('foo');
+        expect(domBinaryInputTypeHost.getStateValue('selected')).toBeFalsy();
       });
     });
   });
 
-  describe("OtherInputTypeHost", function () {
-    var OtherInputTypeHost,
-        otherInputTypeHost;
+  describe("BinaryInputTypeHost", function () {
+    var BinaryInputTypeHost,
+        binaryInputTypeHost;
 
     beforeAll(function () {
-      OtherInputTypeHost = $oop.getClass('test.$ui.DomOtherInputTypeHost.OtherInputTypeHost')
+      BinaryInputTypeHost = $oop.getClass('test.$ui.DomBinaryInputTypeHost.BinaryInputTypeHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
-      .blend($ui.OtherInputTypeHost);
+      .blend($ui.Selectable)
+      .blend($ui.BinaryInputTypeHost);
     });
 
     describe("create()", function () {
       describe("in browser environment", function () {
-        it("should return DomOtherInputTypeHost instance", function () {
-          otherInputTypeHost = OtherInputTypeHost.create();
-          expect($ui.DomOtherInputTypeHost.mixedBy(otherInputTypeHost))
+        it("should return DomBinaryInputTypeHost instance", function () {
+          binaryInputTypeHost = BinaryInputTypeHost.create({
+            inputType: 'checkbox'
+          });
+          expect($ui.DomBinaryInputTypeHost.mixedBy(binaryInputTypeHost))
           .toBeTruthy();
         });
       });
