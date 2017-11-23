@@ -29,17 +29,6 @@ describe("$ui", function () {
         selectable.setOwnValue('foo');
         expect(selectable.ownValue).toBe('foo');
       });
-
-      describe("when selected", function () {
-        beforeEach(function () {
-          selectable.select();
-        });
-
-        it("should sync inputValue", function () {
-          selectable.setOwnValue('foo');
-          expect(selectable.inputValue).toBe('foo');
-        });
-      });
     });
 
     describe("select()", function () {
@@ -56,11 +45,6 @@ describe("$ui", function () {
       it("should set isSelected", function () {
         selectable.select();
         expect(selectable.isSelected).toBeTruthy();
-      });
-
-      it("should sync inputValue", function () {
-        selectable.select();
-        expect(selectable.inputValue).toBe('foo');
       });
     });
 
@@ -79,11 +63,6 @@ describe("$ui", function () {
       it("should set isSelected", function () {
         selectable.deselect();
         expect(selectable.isSelected).toBeFalsy();
-      });
-
-      it("should sync inputValue", function () {
-        selectable.deselect();
-        expect(selectable.inputValue).toBeUndefined();
       });
     });
   });

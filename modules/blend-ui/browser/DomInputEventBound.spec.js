@@ -11,7 +11,6 @@ describe("$ui", function () {
     beforeAll(function () {
       DomInputEventBound = $oop.getClass('test.$ui.DomInputEventBound.DomInputEventBound')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
       .blend($ui.DomInputEventBound);
       DomInputEventBound.__forwards = {list: [], sources: [], lookup: {}};
     });

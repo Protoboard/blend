@@ -5,11 +5,9 @@
  * DOM manifestations of input widgets.
  * @mixin $ui.DomInputEventBound
  * @extends $widget.DomWidget
- * @augments $ui.Inputable
  */
 $ui.DomInputEventBound = $oop.getClass('$ui.DomInputEventBound')
 .blend($widget.DomWidget)
-.expect($oop.getClass('$ui.Inputable'))
 .define(/** @lends $ui.DomInputEventBound# */{
   /** @ignore */
   onRender: function () {

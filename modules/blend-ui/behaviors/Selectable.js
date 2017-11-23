@@ -4,11 +4,13 @@
  * Associates host widget with an own value and selected state to be set by the
  * user. Usually mixed to input widgets.
  * @mixin $ui.Selectable
- * @extends $ui.Inputable
+ * @extends $ui.Disableable
+ * @extends $ui.Focusable
  * @augments $widget.Widget
  */
 $ui.Selectable = $oop.getClass('$ui.Selectable')
-.blend($oop.getClass('$ui.Inputable'))
+.blend($oop.getClass('$ui.Disableable'))
+.blend($oop.getClass('$ui.Focusable'))
 .expect($widget.Widget)
 .define(/** @lends $ui.Selectable# */{
   /**
@@ -20,17 +22,6 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    */
 
   /**
-   * @protected
-   */
-  _syncToOwnValue: function () {
-    if (this.isSelected) {
-      this.setInputValue(this.ownValue);
-    } else {
-      this.setInputValue(undefined);
-    }
-  },
-
-  /**
    * @param {*} ownValue
    * @returns {$ui.Selectable}
    */
@@ -38,7 +29,6 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
     var ownValueBefore = this.ownValue;
     if (ownValue !== ownValueBefore) {
       this.ownValue = ownValue;
-      this._syncToOwnValue();
     }
     setOwnValue.shared.ownValueBefore = ownValueBefore;
     return this;
@@ -51,7 +41,6 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
     var isSelectedBefore = this.isSelected;
     if (!isSelectedBefore) {
       this.isSelected = true;
-      this._syncToOwnValue();
     }
     select.shared.isSelectedBefore = isSelectedBefore;
     return this;
@@ -64,7 +53,6 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
     var isSelectedBefore = this.isSelected;
     if (isSelectedBefore) {
       this.isSelected = false;
-      this._syncToOwnValue();
     }
     deselect.shared.isSelectedBefore = isSelectedBefore;
     return this;
