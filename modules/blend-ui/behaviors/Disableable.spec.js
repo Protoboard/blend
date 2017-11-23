@@ -41,6 +41,11 @@ describe("$ui", function () {
         expect(disableable.binaryStates.getValue('disabled').stateSourceIds
         .hasItem('foo')).toBeTruthy();
       });
+
+      it("should save before state", function () {
+        disableable.disableBy('foo');
+        expect(disableable.disableBy.shared.disabledStateBefore).toBeFalsy();
+      });
     });
 
     describe("enableBy()", function () {
@@ -58,6 +63,11 @@ describe("$ui", function () {
         disableable.enableBy('foo');
         expect(disableable.binaryStates.getValue('disabled').stateSourceIds
         .hasItem('foo')).toBeFalsy();
+      });
+
+      it("should save before state", function () {
+        disableable.enableBy('foo');
+        expect(disableable.enableBy.shared.disabledStateBefore).toBeTruthy();
       });
     });
 

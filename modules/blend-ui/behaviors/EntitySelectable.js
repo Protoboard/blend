@@ -102,15 +102,21 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
    * @returns {$ui.EntitySelectable}
    */
   select: function select() {
-    this._syncIsSelectedEntity();
+    var selectedStateBefore = select.shared.selectedStateBefore;
+    if (!selectedStateBefore) {
+      this._syncIsSelectedEntity();
+    }
     return this;
   },
 
   /**
    * @returns {$ui.EntitySelectable}
    */
-  deselect: function select() {
-    this._syncIsSelectedEntity();
+  deselect: function deselect() {
+    var selectedStateBefore = deselect.shared.selectedStateBefore;
+    if (selectedStateBefore) {
+      this._syncIsSelectedEntity();
+    }
     return this;
   },
 

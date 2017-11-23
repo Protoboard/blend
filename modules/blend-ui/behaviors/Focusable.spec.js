@@ -29,6 +29,11 @@ describe("$ui", function () {
         focusable.focus();
         expect(focusable.isFocused()).toBe(true);
       });
+
+      it("should save before state", function () {
+        focusable.focus();
+        expect(focusable.focus.shared.focusedStateBefore).toBeFalsy();
+      });
     });
 
     describe("blur()", function () {
@@ -45,6 +50,11 @@ describe("$ui", function () {
       it("should set 'focused' state", function () {
         focusable.blur();
         expect(focusable.isFocused()).toBe(false);
+      });
+
+      it("should save before state", function () {
+        focusable.blur();
+        expect(focusable.blur.shared.focusedStateBefore).toBe(true);
       });
     });
 

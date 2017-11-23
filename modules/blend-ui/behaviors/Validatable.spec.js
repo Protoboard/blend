@@ -41,6 +41,11 @@ describe("$ui", function () {
         expect(validatable.binaryStates.getValue('invalid').stateSourceIds
         .hasItem('foo')).toBeTruthy();
       });
+
+      it("should save before state", function () {
+        validatable.invalidateBy('foo');
+        expect(validatable.invalidateBy.shared.invalidStateBefore).toBeFalsy();
+      });
     });
 
     describe("validateBy()", function () {
@@ -58,6 +63,11 @@ describe("$ui", function () {
         validatable.validateBy('foo');
         expect(validatable.binaryStates.getValue('invalid').stateSourceIds
         .hasItem('foo')).toBeFalsy();
+      });
+
+      it("should save before state", function () {
+        validatable.validateBy('foo');
+        expect(validatable.validateBy.shared.invalidStateBefore).toBeTruthy();
       });
     });
 

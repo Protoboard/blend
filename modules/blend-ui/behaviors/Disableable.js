@@ -16,7 +16,8 @@ $ui.Disableable = $oop.getClass('$ui.Disableable')
    * @param {string} sourceId
    * @returns {$ui.Disableable}
    */
-  disableBy: function (sourceId) {
+  disableBy: function disableBy(sourceId) {
+    disableBy.shared.disabledStateBefore = this.getStateValue($ui.STATE_NAME_DISABLED);
     this.addBinaryStateSourceId($ui.STATE_NAME_DISABLED, sourceId);
     return this;
   },
@@ -25,7 +26,8 @@ $ui.Disableable = $oop.getClass('$ui.Disableable')
    * @param {string} sourceId
    * @returns {$ui.Disableable}
    */
-  enableBy: function (sourceId) {
+  enableBy: function enableBy(sourceId) {
+    enableBy.shared.disabledStateBefore = this.getStateValue($ui.STATE_NAME_DISABLED);
     this.removeBinaryStateSourceId($ui.STATE_NAME_DISABLED, sourceId);
     return this;
   },

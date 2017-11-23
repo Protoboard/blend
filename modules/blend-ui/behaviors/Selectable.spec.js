@@ -46,6 +46,11 @@ describe("$ui", function () {
         selectable.select();
         expect(selectable.getStateValue('selected')).toBeTruthy();
       });
+
+      it("should save before state", function () {
+        selectable.select();
+        expect(selectable.select.shared.selectedStateBefore).toBeFalsy();
+      });
     });
 
     describe("deselect()", function () {
@@ -63,6 +68,11 @@ describe("$ui", function () {
       it("should set 'selected' state", function () {
         selectable.deselect();
         expect(selectable.getStateValue('selected')).toBeFalsy();
+      });
+
+      it("should save before state", function () {
+        selectable.deselect();
+        expect(selectable.deselect.shared.selectedStateBefore).toBeTruthy();
       });
     });
 

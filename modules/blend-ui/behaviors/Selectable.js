@@ -34,6 +34,7 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    * @returns {$ui.Selectable}
    */
   select: function select() {
+    select.shared.selectedStateBefore = this.getStateValue($ui.STATE_NAME_SELECTED);
     this.setStateValue($ui.STATE_NAME_SELECTED, true);
     return this;
   },
@@ -42,6 +43,7 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    * @returns {$ui.Selectable}
    */
   deselect: function deselect() {
+    deselect.shared.selectedStateBefore = this.getStateValue($ui.STATE_NAME_SELECTED);
     this.setStateValue($ui.STATE_NAME_SELECTED, false);
     return this;
   },

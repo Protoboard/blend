@@ -12,6 +12,7 @@ $ui.Focusable = $oop.getClass('$ui.Focusable')
    * @returns {$ui.Focusable}
    */
   focus: function focus() {
+    focus.shared.focusedStateBefore = this.getStateValue($ui.STATE_NAME_FOCUSED);
     this.setStateValue($ui.STATE_NAME_FOCUSED, true);
     return this;
   },
@@ -20,6 +21,7 @@ $ui.Focusable = $oop.getClass('$ui.Focusable')
    * @returns {$ui.Focusable}
    */
   blur: function blur() {
+    blur.shared.focusedStateBefore = this.getStateValue($ui.STATE_NAME_FOCUSED);
     this.setStateValue($ui.STATE_NAME_FOCUSED, false);
     return this;
   },

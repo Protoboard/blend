@@ -37,8 +37,8 @@ $ui.DomBinaryInputTypeHost = $oop.getClass('$ui.DomBinaryInputTypeHost')
    * @returns {$ui.DomBinaryInputTypeHost}
    */
   select: function select() {
-    var isSelectedBefore = select.shared.isSelectedBefore;
-    if (!isSelectedBefore) {
+    var selectedStateBefore = select.shared.selectedStateBefore;
+    if (!selectedStateBefore) {
       this._syncElementChecked();
     }
     return this;
@@ -48,8 +48,8 @@ $ui.DomBinaryInputTypeHost = $oop.getClass('$ui.DomBinaryInputTypeHost')
    * @returns {$ui.DomBinaryInputTypeHost}
    */
   deselect: function select() {
-    var isSelectedBefore = select.shared.isSelectedBefore;
-    if (isSelectedBefore) {
+    var selectedStateBefore = select.shared.selectedStateBefore;
+    if (selectedStateBefore) {
       this._syncElementChecked();
     }
     return this;

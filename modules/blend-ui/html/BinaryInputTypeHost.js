@@ -56,7 +56,10 @@ $ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
    * @returns {$ui.BinaryInputTypeHost}
    */
   select: function select() {
-    this._syncCheckedAttribute();
+    var selectedStateBefore = select.shared.selectedStateBefore;
+    if (!selectedStateBefore) {
+      this._syncCheckedAttribute();
+    }
     return this;
   },
 
@@ -64,7 +67,10 @@ $ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
    * @returns {$ui.BinaryInputTypeHost}
    */
   deselect: function deselect() {
-    this._syncCheckedAttribute();
+    var selectedStateBefore = deselect.shared.selectedStateBefore;
+    if (selectedStateBefore) {
+      this._syncCheckedAttribute();
+    }
     return this;
   }
 });

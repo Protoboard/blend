@@ -18,7 +18,8 @@ $ui.Validatable = $oop.getClass('$ui.Validatable')
    * @param {string} sourceId
    * @returns {$ui.Validatable}
    */
-  invalidateBy: function (sourceId) {
+  invalidateBy: function invalidateBy(sourceId) {
+    invalidateBy.shared.invalidStateBefore = this.getStateValue($ui.STATE_NAME_INVALID);
     this.addBinaryStateSourceId($ui.STATE_NAME_INVALID, sourceId);
     return this;
   },
@@ -27,7 +28,8 @@ $ui.Validatable = $oop.getClass('$ui.Validatable')
    * @param {string} sourceId
    * @returns {$ui.Validatable}
    */
-  validateBy: function (sourceId) {
+  validateBy: function validateBy(sourceId) {
+    validateBy.shared.invalidStateBefore = this.getStateValue($ui.STATE_NAME_INVALID);
     this.removeBinaryStateSourceId($ui.STATE_NAME_INVALID, sourceId);
     return this;
   },

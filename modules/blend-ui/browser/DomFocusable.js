@@ -41,7 +41,10 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
    * @returns {$ui.DomFocusable}
    */
   focus: function focus() {
-    this._syncElementFocus();
+    var focusedStateBefore = focus.shared.focusedStateBefore;
+    if (!focusedStateBefore) {
+      this._syncElementFocus();
+    }
     return this;
   },
 
@@ -49,7 +52,10 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
    * @returns {$ui.DomFocusable}
    */
   blur: function blur() {
-    this._syncElementFocus();
+    var focusedStateBefore = blur.shared.focusedStateBefore;
+    if (focusedStateBefore) {
+      this._syncElementFocus();
+    }
     return this;
   },
 
