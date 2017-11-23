@@ -64,15 +64,15 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
     this._syncElementFocus();
 
     var element = this.getElement();
-    element.addEventListener('focusin', this.onFocusIn);
-    element.addEventListener('focusout', this.onFocusOut);
+    element.addEventListener('focusin', this.onElementFocusIn);
+    element.addEventListener('focusout', this.onElementFocusOut);
   },
 
   /**
    * @param {Event} event
    * @ignore
    */
-  onFocusIn: function (event) {
+  onElementFocusIn: function (event) {
     var eventTrail = $event.EventTrail.create(),
         wrapperEvent = $event.WrapperEvent.fromEventName('focusInWrapper')
         .wrap(event);
@@ -85,7 +85,7 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
    * @param {Event} event
    * @ignore
    */
-  onFocusOut: function (event) {
+  onElementFocusOut: function (event) {
     var eventTrail = $event.EventTrail.create(),
         wrapperEvent = $event.WrapperEvent.fromEventName('focusOutWrapper')
         .wrap(event);

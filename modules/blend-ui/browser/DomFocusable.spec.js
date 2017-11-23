@@ -105,7 +105,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onFocusIn()", function () {
+    describe("onElementFocusIn()", function () {
       var element;
 
       beforeEach(function () {
@@ -134,7 +134,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onFocusOut()", function () {
+    describe("onElementFocusOut()", function () {
       var element;
 
       beforeEach(function () {

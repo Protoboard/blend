@@ -52,7 +52,7 @@ $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
    * @param {Event} event
    * @ignore
    */
-  onInput: function (event) {
+  onElementInput: function (event) {
     this._syncToElementValue();
   },
 
@@ -60,7 +60,7 @@ $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
    * @param {Event} event
    * @ignore
    */
-  onChange: function (event) {
+  onElementChange: function (event) {
     this._syncToElementValue();
   }
 });

@@ -54,7 +54,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onInput()", function () {
+    describe("onElementInput()", function () {
       var element;
 
       beforeEach(function () {
@@ -71,7 +71,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onChange()", function () {
+    describe("onElementChange()", function () {
       var element;
 
       beforeEach(function () {

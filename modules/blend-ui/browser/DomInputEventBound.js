@@ -12,15 +12,15 @@ $ui.DomInputEventBound = $oop.getClass('$ui.DomInputEventBound')
   /** @ignore */
   onRender: function () {
     var element = this.getElement();
-    element.addEventListener('input', this.onInput);
-    element.addEventListener('change', this.onChange);
+    element.addEventListener('input', this.onElementInput);
+    element.addEventListener('change', this.onElementChange);
   },
 
   /**
    * @param {Event} event
    * @ignore
    */
-  onInput: function (event) {
+  onElementInput: function (event) {
     var eventTrail = $event.EventTrail.create(),
         wrapperEvent = $event.WrapperEvent.fromEventName('inputWrapper')
         .wrap(event);
@@ -32,7 +32,7 @@ $ui.DomInputEventBound = $oop.getClass('$ui.DomInputEventBound')
    * @param {Event} event
    * @ignore
    */
-  onChange: function (event) {
+  onElementChange: function (event) {
     var eventTrail = $event.EventTrail.create(),
         wrapperEvent = $event.WrapperEvent.fromEventName('changeWrapper')
         .wrap(event);
