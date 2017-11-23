@@ -19,6 +19,7 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
 
   /**
    * @member {boolean} $ui.Selectable#isSelected
+   * @todo Use #state for this
    */
 
   /**
