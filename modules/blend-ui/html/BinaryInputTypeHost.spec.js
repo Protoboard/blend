@@ -39,7 +39,9 @@ describe("$ui", function () {
       it("should initialize 'checked' attribute", function () {
         binaryInputTypeHost = BinaryInputTypeHost.create({
           inputType: 'checkbox',
-          isSelected: true
+          state: {
+            selected: true
+          }
         });
         expect(binaryInputTypeHost.getAttribute('checked')).toBe('checked');
       });
@@ -75,7 +77,7 @@ describe("$ui", function () {
         expect(result).toBe(binaryInputTypeHost);
       });
 
-      it("should add 'value' attribute", function () {
+      it("should add 'checked' attribute", function () {
         binaryInputTypeHost.select();
         expect(binaryInputTypeHost.getAttribute('checked')).toBe('checked');
       });
@@ -94,7 +96,7 @@ describe("$ui", function () {
         expect(result).toBe(binaryInputTypeHost);
       });
 
-      it("should add 'value' attribute", function () {
+      it("should remove 'checked' attribute", function () {
         binaryInputTypeHost.deselect();
         expect(binaryInputTypeHost.getAttribute('checked')).toBeUndefined();
       });

@@ -2,8 +2,8 @@
 
 /**
  * Assigned to input element widgets that are of type 'checkbox' or
- * 'radio'. Host widgets sync their `ownValue` and `isSelected` properties to
- * their element's 'value' and 'checked' attributes.
+ * 'radio'. Host widgets sync their `ownValue` property and `selected` state
+ * to their element's 'value' and 'checked' attributes.
  * @mixin $ui.BinaryInputTypeHost
  * @extends $ui.InputElementHost
  * @augments $ui.Selectable
@@ -33,7 +33,7 @@ $ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
    * @protected
    */
   _syncCheckedAttribute: function () {
-    if (this.isSelected) {
+    if (this.isSelected()) {
       this.setAttribute('checked', 'checked');
     } else {
       this.deleteAttribute('checked');
@@ -56,10 +56,7 @@ $ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
    * @returns {$ui.BinaryInputTypeHost}
    */
   select: function select() {
-    var isSelectedBefore = select.shared.isSelectedBefore;
-    if (!isSelectedBefore) {
-      this._syncCheckedAttribute();
-    }
+    this._syncCheckedAttribute();
     return this;
   },
 
@@ -67,10 +64,7 @@ $ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
    * @returns {$ui.BinaryInputTypeHost}
    */
   deselect: function deselect() {
-    var isSelectedBefore = deselect.shared.isSelectedBefore;
-    if (isSelectedBefore) {
-      this._syncCheckedAttribute();
-    }
+    this._syncCheckedAttribute();
     return this;
   }
 });

@@ -5,7 +5,7 @@
  * @param {Object} [properties]
  * @param {string} [properties.nodeName]
  * @param {*} [properties.ownValue]
- * @param {boolean} [properties.isSelected]
+ * @param {boolean} [properties.state.selected]
  * @returns {$ui.Checkbox}
  */
 

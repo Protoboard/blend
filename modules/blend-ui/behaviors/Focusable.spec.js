@@ -15,13 +15,6 @@ describe("$ui", function () {
       Focusable.__forwards = {list: [], sources: [], lookup: {}};
     });
 
-    describe("create()", function () {
-      it("should initialize isFocused", function () {
-        focusable = Focusable.create();
-        expect(focusable.isFocused).toBe(false);
-      });
-    });
-
     describe("focus()", function () {
       beforeEach(function () {
         focusable = Focusable.create();
@@ -32,14 +25,9 @@ describe("$ui", function () {
         expect(result).toBe(focusable);
       });
 
-      it("should set isFocusable", function () {
+      it("should set 'focused' state", function () {
         focusable.focus();
-        expect(focusable.isFocused).toBe(true);
-      });
-
-      it("should save before state", function () {
-        focusable.focus();
-        expect(focusable.focus.shared.isFocusedBefore).toBe(false);
+        expect(focusable.isFocused()).toBe(true);
       });
     });
 
@@ -54,14 +42,31 @@ describe("$ui", function () {
         expect(result).toBe(focusable);
       });
 
-      it("should set isFocusable", function () {
+      it("should set 'focused' state", function () {
         focusable.blur();
-        expect(focusable.isFocused).toBe(false);
+        expect(focusable.isFocused()).toBe(false);
+      });
+    });
+
+    describe("isFocused()", function () {
+      beforeEach(function () {
+        focusable = Focusable.create();
       });
 
-      it("should save before state", function () {
-        focusable.blur();
-        expect(focusable.blur.shared.isFocusedBefore).toBe(true);
+      describe("when focused", function () {
+        beforeEach(function () {
+          focusable.focus();
+        });
+
+        it("should return truthy", function () {
+          expect(focusable.isFocused()).toBeTruthy();
+        });
+      });
+
+      describe("when blurred", function () {
+        it("should return falsy", function () {
+          expect(focusable.isFocused()).toBeFalsy();
+        });
       });
     });
   });

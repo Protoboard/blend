@@ -15,7 +15,7 @@ $ui.DomBinaryInputTypeHost = $oop.getClass('$ui.DomBinaryInputTypeHost')
   _syncElementChecked: function () {
     var element = this.getElement();
     if (element) {
-      element.checked = this.isSelected;
+      element.checked = this.isSelected();
     }
   },
 

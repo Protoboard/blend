@@ -42,9 +42,9 @@ describe("$ui", function () {
         expect(result).toBe(selectable);
       });
 
-      it("should set isSelected", function () {
+      it("should set 'selected' state", function () {
         selectable.select();
-        expect(selectable.isSelected).toBeTruthy();
+        expect(selectable.getStateValue('selected')).toBeTruthy();
       });
     });
 
@@ -60,9 +60,31 @@ describe("$ui", function () {
         expect(result).toBe(selectable);
       });
 
-      it("should set isSelected", function () {
+      it("should set 'selected' state", function () {
         selectable.deselect();
-        expect(selectable.isSelected).toBeFalsy();
+        expect(selectable.getStateValue('selected')).toBeFalsy();
+      });
+    });
+
+    describe("isSelected()", function () {
+      beforeEach(function () {
+        selectable = Selectable.create();
+      });
+
+      describe("when selected", function () {
+        beforeEach(function () {
+          selectable.select();
+        });
+
+        it("should return truthy", function () {
+          expect(selectable.isSelected()).toBeTruthy();
+        });
+      });
+
+      describe("when not selected", function () {
+        it("should return falsy", function () {
+          expect(selectable.isSelected()).toBeFalsy();
+        });
       });
     });
   });

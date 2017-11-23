@@ -82,7 +82,7 @@ describe("$ui", function () {
         document.body.removeChild(element);
       });
 
-      describe("when isFocused is true", function () {
+      describe("when 'focused' state is true", function () {
         beforeEach(function () {
           domFocusable.focus();
         });
@@ -93,7 +93,7 @@ describe("$ui", function () {
         });
       });
 
-      describe("when isFocused is false", function () {
+      describe("when 'focused' state is false", function () {
         beforeEach(function () {
           domFocusable.blur();
         });
@@ -120,9 +120,9 @@ describe("$ui", function () {
         document.body.removeChild(element);
       });
 
-      it("should sync isFocused", function () {
+      it("should sync 'focused' state", function () {
         element.focus();
-        expect(domFocusable.isFocused).toBe(true);
+        expect(domFocusable.isFocused()).toBe(true);
       });
 
       it("should push wrapper event to EventTail", function () {
@@ -150,9 +150,9 @@ describe("$ui", function () {
         document.body.removeChild(element);
       });
 
-      it("should sync isFocused", function () {
+      it("should sync 'focused' state", function () {
         element.blur();
-        expect(domFocusable.isFocused).toBe(false);
+        expect(domFocusable.isFocused()).toBe(false);
       });
 
       it("should push wrapper event to EventTail", function () {

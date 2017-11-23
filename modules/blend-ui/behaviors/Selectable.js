@@ -18,11 +18,6 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    */
 
   /**
-   * @member {boolean} $ui.Selectable#isSelected
-   * @todo Use #state for this
-   */
-
-  /**
    * @param {*} ownValue
    * @returns {$ui.Selectable}
    */
@@ -39,11 +34,7 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    * @returns {$ui.Selectable}
    */
   select: function select() {
-    var isSelectedBefore = this.isSelected;
-    if (!isSelectedBefore) {
-      this.isSelected = true;
-    }
-    select.shared.isSelectedBefore = isSelectedBefore;
+    this.setStateValue($ui.STATE_NAME_SELECTED, true);
     return this;
   },
 
@@ -51,11 +42,21 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
    * @returns {$ui.Selectable}
    */
   deselect: function deselect() {
-    var isSelectedBefore = this.isSelected;
-    if (isSelectedBefore) {
-      this.isSelected = false;
-    }
-    deselect.shared.isSelectedBefore = isSelectedBefore;
+    this.setStateValue($ui.STATE_NAME_SELECTED, false);
     return this;
+  },
+
+  /**
+   * @returns {boolean}
+   */
+  isSelected: function () {
+    return this.getStateValue($ui.STATE_NAME_SELECTED);
   }
+});
+
+$oop.copyProperties($ui, /** @lends $ui */{
+  /**
+   * @constant
+   */
+  STATE_NAME_SELECTED: 'selected'
 });

@@ -10,13 +10,13 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
 .blend($widget.DomWidget)
 .define(/** @lends $ui.DomFocusable# */{
   /**
-   * Syncs DOM focus to `isFocused` property.
+   * Syncs DOM focus to 'focused' state.
    * @protected
    */
   _syncElementFocus: function () {
     var element = this.getElement();
     if (element) {
-      if (this.isFocused) {
+      if (this.isFocused()) {
         element.focus();
       } else {
         element.blur();
@@ -25,7 +25,7 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
   },
 
   /**
-   * Syncs `isFocused` property to DOM focus.
+   * Syncs 'focused' state to DOM focus.
    * @protected
    */
   _syncToElementFocus: function () {
@@ -41,10 +41,7 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
    * @returns {$ui.DomFocusable}
    */
   focus: function focus() {
-    var isFocusedBefore = focus.shared.isFocusedBefore;
-    if (!isFocusedBefore) {
-      this._syncElementFocus();
-    }
+    this._syncElementFocus();
     return this;
   },
 
@@ -52,10 +49,7 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
    * @returns {$ui.DomFocusable}
    */
   blur: function blur() {
-    var isFocusedBefore = blur.shared.isFocusedBefore;
-    if (isFocusedBefore) {
-      this._syncElementFocus();
-    }
+    this._syncElementFocus();
     return this;
   },
 

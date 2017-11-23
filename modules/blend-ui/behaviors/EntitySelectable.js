@@ -1,8 +1,8 @@
 "use strict";
 
 /**
- * Two-way binds `ownValue` and `isSelected` to associated
- * `ownValueEntity` and `isSelectedEntity`.
+ * Two-way binds `ownValue` property and `selected` state to associated
+ * `ownValueEntity` and `selectedStateEntity`.
  * @mixin $ui.EntitySelectable
  * @extends $ui.EntityPropertyBound
  * @extends $ui.Selectable
@@ -16,21 +16,21 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
    */
 
   /**
-   * @member {$entity.LeafNoded} $ui.EntitySelectable#isSelectedEntity
+   * @member {$entity.LeafNoded} $ui.EntitySelectable#selectedStateEntity
    */
 
   /**
    * @memberOf $ui.EntitySelectable
    * @param {$entity.LeafNoded} ownValueEntity
-   * @param {$entity.LeafNoded} [isSelectedEntity]
+   * @param {$entity.LeafNoded} [selectedStateEntity]
    * @param {Object} [properties]
    */
-  fromOwnValueEntity: function (ownValueEntity, isSelectedEntity,
+  fromOwnValueEntity: function (ownValueEntity, selectedStateEntity,
       properties
   ) {
     return this.create({
       ownValueEntity: ownValueEntity,
-      isSelectedEntity: isSelectedEntity
+      selectedStateEntity: selectedStateEntity
     }, properties);
   },
 
@@ -39,8 +39,8 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
     $assert
     .isInstanceOfOptional(this.ownValueEntity, $entity.LeafNoded,
         "Invalid ownValueEntity")
-    .isInstanceOfOptional(this.isSelectedEntity, $entity.LeafNoded,
-        "Invalid isSelectedEntity");
+    .isInstanceOfOptional(this.selectedStateEntity, $entity.LeafNoded,
+        "Invalid selectedStateEntity");
   },
 
   /**
@@ -49,7 +49,7 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
    */
   _syncToEntityProperty: function (entityProperty) {
     var ownValueEntity = this.ownValueEntity,
-        isSelectedEntity = this.isSelectedEntity;
+        selectedStateEntity = this.selectedStateEntity;
 
     switch (entityProperty) {
     case 'ownValueEntity':
@@ -58,9 +58,9 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
       }
       break;
 
-    case 'isSelectedEntity':
-      if (isSelectedEntity) {
-        if (isSelectedEntity.getNode()) {
+    case 'selectedStateEntity':
+      if (selectedStateEntity) {
+        if (selectedStateEntity.getNode()) {
           this.select();
         } else {
           this.deselect();
@@ -80,9 +80,9 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
 
   /** @private */
   _syncIsSelectedEntity: function () {
-    var isSelectedEntity = this.isSelectedEntity;
-    if (isSelectedEntity) {
-      isSelectedEntity.setNode(this.isSelected);
+    var selectedStateEntity = this.selectedStateEntity;
+    if (selectedStateEntity) {
+      selectedStateEntity.setNode(this.isSelected());
     }
   },
 
@@ -102,10 +102,7 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
    * @returns {$ui.EntitySelectable}
    */
   select: function select() {
-    var isSelectedBefore = select.shared.isSelectedBefore;
-    if (!isSelectedBefore) {
-      this._syncIsSelectedEntity();
-    }
+    this._syncIsSelectedEntity();
     return this;
   },
 
@@ -113,10 +110,7 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
    * @returns {$ui.EntitySelectable}
    */
   deselect: function select() {
-    var isSelectedBefore = select.shared.isSelectedBefore;
-    if (isSelectedBefore) {
-      this._syncIsSelectedEntity();
-    }
+    this._syncIsSelectedEntity();
     return this;
   },
 
@@ -130,11 +124,11 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
   },
 
   /**
-   * @param {$entity.LeafNoded} isSelectedEntity
+   * @param {$entity.LeafNoded} selectedStateEntity
    * @returns {$ui.EntitySelectable}
    */
-  setIsSelectedEntity: function (isSelectedEntity) {
-    this.setEntityProperty('isSelectedEntity', isSelectedEntity);
+  setSelectedStateEntity: function (selectedStateEntity) {
+    this.setEntityProperty('selectedStateEntity', selectedStateEntity);
     return this;
   }
 });

@@ -17,26 +17,26 @@ describe("$ui", function () {
 
     describe("fromOwnValueEntity()", function () {
       var ownValueEntity,
-          isSelectedEntity;
+          selectedStateEntity;
 
       beforeEach(function () {
         ownValueEntity = 'foo/bar/value'.toField();
-        isSelectedEntity = 'foo/bar/selected'.toField();
+        selectedStateEntity = 'foo/bar/selected'.toField();
       });
 
       it("should return EntitySelectable instance", function () {
-        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, isSelectedEntity);
+        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, selectedStateEntity);
         expect(EntitySelectable.mixedBy(entitySelectable)).toBeTruthy();
       });
 
       it("should initialize ownValueEntity", function () {
-        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, isSelectedEntity);
+        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, selectedStateEntity);
         expect(entitySelectable.ownValueEntity).toBe(ownValueEntity);
       });
 
-      it("should initialize isSelectedEntity", function () {
-        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, isSelectedEntity);
-        expect(entitySelectable.isSelectedEntity).toBe(isSelectedEntity);
+      it("should initialize selectedStateEntity", function () {
+        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, selectedStateEntity);
+        expect(entitySelectable.selectedStateEntity).toBe(selectedStateEntity);
       });
     });
 
@@ -51,11 +51,11 @@ describe("$ui", function () {
         });
       });
 
-      describe("on invalid isSelectedEntity", function () {
+      describe("on invalid selectedStateEntity", function () {
         it("should throw", function () {
           expect(function () {
             entitySelectable = EntitySelectable.create({
-              isSelectedEntity: 'foo/bar'.toDocument()
+              selectedStateEntity: 'foo/bar'.toDocument()
             });
           }).toThrow();
         });
@@ -87,18 +87,18 @@ describe("$ui", function () {
     });
 
     describe("select()", function () {
-      var isSelectedEntity;
+      var selectedStateEntity;
 
       beforeEach(function () {
-        isSelectedEntity = 'baz/1/selected'.toField();
-        isSelectedEntity.deleteNode();
+        selectedStateEntity = 'baz/1/selected'.toField();
+        selectedStateEntity.deleteNode();
         entitySelectable = EntitySelectable.create({
-          isSelectedEntity: isSelectedEntity
+          selectedStateEntity: selectedStateEntity
         });
       });
 
       afterEach(function () {
-        isSelectedEntity.deleteNode();
+        selectedStateEntity.deleteNode();
       });
 
       it("should return self", function () {
@@ -106,27 +106,27 @@ describe("$ui", function () {
         expect(result).toBe(entitySelectable);
       });
 
-      it("should sync entity to isSelected", function () {
+      it("should sync entity to 'selected' state", function () {
         entitySelectable.select();
-        expect(isSelectedEntity.getNode()).toBe(true);
+        expect(selectedStateEntity.getNode()).toBe(true);
       });
     });
 
     describe("deselect()", function () {
-      var isSelectedEntity;
+      var selectedStateEntity;
 
       beforeEach(function () {
-        isSelectedEntity = 'baz/1/selected'.toField();
-        isSelectedEntity.setNode(true);
+        selectedStateEntity = 'baz/1/selected'.toField();
+        selectedStateEntity.setNode(true);
         entitySelectable = EntitySelectable.create({
-          isSelectedEntity: isSelectedEntity
+          selectedStateEntity: selectedStateEntity
         });
         entitySelectable.onAttach();
       });
 
       afterEach(function () {
         entitySelectable.destroy();
-        isSelectedEntity.deleteNode();
+        selectedStateEntity.deleteNode();
       });
 
       it("should return self", function () {
@@ -134,9 +134,9 @@ describe("$ui", function () {
         expect(result).toBe(entitySelectable);
       });
 
-      it("should sync entity to isSelected", function () {
+      it("should sync entity to 'selected' state", function () {
         entitySelectable.deselect();
-        expect(isSelectedEntity.getNode()).toBe(false);
+        expect(selectedStateEntity.getNode()).toBe(false);
       });
     });
 
@@ -161,37 +161,37 @@ describe("$ui", function () {
       });
     });
 
-    describe("setIsSelectedEntity()", function () {
-      var isSelectedEntity;
+    describe("setSelectedStateEntity()", function () {
+      var selectedStateEntity;
 
       beforeEach(function () {
-        isSelectedEntity = 'baz/1/value'.toField();
+        selectedStateEntity = 'baz/1/value'.toField();
         entitySelectable = EntitySelectable.fromOwnValueEntity('foo/1/value'.toField());
         spyOn(entitySelectable, 'setEntityProperty');
       });
 
       it("should return self", function () {
-        var result = entitySelectable.setIsSelectedEntity(isSelectedEntity);
+        var result = entitySelectable.setSelectedStateEntity(selectedStateEntity);
         expect(result).toBe(entitySelectable);
       });
 
       it("should invoke setEntityProperty", function () {
-        entitySelectable.setIsSelectedEntity(isSelectedEntity);
+        entitySelectable.setSelectedStateEntity(selectedStateEntity);
         expect(entitySelectable.setEntityProperty)
-        .toHaveBeenCalledWith('isSelectedEntity', isSelectedEntity);
+        .toHaveBeenCalledWith('selectedStateEntity', selectedStateEntity);
       });
     });
 
     describe("_syncToEntityProperty()", function () {
       var ownValueEntity,
-          isSelectedEntity;
+          selectedStateEntity;
 
       beforeEach(function () {
         ownValueEntity = 'foo/1/value'.toField();
-        isSelectedEntity = 'foo/1/selected'.toField();
+        selectedStateEntity = 'foo/1/selected'.toField();
         ownValueEntity.setNode("Hello");
-        isSelectedEntity.setNode(true);
-        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, isSelectedEntity);
+        selectedStateEntity.setNode(true);
+        entitySelectable = EntitySelectable.fromOwnValueEntity(ownValueEntity, selectedStateEntity);
         entitySelectable.onAttach();
       });
 
@@ -205,9 +205,9 @@ describe("$ui", function () {
         expect(entitySelectable.ownValue).toBe("Hello");
       });
 
-      it("should sync isSelected to isSelectedEntity", function () {
-        entitySelectable._syncToEntityProperty('isSelectedEntity');
-        expect(entitySelectable.isSelected).toBe(true);
+      it("should sync 'selected' state to selectedStateEntity", function () {
+        entitySelectable._syncToEntityProperty('selectedStateEntity');
+        expect(entitySelectable.getStateValue('selected')).toBe(true);
       });
     });
   });

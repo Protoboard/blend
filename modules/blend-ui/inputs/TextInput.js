@@ -5,7 +5,7 @@
  * @param {Object} [properties]
  * @param {string} [properties.nodeName]
  * @param {*} [properties.inputValue]
- * @param {boolean} [properties.isFocused]
+ * @param {boolean} [properties.state.focused]
  * @returns {$ui.TextInput}
  */
 

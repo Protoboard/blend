@@ -290,7 +290,9 @@ _createEntityTextInput: function () {
 _createCheckbox: function () {
   return $ui.Checkbox.create({
     ownValue: "Rick",
-    isSelected: true
+    state: {
+      selected: true
+    }
   });
 },
 
