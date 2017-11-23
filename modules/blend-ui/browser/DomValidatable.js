@@ -15,10 +15,10 @@ $ui.DomValidatable = $oop.getClass('$ui.DomValidatable')
   _syncToElementValidity: function () {
     var element = this.getElement();
     if (element) {
+      // no need to handle invalid case
+      // as checkValidity will trigger 'invalid' event
       if (element.checkValidity()) {
         this.validateBy('dom');
-      } else {
-        this.invalidateBy('dom');
       }
     }
   },
@@ -53,7 +53,7 @@ $ui.DomValidatable = $oop.getClass('$ui.DomValidatable')
         .wrap(event);
 
     eventTrail.push(wrapperEvent);
-    this._syncToElementValidity();
+    this.invalidateBy('dom');
   }
 });
 
