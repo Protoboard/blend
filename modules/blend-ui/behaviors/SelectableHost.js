@@ -15,6 +15,7 @@ $ui.SelectableHost = $oop.getClass('$ui.SelectableHost')
 
   /** @ignore */
   defaults: function () {
+    // todo Initialize based on childNodes?
     this.selectablesByOwnValue = this.selectablesByOwnValue || {};
   },
 

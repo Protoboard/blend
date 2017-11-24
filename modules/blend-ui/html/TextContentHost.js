@@ -3,6 +3,8 @@
 /**
  * @mixin $ui.TextContentHost
  * @extends $widget.XmlNode
+ * @todo Move this back to respective classes (HtmlText, HtmlTextInput)
+ * (Shouldn't know about textString)
  */
 $ui.TextContentHost = $oop.getClass('$ui.TextContentHost')
 .blend($oop.getClass('$widget.XmlNode'))

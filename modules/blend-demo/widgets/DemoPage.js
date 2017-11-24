@@ -168,6 +168,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       contentWidget: this._createRadioButton()
     })
     .addToParentNode(this);
+
+    // adding plain select dropdown
+    $demo.DemoItem.create({
+      code: this._createSingleSelect,
+      itemTitle: $ui.Dropdown.__classId,
+      contentWidget: this._createSingleSelect()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -301,6 +309,24 @@ _createRadioButton: function () {
   return $ui.RadioButton.create({
     ownValue: "Morty"
   });
+},
+
+/** @private */
+_createSingleSelect: function () {
+  return $ui.Dropdown.create()
+      .addChildNode($ui.Option.create({
+        textString: "Rick",
+        ownValue: 'Rick'
+      }))
+      .addChildNode($ui.Option.create({
+        textString: "Morty",
+        ownValue: 'Morty'
+      }))
+      .addChildNode($ui.Option.create({
+        textString: "Summer",
+        ownValue: 'Summer'
+      }))
+      .setInputValue("Morty");
 }
   //@formatter:on
 });
