@@ -32,7 +32,7 @@ $widget.Node = $oop.getClass('$widget.Node')
 
   /**
    * Ordered list of child nodes.
-   * @member {$data.OrderedList} $widget.Node#childNodes
+   * @member {$data.Nodes} $widget.Node#childNodes
    */
 
   /**
