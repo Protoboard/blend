@@ -2,6 +2,9 @@
 
 /**
  * @function $ui.Dropdown.create
+ * @param {Object} [properties]
+ * @param {string} [properties.nodeName]
+ * @member {*} [properties.inputValue]
  * @returns {$ui.Dropdown}
  */
 
