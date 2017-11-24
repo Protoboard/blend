@@ -21,6 +21,31 @@ describe("$ui", function () {
         expect(htmlText.elementName).toBe('span');
       });
     });
+
+    describe("getContentMarkup()", function () {
+      var stringifiable = {
+        toString: function () {
+          return "foo";
+        }
+      };
+
+      beforeEach(function () {
+        htmlText = HtmlText.fromElementName('span')
+        .setTextString(stringifiable);
+      });
+
+      it("should append textContent to contents", function () {
+        expect(htmlText.getContentMarkup()).toBe("foo");
+      });
+
+      describe("when textContent has XML markup", function () {
+        it("should encode XML entities", function () {
+          htmlText.setTextString("<script>alert('Foo')</script>");
+          expect(htmlText.getContentMarkup())
+          .toBe("&lt;script&gt;alert(&apos;Foo&apos;)&lt;/script&gt;");
+        });
+      });
+    });
   });
 
   describe("Text", function () {

@@ -3,17 +3,23 @@
 /**
  * @mixin $ui.HtmlText
  * @extends $widget.HtmlWidget
- * @extends $ui.TextContentHost
  * @augments $ui.Text
  */
 $ui.HtmlText = $oop.getClass('$ui.HtmlText')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.TextContentHost'))
 .expect($oop.getClass('$ui.Text'))
 .define(/** @lends $ui.HtmlText# */{
   /** @ignore */
   defaults: function () {
     this.elementName = this.elementName || 'span';
+  },
+
+  /**
+   * @returns {string}
+   */
+  getContentMarkup: function getContentMarkup() {
+    return getContentMarkup.returned +
+        $widget.escapeXmlEntities($utils.stringify(this.textContent));
   }
 });
 

@@ -6,7 +6,7 @@ var $oop = window['blend-oop'],
 describe("$ui", function () {
   describe("TextareaElementHost", function () {
     var TextareaElementHost,
-        inputElementHost;
+        textareaElementHost;
 
     beforeAll(function () {
       TextareaElementHost = $oop.getClass('test.$ui.TextareaElementHost.TextareaElementHost')
@@ -18,8 +18,33 @@ describe("$ui", function () {
 
     describe("create()", function () {
       it("should initialize elementName", function () {
-        inputElementHost = TextareaElementHost.create();
-        expect(inputElementHost.elementName).toBe('textarea');
+        textareaElementHost = TextareaElementHost.create();
+        expect(textareaElementHost.elementName).toBe('textarea');
+      });
+    });
+
+    describe("getContentMarkup()", function () {
+      var stringifiable = {
+        toString: function () {
+          return "foo";
+        }
+      };
+
+      beforeEach(function () {
+        textareaElementHost = TextareaElementHost.create()
+        .setInputValue(stringifiable);
+      });
+
+      it("should append textContent to contents", function () {
+        expect(textareaElementHost.getContentMarkup()).toBe("foo");
+      });
+
+      describe("when textContent has XML markup", function () {
+        it("should encode XML entities", function () {
+          textareaElementHost.setInputValue("<script>alert('Foo')</script>");
+          expect(textareaElementHost.getContentMarkup())
+          .toBe("&lt;script&gt;alert(&apos;Foo&apos;)&lt;/script&gt;");
+        });
       });
     });
   });
