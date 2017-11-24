@@ -9,7 +9,7 @@
  * @augments $widget.Widget
  */
 $ui.EntityPropertyBound = $oop.getClass('$ui.EntityPropertyBound')
-.expect($oop.getClass('$widget.Widget'))
+.expect($widget.Widget)
 .define(/** @lends $ui.EntityPropertyBound# */{
   /**
    * @member {$data.StringSet} $ui.EntityPropertyBound#entityProperties

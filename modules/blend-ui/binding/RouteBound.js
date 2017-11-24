@@ -5,7 +5,7 @@
  * @augments $widget.Widget
  */
 $ui.RouteBound = $oop.getClass('$ui.RouteBound')
-.expect($oop.getClass('$widget.Widget'))
+.expect($widget.Widget)
 .define(/** @lends $ui.RouteBound# */{
   /**
    * Updates parts of the widget's state that depend on the active route.

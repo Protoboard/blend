@@ -7,7 +7,7 @@
  * @augments $widget.Widget
  */
 $ui.ModuleBound = $oop.getClass('$ui.ModuleBound')
-.expect($oop.getClass('$widget.Widget'))
+.expect($widget.Widget)
 .define(/** @lends $ui.ModuleBound# */{
   /**
    * Updates parts of the widget's state that depend on the available modules.
