@@ -3,7 +3,7 @@
 /**
  * @function $ui.EntityHyperlink.create
  * @param {Object} properties
- * @param {$entity.LeafNoded} properties.textEntity
+ * @param {$entity.LeafNoded} properties.textContentEntity
  * @param {$entity.LeafNoded} properties.targetUrlEntity
  * @returns {$ui.EntityHyperlink}
  */

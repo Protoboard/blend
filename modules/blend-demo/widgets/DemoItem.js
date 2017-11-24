@@ -23,6 +23,7 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
    * @member {$widget.Widget} $demo.DemoItem#contentWidget
    */
 
+  /** @ignore */
   defaults: function () {
     this.code = this.code || "No code sample";
   },
@@ -39,13 +40,13 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
       elementName: 'h3',
       nodeName: 'title',
       nodeOrder: 0,
-      textString: this.itemTitle
+      textContent: this.itemTitle
     }))
     .addChildNode($ui.Text.create({
       elementName: 'p',
       nodeName: 'widgetId',
       nodeOrder: 1,
-      textString: this.contentWidget.getAttribute('id')
+      textContent: this.contentWidget.getAttribute('id')
     }))
     .addChildNode(
         this.contentWidget
@@ -55,7 +56,7 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
       elementName: 'pre',
       nodeName: 'code',
       nodeOrder: 3,
-      textString: String(this.code)
+      textContent: String(this.code)
     }));
   }
 });

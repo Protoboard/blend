@@ -11,12 +11,12 @@ $ui.DomText = $oop.getClass('$ui.DomText')
 .blend($widget.DomWidget)
 .define(/** @lends $ui.DomText# */{
   /**
-   * @param {string|$utils.Stringifiable} textString
+   * @param {string|$utils.Stringifiable} textContent
    * @returns {$ui.DomText}
    */
-  setTextString: function setTextString(textString) {
+  setTextString: function setTextString(textContent) {
     var textStringBefore = setTextString.shared.textStringBefore;
-    if (textString !== textStringBefore) {
+    if (textContent !== textStringBefore) {
       // todo Should be syncing to textContent instead?
       this.reRenderContents();
     }

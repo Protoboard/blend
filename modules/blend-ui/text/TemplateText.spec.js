@@ -76,9 +76,9 @@ describe("$ui", function () {
         field.deleteNode();
       });
 
-      it("should sync textString", function () {
+      it("should sync textContent", function () {
         templateText.onAttach();
-        expect(templateText.textString).toBe("Hello World!");
+        expect(templateText.textContent).toBe("Hello World!");
       });
 
       it("should subscribe to EVENT_TEMPLATE_PARAMETER_CHANGE", function () {
@@ -125,9 +125,9 @@ describe("$ui", function () {
         expect(result).toBe(templateText);
       });
 
-      it("should sync textString", function () {
+      it("should sync textContent", function () {
         templateText.setTextTemplate(liveTemplateAfter);
-        expect(templateText.textString).toBe("3 apples");
+        expect(templateText.textContent).toBe("3 apples");
       });
 
       it("should save before state", function () {
@@ -200,9 +200,9 @@ describe("$ui", function () {
         '_locale/de'.toDocument().deleteNode();
       });
 
-      it("should sync textString", function () {
+      it("should sync textContent", function () {
         'de'.toLocale().setAsActiveLocale();
-        expect(templateText.textString).toBe("Hallo Welt!");
+        expect(templateText.textContent).toBe("Hallo Welt!");
       });
     });
 
@@ -222,11 +222,11 @@ describe("$ui", function () {
         templateText.destroy();
       });
 
-      it("should sync textString", function () {
+      it("should sync textContent", function () {
         liveTemplate.setParameterValues({
           name: "All"
         });
-        expect(templateText.textString).toBe("Hello All!");
+        expect(templateText.textContent).toBe("Hello All!");
       });
     });
 
@@ -247,9 +247,9 @@ describe("$ui", function () {
         'foo/bar/baz'.toField().deleteNode();
       });
 
-      it("should sync textString", function () {
+      it("should sync textContent", function () {
         'foo/bar/baz'.toField().setNode("All");
-        expect(templateText.textString).toBe("Hello All!");
+        expect(templateText.textContent).toBe("Hello All!");
       });
     });
   });

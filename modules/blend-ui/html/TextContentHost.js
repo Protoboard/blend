@@ -4,7 +4,7 @@
  * @mixin $ui.TextContentHost
  * @extends $widget.XmlNode
  * @todo Move this back to respective classes (HtmlText, HtmlTextInput)
- * (Shouldn't know about textString)
+ * (Shouldn't know about textContent)
  */
 $ui.TextContentHost = $oop.getClass('$ui.TextContentHost')
 .blend($oop.getClass('$widget.XmlNode'))
@@ -14,6 +14,6 @@ $ui.TextContentHost = $oop.getClass('$ui.TextContentHost')
    */
   getContentMarkup: function getContentMarkup() {
     return getContentMarkup.returned +
-        $widget.escapeXmlEntities($utils.stringify(this.textString));
+        $widget.escapeXmlEntities($utils.stringify(this.textContent));
   }
 });

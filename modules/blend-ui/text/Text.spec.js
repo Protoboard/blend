@@ -31,9 +31,9 @@ describe("$ui", function () {
         expect(result).toBe(text);
       });
 
-      it("should set textString", function () {
+      it("should set textContent", function () {
         text.setTextString('foo');
-        expect(text.textString).toBe('foo');
+        expect(text.textContent).toBe('foo');
       });
 
       it("should update empty state", function () {

@@ -4,7 +4,7 @@
  * @function $ui.Text.create
  * @param {Object} [properties]
  * @param {string} [properties.nodeName]
- * @param {string|$utils.Stringifiable} [properties.textString]
+ * @param {string|$utils.Stringifiable} [properties.textContent]
  * @returns {$ui.Text}
  */
 
@@ -17,7 +17,7 @@ $ui.Text = $oop.getClass('$ui.Text')
 .blend($widget.Widget)
 .define(/** @lends $ui.Text# */{
   /**
-   * @member {string|$utils.Stringifiable} $ui.Text#textString
+   * @member {string|$utils.Stringifiable} $ui.Text#textContent
    */
 
   /** @ignore */
@@ -29,17 +29,17 @@ $ui.Text = $oop.getClass('$ui.Text')
    * @private
    */
   _updateEmptyState: function () {
-    this.setStateValue('empty', !this.textString);
+    this.setStateValue('empty', !this.textContent);
   },
 
   /**
-   * @param {string|$utils.Stringifiable} textString
+   * @param {string|$utils.Stringifiable} textContent
    * @returns {$ui.Text}
    */
-  setTextString: function setTextString(textString) {
-    var textStringBefore = this.textString;
-    if (textString !== textStringBefore) {
-      this.textString = textString;
+  setTextString: function setTextString(textContent) {
+    var textStringBefore = this.textContent;
+    if (textContent !== textStringBefore) {
+      this.textContent = textContent;
       this._updateEmptyState();
     }
     setTextString.shared.textStringBefore = textStringBefore;

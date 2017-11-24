@@ -25,7 +25,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
 
     $ui.Text.create({
       elementName: 'h1',
-      textString: "Blend Demo"
+      textContent: "Blend Demo"
     })
     .addToParentNode(this);
 
@@ -182,7 +182,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
 /** @private */
 _createText: function () {
   return $ui.Text.create({
-    textString: "<em>wubba lubba dub dub</em>"
+    textContent: "<em>wubba lubba dub dub</em>"
   });
 },
 
@@ -210,7 +210,7 @@ _createLocaleText: function () {
 _createDataText: function () {
   'character/rick/name'.toField().setNode("Rick Shanchez");
   return $ui.EntityText.create({
-    textEntity: 'character/rick/name'.toField()
+    textContentEntity: 'character/rick/name'.toField()
   });
 },
 
@@ -228,7 +228,7 @@ _createTemplateText: function () {
 /** @private */
 _createHyperlink: function () {
   return $ui.Hyperlink.create({
-    textString: "Rick and Morty",
+    textContent: "Rick and Morty",
     targetUrl: 'http://www.adultswim.com/videos/rick-and-morty/'
   });
 },
@@ -240,7 +240,7 @@ _createDatHyperlink: function () {
     url: 'http://www.adultswim.com/videos/rick-and-morty/'
   });
   return $ui.EntityHyperlink.create({
-    textEntity: 'show/rick-and-morty/title'.toField(),
+    textContentEntity: 'show/rick-and-morty/title'.toField(),
     targetUrlEntity: 'show/rick-and-morty/url'.toField()
   });
 },
@@ -265,7 +265,7 @@ _createEntityImage: function () {
 _createButton: function () {
   return $ui.Button.create()
   .addChildNode($ui.Text.create({
-    textString: "Open portal"
+    textContent: "Open portal"
   }));
 },
 
@@ -315,15 +315,15 @@ _createRadioButton: function () {
 _createSingleSelect: function () {
   return $ui.Dropdown.create()
       .addChildNode($ui.Option.create({
-        textString: "Rick",
+        textContent: "Rick",
         ownValue: 'Rick'
       }))
       .addChildNode($ui.Option.create({
-        textString: "Morty",
+        textContent: "Morty",
         ownValue: 'Morty'
       }))
       .addChildNode($ui.Option.create({
-        textString: "Summer",
+        textContent: "Summer",
         ownValue: 'Summer'
       }))
       .setInputValue("Morty");

@@ -79,9 +79,9 @@ describe("$ui", function () {
         '_locale/de'.toDocument().deleteNode();
       });
 
-      it("should set textString", function () {
+      it("should set textContent", function () {
         localeText._syncToActiveLocale();
-        expect(localeText.textString).toBe("Hallo Welt!");
+        expect(localeText.textContent).toBe("Hallo Welt!");
       });
     });
   });

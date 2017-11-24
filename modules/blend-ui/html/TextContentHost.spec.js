@@ -27,11 +27,11 @@ describe("$ui", function () {
         .setTextString(stringifiable);
       });
 
-      it("should append textString to contents", function () {
+      it("should append textContent to contents", function () {
         expect(textContentHost.getContentMarkup()).toBe("foo");
       });
 
-      describe("when textString has XML markup", function () {
+      describe("when textContent has XML markup", function () {
         it("should encode XML entities", function () {
           textContentHost.setTextString("<script>alert('Foo')</script>");
           expect(textContentHost.getContentMarkup())

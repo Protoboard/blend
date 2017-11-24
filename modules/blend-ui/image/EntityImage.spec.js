@@ -79,7 +79,7 @@ describe("$ui", function () {
         imageUrlEntity.deleteNode();
       });
 
-      it("should sync text entity to textString", function () {
+      it("should sync text entity to textContent", function () {
         entityImage._syncToEntityProperty('imageUrlEntity');
         expect(entityImage.imageUrl).toBe("http://foo.com");
       });

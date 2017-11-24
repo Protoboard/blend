@@ -3,7 +3,7 @@
 /**
  * @function $ui.EntityText.create
  * @param {Object} properties
- * @param {$entity.ValueKey} properties.textEntity
+ * @param {$entity.ValueKey} properties.textContentEntity
  * @returns {$ui.EntityText}
  */
 
@@ -17,24 +17,24 @@ $ui.EntityText = $oop.getClass('$ui.EntityText')
 .blend($oop.getClass('$ui.EntityPropertyBound'))
 .define(/** @lends $ui.EntityText# */{
   /**
-   * @member {$entity.ValueKey|$entity.ItemKey} $ui.EntityText#textEntity
+   * @member {$entity.ValueKey|$entity.ItemKey} $ui.EntityText#textContentEntity
    */
 
   /**
    * @memberOf $ui.EntityText
-   * @param {$entity.LeafNoded} textEntity
+   * @param {$entity.LeafNoded} textContentEntity
    * @param {Object} [properties]
    */
-  fromTextEntity: function (textEntity, properties) {
+  fromTextEntity: function (textContentEntity, properties) {
     return this.create({
-      textEntity: textEntity
+      textContentEntity: textContentEntity
     }, properties);
   },
 
   /** @ignore */
   init: function () {
-    $assert.isInstanceOfOptional(this.textEntity, $entity.LeafNoded,
-        "Invalid textEntity");
+    $assert.isInstanceOfOptional(this.textContentEntity, $entity.LeafNoded,
+        "Invalid textContentEntity");
   },
 
   /**
@@ -42,18 +42,18 @@ $ui.EntityText = $oop.getClass('$ui.EntityText')
    */
   _syncToEntityProperty: function (entityProperty) {
     switch (entityProperty) {
-    case 'textEntity':
-      this.setTextString(this.textEntity.getNode());
+    case 'textContentEntity':
+      this.setTextString(this.textContentEntity.getNode());
       break;
     }
   },
 
   /**
-   * @param {$entity.LeafNoded} textEntity
+   * @param {$entity.LeafNoded} textContentEntity
    * @returns {$ui.EntityText}
    */
-  setTextEntity: function (textEntity) {
-    this.setEntityProperty('textEntity', textEntity);
+  setTextEntity: function (textContentEntity) {
+    this.setEntityProperty('textContentEntity', textContentEntity);
     return this;
   }
 });

@@ -16,72 +16,72 @@ describe("$ui", function () {
     });
 
     describe("fromTextEntity()", function () {
-      var textEntity;
+      var textContentEntity;
 
       beforeEach(function () {
-        textEntity = 'foo/bar/baz'.toField();
+        textContentEntity = 'foo/bar/baz'.toField();
       });
 
       it("should return EntityText instance", function () {
-        entityText = EntityText.fromTextEntity(textEntity);
+        entityText = EntityText.fromTextEntity(textContentEntity);
         expect(EntityText.mixedBy(entityText)).toBeTruthy();
       });
 
-      it("should initialize textEntity", function () {
-        entityText = EntityText.fromTextEntity(textEntity);
-        expect(entityText.textEntity).toBe(textEntity);
+      it("should initialize textContentEntity", function () {
+        entityText = EntityText.fromTextEntity(textContentEntity);
+        expect(entityText.textContentEntity).toBe(textContentEntity);
       });
     });
 
     describe("create()", function () {
-      describe("on invalid textEntity", function () {
+      describe("on invalid textContentEntity", function () {
         it("should throw", function () {
           expect(function () {
-            entityText = EntityText.create({textEntity: 'foo/bar'.toDocument()});
+            entityText = EntityText.create({textContentEntity: 'foo/bar'.toDocument()});
           }).toThrow();
         });
       });
     });
 
     describe("setTextEntity()", function () {
-      var textEntity;
+      var textContentEntity;
 
       beforeEach(function () {
-        textEntity = 'baz/1/quux'.toField();
+        textContentEntity = 'baz/1/quux'.toField();
         entityText = EntityText.fromTextEntity('foo/1/bar'.toField());
         spyOn(entityText, 'setEntityProperty');
       });
 
       it("should return self", function () {
-        var result = entityText.setTextEntity(textEntity);
+        var result = entityText.setTextEntity(textContentEntity);
         expect(result).toBe(entityText);
       });
 
       it("should invoke setEntityProperty", function () {
-        entityText.setTextEntity(textEntity);
+        entityText.setTextEntity(textContentEntity);
         expect(entityText.setEntityProperty)
-        .toHaveBeenCalledWith('textEntity', textEntity);
+        .toHaveBeenCalledWith('textContentEntity', textContentEntity);
       });
     });
 
     describe("_syncToEntityProperty()", function () {
-      var textEntity;
+      var textContentEntity;
 
       beforeEach(function () {
-        textEntity = 'foo/bar/baz'.toField();
-        textEntity.setNode("Hello");
-        entityText = EntityText.fromTextEntity(textEntity);
+        textContentEntity = 'foo/bar/baz'.toField();
+        textContentEntity.setNode("Hello");
+        entityText = EntityText.fromTextEntity(textContentEntity);
         entityText.onAttach();
       });
 
       afterEach(function () {
         entityText.onDetach();
-        textEntity.deleteNode();
+        textContentEntity.deleteNode();
       });
 
-      it("should sync text entity to textString", function () {
-        entityText._syncToEntityProperty('textEntity');
-        expect(entityText.textString).toBe("Hello");
+      it("should sync text entity to textContent", function () {
+        entityText._syncToEntityProperty('textContentEntity');
+        expect(entityText.textContent).toBe("Hello");
       });
     });
   });
