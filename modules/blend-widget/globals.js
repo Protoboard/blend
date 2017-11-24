@@ -13,6 +13,12 @@ var $assert = require('blend-assert'),
 
 $oop.copyProperties($widget, /** @lends $widget */{
   /**
+   * Signals that the state fo a `Stateful` has changed.
+   * @constant
+   */
+  EVENT_STATE_CHANGE: 'widget.state.change',
+
+  /**
    * Determines how widgets manifest in Node.js.
    * Possible values: undefined, 'html'
    * @constant

@@ -3,7 +3,6 @@
 /**
  * Maintains named sates for the host.
  * @mixin $widget.Stateful
- * @todo Add state change events? Expect Widget? Or EventSender?
  */
 $widget.Stateful = $oop.getClass('$widget.Stateful')
 .define(/** @lends $widget.Stateful# */{

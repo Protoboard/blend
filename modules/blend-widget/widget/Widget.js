@@ -85,6 +85,26 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   },
 
   /**
+   * @param {string} stateName
+   * @param {*} stateValue
+   * @returns {$widget.Widget}
+   * @todo Belongs in an EventedStateful?
+   */
+  setStateValue: function setStateValue(stateName, stateValue) {
+    var stateValueBefore = setStateValue.shared.stateValueBefore;
+    if (stateValue !== stateValueBefore) {
+      this.spawnEvent({
+        eventName: $widget.EVENT_STATE_CHANGE,
+        stateName: stateName,
+        stateValueBefore: stateValueBefore,
+        stateValueAfter: stateValue
+      })
+      .trigger();
+    }
+    return this;
+  },
+
+  /**
    * @param {$data.TreePath} parentNodePath
    * @returns {$widget.Widget}
    * @ignore

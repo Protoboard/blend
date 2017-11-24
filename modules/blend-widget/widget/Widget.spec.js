@@ -329,6 +329,31 @@ describe("$widget", function () {
       });
     });
 
+    describe("setStateValue()", function () {
+      beforeEach(function () {
+        widget = Widget.create({
+          state: {
+            foo: 'bar'
+          }
+        });
+        spyOn($widget.StateChangeEvent, 'trigger');
+      });
+
+      it("should return self", function () {
+        var result = widget.setStateValue('foo', 'baz');
+        expect(result).toBe(widget);
+      });
+
+      it("should trigger EVENT_STATE_CHANGE", function () {
+        widget.setStateValue('foo', 'baz');
+        var calls = $widget.StateChangeEvent.trigger.calls.all(),
+            event = calls[0].object;
+        expect(event.stateName).toBe('foo');
+        expect(event.stateValueBefore).toBe('bar');
+        expect(event.stateValueAfter).toBe('baz');
+      });
+    });
+
     describe("isAttached()", function () {
       beforeEach(function () {
         widget = Widget.create();
