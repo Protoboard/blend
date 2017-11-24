@@ -18,6 +18,7 @@ describe("$ui", function () {
     describe("setOwnValue()", function () {
       beforeEach(function () {
         selectable = Selectable.create();
+        spyOn($ui.SelectableOwnValueChangeEvent, 'trigger');
       });
 
       it("should return self", function () {
@@ -28,6 +29,15 @@ describe("$ui", function () {
       it("should set ownValue", function () {
         selectable.setOwnValue('foo');
         expect(selectable.ownValue).toBe('foo');
+      });
+
+      it("should trigger EVENT_SELECTABLE_OWN_VALUE_CHANGE", function () {
+        selectable.setOwnValue('foo');
+        var calls = $ui.SelectableOwnValueChangeEvent.trigger.calls.all(),
+            event = calls[0].object;
+        expect(event.eventName).toBe('ui.selectable.ownValue.change');
+        expect(event.ownValueBefore).toBeUndefined();
+        expect(event.ownValueAfter).toBe('foo');
       });
     });
 

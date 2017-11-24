@@ -25,6 +25,12 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
     var ownValueBefore = this.ownValue;
     if (ownValue !== ownValueBefore) {
       this.ownValue = ownValue;
+      this.spawnEvent({
+        eventName: $ui.EVENT_SELECTABLE_OWN_VALUE_CHANGE,
+        ownValueBefore: ownValueBefore,
+        ownValueAfter: ownValue
+      })
+      .trigger();
     }
     setOwnValue.shared.ownValueBefore = ownValueBefore;
     return this;

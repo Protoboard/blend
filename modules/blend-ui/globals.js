@@ -28,5 +28,11 @@ $oop.copyProperties($ui, /** @lends $ui */{
    * Signals that a `Clickable` widget was clicked.
    * @constant
    */
-  EVENT_CLICKABLE_CLICK: 'ui.clickable.click'
+  EVENT_CLICKABLE_CLICK: 'ui.clickable.click',
+
+  /**
+   * Signals that the ownValue of a Selectable has changed.
+   * @constant
+   */
+  EVENT_SELECTABLE_OWN_VALUE_CHANGE: 'ui.selectable.ownValue.change'
 });
