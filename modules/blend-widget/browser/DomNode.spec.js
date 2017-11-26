@@ -64,7 +64,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("removeChild()", function () {
+    describe("removeChildNode()", function () {
       var element,
           childNode, childElement;
 
