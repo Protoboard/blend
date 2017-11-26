@@ -27,7 +27,7 @@ $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
   _syncToElementValue: function () {
     var element = this.getElement();
     if (element) {
-      this.inputValue = element.value;
+      this.setInputValue(element.value);
     }
   },
 
