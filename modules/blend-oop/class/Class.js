@@ -231,8 +231,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
           .filter(function (method) {
             return method !== undefined;
           }),
-          methodCount = compactedMethods.length,
-          shared = {};
+          methodCount = compactedMethods.length;
 
       if (methodName === 'defaults') {
         // setting up defaults to be called in reversed order, so more
@@ -246,7 +245,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       } else if (methodCount > 1) {
         // decorating & wrapping individual methods
         that[methodName] = function wrapped() {
-          var i, method, result;
+          var i, method, result,
+              sharedBefore = wrapped.shared,
+              shared = {};
+
+          wrapped.shared = shared;
 
           // calling functions in order of contributions
           for (i = 0; i < methodCount; i++) {
@@ -255,15 +258,18 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
             method.returned = result;
             // todo Pass first n args instead of apply for performance?
             result = method.apply(this, arguments);
+            method.shared = sharedBefore;
           }
+
+          wrapped.shared = sharedBefore;
 
           return result;
         };
       }
 
-      // adding shared container to both wrapper and standalone for
+      // adding initial shared container to both wrapper and standalone for
       // compatibility
-      that[methodName].shared = shared;
+      that[methodName].shared = {};
     });
   },
 
