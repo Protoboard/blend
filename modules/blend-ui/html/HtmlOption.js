@@ -2,14 +2,12 @@
 
 /**
  * @mixin $ui.HtmlOption
- * @extends $widget.HtmlWidget
- * @mixes $ui.TextContentHost
+ * @extends $ui.HtmlText
  * @mixes $ui.DisabledAttributeHost
  * @augments $ui.Option
  */
 $ui.HtmlOption = $oop.getClass('$ui.HtmlOption')
-.blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.TextContentHost'))
+.blend($oop.getClass('$ui.HtmlText'))
 .blend($oop.getClass('$ui.DisabledAttributeHost'))
 .expect($oop.getClass('$ui.Option'))
 .define(/** @lends $ui.HtmlOption# */{

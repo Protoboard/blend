@@ -20,7 +20,10 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       fields: ['name']
     })
     .appendNode('document.__document.show'.toTreePath(), {
-      fields: ['title', 'url']
+      fields: ['title', 'url', 'image', 'selectedEpisode']
+    })
+    .appendNode('document.__document.episode'.toTreePath(), {
+      fields: ['title']
     });
 
     $ui.Text.create({
@@ -171,9 +174,17 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
 
     // adding plain select dropdown
     $demo.DemoItem.create({
-      code: this._createSingleSelect,
+      code: this._createDropdown,
       itemTitle: $ui.Dropdown.__classId,
-      contentWidget: this._createSingleSelect()
+      contentWidget: this._createDropdown()
+    })
+    .addToParentNode(this);
+
+    // adding entity-bound select dropdown
+    $demo.DemoItem.create({
+      code: this._createEntityDropdown,
+      itemTitle: $ui.EntityDropdown.__classId,
+      contentWidget: this._createEntityDropdown()
     })
     .addToParentNode(this);
   },
@@ -200,7 +211,7 @@ _createLocaleText: function () {
       '_translation/wubba-birdperson': 1
     }
   });
-  $i18n.Locale.fromLocaleId('birdperson').setAsActiveLocale();
+  'birdperson'.toLocale().setAsActiveLocale();
   return $ui.LocaleText.create({
     textTranslatable: "I am in great pain, please help me".toTranslatable()
   });
@@ -312,21 +323,43 @@ _createRadioButton: function () {
 },
 
 /** @private */
-_createSingleSelect: function () {
+_createDropdown: function () {
   return $ui.Dropdown.create()
-      .addChildNode($ui.Option.create({
-        textContent: "Rick",
-        ownValue: 'Rick'
-      }))
-      .addChildNode($ui.Option.create({
-        textContent: "Morty",
-        ownValue: 'Morty'
-      }))
-      .addChildNode($ui.Option.create({
-        textContent: "Summer",
-        ownValue: 'Summer'
-      }))
-      .setInputValue("Morty");
+  .addChildNode($ui.Option.create({
+    textContent: "Rick",
+    ownValue: 'Rick'
+  }))
+  .addChildNode($ui.Option.create({
+    textContent: "Morty",
+    ownValue: 'Morty'
+  }))
+  .addChildNode($ui.Option.create({
+    textContent: "Summer",
+    ownValue: 'Summer'
+  }))
+  .setInputValue("Morty");
+},
+
+/** @private */
+_createEntityDropdown: function () {
+  'episode/r-m-s1-e1/title'.toField().setNode("S01-E01 Pilot");
+  'episode/r-m-s1-e2/title'.toField().setNode("S01-E02 Lawnmower Dog");
+  'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
+
+  return $ui.EntityDropdown.create()
+  .addChildNode($ui.EntityOption.create({
+    textContentEntity: 'episode/r-m-s1-e1/title'.toField(),
+    ownValue: 'episode/r-m-s1-e1'
+  }))
+  .addChildNode($ui.EntityOption.create({
+    textContentEntity: 'episode/r-m-s1-e2/title'.toField(),
+    ownValue: 'episode/r-m-s1-e2'
+  }))
+  .addChildNode($ui.EntityOption.create({
+    textContentEntity: 'episode/r-m-s1-e3/title'.toField(),
+    ownValue: 'episode/r-m-s1-e3'
+  }))
+  .setInputValueEntity('show/rick-and-morty/selectedEpisode'.toField());
 }
   //@formatter:on
 });
