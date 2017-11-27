@@ -43,9 +43,9 @@ describe("$widget", function () {
         expect(node.nodeOrder).toBe(node.instanceId);
       });
 
-      it("should initialize childNodeLookup", function () {
+      it("should initialize childNodeByNodeName", function () {
         node = Node.create();
-        expect(node.childNodeLookup).toEqual($data.Collection.create());
+        expect(node.childNodeByNodeName).toEqual($data.Collection.create());
       });
     });
 
@@ -70,9 +70,9 @@ describe("$widget", function () {
         expect(node.addChildNode.childNodeBefore).toBeUndefined();
       });
 
-      it("should add node to childNodeLookup", function () {
+      it("should add node to childNodeByNodeName", function () {
         node.addChildNode(childNode);
-        expect(node.childNodeLookup.getValue('foo')).toBe(childNode);
+        expect(node.childNodeByNodeName.getValue('foo')).toBe(childNode);
       });
 
       it("should add node to childNodes", function () {
@@ -232,9 +232,9 @@ describe("$widget", function () {
         expect(node.removeChildNode.shared.childNodeBefore).toBe(childNode);
       });
 
-      it("should remove node from childNodeLookup", function () {
+      it("should remove node from childNodeByNodeName", function () {
         node.removeChildNode('foo');
-        expect(node.childNodeLookup.getValue('foo')).toBeUndefined();
+        expect(node.childNodeByNodeName.getValue('foo')).toBeUndefined();
       });
 
       it("should remove node from childNodes", function () {
@@ -273,9 +273,9 @@ describe("$widget", function () {
         .toBe('foo');
       });
 
-      it("should move child node in childNodeLookup", function () {
+      it("should move child node in childNodeByNodeName", function () {
         node.setChildName(childNode, 'bar');
-        expect(node.childNodeLookup.data).toEqual({
+        expect(node.childNodeByNodeName.data).toEqual({
           bar: childNode
         });
       });

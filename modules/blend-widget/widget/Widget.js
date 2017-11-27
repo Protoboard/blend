@@ -120,7 +120,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
     .addTriggerPath(parentNodePathStr)
     .addTriggerPath('widget');
 
-    this.childNodeLookup.callOnEachValue('addEventPaths', nodePath);
+    this.childNodeByNodeName.callOnEachValue('addEventPaths', nodePath);
 
     return this;
   },
@@ -141,7 +141,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
     .removeTriggerPath(parentNodePathStr)
     .removeTriggerPath('widget');
 
-    this.childNodeLookup.callOnEachValue('removeEventPaths', nodePath);
+    this.childNodeByNodeName.callOnEachValue('removeEventPaths', nodePath);
 
     return this;
   },
@@ -160,7 +160,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   /** @ignore */
   onAttach: function () {
     // propagating attach 'event' to children
-    this.childNodeLookup.callOnEachValue('onAttach');
+    this.childNodeByNodeName.callOnEachValue('onAttach');
   },
 
   /** @ignore */
@@ -169,7 +169,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
     this.off();
 
     // propagating detach 'event' to children
-    this.childNodeLookup.callOnEachValue('onDetach');
+    this.childNodeByNodeName.callOnEachValue('onDetach');
   }
 });
 

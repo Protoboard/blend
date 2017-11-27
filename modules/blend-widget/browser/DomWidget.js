@@ -55,7 +55,7 @@ $widget.DomWidget = $oop.getClass('$widget.DomWidget')
 
   /** @ignore */
   onRender: function () {
-    this.childNodeLookup.callOnEachValue('onRender');
+    this.childNodeByNodeName.callOnEachValue('onRender');
   }
 });
 
