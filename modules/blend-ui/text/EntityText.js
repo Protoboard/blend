@@ -52,7 +52,7 @@ $ui.EntityText = $oop.getClass('$ui.EntityText')
    * @param {$entity.LeafNoded} textContentEntity
    * @returns {$ui.EntityText}
    */
-  setTextEntity: function (textContentEntity) {
+  setTextContentEntity: function (textContentEntity) {
     this.setEntityProperty('textContentEntity', textContentEntity);
     return this;
   }

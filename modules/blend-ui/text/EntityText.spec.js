@@ -43,7 +43,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setTextEntity()", function () {
+    describe("setTextContentEntity()", function () {
       var textContentEntity;
 
       beforeEach(function () {
@@ -53,12 +53,12 @@ describe("$ui", function () {
       });
 
       it("should return self", function () {
-        var result = entityText.setTextEntity(textContentEntity);
+        var result = entityText.setTextContentEntity(textContentEntity);
         expect(result).toBe(entityText);
       });
 
       it("should invoke setEntityProperty", function () {
-        entityText.setTextEntity(textContentEntity);
+        entityText.setTextContentEntity(textContentEntity);
         expect(entityText.setEntityProperty)
         .toHaveBeenCalledWith('textContentEntity', textContentEntity);
       });
