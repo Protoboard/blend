@@ -10,6 +10,7 @@
 /**
  * Manages state for timed function calls.
  * @class $utils.Timer
+ * @todo Check in Node.js
  */
 $utils.Timer = $oop.getClass('$utils.Timer')
 .define(/** @lends $utils.Timer# */{
@@ -32,16 +33,17 @@ $utils.Timer = $oop.getClass('$utils.Timer')
 
   /**
    * @memberOf $utils.Timer
-   * @param timerId
+   * @param {number} timerId
+   * @param {Object} [properties]
    * @returns {$utils.Timer}
    */
-  fromTimerId: function (timerId) {
-    return this.create({timerId: timerId});
+  fromTimerId: function (timerId, properties) {
+    return this.create({timerId: timerId}, properties);
   },
 
   /** @ignore */
   init: function () {
-    $assert.isNumber(this.timerId, "Invalid timer ID");
+    $assert.isDefined(this.timerId, "Invalid timer ID");
 
     var timerDeferred = $utils.Deferred.create(),
         timerPromise = timerDeferred.promise;

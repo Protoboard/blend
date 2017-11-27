@@ -26,7 +26,7 @@ describe("$utils", function () {
       describe("when passing invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
-            $utils.Timer.create({timerId: "foo"});
+            $utils.Timer.create();
           }).toThrow();
         });
       });
