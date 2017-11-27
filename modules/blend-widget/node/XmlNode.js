@@ -47,8 +47,8 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   },
 
   /**
-   * @param attributeName
-   * @param attributeValue
+   * @param {string} attributeName
+   * @param {string} attributeValue
    * @returns {$widget.XmlNode}
    */
   setAttribute: function (attributeName, attributeValue) {
@@ -57,7 +57,7 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   },
 
   /**
-   * @param attributeName
+   * @param {string} attributeName
    * @returns {string}
    */
   getAttribute: function (attributeName) {
@@ -65,7 +65,7 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
   },
 
   /**
-   * @param attributeName
+   * @param {string} attributeName
    * @returns {$widget.XmlNode}
    */
   deleteAttribute: function (attributeName) {

@@ -12,11 +12,11 @@ $ui.Hyperlink = $oop.getClass('$ui.Hyperlink')
 .blend($oop.getClass('$ui.Text'))
 .define(/** @lends $ui.Hyperlink# */{
   /**
-   * @member {string} $ui.Hyperlink#targetUrl
+   * @member {string|$utils.Stringifiable} $ui.Hyperlink#targetUrl
    */
 
   /**
-   * @param {string} targetUrl
+   * @param {string|$utils.Stringifiable} targetUrl
    * @returns {$ui.Hyperlink}
    */
   setTargetUrl: function setTargetUrl(targetUrl) {

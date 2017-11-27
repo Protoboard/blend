@@ -21,7 +21,7 @@ $ui.OtherInputTypeHost = $oop.getClass('$ui.OtherInputTypeHost')
    * @protected
    */
   _syncValueAttribute: function () {
-    this.setAttribute('value', this.inputValue);
+    this.setAttribute('value', $utils.stringify(this.inputValue));
   },
 
   /**

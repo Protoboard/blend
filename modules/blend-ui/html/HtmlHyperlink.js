@@ -25,7 +25,7 @@ $ui.HtmlHyperlink = $oop.getClass('$ui.HtmlHyperlink')
   _syncHrefAttribute: function () {
     var targetUrl = this.targetUrl;
     if (targetUrl) {
-      this.setAttribute('href', targetUrl);
+      this.setAttribute('href', $utils.stringify(targetUrl));
     } else {
       this.deleteAttribute('href');
     }

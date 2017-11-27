@@ -26,7 +26,7 @@ $ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
    * @protected
    */
   _syncValueAttribute: function () {
-    this.setAttribute('value', this.ownValue);
+    this.setAttribute('value', $utils.stringify(this.ownValue));
   },
 
   /**

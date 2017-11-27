@@ -28,7 +28,7 @@ $ui.HtmlOption = $oop.getClass('$ui.HtmlOption')
   _syncValueAttribute: function () {
     var ownValue = this.ownValue;
     if (ownValue !== undefined) {
-      this.setAttribute('value', ownValue);
+      this.setAttribute('value', $utils.stringify(ownValue));
     } else {
       this.deleteAttribute('value');
     }
