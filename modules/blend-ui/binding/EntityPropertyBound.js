@@ -71,7 +71,6 @@ $ui.EntityPropertyBound = $oop.getClass('$ui.EntityPropertyBound')
    * @param {string} entityProperty
    * @param {$entity.Entity} entity
    * @returns {$ui.EntityPropertyBound}
-   * @todo Should we allow mutating entity properties?
    * @todo Throw when host class is cached?
    */
   setEntityProperty: function (entityProperty, entity) {
