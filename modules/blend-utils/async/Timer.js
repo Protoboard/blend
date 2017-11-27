@@ -30,6 +30,15 @@ $utils.Timer = $oop.getClass('$utils.Timer')
    * @member {$utils.Promise} $utils.Timer#timerPromise
    */
 
+  /**
+   * @memberOf $utils.Timer
+   * @param timerId
+   * @returns {$utils.Timer}
+   */
+  fromTimerId: function (timerId) {
+    return this.create({timerId: timerId});
+  },
+
   /** @ignore */
   init: function () {
     $assert.isNumber(this.timerId, "Invalid timer ID");

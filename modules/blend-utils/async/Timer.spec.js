@@ -10,6 +10,18 @@ describe("$utils", function () {
       timer = $utils.Timer.create({timerId: 1});
     });
 
+    describe("fromTimerId()", function () {
+      it("should return Timer instance", function () {
+        timer = $utils.Timer.fromTimerId(5);
+        expect($utils.Timer.mixedBy(timer)).toBeTruthy();
+      });
+
+      it("should initialize timerId", function () {
+        timer = $utils.Timer.fromTimerId(5);
+        expect(timer.timerId).toBe(5);
+      });
+    });
+
     describe("create()", function () {
       describe("when passing invalid arguments", function () {
         it("should throw", function () {
