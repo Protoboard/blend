@@ -7,7 +7,7 @@ var $oop = window['blend-oop'],
 describe("$ui", function () {
   describe("EntityHyperlink", function () {
     var EntityHyperlink,
-        dataHyperlink;
+        entityHyperlink;
 
     beforeAll(function () {
       EntityHyperlink = $oop.getClass('test.$ui.EntityHyperlink.EntityHyperlink')
@@ -23,13 +23,13 @@ describe("$ui", function () {
       });
 
       it("should return EntityHyperlink instance", function () {
-        dataHyperlink = EntityHyperlink.fromTargetUrlEntity(targetUrlEntity);
-        expect(EntityHyperlink.mixedBy(dataHyperlink)).toBeTruthy();
+        entityHyperlink = EntityHyperlink.fromTargetUrlEntity(targetUrlEntity);
+        expect(EntityHyperlink.mixedBy(entityHyperlink)).toBeTruthy();
       });
 
       it("should initialize targetUrlEntity", function () {
-        dataHyperlink = EntityHyperlink.fromTargetUrlEntity(targetUrlEntity);
-        expect(dataHyperlink.targetUrlEntity).toBe(targetUrlEntity);
+        entityHyperlink = EntityHyperlink.fromTargetUrlEntity(targetUrlEntity);
+        expect(entityHyperlink.targetUrlEntity).toBe(targetUrlEntity);
       });
     });
 
@@ -37,7 +37,7 @@ describe("$ui", function () {
       describe("on invalid targetUrlEntity", function () {
         it("should throw", function () {
           expect(function () {
-            dataHyperlink = EntityHyperlink.create({
+            entityHyperlink = EntityHyperlink.create({
               targetUrlEntity: 'foo/bar'.toDocument()
             });
           }).toThrow();
@@ -50,18 +50,18 @@ describe("$ui", function () {
 
       beforeEach(function () {
         targetUrlEntity = 'baz/1/quux'.toField();
-        dataHyperlink = EntityHyperlink.fromTargetUrlEntity('foo/1/bar'.toField());
-        spyOn(dataHyperlink, 'setEntityProperty');
+        entityHyperlink = EntityHyperlink.fromTargetUrlEntity('foo/1/bar'.toField());
+        spyOn(entityHyperlink, 'setEntityProperty');
       });
 
       it("should return self", function () {
-        var result = dataHyperlink.setTargetUrlEntity(targetUrlEntity);
-        expect(result).toBe(dataHyperlink);
+        var result = entityHyperlink.setTargetUrlEntity(targetUrlEntity);
+        expect(result).toBe(entityHyperlink);
       });
 
       it("should invoke setEntityProperty", function () {
-        dataHyperlink.setTargetUrlEntity(targetUrlEntity);
-        expect(dataHyperlink.setEntityProperty)
+        entityHyperlink.setTargetUrlEntity(targetUrlEntity);
+        expect(entityHyperlink.setEntityProperty)
         .toHaveBeenCalledWith('targetUrlEntity', targetUrlEntity);
       });
     });
@@ -72,18 +72,18 @@ describe("$ui", function () {
       beforeEach(function () {
         targetUrlEntity = 'foo/bar/baz'.toField();
         targetUrlEntity.setNode("http://foo.com");
-        dataHyperlink = EntityHyperlink.fromTargetUrlEntity(targetUrlEntity);
-        dataHyperlink.onAttach();
+        entityHyperlink = EntityHyperlink.fromTargetUrlEntity(targetUrlEntity);
+        entityHyperlink.onAttach();
       });
 
       afterEach(function () {
-        dataHyperlink.onDetach();
+        entityHyperlink.onDetach();
         targetUrlEntity.deleteNode();
       });
 
       it("should sync text entity to targetUrlEntity", function () {
-        dataHyperlink._syncToEntityProperty('targetUrlEntity');
-        expect(dataHyperlink.targetUrl).toBe("http://foo.com");
+        entityHyperlink._syncToEntityProperty('targetUrlEntity');
+        expect(entityHyperlink.targetUrl).toBe("http://foo.com");
       });
     });
   });
