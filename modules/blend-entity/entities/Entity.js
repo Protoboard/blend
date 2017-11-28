@@ -132,10 +132,11 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    */
   setNode: function (node) {
     var nodeBefore = this.getSilentNode(),
-        entityPath = this.entityKey.getEntityPath(),
+        entityPath,
         events;
 
     if (node !== nodeBefore) {
+      entityPath = this.entityKey.getEntityPath();
       $entity.entities.setNode(entityPath, node);
 
       events = this.spawnEntityChangeEvents(nodeBefore, node);
@@ -147,17 +148,40 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
+   * @param {*} nodeBefore
+   * @return {Object}
+   * @private
+   */
+  _getParentNodeBefore: function (nodeBefore) {
+    var result = {};
+    result[this.entityKey.getEntityId()] = nodeBefore;
+    return result;
+  },
+
+  /**
    * Deletes current entity node and triggers change events for all affected
    * entities.
    * @returns {$entity.Entity}
    */
   deleteNode: function () {
     var nodeBefore = this.getSilentNode(),
+        entityPath,
+        parentEntity,
         events;
 
     if (nodeBefore !== undefined) {
-      $entity.entities.deleteNode(this.entityKey.getEntityPath());
-      events = this.spawnEntityChangeEvents(nodeBefore, undefined);
+      entityPath = this.entityKey.getEntityPath();
+      $entity.entities.deleteNode(entityPath);
+
+      parentEntity = this.getParentEntity();
+      if (parentEntity) {
+        // deleting a node changes parent, not self
+        events = parentEntity
+        .spawnEntityChangeEvents(this._getParentNodeBefore(nodeBefore), {});
+      } else {
+        // falling back to setNode(undefined) equivalent
+        events = this.spawnEntityChangeEvents(nodeBefore, undefined);
+      }
       $data.Collection.fromData(events)
       .callOnEachValue('trigger');
     }
@@ -169,11 +193,19 @@ $entity.Entity = $oop.getClass('$entity.Entity')
    * Retrieves the child entity identified by `childId`.
    * @param {string} childId
    * @returns {$entity.Entity}
-   * @todo Farm out to ParentEntity mixin.
    */
   getChildEntity: function (childId) {
     var childKey = this.entityKey.getChildKey(childId);
-    return $entity.Entity.fromEntityKey(childKey);
+    return childKey && $entity.Entity.fromEntityKey(childKey);
+  },
+
+  /**
+   * Retrieves the parent entity.
+   * @returns {$entity.Entity}
+   */
+  getParentEntity: function () {
+    var parentKey = this.entityKey.getParentKey();
+    return parentKey && $entity.Entity.fromEntityKey(parentKey);
   }
 });
 

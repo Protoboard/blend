@@ -133,6 +133,40 @@ describe("$entity", function () {
       });
     });
 
+    describe("getParentKey()", function () {
+      var documentKey;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        fieldKey = FieldKey.create({
+          documentKey: documentKey,
+          fieldName: 'baz'
+        });
+      });
+
+      it("should return associated DocumentKey", function () {
+        var result = fieldKey.getParentKey();
+        expect(result).toBe(documentKey);
+      });
+    });
+
+    describe("getEntityId()", function () {
+      var documentKey;
+
+      beforeEach(function () {
+        documentKey = 'foo/bar'.toDocumentKey();
+        fieldKey = FieldKey.create({
+          documentKey: documentKey,
+          fieldName: 'baz'
+        });
+      });
+
+      it("should return fieldName", function () {
+        var result = fieldKey.getEntityId();
+        expect(result).toBe('baz');
+      });
+    });
+
     describe("getEntityPath()", function () {
       beforeEach(function () {
         result = fieldKey.getEntityPath();
@@ -233,7 +267,7 @@ describe("Array", function () {
 
     it("should create a FieldKey instance", function () {
       fieldKey = components.toFieldKey();
-      expect($entity.FieldKey.mixedBy(fieldKey)).toBeTruthy()
+      expect($entity.FieldKey.mixedBy(fieldKey)).toBeTruthy();
     });
 
     it("should set FieldKey properties", function () {

@@ -5,6 +5,7 @@
  * @class $entity.EntityKey
  * @extends $utils.Equatable
  * @extends $data.Comparable
+ * @todo Add parentKey & entityId properties?
  */
 $entity.EntityKey = $oop.getClass('$entity.EntityKey')
 .blend($utils.Equatable)
@@ -56,23 +57,36 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    */
   getNodeType: function () {
     return this.getAttribute('nodeType');
-  }
+  },
 
   /**
    * Retrieves a key to the attributes associated with the entity class.
-   * @function $entity.EntityKey#getAttributeDocumentKey
    * @returns {$entity.DocumentKey}
    * @abstract
    */
+  getAttributeDocumentKey: function () {},
 
   /**
-   * Retrieves a key to the child entity identified by `childId`
-   * @function $entity.EntityKey#getChildKey
+   * Retrieves a key to the child entity identified by `childId`.
    * @param {string} childId
    * @returns {$entity.EntityKey}
    * @abstract
-   * @todo Farm out to ParentEntityKey interface.
    */
+  getChildKey: function (childId) {},
+
+  /**
+   * Retrieves a key to the parent entity.
+   * @returns {$entity.EntityKey}
+   * @abstract
+   */
+  getParentKey: function () {},
+
+  /**
+   * Retrieves a string that identifies the current entity in its parent.
+   * @returns {string}
+   * @abstract
+   */
+  getEntityId: function () {}
 });
 
 $oop.getClass('$data.TreePath')

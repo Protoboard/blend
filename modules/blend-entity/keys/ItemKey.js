@@ -107,6 +107,20 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   },
 
   /**
+   * @return {$entity.CollectionFieldKey}
+   */
+  getParentKey: function () {
+    return this.fieldKey;
+  },
+
+  /**
+   * @return {string}
+   */
+  getEntityId: function () {
+    return this.itemId;
+  },
+
+  /**
    * @inheritDoc
    * @returns {$data.TreePath}
    */

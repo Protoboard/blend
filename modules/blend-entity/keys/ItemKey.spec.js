@@ -119,6 +119,40 @@ describe("$entity", function () {
       });
     });
 
+    describe("getParentKey()", function () {
+      var fieldKey;
+
+      beforeEach(function () {
+        fieldKey = 'foo/bar/baz'.toFieldKey();
+        itemKey = itemKey = ItemKey.create({
+          fieldKey: fieldKey,
+          itemId: 'quux'
+        });
+      });
+
+      it("should return associated DocumentKey", function () {
+        var result = itemKey.getParentKey();
+        expect(result).toBe(fieldKey);
+      });
+    });
+
+    describe("getEntityId()", function () {
+      var fieldKey;
+
+      beforeEach(function () {
+        fieldKey = 'foo/bar/baz'.toFieldKey();
+        itemKey = itemKey = ItemKey.create({
+          fieldKey: fieldKey,
+          itemId: 'quux'
+        });
+      });
+
+      it("should return itemId", function () {
+        var result = itemKey.getEntityId();
+        expect(result).toBe('quux');
+      });
+    });
+
     describe("getEntityPath()", function () {
       beforeEach(function () {
         result = itemKey.getEntityPath();

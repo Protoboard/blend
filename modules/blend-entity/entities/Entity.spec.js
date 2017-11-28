@@ -295,49 +295,84 @@ describe("$entity", function () {
     });
 
     describe("deleteNode()", function () {
-      var entityPath,
-          eventsToBeTriggered,
-          nodeBefore,
-          nodeAfter;
+      var eventsToBeTriggered;
 
       beforeEach(function () {
-        entityPath = entityKey.getEntityPath();
+        entity = 'foo/bar/baz'.toField();
+        entity.setNode('foo');
         eventsToBeTriggered = [
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE),
           $event.Event.fromEventName($entity.EVENT_ENTITY_CHANGE)
         ];
-        nodeBefore = {};
-        nodeAfter = undefined;
-
-        spyOn(entity, 'spawnEntityChangeEvents').and
-        .returnValue(eventsToBeTriggered);
-        spyOn($entity.EntityChangeEvent, 'trigger');
-        $entity.entities.setNode(entityPath, nodeBefore);
-
-        result = entity.deleteNode();
       });
 
       it("should return self", function () {
+        var result = entity.deleteNode();
         expect(result).toBe(entity);
       });
 
       it("should delete node from container", function () {
-        expect($entity.entities.getNode(entityPath)).toBeUndefined();
+        entity.deleteNode();
+        expect(entity.getNode()).toBeUndefined();
       });
 
-      it("should spawn events", function () {
-        expect(entity.spawnEntityChangeEvents)
-        .toHaveBeenCalledWith(nodeBefore, nodeAfter);
+      describe("when entity has parent", function () {
+        beforeEach(function () {
+          entity = 'foo/bar/baz/quux'.toItem();
+          entity.setNode('foo');
+        });
+
+        it("should spawn events", function () {
+          spyOn($entity.CollectionField, 'spawnEntityChangeEvents');
+          entity.deleteNode();
+          expect($entity.CollectionField.spawnEntityChangeEvents)
+          .toHaveBeenCalledWith({
+            quux: 'foo'
+          }, {});
+        });
+
+        it("should trigger spawned events on parent", function () {
+          spyOn($entity.CollectionField, 'spawnEntityChangeEvents').and
+          .returnValue(eventsToBeTriggered);
+          spyOn($entity.EntityChangeEvent, 'trigger');
+          entity.deleteNode();
+
+          var calls = $entity.EntityChangeEvent.trigger.calls.all();
+          expect(calls.length).toBe(eventsToBeTriggered.length);
+          expect(calls[0].object).toBe(eventsToBeTriggered[0]);
+          expect(calls[1].object).toBe(eventsToBeTriggered[1]);
+          expect(calls[2].object).toBe(eventsToBeTriggered[2]);
+        });
       });
 
-      it("should trigger spawned events", function () {
-        var calls = $entity.EntityChangeEvent.trigger.calls.all();
+      describe("when entity has no parent", function () {
+        beforeEach(function () {
+          entity = 'foo/bar'.toDocument();
+          entity.setNode({foo: 'bar'});
+        });
 
-        expect(calls.length).toBe(eventsToBeTriggered.length);
-        expect(calls[0].object).toBe(eventsToBeTriggered[0]);
-        expect(calls[1].object).toBe(eventsToBeTriggered[1]);
-        expect(calls[2].object).toBe(eventsToBeTriggered[2]);
+        it("should spawn events on self", function () {
+          spyOn(entity, 'spawnEntityChangeEvents');
+          entity.deleteNode();
+          expect(entity.spawnEntityChangeEvents)
+          .toHaveBeenCalledWith({
+            foo: 'bar'
+          }, undefined);
+        });
+
+        it("should trigger spawned events on parent", function () {
+          spyOn(entity, 'spawnEntityChangeEvents').and
+          .returnValue(eventsToBeTriggered);
+          spyOn($entity.EntityChangeEvent, 'trigger');
+          entity.deleteNode();
+
+          var calls = $entity.EntityChangeEvent.trigger.calls.all();
+          expect(calls.length).toBe(eventsToBeTriggered.length);
+          expect(calls[0].object).toBe(eventsToBeTriggered[0]);
+          expect(calls[1].object).toBe(eventsToBeTriggered[1]);
+          expect(calls[2].object).toBe(eventsToBeTriggered[2]);
+        });
       });
     });
 
@@ -357,6 +392,21 @@ describe("$entity", function () {
       it("should return an entity with child key", function () {
         expect($entity.Entity.mixedBy(result)).toBeTruthy();
         expect(result.entityKey).toBe(childKey);
+      });
+    });
+
+    describe("getParentEntity()", function () {
+      var fieldKey;
+
+      beforeEach(function () {
+        entity = 'foo/bar/baz/quux'.toItem();
+        fieldKey = 'foo/bar/baz'.toFieldKey();
+        fieldKey.getEntityPath();
+      });
+
+      it("should return parent entity", function () {
+        var result = entity.getParentEntity();
+        expect(result.entityKey).toEqual(fieldKey);
       });
     });
   });
