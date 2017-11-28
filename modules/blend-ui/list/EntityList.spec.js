@@ -137,7 +137,7 @@ describe("$ui", function () {
         });
       });
 
-      describe("when item widget by same nodeName exists", function () {
+      describe("when passing widget by existing nodeName", function () {
         beforeEach(function () {
           entityList.addChildNode(EntityListItem.create({
             nodeName: 'A',

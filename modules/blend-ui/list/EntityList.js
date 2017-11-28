@@ -126,10 +126,8 @@ $ui.EntityList = $oop.getClass('$ui.EntityList')
       itemWidgetByItemId = this.itemWidgetByItemId;
       listItemEntityBefore = childNodeBefore && childNodeBefore.listItemEntity;
       listItemEntityAfter = node && node.listItemEntity;
-      if (listItemEntityBefore) {
-        if (!listItemEntityBefore.equals(listItemEntityAfter)) {
-          itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.itemId);
-        }
+      if (listItemEntityBefore && !listItemEntityBefore.equals(listItemEntityAfter)) {
+        itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.itemId);
       }
       itemWidgetByItemId.setItem(listItemEntityAfter.entityKey.itemId, node);
     }
@@ -143,10 +141,10 @@ $ui.EntityList = $oop.getClass('$ui.EntityList')
    */
   removeChildNode: function removeChildNode(nodeName) {
     var childNodeBefore = removeChildNode.shared.childNodeBefore,
-        listItemKeyBefore;
+        listItemEntityBefore;
     if (childNodeBefore) {
-      listItemKeyBefore = childNodeBefore.listItemEntity.entityKey;
-      this.itemWidgetByItemId.deleteItem(listItemKeyBefore.itemId);
+      listItemEntityBefore = childNodeBefore.listItemEntity;
+      this.itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.itemId);
     }
     return this;
   },
