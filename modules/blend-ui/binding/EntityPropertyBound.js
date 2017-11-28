@@ -76,16 +76,14 @@ $ui.EntityPropertyBound = $oop.getClass('$ui.EntityPropertyBound')
   setEntityProperty: function (entityProperty, entity) {
     var entityProperties = this.entityProperties,
         entityPropertiesByEntityKeys = this.entityPropertiesByEntityKeys,
-        entityBefore = this[entityProperty],
-        entityKeyBefore = entityBefore && entityBefore.entityKey,
-        entityKeyAfter = entity && entity.entityKey;
+        entityBefore = this[entityProperty];
 
     if (!entityProperties.hasItem(entityProperty)) {
       entityProperties.setItem(entityProperty);
     }
 
-    if (entityKeyAfter && !entityKeyAfter.equals(entityKeyBefore) ||
-        !entityKeyAfter && entity !== entityBefore
+    if (entity && !entity.equals(entityBefore) ||
+        !entity && entityBefore
     ) {
       this[entityProperty] = entity;
 
@@ -97,7 +95,7 @@ $ui.EntityPropertyBound = $oop.getClass('$ui.EntityPropertyBound')
             entityBefore);
       }
 
-      if (entityKeyAfter) {
+      if (entity) {
         entityPropertiesByEntityKeys
         .setItem(entity.entityKey.toString(), entityProperty);
         this.on(

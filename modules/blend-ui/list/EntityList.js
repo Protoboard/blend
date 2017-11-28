@@ -119,19 +119,19 @@ $ui.EntityList = $oop.getClass('$ui.EntityList')
   addChildNode: function addChildNode(node) {
     var childNodeBefore = addChildNode.shared.childNodeBefore,
         itemWidgetByItemId,
-        listItemKeyBefore,
-        listItemKeyAfter;
+        listItemEntityBefore,
+        listItemEntityAfter;
 
     if (node !== childNodeBefore) {
       itemWidgetByItemId = this.itemWidgetByItemId;
-      listItemKeyAfter = node.listItemEntity.entityKey;
-      if (childNodeBefore) {
-        listItemKeyBefore = childNodeBefore && childNodeBefore.listItemEntity.entityKey;
-        if (!listItemKeyBefore.equals(listItemKeyAfter)) {
-          itemWidgetByItemId.deleteItem(listItemKeyBefore.itemId);
+      listItemEntityBefore = childNodeBefore && childNodeBefore.listItemEntity;
+      listItemEntityAfter = node && node.listItemEntity;
+      if (listItemEntityBefore) {
+        if (!listItemEntityBefore.equals(listItemEntityAfter)) {
+          itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.itemId);
         }
       }
-      itemWidgetByItemId.setItem(listItemKeyAfter.itemId, node);
+      itemWidgetByItemId.setItem(listItemEntityAfter.entityKey.itemId, node);
     }
 
     return this;
