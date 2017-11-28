@@ -20,7 +20,13 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       fields: ['name']
     })
     .appendNode('document.__document.show'.toTreePath(), {
-      fields: ['title', 'url', 'image', 'selectedEpisode']
+      fields: ['title', 'url', 'image', 'episodes', 'selectedEpisode']
+    })
+    .appendNode('document.__field.show/episodes'.toTreePath(), {
+      nodeType: 'branch',
+      valueType: 'collection',
+      itemIdType: 'reference',
+      itemValueType: 'order'
     })
     .appendNode('document.__document.episode'.toTreePath(), {
       fields: ['title']
@@ -129,6 +135,14 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
       code: this._createButton,
       itemTitle: $ui.Button.__classId,
       contentWidget: this._createButton()
+    })
+    .addToParentNode(this);
+
+    // adding entity-bound select dropdown
+    $demo.DemoItem.create({
+      code: this._createEntityList,
+      itemTitle: $ui.EntityList.__classId,
+      contentWidget: this._createEntityList()
     })
     .addToParentNode(this);
 
@@ -278,6 +292,45 @@ _createButton: function () {
   .addChildNode($ui.Text.create({
     textContent: "Open portal"
   }));
+},
+
+/** @private */
+_createEntityList: function () {
+  'show/rick-and-morty/episodes'.toField().setNode({
+    'episode/r-m-s1-e1': 1,
+    'episode/r-m-s1-e2': 2,
+    'episode/r-m-s1-e3': 3
+  });
+  'episode/r-m-s1-e1/title'.toField().setNode("S01-E01 Pilot");
+  'episode/r-m-s1-e2/title'.toField().setNode("S01-E02 Lawnmower Dog");
+  'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
+
+  var
+      EntityListItem = $oop.getClass('$demo.EntityListItem')
+      .blend($ui.EntityListItem)
+      .blend($ui.EntityText)
+      .define({
+        defaults: function () {
+          this.elementName = 'li';
+        },
+        _syncToEntityProperty: function (entityProperty) {
+          if (entityProperty === 'listItemEntity') {
+            this.setTextContentEntity(this.listItemEntity.entityKey.itemId.toDocument()
+            .getField('title'));
+          }
+        }
+      }),
+      EntityList = $oop.getClass('$demo.EntityList')
+      .blend($widget.Widget)
+      .blend($ui.EntityList)
+      .define({
+        ListItemClass: EntityListItem,
+        defaults: function () {
+          this.elementName = 'ul';
+        }
+      });
+
+  return EntityList.fromListEntity('show/rick-and-morty/episodes'.toField());
 },
 
 /** @private */
