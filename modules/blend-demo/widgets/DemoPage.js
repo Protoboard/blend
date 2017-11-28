@@ -371,4 +371,11 @@ $event.EventSpace.create()
     $demo.DemoPage.__classId,
     function () {
       $demo.DemoPage.create().setAsActivePage();
+    })
+.on(
+    $module.EVENT_MODULE_AVAILABLE,
+    'module.blend-demo',
+    $demo.DemoPage.__classId,
+    function () {
+      $demo.DemoPage.create().setAsActivePage();
     });
