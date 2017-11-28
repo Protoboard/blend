@@ -97,6 +97,38 @@ describe("$entity", function () {
       });
     });
 
+    describe("equals()", function () {
+      describe("for equivalent entities", function () {
+        it("should return truthy", function () {
+          expect(
+              'foo/bar/baz/quux'.toItem().equals('foo/bar/baz/quux'.toItem()))
+          .toBeTruthy();
+          expect('foo/bar/baz'.toField().equals('foo/bar/baz'.toField()))
+          .toBeTruthy();
+          expect('foo/bar'.toDocument().equals('foo/bar'.toDocument()))
+          .toBeTruthy();
+        });
+      });
+
+      describe("for non-equivalent entities", function () {
+        it("should return falsy", function () {
+          expect(
+              'foo/bar/baz/quux'.toItem().equals('foo/bar/baz/QUUX'.toItem()))
+          .toBeFalsy();
+          expect('foo/bar/baz'.toField().equals('foo/bar/quux'.toField()))
+          .toBeFalsy();
+          expect('foo/bar/baz'.toField().equals('foo/bar'.toDocument()))
+          .toBeFalsy();
+          expect('foo/bar'.toDocument().equals('foo/baz'.toDocument()))
+          .toBeFalsy();
+          expect('foo/bar'.toDocument().equals(undefined))
+          .toBeFalsy();
+          expect('foo/bar'.toDocument().equals('foo'))
+          .toBeFalsy();
+        });
+      });
+    });
+
     describe("getNode()", function () {
       var node;
 

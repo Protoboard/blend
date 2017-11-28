@@ -13,11 +13,13 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  * @extends $entity.EntityKeyHost
+ * @mixes $utils.Equatable
  */
 $entity.Entity = $oop.getClass('$entity.Entity')
 .blend($event.EventSender)
 .blend($event.EventListener)
 .blend($oop.getClass('$entity.EntityKeyHost'))
+.blend($utils.Equatable)
 .define(/** @lends $entity.Entity# */{
   /**
    * @memberOf $entity.Entity
@@ -45,6 +47,15 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     .addTriggerPath(
         attributeDocumentKey.getEntityPath().clone().unshift('entity')
         .toString());
+  },
+
+  /**
+   * @param {$entity.Entity} entity
+   * @return {boolean}
+   */
+  equals: function equals(entity) {
+    return equals.returned &&
+        this.entityKey.equals(entity && entity.entityKey);
   },
 
   /**
