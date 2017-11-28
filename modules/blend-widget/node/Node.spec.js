@@ -256,7 +256,6 @@ describe("$widget", function () {
         childNode = Node.create({
           nodeName: 'foo'
         });
-        spyOn(childNode, 'setNodeName').and.callThrough();
 
         node
         .addChildNode(childNode);
@@ -280,9 +279,9 @@ describe("$widget", function () {
         });
       });
 
-      it("should invoke setNodeName on childNode", function () {
+      it("should set nodeName on child node", function () {
         node.setChildName(childNode, 'bar');
-        expect(childNode.setNodeName).toHaveBeenCalledWith('bar');
+        expect(childNode.nodeName).toBe('bar');
       });
 
       describe("when passing non-child node", function () {
@@ -313,7 +312,6 @@ describe("$widget", function () {
         childNode2 = Node.create({
           nodeOrder: 1
         });
-        spyOn(childNode, 'setNodeOrder').and.callThrough();
 
         node
         .addChildNode(childNode2)
@@ -338,9 +336,9 @@ describe("$widget", function () {
         ]);
       });
 
-      it("should invoke setNodeOrder on childNode", function () {
+      it("should set nodeOrder on child node", function () {
         node.setChildOrder(childNode, 2);
-        expect(childNode.setNodeOrder).toHaveBeenCalledWith(2);
+        expect(childNode.nodeOrder).toBe(2);
       });
 
       describe("when passing non-child node", function () {
@@ -449,9 +447,11 @@ describe("$widget", function () {
         expect(node.nodeName).toBe('bar');
       });
 
-      it("should invoke setChildName on parentNode", function () {
+      it("should update childNodeByNodeName in parent node", function () {
         node.setNodeName('bar');
-        expect(parentNode.setChildName).toHaveBeenCalledWith(node, 'bar');
+        expect(parentNode.childNodeByNodeName.data).toEqual({
+          bar: node
+        });
       });
     });
 
@@ -481,9 +481,11 @@ describe("$widget", function () {
         expect(node.nodeOrder).toBe(12);
       });
 
-      it("should invoke setChildOrder on parentNode", function () {
+      it("should update childNodes in parent node", function () {
         node.setNodeOrder(12);
-        expect(parentNode.setChildOrder).toHaveBeenCalledWith(node, 12);
+        expect(parentNode.childNodes.data).toEqual([
+          node
+        ]);
       });
     });
 

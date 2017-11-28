@@ -161,7 +161,7 @@ $widget.Node = $oop.getClass('$widget.Node')
         childNodeByNodeName.hasItem(nodeNameBefore, childNode)
     ) {
       childNodeByNodeName.deleteItem(nodeNameBefore);
-      childNode.setNodeName(nodeName);
+      childNode.nodeName = nodeName;
       childNodeByNodeName.setItem(nodeName, childNode);
     }
 
@@ -182,7 +182,7 @@ $widget.Node = $oop.getClass('$widget.Node')
         this.childNodeByNodeName.hasItem(childNode.nodeName, childNode)
     ) {
       childNodes.deleteItem(childNode);
-      childNode.setNodeOrder(nodeOrder);
+      childNode.nodeOrder = nodeOrder;
       childNodes.setItem(childNode);
     }
 
@@ -228,9 +228,10 @@ $widget.Node = $oop.getClass('$widget.Node')
         parentNode = this.parentNode;
 
     if (nodeName !== nodeNameBefore) {
-      this.nodeName = nodeName;
       if (parentNode) {
         parentNode.setChildName(this, nodeName);
+      } else {
+        this.nodeName = nodeName;
       }
     }
 
@@ -247,9 +248,10 @@ $widget.Node = $oop.getClass('$widget.Node')
         parentNode = this.parentNode;
 
     if (nodeOrder !== nodeOrderBefore) {
-      this.nodeOrder = nodeOrder;
       if (parentNode) {
         parentNode.setChildOrder(this, nodeOrder);
+      } else {
+        this.nodeOrder = nodeOrder;
       }
     }
 
