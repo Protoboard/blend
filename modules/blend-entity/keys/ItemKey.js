@@ -23,7 +23,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
   /**
    * Identifies the collection field the item belongs to.
    * @todo Somehow this should be cached for items belonging to the same field.
-   * @member {$entity.FieldKey} $entity.ItemKey#fieldKey
+   * @member {$entity.CollectionFieldKey} $entity.ItemKey#fieldKey
    */
 
   /**
@@ -44,7 +44,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
       properties
   ) {
     return this.create({
-      fieldKey: $entity.FieldKey.fromComponents(
+      fieldKey: $entity.CollectionFieldKey.fromComponents(
           documentType, documentId, fieldName),
       itemId: itemId
     }, properties);
@@ -62,7 +62,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
       return $utils.unescape(component, '/');
     });
     return this.create({
-      fieldKey: $entity.FieldKey.fromComponents(
+      fieldKey: $entity.CollectionFieldKey.fromComponents(
           components[0], components[1], components[2]),
       itemId: components[3]
     }, properties);
@@ -78,7 +78,7 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
     ) {
       // we have entity path but not all key components
       components = entityPath.components;
-      this.fieldKey = $entity.FieldKey.fromComponents(
+      this.fieldKey = $entity.CollectionFieldKey.fromComponents(
           components[1], components[2], components[3]);
       this.itemId = components[4];
     }
