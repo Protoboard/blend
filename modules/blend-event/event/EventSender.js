@@ -1,14 +1,9 @@
 "use strict";
 
 /**
- * @function $event.EventSender.create
- * @returns {$event.EventSender}
- */
-
-/**
  * Associates instance with a list of paths on which each triggered event
  * will be invoked.
- * @class $event.EventSender
+ * @mixin $event.EventSender
  */
 $event.EventSender = $oop.getClass('$event.EventSender')
 .define(/** @lends $event.EventSender# */{

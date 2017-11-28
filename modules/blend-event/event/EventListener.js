@@ -1,15 +1,10 @@
 "use strict";
 
 /**
- * @function $event.EventListener.create
- * @returns {$event.EventListener}
- */
-
-/**
  * Associates instance with a path where events are listened to. Facilitates
  * subscribing and unsubscribing `$event.EventSubscriber` instances to
  * events triggered on `listenerPath`.
- * @class $event.EventListener
+ * @mixin $event.EventListener
  */
 $event.EventListener = $oop.getClass('$event.EventListener')
 .define(/** @lends $event.EventListener# */{
