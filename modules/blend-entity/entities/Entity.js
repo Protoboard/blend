@@ -50,6 +50,17 @@ $entity.Entity = $oop.getClass('$entity.Entity')
   },
 
   /**
+   * @param {*} nodeBefore
+   * @return {Object}
+   * @private
+   */
+  _getParentNodeBefore: function (nodeBefore) {
+    var result = {};
+    result[this.entityKey.getEntityId()] = nodeBefore;
+    return result;
+  },
+
+  /**
    * @param {$entity.Entity} entity
    * @return {boolean}
    */
@@ -145,17 +156,6 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     }
 
     return this;
-  },
-
-  /**
-   * @param {*} nodeBefore
-   * @return {Object}
-   * @private
-   */
-  _getParentNodeBefore: function (nodeBefore) {
-    var result = {};
-    result[this.entityKey.getEntityId()] = nodeBefore;
-    return result;
   },
 
   /**
