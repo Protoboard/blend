@@ -55,6 +55,11 @@ $ui.DomOption = $oop.getClass('$ui.DomOption')
     return this;
   },
 
+  /** @ignore */
+  onRender: function () {
+    this._syncToElementSelected();
+  },
+
   /**
    * @param {Event} event
    * @ignore

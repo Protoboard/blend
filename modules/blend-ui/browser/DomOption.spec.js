@@ -57,6 +57,22 @@ describe("$ui", function () {
       });
     });
 
+    describe("onRender()", function () {
+      var element;
+
+      beforeEach(function () {
+        element = document.createElement('option');
+        domOption = DomOption.create();
+        spyOn(domOption, 'getElement').and.returnValue(element);
+        element.selected = true;
+      });
+
+      it("should sync to element's 'selected' property", function () {
+        domOption.onRender();
+        expect(domOption.isSelected()).toBeTruthy();
+      });
+    });
+
     describe("onElementInput()", function () {
       var element;
 
