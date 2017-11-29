@@ -3,8 +3,10 @@
 /**
  * One-way binds the host widget to its `Entity` type properties. Whenever
  * entities associated with instance properties change, or when the host widget
- * becomes attached, a relevant synchronization callback (`syncToEntity`) will
- * be invoked.
+ * becomes attached, a relevant synchronization callback
+ * (`_syncToEntityProperty`) will be invoked.
+ * Define your own `_syncToEntityProperty` to bind widget properties to
+ * entity values.
  * @mixin $ui.EntityPropertyBound
  * @augments $widget.Widget
  */
