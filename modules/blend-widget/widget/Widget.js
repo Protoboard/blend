@@ -17,6 +17,7 @@
  * @extends $event.EventListener
  * @extends $event.EventSubscriber
  * @implements $utils.Destructible
+ * @todo Should have own Retrievable behavior w/ onAttach / onDetach symmetry
  */
 $widget.Widget = $oop.getClass('$widget.Widget')
 .blend($oop.getClass('$widget.Node'))
