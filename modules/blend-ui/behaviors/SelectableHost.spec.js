@@ -158,6 +158,24 @@ describe("$ui", function () {
       });
     });
 
+    describe("onAttach()", function () {
+      var selectable;
+
+      beforeEach(function () {
+        selectableHost = SelectableHost.create();
+        selectable = Selectable.create();
+        selectableHost.addChildNode(selectable);
+        selectable.setOwnValue('foo');
+      });
+
+      it("should initialize selectablesByOwnValue", function () {
+        selectableHost.onAttach();
+        expect(selectableHost.selectablesByOwnValue).toEqual({
+          foo: selectable
+        });
+      });
+    });
+
     describe("onSelectableOwnValueChange()", function () {
       var selectable,
           rootWidget;

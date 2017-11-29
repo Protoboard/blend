@@ -15,8 +15,21 @@ $ui.SelectableHost = $oop.getClass('$ui.SelectableHost')
 
   /** @ignore */
   defaults: function () {
-    // todo Initialize based on childNodes?
     this.selectablesByOwnValue = this.selectablesByOwnValue || {};
+  },
+
+  /**
+   * @protected
+   */
+  _syncToOwnValues: function () {
+    var selectablesByOwnValue = this.selectablesByOwnValue;
+    this.childNodes
+    .filter(function (selectable) {
+      return selectable.ownValue !== undefined;
+    })
+    .forEachItem(function (selectable) {
+      selectablesByOwnValue[selectable.ownValue] = selectable;
+    });
   },
 
   /**
@@ -47,9 +60,10 @@ $ui.SelectableHost = $oop.getClass('$ui.SelectableHost')
    * @returns {$ui.SelectableHost}
    */
   removeChildNode: function removeChildNode(nodeName) {
-    var childNodeBefore = removeChildNode.shared.childNodeBefore;
-    if (childNodeBefore) {
-      delete this.selectablesByOwnValue[childNodeBefore.ownValue];
+    var childNodeBefore = removeChildNode.shared.childNodeBefore,
+        ownValue = childNodeBefore && childNodeBefore.ownValue;
+    if (childNodeBefore && ownValue !== undefined) {
+      delete this.selectablesByOwnValue[ownValue];
     }
     return this;
   },
@@ -64,6 +78,7 @@ $ui.SelectableHost = $oop.getClass('$ui.SelectableHost')
 
   /** @ignore */
   onAttach: function () {
+    this._syncToOwnValues();
     this.on($ui.EVENT_SELECTABLE_OWN_VALUE_CHANGE, this, this.onSelectableOwnValueChange);
   },
 
