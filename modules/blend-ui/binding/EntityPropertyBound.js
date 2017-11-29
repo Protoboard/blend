@@ -90,18 +90,22 @@ $ui.EntityPropertyBound = $oop.getClass('$ui.EntityPropertyBound')
       if (entityBefore) {
         entityPropertiesByEntityKeys
         .deleteItem(entityBefore.entityKey.toString(), entityProperty);
-        this.off(
-            $entity.EVENT_ENTITY_CHANGE,
-            entityBefore);
+        if (this.isAttached()) {
+          this.off(
+              $entity.EVENT_ENTITY_CHANGE,
+              entityBefore);
+        }
       }
 
       if (entity) {
         entityPropertiesByEntityKeys
         .setItem(entity.entityKey.toString(), entityProperty);
-        this.on(
-            $entity.EVENT_ENTITY_CHANGE,
-            entity,
-            this.onEntityChange);
+        if (this.isAttached()) {
+          this.on(
+              $entity.EVENT_ENTITY_CHANGE,
+              entity,
+              this.onEntityChange);
+        }
       }
 
       this._syncToEntityProperty(entityProperty);

@@ -86,10 +86,16 @@ describe("$ui", function () {
         .toHaveBeenCalledWith('field');
       });
 
-      it("should subscribe to new property value", function () {
-        entityPropertyBound.setEntityProperty('field', field);
-        expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field))
-        .toBeTruthy();
+      describe("when widget is attached", function () {
+        beforeEach(function () {
+          spyOn(entityPropertyBound, 'isAttached').and.returnValue(true);
+        });
+
+        it("should subscribe to new property value", function () {
+          entityPropertyBound.setEntityProperty('field', field);
+          expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field))
+          .toBeTruthy();
+        });
       });
 
       describe("when entity property has previous value", function () {
@@ -108,10 +114,16 @@ describe("$ui", function () {
           });
         });
 
-        it("should unsubscribe from old property value", function () {
-          entityPropertyBound.setEntityProperty('field', field);
-          expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field2))
-          .toBeFalsy();
+        describe("when widget is attached", function () {
+          beforeEach(function () {
+            spyOn(entityPropertyBound, 'isAttached').and.returnValue(true);
+          });
+
+          it("should unsubscribe from old property value", function () {
+            entityPropertyBound.setEntityProperty('field', field);
+            expect(entityPropertyBound.subscribes($entity.EVENT_ENTITY_CHANGE, field2))
+            .toBeFalsy();
+          });
         });
       });
     });
