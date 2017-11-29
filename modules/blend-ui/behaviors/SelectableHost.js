@@ -34,7 +34,9 @@ $ui.SelectableHost = $oop.getClass('$ui.SelectableHost')
         // replaced child node of same nodeName
         delete selectablesByOwnValue[ownValueBefore];
       }
-      selectablesByOwnValue[ownValueAfter] = node;
+      if (ownValueAfter !== undefined) {
+        selectablesByOwnValue[ownValueAfter] = node;
+      }
     }
 
     return this;

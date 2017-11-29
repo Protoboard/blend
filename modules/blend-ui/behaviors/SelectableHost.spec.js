@@ -85,6 +85,19 @@ describe("$ui", function () {
             bar: selectableB
           });
         });
+
+        describe("when ownValue is undefined", function () {
+          beforeEach(function () {
+            selectableB.setOwnValue(undefined);
+          });
+
+          it("should not add new ownValue association", function () {
+            selectableHost.addChildNode(selectableB);
+            expect(selectableHost.selectablesByOwnValue).toEqual({
+              foo: selectableA
+            });
+          });
+        });
       });
 
       describe("when adding selectable w/ existing nodeName", function () {

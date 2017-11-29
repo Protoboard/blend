@@ -40,6 +40,17 @@ describe("$ui", function () {
           singleSelect.addChildNode(option);
           expect(option.isSelected()).toBeTruthy();
         });
+
+        describe("when ownValue and inputValue are both undefined", function () {
+          beforeEach(function () {
+            option.setOwnValue(undefined);
+          });
+
+          it("should not select node", function () {
+            singleSelect.addChildNode(option);
+            expect(option.isSelected()).toBeFalsy();
+          });
+        });
       });
     });
 

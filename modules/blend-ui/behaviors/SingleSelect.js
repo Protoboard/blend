@@ -10,6 +10,7 @@ $ui.SingleSelect = $oop.getClass('$ui.SingleSelect')
 .expect($oop.getClass('$ui.Inputable'))
 .define(/** @lends $ui.SingleSelect# */{
   /**
+   * Syncs initial selected state to inputValue.
    * @protected
    */
   _syncSelectableStates: function () {
@@ -24,8 +25,11 @@ $ui.SingleSelect = $oop.getClass('$ui.SingleSelect')
    * @returns {$ui.SingleSelect}
    */
   addChildNode: function addChildNode(node) {
-    var childNodeBefore = addChildNode.shared.childNodeBefore;
-    if (node !== childNodeBefore && node.ownValue === this.inputValue) {
+    var childNodeBefore = addChildNode.shared.childNodeBefore,
+        ownValue = node.ownValue;
+    if (node !== childNodeBefore &&
+        ownValue !== undefined && ownValue === this.inputValue
+    ) {
       node.select();
     }
     return this;
