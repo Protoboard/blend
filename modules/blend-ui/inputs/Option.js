@@ -5,7 +5,7 @@
  * @param {Object} [properties]
  * @param {string} [properties.nodeName]
  * @param {string|$utils.Stringifiable} [properties.textContent]
- * @member {*} [properties.ownValue]
+ * @param {*} [properties.ownValue]
  * @returns {$ui.Option}
  */
 

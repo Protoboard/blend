@@ -395,24 +395,38 @@ _createDropdown: function () {
 
 /** @private */
 _createEntityDropdown: function () {
+  'show/rick-and-morty/episodes'.toField().setNode({
+    'episode/r-m-s1-e1': 1,
+    'episode/r-m-s1-e2': 2,
+    'episode/r-m-s1-e3': 3
+  });
   'episode/r-m-s1-e1/title'.toField().setNode("S01-E01 Pilot");
   'episode/r-m-s1-e2/title'.toField().setNode("S01-E02 Lawnmower Dog");
   'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
 
-  return $ui.EntityDropdown.create()
-  .addChildNode($ui.EntityOption.create({
-    textContentEntity: 'episode/r-m-s1-e1/title'.toField(),
-    ownValue: 'episode/r-m-s1-e1'
-  }))
-  .addChildNode($ui.EntityOption.create({
-    textContentEntity: 'episode/r-m-s1-e2/title'.toField(),
-    ownValue: 'episode/r-m-s1-e2'
-  }))
-  .addChildNode($ui.EntityOption.create({
-    textContentEntity: 'episode/r-m-s1-e3/title'.toField(),
-    ownValue: 'episode/r-m-s1-e3'
-  }))
-  .setInputValueEntity('show/rick-and-morty/selectedEpisode'.toField());
+  var
+      EntityOption = $oop.getClass('$demo.EntityOption')
+      .blend($ui.EntityOption)
+      .define({
+        _syncToEntityProperty: function (entityProperty) {
+          var listItemKey = this.listItemEntity.entityKey;
+          if (entityProperty === 'listItemEntity') {
+            this.setTextContentEntity(listItemKey.itemId.toDocument()
+            .getField('title'));
+            this.setOwnValue(listItemKey.itemId);
+          }
+        }
+      }),
+      EntityDropdown = $oop.getClass('$demo.EntityDropdown')
+      .blend($ui.EntityDropdown)
+      .define({
+        ListItemClass: EntityOption
+      });
+
+  return EntityDropdown.create({
+    listEntity: 'show/rick-and-morty/episodes'.toField(),
+    inputValueEntity: 'show/rick-and-morty/selectedEpisode'.toField()
+  });
 }
   //@formatter:on
 });
