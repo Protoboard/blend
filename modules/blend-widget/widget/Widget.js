@@ -33,6 +33,40 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   },
 
   /**
+   * @param {string} parentNodePath
+   * @protected
+   */
+  _addEventPaths: function (parentNodePath) {
+    var nodePath = parentNodePath + '.' + this.instanceId;
+
+    this
+    .setListeningPath('widget.' + nodePath)
+    .addTriggerPath('widget.' + nodePath)
+    .addTriggerPath('widget.' + parentNodePath)
+    .addTriggerPath('widget');
+
+    // updating event paths in subtree
+    this.childNodeByNodeName.callOnEachValue('_addEventPaths', nodePath);
+  },
+
+  /**
+   * @param {string} parentNodePath
+   * @protected
+   */
+  _removeEventPaths: function (parentNodePath) {
+    var nodePath = parentNodePath + '.' + this.instanceId;
+
+    this
+    .setListeningPath(undefined)
+    .removeTriggerPath('widget.' + nodePath)
+    .removeTriggerPath('widget.' + parentNodePath)
+    .removeTriggerPath('widget');
+
+    // updating event paths in subtree
+    this.childNodeByNodeName.callOnEachValue('_removeEventPaths', nodePath);
+  },
+
+  /**
    * @param {$widget.Widget} node
    * @returns {$widget.Widget}
    */
@@ -64,10 +98,10 @@ $widget.Widget = $oop.getClass('$widget.Widget')
     var parentNodeBefore = addToParentNode.shared.parentNodeBefore;
     if (node !== parentNodeBefore) {
       if (parentNodeBefore && parentNodeBefore.isAttached()) {
-        this.removeEventPaths(parentNodeBefore.getNodePath().unshift('widget'));
+        this._removeEventPaths(parentNodeBefore.getNodePath().toString());
       }
       if (node.isAttached()) {
-        this.addEventPaths(node.getNodePath().unshift('widget'));
+        this._addEventPaths(node.getNodePath().toString());
       }
     }
     return this;
@@ -79,7 +113,7 @@ $widget.Widget = $oop.getClass('$widget.Widget')
   removeFromParentNode: function removeFromParentNode() {
     var parentNodeBefore = removeFromParentNode.shared.parentNodeBefore;
     if (parentNodeBefore && parentNodeBefore.isAttached()) {
-      this.removeEventPaths(parentNodeBefore.getNodePath().unshift('widget'));
+      this._removeEventPaths(parentNodeBefore.getNodePath().toString());
     }
     return this;
   },
@@ -101,48 +135,6 @@ $widget.Widget = $oop.getClass('$widget.Widget')
       })
       .trigger();
     }
-    return this;
-  },
-
-  /**
-   * @param {$data.TreePath} parentNodePath
-   * @returns {$widget.Widget}
-   * @ignore
-   */
-  addEventPaths: function (parentNodePath) {
-    var parentNodePathStr = parentNodePath.toString(),
-        nodePath = parentNodePath.clone().push(String(this.instanceId)),
-        nodePathStr = nodePath.toString();
-
-    this
-    .setListeningPath(nodePathStr)
-    .addTriggerPath(nodePathStr)
-    .addTriggerPath(parentNodePathStr)
-    .addTriggerPath('widget');
-
-    this.childNodeByNodeName.callOnEachValue('addEventPaths', nodePath);
-
-    return this;
-  },
-
-  /**
-   * @param {$data.TreePath} parentNodePath
-   * @returns {$widget.Widget}
-   * @ignore
-   */
-  removeEventPaths: function (parentNodePath) {
-    var parentNodePathStr = parentNodePath.toString(),
-        nodePath = parentNodePath.clone().push(String(this.instanceId)),
-        nodePathStr = nodePath.toString();
-
-    this
-    .setListeningPath(undefined)
-    .removeTriggerPath(nodePathStr)
-    .removeTriggerPath(parentNodePathStr)
-    .removeTriggerPath('widget');
-
-    this.childNodeByNodeName.callOnEachValue('removeEventPaths', nodePath);
-
     return this;
   },
 
