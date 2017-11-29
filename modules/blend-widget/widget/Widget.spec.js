@@ -178,13 +178,21 @@ describe("$widget", function () {
 
     describe("addToParentNode()", function () {
       var childWidget1,
-          childWidget2;
+          childWidget2,
+          listeningPath,
+          listeningPath1,
+          listeningPath2;
 
       beforeEach(function () {
         widget = Widget.fromNodeName('foo');
         childWidget1 = Widget.fromNodeName('bar');
         childWidget2 = Widget.fromNodeName('baz');
         childWidget1.addChildNode(childWidget2);
+        listeningPath = ['widget', widget.instanceId].join('.');
+        listeningPath1 = ['widget', widget.instanceId,
+          childWidget1.instanceId].join('.');
+        listeningPath2 = ['widget', widget.instanceId,
+          childWidget1.instanceId, childWidget2.instanceId].join('.');
       });
 
       it("should return self", function () {
@@ -199,12 +207,6 @@ describe("$widget", function () {
           });
 
           it("should set event paths on children", function () {
-            var listeningPath = ['widget', widget.instanceId].join('.'),
-                listeningPath1 = ['widget', widget.instanceId,
-                  childWidget1.instanceId].join('.'),
-                listeningPath2 = ['widget', widget.instanceId,
-                  childWidget1.instanceId, childWidget2.instanceId].join('.');
-
             childWidget1.addToParentNode(widget);
             expect(childWidget1.listeningPath).toBe(listeningPath1);
             expect(childWidget1.triggerPaths.list)
@@ -218,12 +220,12 @@ describe("$widget", function () {
         describe("when new parent is not attached", function () {
           it("should not set event paths on children", function () {
             childWidget1.addToParentNode(widget);
-            expect(childWidget1.listeningPath).not.toBe('widget.foo.bar');
+            expect(childWidget1.listeningPath).not.toBe(listeningPath1);
             expect(childWidget1.triggerPaths.list)
-            .not.toContain('widget.foo.bar', 'widget.foo', 'widget');
-            expect(childWidget2.listeningPath).not.toBe('widget.foo.bar.baz');
+            .not.toContain(listeningPath1, listeningPath, 'widget');
+            expect(childWidget2.listeningPath).not.toBe(listeningPath2);
             expect(childWidget2.triggerPaths.list)
-            .not.toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+            .not.toContain(listeningPath2, listeningPath1, 'widget');
           });
         });
 
@@ -240,12 +242,12 @@ describe("$widget", function () {
           describe("when previous parent is attached", function () {
             it("should remove old event paths", function () {
               childWidget1.addToParentNode(widget2);
-              expect(childWidget1.listeningPath).not.toBe('widget.foo.bar');
+              expect(childWidget1.listeningPath).not.toBe(listeningPath1);
               expect(childWidget1.triggerPaths.list)
-              .not.toContain('widget.foo.bar', 'widget.foo', 'widget');
-              expect(childWidget2.listeningPath).not.toBe('widget.foo.bar.baz');
+              .not.toContain(listeningPath1, listeningPath, 'widget');
+              expect(childWidget2.listeningPath).not.toBe(listeningPath2);
               expect(childWidget2.triggerPaths.list)
-              .not.toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+              .not.toContain(listeningPath2, listeningPath1, 'widget');
             });
           });
 
@@ -277,7 +279,10 @@ describe("$widget", function () {
     describe("removeFromParentNode()", function () {
       var childWidget1,
           childWidget2,
-          isAttached;
+          isAttached,
+          listeningPath,
+          listeningPath1,
+          listeningPath2;
 
       beforeEach(function () {
         widget = Widget.fromNodeName('foo');
@@ -287,6 +292,11 @@ describe("$widget", function () {
         widget.addChildNode(
             childWidget1.addChildNode(
                 childWidget2));
+        listeningPath = ['widget', widget.instanceId].join('.');
+        listeningPath1 = ['widget', widget.instanceId,
+          childWidget1.instanceId].join('.');
+        listeningPath2 = ['widget', widget.instanceId,
+          childWidget1.instanceId, childWidget2.instanceId].join('.');
       });
 
       it("should return self", function () {
@@ -299,10 +309,10 @@ describe("$widget", function () {
           childWidget1.removeFromParentNode();
           expect(childWidget1.listeningPath).toBeUndefined();
           expect(childWidget1.triggerPaths.list)
-          .not.toContain('widget.foo.bar', 'widget.foo', 'widget');
+          .not.toContain(listeningPath1, listeningPath, 'widget');
           expect(childWidget2.listeningPath).toBeUndefined();
           expect(childWidget2.triggerPaths.list)
-          .not.toContain('widget.foo.bar.baz', 'widget.foo.bar', 'widget');
+          .not.toContain(listeningPath2, listeningPath1, 'widget');
         });
 
         describe("when previous parent is not attached", function () {
