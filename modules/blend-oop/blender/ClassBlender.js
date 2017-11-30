@@ -15,16 +15,16 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
    */
   _normalizeMixins: function (mixins) {
     return mixins
-    .map(function (Mixed) {
+    .map(function cbNormalizeMixin(Mixed) {
       var mixed = mixins
-      .some(function (Mixer) {
+      .some(function cbIsMixed(Mixer) {
         return Mixed !== Mixer && Mixer.mixes(Mixed);
       });
       return mixed ?
           undefined :
           Mixed;
     })
-    .filter(function (Mixin) {
+    .filter(function cbIsMixin(Mixin) {
       return $oop.Class.isPrototypeOf(Mixin);
     });
   },
@@ -38,14 +38,17 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
    */
   _classMatchesMixins: function (Class, mixins) {
     var
+        // IDs of `Class`' (atomic) mixins
         mixinsA = Class.__mixins.downstream.list
         .map($oop.getClassId)
         .sort(),
+
+        // IDs of all unique atomic mixins in `mixins`
         mixinsB = mixins
-        .reduce(function (result, Mixin) {
+        .reduce(function cbAddAtomicMixins(result, Mixin) {
           Mixin.__mixins.downstream.list
           .concat([Mixin])
-          .forEach(function (Mixin) {
+          .forEach(function cbAddNewMixin(Mixin) {
             var mixinId = Mixin.__classId;
             if (result.indexOf(mixinId) === -1) {
               result.push(Mixin.__classId);
@@ -87,7 +90,7 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
       return Object.keys($oop.classByClassId)
       // todo We could avoid this map with a global `classes` array.
       .map($oop.getClass)
-      .filter(function (Class) {
+      .filter(function cbMatchesMixins(Class) {
         return that._classMatchesMixins(Class, mixins);
       });
     }
@@ -106,7 +109,7 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
     if (!Class) {
       // finding an existing matching class
       this._findMatchingClasses(mixins)
-      .forEach(function (Class) {
+      .forEach(function cbAddClassToBlenderIndex(Class) {
         // adding Class for this specific combination of mixins
         BlenderIndex.addClassForMixins(Class, mixins);
       });
@@ -116,7 +119,7 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
     if (!Class) {
       // creating ad-hoc class and adding mixins
       Class = $oop.getClass($oop.generateUuid());
-      mixins.forEach(function (Mixin) {
+      mixins.forEach(function cbBlendMixin(Mixin) {
         Class.blend(Mixin);
       });
       BlenderIndex.addClass(Class);
