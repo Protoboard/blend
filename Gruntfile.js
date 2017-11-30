@@ -213,6 +213,9 @@ module.exports = function (grunt) {
         files: [{
           src: 'templates/index.html',
           dest: 'public/index.html'
+        }, {
+          src: 'templates/perf.html',
+          dest: 'public/perf.html'
         }]
       }
     },
