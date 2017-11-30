@@ -23,6 +23,13 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
+   * Registry of interfaces implemented by the current class, and classes
+   * implementing the current class as an interface.
+   * @name $oop.ClassBuilder#interfaces
+   * @type {{downstream:$oop.QuickList,upstream:$oop.QuickList}}
+   */
+
+  /**
    * @memberOf $oop.ClassBuilder
    * @param {string} classId
    * @return {$oop.ClassBuilder}
@@ -37,6 +44,10 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
       mixins: {
         downstream: {list: [], lookup: {}},
         upstream: {list: [], lookup: {}}
+      },
+      interfaces: {
+        downstream: {list: [], lookup: {}},
+        upstream: {list: [], lookup: {}}
       }
     });
   },
@@ -45,15 +56,15 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @param {$oop.ClassBuilder} classBuilder
    * @private
    */
-  _addToDownstreamMixins: function (classBuilder) {
+  _addToMixins: function (classBuilder) {
     var mixins = this.mixins.downstream,
         mixinList = mixins.list,
         mixinLookup = mixins.lookup,
-        classId = classBuilder.classId;
+        mixinId = classBuilder.classId;
 
-    if (!hOP.call(mixinLookup, classId)) {
+    if (!hOP.call(mixinLookup, mixinId)) {
       mixinList.push(classBuilder);
-      mixinLookup[classId] = 1;
+      mixinLookup[mixinId] = 1;
     }
   },
 
@@ -61,15 +72,15 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @param {$oop.ClassBuilder} classBuilder
    * @private
    */
-  _addToUpstreamMixins: function (classBuilder) {
+  _addToHosts: function (classBuilder) {
     var hosts = this.mixins.upstream,
         hostList = hosts.list,
         hostLookup = hosts.lookup,
-        classId = classBuilder.classId;
+        hostId = classBuilder.classId;
 
-    if (!hOP.call(hostLookup, classId)) {
+    if (!hOP.call(hostLookup, hostId)) {
       hostList.push(classBuilder);
-      hostLookup[classId] = 1;
+      hostLookup[hostId] = 1;
     }
   },
 
@@ -97,86 +108,54 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @param {Object} members
-   * @return {$oop.ClassBuilder}
+   * @param {$oop.ClassBuilder} interfaceBuilder
+   * @private
    */
-  define: function (members) {
-    $assert.isObject(members, "No members specified.");
+  _addToInterfaces: function (interfaceBuilder) {
+    var interfaces = this.interfaces.downstream,
+        interfaceList = interfaces.list,
+        interfaceLookup = interfaces.lookup,
+        interfaceId = interfaceBuilder.classId;
 
-    var that = this;
+    if (!hOP.call(interfaceLookup, interfaceId)) {
+      interfaceList.push(interfaceBuilder);
+      interfaceLookup[interfaceId] = 1;
+    }
+  },
 
-    Object.keys(members)
-    .forEach(function (property) {
-      that.members[property] = members[property];
+  /**
+   * @param {$oop.ClassBuilder} classBuilder
+   * @private
+   */
+  _addToImplementers: function (classBuilder) {
+    var implementers = this.interfaces.upstream,
+        implementerList = implementers.list,
+        implementerLookup = implementers.lookup,
+        implementerId = classBuilder.classId;
+
+    if (!hOP.call(implementerLookup, implementerId)) {
+      implementerList.push(classBuilder);
+      implementerLookup[implementerId] = 1;
+    }
+  },
+
+  /**
+   * @return {Array.<$oop.Klass>}
+   * @private
+   */
+  _getUnimplementedInterfaces: function () {
+    var members = this.members;
+
+    return this.interfaces.downstream.list
+    .filter(function (interfaceBuilder) {
+      var interfaceMembers = interfaceBuilder.members;
+      return Object.keys(interfaceMembers)
+      .filter(function (property) {
+        var interfaceMember = interfaceMembers[property];
+        return typeof interfaceMember === 'function' &&
+            typeof members[property] !== 'function';
+      }).length;
     });
-
-    return this;
-  },
-
-  /**
-   * @param {Object} properties
-   * @return {$oop.ClassBuilder}
-   */
-  delegate: function (properties) {
-
-  },
-
-  /**
-   * @param {$oop.Klass} Class
-   * @return {$oop.ClassBuilder}
-   */
-  mix: function (Class) {
-    $assert.isKlass(Class, "Expecting Klass instance");
-
-    var classBuilder = Class.__builder;
-
-    this._addToDownstreamMixins(classBuilder);
-    classBuilder._addToUpstreamMixins(this);
-
-    return this;
-  },
-
-  /**
-   * @param {$oop.Klass} Class
-   * @return {$oop.ClassBuilder}
-   */
-  blend: function (Class) {
-    $assert.isKlass(Class, "Expecting Klass instance");
-
-    var that = this,
-        classBuilder = Class.__builder;
-
-    classBuilder._flattenMixinTree()
-    .forEach(function (mixinBuilder) {
-      that.mix(mixinBuilder.Class);
-    });
-    this.mix(Class);
-
-    return this;
-  },
-
-  /**
-   * @param {$oop.Class} Interface
-   * @return {$oop.ClassBuilder}
-   */
-  implement: function (Interface) {
-
-  },
-
-  /**
-   * @param {$oop.Class} Class
-   * @return {$oop.ClassBuilder}
-   */
-  expect: function (Class) {
-
-  },
-
-  /**
-   * @param {function} mapper
-   * @return {$oop.ClassBuilder}
-   */
-  cacheBy: function (mapper) {
-
   },
 
   /**
@@ -279,6 +258,104 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * Defines properties and methods to be contributed by the current class.
+   * May be called multiple times, but conflicting members will overwrite
+   * previous ones.
+   * @param {Object} members
+   * @return {$oop.ClassBuilder}
+   */
+  define: function (members) {
+    $assert.isObject(members, "No members specified.");
+
+    var that = this;
+
+    Object.keys(members)
+    .forEach(function (property) {
+      that.members[property] = members[property];
+    });
+
+    return this;
+  },
+
+  /**
+   * @param {Object} properties
+   * @return {$oop.ClassBuilder}
+   */
+  delegate: function (properties) {
+
+  },
+
+  /**
+   * Mixes specified mixin to the current class.
+   * @param {$oop.Klass} Class
+   * @return {$oop.ClassBuilder}
+   */
+  mix: function (Class) {
+    $assert.isKlass(Class, "Expecting Klass instance");
+
+    var classBuilder = Class.__builder;
+
+    this._addToMixins(classBuilder);
+    classBuilder._addToHosts(this);
+
+    return this;
+  },
+
+  /**
+   * Mixes specified class and all its mixins, direct or indirect, to the
+   * current class.
+   * @param {$oop.Klass} Class
+   * @return {$oop.ClassBuilder}
+   */
+  blend: function (Class) {
+    $assert.isKlass(Class, "Expecting Klass instance");
+
+    var that = this,
+        classBuilder = Class.__builder;
+
+    classBuilder._flattenMixinTree()
+    .forEach(function (mixinBuilder) {
+      that.mix(mixinBuilder.Class);
+    });
+    this.mix(Class);
+
+    return this;
+  },
+
+  /**
+   * Specifies an interface to be implemented by the host class. Building the
+   * class will throw on unimplemented interface methods.
+   * @param {$oop.Klass} Interface
+   * @return {$oop.ClassBuilder}
+   */
+  implement: function (Interface) {
+    $assert.isKlass(Interface, "Expecting Klass instance");
+
+    var interfaceBuilder = Interface.__builder;
+
+    this._addToInterfaces(interfaceBuilder);
+    interfaceBuilder._addToImplementers(this);
+
+    return this;
+  },
+
+  /**
+   * @param {$oop.Klass} Class
+   * @return {$oop.ClassBuilder}
+   */
+  expect: function (Class) {
+
+  },
+
+  /**
+   * @param {function} mapper
+   * @return {$oop.ClassBuilder}
+   */
+  cacheBy: function (mapper) {
+
+  },
+
+  /**
    * Builds class based on the current state of the builder. Can only be
    * called once per builder, otherwise throws exception.
    * @return {$oop.Klass}
@@ -286,11 +363,25 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   build: function () {
     $assert.isUndefined(this.Class, "Class already built");
 
-    var classId = this.classId,
-        Class = $oop.createObject($oop.Klass, {
-          __classId: classId,
-          __builder: this
-        });
+    var classId = this.classId;
+
+    // detecting unimplemented interfaces
+    var unimplementedInterfaces = this._getUnimplementedInterfaces();
+    if (unimplementedInterfaces.length) {
+      $assert.fail([
+        "Class '" + classId + "' doesn't implement interface(s):",
+        unimplementedInterfaces
+        .map($oop.getBuilderId)
+        .map($oop.addQuotes)
+      ].join(' '));
+    }
+
+    // detecting unmet expectations
+
+    var Class = $oop.createObject($oop.Klass, {
+      __classId: classId,
+      __builder: this
+    });
 
     // storing class on builder (self)
     this.Class = Class;

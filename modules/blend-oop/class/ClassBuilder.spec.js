@@ -42,6 +42,14 @@ describe("$oop", function () {
           upstream: {list: [], lookup: {}}
         });
       });
+
+      it("should initialize interfaces", function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expect(classBuilder.interfaces).toEqual({
+          downstream: {list: [], lookup: {}},
+          upstream: {list: [], lookup: {}}
+        });
+      });
     });
 
     describe("define()", function () {
@@ -102,7 +110,7 @@ describe("$oop", function () {
         expect(result).toBe(classBuilder);
       });
 
-      it("should add Mixin builder to downstream mixins", function () {
+      it("should add Mixin builder to mixins", function () {
         classBuilder.mix(Mixin);
         expect(classBuilder.mixins.downstream).toEqual({
           list: [mixinBuilder],
@@ -112,7 +120,7 @@ describe("$oop", function () {
         });
       });
 
-      it("should add self to Mixin's upstream mixins", function () {
+      it("should add self to Mixin's mixers", function () {
         classBuilder.mix(Mixin);
         expect(mixinBuilder.mixins.upstream).toEqual({
           list: [classBuilder],
@@ -210,6 +218,82 @@ describe("$oop", function () {
       });
     });
 
+    describe("implement()", function () {
+      var interfaceBuilder,
+          Interface;
+
+      beforeEach(function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        interfaceBuilder = $oop.ClassBuilder.create('bar')
+        .define({
+          foo: function () {}
+        });
+        Interface = interfaceBuilder.build();
+      });
+
+      describe("on invalid Interface", function () {
+        it("should throw", function () {
+          expect(function () {
+            classBuilder.implement();
+          }).toThrow();
+          expect(function () {
+            classBuilder.implement('foo');
+          }).toThrow();
+        });
+      });
+
+      it("should return self", function () {
+        var result = classBuilder.implement(Interface);
+        expect(result).toBe(classBuilder);
+      });
+
+      it("should add Interface builder to interfaces", function () {
+        classBuilder.implement(Interface);
+        expect(classBuilder.interfaces.downstream).toEqual({
+          list: [interfaceBuilder],
+          lookup: {
+            bar: 1
+          }
+        });
+      });
+
+      it("should add self to Interface's implementers", function () {
+        classBuilder.implement(Interface);
+        expect(interfaceBuilder.interfaces.upstream).toEqual({
+          list: [classBuilder],
+          lookup: {
+            foo: 1
+          }
+        });
+      });
+
+      describe("when implementing again", function () {
+        beforeEach(function () {
+          classBuilder.implement(Interface);
+        });
+
+        it("should not add Interface to interfaces again", function () {
+          classBuilder.implement(Interface);
+          expect(classBuilder.interfaces.downstream).toEqual({
+            list: [interfaceBuilder],
+            lookup: {
+              bar: 1
+            }
+          });
+        });
+
+        it("should not add self to Interface's implementers again", function () {
+          classBuilder.implement(Interface);
+          expect(interfaceBuilder.interfaces.upstream).toEqual({
+            list: [classBuilder],
+            lookup: {
+              foo: 1
+            }
+          });
+        });
+      });
+    });
+
     describe("build()", function () {
       var Class,
           klassByClassId;
@@ -227,6 +311,26 @@ describe("$oop", function () {
       describe("when already built", function () {
         beforeEach(function () {
           classBuilder.build();
+        });
+
+        it("should throw", function () {
+          expect(function () {
+            classBuilder.build();
+          }).toThrow();
+        });
+      });
+
+      describe("on unimplemented interfaces", function () {
+        var interfaceBuilder,
+            Interface;
+
+        beforeEach(function () {
+          interfaceBuilder = $oop.createClass('Interface')
+          .define({
+            foo: function () {}
+          });
+          Interface = interfaceBuilder.build();
+          classBuilder.implement(Interface);
         });
 
         it("should throw", function () {
@@ -295,6 +399,29 @@ describe("$oop", function () {
           Class.baz('foo');
           expect(method1).toHaveBeenCalledWith('foo');
           expect(method3).toHaveBeenCalledWith('foo');
+        });
+      });
+
+      describe("when class implements interfaces", function () {
+        var Interface;
+
+        beforeEach(function () {
+          Interface = $oop.createClass('Interface')
+          .define({
+            foo: function () {}
+          })
+          .build();
+          classBuilder
+          .implement(Interface)
+          .define({
+            foo: function () {}
+          });
+        });
+
+        it("should not throw", function () {
+          expect(function () {
+            classBuilder.build();
+          }).not.toThrow();
         });
       });
     });
