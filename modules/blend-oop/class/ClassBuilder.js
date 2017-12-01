@@ -30,6 +30,13 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
+   * Registry of classes expected by the current class, and classes
+   * expecting the current class.
+   * @name $oop.ClassBuilder#expectations
+   * @type {{downstream:$oop.QuickList,upstream:$oop.QuickList}}
+   */
+
+  /**
    * @memberOf $oop.ClassBuilder
    * @param {string} classId
    * @return {$oop.ClassBuilder}
@@ -46,6 +53,10 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
         upstream: {list: [], lookup: {}}
       },
       interfaces: {
+        downstream: {list: [], lookup: {}},
+        upstream: {list: [], lookup: {}}
+      },
+      expectations: {
         downstream: {list: [], lookup: {}},
         upstream: {list: [], lookup: {}}
       }
@@ -140,6 +151,66 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * @param {$oop.ClassBuilder} classBuilder
+   * @private
+   */
+  _addToExpected: function (classBuilder) {
+    var expected = this.expectations.downstream,
+        expectedList = expected.list,
+        expectedLookup = expected.lookup,
+        expectedId = classBuilder.classId;
+
+    if (!hOP.call(expectedLookup, expectedId)) {
+      expectedList.push(classBuilder);
+      expectedLookup[expectedId] = 1;
+    }
+  },
+
+  /**
+   * @param {$oop.ClassBuilder} classBuilder
+   * @private
+   */
+  _addToExpecters: function (classBuilder) {
+    var expecters = this.expectations.upstream,
+        expecterList = expecters.list,
+        expecterLookup = expecters.lookup,
+        expecterId = classBuilder.classId;
+
+    if (!hOP.call(expecterLookup, expecterId)) {
+      expecterList.push(classBuilder);
+      expecterLookup[expecterId] = 1;
+    }
+  },
+
+  /**
+   * Transfers expectations from specified class to the current class.
+   * @param {$oop.ClassBuilder} classBuilder
+   * @private
+   */
+  _transferExpected: function (classBuilder) {
+    var that = this;
+    classBuilder.expectations.downstream.list
+    .forEach(function (classBuilder) {
+      that._addToExpected(classBuilder);
+      classBuilder._addToExpecters(that);
+    });
+  },
+
+  /**
+   * Transfers mixins of the specified class to the current class.
+   * @param {$oop.ClassBuilder} expectedBuilder
+   * @private
+   */
+  _transferMixinsAsExpected: function (expectedBuilder) {
+    var that = this;
+    expectedBuilder.mixins.downstream.list
+    .forEach(function (classBuilder) {
+      that._addToExpected(classBuilder);
+      classBuilder._addToExpecters(that);
+    });
+  },
+
+  /**
    * @return {Array.<$oop.Klass>}
    * @private
    */
@@ -155,6 +226,19 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
         return typeof interfaceMember === 'function' &&
             typeof members[property] !== 'function';
       }).length;
+    });
+  },
+
+  /**
+   * @return {Array.<$oop.Klass>}
+   * @private
+   */
+  _getUnmetExpectations: function () {
+    var mixinLookup = this.mixins.downstream.lookup;
+
+    return this.expectations.downstream.list
+    .filter(function (expectedBuilder) {
+      return !mixinLookup[expectedBuilder.classId];
     });
   },
 
@@ -297,6 +381,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     this._addToMixins(classBuilder);
     classBuilder._addToHosts(this);
+    this._transferExpected(classBuilder);
 
     return this;
   },
@@ -344,7 +429,15 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   expect: function (Class) {
+    $assert.isKlass(Class, "Expecting Klass instance");
 
+    var classBuilder = Class.__builder;
+
+    this._addToExpected(classBuilder);
+    classBuilder._addToExpecters(this);
+    this._transferMixinsAsExpected(classBuilder);
+
+    return this;
   },
 
   /**
@@ -365,26 +458,18 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     var classId = this.classId;
 
-    // detecting unimplemented interfaces
-    var unimplementedInterfaces = this._getUnimplementedInterfaces();
-    if (unimplementedInterfaces.length) {
-      $assert.fail([
-        "Class '" + classId + "' doesn't implement interface(s):",
-        unimplementedInterfaces
-        .map($oop.getBuilderId)
-        .map($oop.addQuotes)
-      ].join(' '));
-    }
-
-    // detecting unmet expectations
-
+    // creating Class object
     var Class = $oop.createObject($oop.Klass, {
       __classId: classId,
       __builder: this
     });
 
-    // storing class on builder (self)
-    this.Class = Class;
+    // adding finalized information to builder
+    $oop.copyProperties(this, {
+      Class: Class,
+      unimplementedInterfaces: this._getUnimplementedInterfaces(),
+      unmetExpectations: this._getUnmetExpectations()
+    });
 
     // storing class in global lookup
     $oop.klassByClassId[classId] = Class;

@@ -50,6 +50,14 @@ describe("$oop", function () {
           upstream: {list: [], lookup: {}}
         });
       });
+
+      it("should initialize expectations", function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expect(classBuilder.expectations).toEqual({
+          downstream: {list: [], lookup: {}},
+          upstream: {list: [], lookup: {}}
+        });
+      });
     });
 
     describe("define()", function () {
@@ -91,7 +99,6 @@ describe("$oop", function () {
       beforeEach(function () {
         classBuilder = $oop.ClassBuilder.create('foo');
         mixinBuilder = $oop.ClassBuilder.create('bar');
-        Mixin = mixinBuilder.build();
       });
 
       describe("on invalid Class", function () {
@@ -106,11 +113,13 @@ describe("$oop", function () {
       });
 
       it("should return self", function () {
+        Mixin = mixinBuilder.build();
         var result = classBuilder.mix(Mixin);
         expect(result).toBe(classBuilder);
       });
 
       it("should add Mixin builder to mixins", function () {
+        Mixin = mixinBuilder.build();
         classBuilder.mix(Mixin);
         expect(classBuilder.mixins.downstream).toEqual({
           list: [mixinBuilder],
@@ -121,6 +130,7 @@ describe("$oop", function () {
       });
 
       it("should add self to Mixin's mixers", function () {
+        Mixin = mixinBuilder.build();
         classBuilder.mix(Mixin);
         expect(mixinBuilder.mixins.upstream).toEqual({
           list: [classBuilder],
@@ -130,8 +140,31 @@ describe("$oop", function () {
         });
       });
 
+      describe("when Mixin has expectations", function () {
+        var expectedBuilder,
+            Expected;
+
+        beforeEach(function () {
+          expectedBuilder = $oop.createClass('baz');
+          Expected = expectedBuilder.build();
+          mixinBuilder.expect(Expected);
+        });
+
+        it("should transfer Expected", function () {
+          Mixin = mixinBuilder.build();
+          classBuilder.mix(Mixin);
+          expect(classBuilder.expectations.downstream).toEqual({
+            list: [expectedBuilder],
+            lookup: {
+              baz: 1
+            }
+          });
+        });
+      });
+
       describe("when mixing again", function () {
         beforeEach(function () {
+          Mixin = mixinBuilder.build();
           classBuilder.mix(Mixin);
         });
 
@@ -294,6 +327,105 @@ describe("$oop", function () {
       });
     });
 
+    describe("expect()", function () {
+      var expectedBuilder,
+          Expected;
+
+      beforeEach(function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expectedBuilder = $oop.ClassBuilder.create('bar');
+      });
+
+      describe("on invalid Class", function () {
+        it("should throw", function () {
+          expect(function () {
+            classBuilder.expect();
+          }).toThrow();
+          expect(function () {
+            classBuilder.expect('foo');
+          }).toThrow();
+        });
+      });
+
+      it("should return self", function () {
+        Expected = expectedBuilder.build();
+        var result = classBuilder.expect(Expected);
+        expect(result).toBe(classBuilder);
+      });
+
+      it("should add Class builder to expected", function () {
+        Expected = expectedBuilder.build();
+        classBuilder.expect(Expected);
+        expect(classBuilder.expectations.downstream).toEqual({
+          list: [expectedBuilder],
+          lookup: {
+            bar: 1
+          }
+        });
+      });
+
+      it("should add self to Class' expecters", function () {
+        Expected = expectedBuilder.build();
+        classBuilder.expect(Expected);
+        expect(expectedBuilder.expectations.upstream).toEqual({
+          list: [classBuilder],
+          lookup: {
+            foo: 1
+          }
+        });
+      });
+
+      describe("when Expected has mixins", function () {
+        var mixinBuilder,
+            Mixin;
+
+        beforeEach(function () {
+          mixinBuilder = $oop.createClass('baz');
+          Mixin = mixinBuilder.build();
+          expectedBuilder.mix(Mixin);
+        });
+
+        it("should transfer mixin as expected", function () {
+          Expected = expectedBuilder.build();
+          classBuilder.expect(Expected);
+          expect(classBuilder.expectations.downstream).toEqual({
+            list: [expectedBuilder, mixinBuilder],
+            lookup: {
+              bar: 1,
+              baz: 1
+            }
+          });
+        });
+      });
+
+      describe("when expecting again", function () {
+        beforeEach(function () {
+          Expected = expectedBuilder.build();
+          classBuilder.expect(Expected);
+        });
+
+        it("should not add Class to expected again", function () {
+          classBuilder.expect(Expected);
+          expect(classBuilder.expectations.downstream).toEqual({
+            list: [expectedBuilder],
+            lookup: {
+              bar: 1
+            }
+          });
+        });
+
+        it("should not add self to Class' expecters again", function () {
+          classBuilder.expect(Expected);
+          expect(expectedBuilder.expectations.upstream).toEqual({
+            list: [classBuilder],
+            lookup: {
+              foo: 1
+            }
+          });
+        });
+      });
+    });
+
     describe("build()", function () {
       var Class,
           klassByClassId;
@@ -320,26 +452,6 @@ describe("$oop", function () {
         });
       });
 
-      describe("on unimplemented interfaces", function () {
-        var interfaceBuilder,
-            Interface;
-
-        beforeEach(function () {
-          interfaceBuilder = $oop.createClass('Interface')
-          .define({
-            foo: function () {}
-          });
-          Interface = interfaceBuilder.build();
-          classBuilder.implement(Interface);
-        });
-
-        it("should throw", function () {
-          expect(function () {
-            classBuilder.build();
-          }).toThrow();
-        });
-      });
-
       it("should return Klass instance", function () {
         Class = classBuilder.build();
         expect($oop.Klass.isPrototypeOf(Class)).toBeTruthy();
@@ -353,6 +465,45 @@ describe("$oop", function () {
       it("should set Class", function () {
         Class = classBuilder.build();
         expect(classBuilder.Class).toBe(Class);
+      });
+
+      describe("when Class implements interfaces", function () {
+        var interfaceBuilder,
+            Interface;
+
+        beforeEach(function () {
+          interfaceBuilder = $oop.createClass('Interface')
+          .define({
+            foo: function () {}
+          });
+          Interface = interfaceBuilder.build();
+          classBuilder.implement(Interface);
+        });
+
+        it("should set unimplementedInterfaces", function () {
+          Class = classBuilder.build();
+          expect(classBuilder.unimplementedInterfaces).toEqual([
+            interfaceBuilder
+          ]);
+        });
+      });
+
+      describe("when Class has expectations", function () {
+        var expectationBuilder,
+            Expectation;
+
+        beforeEach(function () {
+          expectationBuilder = $oop.createClass('Expectation');
+          Expectation = expectationBuilder.build();
+          classBuilder.expect(Expectation);
+        });
+
+        it("should set unimplementedInterfaces", function () {
+          Class = classBuilder.build();
+          expect(classBuilder.unmetExpectations).toEqual([
+            expectationBuilder
+          ]);
+        });
       });
 
       it("should store class in klassByClassId", function () {
@@ -399,29 +550,6 @@ describe("$oop", function () {
           Class.baz('foo');
           expect(method1).toHaveBeenCalledWith('foo');
           expect(method3).toHaveBeenCalledWith('foo');
-        });
-      });
-
-      describe("when class implements interfaces", function () {
-        var Interface;
-
-        beforeEach(function () {
-          Interface = $oop.createClass('Interface')
-          .define({
-            foo: function () {}
-          })
-          .build();
-          classBuilder
-          .implement(Interface)
-          .define({
-            foo: function () {}
-          });
-        });
-
-        it("should not throw", function () {
-          expect(function () {
-            classBuilder.build();
-          }).not.toThrow();
         });
       });
     });
