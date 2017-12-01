@@ -16,6 +16,14 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   create: function (properties) {
   },
 
+  /**
+   * @param {Object} members
+   * @return {$oop.Klass}
+   */
+  delegate: function (members) {
+
+  },
+
   forwardBlend: function (Class, filter) {
     return this;
   },

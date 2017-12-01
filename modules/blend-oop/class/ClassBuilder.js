@@ -376,14 +376,6 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @param {Object} properties
-   * @return {$oop.ClassBuilder}
-   */
-  delegate: function (properties) {
-
-  },
-
-  /**
    * Mixes specified mixin to the current class.
    * @param {$oop.Klass} Class
    * @return {$oop.ClassBuilder}
