@@ -58,6 +58,16 @@ describe("$oop", function () {
           upstream: {list: [], lookup: {}}
         });
       });
+
+      it("should initialize mapper", function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expect(classBuilder.mapper).toBeUndefined();
+      });
+
+      it("should initialize instances", function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expect(classBuilder.instances).toEqual({});
+      });
     });
 
     describe("define()", function () {
@@ -159,6 +169,21 @@ describe("$oop", function () {
               baz: 1
             }
           });
+        });
+      });
+
+      describe("when Mixin has mapper", function () {
+        var mapper;
+
+        beforeEach(function () {
+          mapper = function () {};
+          mixinBuilder.cacheBy(mapper);
+        });
+
+        it("should transfer mapper", function () {
+          Mixin = mixinBuilder.build();
+          classBuilder.mix(Mixin);
+          expect(classBuilder.mapper).toBe(mapper);
         });
       });
 
@@ -423,6 +448,36 @@ describe("$oop", function () {
             }
           });
         });
+      });
+    });
+
+    describe("cacheBy()", function () {
+      var mapper;
+
+      beforeEach(function () {
+        mapper = function () {};
+        classBuilder = $oop.ClassBuilder.create('foo');
+      });
+
+      describe("on invalid argument", function () {
+        it("should throw", function () {
+          expect(function () {
+            classBuilder.cacheBy();
+          }).toThrow();
+          expect(function () {
+            classBuilder.cacheBy('foo');
+          }).toThrow();
+        });
+      });
+
+      it("should return self", function () {
+        var result = classBuilder.cacheBy(mapper);
+        expect(result).toBe(classBuilder);
+      });
+
+      it("should set mapper", function () {
+        classBuilder.cacheBy(mapper);
+        expect(classBuilder.mapper).toBe(mapper);
       });
     });
 

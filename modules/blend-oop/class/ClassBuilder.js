@@ -37,6 +37,18 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
+   * Hash function for caching instances.
+   * @name $oop.ClassBuilder#mapper
+   * @type {function}
+   */
+
+  /**
+   * Lookup of cached instances indexed by hash.
+   * @name $oop.ClassBuilder#instances
+   * @type {Object}
+   */
+
+  /**
    * @memberOf $oop.ClassBuilder
    * @param {string} classId
    * @return {$oop.ClassBuilder}
@@ -59,7 +71,9 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
       expectations: {
         downstream: {list: [], lookup: {}},
         upstream: {list: [], lookup: {}}
-      }
+      },
+      mapper: undefined,
+      instances: {}
     });
   },
 
@@ -375,13 +389,18 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   mix: function (Class) {
-    $assert.isKlass(Class, "Expecting Klass instance");
+    $assert.isKlass(Class, "Klass instance expected.");
 
     var classBuilder = Class.__builder;
 
     this._addToMixins(classBuilder);
     classBuilder._addToHosts(this);
     this._transferExpected(classBuilder);
+
+    if (classBuilder.mapper) {
+      // todo Merge mappers?
+      this.mapper = classBuilder.mapper;
+    }
 
     return this;
   },
@@ -393,7 +412,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   blend: function (Class) {
-    $assert.isKlass(Class, "Expecting Klass instance");
+    $assert.isKlass(Class, "Klass instance expected.");
 
     var that = this,
         classBuilder = Class.__builder;
@@ -414,7 +433,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   implement: function (Interface) {
-    $assert.isKlass(Interface, "Expecting Klass instance");
+    $assert.isKlass(Interface, "Klass instance expected.");
 
     var interfaceBuilder = Interface.__builder;
 
@@ -429,7 +448,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   expect: function (Class) {
-    $assert.isKlass(Class, "Expecting Klass instance");
+    $assert.isKlass(Class, "Klass instance expected.");
 
     var classBuilder = Class.__builder;
 
@@ -445,7 +464,9 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   cacheBy: function (mapper) {
-
+    $assert.isFunction(mapper, "Function expected.");
+    this.mapper = mapper;
+    return this;
   },
 
   /**
