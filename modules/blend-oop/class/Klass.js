@@ -21,7 +21,24 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    * @return {$oop.Klass}
    */
   delegate: function (members) {
+    var builder = this.__builder;
 
+    builder.delegate(members);
+
+    $oop.copyProperties(this, members);
+
+    builder.mixins.upstream.list
+    .map(function (classBuilder) {
+      return classBuilder.Class;
+    })
+    .filter(function (Class) {
+      return Class !== undefined;
+    })
+    .forEach(function (Class) {
+      $oop.copyProperties(Class, members);
+    });
+
+    return this;
   },
 
   forwardBlend: function (Class, filter) {

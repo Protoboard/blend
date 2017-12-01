@@ -68,6 +68,11 @@ describe("$oop", function () {
         classBuilder = $oop.ClassBuilder.create('foo');
         expect(classBuilder.instances).toEqual({});
       });
+
+      it("should initialize delegates", function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expect(classBuilder.delegates).toEqual({});
+      });
     });
 
     describe("define()", function () {
@@ -184,6 +189,23 @@ describe("$oop", function () {
           Mixin = mixinBuilder.build();
           classBuilder.mix(Mixin);
           expect(classBuilder.mapper).toBe(mapper);
+        });
+      });
+
+      describe("when Mixin has delegates", function () {
+        var members;
+
+        beforeEach(function () {
+          members = {
+            foo: function () {}
+          };
+          mixinBuilder.delegate(members);
+        });
+
+        it("should transfer delegates", function () {
+          Mixin = mixinBuilder.build();
+          classBuilder.mix(Mixin);
+          expect(classBuilder.delegates).toEqual(members);
         });
       });
 
@@ -522,7 +544,7 @@ describe("$oop", function () {
         expect(classBuilder.Class).toBe(Class);
       });
 
-      describe("when Class implements interfaces", function () {
+      describe("when class implements interfaces", function () {
         var interfaceBuilder,
             Interface;
 
@@ -543,7 +565,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("when Class has expectations", function () {
+      describe("when class has expectations", function () {
         var expectationBuilder,
             Expectation;
 
@@ -605,6 +627,69 @@ describe("$oop", function () {
           Class.baz('foo');
           expect(method1).toHaveBeenCalledWith('foo');
           expect(method3).toHaveBeenCalledWith('foo');
+        });
+      });
+
+      describe("when class has delegates", function () {
+        var members;
+
+        beforeEach(function () {
+          members = {
+            foo: function () {}
+          };
+          classBuilder.delegate(members);
+        });
+
+        it("should copy delegates to class", function () {
+          Class = classBuilder.build();
+          expect(Class.foo).toBe(members.foo);
+        });
+      });
+    });
+
+    describe("delegate()", function () {
+      var members;
+
+      beforeEach(function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        members = {
+          foo: 'bar'
+        };
+      });
+
+      describe("on invalid members", function () {
+        it("should throw", function () {
+          expect(function () {
+            classBuilder.delegate();
+          }).toThrow();
+          expect(function () {
+            classBuilder.delegate('foo');
+          }).toThrow();
+        });
+      });
+
+      it("should return self", function () {
+        var result = classBuilder.delegate(members);
+        expect(result).toBe(classBuilder);
+      });
+
+      it("should copy members", function () {
+        classBuilder.delegate(members);
+        expect(classBuilder.delegates).toEqual(members);
+      });
+
+      describe("when Class has mixers", function () {
+        var mixerBuilder,
+            Class;
+        beforeEach(function () {
+          Class = classBuilder.build();
+          mixerBuilder = $oop.createClass('Mixer')
+          .mix(Class);
+        });
+
+        it("should transfer delegates to mixers", function () {
+          classBuilder.delegate(members);
+          expect(mixerBuilder.delegates).toEqual(members);
         });
       });
     });

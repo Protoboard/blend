@@ -1,6 +1,7 @@
 "use strict";
 
-var $oop = window['blend-oop'];
+var $assert = window['blend-assert'],
+    $oop = window['blend-oop'];
 
 describe("$assert", function () {
   var Klass;
@@ -66,6 +67,53 @@ describe("$assert", function () {
         expect(function () {
           $assert.isKlassOptional(undefined);
         }).not.toThrow();
+      });
+    });
+  });
+});
+
+describe("$oop", function () {
+  describe("Klass", function () {
+    var classBuilder,
+        Class;
+
+    beforeEach(function () {
+      classBuilder = $oop.createClass('Class');
+      Class = classBuilder.build();
+    });
+
+    describe("delegate()", function () {
+      var Mixer,
+          members;
+
+      beforeEach(function () {
+        Mixer = $oop.createClass('Mixer')
+        .mix(Class)
+        .build();
+        members = {
+          foo: function () {}
+        };
+        spyOn(classBuilder, 'delegate');
+      });
+
+      it("should return self", function () {
+        var result = Class.delegate(members);
+        expect(result).toBe(Class);
+      });
+
+      it("should invoke delegation on builder", function () {
+        Class.delegate(members);
+        expect(classBuilder.delegate).toHaveBeenCalledWith(members);
+      });
+
+      it("should set delegates", function () {
+        Class.delegate(members);
+        expect(Class.foo).toBe(members.foo);
+      });
+
+      it("should transfer delegates", function () {
+        Class.delegate(members);
+        expect(Mixer.foo).toBe(members.foo);
       });
     });
   });

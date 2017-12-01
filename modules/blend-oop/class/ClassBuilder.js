@@ -11,8 +11,13 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
-   * Properties and methods contributed by the current builder.
+   * Properties and methods contributed by the current class.
    * @member {Object} $oop.ClassBuilder#members
+   */
+
+  /**
+   * Properties and methods delegated to the current class.
+   * @member {Object} $oop.ClassBuilder#delegates
    */
 
   /**
@@ -73,8 +78,28 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
         upstream: {list: [], lookup: {}}
       },
       mapper: undefined,
-      instances: {}
+      instances: {},
+      delegates: {}
     });
+  },
+
+  /**
+   * @param {$oop.ClassBuilder} classBuilder
+   * @private
+   */
+  _transferMapperFrom: function (classBuilder) {
+    if (classBuilder.mapper) {
+      // todo Merge mappers?
+      this.mapper = classBuilder.mapper;
+    }
+  },
+
+  /**
+   * @param {$oop.ClassBuilder} classBuilder
+   * @private
+   */
+  _transferDelegatesFrom: function (classBuilder) {
+    $oop.copyProperties(this.delegates, classBuilder.delegates);
   },
 
   /**
@@ -201,7 +226,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @param {$oop.ClassBuilder} classBuilder
    * @private
    */
-  _transferExpected: function (classBuilder) {
+  _transferExpectedFrom: function (classBuilder) {
     var that = this;
     classBuilder.expectations.downstream.list
     .forEach(function (classBuilder) {
@@ -215,7 +240,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @param {$oop.ClassBuilder} expectedBuilder
    * @private
    */
-  _transferMixinsAsExpected: function (expectedBuilder) {
+  _transferMixinsAsExpectedFrom: function (expectedBuilder) {
     var that = this;
     expectedBuilder.mixins.downstream.list
     .forEach(function (classBuilder) {
@@ -337,6 +362,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * @param {$oop.Klass} Class
    * @private
    */
   _mergeMembers: function (Class) {
@@ -356,6 +382,14 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * @param {$oop.Klass} Class
+   * @private
+   */
+  _applyDelegates: function (Class) {
+    $oop.copyProperties(Class, this.delegates);
+  },
+
+  /**
    * Defines properties and methods to be contributed by the current class.
    * May be called multiple times, but conflicting members will overwrite
    * previous ones.
@@ -364,14 +398,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   define: function (members) {
     $assert.isObject(members, "No members specified.");
-
-    var that = this;
-
-    Object.keys(members)
-    .forEach(function (property) {
-      that.members[property] = members[property];
-    });
-
+    $oop.copyProperties(this.members, members);
     return this;
   },
 
@@ -387,12 +414,9 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     this._addToMixins(classBuilder);
     classBuilder._addToHosts(this);
-    this._transferExpected(classBuilder);
-
-    if (classBuilder.mapper) {
-      // todo Merge mappers?
-      this.mapper = classBuilder.mapper;
-    }
+    this._transferExpectedFrom(classBuilder);
+    this._transferMapperFrom(classBuilder);
+    this._transferDelegatesFrom(classBuilder);
 
     return this;
   },
@@ -446,7 +470,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     this._addToExpected(classBuilder);
     classBuilder._addToExpecters(this);
-    this._transferMixinsAsExpected(classBuilder);
+    this._transferMixinsAsExpectedFrom(classBuilder);
 
     return this;
   },
@@ -487,10 +511,28 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     // storing class in global lookup
     $oop.klassByClassId[classId] = Class;
 
-    // merging down class members
+    // finalizing members
     this._mergeMembers(Class);
+    this._applyDelegates(Class);
 
     return Class;
+  },
+
+  /**
+   * @param {Object} members
+   * @return {$oop.ClassBuilder}
+   */
+  delegate: function (members) {
+    $assert.isObject(members, "No members specified.");
+
+    var that = this;
+    $oop.copyProperties(this.delegates, members);
+    this.mixins.upstream.list
+    .forEach(function (mixer) {
+      mixer._transferDelegatesFrom(that);
+    });
+
+    return this;
   }
 });
 
