@@ -51,12 +51,22 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
     return this;
   },
 
+  /**
+   * @param {$oop.Klass} Interface
+   * @return {boolean}
+   */
   implements: function (Interface) {
-    return false;
+    return Interface &&
+        this.__builder.interfaces.downstream.lookup[Interface.__classId];
   },
 
+  /**
+   * @param {$oop.Klass} Class
+   * @return {boolean}
+   */
   implementedBy: function (Class) {
-    return false;
+    return Class &&
+        this.__builder.interfaces.upstream.lookup[Class.__classId];
   },
 
   /**

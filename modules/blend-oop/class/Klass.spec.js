@@ -140,6 +140,62 @@ describe("$oop", function () {
       });
     });
 
+    describe("implements()", function () {
+      var interfaceBuilder1,
+          interfaceBuilder2,
+          Interface1,
+          Interface2;
+
+      beforeEach(function () {
+        interfaceBuilder1 = $oop.createClass('Interface1');
+        interfaceBuilder2 = $oop.createClass('Interface2');
+        Interface1 = interfaceBuilder1.build();
+        Interface2 = interfaceBuilder2.build();
+        classBuilder.implement(Interface1);
+        Class = classBuilder.build();
+      });
+
+      describe("on implemented interface", function () {
+        it("should return truthy", function () {
+          expect(Class.implements(Interface1)).toBeTruthy();
+        });
+      });
+
+      describe("on other interface", function () {
+        it("should return falsy", function () {
+          expect(Class.implements(Interface2)).toBeFalsy();
+        });
+      });
+    });
+
+    describe("implementedBy()", function () {
+      var interfaceBuilder1,
+          interfaceBuilder2,
+          Interface1,
+          Interface2;
+
+      beforeEach(function () {
+        interfaceBuilder1 = $oop.createClass('Interface1');
+        interfaceBuilder2 = $oop.createClass('Interface2');
+        Interface1 = interfaceBuilder1.build();
+        Interface2 = interfaceBuilder2.build();
+        classBuilder.implement(Interface1);
+        Class = classBuilder.build();
+      });
+
+      describe("on implemented interface", function () {
+        it("should return truthy", function () {
+          expect(Interface1.implementedBy(Class)).toBeTruthy();
+        });
+      });
+
+      describe("on other interface", function () {
+        it("should return falsy", function () {
+          expect(Interface2.implementedBy(Class)).toBeFalsy();
+        });
+      });
+    });
+
     describe("mixes()", function () {
       var mixinBuilder1,
           mixinBuilder2,
