@@ -41,7 +41,13 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
     return this;
   },
 
-  forwardBlend: function (Class, filter) {
+  /**
+   * @param {$oop.Klass} Class
+   * @param {function} callback
+   * @return {$oop.Klass}
+   */
+  forwardBlend: function (Class, callback) {
+    this.__builder.forwardBlend(Class, callback);
     return this;
   },
 

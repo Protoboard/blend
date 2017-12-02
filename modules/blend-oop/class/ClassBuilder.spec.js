@@ -73,6 +73,11 @@ describe("$oop", function () {
         classBuilder = $oop.ClassBuilder.create('foo');
         expect(classBuilder.delegates).toEqual({});
       });
+
+      it("should initialize forwards", function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expect(classBuilder.forwards).toEqual({list: [], lookup: {}});
+      });
     });
 
     describe("define()", function () {
@@ -133,7 +138,7 @@ describe("$oop", function () {
         expect(result).toBe(classBuilder);
       });
 
-      it("should add Mixin builder to mixins", function () {
+      it("should add to mixins", function () {
         Mixin = mixinBuilder.build();
         classBuilder.mix(Mixin);
         expect(classBuilder.mixins.downstream).toEqual({
@@ -144,7 +149,7 @@ describe("$oop", function () {
         });
       });
 
-      it("should add self to Mixin's mixers", function () {
+      it("should add self to mixin's mixers", function () {
         Mixin = mixinBuilder.build();
         classBuilder.mix(Mixin);
         expect(mixinBuilder.mixins.upstream).toEqual({
@@ -155,7 +160,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("when Mixin has expectations", function () {
+      describe("when mixin has expectations", function () {
         var expectedBuilder,
             Expected;
 
@@ -177,7 +182,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("when Mixin has mapper", function () {
+      describe("when mixin has mapper", function () {
         var mapper;
 
         beforeEach(function () {
@@ -192,7 +197,7 @@ describe("$oop", function () {
         });
       });
 
-      describe("when Mixin has delegates", function () {
+      describe("when mixin has delegates", function () {
         var members;
 
         beforeEach(function () {
@@ -209,13 +214,39 @@ describe("$oop", function () {
         });
       });
 
+      describe("when mixin has forwards", function () {
+        var forwardBuilder,
+            Forward,
+            callback = function () {};
+
+        beforeEach(function () {
+          Mixin = mixinBuilder.build();
+          forwardBuilder = $oop.createClass('Forward');
+          Forward = forwardBuilder.build();
+          mixinBuilder.forwardBlend(Forward, callback);
+        });
+
+        it("should transfer forwards", function () {
+          classBuilder.mix(Mixin);
+          expect(classBuilder.forwards).toEqual({
+            list: [{
+              mixin: forwardBuilder,
+              callback: callback
+            }],
+            lookup: {
+              Forward: 1
+            }
+          });
+        });
+      });
+
       describe("when mixing again", function () {
         beforeEach(function () {
           Mixin = mixinBuilder.build();
           classBuilder.mix(Mixin);
         });
 
-        it("should not add Mixin to downstream mixins again", function () {
+        it("should not add mixin to downstream mixins again", function () {
           classBuilder.mix(Mixin);
           expect(classBuilder.mixins.downstream).toEqual({
             list: [mixinBuilder],
@@ -225,7 +256,7 @@ describe("$oop", function () {
           });
         });
 
-        it("should not add self to Mixin's upstream mixins again", function () {
+        it("should not add self to mixin's upstream mixins again", function () {
           classBuilder.mix(Mixin);
           expect(mixinBuilder.mixins.upstream).toEqual({
             list: [classBuilder],
@@ -690,6 +721,75 @@ describe("$oop", function () {
         it("should transfer delegates to mixers", function () {
           classBuilder.delegate(members);
           expect(mixerBuilder.delegates).toEqual(members);
+        });
+      });
+    });
+
+    describe("forwardBlend()", function () {
+      var mixinBuilder,
+          Mixin,
+          callback;
+
+      beforeEach(function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        mixinBuilder = $oop.ClassBuilder.create('bar');
+        Mixin = mixinBuilder.build();
+        callback = function () {};
+      });
+
+      it("should return self", function () {
+        var result = classBuilder.forwardBlend(Mixin, callback);
+        expect(result).toBe(classBuilder);
+      });
+
+      it("should add mixin to forwards", function () {
+        classBuilder.forwardBlend(Mixin, callback);
+        expect(classBuilder.forwards).toEqual({
+          list: [{
+            mixin: mixinBuilder,
+            callback: callback
+          }],
+          lookup: {
+            'bar': 1
+          }
+        });
+      });
+
+      describe("when class has mixers", function () {
+        var Class,
+            mixerBuilder;
+
+        beforeEach(function () {
+          Class = classBuilder.build();
+          mixerBuilder = $oop.createClass('Mixer')
+          .mix(Class);
+        });
+
+        it("should add to mixer's forwards", function () {
+          classBuilder.forwardBlend(Mixin, callback);
+          expect(mixerBuilder.forwards).toEqual({
+            list: [{
+              mixin: mixinBuilder,
+              callback: callback
+            }],
+            lookup: {
+              'bar': 1
+            }
+          });
+        });
+
+        describe("that already mix forward mixin", function () {
+          beforeEach(function () {
+            mixerBuilder.mix(Mixin);
+          });
+
+          it("should not add to mixer's forwards", function () {
+            classBuilder.forwardBlend(Mixin, callback);
+            expect(mixerBuilder.forwards).toEqual({
+              list: [],
+              lookup: {}
+            });
+          });
         });
       });
     });

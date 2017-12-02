@@ -11,6 +11,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
+   * Reference to built class.
+   * @member {$oop.Klass} $oop.ClassBuilder#Class
+   */
+
+  /**
    * Properties and methods contributed by the current class.
    * @member {Object} $oop.ClassBuilder#members
    */
@@ -54,6 +59,14 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
+   * Registry of forward descriptors. Forwards define additional mixins to be
+   * mixed to classes when environment or initial properties meet the
+   * specified condition.
+   * @name $oop.ClassBuilder#forwards
+   * @type {$oop.QuickList}
+   */
+
+  /**
    * @memberOf $oop.ClassBuilder
    * @param {string} classId
    * @return {$oop.ClassBuilder}
@@ -79,7 +92,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
       },
       mapper: undefined,
       instances: {},
-      delegates: {}
+      delegates: {},
+      forwards: {list: [], lookup: {}}
     });
   },
 
@@ -390,6 +404,42 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * @param {$oop.ClassBuilder} mixinBuilder
+   * @param {function} callback
+   * @private
+   */
+  _addToForwards: function (mixinBuilder, callback) {
+    var forwards = this.forwards,
+        forwardId = mixinBuilder.classId,
+        forwardList = forwards.list,
+        forwardLookup = forwards.lookup;
+
+    if (!forwardLookup[forwardId]) {
+      forwardList.push({
+        mixin: mixinBuilder,
+        callback: callback
+      });
+      forwardLookup[forwardId] = 1;
+    }
+  },
+
+  /**
+   * @param {$oop.ClassBuilder} classBuilder
+   * @private
+   */
+  _transferForwardsFrom: function (classBuilder) {
+    var that = this,
+        mixinLookup = this.mixins.downstream.lookup;
+    classBuilder.forwards.list
+    .filter(function (forward) {
+      return !mixinLookup[forward.mixin.classId];
+    })
+    .forEach(function (forward) {
+      that._addToForwards(forward.mixin, forward.callback);
+    });
+  },
+
+  /**
    * Defines properties and methods to be contributed by the current class.
    * May be called multiple times, but conflicting members will overwrite
    * previous ones.
@@ -408,7 +458,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   mix: function (Class) {
-    $assert.isKlass(Class, "Klass instance expected.");
+    $assert.isKlass(Class, "Klass type expected.");
 
     var classBuilder = Class.__builder;
 
@@ -417,6 +467,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     this._transferExpectedFrom(classBuilder);
     this._transferMapperFrom(classBuilder);
     this._transferDelegatesFrom(classBuilder);
+    this._transferForwardsFrom(classBuilder);
 
     return this;
   },
@@ -428,7 +479,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   blend: function (Class) {
-    $assert.isKlass(Class, "Klass instance expected.");
+    $assert.isKlass(Class, "Klass type expected.");
 
     var that = this,
         classBuilder = Class.__builder;
@@ -449,7 +500,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   implement: function (Interface) {
-    $assert.isKlass(Interface, "Klass instance expected.");
+    $assert.isKlass(Interface, "Klass type expected.");
 
     var interfaceBuilder = Interface.__builder;
 
@@ -464,7 +515,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   expect: function (Class) {
-    $assert.isKlass(Class, "Klass instance expected.");
+    $assert.isKlass(Class, "Klass type expected.");
 
     var classBuilder = Class.__builder;
 
@@ -530,6 +581,29 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     this.mixins.upstream.list
     .forEach(function (mixer) {
       mixer._transferDelegatesFrom(that);
+    });
+
+    return this;
+  },
+
+  /**
+   * @param {$oop.Klass} Mixin
+   * @param {function} callback
+   * @return {$oop.ClassBuilder}
+   * @todo Make callback optional / accept boolean?
+   */
+  forwardBlend: function (Mixin, callback) {
+    $assert.isKlass(Mixin, "Klass type expected.");
+
+    var mixinBuilder = Mixin.__builder;
+    this._addToForwards(mixinBuilder, callback);
+    this.mixins.upstream.list
+    .filter(function (mixerBuilder) {
+      // only mixers that don't already mix Mixin
+      return !mixerBuilder.mixins.downstream.lookup[mixinBuilder.classId];
+    })
+    .forEach(function (mixerBuilder) {
+      mixerBuilder._addToForwards(mixinBuilder, callback);
     });
 
     return this;

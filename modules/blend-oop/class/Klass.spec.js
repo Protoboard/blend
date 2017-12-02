@@ -117,6 +117,29 @@ describe("$oop", function () {
       });
     });
 
+    describe("forwardBlend()", function () {
+      var Mixin,
+          callback;
+
+      beforeEach(function () {
+        Mixin = $oop.createClass('Mixin').build();
+        callback = function () {};
+        Class = classBuilder.build();
+      });
+
+      it("should return self", function () {
+        var result = Class.forwardBlend(Mixin);
+        expect(result).toBe(Class);
+      });
+
+      it("should invoke forwardBlend on builder", function () {
+        spyOn(Class.__builder, 'forwardBlend');
+        Class.forwardBlend(Mixin, callback);
+        expect(Class.__builder.forwardBlend)
+        .toHaveBeenCalledWith(Mixin, callback);
+      });
+    });
+
     describe("mixes()", function () {
       var mixinBuilder1,
           mixinBuilder2,
