@@ -66,7 +66,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    */
   implementedBy: function (Class) {
     return Class &&
-        this.__builder.interfaces.upstream.lookup[Class.__classId];
+        Class.__builder.interfaces.downstream.lookup[this.__classId];
   },
 
   /**
@@ -85,12 +85,22 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
     return Class && Class.__builder.mixins.downstream.lookup[this.__classId];
   },
 
+  /**
+   * @param {$oop.Klass} Class
+   * @return {boolean}
+   */
   expects: function (Class) {
-    return false;
+    return Class &&
+        this.__builder.expectations.downstream.lookup[Class.__classId];
   },
 
+  /**
+   * @param {$oop.Klass} Class
+   * @return {boolean}
+   */
   expectedBy: function (Class) {
-    return false;
+    return Class &&
+        Class.__builder.expectations.downstream.lookup[this.__classId];
   },
 
   elevateMethods: function () {

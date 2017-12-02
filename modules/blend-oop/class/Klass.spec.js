@@ -251,5 +251,61 @@ describe("$oop", function () {
         });
       });
     });
+
+    describe("expects()", function () {
+      var hostBuilder1,
+          hostBuilder2,
+          Host1,
+          Host2;
+
+      beforeEach(function () {
+        hostBuilder1 = $oop.createClass('Host1');
+        hostBuilder2 = $oop.createClass('Host2');
+        Host1 = hostBuilder1.build();
+        Host2 = hostBuilder2.build();
+        classBuilder.expect(Host1);
+        Class = classBuilder.build();
+      });
+
+      describe("on met expectation", function () {
+        it("should return truthy", function () {
+          expect(Class.expects(Host1)).toBeTruthy();
+        });
+      });
+
+      describe("on unmet expectation", function () {
+        it("should return falsy", function () {
+          expect(Class.expects(Host2)).toBeFalsy();
+        });
+      });
+    });
+
+    describe("expectedBy()", function () {
+      var hostBuilder1,
+          hostBuilder2,
+          Host1,
+          Host2;
+
+      beforeEach(function () {
+        hostBuilder1 = $oop.createClass('Host1');
+        hostBuilder2 = $oop.createClass('Host2');
+        Host1 = hostBuilder1.build();
+        Host2 = hostBuilder2.build();
+        classBuilder.expect(Host1);
+        Class = classBuilder.build();
+      });
+
+      describe("on met expectation", function () {
+        it("should return truthy", function () {
+          expect(Host1.expectedBy(Class)).toBeTruthy();
+        });
+      });
+
+      describe("on unmet expectation", function () {
+        it("should return falsy", function () {
+          expect(Host2.expectedBy(Class)).toBeFalsy();
+        });
+      });
+    });
   });
 });
