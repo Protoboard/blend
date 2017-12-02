@@ -103,7 +103,21 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
         Class.__builder.expectations.downstream.lookup[this.__classId];
   },
 
-  elevateMethods: function () {
+  /**
+   * Binds and stores the specified methods on the instance, so they're
+   * reusable as callbacks.
+   * @param {...string} methodName
+   * @return {$oop.Klass}
+   */
+  elevateMethods: function (methodName) {
+    var argumentCount = arguments.length,
+        i;
+
+    for (i = 0; i < argumentCount; i++) {
+      methodName = arguments[i];
+      this[methodName] = this[methodName].bind(this);
+    }
+
     return this;
   }
 });

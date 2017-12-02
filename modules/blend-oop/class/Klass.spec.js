@@ -307,5 +307,47 @@ describe("$oop", function () {
         });
       });
     });
+
+    describe("elevateMethods()", function () {
+      var instance;
+
+      beforeEach(function () {
+        classBuilder.define({
+          foo: function () {},
+          bar: function () {}
+        });
+        Class = classBuilder.build();
+        instance = $oop.createObject(Class, {});
+      });
+
+      describe("when passing absent methodName", function () {
+        it("should throw", function () {
+          expect(function () {
+            instance.elevateMethods('baz');
+          }).toThrow();
+        });
+      });
+
+      it("should add elevated method", function () {
+        instance.elevateMethods('foo');
+        expect(instance.hasOwnProperty('foo')).toBeTruthy();
+        expect(typeof instance.foo).toBe('function');
+        expect(instance.foo).not.toBe(Class.foo);
+      });
+
+      describe("when method is already elevated", function () {
+        var elevated;
+
+        beforeEach(function () {
+          instance.elevateMethods('foo');
+          elevated = instance.foo;
+        });
+
+        it("should replace elevated method", function () {
+          instance.elevateMethods('foo');
+          expect(instance.foo).not.toBe(elevated);
+        });
+      });
+    });
   });
 });
