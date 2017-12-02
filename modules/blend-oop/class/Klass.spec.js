@@ -79,7 +79,6 @@ describe("$oop", function () {
 
     beforeEach(function () {
       classBuilder = $oop.createClass('Class');
-      Class = classBuilder.build();
     });
 
     describe("delegate()", function () {
@@ -87,6 +86,7 @@ describe("$oop", function () {
           members;
 
       beforeEach(function () {
+        Class = classBuilder.build();
         Mixer = $oop.createClass('Mixer')
         .mix(Class)
         .build();
@@ -114,6 +114,62 @@ describe("$oop", function () {
       it("should transfer delegates", function () {
         Class.delegate(members);
         expect(Mixer.foo).toBe(members.foo);
+      });
+    });
+
+    describe("mixes()", function () {
+      var mixinBuilder1,
+          mixinBuilder2,
+          Mixin1,
+          Mixin2;
+
+      beforeEach(function () {
+        mixinBuilder1 = $oop.createClass('Mixin1');
+        mixinBuilder2 = $oop.createClass('Mixin2');
+        Mixin1 = mixinBuilder1.build();
+        Mixin2 = mixinBuilder2.build();
+        classBuilder.mix(Mixin1);
+        Class = classBuilder.build();
+      });
+
+      describe("on present mixin", function () {
+        it("should return truthy", function () {
+          expect(Class.mixes(Mixin1)).toBeTruthy();
+        });
+      });
+
+      describe("on absent mixin", function () {
+        it("should return falsy", function () {
+          expect(Class.mixes(Mixin2)).toBeFalsy();
+        });
+      });
+    });
+
+    describe("mixedBy()", function () {
+      var mixinBuilder1,
+          mixinBuilder2,
+          Mixin1,
+          Mixin2;
+
+      beforeEach(function () {
+        mixinBuilder1 = $oop.createClass('Mixin1');
+        mixinBuilder2 = $oop.createClass('Mixin2');
+        Mixin1 = mixinBuilder1.build();
+        Mixin2 = mixinBuilder2.build();
+        classBuilder.mix(Mixin1);
+        Class = classBuilder.build();
+      });
+
+      describe("on present mixin", function () {
+        it("should return truthy", function () {
+          expect(Mixin1.mixedBy(Class)).toBeTruthy();
+        });
+      });
+
+      describe("on absent mixin", function () {
+        it("should return falsy", function () {
+          expect(Mixin2.mixedBy(Class)).toBeFalsy();
+        });
       });
     });
   });

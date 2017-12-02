@@ -6,11 +6,11 @@
  */
 $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   /**
-   * @member {string} @lends $oop.Klass#__classId
+   * @member {string} $oop.Klass#__classId
    */
 
   /**
-   * @member {$oop.ClassBuilder} @lends $oop.Klass#__builder
+   * @member {$oop.ClassBuilder} $oop.Klass#__builder
    */
 
   create: function (properties) {
@@ -53,12 +53,20 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
     return false;
   },
 
+  /**
+   * @param {$oop.Klass} Class
+   * @return {boolean}
+   */
   mixes: function (Class) {
-    return false;
+    return Class && this.__builder.mixins.downstream.lookup[Class.__classId];
   },
 
+  /**
+   * @param {$oop.Klass} Class
+   * @return {boolean}
+   */
   mixedBy: function (Class) {
-    return false;
+    return Class && Class.__builder.mixins.downstream.lookup[this.__classId];
   },
 
   expects: function (Class) {
