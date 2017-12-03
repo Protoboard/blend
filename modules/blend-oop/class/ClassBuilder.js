@@ -7,7 +7,7 @@
 $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBuilder# */{
   /**
    * Identifies class.
-   * @member {string} $oop.ClassBuilder#classId
+   * @member {string} $oop.ClassBuilder#className
    */
 
   /**
@@ -68,14 +68,14 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
   /**
    * @memberOf $oop.ClassBuilder
-   * @param {string} classId
+   * @param {string} className
    * @return {$oop.ClassBuilder}
    */
-  create: function (classId) {
-    $assert.isString(classId, "No class ID was specified.");
+  create: function (className) {
+    $assert.isString(className, "No class name was specified.");
 
     return $oop.createObject(this, {
-      classId: classId,
+      className: className,
       Class: undefined,
       members: {},
       mixins: {
@@ -124,7 +124,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var mixins = this.mixins.downstream,
         mixinList = mixins.list,
         mixinLookup = mixins.lookup,
-        mixinId = classBuilder.classId;
+        mixinId = classBuilder.className;
 
     if (!hOP.call(mixinLookup, mixinId)) {
       mixinList.push(classBuilder);
@@ -140,7 +140,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var hosts = this.mixins.upstream,
         hostList = hosts.list,
         hostLookup = hosts.lookup,
-        hostId = classBuilder.classId;
+        hostId = classBuilder.className;
 
     if (!hOP.call(hostLookup, hostId)) {
       hostList.push(classBuilder);
@@ -161,9 +161,9 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
       .forEach(function (mixinBuilder) {
         traverseMixins(mixinBuilder);
 
-        if (!mixinLookup[mixinBuilder.classId]) {
+        if (!mixinLookup[mixinBuilder.className]) {
           mixins.push(mixinBuilder);
-          mixinLookup[mixinBuilder.classId] = 1;
+          mixinLookup[mixinBuilder.className] = 1;
         }
       });
     }(this));
@@ -179,7 +179,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var interfaces = this.interfaces.downstream,
         interfaceList = interfaces.list,
         interfaceLookup = interfaces.lookup,
-        interfaceId = interfaceBuilder.classId;
+        interfaceId = interfaceBuilder.className;
 
     if (!hOP.call(interfaceLookup, interfaceId)) {
       interfaceList.push(interfaceBuilder);
@@ -195,7 +195,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var implementers = this.interfaces.upstream,
         implementerList = implementers.list,
         implementerLookup = implementers.lookup,
-        implementerId = classBuilder.classId;
+        implementerId = classBuilder.className;
 
     if (!hOP.call(implementerLookup, implementerId)) {
       implementerList.push(classBuilder);
@@ -211,7 +211,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var expected = this.expectations.downstream,
         expectedList = expected.list,
         expectedLookup = expected.lookup,
-        expectedId = classBuilder.classId;
+        expectedId = classBuilder.className;
 
     if (!hOP.call(expectedLookup, expectedId)) {
       expectedList.push(classBuilder);
@@ -227,7 +227,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var expecters = this.expectations.upstream,
         expecterList = expecters.list,
         expecterLookup = expecters.lookup,
-        expecterId = classBuilder.classId;
+        expecterId = classBuilder.className;
 
     if (!hOP.call(expecterLookup, expecterId)) {
       expecterList.push(classBuilder);
@@ -291,7 +291,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     return this.expectations.downstream.list
     .filter(function (expectedBuilder) {
-      return !mixinLookup[expectedBuilder.classId];
+      return !mixinLookup[expectedBuilder.className];
     });
   },
 
@@ -410,7 +410,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   _addToForwards: function (mixinBuilder, callback) {
     var forwards = this.forwards,
-        forwardId = mixinBuilder.classId,
+        forwardId = mixinBuilder.className,
         forwardList = forwards.list,
         forwardLookup = forwards.lookup;
 
@@ -432,7 +432,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
         mixinLookup = this.mixins.downstream.lookup;
     classBuilder.forwards.list
     .filter(function (forward) {
-      return !mixinLookup[forward.mixin.classId];
+      return !mixinLookup[forward.mixin.className];
     })
     .forEach(function (forward) {
       that._addToForwards(forward.mixin, forward.callback);
@@ -544,11 +544,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   build: function () {
     $assert.isUndefined(this.Class, "Class already built");
 
-    var classId = this.classId;
+    var className = this.className;
 
     // creating Class object
     var Class = $oop.createObject($oop.Klass, {
-      __classId: classId,
+      __className: className,
       __builder: this
     });
 
@@ -560,7 +560,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     });
 
     // storing class in global lookup
-    $oop.klassByClassId[classId] = Class;
+    $oop.klassByClassId[className] = Class;
 
     // finalizing members
     this._mergeMembers(Class);
@@ -600,7 +600,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     this.mixins.upstream.list
     .filter(function (mixerBuilder) {
       // only mixers that don't already mix Mixin
-      return !mixerBuilder.mixins.downstream.lookup[mixinBuilder.classId];
+      return !mixerBuilder.mixins.downstream.lookup[mixinBuilder.className];
     })
     .forEach(function (mixerBuilder) {
       mixerBuilder._addToForwards(mixinBuilder, callback);
@@ -617,10 +617,10 @@ $oop.copyProperties($oop, /** @lends $oop */{
   klassByClassId: {},
 
   /**
-   * @param {string} classId
+   * @param {string} className
    * @return {$oop.ClassBuilder}
    */
-  createClass: function (classId) {
-    return $oop.ClassBuilder.create(classId);
+  createClass: function (className) {
+    return $oop.ClassBuilder.create(className);
   }
 });

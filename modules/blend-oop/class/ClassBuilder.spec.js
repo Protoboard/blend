@@ -7,7 +7,7 @@ describe("$oop", function () {
     var classBuilder;
 
     describe("create()", function () {
-      describe("on invalid classId", function () {
+      describe("on invalid className", function () {
         it("should throw", function () {
           expect(function () {
             $oop.ClassBuilder.create();
@@ -20,9 +20,9 @@ describe("$oop", function () {
         expect($oop.ClassBuilder.isPrototypeOf(classBuilder)).toBeTruthy();
       });
 
-      it("should initialize classId", function () {
+      it("should initialize className", function () {
         classBuilder = $oop.ClassBuilder.create('foo');
-        expect(classBuilder.classId).toBe('foo');
+        expect(classBuilder.className).toBe('foo');
       });
 
       it("should initialize Class", function () {

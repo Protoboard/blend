@@ -131,22 +131,22 @@ describe("$oop", function () {
     });
   });
 
-  describe("getBuilderId()", function () {
+  describe("getClassName()", function () {
     var classBuilder;
 
     beforeAll(function () {
       classBuilder = $oop.createClass('Class');
     });
 
-    it("should retrieve class ID from Class", function () {
-      expect($oop.getBuilderId(classBuilder)).toBe('Class');
+    it("should retrieve class name from Class", function () {
+      expect($oop.getClassName(classBuilder)).toBe('Class');
     });
 
     describe("for falsy input", function () {
       it("should return falsy", function () {
-        expect($oop.getBuilderId(undefined)).toBeFalsy();
-        expect($oop.getBuilderId(null)).toBeFalsy();
-        expect($oop.getBuilderId('')).toBeFalsy();
+        expect($oop.getClassName(undefined)).toBeFalsy();
+        expect($oop.getClassName(null)).toBeFalsy();
+        expect($oop.getClassName('')).toBeFalsy();
       });
     });
   });

@@ -85,8 +85,8 @@ $oop.copyProperties($oop, /** @lends $oop */{
    * @param {$oop.ClassBuilder} classBuilder
    * @returns {string}
    */
-  getBuilderId: function (classBuilder) {
-    return classBuilder && classBuilder.classId;
+  getClassName: function (classBuilder) {
+    return classBuilder && classBuilder.className;
   }
 });
 

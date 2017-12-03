@@ -6,7 +6,7 @@
  */
 $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   /**
-   * @member {string} $oop.Klass#__classId
+   * @member {string} $oop.Klass#__className
    */
 
   /**
@@ -60,7 +60,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
     var unimplementedInterfaces = builder.unimplementedInterfaces;
     if (unimplementedInterfaces.length) {
       $assert.fail([
-        "Class '" + that.__classId + "' doesn't implement interface(s): " +
+        "Class '" + that.__className + "' doesn't implement interface(s): " +
         unimplementedInterfaces
         .map($oop.addQuotes) + ".",
         "Can't instantiate."
@@ -72,7 +72,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
     if (unmetExpectations.length) {
       // there are unmet expectations - can't instantiate
       $assert.fail([
-        "Class '" + that.__classId + "' doesn't satisfy expectation(s): " +
+        "Class '" + that.__className + "' doesn't satisfy expectation(s): " +
         unmetExpectations
         .map($oop.getClassId)
         .map($oop.addQuotes)
@@ -95,7 +95,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
     } else {
       // invalid properties supplied
       $assert.fail([
-        "Invalid properties supplied to class '" + that.__classId + "'.",
+        "Invalid properties supplied to class '" + that.__className + "'.",
         "Can't instantiate."
       ].join(" "));
     }
@@ -164,7 +164,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    */
   implements: function (Interface) {
     return Interface &&
-        this.__builder.interfaces.downstream.lookup[Interface.__classId];
+        this.__builder.interfaces.downstream.lookup[Interface.__className];
   },
 
   /**
@@ -173,7 +173,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    */
   implementedBy: function (Class) {
     return Class &&
-        Class.__builder.interfaces.downstream.lookup[this.__classId];
+        Class.__builder.interfaces.downstream.lookup[this.__className];
   },
 
   /**
@@ -181,7 +181,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    * @return {boolean}
    */
   mixes: function (Class) {
-    return Class && this.__builder.mixins.downstream.lookup[Class.__classId];
+    return Class && this.__builder.mixins.downstream.lookup[Class.__className];
   },
 
   /**
@@ -189,7 +189,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    * @return {boolean}
    */
   mixedBy: function (Class) {
-    return Class && Class.__builder.mixins.downstream.lookup[this.__classId];
+    return Class && Class.__builder.mixins.downstream.lookup[this.__className];
   },
 
   /**
@@ -198,7 +198,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    */
   expects: function (Class) {
     return Class &&
-        this.__builder.expectations.downstream.lookup[Class.__classId];
+        this.__builder.expectations.downstream.lookup[Class.__className];
   },
 
   /**
@@ -207,7 +207,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    */
   expectedBy: function (Class) {
     return Class &&
-        Class.__builder.expectations.downstream.lookup[this.__classId];
+        Class.__builder.expectations.downstream.lookup[this.__className];
   },
 
   /**
