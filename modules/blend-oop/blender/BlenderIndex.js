@@ -5,7 +5,7 @@
  * access to classes based on (a subset of) their mixins. Used internally by
  * `$oop.ClassBlender`.
  * @class $oop.BlenderIndex
- * @ignore
+ * @deprecated
  */
 $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderIndex */{
   /**

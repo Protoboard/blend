@@ -3,6 +3,7 @@
 /**
  * Composable class.
  * @class $oop.Class
+ * @deprecated
  */
 $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**

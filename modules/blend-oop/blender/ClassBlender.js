@@ -4,7 +4,7 @@
  * Implements ad-hoc mixing of classes. Used internally by `$oop.Class`.
  * @class $oop.ClassBlender
  * @see $oop.blendClass
- * @ignore
+ * @deprecated
  */
 $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBlender */{
   /**
