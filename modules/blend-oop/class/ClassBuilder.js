@@ -572,7 +572,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     });
 
     // storing class in global lookup
-    $oop.klassByClassId[className] = Class;
+    $oop.klassByClassName[className] = Class;
 
     // finalizing members
     this._mergeMembers(Class);
@@ -626,7 +626,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * @type {Object}
    */
-  klassByClassId: {},
+  klassByClassName: {},
 
   /**
    * @param {string} className
