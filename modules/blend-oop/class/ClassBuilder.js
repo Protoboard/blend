@@ -7,7 +7,7 @@
 $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBuilder# */{
   /**
    * Globally identifies class.
-   * @member {string} $oop.ClassBuilder#classId
+   * @member {number} $oop.ClassBuilder#classId
    */
 
   /**
@@ -556,11 +556,10 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   build: function () {
     $assert.isUndefined(this.Class, "Class already built");
 
-    var className = this.className;
-
     // creating Class object
     var Class = $oop.createObject($oop.Klass, {
-      __className: className,
+      __classId: this.classId,
+      __className: this.className,
       __builder: this
     });
 
@@ -572,7 +571,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     });
 
     // storing class in global lookup
-    $oop.klassByClassName[className] = Class;
+    $oop.klassByClassName[this.className] = Class;
 
     // finalizing members
     this._mergeMembers(Class);

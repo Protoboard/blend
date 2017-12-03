@@ -6,6 +6,10 @@
  */
 $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   /**
+   * @member {number} $oop.Klass#__classId
+   */
+
+  /**
    * @member {string} $oop.Klass#__className
    */
 

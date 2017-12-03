@@ -570,6 +570,16 @@ describe("$oop", function () {
         expect($oop.Klass.isPrototypeOf(Class)).toBeTruthy();
       });
 
+      it("should initialize __classId", function () {
+        Class = classBuilder.build();
+        expect(Class.__classId).toBe(classBuilder.classId);
+      });
+
+      it("should initialize __className", function () {
+        Class = classBuilder.build();
+        expect(Class.__className).toBe('foo');
+      });
+
       it("should initialize __builder", function () {
         Class = classBuilder.build();
         expect(Class.__builder).toBe(classBuilder);
