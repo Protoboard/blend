@@ -13,6 +13,7 @@
     "class/Class.js",
     "class/getClass.js",
     "blender/MixerIndex.js",
+    "blender/ClassMixer.js",
     "blender/BlenderIndex.js",
     "blender/ClassBlender.js",
     "blender/blendClass.js",

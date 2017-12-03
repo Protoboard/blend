@@ -571,6 +571,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     });
 
     // storing class in global lookup
+    $oop.klasses.push(Class);
     $oop.klassByClassName[this.className] = Class;
 
     // finalizing members
@@ -623,7 +624,13 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
-   * @type {Object}
+   * @type {Array.<$oop.Klass>}
+   */
+  klasses: [],
+
+  /**
+   * @type {Object.<string,$oop.Klass>}
+   * @todo Necessary?
    */
   klassByClassName: {},
 
