@@ -13,7 +13,114 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    * @member {$oop.ClassBuilder} $oop.Klass#__builder
    */
 
+  /**
+   * @param {Object} properties
+   * @return {$oop.Klass}
+   */
   create: function (properties) {
+    properties = properties || {};
+
+    // merging down properties
+    var argumentCount = arguments.length,
+        i, propertyBatch,
+        propertyNames, propertyCount,
+        j, propertyName;
+    for (i = 1; i < argumentCount; i++) {
+      propertyBatch = arguments[i];
+      if (propertyBatch) {
+        propertyNames = Object.keys(propertyBatch);
+        propertyCount = propertyNames.length;
+        for (j = 0; j < propertyCount; j++) {
+          propertyName = propertyNames[j];
+          properties[propertyName] = propertyBatch[propertyName];
+        }
+      }
+    }
+
+    // todo Add forwarding
+    var that = this;
+
+    // fetching cached instance
+    var builder = that.__builder,
+        mapper = builder.mapper,
+        instances,
+        instanceId, instance;
+    if (mapper) {
+      instances = builder.instances;
+      instanceId = mapper.call(that, properties);
+      instance = instances[instanceId];
+      if (instance) {
+        // instance found in cache
+        return instance;
+      }
+    }
+
+    // checking whether
+    // ... methods match interfaces
+    var unimplementedInterfaces = builder.unimplementedInterfaces;
+    if (unimplementedInterfaces.length) {
+      $assert.fail([
+        "Class '" + that.__classId + "' doesn't implement interface(s): " +
+        unimplementedInterfaces
+        .map($oop.addQuotes) + ".",
+        "Can't instantiate."
+      ].join(" "));
+    }
+
+    // ... expectations are satisfied
+    var unmetExpectations = builder.unmetExpectations;
+    if (unmetExpectations.length) {
+      // there are unmet expectations - can't instantiate
+      $assert.fail([
+        "Class '" + that.__classId + "' doesn't satisfy expectation(s): " +
+        unmetExpectations
+        .map($oop.getClassId)
+        .map($oop.addQuotes)
+        .join(",") + ".",
+        "Can't instantiate."
+      ].join(" "));
+    }
+
+    // instantiating class
+    instance = Object.create(that);
+
+    // copying initial properties to instance
+    if (properties instanceof Object) {
+      propertyNames = Object.getOwnPropertyNames(properties);
+      propertyCount = propertyNames.length;
+      for (i = 0; i < propertyCount; i++) {
+        propertyName = propertyNames[i];
+        instance[propertyName] = properties[propertyName];
+      }
+    } else {
+      // invalid properties supplied
+      $assert.fail([
+        "Invalid properties supplied to class '" + that.__classId + "'.",
+        "Can't instantiate."
+      ].join(" "));
+    }
+
+    // caching instance (if necessary)
+    if (instanceId !== undefined) {
+      instances[instanceId] = instance;
+    }
+
+    // setting defaults
+    if (typeof instance.defaults === 'function') {
+      instance.defaults();
+    }
+
+    // spreading properties - ie. dependencies bw. properties
+    if (typeof instance.spread === 'function') {
+      instance.spread();
+    }
+
+    // initializing instance
+    if (typeof instance.init === 'function') {
+      instance.init();
+    }
+
+    return instance;
   },
 
   /**
@@ -144,4 +251,3 @@ $oop.copyProperties($assert, /** @lends $assert */{
         $oop.Klass.isPrototypeOf(expr), message);
   }
 });
-

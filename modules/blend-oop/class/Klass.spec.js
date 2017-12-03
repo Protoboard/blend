@@ -81,6 +81,204 @@ describe("$oop", function () {
       classBuilder = $oop.createClass('Class');
     });
 
+    describe("create()", function () {
+      var instance;
+
+      it("should copy properties", function () {
+        Class = classBuilder.build();
+        instance = Class.create({
+          foo: 'FOO',
+          bar: 'BAR'
+        }, {
+          bar: "Bar",
+          baz: "Baz"
+        });
+        expect(instance.foo).toBe('FOO');
+        expect(instance.bar).toBe('Bar');
+        expect(instance.baz).toBe('Baz');
+      });
+
+      describe("when any of the arguments is falsy", function () {
+        it("should discard falsy arguments", function () {
+          Class = classBuilder.build();
+          instance = Class.create(
+              null,
+              {
+                foo: 'FOO',
+                bar: 'BAR'
+              },
+              undefined,
+              {
+                bar: "Bar",
+                baz: "Baz"
+              });
+          expect(instance.foo).toBe('FOO');
+          expect(instance.bar).toBe('Bar');
+          expect(instance.baz).toBe('Baz');
+        });
+      });
+
+      describe("on invalid argument", function () {
+        it("should throw", function () {
+          Class = classBuilder.build();
+          expect(function () {
+            Class.create(1);
+          }).toThrow();
+          expect(function () {
+            Class.create('foo');
+          }).toThrow();
+          expect(function () {
+            Class.create(true);
+          }).toThrow();
+        });
+      });
+
+      describe("when defaults is defined", function () {
+        var defaults,
+            properties;
+
+        beforeEach(function () {
+          properties = {};
+          defaults = jasmine.createSpy();
+          classBuilder.define({
+            defaults: defaults
+          });
+          Class = classBuilder.build();
+        });
+
+        it("should invoke defaults", function () {
+          Class.create(properties);
+          expect(defaults).toHaveBeenCalled();
+        });
+      });
+
+      describe("when spread is defined", function () {
+        var spread,
+            properties;
+
+        beforeEach(function () {
+          properties = {};
+          spread = jasmine.createSpy();
+          classBuilder.define({
+            spread: spread
+          });
+          Class = classBuilder.build();
+        });
+
+        it("should invoke spread", function () {
+          Class.create(properties);
+          expect(spread).toHaveBeenCalledWith();
+        });
+      });
+
+      describe("when init is defined", function () {
+        var init,
+            properties;
+
+        beforeEach(function () {
+          properties = {};
+          init = jasmine.createSpy();
+          classBuilder.define({
+            init: init
+          });
+          Class = classBuilder.build();
+        });
+
+        it("should invoke init", function () {
+          Class.create(properties);
+          expect(init).toHaveBeenCalledWith();
+        });
+      });
+
+      describe("of mixin", function () {
+        var Host;
+
+        beforeEach(function () {
+          Host = $oop.createClass('Host').build();
+          classBuilder.expect(Host);
+          Class = classBuilder.build();
+        });
+
+        it("should throw", function () {
+          expect(function () {
+            Class.create();
+          }).toThrow();
+        });
+      });
+
+      describe("of cached class", function () {
+        var context;
+
+        beforeEach(function () {
+          classBuilder.cacheBy(function (args) {
+            context = this;
+            return args.foo && // return undefined when args.foo is undefined
+                '_' + args.foo; // otherwise a prefixed version of it
+          });
+        });
+
+        it("should pass class to mapper as context", function () {
+          Class = classBuilder.build();
+          instance = Class.create({foo: 'foo'});
+          expect(context).toBe(Class);
+        });
+
+        describe("when instance is not cached yet", function () {
+          it("should store new instance in cache", function () {
+            Class = classBuilder.build();
+            instance = Class.create({foo: 'foo'});
+            expect(Class.__builder.instances).toEqual({
+              '_foo': instance
+            });
+          });
+        });
+
+        describe("when instance does not satisfy mapper", function () {
+          it("should not store new instance in cache", function () {
+            Class = classBuilder.build();
+            instance = Class.create({foo: undefined});
+            expect(Class.__builder.instances).toEqual({});
+          });
+        });
+
+        describe("when instance is already cached", function () {
+          var cached;
+
+          beforeEach(function () {
+            Class = classBuilder.build();
+            Class.create({foo: 'foo'});
+            cached = Class.__builder.instances._foo;
+          });
+
+          it("should return cached instance", function () {
+            instance = Class.create({foo: 'foo'});
+            expect(instance).toBe(cached);
+          });
+        });
+      });
+
+      describe("of unimplemented class", function () {
+        var Interface;
+
+        beforeEach(function () {
+          Interface = $oop.createClass('Interface')
+          .define({
+            foo: function () {
+            }
+          })
+          .build();
+          classBuilder.implement(Interface);
+          Class = classBuilder.build();
+        });
+
+        it("should throw", function () {
+          expect(function () {
+            Class.create();
+          }).toThrow();
+        });
+      });
+    });
+
     describe("delegate()", function () {
       var Mixer,
           members;
