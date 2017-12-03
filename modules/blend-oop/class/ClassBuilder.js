@@ -6,7 +6,12 @@
  */
 $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBuilder# */{
   /**
-   * Identifies class.
+   * Globally identifies class.
+   * @member {string} $oop.ClassBuilder#classId
+   */
+
+  /**
+   * Identifies class to user.
    * @member {string} $oop.ClassBuilder#className
    */
 
@@ -68,6 +73,12 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
   /**
    * @memberOf $oop.ClassBuilder
+   * @type {number}
+   */
+  lastClassId: -1,
+
+  /**
+   * @memberOf $oop.ClassBuilder
    * @param {string} className
    * @return {$oop.ClassBuilder}
    */
@@ -75,6 +86,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     $assert.isString(className, "No class name was specified.");
 
     return $oop.createObject(this, {
+      classId: ++$oop.ClassBuilder.lastClassId,
       className: className,
       Class: undefined,
       members: {},

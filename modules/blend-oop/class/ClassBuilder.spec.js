@@ -20,6 +20,11 @@ describe("$oop", function () {
         expect($oop.ClassBuilder.isPrototypeOf(classBuilder)).toBeTruthy();
       });
 
+      it("should initialize classId", function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        expect(classBuilder.classId).toBe($oop.ClassBuilder.lastClassId);
+      });
+
       it("should initialize className", function () {
         classBuilder = $oop.ClassBuilder.create('foo');
         expect(classBuilder.className).toBe('foo');
