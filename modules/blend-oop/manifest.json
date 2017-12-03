@@ -12,6 +12,7 @@
     "class/assertions.js",
     "class/Class.js",
     "class/getClass.js",
+    "blender/MixerIndex.js",
     "blender/BlenderIndex.js",
     "blender/ClassBlender.js",
     "blender/blendClass.js",

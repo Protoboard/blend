@@ -131,22 +131,43 @@ describe("$oop", function () {
     });
   });
 
-  describe("getClassName()", function () {
+  describe("getClassBuilderId()", function () {
     var classBuilder;
 
-    beforeAll(function () {
-      classBuilder = $oop.createClass('Class');
+    beforeEach(function () {
+      $oop.ClassBuilder.lastClassId = -1;
+      classBuilder = $oop.createClass('test.$oop.class-utils.Class');
     });
 
-    it("should retrieve class name from Class", function () {
-      expect($oop.getClassName(classBuilder)).toBe('Class');
+    it("should retrieve class ID from Class", function () {
+      expect($oop.getClassBuilderId(classBuilder)).toBe(0);
     });
 
     describe("for falsy input", function () {
       it("should return falsy", function () {
-        expect($oop.getClassName(undefined)).toBeFalsy();
-        expect($oop.getClassName(null)).toBeFalsy();
-        expect($oop.getClassName('')).toBeFalsy();
+        expect($oop.getClassId(undefined)).toBeFalsy();
+        expect($oop.getClassId(null)).toBeFalsy();
+        expect($oop.getClassId('')).toBeFalsy();
+      });
+    });
+  });
+
+  describe("getClassBuilderName()", function () {
+    var classBuilder;
+
+    beforeEach(function () {
+      classBuilder = $oop.createClass('Class');
+    });
+
+    it("should retrieve class name from Class", function () {
+      expect($oop.getClassBuilderName(classBuilder)).toBe('Class');
+    });
+
+    describe("for falsy input", function () {
+      it("should return falsy", function () {
+        expect($oop.getClassBuilderName(undefined)).toBeFalsy();
+        expect($oop.getClassBuilderName(null)).toBeFalsy();
+        expect($oop.getClassBuilderName('')).toBeFalsy();
       });
     });
   });
