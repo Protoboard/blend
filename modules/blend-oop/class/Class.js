@@ -211,7 +211,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   mixes: function (Class) {
     return this === Class || Class.isPrototypeOf(this) ||
-        Class && this.__builder.mixins.downstream.lookup[Class.__className];
+        $oop.Class.isPrototypeOf(Class) &&
+        this.__builder.mixins.downstream.lookup[Class.__className];
   },
 
   /**
@@ -221,7 +222,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   mixedBy: function (Class) {
     return this === Class || this.isPrototypeOf(Class) ||
-        Class && Class.__builder.mixins.downstream.lookup[this.__className];
+        $oop.Class.isPrototypeOf(Class) &&
+        Class.__builder.mixins.downstream.lookup[this.__className];
   },
 
   /**
@@ -281,5 +283,28 @@ $oop.copyProperties($assert, /** @lends $assert */{
     return $assert.assert(
         expr === undefined ||
         $oop.Class.isPrototypeOf(expr), message);
+  },
+
+  /**
+   * @param {*} expr
+   * @param {$oop.Class} Class
+   * @param {string} [message]
+   * @returns {$assert}
+   */
+  isInstanceOf: function (expr, Class, message) {
+    return $assert.assert(
+        Class.mixedBy(expr), message);
+  },
+
+  /**
+   * @param {*} [expr]
+   * @param {$oop.Class} Class
+   * @param {string} [message]
+   * @returns {$assert}
+   */
+  isInstanceOfOptional: function (expr, Class, message) {
+    return $assert.assert(
+        expr === undefined ||
+        Class.mixedBy(expr), message);
   }
 });

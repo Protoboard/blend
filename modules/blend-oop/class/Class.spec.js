@@ -70,6 +70,79 @@ describe("$assert", function () {
       });
     });
   });
+
+  describe("isInstanceOf()", function () {
+    var Class,
+        instance;
+
+    beforeEach(function () {
+      Class = $oop.createClass('test.$assert.isInstanceOf.Class').build();
+      instance = Class.create();
+      spyOn($assert, 'assert').and.callThrough();
+    });
+
+    it("should pass message to assert", function () {
+      $assert.isInstanceOf(instance, Class, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-instance", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isInstanceOf(undefined, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOf(null, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOf(1, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOf({}, Class);
+        }).toThrow();
+        var OtherClass = $oop.createClass('test.$assert.isInstanceOf.OtherClass')
+        .build();
+        expect(function () {
+          $assert.isInstanceOf(OtherClass, Class);
+        }).toThrow();
+      });
+    });
+  });
+
+  describe("isInstanceOfOptional()", function () {
+    var Class,
+        instance;
+
+    beforeEach(function () {
+      Class = $oop.createClass('test.$assert.isInstanceOf.Class').build();
+      instance = Class.create();
+      spyOn($assert, 'assert').and.callThrough();
+    });
+
+    it("should pass message to assert", function () {
+      $assert.isInstanceOfOptional(undefined, Class, "bar");
+      expect($assert.assert).toHaveBeenCalledWith(true, "bar");
+    });
+
+    describe("when passing non-instance", function () {
+      it("should throw", function () {
+        expect(function () {
+          $assert.isInstanceOfOptional(null, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOfOptional(1, Class);
+        }).toThrow();
+        expect(function () {
+          $assert.isInstanceOfOptional({}, Class);
+        }).toThrow();
+        var OtherClass = $oop.createClass('test.$assert.isInstanceOf.OtherClass')
+        .build();
+        expect(function () {
+          $assert.isInstanceOfOptional(OtherClass, Class);
+        }).toThrow();
+      });
+    });
+  });
 });
 
 describe("$oop", function () {
@@ -427,6 +500,14 @@ describe("$oop", function () {
         Class = classBuilder.build();
       });
 
+      describe("on invalid argument", function () {
+        it("should return falsy", function () {
+          expect(Class.mixes('foo')).toBeFalsy();
+          expect(Class.mixes(1)).toBeFalsy();
+          expect(Class.mixes(false)).toBeFalsy();
+        });
+      });
+
       describe("on self", function () {
         it("should return truthy", function () {
           expect(Class.mixes(Class)).toBeTruthy();
@@ -468,6 +549,14 @@ describe("$oop", function () {
         Mixin2 = mixinBuilder2.build();
         classBuilder.mix(Mixin1);
         Class = classBuilder.build();
+      });
+
+      describe("on invalid argument", function () {
+        it("should return falsy", function () {
+          expect(Mixin1.mixedBy('foo')).toBeFalsy();
+          expect(Mixin1.mixedBy(1)).toBeFalsy();
+          expect(Mixin1.mixedBy(false)).toBeFalsy();
+        });
       });
 
       describe("on self", function () {
