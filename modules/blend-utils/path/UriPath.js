@@ -33,9 +33,10 @@ $utils.UriPath = $oop.createClass('$utils.UriPath')
    * @returns {string}
    */
   toString: function () {
-    return this.components
+    var components = this.components;
+    return components && components
     .map(encodeURIComponent)
-    .join($utils.LOCATION_PATH_DELIMITER);
+    .join($utils.LOCATION_PATH_DELIMITER) || '';
   }
 })
 .build();
