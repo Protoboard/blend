@@ -474,9 +474,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     classBuilder.forwards.list
     .filter(function (forward) {
-      // todo Use Class#mixes()
       var forwardMixin = forward.mixin;
-      return forwardMixin === that ||
+      return forwardMixin !== that &&
           !mixinLookup1[forwardMixin.className];
     })
     .forEach(function (forward) {
@@ -485,7 +484,6 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     this.forwards.list
     .filter(function (forward) {
-      // todo Use Class#mixes()
       var forwardMixin = forward.mixin;
       return forwardMixin === classBuilder ||
           mixinLookup2[forwardMixin.className];
@@ -670,7 +668,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     this.mixins.upstream.list
     .filter(function (mixerBuilder) {
       // only mixers that don't already mix Mixin
-      return !mixerBuilder.mixins.downstream.lookup[mixinBuilder.className];
+      return mixerBuilder !== mixinBuilder &&
+          !mixerBuilder.mixins.downstream.lookup[mixinBuilder.className];
     })
     .forEach(function (mixerBuilder) {
       mixerBuilder._addToForwards(mixinBuilder, callback);
