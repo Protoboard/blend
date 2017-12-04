@@ -12,7 +12,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
-$module.Module = $oop.getClass('$module.Module')
+$module.Module = $oop.createClass('$module.Module')
 .cacheBy(function (properties) {
   return properties && properties.moduleId;
 })
@@ -75,7 +75,8 @@ $module.Module = $oop.getClass('$module.Module')
     var modulePath = $data.TreePath.fromString(this.moduleId);
     return !!$module.modules.getNode(modulePath);
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
