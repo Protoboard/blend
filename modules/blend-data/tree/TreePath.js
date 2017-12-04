@@ -143,8 +143,7 @@ $data.TreePath = $oop.createClass('$data.TreePath')
    * $data.TreePath.create(['foo', 'bar.baz'])+'' // 'foo.bar\.baz'
    */
   toString: function () {
-    var components = this.components;
-    return components && components.map($data.escapeTreePathComponent)
+    return this.components.map($data.escapeTreePathComponent)
     .join($data.TREE_PATH_DELIMITER) || '';
   }
 })

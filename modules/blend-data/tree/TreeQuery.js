@@ -79,8 +79,7 @@ $data.TreeQuery = $oop.createClass('$data.TreeQuery')
    * // 'foo\.bar.*:!baz\.quux'
    */
   toString: function () {
-    var components = this.components;
-    return components && components
+    return this.components
     .map(String)
     .map($data.escapeTreePathComponent)
     .join($data.TREE_PATH_DELIMITER) || '';
