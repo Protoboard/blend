@@ -12,7 +12,7 @@ describe("$template", function () {
         result;
 
     beforeAll(function () {
-      Stringifiable = $oop.getClass('test.$template.Template.Stringifiable')
+      Stringifiable = $oop.createClass('test.$template.Template.Stringifiable')
       .implement($utils.Stringifiable)
       .define({
         fromAb: function (a, b) {
@@ -21,9 +21,11 @@ describe("$template", function () {
         toString: function () {
           return "" + this.a + this.b;
         }
-      });
-      Template = $oop.getClass('test.$template.Template.Template')
-      .blend($template.Template);
+      })
+      .build();
+      Template = $oop.createClass('test.$template.Template.Template')
+      .blend($template.Template)
+      .build();
     });
 
     describe("fromString()", function () {

@@ -1,7 +1,7 @@
 {
   "js": [
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "events/TemplateParameterChangeEvent.js",
+    "template/Template.js",
+    "template/LiveTemplate.js"
   ]
 }

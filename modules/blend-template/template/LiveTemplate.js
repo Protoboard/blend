@@ -15,8 +15,8 @@
  * @extends $event.EventListener
  * @implements $utils.Stringifiable
  */
-$template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
-.blend($oop.getClass('$template.Template'))
+$template.LiveTemplate = $oop.createClass('$template.LiveTemplate')
+.blend($template.Template)
 .blend($utils.Identifiable)
 .blend($event.EventSender)
 .blend($event.EventListener)
@@ -112,7 +112,8 @@ $template.LiveTemplate = $oop.getClass('$template.LiveTemplate')
   toString: function () {
     return this.getResolvedString(this.parameterValues);
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**
