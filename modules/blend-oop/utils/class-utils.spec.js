@@ -151,6 +151,26 @@ describe("$oop", function () {
     });
   });
 
+  describe("getClassName()", function () {
+    var Class;
+
+    beforeAll(function () {
+      Class = $oop.createClass('test.$oop.class-utils.Class').build();
+    });
+
+    it("should retrieve class ID from Class", function () {
+      expect($oop.getClassName(Class)).toBe('test.$oop.class-utils.Class');
+    });
+
+    describe("for falsy input", function () {
+      it("should return falsy", function () {
+        expect($oop.getClassName(undefined)).toBeFalsy();
+        expect($oop.getClassName(null)).toBeFalsy();
+        expect($oop.getClassName('')).toBeFalsy();
+      });
+    });
+  });
+
   describe("getClassBuilderId()", function () {
     var classBuilder;
 

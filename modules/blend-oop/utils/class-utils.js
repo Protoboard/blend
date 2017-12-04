@@ -90,6 +90,15 @@ $oop.copyProperties($oop, /** @lends $oop */{
 
   /**
    * Retrieves class ID for specified class. To be used in `Array#map()`.
+   * @param {$oop.Class} Class
+   * @returns {string}
+   */
+  getClassName: function (Class) {
+    return Class && Class.__className;
+  },
+
+  /**
+   * Retrieves class ID for specified class. To be used in `Array#map()`.
    * @param {$oop.ClassBuilder} classBuilder
    * @returns {number}
    */
