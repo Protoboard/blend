@@ -10,8 +10,9 @@ describe("$data", function () {
         chain;
 
     beforeAll(function () {
-      MasterLink = $oop.getClass('test.$data.MasterLink.MasterLink')
-      .blend($data.MasterLink);
+      MasterLink = $oop.createClass('test.$data.MasterLink.MasterLink')
+      .blend($data.MasterLink)
+      .build();
     });
 
     beforeEach(function () {

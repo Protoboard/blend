@@ -9,22 +9,22 @@ $oop.copyProperties($data, /** @lends $data */{
   CLASS_BY_TYPE: {
     string: { // $data.KEY_TYPE_STRING
       string: { // $data.VALUE_TYPE_STRING
-        unique: $oop.getClass('$data.StringCollection'),
-        undefined: $oop.getClass('$data.StringDictionary')
+        unique: $data.StringCollection,
+        undefined: $data.StringDictionary
       },
       undefined: { // $data.VALUE_TYPE_ANY
-        unique: $oop.getClass('$data.Collection'),
-        undefined: $oop.getClass('$data.Dictionary')
+        unique: $data.Collection,
+        undefined: $data.Dictionary
       }
     },
     undefined: { // $data.KEY_TYPE_ANY
       string: { // $data.VALUE_TYPE_STRING
-        unique: $oop.getClass('$data.StringPairList'),
-        undefined: $oop.getClass('$data.StringPairList')
+        unique: $data.StringPairList,
+        undefined: $data.StringPairList
       },
       undefined: { // $data.VALUE_TYPE_ANY
-        unique: $oop.getClass('$data.PairList'),
-        undefined: $oop.getClass('$data.PairList')
+        unique: $data.PairList,
+        undefined: $data.PairList
       }
     }
   },

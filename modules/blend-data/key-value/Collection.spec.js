@@ -13,8 +13,9 @@ describe("$data", function () {
 
   describe("Collection", function () {
     beforeAll(function () {
-      Collection = $oop.getClass("test.$data.Collection.Collection")
-      .blend($data.Collection);
+      Collection = $oop.createClass("test.$data.Collection.Collection")
+      .blend($data.Collection)
+      .build();
     });
 
     beforeEach(function () {

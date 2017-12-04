@@ -12,18 +12,24 @@ describe("$data", function () {
       StringPairList;
 
   beforeAll(function () {
-    Collection = $oop.getClass('test.$data.KeyValueContainer-utils.Collection')
-    .blend($data.Collection);
-    StringCollection = $oop.getClass('test.$data.KeyValueContainer-utils.StringCollection')
-    .blend($data.StringCollection);
-    Dictionary = $oop.getClass('test.$data.KeyValueContainer-utils.Dictionary')
-    .blend($data.Dictionary);
-    StringDictionary = $oop.getClass('test.$data.KeyValueContainer-utils.StringDictionary')
-    .blend($data.StringDictionary);
-    PairList = $oop.getClass('test.$data.KeyValueContainer-utils.PairList')
-    .blend($data.PairList);
-    StringPairList = $oop.getClass('test.$data.KeyValueContainer-utils.StringPairList')
-    .blend($data.StringPairList);
+    Collection = $oop.createClass('test.$data.KeyValueContainer-utils.Collection')
+    .blend($data.Collection)
+    .build();
+    StringCollection = $oop.createClass('test.$data.KeyValueContainer-utils.StringCollection')
+    .blend($data.StringCollection)
+    .build();
+    Dictionary = $oop.createClass('test.$data.KeyValueContainer-utils.Dictionary')
+    .blend($data.Dictionary)
+    .build();
+    StringDictionary = $oop.createClass('test.$data.KeyValueContainer-utils.StringDictionary')
+    .blend($data.StringDictionary)
+    .build();
+    PairList = $oop.createClass('test.$data.KeyValueContainer-utils.PairList')
+    .blend($data.PairList)
+    .build();
+    StringPairList = $oop.createClass('test.$data.KeyValueContainer-utils.StringPairList')
+    .blend($data.StringPairList)
+    .build();
   });
 
   describe("getMapResultClass()", function () {

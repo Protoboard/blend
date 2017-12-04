@@ -13,10 +13,10 @@
  * @extends $data.ObjectContainer
  * @extends $data.SetContainer
  */
-$data.StringSet = $oop.getClass('$data.StringSet')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ObjectContainer'))
-.blend($oop.getClass('$data.SetContainer'))
+$data.StringSet = $oop.createClass('$data.StringSet')
+.blend($data.DataContainer)
+.blend($data.ObjectContainer)
+.blend($data.SetContainer)
 .define(/** @lends $data.StringSet# */{
   /**
    * @param {string} item
@@ -85,7 +85,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
    * @returns {$data.StringSet} Intersection
    */
   intersectWith: function (set) {
-    var result = $oop.getClass(this.__classId).create();
+    var result = $oop.getClass(this.__className).create();
     this.forEachItem(function (item) {
       if (set.hasItem(item)) {
         result.setItem(item);
@@ -100,7 +100,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
    * @returns {$data.StringSet} Union
    */
   uniteWith: function (set) {
-    var result = $oop.getClass(this.__classId).create();
+    var result = $oop.getClass(this.__className).create();
     this.forEachItem(function (item) {
       result.setItem(item);
     });
@@ -117,7 +117,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
    * @returns {$data.StringSet} Difference
    */
   subtract: function (set) {
-    var result = $oop.getClass(this.__classId).create();
+    var result = $oop.getClass(this.__className).create();
     this.forEachItem(function (item) {
       if (!set.hasItem(item)) {
         result.setItem(item);
@@ -134,7 +134,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
    */
   subtractFrom: function (set) {
     var that = this,
-        result = $oop.getClass(this.__classId).create();
+        result = $oop.getClass(this.__className).create();
     set.forEachItem(function (item) {
       if (!that.hasItem(item)) {
         result.setItem(item);
@@ -151,7 +151,7 @@ $data.StringSet = $oop.getClass('$data.StringSet')
    */
   takeDifferenceWith: function (set) {
     var that = this,
-        result = $oop.getClass(this.__classId).create();
+        result = $oop.getClass(this.__className).create();
     this.forEachItem(function (item) {
       if (!set.hasItem(item)) {
         result.setItem(item);
@@ -164,9 +164,10 @@ $data.StringSet = $oop.getClass('$data.StringSet')
     });
     return result;
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.StringSet}
@@ -176,7 +177,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.StringSet}
@@ -186,7 +187,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.StringSet}

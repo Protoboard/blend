@@ -40,10 +40,10 @@
  * $data.TreeQueryComponent.fromString("*:bar")
  * // matches pair where value is "bar"
  */
-$data.TreeQueryComponent = $oop.getClass('$data.TreeQueryComponent')
+$data.TreeQueryComponent = $oop.createClass('$data.TreeQueryComponent')
 .blend($utils.Cloneable)
 .implement($utils.Stringifiable)
-.implement($oop.getClass('$data.Matchable'))
+.implement($data.Matchable)
 .define(/** @lends $data.TreeQueryComponent# */{
   /**
    * @member {string} $data.TreeQueryComponent#componentString
@@ -318,7 +318,8 @@ $data.TreeQueryComponent = $oop.getClass('$data.TreeQueryComponent')
                 this.valueOptions.indexOf(value) === -1 :
                 this.valueOptions.indexOf(value) > -1));
   }
-});
+})
+.build();
 
 $oop.copyProperties($data, /** @lends $data */{
   /**

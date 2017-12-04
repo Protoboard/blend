@@ -11,7 +11,7 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      SetContainer = $oop.getClass('test.$data.SetContainer.SetContainer')
+      SetContainer = $oop.createClass('test.$data.SetContainer.SetContainer')
       .blend($data.DataContainer)
       .blend($data.ArrayContainer)
       .blend($data.SetContainer)
@@ -22,7 +22,8 @@ describe("$data", function () {
         forEachItem: function (callback, context) {
           this.data.forEach(callback, context);
         }
-      });
+      })
+      .build();
     });
 
     beforeEach(function () {
@@ -60,7 +61,7 @@ describe("$data", function () {
           setContainer2;
 
       beforeAll(function () {
-        SetContainer2 = $oop.getClass('test.$data.SetContainer.SetContainer2')
+        SetContainer2 = $oop.createClass('test.$data.SetContainer.SetContainer2')
         .blend($data.DataContainer)
         .blend($data.ObjectContainer)
         .blend($data.SetContainer)
@@ -72,7 +73,8 @@ describe("$data", function () {
             callback = context ? callback.bind(context) : callback;
             Object.keys(this.data).forEach(callback);
           }
-        });
+        })
+        .build();
       });
 
       beforeEach(function () {
@@ -103,7 +105,7 @@ describe("$data", function () {
           keyValueContainer;
 
       beforeAll(function () {
-        KeyValueContainer = $oop.getClass('test.$data.SetContainer.KeyValueContainer')
+        KeyValueContainer = $oop.createClass('test.$data.SetContainer.KeyValueContainer')
         .blend($data.DataContainer)
         .blend($data.ArrayContainer)
         .blend($data.KeyValueContainer)
@@ -117,7 +119,8 @@ describe("$data", function () {
               callback(item[1], i);
             });
           }
-        });
+        })
+        .build();
       });
 
       beforeEach(function () {
@@ -214,9 +217,10 @@ describe("$data", function () {
           transformed;
 
       beforeAll(function () {
-        SetConvertible = $oop.getClass('test.$data.SetContainer.SetConvertible')
+        SetConvertible = $oop.createClass('test.$data.SetContainer.SetConvertible')
         .blend($data.DataContainer)
-        .blend($data.SetConvertible);
+        .blend($data.SetConvertible)
+        .build();
       });
 
       beforeEach(function () {

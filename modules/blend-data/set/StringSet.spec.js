@@ -14,8 +14,9 @@ describe("$data", function () {
         set, set2;
 
     beforeAll(function () {
-      StringSet = $oop.getClass("test.$data.StringSet.StringSet")
-      .blend($data.StringSet);
+      StringSet = $oop.createClass("test.$data.StringSet.StringSet")
+      .blend($data.StringSet)
+      .build();
     });
 
     beforeEach(function () {

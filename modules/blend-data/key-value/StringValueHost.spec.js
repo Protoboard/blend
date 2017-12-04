@@ -12,7 +12,7 @@ describe("$data", function () {
         stringValueHost;
 
     beforeAll(function () {
-      StringKeyHost = $oop.getClass('test.$data.StringValueHost.StringKeyHost')
+      StringKeyHost = $oop.createClass('test.$data.StringValueHost.StringKeyHost')
       .blend($data.DataContainer)
       .blend($data.KeyValueContainer)
       .mix($data.StringKeyHost)
@@ -23,9 +23,10 @@ describe("$data", function () {
               [this.data[key]] :
               [];
         }
-      });
+      })
+      .build();
 
-      StringValueHost = $oop.getClass('test.$data.StringValueHost.StringValueHost')
+      StringValueHost = $oop.createClass('test.$data.StringValueHost.StringValueHost')
       .blend($data.DataContainer)
       .blend($data.KeyValueContainer)
       .mix($data.StringValueHost)
@@ -40,7 +41,8 @@ describe("$data", function () {
             }
           }
         }
-      });
+      })
+      .build();
     });
 
     beforeEach(function () {

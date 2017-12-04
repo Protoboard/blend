@@ -9,8 +9,9 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      TreePath = $oop.getClass('test.$data.TreePath.TreePath')
-      .blend($data.TreePath);
+      TreePath = $oop.createClass('test.$data.TreePath.TreePath')
+      .blend($data.TreePath)
+      .build();
     });
 
     beforeEach(function () {

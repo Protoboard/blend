@@ -13,8 +13,8 @@
  * @class $data.OrderedStringList
  * @extends $data.OrderedList
  */
-$data.OrderedStringList = $oop.getClass('$data.OrderedStringList')
-.blend($oop.getClass('$data.OrderedList'))
+$data.OrderedStringList = $oop.createClass('$data.OrderedStringList')
+.blend($data.OrderedList)
 .define(/** @lends $data.OrderedStringList# */{
   /**
    * Increments last character of specified string.
@@ -44,13 +44,14 @@ $data.OrderedStringList = $oop.getClass('$data.OrderedStringList')
    * @returns {$data.OrderedStringList}
    */
   getRangeByPrefixWrapped: function (prefix, offset, limit) {
-    return $oop.getClass(this.__classId).create({
+    return $oop.getClass(this.__className).create({
       data: this.getRangeByPrefix(prefix, offset, limit)
     });
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.OrderedStringList}
@@ -60,7 +61,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.OrderedStringList}
@@ -70,7 +71,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.OrderedStringList}

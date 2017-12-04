@@ -11,9 +11,10 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      ArrayContainer = $oop.getClass('test.$data.ArrayContainer.ArrayContainer')
+      ArrayContainer = $oop.createClass('test.$data.ArrayContainer.ArrayContainer')
       .blend($data.DataContainer)
-      .blend($data.ArrayContainer);
+      .blend($data.ArrayContainer)
+      .build();
     });
 
     beforeEach(function () {

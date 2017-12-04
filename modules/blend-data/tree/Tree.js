@@ -16,10 +16,10 @@
  * @implements $data.Queryable
  * @todo Make Filterable and implement filtering by query.
  */
-$data.Tree = $oop.getClass('$data.Tree')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ObjectContainer'))
-.implement($oop.getClass('$data.Queryable'))
+$data.Tree = $oop.createClass('$data.Tree')
+.blend($data.DataContainer)
+.blend($data.ObjectContainer)
+.implement($data.Queryable)
 .define(/** @lends $data.Tree# */{
   /**
    * @param {$data.TreeQueryComponent[]} components Query components
@@ -246,7 +246,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    * @todo Wrap primitives in DataContainer
    */
   getNodeWrapped: function (path) {
-    return $oop.getClass(this.__classId).create({data: this.getNode(path)});
+    return $oop.getClass(this.__className).create({data: this.getNode(path)});
   },
 
   /**
@@ -274,7 +274,7 @@ $data.Tree = $oop.getClass('$data.Tree')
    */
   getInitializedNodeWrapped: function (path, initializer) {
     var initializedNode = this.getInitializedNode(path, initializer);
-    return $oop.getClass(this.__classId).create({data: initializedNode});
+    return $oop.getClass(this.__className).create({data: initializedNode});
   },
 
   /**
@@ -502,9 +502,10 @@ $data.Tree = $oop.getClass('$data.Tree')
     });
     return $data.PairList.create({data: result});
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.Tree}

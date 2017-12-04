@@ -20,11 +20,11 @@
  * @example
  * $data.TreePath.create(['foo', 'bar', 'baz'])
  */
-$data.TreePath = $oop.getClass('$data.TreePath')
+$data.TreePath = $oop.createClass('$data.TreePath')
 .blend($utils.Path)
-.blend($oop.getClass('$data.Comparable'))
+.blend($data.Comparable)
 .implement($utils.Stringifiable)
-.implement($oop.getClass('$data.Stackable'))
+.implement($data.Stackable)
 .define(/** @lends $data.TreePath# */{
   /**
    * Path components.
@@ -132,7 +132,7 @@ $data.TreePath = $oop.getClass('$data.TreePath')
    */
   concat: function (path) {
     var components = this.components.concat(path.components);
-    return $oop.getClass(this.__classId).create({components: components});
+    return $oop.getClass(this.__className).create({components: components});
   },
 
   /**
@@ -143,10 +143,12 @@ $data.TreePath = $oop.getClass('$data.TreePath')
    * $data.TreePath.create(['foo', 'bar.baz'])+'' // 'foo.bar\.baz'
    */
   toString: function () {
-    return this.components.map($data.escapeTreePathComponent)
-    .join($data.TREE_PATH_DELIMITER);
+    var components = this.components;
+    return components && components.map($data.escapeTreePathComponent)
+    .join($data.TREE_PATH_DELIMITER) || '';
   }
-});
+})
+.build();
 
 $oop.copyProperties($data, /** @lends $data */{
   /**

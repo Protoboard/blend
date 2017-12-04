@@ -9,8 +9,9 @@ describe("$data", function () {
         comparable;
 
     beforeAll(function () {
-      Comparable = $oop.getClass('test.$data.Comparable.Comparable')
-      .blend($data.Comparable);
+      Comparable = $oop.createClass('test.$data.Comparable.Comparable')
+      .blend($data.Comparable)
+      .build();
     });
 
     beforeEach(function () {

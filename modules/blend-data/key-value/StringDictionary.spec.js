@@ -11,8 +11,9 @@ describe("$data", function () {
 
   describe("StringDictionary", function () {
     beforeAll(function () {
-      StringDictionary = $oop.getClass("test.$data.StringDictionary.StringDictionary")
-      .blend($data.StringDictionary);
+      StringDictionary = $oop.createClass("test.$data.StringDictionary.StringDictionary")
+      .blend($data.StringDictionary)
+      .build();
     });
 
     beforeEach(function () {

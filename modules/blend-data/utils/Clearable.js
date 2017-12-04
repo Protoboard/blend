@@ -4,7 +4,7 @@
  * @todo Rename to Emptyable?
  * @interface $data.Clearable
  */
-$data.Clearable = $oop.getClass('$data.Clearable')
+$data.Clearable = $oop.createClass('$data.Clearable')
 .define(/** @lends $data.Clearable# */{
   /**
    * Resets instance to initial state.
@@ -17,4 +17,5 @@ $data.Clearable = $oop.getClass('$data.Clearable')
    * @returns {boolean}
    */
   isEmpty: function () {}
-});
+})
+.build();

@@ -6,8 +6,8 @@
  * @mixin $data.ItemContainer
  * @augments $data.DataContainer
  */
-$data.ItemContainer = $oop.getClass('$data.ItemContainer')
-.expect($oop.getClass('$data.DataContainer'))
+$data.ItemContainer = $oop.createClass('$data.ItemContainer')
+.expect($data.DataContainer)
 .define(/** @lends $data.ItemContainer# */{
   /**
    * Keeps track of number of items in the container.
@@ -76,4 +76,5 @@ $data.ItemContainer = $oop.getClass('$data.ItemContainer')
     }
     return itemCount;
   }
-});
+})
+.build();

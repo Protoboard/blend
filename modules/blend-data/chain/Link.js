@@ -10,7 +10,7 @@
  * @class $data.Link
  * @mixes $utils.Cloneable
  */
-$data.Link = $oop.getClass('$data.Link')
+$data.Link = $oop.createClass('$data.Link')
 .blend($utils.Cloneable)
 .define(/** @lends $data.Link# */{
   /**
@@ -131,4 +131,5 @@ $data.Link = $oop.getClass('$data.Link')
 
     return this;
   }
-});
+})
+.build();

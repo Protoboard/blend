@@ -12,7 +12,7 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      ItemContainer = $oop.getClass('test.$data.ItemContainer.ItemContainer')
+      ItemContainer = $oop.createClass('test.$data.ItemContainer.ItemContainer')
       .blend($data.DataContainer)
       .blend($data.ItemContainer)
       .define({
@@ -25,7 +25,8 @@ describe("$data", function () {
             callback.call(context, data[key], key, this);
           }
         }
-      });
+      })
+      .build();
     });
 
     beforeEach(function () {

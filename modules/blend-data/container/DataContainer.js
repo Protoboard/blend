@@ -16,11 +16,11 @@
  * @implements $data.Clearable
  * @implements $data.Reinterpretable
  */
-$data.DataContainer = $oop.getClass('$data.DataContainer')
+$data.DataContainer = $oop.createClass('$data.DataContainer')
 .blend($utils.Cloneable)
 .implement($utils.Destructible)
-.implement($oop.getClass('$data.Clearable'))
-.implement($oop.getClass('$data.Reinterpretable'))
+.implement($data.Clearable)
+.implement($data.Reinterpretable)
 .define(/** @lends $data.DataContainer# */{
   /**
    * @member {*} $data.DataContainer#data
@@ -107,4 +107,5 @@ $data.DataContainer = $oop.getClass('$data.DataContainer')
       return callback.call(context, this);
     }
   }
-});
+})
+.build();

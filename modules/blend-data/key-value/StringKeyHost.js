@@ -4,8 +4,8 @@
  * @mixin $data.StringKeyHost
  * @augments $data.KeyValueContainer
  */
-$data.StringKeyHost = $oop.getClass('$data.StringKeyHost')
-.expect($oop.getClass('$data.KeyValueContainer'))
+$data.StringKeyHost = $oop.createClass('$data.StringKeyHost')
+.expect($data.KeyValueContainer)
 .define(/** @lends $data.StringKeyHost# */{
   /**
    * @type {string}
@@ -26,4 +26,5 @@ $data.StringKeyHost = $oop.getClass('$data.StringKeyHost')
   joinTo: function (leftContainer) {
     return leftContainer.join(this);
   }
-});
+})
+.build();

@@ -12,13 +12,13 @@
  * @implements $data.KeyValueConvertible
  * @implements $data.Transformable
  */
-$data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
-.blend($oop.getClass('$data.ItemContainer'))
-.implement($oop.getClass('$data.Filterable'))
-.implement($oop.getClass('$data.Reducible'))
-.implement($oop.getClass('$data.SetConvertible'))
-.implement($oop.getClass('$data.KeyValueConvertible'))
-.implement($oop.getClass('$data.Transformable'))
+$data.KeyValueContainer = $oop.createClass('$data.KeyValueContainer')
+.blend($data.ItemContainer)
+.implement($data.Filterable)
+.implement($data.Reducible)
+.implement($data.SetConvertible)
+.implement($data.KeyValueConvertible)
+.implement($data.Transformable)
 .define(/** @lends $data.KeyValueContainer# */{
   /**
    * @type {string}
@@ -94,7 +94,7 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
    */
   filter: function (callback, context) {
     var data = this.data instanceof Array ? [] : {},
-        ResultClass = $oop.getClass(this.__classId),
+        ResultClass = $oop.getClass(this.__className),
         result = ResultClass.create({data: data});
 
     this.forEachItem(function (value, key) {
@@ -397,4 +397,5 @@ $data.KeyValueContainer = $oop.getClass('$data.KeyValueContainer')
     });
     return result;
   }
-});
+})
+.build();
