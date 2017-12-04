@@ -60,7 +60,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
 
       if (mixins.length > 1) {
         // mixing new class
-        that = $oop.mixClass(mixins);
+        that = $oop.blendClass(mixins);
       } else {
         // no matching forwards found
         // going with last value of `that`

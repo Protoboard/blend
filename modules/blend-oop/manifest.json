@@ -7,8 +7,8 @@
     "class/ClassBuilder.js",
     "class/Class.js",
     "class/assertions.js",
-    "blender/MixerIndex.js",
-    "blender/ClassMixer.js",
+    "blender/BlenderIndex.js",
+    "blender/ClassBlender.js",
     "blender/blendClass.js",
     "classes/Singleton.js"
   ]

@@ -3,17 +3,17 @@
 var $oop = window['blend-oop'];
 
 describe("$oop", function () {
-  describe("MixerIndex", function () {
-    var klassByMixinIds;
+  describe("BlenderIndex", function () {
+    var classByMixinIds;
 
     beforeEach(function () {
       $oop.ClassBuilder.lastClassId = -1;
-      klassByMixinIds = $oop.klassByMixinIds;
-      $oop.klassByMixinIds = {};
+      classByMixinIds = $oop.classByMixinIds;
+      $oop.classByMixinIds = {};
     });
 
     afterEach(function () {
-      $oop.klassByMixinIds = klassByMixinIds;
+      $oop.classByMixinIds = classByMixinIds;
     });
 
     describe("addClassForMixins()", function () {
@@ -28,15 +28,15 @@ describe("$oop", function () {
       });
 
       it("should return self", function () {
-        var result = $oop.MixerIndex.addClassForMixins(Class, [mixinBuilder1,
+        var result = $oop.BlenderIndex.addClassForMixins(Class, [mixinBuilder1,
           mixinBuilder2]);
-        expect(result).toBe($oop.MixerIndex);
+        expect(result).toBe($oop.BlenderIndex);
       });
 
       it("should add class to index", function () {
-        $oop.MixerIndex.addClassForMixins(Class, [mixinBuilder1,
+        $oop.BlenderIndex.addClassForMixins(Class, [mixinBuilder1,
           mixinBuilder2]);
-        expect($oop.klassByMixinIds).toEqual({
+        expect($oop.classByMixinIds).toEqual({
           '0,1': Class
         });
       });
@@ -58,13 +58,13 @@ describe("$oop", function () {
       });
 
       it("should return self", function () {
-        var result = $oop.MixerIndex.addClass(Class);
-        expect(result).toBe($oop.MixerIndex);
+        var result = $oop.BlenderIndex.addClass(Class);
+        expect(result).toBe($oop.BlenderIndex);
       });
 
       it("should add class to index", function () {
-        $oop.MixerIndex.addClass(Class);
-        expect($oop.klassByMixinIds).toEqual({
+        $oop.BlenderIndex.addClass(Class);
+        expect($oop.classByMixinIds).toEqual({
           '0,1': Class
         });
       });
@@ -79,12 +79,12 @@ describe("$oop", function () {
         mixinBuilder1 = $oop.createClass('Mixin1');
         mixinBuilder2 = $oop.createClass('Mixin2');
         Class = $oop.createClass('Class').build();
-        $oop.MixerIndex.addClassForMixins(Class, [mixinBuilder1,
+        $oop.BlenderIndex.addClassForMixins(Class, [mixinBuilder1,
           mixinBuilder2]);
       });
 
       it("should return class associated with mixins", function () {
-        var result = $oop.MixerIndex.getClassForMixins([mixinBuilder1,
+        var result = $oop.BlenderIndex.getClassForMixins([mixinBuilder1,
           mixinBuilder2]);
         expect(result).toBe(Class);
       });

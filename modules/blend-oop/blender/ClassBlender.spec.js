@@ -3,19 +3,19 @@
 var $oop = window['blend-oop'];
 
 describe("$oop", function () {
-  describe("ClassMixer", function () {
-    var klassByMixinIds;
+  describe("ClassBlender", function () {
+    var classByMixinIds;
 
     beforeEach(function () {
-      klassByMixinIds = $oop.klassByMixinIds;
-      $oop.klassByMixinIds = {};
+      classByMixinIds = $oop.classByMixinIds;
+      $oop.classByMixinIds = {};
     });
 
     afterEach(function () {
-      $oop.klassByMixinIds = klassByMixinIds;
+      $oop.classByMixinIds = classByMixinIds;
     });
 
-    describe("mixClass()", function () {
+    describe("blendClass()", function () {
       var classBuilder,
           mixinBuilder1,
           mixinBuilder2,
@@ -34,12 +34,12 @@ describe("$oop", function () {
       describe("when association is already stored", function () {
         beforeEach(function () {
           Class = classBuilder.build();
-          $oop.MixerIndex.addClassForMixins(Class, [mixinBuilder1,
+          $oop.BlenderIndex.addClassForMixins(Class, [mixinBuilder1,
             mixinBuilder2]);
         });
 
         it("should return stored class", function () {
-          var result = $oop.ClassMixer.mixClass([Mixin1, Mixin2]);
+          var result = $oop.ClassBlender.blendClass([Mixin1, Mixin2]);
           expect(result).toBe(Class);
         });
       });
@@ -53,14 +53,14 @@ describe("$oop", function () {
         });
 
         it("should return matching class", function () {
-          var result = $oop.ClassMixer.mixClass([Mixin1, Mixin2]);
+          var result = $oop.ClassBlender.blendClass([Mixin1, Mixin2]);
           expect(result).toBe(Class);
         });
       });
 
       describe("when no stored nor matching class exist", function () {
         it("should create new class", function () {
-          var result = $oop.ClassMixer.mixClass([Mixin1, Mixin2]);
+          var result = $oop.ClassBlender.blendClass([Mixin1, Mixin2]);
           expect(result.__builder.mixins.downstream.list).toEqual([
             mixinBuilder1,
             mixinBuilder2

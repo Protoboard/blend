@@ -1,22 +1,21 @@
 "use strict";
 
 /**
- * @class $oop.MixerIndex
- * @todo Rename to BlenderIndex once old BlenderIndex is demised.
+ * @class $oop.BlenderIndex
  */
-$oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex */{
+$oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderIndex */{
   /**
    * @param {$oop.Class} Class
    * @param {Array.<$oop.ClassBuilder>} mixinBuilders
-   * @return {$oop.MixerIndex}
+   * @return {$oop.BlenderIndex}
    */
   addClassForMixins: function (Class, mixinBuilders) {
-    var klassByMixinIds = $oop.klassByMixinIds,
+    var classByMixinIds = $oop.classByMixinIds,
         mixinHash = mixinBuilders.map($oop.getClassBuilderId).join(','),
-        ClassBefore = klassByMixinIds[mixinHash];
+        ClassBefore = classByMixinIds[mixinHash];
 
     if (!ClassBefore) {
-      klassByMixinIds[mixinHash] = Class;
+      classByMixinIds[mixinHash] = Class;
     }
 
     return this;
@@ -24,7 +23,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
 
   /**
    * @param {$oop.Class} Class
-   * @return {$oop.MixerIndex}
+   * @return {$oop.BlenderIndex}
    */
   addClass: function (Class) {
     var mixins = Class.__builder.mixins.downstream.list;
@@ -40,15 +39,15 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
    */
   getClassForMixins: function (mixinBuilders) {
     var mixinHash = mixinBuilders.map($oop.getClassBuilderId).join(',');
-    return $oop.klassByMixinIds[mixinHash];
+    return $oop.classByMixinIds[mixinHash];
   }
 });
 
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Classes (declared or ad-hoc) indexed by the serialized class IDs of the
-   * mixins they're composed of. Used internally by `$oop.MixerIndex`.
+   * mixins they're composed of. Used internally by `$oop.BlenderIndex`.
    * @type {Object.<string,$oop.Class>}
    */
-  klassByMixinIds: {}
+  classByMixinIds: {}
 });

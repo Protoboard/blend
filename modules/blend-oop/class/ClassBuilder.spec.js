@@ -554,20 +554,20 @@ describe("$oop", function () {
 
     describe("build()", function () {
       var Class,
-          klasses,
-          klassByClassId;
+          classes,
+          classByClassId;
 
       beforeEach(function () {
         classBuilder = $oop.ClassBuilder.create('foo');
-        klasses = $oop.klasses;
-        $oop.klasses = [];
-        klassByClassId = $oop.klassByClassName;
-        $oop.klassByClassName = {};
+        classes = $oop.classes;
+        $oop.classes = [];
+        classByClassId = $oop.classByClassName;
+        $oop.classByClassName = {};
       });
 
       afterEach(function () {
-        $oop.klassByClassName = klassByClassId;
-        $oop.klasses = klasses;
+        $oop.classByClassName = classByClassId;
+        $oop.classes = classes;
       });
 
       describe("when already built", function () {
@@ -646,14 +646,14 @@ describe("$oop", function () {
         });
       });
 
-      it("should store class in klasses", function () {
+      it("should store class in classes", function () {
         Class = classBuilder.build();
-        expect($oop.klasses).toEqual([Class]);
+        expect($oop.classes).toEqual([Class]);
       });
 
-      it("should store class in klassByClassName", function () {
+      it("should store class in classByClassName", function () {
         Class = classBuilder.build();
-        expect($oop.klassByClassName).toEqual({
+        expect($oop.classByClassName).toEqual({
           foo: Class
         });
       });

@@ -1,10 +1,9 @@
 "use strict";
 
 /**
- * @class $oop.ClassMixer
- * @todo Rename to ClassBlender once current ClassBlender is demised.
+ * @class $oop.ClassBlender
  */
-$oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer */{
+$oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBlender */{
   /**
    * @param {$oop.Class} Class
    * @param {Array.<$oop.ClassBuilder>} mixinBuilders
@@ -35,7 +34,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    * @private
    */
   _findMatchingClass: function (mixinBuilders) {
-    var classes = $oop.klasses,
+    var classes = $oop.classes,
         classCount = classes.length,
         i, Class;
     for (i = 0; i < classCount; i++) {
@@ -66,12 +65,12 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
    * @return {$oop.Class}
    * @todo Rename to blendClass ASAP
    */
-  mixClass: function (mixins) {
+  blendClass: function (mixins) {
     var mixinBuilders = mixins.map(function (Mixer) {
       return Mixer.__builder;
     });
 
-    return $oop.MixerIndex.getClassForMixins(mixinBuilders) ||
+    return $oop.BlenderIndex.getClassForMixins(mixinBuilders) ||
         this._findMatchingClass(mixinBuilders) ||
         this._blendClass(mixins);
   }
