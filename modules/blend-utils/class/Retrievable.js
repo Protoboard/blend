@@ -7,9 +7,9 @@
  * @extends $utils.Identifiable
  * @implements $utils.Destructible
  */
-$utils.Retrievable = $oop.getClass('$utils.Retrievable')
-.implement($oop.getClass('$utils.Destructible'))
-.blend($oop.getClass('$utils.Identifiable'))
+$utils.Retrievable = $oop.createClass('$utils.Retrievable')
+.implement($utils.Destructible)
+.blend($utils.Identifiable)
 .define(/** @lends $utils.Retrievable# */{
   /**
    * Global registry for instances having the Retrievable mixin.
@@ -60,4 +60,5 @@ $utils.Retrievable = $oop.getClass('$utils.Retrievable')
   getInstanceById: function (instanceId) {
     return $utils.Retrievable.instances[instanceId];
   }
-});
+})
+.build();

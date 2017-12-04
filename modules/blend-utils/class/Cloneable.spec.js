@@ -9,13 +9,14 @@ describe("$utils", function () {
         cloneable;
 
     beforeAll(function () {
-      Cloneable = $oop.getClass('test.$utils.Cloneable.Cloneable')
+      Cloneable = $oop.createClass('test.$utils.Cloneable.Cloneable')
       .mix($utils.Cloneable)
       .define({
         clone: function clone() {
           return clone.returned;
         }
-      });
+      })
+      .build();
     });
 
     beforeEach(function () {

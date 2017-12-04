@@ -13,8 +13,8 @@
  * @class $utils.Interval
  * @extends $utils.Timer
  */
-$utils.Interval = $oop.getClass('$utils.Interval')
-.blend($oop.getClass('$utils.Timer'))
+$utils.Interval = $oop.createClass('$utils.Interval')
+.blend($utils.Timer)
 .define(/** @lends $utils.Interval# */{
   /**
    * @inheritDoc
@@ -24,7 +24,8 @@ $utils.Interval = $oop.getClass('$utils.Interval')
     clearInterval(this.timerId);
     return this;
   }
-});
+})
+.build();
 
 /** @external Number */
 $oop.copyProperties(Number.prototype, /** @lends Number# */{

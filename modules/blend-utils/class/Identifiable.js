@@ -4,7 +4,7 @@
  * Endows instances of the host class with a unique identifier.
  * @mixin $utils.Identifiable
  */
-$utils.Identifiable = $oop.getClass('$utils.Identifiable')
+$utils.Identifiable = $oop.createClass('$utils.Identifiable')
 .define(/** @lends $utils.Identifiable# */{
   /**
    * @memberOf $utils.Identifiable
@@ -20,4 +20,5 @@ $utils.Identifiable = $oop.getClass('$utils.Identifiable')
      */
     this.instanceId = this.instanceId || ++$utils.Identifiable.lastInstanceId;
   }
-});
+})
+.build();

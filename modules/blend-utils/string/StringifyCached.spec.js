@@ -10,14 +10,15 @@ describe("$utils", function () {
         result;
 
     beforeAll(function () {
-      CachedStringifiable = $oop.getClass('test.$utils.StringifyCached.StringifyCached')
+      CachedStringifiable = $oop.createClass('test.$utils.StringifyCached.StringifyCached')
       .implement($utils.Stringifiable)
       .blend($utils.StringifyCached)
       .define({
         toString: function () {
           return this.foo;
         }
-      });
+      })
+      .build();
     });
 
     beforeEach(function () {

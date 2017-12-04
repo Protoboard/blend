@@ -9,8 +9,9 @@ describe("$utils", function () {
         equatable;
 
     beforeAll(function () {
-      Equatable = $oop.getClass('test.$utils.Equatable.Equatable')
-      .mix($utils.Equatable);
+      Equatable = $oop.createClass('test.$utils.Equatable.Equatable')
+      .mix($utils.Equatable)
+      .build();
     });
 
     describe("equals()", function () {
@@ -43,10 +44,15 @@ describe("$utils", function () {
       });
 
       describe("when passing instanceof different class", function () {
+        var OtherClass;
+
+        beforeEach(function () {
+          OtherClass = $oop.createClass('test.$utils.Equatable.OtherClass')
+          .build();
+        });
+
         it("should return false", function () {
-          expect(equatable.equals($oop.getClass('test.$utils.Equatable.Foo')
-          .create()))
-          .toBeFalsy();
+          expect(equatable.equals(OtherClass.create())).toBeFalsy();
         });
       });
     });

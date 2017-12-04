@@ -12,7 +12,7 @@
  * @class $utils.Timer
  * @todo Check in Node.js
  */
-$utils.Timer = $oop.getClass('$utils.Timer')
+$utils.Timer = $oop.createClass('$utils.Timer')
 .define(/** @lends $utils.Timer# */{
   /**
    * ID associated with timer.
@@ -80,4 +80,5 @@ $utils.Timer = $oop.getClass('$utils.Timer')
   onTimerPromiseReject: function () {
     this.clearTimer();
   }
-});
+})
+.build();

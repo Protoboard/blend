@@ -6,8 +6,9 @@
  * where they're expected alongside strings.
  * @interface $utils.Stringifiable
  */
-$utils.Stringifiable = $oop.getClass('$utils.Stringifiable')
+$utils.Stringifiable = $oop.createClass('$utils.Stringifiable')
 .define(/** @lends $utils.Stringifiable# */{
   /** @returns {string} */
   toString: function () {}
-});
+})
+.build();

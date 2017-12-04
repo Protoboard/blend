@@ -9,8 +9,9 @@ describe("$utils", function () {
         uriPath;
 
     beforeAll(function () {
-      UriPath = $oop.getClass('test.$utils.UriPath.UriPath')
-      .blend($utils.UriPath);
+      UriPath = $oop.createClass('test.$utils.UriPath.UriPath')
+      .blend($utils.UriPath)
+      .build();
       UriPath.__forwards = {list: [], sources: [], lookup: {}};
     });
 

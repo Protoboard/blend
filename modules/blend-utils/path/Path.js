@@ -14,9 +14,9 @@
  * @example
  * $utils.Path.create(['foo', 'bar', 'baz'])
  */
-$utils.Path = $oop.getClass('$utils.Path')
+$utils.Path = $oop.createClass('$utils.Path')
 .blend($utils.Cloneable)
-.blend($oop.getClass('$utils.Equatable'))
+.blend($utils.Equatable)
 .define(/** @lends $utils.Path# */{
   /**
    * Path components.
@@ -77,7 +77,8 @@ $utils.Path = $oop.getClass('$utils.Path')
       return result;
     }
   }
-});
+})
+.build();
 
 $oop.copyProperties(Array.prototype, /** @lends Array# */{
   /**

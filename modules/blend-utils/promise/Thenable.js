@@ -5,7 +5,7 @@
  * promises from external libraries. (Eg. Q, jQuery, ES6, etc.)
  * @interface $utils.Thenable
  */
-$utils.Thenable = $oop.getClass('$utils.Thenable')
+$utils.Thenable = $oop.createClass('$utils.Thenable')
 .define(/** @lends $utils.Thenable# */{
   /**
    * Assigns event handlers to the `Promise`, to be called on resolution,
@@ -17,7 +17,8 @@ $utils.Thenable = $oop.getClass('$utils.Thenable')
    */
   then: function (successHandler, failureHandler, progressHandler) {
   }
-});
+})
+.build();
 
 $oop.copyProperties($assert, /** @lends $assert */{
   /**
