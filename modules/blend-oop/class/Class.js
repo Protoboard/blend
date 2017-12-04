@@ -1,25 +1,24 @@
 "use strict";
 
 /**
- * @class $oop.Klass
- * @todo Rename when replacing $oop.Class
+ * @class $oop.Class
  */
-$oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
+$oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
-   * @member {number} $oop.Klass#__classId
+   * @member {number} $oop.Class#__classId
    */
 
   /**
-   * @member {string} $oop.Klass#__className
+   * @member {string} $oop.Class#__className
    */
 
   /**
-   * @member {$oop.ClassBuilder} $oop.Klass#__builder
+   * @member {$oop.ClassBuilder} $oop.Class#__builder
    */
 
   /**
    * @param {Object} properties
-   * @return {$oop.Klass}
+   * @return {$oop.Class}
    */
   create: function (properties) {
     properties = properties || {};
@@ -154,7 +153,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
 
   /**
    * @param {Object} members
-   * @return {$oop.Klass}
+   * @return {$oop.Class}
    */
   delegate: function (members) {
     var builder = this.__builder;
@@ -178,9 +177,9 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @param {function} callback
-   * @return {$oop.Klass}
+   * @return {$oop.Class}
    */
   forwardBlend: function (Class, callback) {
     this.__builder.forwardBlend(Class, callback);
@@ -188,7 +187,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   },
 
   /**
-   * @param {$oop.Klass} Interface
+   * @param {$oop.Class} Interface
    * @return {boolean}
    */
   implements: function (Interface) {
@@ -197,7 +196,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {boolean}
    */
   implementedBy: function (Class) {
@@ -206,7 +205,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {boolean}
    * @todo Rename to isA() and add pure mixes() later.
    */
@@ -216,7 +215,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {boolean}
    * @todo Remove equality and replace w/ isA() throughout codebase.
    */
@@ -226,7 +225,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {boolean}
    */
   expects: function (Class) {
@@ -235,7 +234,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {boolean}
    */
   expectedBy: function (Class) {
@@ -247,7 +246,7 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
    * Binds and stores the specified methods on the instance, so they're
    * reusable as callbacks.
    * @param {...string} methodName
-   * @return {$oop.Klass}
+   * @return {$oop.Class}
    */
   elevateMethods: function (methodName) {
     var argumentCount = arguments.length,
@@ -264,23 +263,23 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
 
 $oop.copyProperties($assert, /** @lends $assert */{
   /**
-   * @param {$oop.Klass} expr
+   * @param {$oop.Class} expr
    * @param {string} [message]
    * @return {$assert}
    */
   isKlass: function (expr, message) {
     return $assert.assert(
-        $oop.Klass.isPrototypeOf(expr), message);
+        $oop.Class.isPrototypeOf(expr), message);
   },
 
   /**
-   * @param {$oop.Klass} [expr]
+   * @param {$oop.Class} [expr]
    * @param {string} [message]
    * @return {$assert}
    */
   isKlassOptional: function (expr, message) {
     return $assert.assert(
         expr === undefined ||
-        $oop.Klass.isPrototypeOf(expr), message);
+        $oop.Class.isPrototypeOf(expr), message);
   }
 });

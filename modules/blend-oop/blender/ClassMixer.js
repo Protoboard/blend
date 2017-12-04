@@ -6,7 +6,7 @@
  */
 $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer */{
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @param {Array.<$oop.ClassBuilder>} mixinBuilders
    * @private
    */
@@ -31,7 +31,7 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
 
   /**
    * @param {Array.<$oop.ClassBuilder>} mixinBuilders
-   * @return {Array.<$oop.Klass>}
+   * @return {Array.<$oop.Class>}
    * @private
    */
   _findMatchingClass: function (mixinBuilders) {
@@ -47,8 +47,8 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
   },
 
   /**
-   * @param {Array.<$oop.Klass>} mixins
-   * @return {$oop.Klass}
+   * @param {Array.<$oop.Class>} mixins
+   * @return {$oop.Class}
    * @private
    */
   _blendClass: function (mixins) {
@@ -62,8 +62,8 @@ $oop.ClassMixer = $oop.createObject(Object.prototype, /** @lends $oop.ClassMixer
   },
 
   /**
-   * @param {Array.<$oop.Klass>} mixins
-   * @return {$oop.Klass}
+   * @param {Array.<$oop.Class>} mixins
+   * @return {$oop.Class}
    * @todo Rename to blendClass ASAP
    */
   mixClass: function (mixins) {

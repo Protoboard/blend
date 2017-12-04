@@ -5,7 +5,7 @@
     "utils/uuid-utils.js",
     "utils/string-utils.js",
     "class/ClassBuilder.js",
-    "class/Klass.js",
+    "class/Class.js",
     "class/assertions.js",
     "blender/MixerIndex.js",
     "blender/ClassMixer.js",

@@ -17,7 +17,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
   /**
    * Reference to built class.
-   * @member {$oop.Klass} $oop.ClassBuilder#Class
+   * @member {$oop.Class} $oop.ClassBuilder#Class
    */
 
   /**
@@ -276,7 +276,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @return {Array.<$oop.Klass>}
+   * @return {Array.<$oop.Class>}
    * @private
    */
   _getUnimplementedInterfaces: function () {
@@ -295,7 +295,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @return {Array.<$oop.Klass>}
+   * @return {Array.<$oop.Class>}
    * @private
    */
   _getUnmetExpectations: function () {
@@ -388,7 +388,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @private
    */
   _mergeMembers: function (Class) {
@@ -408,7 +408,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @private
    */
   _applyDelegates: function (Class) {
@@ -467,7 +467,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     classBuilder.forwards.list
     .filter(function (forward) {
-      // todo Use Klass#mixes()
+      // todo Use Class#mixes()
       var forwardMixin = forward.mixin;
       return forwardMixin === that ||
           !mixinLookup1[forwardMixin.className];
@@ -478,7 +478,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     this.forwards.list
     .filter(function (forward) {
-      // todo Use Klass#mixes()
+      // todo Use Class#mixes()
       var forwardMixin = forward.mixin;
       return forwardMixin === classBuilder ||
           mixinLookup2[forwardMixin.className];
@@ -503,11 +503,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
   /**
    * Mixes specified mixin to the current class.
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {$oop.ClassBuilder}
    */
   mix: function (Class) {
-    $assert.isKlass(Class, "Klass type expected.");
+    $assert.isKlass(Class, "Class type expected.");
 
     var classBuilder = Class.__builder;
 
@@ -524,11 +524,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   /**
    * Mixes specified class and all its mixins, direct or indirect, to the
    * current class.
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {$oop.ClassBuilder}
    */
   blend: function (Class) {
-    $assert.isKlass(Class, "Klass type expected.");
+    $assert.isKlass(Class, "Class type expected.");
 
     var that = this,
         classBuilder = Class.__builder;
@@ -545,11 +545,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   /**
    * Specifies an interface to be implemented by the host class. Building the
    * class will throw on unimplemented interface methods.
-   * @param {$oop.Klass} Interface
+   * @param {$oop.Class} Interface
    * @return {$oop.ClassBuilder}
    */
   implement: function (Interface) {
-    $assert.isKlass(Interface, "Klass type expected.");
+    $assert.isKlass(Interface, "Class type expected.");
 
     var interfaceBuilder = Interface.__builder;
 
@@ -560,11 +560,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {$oop.ClassBuilder}
    */
   expect: function (Class) {
-    $assert.isKlass(Class, "Klass type expected.");
+    $assert.isKlass(Class, "Class type expected.");
 
     var classBuilder = Class.__builder;
 
@@ -588,13 +588,13 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   /**
    * Builds class based on the current state of the builder. Can only be
    * called once per builder, otherwise throws exception.
-   * @return {$oop.Klass}
+   * @return {$oop.Class}
    */
   build: function () {
     $assert.isUndefined(this.Class, "Class already built");
 
     // creating Class object
-    var Class = $oop.createObject($oop.Klass, {
+    var Class = $oop.createObject($oop.Class, {
       __classId: this.classId,
       __className: this.className,
       __builder: this
@@ -636,13 +636,13 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @param {$oop.Klass} Mixin
+   * @param {$oop.Class} Mixin
    * @param {function} callback
    * @return {$oop.ClassBuilder}
    * @todo Make callback optional / accept boolean?
    */
   forwardBlend: function (Mixin, callback) {
-    $assert.isKlass(Mixin, "Klass type expected.");
+    $assert.isKlass(Mixin, "Class type expected.");
 
     var mixinBuilder = Mixin.__builder;
     this._addToForwards(mixinBuilder, callback);
@@ -661,12 +661,12 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
 $oop.copyProperties($oop, /** @lends $oop */{
   /**
-   * @type {Array.<$oop.Klass>}
+   * @type {Array.<$oop.Class>}
    */
   klasses: [],
 
   /**
-   * @type {Object.<string,$oop.Klass>}
+   * @type {Object.<string,$oop.Class>}
    * @todo Necessary?
    */
   klassByClassName: {},

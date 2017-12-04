@@ -4,8 +4,8 @@ $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Creates or retrieves an ad-hoc class that is made up of the specified
    * mixins.
-   * @param {Array.<$oop.Klass>} mixins
-   * @returns {$oop.Klass}
+   * @param {Array.<$oop.Class>} mixins
+   * @returns {$oop.Class}
    * @todo Rename to blendClass ASAP.
    */
   mixClass: function (mixins) {

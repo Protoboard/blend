@@ -6,7 +6,7 @@
  */
 $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex */{
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @param {Array.<$oop.ClassBuilder>} mixinBuilders
    * @return {$oop.MixerIndex}
    */
@@ -23,7 +23,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
   },
 
   /**
-   * @param {$oop.Klass} Class
+   * @param {$oop.Class} Class
    * @return {$oop.MixerIndex}
    */
   addClass: function (Class) {
@@ -36,7 +36,7 @@ $oop.MixerIndex = $oop.createObject(Object.prototype, /** @lends $oop.MixerIndex
 
   /**
    * @param {Array.<$oop.ClassBuilder>} mixinBuilders
-   * @return {$oop.Klass}
+   * @return {$oop.Class}
    */
   getClassForMixins: function (mixinBuilders) {
     var mixinHash = mixinBuilders.map($oop.getClassBuilderId).join(',');
@@ -48,7 +48,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Classes (declared or ad-hoc) indexed by the serialized class IDs of the
    * mixins they're composed of. Used internally by `$oop.MixerIndex`.
-   * @type {Object.<string,$oop.Klass>}
+   * @type {Object.<string,$oop.Class>}
    */
   klassByMixinIds: {}
 });

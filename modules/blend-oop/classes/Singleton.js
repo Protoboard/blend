@@ -3,7 +3,7 @@
 /**
  * Adds singleton behavior to host class.
  * @mixin $oop.Singleton
- * @extends $oop.Klass
+ * @extends $oop.Class
  * @example
  * var MySingletonClass = $oop.createClass('MySingletonClass')
  * .blend($oop.Singleton)

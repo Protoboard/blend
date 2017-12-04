@@ -4,10 +4,10 @@ var $assert = window['blend-assert'],
     $oop = window['blend-oop'];
 
 describe("$assert", function () {
-  var Klass;
+  var Class;
 
   beforeEach(function () {
-    Klass = $oop.createClass('Klass').build();
+    Class = $oop.createClass('Class').build();
   });
 
   describe("isKlass()", function () {
@@ -16,19 +16,19 @@ describe("$assert", function () {
     });
 
     it("should pass message to assert", function () {
-      $assert.isKlass(Klass, "bar");
+      $assert.isKlass(Class, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");
     });
 
-    describe("when passing Klass", function () {
+    describe("when passing Class", function () {
       it("should not throw", function () {
         expect(function () {
-          $assert.isKlass(Klass);
+          $assert.isKlass(Class);
         }).not.toThrow();
       });
     });
 
-    describe("when passing non-Klass", function () {
+    describe("when passing non-Class", function () {
       it("should throw", function () {
         expect(function () {
           $assert.isKlass(undefined);
@@ -58,7 +58,7 @@ describe("$assert", function () {
     });
 
     it("should pass message to assert", function () {
-      $assert.isKlassOptional(Klass, "bar");
+      $assert.isKlassOptional(Class, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");
     });
 
@@ -73,7 +73,7 @@ describe("$assert", function () {
 });
 
 describe("$oop", function () {
-  describe("Klass", function () {
+  describe("Class", function () {
     var classBuilder,
         Class;
 

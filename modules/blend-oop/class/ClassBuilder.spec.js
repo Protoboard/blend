@@ -582,9 +582,9 @@ describe("$oop", function () {
         });
       });
 
-      it("should return Klass instance", function () {
+      it("should return Class instance", function () {
         Class = classBuilder.build();
-        expect($oop.Klass.isPrototypeOf(Class)).toBeTruthy();
+        expect($oop.Class.isPrototypeOf(Class)).toBeTruthy();
       });
 
       it("should initialize __classId", function () {
