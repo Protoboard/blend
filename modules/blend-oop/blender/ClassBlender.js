@@ -63,7 +63,6 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
   /**
    * @param {Array.<$oop.Class>} mixins
    * @return {$oop.Class}
-   * @todo Rename to blendClass ASAP
    */
   blendClass: function (mixins) {
     var mixinBuilders = mixins.map(function (Mixer) {

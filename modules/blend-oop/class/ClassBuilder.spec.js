@@ -555,7 +555,8 @@ describe("$oop", function () {
     describe("build()", function () {
       var Class,
           classes,
-          classByClassId;
+          classByClassId,
+          classByMixinIds;
 
       beforeEach(function () {
         classBuilder = $oop.ClassBuilder.create('foo');
@@ -563,11 +564,15 @@ describe("$oop", function () {
         $oop.classes = [];
         classByClassId = $oop.classByClassName;
         $oop.classByClassName = {};
+        classByMixinIds = $oop.classByMixinIds;
+        $oop.classByMixinIds = {};
+        $oop.ClassBuilder.lastClassId = -1;
       });
 
       afterEach(function () {
-        $oop.classByClassName = classByClassId;
         $oop.classes = classes;
+        $oop.classByClassName = classByClassId;
+        $oop.classByMixinIds = classByMixinIds;
       });
 
       describe("when already built", function () {
@@ -695,6 +700,14 @@ describe("$oop", function () {
           Class.baz('foo');
           expect(method1).toHaveBeenCalledWith('foo');
           expect(method3).toHaveBeenCalledWith('foo');
+        });
+
+        it("should add class to BlenderIndex", function () {
+          Class = classBuilder.build();
+          expect($oop.classByMixinIds).toEqual({
+            '0,1': Mixin2,
+            '0,1,2': Class
+          });
         });
       });
 

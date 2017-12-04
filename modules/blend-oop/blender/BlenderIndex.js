@@ -5,13 +5,35 @@
  */
 $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderIndex */{
   /**
+   * @param {Array.<$oop.ClassBuilder>} mixinBuilders
+   * @return {Array.<$oop.ClassBuilder>}
+   * @private
+   * @todo Refactor into iterative for performance.
+   */
+  _normalizeMixins: function (mixinBuilders) {
+    var result = [],
+        lookup = {};
+    mixinBuilders.forEach(function (mixinBuilder) {
+      mixinBuilder.contributors
+      .forEach(function (mixinBuilder) {
+        if (!lookup[mixinBuilder.classId]) {
+          result.push(mixinBuilder);
+          lookup[mixinBuilder.classId] = 1;
+        }
+      });
+    });
+    return result;
+  },
+
+  /**
    * @param {$oop.Class} Class
    * @param {Array.<$oop.ClassBuilder>} mixinBuilders
    * @return {$oop.BlenderIndex}
    */
   addClassForMixins: function (Class, mixinBuilders) {
     var classByMixinIds = $oop.classByMixinIds,
-        mixinHash = mixinBuilders.map($oop.getClassBuilderId).join(','),
+        normalizedMixins = this._normalizeMixins(mixinBuilders),
+        mixinHash = normalizedMixins.map($oop.getClassBuilderId).join(','),
         ClassBefore = classByMixinIds[mixinHash];
 
     if (!ClassBefore) {
@@ -26,9 +48,9 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
    * @return {$oop.BlenderIndex}
    */
   addClass: function (Class) {
-    var mixins = Class.__builder.mixins.downstream.list;
-    if (mixins.length) {
-      this.addClassForMixins(Class, mixins);
+    var mixinBuilders = Class.__builder.contributors;
+    if (mixinBuilders.length) {
+      this.addClassForMixins(Class, mixinBuilders);
     }
     return this;
   },
@@ -38,7 +60,8 @@ $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderI
    * @return {$oop.Class}
    */
   getClassForMixins: function (mixinBuilders) {
-    var mixinHash = mixinBuilders.map($oop.getClassBuilderId).join(',');
+    var normalizedMixins = this._normalizeMixins(mixinBuilders),
+        mixinHash = normalizedMixins.map($oop.getClassBuilderId).join(',');
     return $oop.classByMixinIds[mixinHash];
   }
 });

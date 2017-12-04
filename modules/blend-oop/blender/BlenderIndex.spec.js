@@ -24,6 +24,8 @@ describe("$oop", function () {
       beforeEach(function () {
         mixinBuilder1 = $oop.createClass('Mixin1');
         mixinBuilder2 = $oop.createClass('Mixin2');
+        mixinBuilder1.build();
+        mixinBuilder2.build();
         Class = $oop.createClass('Class').build();
       });
 
@@ -45,15 +47,19 @@ describe("$oop", function () {
     describe("addClass()", function () {
       var mixinBuilder1,
           mixinBuilder2,
+          Mixin1,
+          Mixin2,
           classBuilder,
           Class;
 
       beforeEach(function () {
         mixinBuilder1 = $oop.createClass('Mixin1');
         mixinBuilder2 = $oop.createClass('Mixin2');
+        Mixin1 = mixinBuilder1.build();
+        Mixin2 = mixinBuilder2.build();
         classBuilder = $oop.createClass('Class')
-        .mix(mixinBuilder1.build())
-        .mix(mixinBuilder2.build());
+        .mix(Mixin1)
+        .mix(Mixin2);
         Class = classBuilder.build();
       });
 
@@ -65,7 +71,7 @@ describe("$oop", function () {
       it("should add class to index", function () {
         $oop.BlenderIndex.addClass(Class);
         expect($oop.classByMixinIds).toEqual({
-          '0,1': Class
+          '0,1,2': Class
         });
       });
     });
@@ -78,6 +84,8 @@ describe("$oop", function () {
       beforeEach(function () {
         mixinBuilder1 = $oop.createClass('Mixin1');
         mixinBuilder2 = $oop.createClass('Mixin2');
+        mixinBuilder1.build();
+        mixinBuilder2.build();
         Class = $oop.createClass('Class').build();
         $oop.BlenderIndex.addClassForMixins(Class, [mixinBuilder1,
           mixinBuilder2]);

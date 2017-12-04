@@ -38,6 +38,12 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
+   * Registry of classes that contribute to the current class.
+   * @name $oop.ClassBuilder#contributors
+   * @type {Array.<$oop.ClassBuilder>}
+   */
+
+  /**
    * Registry of interfaces implemented by the current class, and classes
    * implementing the current class as an interface.
    * @name $oop.ClassBuilder#interfaces
@@ -603,21 +609,26 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     // creating Class object
     var Class = $oop.createObject($oop.Class, {
-      __classId: this.classId,
-      __className: this.className,
-      __builder: this
-    });
+          __classId: this.classId,
+          __className: this.className,
+          __builder: this
+        }),
+        contributors = this.mixins.downstream.list.concat(this);
 
     // adding finalized information to builder
     $oop.copyProperties(this, {
       Class: Class,
+      contributors: contributors,
       unimplementedInterfaces: this._getUnimplementedInterfaces(),
       unmetExpectations: this._getUnmetExpectations()
     });
 
-    // storing class in global lookup
+    // storing class in global lookups
     $oop.classes.push(Class);
     $oop.classByClassName[this.className] = Class;
+    if (contributors.length > 1) {
+      $oop.BlenderIndex.addClass(Class);
+    }
 
     // finalizing members
     this._mergeMembers(Class);
