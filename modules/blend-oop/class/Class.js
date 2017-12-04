@@ -17,7 +17,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
 
   /**
-   * @param {Object} properties
+   * @param {Object} [properties]
    * @return {$oop.Class}
    */
   create: function (properties) {

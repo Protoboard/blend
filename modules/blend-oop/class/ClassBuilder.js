@@ -83,7 +83,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   create: function (className) {
-    $assert.isString(className, "No class name was specified.");
+    $assert.isString(className,
+        "$oop.ClassBuilder#create() expects type string, got " + className);
 
     return $oop.createObject(this, {
       classId: ++$oop.ClassBuilder.lastClassId,
@@ -320,7 +321,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     .reduce(function (memberMatrix, mixinMembers) {
       Object.keys(mixinMembers)
       .forEach(function (property) {
-        if (!memberMatrix[property]) {
+        if (!hOP.call(memberMatrix, property)) {
           memberMatrix[property] = [];
         }
         memberMatrix[property].push(mixinMembers[property]);
@@ -496,7 +497,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   define: function (members) {
-    $assert.isObject(members, "No members specified.");
+    $assert.isObject(members,
+        this.className + "#define() expects type Object, got " + members);
     $oop.copyProperties(this.members, members);
     return this;
   },
@@ -507,7 +509,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   mix: function (Class) {
-    $assert.isKlass(Class, "Class type expected.");
+    $assert.isKlass(Class,
+        this.className + "#mix() expects type Class, got " + Class);
 
     var classBuilder = Class.__builder;
 
@@ -528,7 +531,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   blend: function (Class) {
-    $assert.isKlass(Class, "Class type expected.");
+    $assert.isKlass(Class,
+        this.className + "#blend() expects type Class, got " + Class);
 
     var that = this,
         classBuilder = Class.__builder;
@@ -549,7 +553,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   implement: function (Interface) {
-    $assert.isKlass(Interface, "Class type expected.");
+    $assert.isKlass(Interface,
+        this.className + "#implement() expects type Class, got " + Interface);
 
     var interfaceBuilder = Interface.__builder;
 
@@ -564,7 +569,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   expect: function (Class) {
-    $assert.isKlass(Class, "Class type expected.");
+    $assert.isKlass(Class,
+        this.className + "#expect() expects type Class, got " + Class);
 
     var classBuilder = Class.__builder;
 
@@ -580,7 +586,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   cacheBy: function (mapper) {
-    $assert.isFunction(mapper, "Function expected.");
+    $assert.isFunction(mapper,
+        this.className + "#cacheBy() expects type function, got " + mapper);
     this.mapper = mapper;
     return this;
   },
@@ -591,7 +598,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.Class}
    */
   build: function () {
-    $assert.isUndefined(this.Class, "Class already built");
+    $assert.isUndefined(this.Class,
+        this.className + "#build() can't build. Class already built.");
 
     // creating Class object
     var Class = $oop.createObject($oop.Class, {
@@ -623,7 +631,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   delegate: function (members) {
-    $assert.isObject(members, "No members specified.");
+    $assert.isObject(members,
+        this.className + "#delegate() expects type Object, got " + members);
 
     var that = this;
     $oop.copyProperties(this.delegates, members);
@@ -642,7 +651,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @todo Make callback optional / accept boolean?
    */
   forwardBlend: function (Mixin, callback) {
-    $assert.isKlass(Mixin, "Class type expected.");
+    $assert.isKlass(Mixin,
+        this.className + "#forwardBlend() expects type Class, got " + Mixin);
 
     var mixinBuilder = Mixin.__builder;
     this._addToForwards(mixinBuilder, callback);
