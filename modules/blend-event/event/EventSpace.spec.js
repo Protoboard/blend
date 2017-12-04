@@ -11,8 +11,9 @@ describe("$event", function () {
         result;
 
     beforeAll(function () {
-      EventSpace = $oop.getClass('test.$event.EventSpace.EventSpace')
-      .blend($event.EventSpace);
+      EventSpace = $oop.createClass('test.$event.EventSpace.EventSpace')
+      .blend($event.EventSpace)
+      .build();
     });
 
     beforeEach(function () {

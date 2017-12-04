@@ -10,8 +10,9 @@ describe("$event", function () {
         eventTrail;
 
     beforeAll(function () {
-      EventTrail = $oop.getClass('test.$event.EventTrail.EventTrail')
-      .blend($event.EventTrail);
+      EventTrail = $oop.createClass('test.$event.EventTrail.EventTrail')
+      .blend($event.EventTrail)
+      .build();
     });
 
     describe("create()", function () {

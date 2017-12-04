@@ -11,9 +11,10 @@ describe("$event", function () {
         result;
 
     beforeAll(function () {
-      Wrapper = $oop.getClass('test.$event.Wrapper.Wrapper')
+      Wrapper = $oop.createClass('test.$event.Wrapper.Wrapper')
       .blend($utils.Cloneable)
-      .blend($event.Wrapper);
+      .blend($event.Wrapper)
+      .build();
     });
 
     beforeEach(function () {

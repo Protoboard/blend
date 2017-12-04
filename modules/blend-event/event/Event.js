@@ -16,7 +16,7 @@
  * @extends $data.Link
  * @todo Add getter functions for causingEvents
  */
-$event.Event = $oop.getClass('$event.Event')
+$event.Event = $oop.createClass('$event.Event')
 .blend($utils.Cloneable)
 .blend($data.Link)
 .define(/** @lends $event.Event# */{
@@ -237,4 +237,5 @@ $event.Event = $oop.getClass('$event.Event')
 
     return this._unlinkWhen(results);
   }
-});
+})
+.build();

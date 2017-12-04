@@ -10,8 +10,9 @@ describe("$event", function () {
         event;
 
     beforeAll(function () {
-      Event = $oop.getClass('test.$event.Event.Event')
-      .blend($event.Event);
+      Event = $oop.createClass('test.$event.Event.Event')
+      .blend($event.Event)
+      .build();
       Event.__forwards = {list: [], sources: [], lookup: {}};
     });
 
@@ -271,8 +272,8 @@ describe("$event", function () {
           event3;
 
       beforeEach(function () {
-        Event2 = $oop.getClass('test.$event.Event.Event2');
-        Event3 = $oop.getClass('test.$event.Event.Event3');
+        Event2 = $oop.createClass('test.$event.Event.Event2').build();
+        Event3 = $oop.createClass('test.$event.Event.Event3').build();
         event = Event.create({eventName: 'event1'});
         event2 = Event2.create({eventName: 'event2'});
         event3 = Event.create({eventName: 'event3'});

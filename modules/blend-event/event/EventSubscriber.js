@@ -7,7 +7,7 @@
  * @mixin $event.EventSubscriber
  * @implements $utils.Destructible
  */
-$event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
+$event.EventSubscriber = $oop.createClass('$event.EventSubscriber')
 .implement($utils.Destructible)
 .define(/** @lends $event.EventSubscriber# */{
   /**
@@ -33,10 +33,19 @@ $event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
    */
   _elevateEventHandlers: function () {
     // obtaining event handlers
-    var methodNames = Object.keys(this.__methodMatrix),
-        eventHandlerNames = methodNames.filter(function (methodName) {
-          return methodName.length > 2 && methodName.substr(0, 2) === 'on';
-        });
+    // todo methodName list should be extracted on .build() somehow.
+    var eventHandlerNames = [],
+        memberName, member;
+
+    for (memberName in this) {
+      member = this[memberName];
+      if (typeof member === 'function' &&
+          memberName.length > 2 &&
+          memberName.substr(0, 2) === 'on'
+      ) {
+        eventHandlerNames.push(memberName);
+      }
+    }
 
     this.elevateMethods.apply(this, eventHandlerNames);
   },
@@ -85,4 +94,5 @@ $event.EventSubscriber = $oop.getClass('$event.EventSubscriber')
           this.subscriberId]);
     return !!eventSpace.subscriptions.getNode(callbackPath);
   }
-});
+})
+.build();
