@@ -436,18 +436,55 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * @param {$oop.ClassBuilder} mixinBuilder
+   * @private
+   */
+  _removeFromForwards: function (mixinBuilder) {
+    var forwards = this.forwards,
+        forwardId = mixinBuilder.className,
+        forwardList = forwards.list,
+        forwardLookup = forwards.lookup,
+        forwardCount = forwardList.length,
+        i;
+
+    for (i = 0; i < forwardCount; i++) {
+      if (forwardList[i].mixin === mixinBuilder) {
+        forwardList.splice(i, 1);
+        delete forwardLookup[forwardId];
+        break;
+      }
+    }
+  },
+
+  /**
    * @param {$oop.ClassBuilder} classBuilder
    * @private
    */
   _transferForwardsFrom: function (classBuilder) {
     var that = this,
-        mixinLookup = this.mixins.downstream.lookup;
+        mixinLookup1 = this.mixins.downstream.lookup,
+        mixinLookup2 = classBuilder.mixins.downstream.lookup;
+
     classBuilder.forwards.list
     .filter(function (forward) {
-      return !mixinLookup[forward.mixin.className];
+      // todo Use Klass#mixes()
+      var forwardMixin = forward.mixin;
+      return forwardMixin === that ||
+          !mixinLookup1[forwardMixin.className];
     })
     .forEach(function (forward) {
       that._addToForwards(forward.mixin, forward.callback);
+    });
+
+    this.forwards.list
+    .filter(function (forward) {
+      // todo Use Klass#mixes()
+      var forwardMixin = forward.mixin;
+      return forwardMixin === classBuilder ||
+          mixinLookup2[forwardMixin.className];
+    })
+    .forEach(function (forward) {
+      that._removeFromForwards(forward.mixin);
     });
   },
 

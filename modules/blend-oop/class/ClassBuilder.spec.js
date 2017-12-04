@@ -245,6 +245,19 @@ describe("$oop", function () {
         });
       });
 
+      describe("when mixing a forward", function () {
+        var callback = function () {};
+
+        beforeEach(function () {
+          Mixin = mixinBuilder.build();
+          classBuilder.forwardBlend(Mixin, callback);
+        });
+
+        it("should remove affected forward", function () {
+
+        });
+      });
+
       describe("when mixing again", function () {
         beforeEach(function () {
           Mixin = mixinBuilder.build();

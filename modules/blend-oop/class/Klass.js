@@ -41,8 +41,33 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
       }
     }
 
-    // todo Add forwarding
-    var that = this;
+    var that = this,
+        forwards,
+        forwardCount,
+        forward,
+        mixins;
+    while (true) {
+      forwards = that.__builder.forwards.list;
+      forwardCount = forwards.length;
+      mixins = [that];
+
+      // obtaining suitable mixins
+      for (i = 0; i < forwardCount; i++) {
+        forward = forwards[i];
+        if (forward.callback.call(that, properties)) {
+          mixins.push(forward.mixin.Class);
+        }
+      }
+
+      if (mixins.length > 1) {
+        // mixing new class
+        that = $oop.mixClass(mixins);
+      } else {
+        // no matching forwards found
+        // going with last value of `that`
+        break;
+      }
+    }
 
     // fetching cached instance
     var builder = that.__builder,

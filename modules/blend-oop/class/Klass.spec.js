@@ -277,6 +277,24 @@ describe("$oop", function () {
           }).toThrow();
         });
       });
+
+      describe("of forwarded class", function () {
+        var ForwardMixin;
+
+        beforeEach(function () {
+          ForwardMixin = $oop.createClass('ForwardMixin').build();
+          Class = classBuilder.build();
+          Class.forwardBlend(ForwardMixin, function (properties) {
+            return properties.foo;
+          });
+        });
+
+        it("should instantiate forwarded class", function () {
+          var result = Class.create({foo: true});
+          expect(Class.mixedBy(result)).toBeTruthy();
+          expect(ForwardMixin.mixedBy(result)).toBeTruthy();
+        });
+      });
     });
 
     describe("delegate()", function () {
