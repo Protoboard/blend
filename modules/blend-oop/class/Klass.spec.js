@@ -427,9 +427,24 @@ describe("$oop", function () {
         Class = classBuilder.build();
       });
 
+      describe("on self", function () {
+        it("should return truthy", function () {
+          expect(Class.mixes(Class)).toBeTruthy();
+        });
+      });
+
+      describe("on instance of self", function () {
+        it("should return truthy", function () {
+          var instance = Class.create();
+          expect(instance.mixes(Class)).toBeTruthy();
+        });
+      });
+
       describe("on present mixin", function () {
         it("should return truthy", function () {
           expect(Class.mixes(Mixin1)).toBeTruthy();
+          var instance = Class.create();
+          expect(instance.mixes(Mixin1)).toBeTruthy();
         });
       });
 
@@ -455,9 +470,24 @@ describe("$oop", function () {
         Class = classBuilder.build();
       });
 
+      describe("on self", function () {
+        it("should return truthy", function () {
+          expect(Class.mixedBy(Class)).toBeTruthy();
+        });
+      });
+
+      describe("on instance of self", function () {
+        it("should return truthy", function () {
+          var instance = Class.create();
+          expect(Class.mixedBy(instance)).toBeTruthy();
+        });
+      });
+
       describe("on present mixin", function () {
         it("should return truthy", function () {
           expect(Mixin1.mixedBy(Class)).toBeTruthy();
+          var instance = Class.create();
+          expect(Mixin1.mixedBy(instance)).toBeTruthy();
         });
       });
 

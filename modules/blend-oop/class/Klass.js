@@ -208,17 +208,21 @@ $oop.Klass = $oop.createObject(Object.prototype, /** @lends $oop.Klass# */{
   /**
    * @param {$oop.Klass} Class
    * @return {boolean}
+   * @todo Rename to isA() and add pure mixes() later.
    */
   mixes: function (Class) {
-    return Class && this.__builder.mixins.downstream.lookup[Class.__className];
+    return this === Class || Class.isPrototypeOf(this) ||
+        Class && this.__builder.mixins.downstream.lookup[Class.__className];
   },
 
   /**
    * @param {$oop.Klass} Class
    * @return {boolean}
+   * @todo Remove equality and replace w/ isA() throughout codebase.
    */
   mixedBy: function (Class) {
-    return Class && Class.__builder.mixins.downstream.lookup[this.__className];
+    return this === Class || this.isPrototypeOf(Class) ||
+        Class && Class.__builder.mixins.downstream.lookup[this.__className];
   },
 
   /**
