@@ -498,7 +498,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   define: function (members) {
     $assert.isObject(members,
-        this.className + "#define() expects type Object, got " + members);
+        this.className + "#define() expects type Object, got " + typeof members);
     $oop.copyProperties(this.members, members);
     return this;
   },
@@ -510,7 +510,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   mix: function (Class) {
     $assert.isKlass(Class,
-        this.className + "#mix() expects type Class, got " + Class);
+        this.className + "#mix() expects type Class, got " + typeof Class);
 
     var classBuilder = Class.__builder;
 
@@ -532,7 +532,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   blend: function (Class) {
     $assert.isKlass(Class,
-        this.className + "#blend() expects type Class, got " + Class);
+        this.className + "#blend() expects type Class, got " + typeof Class);
 
     var that = this,
         classBuilder = Class.__builder;
@@ -554,7 +554,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   implement: function (Interface) {
     $assert.isKlass(Interface,
-        this.className + "#implement() expects type Class, got " + Interface);
+        this.className + "#implement() expects type Class, got " + typeof Interface);
 
     var interfaceBuilder = Interface.__builder;
 
@@ -570,7 +570,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   expect: function (Class) {
     $assert.isKlass(Class,
-        this.className + "#expect() expects type Class, got " + Class);
+        this.className + "#expect() expects type Class, got " + typeof Class);
 
     var classBuilder = Class.__builder;
 
@@ -587,7 +587,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   cacheBy: function (mapper) {
     $assert.isFunction(mapper,
-        this.className + "#cacheBy() expects type function, got " + mapper);
+        this.className + "#cacheBy() expects type function, got " + typeof mapper);
     this.mapper = mapper;
     return this;
   },
@@ -632,7 +632,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   delegate: function (members) {
     $assert.isObject(members,
-        this.className + "#delegate() expects type Object, got " + members);
+        this.className + "#delegate() expects type Object, got " + typeof members);
 
     var that = this;
     $oop.copyProperties(this.delegates, members);
@@ -652,7 +652,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   forwardBlend: function (Mixin, callback) {
     $assert.isKlass(Mixin,
-        this.className + "#forwardBlend() expects type Class, got " + Mixin);
+        this.className + "#forwardBlend() expects type Class, got " + typeof Mixin);
 
     var mixinBuilder = Mixin.__builder;
     this._addToForwards(mixinBuilder, callback);
