@@ -4,12 +4,14 @@ var $oop = window['blend-oop'];
 
 describe("$oop", function () {
   describe("Singleton", function () {
-    var Singleton,
+    var singletonBuilder,
+        Singleton,
         singleton;
 
     beforeAll(function () {
-      Singleton = $oop.getClass('test.$oop.Singleton.Singleton')
+      singletonBuilder = $oop.createClass('test.$oop.Singleton.Singleton')
       .blend($oop.Singleton);
+      Singleton = singletonBuilder.build();
     });
 
     beforeEach(function () {
@@ -19,7 +21,7 @@ describe("$oop", function () {
     describe("then mixing again", function () {
       it("should not throw", function () {
         expect(function () {
-          Singleton.blend($oop.Singleton);
+          singletonBuilder.blend($oop.Singleton);
         }).not.toThrow();
       });
     });
