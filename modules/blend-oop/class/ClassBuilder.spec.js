@@ -6,6 +6,10 @@ describe("$oop", function () {
   describe("ClassBuilder", function () {
     var classBuilder;
 
+    beforeEach(function () {
+      $oop.ClassBuilder.lastClassId = -1;
+    });
+
     describe("create()", function () {
       it("should create ClassBuilder instance", function () {
         classBuilder = $oop.ClassBuilder.create('foo');
@@ -141,7 +145,7 @@ describe("$oop", function () {
         expect(classBuilder.mixins.downstream).toEqual({
           list: [mixinBuilder],
           lookup: {
-            bar: 1
+            1: 1
           }
         });
       });
@@ -152,7 +156,7 @@ describe("$oop", function () {
         expect(mixinBuilder.mixins.upstream).toEqual({
           list: [classBuilder],
           lookup: {
-            foo: 1
+            0: 1
           }
         });
       });
@@ -173,7 +177,7 @@ describe("$oop", function () {
           expect(classBuilder.expectations.downstream).toEqual({
             list: [expectedBuilder],
             lookup: {
-              baz: 1
+              2: 1
             }
           });
         });
@@ -231,7 +235,7 @@ describe("$oop", function () {
               callback: callback
             }],
             lookup: {
-              Forward: 1
+              2: 1
             }
           });
         });
@@ -261,7 +265,7 @@ describe("$oop", function () {
           expect(classBuilder.mixins.downstream).toEqual({
             list: [mixinBuilder],
             lookup: {
-              bar: 1
+              1: 1
             }
           });
         });
@@ -271,7 +275,7 @@ describe("$oop", function () {
           expect(mixinBuilder.mixins.upstream).toEqual({
             list: [classBuilder],
             lookup: {
-              foo: 1
+              0: 1
             }
           });
         });
@@ -373,7 +377,7 @@ describe("$oop", function () {
         expect(classBuilder.interfaces.downstream).toEqual({
           list: [interfaceBuilder],
           lookup: {
-            bar: 1
+            1: 1
           }
         });
       });
@@ -383,7 +387,7 @@ describe("$oop", function () {
         expect(interfaceBuilder.interfaces.upstream).toEqual({
           list: [classBuilder],
           lookup: {
-            foo: 1
+            0: 1
           }
         });
       });
@@ -398,7 +402,7 @@ describe("$oop", function () {
           expect(classBuilder.interfaces.downstream).toEqual({
             list: [interfaceBuilder],
             lookup: {
-              bar: 1
+              1: 1
             }
           });
         });
@@ -408,7 +412,7 @@ describe("$oop", function () {
           expect(interfaceBuilder.interfaces.upstream).toEqual({
             list: [classBuilder],
             lookup: {
-              foo: 1
+              0: 1
             }
           });
         });
@@ -447,7 +451,7 @@ describe("$oop", function () {
         expect(classBuilder.expectations.downstream).toEqual({
           list: [expectedBuilder],
           lookup: {
-            bar: 1
+            1: 1
           }
         });
       });
@@ -458,7 +462,7 @@ describe("$oop", function () {
         expect(expectedBuilder.expectations.upstream).toEqual({
           list: [classBuilder],
           lookup: {
-            foo: 1
+            0: 1
           }
         });
       });
@@ -479,8 +483,8 @@ describe("$oop", function () {
           expect(classBuilder.expectations.downstream).toEqual({
             list: [expectedBuilder, mixinBuilder],
             lookup: {
-              bar: 1,
-              baz: 1
+              1: 1,
+              2: 1
             }
           });
         });
@@ -497,7 +501,7 @@ describe("$oop", function () {
           expect(classBuilder.expectations.downstream).toEqual({
             list: [expectedBuilder],
             lookup: {
-              bar: 1
+              1: 1
             }
           });
         });
@@ -507,7 +511,7 @@ describe("$oop", function () {
           expect(expectedBuilder.expectations.upstream).toEqual({
             list: [classBuilder],
             lookup: {
-              foo: 1
+              0: 1
             }
           });
         });
@@ -561,7 +565,6 @@ describe("$oop", function () {
         $oop.classByClassName = {};
         classByMixinIds = $oop.classByMixinIds;
         $oop.classByMixinIds = {};
-        $oop.ClassBuilder.lastClassId = -1;
       });
 
       afterEach(function () {
@@ -709,8 +712,8 @@ describe("$oop", function () {
         it("should add class to BlenderIndex", function () {
           Class = classBuilder.build();
           expect($oop.classByMixinIds).toEqual({
-            '0,1': Mixin2,
-            '0,1,2': Class
+            '1,2': Mixin2,
+            '1,2,0': Class
           });
         });
 
@@ -722,7 +725,7 @@ describe("$oop", function () {
           it("should add to BlenderIndex by mixins only", function () {
             Class = classBuilder.build();
             expect($oop.classByMixinIds).toEqual({
-              '0,1': Mixin2
+              '1,2': Mixin2
             });
           });
         });
@@ -817,7 +820,7 @@ describe("$oop", function () {
             callback: callback
           }],
           lookup: {
-            'bar': 1
+            1: 1
           }
         });
       });
@@ -840,7 +843,7 @@ describe("$oop", function () {
               callback: callback
             }],
             lookup: {
-              'bar': 1
+              1: 1
             }
           });
         });

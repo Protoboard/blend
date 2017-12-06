@@ -192,7 +192,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   implements: function (Interface) {
     return Interface &&
-        this.__builder.interfaces.downstream.lookup[Interface.__className];
+        this.__builder.interfaces.downstream.lookup[Interface.__classId];
   },
 
   /**
@@ -201,7 +201,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   implementedBy: function (Class) {
     return Class &&
-        Class.__builder.interfaces.downstream.lookup[this.__className];
+        Class.__builder.interfaces.downstream.lookup[this.__classId];
   },
 
   /**
@@ -212,7 +212,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   mixes: function (Class) {
     return this === Class || Class.isPrototypeOf(this) ||
         $oop.Class.isPrototypeOf(Class) &&
-        this.__builder.mixins.downstream.lookup[Class.__className];
+        this.__builder.mixins.downstream.lookup[Class.__classId];
   },
 
   /**
@@ -223,7 +223,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   mixedBy: function (Class) {
     return this === Class || this.isPrototypeOf(Class) ||
         $oop.Class.isPrototypeOf(Class) &&
-        Class.__builder.mixins.downstream.lookup[this.__className];
+        Class.__builder.mixins.downstream.lookup[this.__classId];
   },
 
   /**
@@ -232,7 +232,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   expects: function (Class) {
     return Class &&
-        this.__builder.expectations.downstream.lookup[Class.__className];
+        this.__builder.expectations.downstream.lookup[Class.__classId];
   },
 
   /**
@@ -241,7 +241,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
   expectedBy: function (Class) {
     return Class &&
-        Class.__builder.expectations.downstream.lookup[this.__className];
+        Class.__builder.expectations.downstream.lookup[this.__classId];
   },
 
   /**
