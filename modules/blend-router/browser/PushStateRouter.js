@@ -10,8 +10,8 @@
  * @class $router.PushStateRouter
  * @extends $router.Router
  */
-$router.PushStateRouter = $oop.getClass('$router.PushStateRouter')
-.blend($oop.getClass('$router.Router'))
+$router.PushStateRouter = $oop.createClass('$router.PushStateRouter')
+.blend($router.Router)
 .define(/** @lends $router.PushStateRouter# */{
   /** @ignore */
   init: function () {
@@ -56,9 +56,10 @@ $router.PushStateRouter = $oop.getClass('$router.PushStateRouter')
       this._syncActiveRouteToHistory();
     }
   }
-});
+})
+.build();
 
-$oop.getClass('$router.Router')
+$router.Router
 .forwardBlend($router.PushStateRouter, function () {
   return $router.browserRoutingMethod === 'pushState' && $utils.isBrowser();
 });

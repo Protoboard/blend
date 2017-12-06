@@ -10,8 +10,8 @@
  * @class $router.HashRouter
  * @extends $router.Router
  */
-$router.HashRouter = $oop.getClass('$router.HashRouter')
-.blend($oop.getClass('$router.Router'))
+$router.HashRouter = $oop.createClass('$router.HashRouter')
+.blend($router.Router)
 .define(/** @lends $router.HashRouter# */{
   /** @ignore */
   init: function () {
@@ -68,9 +68,10 @@ $router.HashRouter = $oop.getClass('$router.HashRouter')
       this._syncActiveRouteToHash();
     }
   }
-});
+})
+.build();
 
-$oop.getClass('$router.Router')
+$router.Router
 .forwardBlend($router.HashRouter, function () {
   return $router.browserRoutingMethod === 'hash' && $utils.isBrowser();
 });

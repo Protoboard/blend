@@ -13,7 +13,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
-$router.Route = $oop.getClass('$router.Route')
+$router.Route = $oop.createClass('$router.Route')
 .blend($utils.UriPath)
 .blend($event.EventSender)
 .blend($event.EventListener)
@@ -43,7 +43,8 @@ $router.Route = $oop.getClass('$router.Route')
   navigateToDebounced: function () {
     return $router.Router.create().navigateToRouteDebounced(this);
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

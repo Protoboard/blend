@@ -9,13 +9,14 @@ describe("$router", function () {
         routeEnvironment;
 
     beforeAll(function () {
-      RouteEnvironment = $oop.getClass('test.$router.RouteEnvironment.RouteEnvironment')
-      .blend($router.RouteEnvironment);
-      RouteEnvironment.__forwards = {list: [], sources: [], lookup: {}};
+      RouteEnvironment = $oop.createClass('test.$router.RouteEnvironment.RouteEnvironment')
+      .blend($router.RouteEnvironment)
+      .build();
+      RouteEnvironment.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      RouteEnvironment.__instanceLookup = {};
+      RouteEnvironment.__builder.instances = {};
     });
 
     it("should be singleton", function () {
