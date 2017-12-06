@@ -12,9 +12,10 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      DocumentKey = $oop.getClass('test.$entity.DocumentKey.DocumentKey')
-      .blend($entity.DocumentKey);
-      DocumentKey.__forwards = {list: [], sources: [], lookup: {}};
+      DocumentKey = $oop.createClass('test.$entity.DocumentKey.DocumentKey')
+      .blend($entity.DocumentKey)
+      .build();
+      DocumentKey.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

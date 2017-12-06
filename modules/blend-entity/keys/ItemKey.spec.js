@@ -11,8 +11,10 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      ItemKey = $oop.getClass('test.$entity.ItemKey.ItemKey')
-      .blend($entity.ItemKey);
+      ItemKey = $oop.createClass('test.$entity.ItemKey.ItemKey')
+      .blend($entity.ItemKey)
+      .build();
+      ItemKey.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

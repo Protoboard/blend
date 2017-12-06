@@ -14,7 +14,7 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
+      EntityKey = $oop.createClass('test.$entity.Entity.EntityKey')
       .blend($entity.EntityKey)
       .define({
         getAttributeDocumentKey: function () {
@@ -23,9 +23,12 @@ describe("$entity", function () {
         getChildKey: function (childId) {
           return EntityKey.fromEntityPath(['foo', childId].toTreePath());
         }
-      });
-      Entity = $oop.getClass('test.$entity.Entity.Entity')
-      .blend($entity.Entity);
+      })
+      .build();
+      Entity = $oop.createClass('test.$entity.Entity.Entity')
+      .blend($entity.Entity)
+      .build();
+      Entity.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
@@ -69,7 +72,7 @@ describe("$entity", function () {
             result;
 
         beforeAll(function () {
-          EntityKey = $oop.getClass('test.$entity.Entity.EntityKey')
+          EntityKey = $oop.createClass('test.$entity.Entity.EntityKey')
           .blend($entity.EntityKey)
           .blend($utils.StringifyCached)
           .define({
@@ -79,7 +82,8 @@ describe("$entity", function () {
             toString: function () {
               return this._entityPath + '';
             }
-          });
+          })
+          .build();
         });
 
         beforeEach(function () {

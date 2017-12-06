@@ -7,7 +7,7 @@
  * @extends $data.Comparable
  * @todo Add parentKey & entityId properties?
  */
-$entity.EntityKey = $oop.getClass('$entity.EntityKey')
+$entity.EntityKey = $oop.createClass('$entity.EntityKey')
 .blend($utils.Equatable)
 .blend($data.Comparable)
 .define(/** @lends $entity.EntityKey# */{
@@ -87,9 +87,10 @@ $entity.EntityKey = $oop.getClass('$entity.EntityKey')
    * @abstract
    */
   getEntityId: function () {}
-});
+})
+.build();
 
-$oop.getClass('$data.TreePath')
+$data.TreePath
 .delegate(/** @lends $data.TreePath# */{
   /**
    * @param {Object} [properties]

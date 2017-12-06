@@ -9,9 +9,10 @@ describe("$entity", function () {
         itemIdTypePath;
 
     beforeAll(function () {
-      ItemIdTypePath = $oop.getClass('test.$entity.ItemIdTypePath.ItemIdTypePath')
-      .blend($entity.ItemIdTypePath);
-      ItemIdTypePath.__forwards = {list: [], sources: [], lookup: {}};
+      ItemIdTypePath = $oop.createClass('test.$entity.ItemIdTypePath.ItemIdTypePath')
+      .blend($entity.ItemIdTypePath)
+      .build();
+      ItemIdTypePath.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromItemIdType()", function () {

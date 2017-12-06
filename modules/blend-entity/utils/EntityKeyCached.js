@@ -6,9 +6,10 @@
  * @mixin $entity.EntityKeyCached
  * @augments $entity.EntityKeyHost
  */
-$entity.EntityKeyCached = $oop.getClass('$entity.EntityKeyCached')
+$entity.EntityKeyCached = $oop.createClass('$entity.EntityKeyCached')
 .cacheBy(function (properties) {
   var entityKey = properties && properties.entityKey;
   return entityKey && entityKey.toString();
 })
-.expect($oop.getClass('$entity.EntityKeyHost'));
+.expect($entity.EntityKeyHost)
+.build();

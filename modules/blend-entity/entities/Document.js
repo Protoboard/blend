@@ -11,9 +11,9 @@
  * @class $entity.Document
  * @extends $entity.Entity
  */
-$entity.Document = $oop.getClass('$entity.Document')
-.blend($oop.getClass('$entity.Entity'))
-.blend($oop.getClass('$entity.BranchNoded'))
+$entity.Document = $oop.createClass('$entity.Document')
+.blend($entity.Entity)
+.blend($entity.BranchNoded)
 .define(/** @lends $entity.Document# */{
   /**
    * @inheritDoc
@@ -115,14 +115,15 @@ $entity.Document = $oop.getClass('$entity.Document')
   getField: function (fieldName) {
     return $entity.Field.fromEntityKey(this.entityKey.getFieldKey(fieldName));
   }
-});
+})
+.build();
 
-$oop.getClass('$entity.Entity')
+$entity.Entity
 .forwardBlend($entity.Document, function (properties) {
   return $entity.DocumentKey.mixedBy(properties.entityKey);
 });
 
-$oop.getClass('$entity.DocumentKey')
+$entity.DocumentKey
 .delegate(/** @lends $entity.DocumentKey# */{
   /**
    * @param {Object} [properties]

@@ -14,9 +14,9 @@
  * @extends $entity.DocumentKey
  * @mixes $utils.StringifyCached
  */
-$entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
-.blend($oop.getClass('$entity.DocumentKey'))
-.blend($oop.getClass('$utils.StringifyCached'))
+$entity.AttributeDocumentKey = $oop.createClass('$entity.AttributeDocumentKey')
+.blend($entity.DocumentKey)
+.blend($utils.StringifyCached)
 .define(/** @lends $entity.AttributeDocumentKey# */{
   /**
    * @memberOf $entity.AttributeDocumentKey
@@ -35,9 +35,10 @@ $entity.AttributeDocumentKey = $oop.getClass('$entity.AttributeDocumentKey')
       .join('/')
     }, properties);
   }
-});
+})
+.build();
 
-$oop.getClass('$entity.DocumentKey')
-.forwardBlend($utils.StringifyCached, function (properties) {
+$entity.DocumentKey
+.forwardBlend($entity.AttributeDocumentKey, function (properties) {
   return $utils.matchesPrefix(properties.documentType, '__');
 });

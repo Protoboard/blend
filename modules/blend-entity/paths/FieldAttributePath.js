@@ -13,7 +13,7 @@
  * @class $entity.FieldAttributePath
  * @extends $data.TreePath
  */
-$entity.FieldAttributePath = $oop.getClass('$entity.FieldAttributePath')
+$entity.FieldAttributePath = $oop.createClass('$entity.FieldAttributePath')
 .blend($data.TreePath)
 .define(/** @lends $entity.FieldAttributePath# */{
   /**
@@ -27,7 +27,8 @@ $entity.FieldAttributePath = $oop.getClass('$entity.FieldAttributePath')
       components: ['document', '__field', attributeRef]
     }, properties);
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

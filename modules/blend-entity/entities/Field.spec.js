@@ -11,8 +11,10 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      Field = $oop.getClass('test.$entity.Field.Field')
-      .blend($entity.Field);
+      Field = $oop.createClass('test.$entity.Field.Field')
+      .blend($entity.Field)
+      .build();
+      Field.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
@@ -68,9 +70,10 @@ describe("$entity", function () {
             result;
 
         beforeAll(function () {
-          FieldKey = $oop.getClass('test.$entity.Field.FieldKey')
+          FieldKey = $oop.createClass('test.$entity.Field.FieldKey')
           .blend($entity.FieldKey)
-          .blend($utils.StringifyCached);
+          .blend($utils.StringifyCached)
+          .build();
         });
 
         beforeEach(function () {

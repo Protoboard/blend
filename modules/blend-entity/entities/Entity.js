@@ -15,10 +15,10 @@
  * @extends $entity.EntityKeyHost
  * @mixes $utils.Equatable
  */
-$entity.Entity = $oop.getClass('$entity.Entity')
+$entity.Entity = $oop.createClass('$entity.Entity')
 .blend($event.EventSender)
 .blend($event.EventListener)
-.blend($oop.getClass('$entity.EntityKeyHost'))
+.blend($entity.EntityKeyHost)
 .blend($utils.Equatable)
 .define(/** @lends $entity.Entity# */{
   /**
@@ -207,15 +207,16 @@ $entity.Entity = $oop.getClass('$entity.Entity')
     var parentKey = this.entityKey.getParentKey();
     return parentKey && $entity.Entity.fromEntityKey(parentKey);
   }
-});
+})
+.build();
 
 // caching Entity if key is cached
 $entity.Entity
-.forwardBlend($oop.getClass('$entity.EntityKeyCached'), function (properties) {
+.forwardBlend($entity.EntityKeyCached, function (properties) {
   return $utils.StringifyCached.mixedBy(properties.entityKey);
 });
 
-$oop.getClass('$entity.EntityKey')
+$entity.EntityKey
 .delegate(/** @lends $entity.EntityKey# */{
   /**
    * @param {Object} [properties]

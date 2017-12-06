@@ -11,8 +11,8 @@
  * @class $entity.CollectionFieldKey
  * @extends $entity.FieldKey
  */
-$entity.CollectionFieldKey = $oop.getClass('$entity.CollectionFieldKey')
-.blend($oop.getClass('$entity.FieldKey'))
+$entity.CollectionFieldKey = $oop.createClass('$entity.CollectionFieldKey')
+.blend($entity.FieldKey)
 .define(/** @lends $entity.CollectionFieldKey# */{
   /**
    * Retrieves type associated with collection's item IDs (keys).
@@ -45,9 +45,10 @@ $entity.CollectionFieldKey = $oop.getClass('$entity.CollectionFieldKey')
   getItemValueOptions: function () {
     return this.getAttribute('itemValueOptions');
   }
-});
+})
+.build();
 
-$oop.getClass('$entity.FieldKey')
+$entity.FieldKey
 // 'collection' field valueType
 .forwardBlend($entity.CollectionFieldKey, function (properties) {
   var documentKey = properties.documentKey,

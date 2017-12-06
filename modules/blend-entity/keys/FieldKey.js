@@ -16,9 +16,9 @@
  * @implements $utils.Stringifiable
  * @todo Cache attributeDocumentKey, nodeType, nodeTypeKey
  */
-$entity.FieldKey = $oop.getClass('$entity.FieldKey')
-.blend($oop.getClass('$entity.EntityKey'))
-.blend($oop.getClass('$entity.ValueKey'))
+$entity.FieldKey = $oop.createClass('$entity.FieldKey')
+.blend($entity.EntityKey)
+.blend($entity.ValueKey)
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.FieldKey# */{
   /**
@@ -167,14 +167,15 @@ $entity.FieldKey = $oop.getClass('$entity.FieldKey')
       $utils.escape(this.fieldName, '/')
     ].join('/');
   }
-});
+})
+.build();
 
 $entity.FieldKey
-.forwardBlend($oop.getClass('$utils.StringifyCached'), function (properties) {
+.forwardBlend($utils.StringifyCached, function (properties) {
   return $utils.StringifyCached.mixedBy(properties.documentKey);
 });
 
-$oop.getClass('$entity.EntityKey')
+$entity.EntityKey
 .forwardBlend($entity.FieldKey, function (properties) {
   var entityPath = properties._entityPath,
       components = entityPath && entityPath.components;

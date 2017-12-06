@@ -11,8 +11,8 @@
  * @class $entity.Field
  * @extends $entity.Entity
  */
-$entity.Field = $oop.getClass('$entity.Field')
-.blend($oop.getClass('$entity.Entity'))
+$entity.Field = $oop.createClass('$entity.Field')
+.blend($entity.Entity)
 .define(/** @lends $entity.Field# */{
   /**
    * @inheritDoc
@@ -61,23 +61,24 @@ $entity.Field = $oop.getClass('$entity.Field')
   getItem: function (itemId) {
     return $entity.Item.fromEntityKey(this.entityKey.getItemKey(itemId));
   }
-});
+})
+.build();
 
 $entity.Field
 // leaf node fields
-.forwardBlend($oop.getClass('$entity.LeafNoded'), function (properties) {
+.forwardBlend($entity.LeafNoded, function (properties) {
   var fieldKey = properties && properties.entityKey;
-  // todo Need better way of specifying mutually exclusive
+  // todo Need better way of specifying mutually exclusive mixins
   return !this.mixes($entity.BranchNoded) &&
       fieldKey && fieldKey.getNodeType() === 'leaf';
 });
 
-$oop.getClass('$entity.Entity')
+$entity.Entity
 .forwardBlend($entity.Field, function (properties) {
   return $entity.FieldKey.mixedBy(properties.entityKey);
 });
 
-$oop.getClass('$entity.FieldKey')
+$entity.FieldKey
 .delegate(/** @lends $entity.FieldKey# */{
   /**
    * @param {Object} [properties]

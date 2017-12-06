@@ -12,9 +12,11 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      BranchNoded = $oop.getClass('test.$entity.BranchNoded.BranchNoded')
+      BranchNoded = $oop.createClass('test.$entity.BranchNoded.BranchNoded')
       .blend($entity.Entity)
-      .blend($entity.BranchNoded);
+      .blend($entity.BranchNoded)
+      .build();
+      BranchNoded.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

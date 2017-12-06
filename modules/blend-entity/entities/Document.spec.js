@@ -11,8 +11,10 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      Document = $oop.getClass('test.$entity.Document.Document')
-      .blend($entity.Document);
+      Document = $oop.createClass('test.$entity.Document.Document')
+      .blend($entity.Document)
+      .build();
+      Document.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
@@ -61,9 +63,10 @@ describe("$entity", function () {
             result;
 
         beforeAll(function () {
-          DocumentKey = $oop.getClass('test.$entity.Document.DocumentKey')
+          DocumentKey = $oop.createClass('test.$entity.Document.DocumentKey')
           .blend($entity.DocumentKey)
-          .blend($utils.StringifyCached);
+          .blend($utils.StringifyCached)
+          .build();
         });
 
         beforeEach(function () {
@@ -290,7 +293,7 @@ describe("Array", function () {
 
     beforeEach(function () {
       components = ['foo', 'bar'];
-      $entity.Document.__instanceLookup = {};
+      $entity.Document.__builder.instances = {};
     });
 
     it("should create a Document instance", function () {

@@ -14,8 +14,8 @@
  * @extends $entity.EntityKey
  * @implements $utils.Stringifiable
  */
-$entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
-.blend($oop.getClass('$entity.EntityKey'))
+$entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
+.blend($entity.EntityKey)
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.DocumentKey# */{
   /**
@@ -154,9 +154,10 @@ $entity.DocumentKey = $oop.getClass('$entity.DocumentKey')
     return $utils.escape(this.documentType, '/') + '/' +
         $utils.escape(this.documentId, '/');
   }
-});
+})
+.build();
 
-$oop.getClass('$entity.EntityKey')
+$entity.EntityKey
 .forwardBlend($entity.DocumentKey, function (properties) {
   var entityPath = properties && properties._entityPath,
       components = entityPath && entityPath.components;

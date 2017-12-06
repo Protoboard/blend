@@ -12,8 +12,10 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      EntityChangeEvent = $oop.getClass('test.$entity.EntityChangeEvent.EntityChangeEvent')
-      .blend($entity.EntityChangeEvent);
+      EntityChangeEvent = $oop.createClass('test.$entity.EntityChangeEvent.EntityChangeEvent')
+      .blend($entity.EntityChangeEvent)
+      .build();
+      EntityChangeEvent.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

@@ -15,9 +15,9 @@
  * @mixes $entity.ValueKey
  * @implements $utils.Stringifiable
  */
-$entity.ItemKey = $oop.getClass('$entity.ItemKey')
-.blend($oop.getClass('$entity.EntityKey'))
-.blend($oop.getClass('$entity.ValueKey'))
+$entity.ItemKey = $oop.createClass('$entity.ItemKey')
+.blend($entity.EntityKey)
+.blend($entity.ValueKey)
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.ItemKey# */{
   /**
@@ -169,14 +169,15 @@ $entity.ItemKey = $oop.getClass('$entity.ItemKey')
       $utils.escape(this.itemId, '/')
     ].join('/');
   }
-});
+})
+.build();
 
 $entity.ItemKey
-.forwardBlend($oop.getClass('$utils.StringifyCached'), function (properties) {
+.forwardBlend($utils.StringifyCached, function (properties) {
   return $utils.StringifyCached.mixedBy(properties.fieldKey);
 });
 
-$oop.getClass('$entity.EntityKey')
+$entity.EntityKey
 .forwardBlend($entity.ItemKey, function (properties) {
   var entityPath = properties._entityPath,
       components = entityPath && entityPath.components;

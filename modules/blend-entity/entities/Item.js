@@ -13,9 +13,9 @@
  * @extends $entity.Entity
  * @mixes $entity.LeafNoded
  */
-$entity.Item = $oop.getClass('$entity.Item')
-.blend($oop.getClass('$entity.Entity'))
-.blend($oop.getClass('$entity.LeafNoded'))
+$entity.Item = $oop.createClass('$entity.Item')
+.blend($entity.Entity)
+.blend($entity.LeafNoded)
 .define(/** @lends $entity.Item# */{
   /**
    * @inheritDoc
@@ -70,14 +70,15 @@ $entity.Item = $oop.getClass('$entity.Item')
     .addTriggerPath(idTypePath)
     .addTriggerPath(valueTypePath);
   }
-});
+})
+.build();
 
-$oop.getClass('$entity.Entity')
+$entity.Entity
 .forwardBlend($entity.Item, function (properties) {
   return $entity.ItemKey.mixedBy(properties.entityKey);
 });
 
-$oop.getClass('$entity.ItemKey')
+$entity.ItemKey
 .delegate(/** @lends $entity.ItemKey# */{
   /**
    * @param {Object} [properties]
