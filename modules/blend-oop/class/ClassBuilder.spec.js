@@ -713,6 +713,19 @@ describe("$oop", function () {
             '0,1,2': Class
           });
         });
+
+        describe("for ad-hoc class", function () {
+          beforeEach(function () {
+            classBuilder.className = undefined;
+          });
+
+          it("should add to BlenderIndex by mixins only", function () {
+            Class = classBuilder.build();
+            expect($oop.classByMixinIds).toEqual({
+              '0,1': Mixin2
+            });
+          });
+        });
       });
 
       describe("when class has delegates", function () {

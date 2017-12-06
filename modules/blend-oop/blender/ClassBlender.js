@@ -51,7 +51,7 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
    * @private
    */
   _blendClass: function (mixins) {
-    var classBuilder = $oop.createClass($oop.generateUuid()),
+    var classBuilder = $oop.createClass(),
         mixinCount = mixins.length,
         i;
     for (i = 0; i < mixinCount; i++) {
@@ -61,6 +61,7 @@ $oop.ClassBlender = $oop.createObject(Object.prototype, /** @lends $oop.ClassBle
   },
 
   /**
+   * Creates and ad-hoc class that blends `mixins` in the specified order.
    * @param {Array.<$oop.Class>} mixins
    * @return {$oop.Class}
    */

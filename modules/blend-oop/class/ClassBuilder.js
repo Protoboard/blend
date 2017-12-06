@@ -610,7 +610,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
           __className: className,
           __builder: this
         }),
-        contributors = this.mixins.downstream.list.concat(this);
+        contributors = className !== undefined ?
+            // to regular classes, mixins & self both contribute
+            this.mixins.downstream.list.concat(this) :
+            // fto ad-hoc classes, only mixins contribute
+            this.mixins.downstream.list;
 
     // adding finalized information to builder
     $oop.copyProperties(this, {

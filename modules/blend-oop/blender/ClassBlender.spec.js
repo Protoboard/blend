@@ -60,11 +60,16 @@ describe("$oop", function () {
 
       describe("when no stored nor matching class exist", function () {
         it("should create new class", function () {
-          var result = $oop.ClassBlender.blendClass([Mixin1, Mixin2]);
-          expect(result.__builder.mixins.downstream.list).toEqual([
+          Class = $oop.ClassBlender.blendClass([Mixin1, Mixin2]);
+          expect(Class.__builder.mixins.downstream.list).toEqual([
             mixinBuilder1,
             mixinBuilder2
           ]);
+        });
+
+        it("should leave className blank", function () {
+          Class = $oop.ClassBlender.blendClass([Mixin1, Mixin2]);
+          expect(Class.className).toBeUndefined();
         });
       });
     });
