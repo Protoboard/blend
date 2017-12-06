@@ -5,9 +5,9 @@
  * @extends $widget.DomNode
  * @extends $widget.HtmlWidget
  */
-$widget.DomWidget = $oop.getClass('$widget.DomWidget')
-.blend($oop.getClass('$widget.DomNode'))
-.blend($oop.getClass('$widget.HtmlWidget'))
+$widget.DomWidget = $oop.createClass('$widget.DomWidget')
+.blend($widget.DomNode)
+.blend($widget.HtmlWidget)
 .define(/** @lends $widget.DomWidget# */{
   /**
    * @param {$widget.DomWidget} node
@@ -57,7 +57,8 @@ $widget.DomWidget = $oop.getClass('$widget.DomWidget')
   onRender: function () {
     this.childNodeByNodeName.callOnEachValue('onRender');
   }
-});
+})
+.build();
 
-$oop.getClass('$widget.HtmlWidget')
+$widget.HtmlWidget
 .forwardBlend($widget.DomWidget, $utils.isBrowser);

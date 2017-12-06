@@ -10,11 +10,13 @@ describe("$widget", function () {
         xmlNodes;
 
     beforeAll(function () {
-      XmlNode = $oop.getClass('test.$widget.XmlNodes.XmlNode')
+      XmlNode = $oop.createClass('test.$widget.XmlNodes.XmlNode')
       .blend($widget.Node)
-      .blend($widget.XmlNode);
-      XmlNodes = $oop.getClass('test.$widget.XmlNodes.XmlNodes')
-      .blend($widget.XmlNodes);
+      .blend($widget.XmlNode)
+      .build();
+      XmlNodes = $oop.createClass('test.$widget.XmlNodes.XmlNodes')
+      .blend($widget.XmlNodes)
+      .build();
     });
 
     describe("toString()", function () {

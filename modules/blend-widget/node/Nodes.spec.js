@@ -9,8 +9,9 @@ describe("$widget", function () {
         nodes;
 
     beforeAll(function () {
-      Nodes = $oop.getClass('test.$widget.Nodes.Nodes')
-      .blend($widget.Nodes);
+      Nodes = $oop.createClass('test.$widget.Nodes.Nodes')
+      .blend($widget.Nodes)
+      .build();
     });
 
     describe("setItem()", function () {

@@ -9,15 +9,16 @@ describe("$widget", function () {
         domNode;
 
     beforeAll(function () {
-      DomNode = $oop.getClass('test.$widget.DomNode.DomNode')
+      DomNode = $oop.createClass('test.$widget.DomNode.DomNode')
       .blend($widget.Node)
       .blend($widget.DomNode)
       .define({
         getContentMarkup: function fn() {
           return fn.returned + "FOO";
         }
-      });
-      DomNode.__forwards = {list: [], sources: [], lookup: {}};
+      })
+      .build();
+      DomNode.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("addChildNode()", function () {
@@ -343,9 +344,10 @@ describe("$widget", function () {
         htmlNode;
 
     beforeAll(function () {
-      HtmlNode = $oop.getClass('test.$widget.DomNode.HtmlNode')
+      HtmlNode = $oop.createClass('test.$widget.DomNode.HtmlNode')
       .blend($widget.Node)
-      .blend($widget.HtmlNode);
+      .blend($widget.HtmlNode)
+      .build();
     });
 
     describe("create()", function () {

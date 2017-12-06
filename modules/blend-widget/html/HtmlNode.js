@@ -6,8 +6,8 @@
  * @extends $widget.XmlNode
  * @todo Maintaining reference count for CSS classes?
  */
-$widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
-.blend($oop.getClass('$widget.XmlNode'))
+$widget.HtmlNode = $oop.createClass('$widget.HtmlNode')
+.blend($widget.XmlNode)
 .define(/** @lends $widget.HtmlNode# */{
   /**
    * Identifies element in the HTML document.
@@ -167,7 +167,8 @@ $widget.HtmlNode = $oop.getClass('$widget.HtmlNode')
     }
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$widget.XmlNode')
+$widget.XmlNode
 .forwardBlend($widget.HtmlNode, $widget.isHtml);

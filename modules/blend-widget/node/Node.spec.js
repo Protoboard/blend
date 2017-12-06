@@ -10,9 +10,10 @@ describe("$widget", function () {
         node;
 
     beforeAll(function () {
-      Node = $oop.getClass('test.$widget.Node.Node')
-      .blend($widget.Node);
-      Node.__forwards = {list: [], sources: [], lookup: {}};
+      Node = $oop.createClass('test.$widget.Node.Node')
+      .blend($widget.Node)
+      .build();
+      Node.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromNodeName()", function () {

@@ -11,7 +11,7 @@
  * @class $widget.Node
  * @extends $utils.Identifiable
  */
-$widget.Node = $oop.getClass('$widget.Node')
+$widget.Node = $oop.createClass('$widget.Node')
 .blend($utils.Identifiable)
 .define(/** @lends $widget.Node# */{
   /**
@@ -335,4 +335,5 @@ $widget.Node = $oop.getClass('$widget.Node')
 
     return result;
   }
-});
+})
+.build();

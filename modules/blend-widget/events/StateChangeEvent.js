@@ -9,8 +9,9 @@
  * @class $widget.StateChangeEvent
  * @extends {$event.Event}
  */
-$widget.StateChangeEvent = $oop.getClass('$widget.StateChangeEvent')
-.blend($event.Event);
+$widget.StateChangeEvent = $oop.createClass('$widget.StateChangeEvent')
+.blend($event.Event)
+.build();
 
 /**
  * @member {string} $widget.StateChangeEvent#stateName

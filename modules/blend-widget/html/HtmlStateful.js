@@ -5,9 +5,9 @@
  * @extends $widget.Stateful
  * @extends $widget.HtmlNode
  */
-$widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
-.blend($oop.getClass('$widget.Stateful'))
-.blend($oop.getClass('$widget.HtmlNode'))
+$widget.HtmlStateful = $oop.createClass('$widget.HtmlStateful')
+.blend($widget.Stateful)
+.blend($widget.HtmlNode)
 .define(/** @lends $widget.HtmlStateful# */{
   /**
    * @param {string} stateName
@@ -36,7 +36,8 @@ $widget.HtmlStateful = $oop.getClass('$widget.HtmlStateful')
     }
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$widget.Stateful')
+$widget.Stateful
 .forwardBlend($widget.HtmlStateful, $widget.isHtml);

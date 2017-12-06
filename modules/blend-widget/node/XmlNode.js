@@ -7,8 +7,8 @@
  * @extends $widget.Node
  * @implements $utils.Stringifiable
  */
-$widget.XmlNode = $oop.getClass('$widget.XmlNode')
-.expect($oop.getClass('$widget.Node'))
+$widget.XmlNode = $oop.createClass('$widget.XmlNode')
+.expect($widget.Node)
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.XmlNode# */{
   /**
@@ -92,4 +92,5 @@ $widget.XmlNode = $oop.getClass('$widget.XmlNode')
       '</' + elementName + '>'
     ].join('');
   }
-});
+})
+.build();

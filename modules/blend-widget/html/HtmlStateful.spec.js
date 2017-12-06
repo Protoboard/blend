@@ -9,10 +9,11 @@ describe("$widget", function () {
         htmlStateful;
 
     beforeAll(function () {
-      HtmlStateful = $oop.getClass('test.$widget.HtmlStateful.HtmlStateful')
+      HtmlStateful = $oop.createClass('test.$widget.HtmlStateful.HtmlStateful')
       .blend($widget.Node)
-      .blend($widget.HtmlStateful);
-      HtmlStateful.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($widget.HtmlStateful)
+      .build();
+      HtmlStateful.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setStateValue()", function () {
@@ -96,9 +97,10 @@ describe("$widget", function () {
         stateful;
 
     beforeAll(function () {
-      Stateful = $oop.getClass('test.$widget.HtmlStateful.Stateful')
+      Stateful = $oop.createClass('test.$widget.HtmlStateful.Stateful')
       .blend($widget.Node)
-      .blend($widget.Stateful);
+      .blend($widget.Stateful)
+      .build();
     });
 
     describe("create()", function () {

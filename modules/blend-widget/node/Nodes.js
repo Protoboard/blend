@@ -9,11 +9,12 @@
  * @class $widget.Nodes
  * @extends $data.OrderedList
  */
-$widget.Nodes = $oop.getClass('$widget.Nodes')
+$widget.Nodes = $oop.createClass('$widget.Nodes')
 .blend($data.OrderedList)
 .define(/** @lends $widget.Nodes# */{
   /** @ignore */
   defaults: function () {
     this.compare = this.compare || $widget.compareNodes;
   }
-});
+})
+.build();

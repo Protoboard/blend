@@ -9,10 +9,11 @@ describe("$widget", function () {
         htmlNode;
 
     beforeAll(function () {
-      HtmlNode = $oop.getClass('test.$widget.HtmlNode.HtmlNode')
+      HtmlNode = $oop.createClass('test.$widget.HtmlNode.HtmlNode')
       .blend($widget.Node)
-      .blend($widget.HtmlNode);
-      HtmlNode.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($widget.HtmlNode)
+      .build();
+      HtmlNode.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromElementId()", function () {
@@ -231,9 +232,10 @@ describe("$widget", function () {
         xmlNode;
 
     beforeAll(function () {
-      XmlNode = $oop.getClass('test.$widget.HtmlNode.XmlNode')
+      XmlNode = $oop.createClass('test.$widget.HtmlNode.XmlNode')
       .blend($widget.Node)
-      .blend($widget.XmlNode);
+      .blend($widget.XmlNode)
+      .build();
     });
 
     describe("create()", function () {

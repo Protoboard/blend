@@ -19,9 +19,9 @@
  * @implements $utils.Destructible
  * @todo Should have own Retrievable behavior w/ onAttach / onDetach symmetry
  */
-$widget.Widget = $oop.getClass('$widget.Widget')
-.blend($oop.getClass('$widget.Node'))
-.blend($oop.getClass('$widget.Stateful'))
+$widget.Widget = $oop.createClass('$widget.Widget')
+.blend($widget.Node)
+.blend($widget.Stateful)
 .blend($utils.Retrievable)
 .blend($event.EventSender)
 .blend($event.EventListener)
@@ -164,7 +164,8 @@ $widget.Widget = $oop.getClass('$widget.Widget')
     // propagating detach 'event' to children
     this.childNodeByNodeName.callOnEachValue('onDetach');
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

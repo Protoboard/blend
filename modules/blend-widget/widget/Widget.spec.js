@@ -10,9 +10,10 @@ describe("$widget", function () {
         widget;
 
     beforeAll(function () {
-      Widget = $oop.getClass('test.$widget.Widget.Widget')
-      .blend($widget.Widget);
-      Widget.__forwards = {list: [], sources: [], lookup: {}};
+      Widget = $oop.createClass('test.$widget.Widget.Widget')
+      .blend($widget.Widget)
+      .build();
+      Widget.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

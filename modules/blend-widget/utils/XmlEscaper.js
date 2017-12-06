@@ -3,7 +3,7 @@
 /**
  * @class $widget.XmlEscaper
  */
-$widget.XmlEscaper = $oop.getClass('$widget.XmlEscaper')
+$widget.XmlEscaper = $oop.createClass('$widget.XmlEscaper')
 .define(/** @lends $widget.XmlEscaper */{
   /**
    * @type {RegExp}
@@ -39,4 +39,5 @@ $widget.XmlEscaper = $oop.getClass('$widget.XmlEscaper')
         this.RE_XML_ESCAPE_CHARS,
         this.escapeCharacterForXml);
   }
-});
+})
+.build();

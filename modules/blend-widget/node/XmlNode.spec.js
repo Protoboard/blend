@@ -9,10 +9,11 @@ describe("$widget", function () {
         xmlNode;
 
     beforeAll(function () {
-      XmlNode = $oop.getClass('test.$widget.XmlNode.XmlNode')
+      XmlNode = $oop.createClass('test.$widget.XmlNode.XmlNode')
       .blend($widget.Node)
-      .blend($widget.XmlNode);
-      XmlNode.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($widget.XmlNode)
+      .build();
+      XmlNode.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromElementName()", function () {

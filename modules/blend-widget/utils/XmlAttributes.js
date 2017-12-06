@@ -12,7 +12,7 @@
  * @extends $data.Collection
  * @implements $utils.Stringifiable
  */
-$widget.XmlAttributes = $oop.getClass('$widget.XmlAttributes')
+$widget.XmlAttributes = $oop.createClass('$widget.XmlAttributes')
 .blend($data.Collection)
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.XmlAttributes# */{
@@ -27,4 +27,5 @@ $widget.XmlAttributes = $oop.getClass('$widget.XmlAttributes')
     .sort()
     .join(' ');
   }
-});
+})
+.build();

@@ -9,8 +9,9 @@ describe("$widget", function () {
         cssClasses;
 
     beforeAll(function () {
-      CssClasses = $oop.getClass('test.$widget.CssClasses.CssClasses')
-      .blend($widget.CssClasses);
+      CssClasses = $oop.createClass('test.$widget.CssClasses.CssClasses')
+      .blend($widget.CssClasses)
+      .build();
     });
 
     describe("toString()", function () {

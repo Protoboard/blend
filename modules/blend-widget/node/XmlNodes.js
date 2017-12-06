@@ -12,8 +12,8 @@
  * @extends $widget.Nodes
  * @implements $utils.Stringifiable
  */
-$widget.XmlNodes = $oop.getClass('$widget.XmlNodes')
-.blend($oop.getClass('$widget.Nodes'))
+$widget.XmlNodes = $oop.createClass('$widget.XmlNodes')
+.blend($widget.Nodes)
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.XmlNodes# */{
   /** @returns {string} */
@@ -22,4 +22,5 @@ $widget.XmlNodes = $oop.getClass('$widget.XmlNodes')
     .map(String)
     .join('');
   }
-});
+})
+.build();
