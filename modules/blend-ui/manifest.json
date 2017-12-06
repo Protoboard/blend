@@ -38,6 +38,7 @@
     "inputs/EntityOption.js",
     "inputs/RadioButton.js",
     "inputs/TextInput.js",
+    "inputs/EntityTextInput.js",
     "html/DisabledAttributeHost.js",
     "html/InputElementHost.js",
     "html/BinaryInputTypeHost.js",
