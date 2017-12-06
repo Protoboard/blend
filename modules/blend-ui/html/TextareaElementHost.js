@@ -6,10 +6,10 @@
  * @extends $ui.DisabledAttributeHost
  * @augments $ui.Inputable
  */
-$ui.TextareaElementHost = $oop.getClass('$ui.TextareaElementHost')
+$ui.TextareaElementHost = $oop.createClass('$ui.TextareaElementHost')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.DisabledAttributeHost'))
-.expect($oop.getClass('$ui.Inputable'))
+.blend($ui.DisabledAttributeHost)
+.expect($ui.Inputable)
 .define(/** @lends $ui.TextareaElementHost# */{
   /** @ignore */
   defaults: function () {
@@ -23,4 +23,5 @@ $ui.TextareaElementHost = $oop.getClass('$ui.TextareaElementHost')
     return getContentMarkup.returned +
         $widget.escapeXmlEntities($utils.stringify(this.inputValue));
   }
-});
+})
+.build();

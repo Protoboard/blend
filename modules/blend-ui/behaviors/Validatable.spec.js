@@ -9,11 +9,12 @@ describe("$ui", function () {
         validatable;
 
     beforeAll(function () {
-      Validatable = $oop.getClass('test.$ui.Validatable.Validatable')
+      Validatable = $oop.createClass('test.$ui.Validatable.Validatable')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.Validatable);
-      Validatable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Validatable)
+      .build();
+      Validatable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

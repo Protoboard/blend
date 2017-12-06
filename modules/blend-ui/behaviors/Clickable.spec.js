@@ -9,10 +9,11 @@ describe("$ui", function () {
         clickable;
 
     beforeAll(function () {
-      Clickable = $oop.getClass('test.$ui.Clickable.Clickable')
+      Clickable = $oop.createClass('test.$ui.Clickable.Clickable')
       .blend($widget.Widget)
-      .blend($ui.Clickable);
-      Clickable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Clickable)
+      .build();
+      Clickable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("click()", function () {

@@ -5,9 +5,9 @@
  * @extends $widget.DomWidget
  * @extends $ui.Validatable
  */
-$ui.DomValidatable = $oop.getClass('$ui.DomValidatable')
+$ui.DomValidatable = $oop.createClass('$ui.DomValidatable')
 .blend($widget.DomWidget)
-.blend($oop.getClass('$ui.Validatable'))
+.blend($ui.Validatable)
 .define(/** @lends $ui.DomValidatable# */{
   /**
    * @protected
@@ -58,7 +58,8 @@ $ui.DomValidatable = $oop.getClass('$ui.DomValidatable')
     // event loop
     this.invalidateBy('dom');
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Validatable')
+$ui.Validatable
 .forwardBlend($ui.DomValidatable, $utils.isBrowser);

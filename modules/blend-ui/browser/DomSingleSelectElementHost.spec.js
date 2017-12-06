@@ -9,10 +9,11 @@ describe("$ui", function () {
         domSingleSelectElementHost;
 
     beforeAll(function () {
-      DomSingleSelectElementHost = $oop.getClass('test.$ui.DomSingleSelectElementHost.DomSingleSelectElementHost')
+      DomSingleSelectElementHost = $oop.createClass('test.$ui.DomSingleSelectElementHost.DomSingleSelectElementHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.DomSingleSelectElementHost);
+      .blend($ui.DomSingleSelectElementHost)
+      .build();
       DomSingleSelectElementHost.__forwards = {
         list: [],
         sources: [],
@@ -88,10 +89,11 @@ describe("$ui", function () {
         singleSelectElementHost;
 
     beforeAll(function () {
-      SingleSelectElementHost = $oop.getClass('test.$ui.DomSingleSelectElementHost.SingleSelectElementHost')
+      SingleSelectElementHost = $oop.createClass('test.$ui.DomSingleSelectElementHost.SingleSelectElementHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.SingleSelectElementHost);
+      .blend($ui.SingleSelectElementHost)
+      .build();
     });
 
     describe("create()", function () {

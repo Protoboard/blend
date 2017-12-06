@@ -10,9 +10,10 @@ describe("$ui", function () {
         entityText;
 
     beforeAll(function () {
-      EntityText = $oop.getClass('test.$ui.EntityText.EntityText')
-      .blend($ui.EntityText);
-      EntityText.__forwards = {list: [], sources: [], lookup: {}};
+      EntityText = $oop.createClass('test.$ui.EntityText.EntityText')
+      .blend($ui.EntityText)
+      .build();
+      EntityText.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromTextEntity()", function () {

@@ -8,9 +8,9 @@
  * @extends $ui.Focusable
  * @augments $widget.Widget
  */
-$ui.Inputable = $oop.getClass('$ui.Inputable')
-.blend($oop.getClass('$ui.Disableable'))
-.blend($oop.getClass('$ui.Focusable'))
+$ui.Inputable = $oop.createClass('$ui.Inputable')
+.blend($ui.Disableable)
+.blend($ui.Focusable)
 .expect($widget.Widget)
 .define(/** @lends $ui.Inputable# */{
   /**
@@ -27,4 +27,5 @@ $ui.Inputable = $oop.getClass('$ui.Inputable')
     setInputValue.shared.inputValueBefore = inputValueBefore;
     return this;
   }
-});
+})
+.build();

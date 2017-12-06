@@ -9,10 +9,11 @@ describe("$ui", function () {
         domInputEventHost;
 
     beforeAll(function () {
-      DomInputEventBound = $oop.getClass('test.$ui.DomInputEventBound.DomInputEventBound')
+      DomInputEventBound = $oop.createClass('test.$ui.DomInputEventBound.DomInputEventBound')
       .blend($widget.Widget)
-      .blend($ui.DomInputEventBound);
-      DomInputEventBound.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomInputEventBound)
+      .build();
+      DomInputEventBound.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("onElementInput()", function () {

@@ -10,15 +10,17 @@ describe("$ui", function () {
         selectableHost;
 
     beforeAll(function () {
-      SelectableHost = $oop.getClass('test.$ui.SelectableHost.SelectableHost')
+      SelectableHost = $oop.createClass('test.$ui.SelectableHost.SelectableHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.SelectableHost);
-      SelectableHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.SelectableHost)
+      .build();
+      SelectableHost.__builder.forwards = {list: [], lookup: {}};
 
-      Selectable = $oop.getClass('test.$ui.SelectableHost.Selectable')
+      Selectable = $oop.createClass('test.$ui.SelectableHost.Selectable')
       .blend($widget.Widget)
-      .blend($ui.Selectable);
+      .blend($ui.Selectable)
+      .build();
     });
 
     describe("create()", function () {

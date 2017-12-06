@@ -10,10 +10,11 @@ describe("$ui", function () {
         domClickable;
 
     beforeAll(function () {
-      DomClickable = $oop.getClass('test.$ui.DomClickable.DomClickable')
+      DomClickable = $oop.createClass('test.$ui.DomClickable.DomClickable')
       .blend($widget.Widget)
-      .blend($ui.DomClickable);
-      DomClickable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomClickable)
+      .build();
+      DomClickable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("onClick()", function () {
@@ -50,9 +51,10 @@ describe("$ui", function () {
         clickable;
 
     beforeEach(function () {
-      Clickable = $oop.getClass('test.$ui.DomClickable.Clickable')
+      Clickable = $oop.createClass('test.$ui.DomClickable.Clickable')
       .blend($widget.Widget)
-      .blend($ui.Clickable);
+      .blend($ui.Clickable)
+      .build();
     });
 
     describe("create()", function () {

@@ -9,10 +9,11 @@ describe("$ui", function () {
         htmlImage;
 
     beforeAll(function () {
-      HtmlImage = $oop.getClass('test.$ui.HtmlImage.HtmlImage')
+      HtmlImage = $oop.createClass('test.$ui.HtmlImage.HtmlImage')
       .blend($ui.Image)
-      .blend($ui.HtmlImage);
-      HtmlImage.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.HtmlImage)
+      .build();
+      HtmlImage.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {
@@ -46,8 +47,9 @@ describe("$ui", function () {
         image;
 
     beforeAll(function () {
-      Image = $oop.getClass('test.$ui.HtmlImage.Image')
-      .blend($ui.Image);
+      Image = $oop.createClass('test.$ui.HtmlImage.Image')
+      .blend($ui.Image)
+      .build();
     });
 
     describe("create()", function () {

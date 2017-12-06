@@ -5,23 +5,24 @@
  * @extend $widget.HtmlWidget
  * @augments $ui.TextInput
  */
-$ui.HtmlTextInput = $oop.getClass('$ui.HtmlTextInput')
+$ui.HtmlTextInput = $oop.createClass('$ui.HtmlTextInput')
 .blend($widget.HtmlWidget)
-.expect($oop.getClass('$ui.TextInput'))
+.expect($ui.TextInput)
 .define(/** @lends $ui.HtmlTextInput# */{
   /** @ignore */
   defaults: function () {
     this.inputType = this.inputType || 'text';
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.TextInput')
+$ui.TextInput
 .forwardBlend($ui.HtmlTextInput, $widget.isHtml);
 
 $ui.HtmlTextInput
-.forwardBlend($oop.getClass('$ui.OtherInputTypeHost'), function (properties) {
+.forwardBlend($ui.OtherInputTypeHost, function (properties) {
   return !properties || !properties.isMultiline;
 })
-.forwardBlend($oop.getClass('$ui.TextareaElementHost'), function (properties) {
+.forwardBlend($ui.TextareaElementHost, function (properties) {
   return properties && properties.isMultiline;
 });

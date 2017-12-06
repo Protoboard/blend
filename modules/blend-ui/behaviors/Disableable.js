@@ -4,8 +4,8 @@
  * @mixin $ui.Disableable
  * @mixes $ui.BinaryStateful
  */
-$ui.Disableable = $oop.getClass('$ui.Disableable')
-.blend($oop.getClass('$ui.BinaryStateful'))
+$ui.Disableable = $oop.createClass('$ui.Disableable')
+.blend($ui.BinaryStateful)
 .define(/** @lends $ui.Disableable# */{
   /** @ignore */
   init: function () {
@@ -38,7 +38,8 @@ $ui.Disableable = $oop.getClass('$ui.Disableable')
   isDisabled: function () {
     return this.isStateOn($ui.STATE_NAME_DISABLED);
   }
-});
+})
+.build();
 
 $oop.copyProperties($ui, /** @lends $ui */{
   /**

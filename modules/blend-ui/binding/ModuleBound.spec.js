@@ -11,10 +11,11 @@ describe("$ui", function () {
         moduleBound;
 
     beforeAll(function () {
-      ModuleBound = $oop.getClass('test.$ui.ModuleBound.ModuleBound')
+      ModuleBound = $oop.createClass('test.$ui.ModuleBound.ModuleBound')
       .blend($widget.Widget)
-      .blend($ui.ModuleBound);
-      ModuleBound.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.ModuleBound)
+      .build();
+      ModuleBound.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("onAttach()", function () {

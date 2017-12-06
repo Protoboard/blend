@@ -16,8 +16,9 @@
  * @extends $ui.SelectableHost
  * @mixes $ui.SingleSelect
  */
-$ui.Dropdown = $oop.getClass('$ui.Dropdown')
+$ui.Dropdown = $oop.createClass('$ui.Dropdown')
 .blend($widget.Widget)
-.blend($oop.getClass('$ui.Inputable'))
-.blend($oop.getClass('$ui.Validatable'))
-.blend($oop.getClass('$ui.SingleSelect'));
+.blend($ui.Inputable)
+.blend($ui.Validatable)
+.blend($ui.SingleSelect)
+.build();

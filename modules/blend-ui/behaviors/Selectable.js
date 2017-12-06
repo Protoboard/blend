@@ -8,9 +8,9 @@
  * @extends $ui.Focusable
  * @augments $widget.Widget
  */
-$ui.Selectable = $oop.getClass('$ui.Selectable')
-.blend($oop.getClass('$ui.Disableable'))
-.blend($oop.getClass('$ui.Focusable'))
+$ui.Selectable = $oop.createClass('$ui.Selectable')
+.blend($ui.Disableable)
+.blend($ui.Focusable)
 .expect($widget.Widget)
 .define(/** @lends $ui.Selectable# */{
   /**
@@ -60,7 +60,8 @@ $ui.Selectable = $oop.getClass('$ui.Selectable')
   isSelected: function () {
     return this.getStateValue($ui.STATE_NAME_SELECTED);
   }
-});
+})
+.build();
 
 $oop.copyProperties($ui, /** @lends $ui */{
   /**

@@ -5,9 +5,9 @@
  * @extends $ui.HtmlText
  * @augments $ui.Hyperlink
  */
-$ui.HtmlHyperlink = $oop.getClass('$ui.HtmlHyperlink')
-.blend($oop.getClass('$ui.HtmlText'))
-.expect($oop.getClass('$ui.Hyperlink'))
+$ui.HtmlHyperlink = $oop.createClass('$ui.HtmlHyperlink')
+.blend($ui.HtmlText)
+.expect($ui.Hyperlink)
 .define(/** @lends $ui.HtmlHyperlink# */{
   /** @ignore */
   defaults: function () {
@@ -38,7 +38,8 @@ $ui.HtmlHyperlink = $oop.getClass('$ui.HtmlHyperlink')
     this._syncHrefAttribute();
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Hyperlink')
+$ui.Hyperlink
 .forwardBlend($ui.HtmlHyperlink, $widget.isHtml);

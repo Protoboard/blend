@@ -14,6 +14,7 @@
  * @extends $widget.Widget
  * @mixes $ui.Selectable
  */
-$ui.RadioButton = $oop.getClass('$ui.RadioButton')
+$ui.RadioButton = $oop.createClass('$ui.RadioButton')
 .blend($widget.Widget)
-.blend($oop.getClass('$ui.Selectable'));
+.blend($ui.Selectable)
+.build();

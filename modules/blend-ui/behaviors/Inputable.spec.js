@@ -9,10 +9,11 @@ describe("$ui", function () {
         inputable;
 
     beforeAll(function () {
-      Inputable = $oop.getClass('test.$ui.Inputable.Inputable')
+      Inputable = $oop.createClass('test.$ui.Inputable.Inputable')
       .blend($widget.Widget)
-      .blend($ui.Inputable);
-      Inputable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Inputable)
+      .build();
+      Inputable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setInputValue()", function () {

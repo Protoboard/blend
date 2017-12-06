@@ -9,11 +9,12 @@ describe("$ui", function () {
         otherInputTypeHost;
 
     beforeAll(function () {
-      OtherInputTypeHost = $oop.getClass('test.$ui.OtherInputTypeHost.OtherInputTypeHost')
+      OtherInputTypeHost = $oop.createClass('test.$ui.OtherInputTypeHost.OtherInputTypeHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.OtherInputTypeHost);
-      OtherInputTypeHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.OtherInputTypeHost)
+      .build();
+      OtherInputTypeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

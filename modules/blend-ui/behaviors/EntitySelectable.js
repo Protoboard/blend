@@ -7,9 +7,9 @@
  * @extends $ui.EntityPropertyBound
  * @extends $ui.Selectable
  */
-$ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
-.blend($oop.getClass('$ui.EntityPropertyBound'))
-.blend($oop.getClass('$ui.Selectable'))
+$ui.EntitySelectable = $oop.createClass('$ui.EntitySelectable')
+.blend($ui.EntityPropertyBound)
+.blend($ui.Selectable)
 .define(/** @lends $ui.EntitySelectable# */{
   /**
    * @member {$entity.LeafNoded} $ui.EntitySelectable#ownValueEntity
@@ -137,4 +137,5 @@ $ui.EntitySelectable = $oop.getClass('$ui.EntitySelectable')
     this.setEntityProperty('selectedStateEntity', selectedStateEntity);
     return this;
   }
-});
+})
+.build();

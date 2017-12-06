@@ -20,8 +20,9 @@
  * @extends $ui.Option
  * @extends $ui.EntitySelectable
  */
-$ui.EntityOption = $oop.getClass('$ui.EntityOption')
-.blend($oop.getClass('$ui.Option'))
-.blend($oop.getClass('$ui.EntityText'))
-.blend($oop.getClass('$ui.EntitySelectable'))
-.blend($oop.getClass('$ui.EntityListItem'));
+$ui.EntityOption = $oop.createClass('$ui.EntityOption')
+.blend($ui.Option)
+.blend($ui.EntityText)
+.blend($ui.EntitySelectable)
+.blend($ui.EntityListItem)
+.build();

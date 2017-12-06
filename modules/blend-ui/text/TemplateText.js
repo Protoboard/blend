@@ -13,9 +13,9 @@
  * @extends $ui.Text
  * @mixes $ui.LocaleBound
  */
-$ui.TemplateText = $oop.getClass('$ui.TemplateText')
-.blend($oop.getClass('$ui.Text'))
-.blend($oop.getClass('$ui.LocaleBound'))
+$ui.TemplateText = $oop.createClass('$ui.TemplateText')
+.blend($ui.Text)
+.blend($ui.LocaleBound)
 .define(/** @lends $ui.TemplateText# */{
   /**
    * @member {$template.LiveTemplate} $ui.Text#textTemplate
@@ -136,4 +136,5 @@ $ui.TemplateText = $oop.getClass('$ui.TemplateText')
   onEntityParameterChange: function () {
     this._syncToTextTemplate();
   }
-});
+})
+.build();

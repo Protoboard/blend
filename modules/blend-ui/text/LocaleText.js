@@ -10,9 +10,9 @@
  * @extends $ui.Text
  * @mixes $ui.LocaleBound
  */
-$ui.LocaleText = $oop.getClass('$ui.LocaleText')
-.blend($oop.getClass('$ui.Text'))
-.blend($oop.getClass('$ui.LocaleBound'))
+$ui.LocaleText = $oop.createClass('$ui.LocaleText')
+.blend($ui.Text)
+.blend($ui.LocaleBound)
 .define(/** @lends $ui.LocaleText# */{
   /**
    * @member {$i18n.Translatable} $ui.LocaleText#textTranslatable
@@ -42,4 +42,5 @@ $ui.LocaleText = $oop.getClass('$ui.LocaleText')
     $assert.isInstanceOf(
         this.textTranslatable, $i18n.Translatable, "Invalid textTranslatable");
   }
-});
+})
+.build();

@@ -9,10 +9,11 @@ describe("$ui", function () {
         singleSelect;
 
     beforeAll(function () {
-      SingleSelect = $oop.getClass('test.$ui.HtmlSingleSelect.SingleSelect')
+      SingleSelect = $oop.createClass('test.$ui.HtmlSingleSelect.SingleSelect')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.SingleSelect);
+      .blend($ui.SingleSelect)
+      .build();
     });
 
     describe("create()", function () {

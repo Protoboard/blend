@@ -5,9 +5,9 @@
  * @extends $widget.HtmlWidget
  * @extends $ui.DisabledAttributeHost
  */
-$ui.InputElementHost = $oop.getClass('$ui.InputElementHost')
+$ui.InputElementHost = $oop.createClass('$ui.InputElementHost')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.DisabledAttributeHost'))
+.blend($ui.DisabledAttributeHost)
 .define(/** @lends $ui.InputElementHost# */{
   /**
    * @member {string} $ui.HtmlTextInput#inputType
@@ -27,4 +27,5 @@ $ui.InputElementHost = $oop.getClass('$ui.InputElementHost')
   _syncTypeAttribute: function () {
     this.setAttribute('type', this.inputType);
   }
-});
+})
+.build();

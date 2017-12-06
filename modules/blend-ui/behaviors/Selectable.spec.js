@@ -9,10 +9,11 @@ describe("$ui", function () {
         selectable;
 
     beforeAll(function () {
-      Selectable = $oop.getClass('test.$ui.Selectable.Selectable')
+      Selectable = $oop.createClass('test.$ui.Selectable.Selectable')
       .blend($widget.Widget)
-      .blend($ui.Selectable);
-      Selectable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Selectable)
+      .build();
+      Selectable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setOwnValue()", function () {

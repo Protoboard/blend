@@ -9,10 +9,11 @@ describe("$ui", function () {
         domText;
 
     beforeAll(function () {
-      DomText = $oop.getClass('test.$ui.DomText.DomText')
+      DomText = $oop.createClass('test.$ui.DomText.DomText')
       .blend($ui.Text)
-      .blend($ui.DomText);
-      DomText.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomText)
+      .build();
+      DomText.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setTextString()", function () {
@@ -47,9 +48,10 @@ describe("$ui", function () {
         htmlText;
 
     beforeAll(function () {
-      HtmlText = $oop.getClass('test.$ui.DomText.HtmlText')
+      HtmlText = $oop.createClass('test.$ui.DomText.HtmlText')
       .blend($ui.Text)
-      .blend($ui.HtmlText);
+      .blend($ui.HtmlText)
+      .build();
     });
 
     describe("create()", function () {

@@ -4,7 +4,7 @@
  * @mixin $ui.RouteBound
  * @augments $widget.Widget
  */
-$ui.RouteBound = $oop.getClass('$ui.RouteBound')
+$ui.RouteBound = $oop.createClass('$ui.RouteBound')
 .expect($widget.Widget)
 .define(/** @lends $ui.RouteBound# */{
   /**
@@ -26,4 +26,5 @@ $ui.RouteBound = $oop.getClass('$ui.RouteBound')
   onRouteChange: function () {
     this._syncToActiveRoute();
   }
-});
+})
+.build();

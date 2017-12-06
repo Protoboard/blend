@@ -4,15 +4,15 @@
  * @mixin $ui.EntityList
  * @extends $ui.EntityPropertyBound
  */
-$ui.EntityList = $oop.getClass('$ui.EntityList')
-.blend($oop.getClass('$ui.EntityPropertyBound'))
+$ui.EntityList = $oop.createClass('$ui.EntityList')
+.blend($ui.EntityPropertyBound)
 .define(/** @lends $ui.EntityList# */{
   /**
    * @memberOf $ui.EntityList
    * @type {$ui.EntityListItem}
    */
   ListItemClass: $oop.blendClass([
-    $widget.Widget, $oop.getClass('$ui.EntityListItem')]),
+    $widget.Widget, $ui.EntityListItem]),
 
   /**
    * @member {$entity.CollectionField} $ui.EntityList#listEntity
@@ -179,4 +179,5 @@ $ui.EntityList = $oop.getClass('$ui.EntityList')
       this._updateItemWidgets(event.propertiesAdded, event.propertiesRemoved);
     }
   }
-});
+})
+.build();

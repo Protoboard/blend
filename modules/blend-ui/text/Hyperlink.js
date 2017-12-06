@@ -8,8 +8,8 @@
 /**
  * @class $ui.Hyperlink
  */
-$ui.Hyperlink = $oop.getClass('$ui.Hyperlink')
-.blend($oop.getClass('$ui.Text'))
+$ui.Hyperlink = $oop.createClass('$ui.Hyperlink')
+.blend($ui.Text)
 .define(/** @lends $ui.Hyperlink# */{
   /**
    * @member {string|$utils.Stringifiable} $ui.Hyperlink#targetUrl
@@ -25,4 +25,5 @@ $ui.Hyperlink = $oop.getClass('$ui.Hyperlink')
     setTargetUrl.shared.targetUrlBefore = targetUrlBefore;
     return this;
   }
-});
+})
+.build();

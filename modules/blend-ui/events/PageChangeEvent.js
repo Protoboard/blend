@@ -9,8 +9,9 @@
  * @class $ui.PageChangeEvent
  * @extends $event.Event
  */
-$ui.PageChangeEvent = $oop.getClass('$ui.PageChangeEvent')
-.blend($event.Event);
+$ui.PageChangeEvent = $oop.createClass('$ui.PageChangeEvent')
+.blend($event.Event)
+.build();
 
 /**
  * @member {$ui.Page} $ui.PageChangeEvent#pageBefore

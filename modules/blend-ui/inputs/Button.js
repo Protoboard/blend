@@ -11,8 +11,9 @@
  * @mixes $ui.Clickable
  * @mixes $ui.Disableable
  */
-$ui.Button = $oop.getClass('$ui.Button')
+$ui.Button = $oop.createClass('$ui.Button')
 .blend($widget.Widget)
-.blend($oop.getClass('$ui.Clickable'))
-.blend($oop.getClass('$ui.Disableable'))
-.blend($oop.getClass('$ui.Focusable'));
+.blend($ui.Clickable)
+.blend($ui.Disableable)
+.blend($ui.Focusable)
+.build();

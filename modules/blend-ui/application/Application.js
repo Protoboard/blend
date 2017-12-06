@@ -10,9 +10,9 @@
  * @extends $widget.RootWidget
  * @extends $ui.RouteBound
  */
-$ui.Application = $oop.getClass('$ui.Application')
+$ui.Application = $oop.createClass('$ui.Application')
 .blend($widget.RootWidget)
-.blend($oop.getClass('$ui.RouteBound'))
+.blend($ui.RouteBound)
 .define(/** @lends $ui.Application# */{
   /**
    * @member {$router.Route} $ui.Application#activeRoute
@@ -27,12 +27,12 @@ $ui.Application = $oop.getClass('$ui.Application')
 
     if (activeRouteBefore) {
       this
-      .setStateValue(activeRouteBefore.__classId, false)
+      .setStateValue(activeRouteBefore.__className, false)
       .setStateValue('route-' + activeRouteBefore, false);
     }
 
     this
-    .setStateValue(activeRouteAfter.__classId, true)
+    .setStateValue(activeRouteAfter.__className, true)
     .setStateValue('route-' + activeRouteAfter, true);
 
     this.activeRoute = activeRouteAfter;
@@ -66,4 +66,5 @@ $ui.Application = $oop.getClass('$ui.Application')
   onRouteChange: function () {
     this._syncToActiveRoute();
   }
-});
+})
+.build();

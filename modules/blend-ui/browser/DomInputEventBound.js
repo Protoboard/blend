@@ -6,7 +6,7 @@
  * @mixin $ui.DomInputEventBound
  * @extends $widget.DomWidget
  */
-$ui.DomInputEventBound = $oop.getClass('$ui.DomInputEventBound')
+$ui.DomInputEventBound = $oop.createClass('$ui.DomInputEventBound')
 .blend($widget.DomWidget)
 .define(/** @lends $ui.DomInputEventBound# */{
   /** @ignore */
@@ -39,4 +39,5 @@ $ui.DomInputEventBound = $oop.getClass('$ui.DomInputEventBound')
 
     eventTrail.push(wrapperEvent);
   }
-});
+})
+.build();

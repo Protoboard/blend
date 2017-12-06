@@ -5,7 +5,7 @@
  * @mixin $ui.Focusable
  * @augments $widget.Widget
  */
-$ui.Focusable = $oop.getClass('$ui.Focusable')
+$ui.Focusable = $oop.createClass('$ui.Focusable')
 .expect($widget.Widget)
 .define(/** @lends $ui.Focusable# */{
   /**
@@ -32,7 +32,8 @@ $ui.Focusable = $oop.getClass('$ui.Focusable')
   isFocused: function () {
     return this.getStateValue($ui.STATE_NAME_FOCUSED);
   }
-});
+})
+.build();
 
 $oop.copyProperties($ui, /** @lends $ui */{
   /**

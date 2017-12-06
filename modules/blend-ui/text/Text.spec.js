@@ -9,9 +9,10 @@ describe("$ui", function () {
         text;
 
     beforeAll(function () {
-      Text = $oop.getClass('test.$ui.Text.Text')
-      .blend($ui.Text);
-      Text.__forwards = {list: [], sources: [], lookup: {}};
+      Text = $oop.createClass('test.$ui.Text.Text')
+      .blend($ui.Text)
+      .build();
+      Text.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

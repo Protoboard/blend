@@ -9,10 +9,11 @@ describe("$ui", function () {
         entitySelectable;
 
     beforeAll(function () {
-      EntitySelectable = $oop.getClass('test.$ui.EntitySelectable.EntitySelectable')
+      EntitySelectable = $oop.createClass('test.$ui.EntitySelectable.EntitySelectable')
       .blend($widget.Widget)
-      .blend($ui.EntitySelectable);
-      EntitySelectable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.EntitySelectable)
+      .build();
+      EntitySelectable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromOwnValueEntity()", function () {

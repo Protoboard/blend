@@ -9,10 +9,11 @@ describe("$ui", function () {
         entityPropertyBound;
 
     beforeAll(function () {
-      EntityPropertyBound = $oop.getClass('test.$ui.EntityPropertyBound.EntityPropertyBound')
+      EntityPropertyBound = $oop.createClass('test.$ui.EntityPropertyBound.EntityPropertyBound')
       .blend($widget.Widget)
-      .blend($ui.EntityPropertyBound);
-      EntityPropertyBound.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.EntityPropertyBound)
+      .build();
+      EntityPropertyBound.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

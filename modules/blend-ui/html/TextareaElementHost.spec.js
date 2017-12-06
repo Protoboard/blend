@@ -9,11 +9,12 @@ describe("$ui", function () {
         textareaElementHost;
 
     beforeAll(function () {
-      TextareaElementHost = $oop.getClass('test.$ui.TextareaElementHost.TextareaElementHost')
+      TextareaElementHost = $oop.createClass('test.$ui.TextareaElementHost.TextareaElementHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.TextareaElementHost);
-      TextareaElementHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.TextareaElementHost)
+      .build();
+      TextareaElementHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

@@ -9,10 +9,11 @@ describe("$ui", function () {
         htmlCheckbox;
 
     beforeAll(function () {
-      HtmlCheckbox = $oop.getClass('test.$ui.HtmlCheckbox.HtmlCheckbox')
+      HtmlCheckbox = $oop.createClass('test.$ui.HtmlCheckbox.HtmlCheckbox')
       .blend($ui.Checkbox)
-      .blend($ui.HtmlCheckbox);
-      HtmlCheckbox.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.HtmlCheckbox)
+      .build();
+      HtmlCheckbox.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

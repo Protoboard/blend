@@ -10,9 +10,10 @@ describe("$ui", function () {
         entityImage;
 
     beforeAll(function () {
-      EntityImage = $oop.getClass('test.$ui.EntityImage.EntityImage')
-      .blend($ui.EntityImage);
-      EntityImage.__forwards = {list: [], sources: [], lookup: {}};
+      EntityImage = $oop.createClass('test.$ui.EntityImage.EntityImage')
+      .blend($ui.EntityImage)
+      .build();
+      EntityImage.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromImageUrlEntity()", function () {

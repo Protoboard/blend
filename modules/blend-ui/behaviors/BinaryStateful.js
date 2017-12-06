@@ -5,7 +5,7 @@
  * @extends $widget.Stateful
  * @augments $widget.Widget
  */
-$ui.BinaryStateful = $oop.getClass('$ui.BinaryStateful')
+$ui.BinaryStateful = $oop.createClass('$ui.BinaryStateful')
 .blend($widget.Stateful)
 .expect($widget.Widget) // todo Move to Stateful
 .define(/** @lends $ui.BinaryStateful# */{
@@ -153,7 +153,8 @@ $ui.BinaryStateful = $oop.getClass('$ui.BinaryStateful')
           stateName, $ui.BINARY_STATE_SOURCE_ID_IMPOSED);
     });
   }
-});
+})
+.build();
 
 $oop.copyProperties($ui, /** @lends $ui */{
   /** @constant */

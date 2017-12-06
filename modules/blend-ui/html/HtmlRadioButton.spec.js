@@ -9,10 +9,11 @@ describe("$ui", function () {
         htmlRadioButton;
 
     beforeAll(function () {
-      HtmlRadioButton = $oop.getClass('test.$ui.HtmlRadioButton.HtmlRadioButton')
+      HtmlRadioButton = $oop.createClass('test.$ui.HtmlRadioButton.HtmlRadioButton')
       .blend($ui.RadioButton)
-      .blend($ui.HtmlRadioButton);
-      HtmlRadioButton.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.HtmlRadioButton)
+      .build();
+      HtmlRadioButton.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

@@ -9,10 +9,11 @@ describe("$ui", function () {
         focusable;
 
     beforeAll(function () {
-      Focusable = $oop.getClass('test.$ui.Focusable.Focusable')
+      Focusable = $oop.createClass('test.$ui.Focusable.Focusable')
       .blend($widget.Widget)
-      .blend($ui.Focusable);
-      Focusable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Focusable)
+      .build();
+      Focusable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("focus()", function () {

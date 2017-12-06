@@ -11,10 +11,10 @@
  * @extends $widget.Widget
  * @mixes $ui.Disableable
  */
-$ui.Page = $oop.getClass('$ui.Page')
+$ui.Page = $oop.createClass('$ui.Page')
 .blend($widget.Widget)
 .blend($oop.Singleton)
-.blend($oop.getClass('$ui.Disableable'))
+.blend($ui.Disableable)
 .define(/** @lends $ui.Page# */{
   /** @ignore */
   defaults: function () {
@@ -28,4 +28,5 @@ $ui.Page = $oop.getClass('$ui.Page')
     $ui.Application.create().setActivePage(this);
     return this;
   }
-});
+})
+.build();

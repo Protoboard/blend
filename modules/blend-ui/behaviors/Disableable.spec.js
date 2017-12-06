@@ -9,10 +9,11 @@ describe("$ui", function () {
         disableable;
 
     beforeAll(function () {
-      Disableable = $oop.getClass('test.$ui.Disableable.Disableable')
+      Disableable = $oop.createClass('test.$ui.Disableable.Disableable')
       .blend($widget.Widget)
-      .blend($ui.Disableable);
-      Disableable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Disableable)
+      .build();
+      Disableable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

@@ -6,10 +6,11 @@
  * @mixes $ui.SingleSelectElementHost
  * @augments $ui.SingleSelect
  */
-$ui.HtmlSingleSelect = $oop.getClass('$ui.HtmlSingleSelect')
+$ui.HtmlSingleSelect = $oop.createClass('$ui.HtmlSingleSelect')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.SingleSelectElementHost'))
-.expect($oop.getClass('$ui.SingleSelect'));
+.blend($ui.SingleSelectElementHost)
+.expect($ui.SingleSelect)
+.build();
 
-$oop.getClass('$ui.SingleSelect')
+$ui.SingleSelect
 .forwardBlend($ui.HtmlSingleSelect, $widget.isHtml);

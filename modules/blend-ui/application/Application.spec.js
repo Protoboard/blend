@@ -9,10 +9,11 @@ describe("$ui", function () {
         application;
 
     beforeAll(function () {
-      Application = $oop.getClass('test.$ui.Application.Application')
+      Application = $oop.createClass('test.$ui.Application.Application')
       .blend($ui.Application)
-      .blend($ui.Application);
-      Application.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.Application)
+      .build();
+      Application.__builder.forwards = {list: [], lookup: {}};
       $router.browserRoutingMethod = undefined;
     });
 
@@ -21,7 +22,7 @@ describe("$ui", function () {
     });
 
     beforeEach(function () {
-      Application.__instanceLookup = {};
+      Application.__builder.instances = {};
     });
 
     it("should be singleton", function () {

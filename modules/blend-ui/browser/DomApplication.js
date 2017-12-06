@@ -5,9 +5,9 @@
  * @extends $widget.DomWidget
  * @augments $ui.Application
  */
-$ui.DomApplication = $oop.getClass('$ui.DomApplication')
+$ui.DomApplication = $oop.createClass('$ui.DomApplication')
 .blend($widget.DomWidget)
-.expect($oop.getClass('$ui.Application'))
+.expect($ui.Application)
 .define(/** @lends $ui.DomApplication# */{
   /** @ignore */
   onAttach: function () {
@@ -22,7 +22,8 @@ $ui.DomApplication = $oop.getClass('$ui.DomApplication')
       this.renderInto(document.body);
     }
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Application')
+$ui.Application
 .forwardBlend($ui.DomApplication, $utils.isBrowser);

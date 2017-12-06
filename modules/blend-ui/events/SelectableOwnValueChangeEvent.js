@@ -4,8 +4,9 @@
  * @class $ui.SelectableOwnValueChangeEvent
  * @extends $event.Event
  */
-$ui.SelectableOwnValueChangeEvent = $oop.getClass('$ui.SelectableOwnValueChangeEvent')
-.blend($event.Event);
+$ui.SelectableOwnValueChangeEvent = $oop.createClass('$ui.SelectableOwnValueChangeEvent')
+.blend($event.Event)
+.build();
 
 /**
  * @member {$ui.Page} $ui.SelectableOwnValueChangeEvent#ownValueBefore

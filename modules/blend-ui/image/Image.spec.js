@@ -9,9 +9,10 @@ describe("$ui", function () {
         image;
 
     beforeAll(function () {
-      Image = $oop.getClass('test.$ui.Image.Image')
-      .blend($ui.Image);
-      Image.__forwards = {list: [], sources: [], lookup: {}};
+      Image = $oop.createClass('test.$ui.Image.Image')
+      .blend($ui.Image)
+      .build();
+      Image.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setImageUrl()", function () {

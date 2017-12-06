@@ -9,12 +9,13 @@ describe("$ui", function () {
         domValidatable;
 
     beforeAll(function () {
-      DomValidatable = $oop.getClass('test.$ui.DomValidatable.DomValidatable')
+      DomValidatable = $oop.createClass('test.$ui.DomValidatable.DomValidatable')
       .blend($widget.Widget)
       .blend($widget.DomWidget)
       .blend($ui.Inputable)
-      .blend($ui.DomValidatable);
-      DomValidatable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomValidatable)
+      .build();
+      DomValidatable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setInputValue()", function () {

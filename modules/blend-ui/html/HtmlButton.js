@@ -6,16 +6,17 @@
  * @extend $widget.DisabledAttributeHost
  * @augments $ui.Button
  */
-$ui.HtmlButton = $oop.getClass('$ui.HtmlButton')
+$ui.HtmlButton = $oop.createClass('$ui.HtmlButton')
 .blend($widget.HtmlWidget)
-.blend($oop.getClass('$ui.DisabledAttributeHost'))
-.expect($oop.getClass('$ui.Button'))
+.blend($ui.DisabledAttributeHost)
+.expect($ui.Button)
 .define(/** @lends $ui.HtmlButton# */{
   /** @ignore */
   defaults: function () {
     this.elementName = this.elementName || 'button';
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Button')
+$ui.Button
 .forwardBlend($ui.HtmlButton, $widget.isHtml);

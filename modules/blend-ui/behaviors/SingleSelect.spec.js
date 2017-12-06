@@ -9,11 +9,12 @@ describe("$ui", function () {
         singleSelect;
 
     beforeAll(function () {
-      SingleSelect = $oop.getClass('test.$ui.SingleSelect.SingleSelect')
+      SingleSelect = $oop.createClass('test.$ui.SingleSelect.SingleSelect')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.SingleSelect);
-      SingleSelect.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.SingleSelect)
+      .build();
+      SingleSelect.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("addChildNode()", function () {
