@@ -9,13 +9,14 @@ describe("$api", function () {
         httpEndpoint;
 
     beforeAll(function () {
-      HttpEndpoint = $oop.getClass('test.$api.HttpEndpoint.HttpEndpoint')
-      .blend($api.HttpEndpoint);
-      HttpEndpoint.__forwards = {list: [], sources: [], lookup: {}};
+      HttpEndpoint = $oop.createClass('test.$api.HttpEndpoint.HttpEndpoint')
+      .blend($api.HttpEndpoint)
+      .build();
+      HttpEndpoint.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      HttpEndpoint.__instanceLookup = {};
+      HttpEndpoint.__builder.instances = {};
     });
 
     it("should be cached by endpointId", function () {
@@ -51,7 +52,7 @@ describe("$data", function () {
           httpEndpoint;
 
       beforeEach(function () {
-        $api.HttpEndpoint.__instanceLookup = {};
+        $api.HttpEndpoint.__builder.instances = {};
         path = 'foo.bar.baz'.toTreePath();
       });
 
@@ -78,7 +79,7 @@ describe("String", function () {
     var httpEndpoint;
 
     beforeEach(function () {
-      $api.HttpEndpoint.__instanceLookup = {};
+      $api.HttpEndpoint.__builder.instances = {};
     });
 
     it("should return a HttpEndpoint instance", function () {
@@ -106,7 +107,7 @@ describe("Array", function () {
         array = ['1', '2', '3'];
 
     beforeEach(function () {
-      $api.HttpEndpoint.__instanceLookup = {};
+      $api.HttpEndpoint.__builder.instances = {};
     });
 
     it("should return a HttpEndpoint instance", function () {

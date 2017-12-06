@@ -9,9 +9,10 @@ describe("$api", function () {
         request;
 
     beforeAll(function () {
-      Request = $oop.getClass('test.$api.Request.Request')
-      .blend($api.Request);
-      Request.__forwards = {list: [], sources: [], lookup: {}};
+      Request = $oop.createClass('test.$api.Request.Request')
+      .blend($api.Request)
+      .build();
+      Request.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromEndpoint()", function () {

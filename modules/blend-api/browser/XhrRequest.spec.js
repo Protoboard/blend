@@ -9,9 +9,10 @@ describe("$api", function () {
         xhrRequest;
 
     beforeAll(function () {
-      XhrRequest = $oop.getClass('test.$api.XhrRequest.XhrRequest')
-      .blend($api.XhrRequest);
-      XhrRequest.__forwards = {list: [], sources: [], lookup: {}};
+      XhrRequest = $oop.createClass('test.$api.XhrRequest.XhrRequest')
+      .blend($api.XhrRequest)
+      .build();
+      XhrRequest.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("toString()", function () {

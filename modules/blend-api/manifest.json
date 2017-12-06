@@ -1,8 +1,20 @@
 {
   "js": [
-    "containers/*.js",
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "containers/index.js",
+    "utils/Dispatchable.js",
+    "utils/Sendable.js",
+    "utils/UrlQuery.js",
+    "index/ActiveRequestIndex.js",
+    "events/ApiEvent.js",
+    "endpoint/Endpoint.js",
+    "request/Request.js",
+    "request/RequestDispatcher.js",
+    "response/Response.js",
+    "ajax/HttpEndpoint.js",
+    "ajax/HttpRequest.js",
+    "ajax/HttpResponse.js",
+    "browser/XhrDispatcher.js",
+    "browser/XhrEvent.js",
+    "browser/XhrRequest.js"
   ]
 }

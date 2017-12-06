@@ -11,9 +11,10 @@ describe("$api", function () {
         xhrDispatcher;
 
     beforeAll(function () {
-      XhrDispatcher = $oop.getClass('test.$api.XhrDispatcher.XhrDispatcher')
-      .blend($api.XhrDispatcher);
-      XhrDispatcher.__forwards = {list: [], sources: [], lookup: {}};
+      XhrDispatcher = $oop.createClass('test.$api.XhrDispatcher.XhrDispatcher')
+      .blend($api.XhrDispatcher)
+      .build();
+      XhrDispatcher.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("dispatch()", function () {
@@ -95,7 +96,7 @@ describe("$api", function () {
         beforeEach(function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
-          spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(1);
+          spyOn($api.XhrDispatcher, '_readyStateGetterProxy').and.returnValue(1);
           promise = xhrDispatcher.dispatch(request);
         });
 
@@ -132,7 +133,7 @@ describe("$api", function () {
         beforeEach(function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
-          spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(2);
+          spyOn($api.XhrDispatcher, '_readyStateGetterProxy').and.returnValue(2);
           promise = xhrDispatcher.dispatch(request);
         });
 
@@ -169,7 +170,7 @@ describe("$api", function () {
         beforeEach(function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'notify');
-          spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(3);
+          spyOn($api.XhrDispatcher, '_readyStateGetterProxy').and.returnValue(3);
           promise = xhrDispatcher.dispatch(request);
         });
 
@@ -204,7 +205,7 @@ describe("$api", function () {
         beforeEach(function () {
           spyOn($event.Event, 'trigger');
           spyOn($utils.Deferred, 'resolve');
-          spyOn(XhrDispatcher, '_readyStateGetterProxy').and.returnValue(4);
+          spyOn($api.XhrDispatcher, '_readyStateGetterProxy').and.returnValue(4);
           promise = xhrDispatcher.dispatch(request);
         });
 

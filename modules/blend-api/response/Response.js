@@ -10,7 +10,8 @@
 /**
  * @class $api.Response
  */
-$api.Response = $oop.getClass('$api.Response');
+$api.Response = $oop.createClass('$api.Response')
+.build();
 
 /**
  * @member {*} $api.Response#responseBody

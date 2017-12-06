@@ -17,8 +17,8 @@
  * @extends $api.Request
  * @todo Host in URL?
  */
-$api.HttpRequest = $oop.getClass('$api.HttpRequest')
-.blend($oop.getClass('$api.Request'))
+$api.HttpRequest = $oop.createClass('$api.HttpRequest')
+.blend($api.Request)
 .define(/** @lends $api.HttpRequest# */{
   /**
    * Target URL of request.
@@ -101,9 +101,10 @@ $api.HttpRequest = $oop.getClass('$api.HttpRequest')
       requestBody: this.requestBody
     }));
   }
-});
+})
+.build();
 
-$oop.getClass('$api.Request')
+$api.Request
 .forwardBlend($api.HttpRequest, function (properties) {
   return properties && $api.HttpEndpoint.mixedBy(properties.endpoint);
 });

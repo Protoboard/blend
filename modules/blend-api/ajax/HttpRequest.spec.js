@@ -9,9 +9,10 @@ describe("$api", function () {
         httpRequest;
 
     beforeAll(function () {
-      HttpRequest = $oop.getClass('test.$api.HttpRequest.HttpRequest')
-      .blend($api.HttpRequest);
-      HttpRequest.__forwards = {list: [], sources: [], lookup: {}};
+      HttpRequest = $oop.createClass('test.$api.HttpRequest.HttpRequest')
+      .blend($api.HttpRequest)
+      .build();
+      HttpRequest.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

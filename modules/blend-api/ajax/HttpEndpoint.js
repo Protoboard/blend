@@ -14,13 +14,13 @@
  * @extends $api.Endpoint
  * @extends $utils.UriPath
  */
-$api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
+$api.HttpEndpoint = $oop.createClass('$api.HttpEndpoint')
 .cacheBy(function (parameters) {
   var endpointId = parameters && parameters.endpointId;
   return endpointId || $api.HttpEndpoint.toString.call(parameters);
 })
-.blend($oop.getClass('$api.Endpoint'))
-.blend($oop.getClass('$utils.UriPath'))
+.blend($api.Endpoint)
+.blend($utils.UriPath)
 .define(/** @lends $api.HttpEndpoint# */{
   /** @ignore */
   spread: function () {
@@ -28,7 +28,8 @@ $api.HttpEndpoint = $oop.getClass('$api.HttpEndpoint')
       this.endpointId = this.toString();
     }
   }
-});
+})
+.build();
 
 $data.TreePath
 .delegate(/** @lends $data.TreePath */{

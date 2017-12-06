@@ -9,9 +9,10 @@ describe("$api", function () {
         requestDispatcher;
 
     beforeAll(function () {
-      RequestDispatcher = $oop.getClass('test.$api.RequestDispatcher.RequestDispatcher')
-      .blend($api.RequestDispatcher);
-      RequestDispatcher.__forwards = {list: [], sources: [], lookup: {}};
+      RequestDispatcher = $oop.createClass('test.$api.RequestDispatcher.RequestDispatcher')
+      .blend($api.RequestDispatcher)
+      .build();
+      RequestDispatcher.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromRequest()", function () {

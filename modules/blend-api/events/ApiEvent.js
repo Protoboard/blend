@@ -13,8 +13,9 @@
  * @class $api.ApiEvent
  * @extends $event.Event
  */
-$api.ApiEvent = $oop.getClass('$api.ApiEvent')
-.blend($event.Event);
+$api.ApiEvent = $oop.createClass('$api.ApiEvent')
+.blend($event.Event)
+.build();
 
 /**
  * @member {$api.Request} $api.ApiEvent#request

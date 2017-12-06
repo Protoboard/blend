@@ -14,7 +14,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
-$api.Endpoint = $oop.getClass('$api.Endpoint')
+$api.Endpoint = $oop.createClass('$api.Endpoint')
 .blend($utils.Identifiable)
 .blend($event.EventSender)
 .blend($event.EventListener)
@@ -44,4 +44,5 @@ $api.Endpoint = $oop.getClass('$api.Endpoint')
     .addTriggerPath(listeningPath)
     .addTriggerPath('endpoint');
   }
-});
+})
+.build();

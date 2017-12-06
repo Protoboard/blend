@@ -14,14 +14,15 @@
  * @class $api.XhrEvent
  * @extends $api.ApiEvent
  */
-$api.XhrEvent = $oop.getClass('$api.XhrEvent')
-.blend($oop.getClass('$api.ApiEvent'));
+$api.XhrEvent = $oop.createClass('$api.XhrEvent')
+.blend($api.ApiEvent)
+.build();
 
 /**
  * @member {XMLHttpRequest} $api.ApiEvent#xhr
  */
 
-$oop.getClass('$api.ApiEvent')
+$api.ApiEvent
 .forwardBlend($api.XhrEvent, function (properties) {
   var xhr = properties && properties.xhr;
   return $utils.isBrowser() &&
