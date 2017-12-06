@@ -44,7 +44,7 @@ $data.PairList = $oop.createClass('$data.PairList')
    */
   deleteItem: function (key, value) {
     $assert.fail([
-      this.__classId + "does not support item deletion."
+      this.__className + "does not support item deletion."
     ].join(" "));
     /* istanbul ignore next */
     return this;
@@ -58,7 +58,7 @@ $data.PairList = $oop.createClass('$data.PairList')
    */
   hasItem: function (key, value) {
     $assert.fail([
-      this.__classId + "does not support item testing."
+      this.__className + "does not support item testing."
     ].join(" "));
     /* istanbul ignore next */
     return false;

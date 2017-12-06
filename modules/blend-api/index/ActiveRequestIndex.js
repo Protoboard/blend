@@ -70,14 +70,14 @@ $api.ActiveRequestIndex = $oop.createClass('$api.ActiveRequestIndex')
 $event.EventSpace.create()
 .on($api.EVENT_REQUEST_SEND,
     'endpoint',
-    $api.ActiveRequestIndex.__classId,
+    $api.ActiveRequestIndex.__className,
     function (event) {
       return $api.ActiveRequestIndex.create()
       .onRequestSend(event);
     })
 .on($api.EVENT_RESPONSE_RECEIVE,
     'endpoint',
-    $api.ActiveRequestIndex.__classId,
+    $api.ActiveRequestIndex.__className,
     function (event) {
       return $api.ActiveRequestIndex.create()
       .onResponseReceive(event);
