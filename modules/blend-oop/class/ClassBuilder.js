@@ -623,6 +623,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     // storing class in global lookups
     $oop.classes.push(Class);
+    $oop.classByClassId[this.classId] = Class;
     $oop.classByClassName[this.className] = Class;
     if (contributors.length > 1) {
       $oop.BlenderIndex.addClass(Class);
@@ -687,7 +688,11 @@ $oop.copyProperties($oop, /** @lends $oop */{
 
   /**
    * @type {Object.<string,$oop.Class>}
-   * @todo Necessary?
+   */
+  classByClassId: {},
+
+  /**
+   * @type {Object.<string,$oop.Class>}
    */
   classByClassName: {},
 

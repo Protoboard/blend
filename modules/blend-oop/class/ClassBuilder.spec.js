@@ -556,13 +556,16 @@ describe("$oop", function () {
       var Class,
           classes,
           classByClassId,
+          classByClassName,
           classByMixinIds;
 
       beforeEach(function () {
         classBuilder = $oop.ClassBuilder.create('foo');
         classes = $oop.classes;
         $oop.classes = [];
-        classByClassId = $oop.classByClassName;
+        classByClassId = $oop.classByClassId;
+        $oop.classByClassId = {};
+        classByClassName = $oop.classByClassName;
         $oop.classByClassName = {};
         classByMixinIds = $oop.classByMixinIds;
         $oop.classByMixinIds = {};
@@ -571,7 +574,8 @@ describe("$oop", function () {
 
       afterEach(function () {
         $oop.classes = classes;
-        $oop.classByClassName = classByClassId;
+        $oop.classByClassId = classByClassId;
+        $oop.classByClassName = classByClassName;
         $oop.classByMixinIds = classByMixinIds;
       });
 
@@ -623,6 +627,7 @@ describe("$oop", function () {
           });
           Interface = interfaceBuilder.build();
           classBuilder.implement(Interface);
+          $oop.ClassBuilder.lastClassId = -1;
         });
 
         it("should set unimplementedInterfaces", function () {
@@ -654,6 +659,13 @@ describe("$oop", function () {
       it("should store class in classes", function () {
         Class = classBuilder.build();
         expect($oop.classes).toEqual([Class]);
+      });
+
+      it("should store class in classByClassId", function () {
+        Class = classBuilder.build();
+        expect($oop.classByClassId).toEqual({
+          0: Class
+        });
       });
 
       it("should store class in classByClassName", function () {
