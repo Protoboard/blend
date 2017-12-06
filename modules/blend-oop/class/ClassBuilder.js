@@ -85,13 +85,10 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
   /**
    * @memberOf $oop.ClassBuilder
-   * @param {string} className
+   * @param {string} [className]
    * @return {$oop.ClassBuilder}
    */
   create: function (className) {
-    $assert.isString(className,
-        "$oop.ClassBuilder#create() expects type string, got " + className);
-
     return $oop.createObject(this, {
       classId: ++$oop.ClassBuilder.lastClassId,
       className: className,
@@ -606,9 +603,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
         this.className + "#build() can't build. Class already built.");
 
     // creating Class object
-    var Class = $oop.createObject($oop.Class, {
-          __classId: this.classId,
-          __className: this.className,
+    var classId = this.classId,
+        className = this.className,
+        Class = $oop.createObject($oop.Class, {
+          __classId: classId,
+          __className: className,
           __builder: this
         }),
         contributors = this.mixins.downstream.list.concat(this);
@@ -623,8 +622,10 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
 
     // storing class in global lookups
     $oop.classes.push(Class);
-    $oop.classByClassId[this.classId] = Class;
-    $oop.classByClassName[this.className] = Class;
+    $oop.classByClassId[classId] = Class;
+    if (className !== undefined) {
+      $oop.classByClassName[className] = Class;
+    }
     if (contributors.length > 1) {
       $oop.BlenderIndex.addClass(Class);
     }
@@ -697,7 +698,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
   classByClassName: {},
 
   /**
-   * @param {string} className
+   * @param {string} [className]
    * @return {$oop.ClassBuilder}
    */
   createClass: function (className) {

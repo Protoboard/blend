@@ -44,7 +44,7 @@ $data.OrderedStringList = $oop.createClass('$data.OrderedStringList')
    * @returns {$data.OrderedStringList}
    */
   getRangeByPrefixWrapped: function (prefix, offset, limit) {
-    return $oop.getClass(this.__className).create({
+    return $oop.getClass(this.__classId).create({
       data: this.getRangeByPrefix(prefix, offset, limit)
     });
   }

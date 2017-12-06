@@ -132,7 +132,7 @@ $data.TreePath = $oop.createClass('$data.TreePath')
    */
   concat: function (path) {
     var components = this.components.concat(path.components);
-    return $oop.getClass(this.__className).create({components: components});
+    return $oop.getClass(this.__classId).create({components: components});
   },
 
   /**

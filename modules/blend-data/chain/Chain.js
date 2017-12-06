@@ -152,7 +152,7 @@ $data.Chain = $oop.createClass('$data.Chain')
    * @returns {$data.Chain}
    */
   concat: function (chain) {
-    var result = $oop.getClass(this.__className).create();
+    var result = $oop.getClass(this.__classId).create();
     this.forEachItem(function (link) {
       result.push(link.clone());
     });

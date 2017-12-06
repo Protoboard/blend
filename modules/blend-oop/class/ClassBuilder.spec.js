@@ -7,14 +7,6 @@ describe("$oop", function () {
     var classBuilder;
 
     describe("create()", function () {
-      describe("on invalid className", function () {
-        it("should throw", function () {
-          expect(function () {
-            $oop.ClassBuilder.create();
-          }).toThrow();
-        });
-      });
-
       it("should create ClassBuilder instance", function () {
         classBuilder = $oop.ClassBuilder.create('foo');
         expect($oop.ClassBuilder.isPrototypeOf(classBuilder)).toBeTruthy();

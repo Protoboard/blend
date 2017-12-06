@@ -85,7 +85,7 @@ $data.StringSet = $oop.createClass('$data.StringSet')
    * @returns {$data.StringSet} Intersection
    */
   intersectWith: function (set) {
-    var result = $oop.getClass(this.__className).create();
+    var result = $oop.getClass(this.__classId).create();
     this.forEachItem(function (item) {
       if (set.hasItem(item)) {
         result.setItem(item);
@@ -100,7 +100,7 @@ $data.StringSet = $oop.createClass('$data.StringSet')
    * @returns {$data.StringSet} Union
    */
   uniteWith: function (set) {
-    var result = $oop.getClass(this.__className).create();
+    var result = $oop.getClass(this.__classId).create();
     this.forEachItem(function (item) {
       result.setItem(item);
     });
@@ -117,7 +117,7 @@ $data.StringSet = $oop.createClass('$data.StringSet')
    * @returns {$data.StringSet} Difference
    */
   subtract: function (set) {
-    var result = $oop.getClass(this.__className).create();
+    var result = $oop.getClass(this.__classId).create();
     this.forEachItem(function (item) {
       if (!set.hasItem(item)) {
         result.setItem(item);
@@ -134,7 +134,7 @@ $data.StringSet = $oop.createClass('$data.StringSet')
    */
   subtractFrom: function (set) {
     var that = this,
-        result = $oop.getClass(this.__className).create();
+        result = $oop.getClass(this.__classId).create();
     set.forEachItem(function (item) {
       if (!that.hasItem(item)) {
         result.setItem(item);
@@ -151,7 +151,7 @@ $data.StringSet = $oop.createClass('$data.StringSet')
    */
   takeDifferenceWith: function (set) {
     var that = this,
-        result = $oop.getClass(this.__className).create();
+        result = $oop.getClass(this.__classId).create();
     this.forEachItem(function (item) {
       if (!set.hasItem(item)) {
         result.setItem(item);

@@ -246,7 +246,7 @@ $data.Tree = $oop.createClass('$data.Tree')
    * @todo Wrap primitives in DataContainer
    */
   getNodeWrapped: function (path) {
-    return $oop.getClass(this.__className).create({data: this.getNode(path)});
+    return $oop.getClass(this.__classId).create({data: this.getNode(path)});
   },
 
   /**
@@ -274,7 +274,7 @@ $data.Tree = $oop.createClass('$data.Tree')
    */
   getInitializedNodeWrapped: function (path, initializer) {
     var initializedNode = this.getInitializedNode(path, initializer);
-    return $oop.getClass(this.__className).create({data: initializedNode});
+    return $oop.getClass(this.__classId).create({data: initializedNode});
   },
 
   /**

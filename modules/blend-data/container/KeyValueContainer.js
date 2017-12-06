@@ -94,7 +94,7 @@ $data.KeyValueContainer = $oop.createClass('$data.KeyValueContainer')
    */
   filter: function (callback, context) {
     var data = this.data instanceof Array ? [] : {},
-        ResultClass = $oop.getClass(this.__className),
+        ResultClass = $oop.getClass(this.__classId),
         result = ResultClass.create({data: data});
 
     this.forEachItem(function (value, key) {

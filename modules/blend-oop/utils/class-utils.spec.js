@@ -114,15 +114,16 @@ describe("$oop", function () {
   describe("getClass()", function () {
     var Class;
 
-    beforeAll(function () {
+    beforeEach(function () {
+      $oop.ClassBuilder.lastClassId = -1;
       Class = $oop.createClass('test.$oop.class-utils.Class').build();
     });
 
     it("should retrieve class ID from Class", function () {
-      expect($oop.getClass('test.$oop.class-utils.Class')).toBe(Class);
+      expect($oop.getClass(0)).toBe(Class);
     });
 
-    describe("for falsy input", function () {
+    describe("for invalid input", function () {
       it("should return falsy", function () {
         expect($oop.getClassId(undefined)).toBeFalsy();
         expect($oop.getClassId(null)).toBeFalsy();

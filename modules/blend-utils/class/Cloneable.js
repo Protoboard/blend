@@ -12,7 +12,7 @@ $utils.Cloneable = $oop.createClass('$utils.Cloneable')
    * @todo Add "recursive" param?
    */
   clone: function clone() {
-    var Class = $oop.getClass(this.__className);
+    var Class = $oop.getClass(this.__classId);
     return Class.create(this);
   }
 })

@@ -72,11 +72,11 @@ $oop.copyProperties($oop, /** @lends $oop */{
   },
 
   /**
-   * @param {string} className
+   * @param {number} classId
    * @return {$oop.Class}
    */
-  getClass: function (className) {
-    return $oop.classByClassName[className];
+  getClass: function (classId) {
+    return $oop.classByClassId[classId];
   },
 
   /**

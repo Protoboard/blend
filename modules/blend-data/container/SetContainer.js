@@ -86,7 +86,7 @@ $data.SetContainer = $oop.createClass('$data.SetContainer')
    * @returns {$data.SetContainer} Filtered collection
    */
   filter: function (callback, context) {
-    var ResultClass = $oop.getClass(this.__className),
+    var ResultClass = $oop.getClass(this.__classId),
         result = ResultClass.create();
 
     this.forEachItem(function (item) {

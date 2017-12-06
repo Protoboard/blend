@@ -185,7 +185,7 @@ $data.OrderedList = $oop.createClass('$data.OrderedList')
    * @returns {$data.OrderedList}
    */
   getRangeWrapped: function (startValue, endValue, offset, limit) {
-    return $oop.getClass(this.__className).create({
+    return $oop.getClass(this.__classId).create({
       data: this.getRange(startValue, endValue, offset, limit)
     });
   }
