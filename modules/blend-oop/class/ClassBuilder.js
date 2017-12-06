@@ -143,11 +143,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var mixins = this.mixins.downstream,
         mixinList = mixins.list,
         mixinLookup = mixins.lookup,
-        mixinId = classBuilder.className;
+        mixinName = classBuilder.className;
 
-    if (!hOP.call(mixinLookup, mixinId)) {
+    if (!hOP.call(mixinLookup, mixinName)) {
       mixinList.push(classBuilder);
-      mixinLookup[mixinId] = 1;
+      mixinLookup[mixinName] = 1;
     }
   },
 
@@ -159,11 +159,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var hosts = this.mixins.upstream,
         hostList = hosts.list,
         hostLookup = hosts.lookup,
-        hostId = classBuilder.className;
+        hostName = classBuilder.className;
 
-    if (!hOP.call(hostLookup, hostId)) {
+    if (!hOP.call(hostLookup, hostName)) {
       hostList.push(classBuilder);
-      hostLookup[hostId] = 1;
+      hostLookup[hostName] = 1;
     }
   },
 
@@ -198,11 +198,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var interfaces = this.interfaces.downstream,
         interfaceList = interfaces.list,
         interfaceLookup = interfaces.lookup,
-        interfaceId = interfaceBuilder.className;
+        interfaceName = interfaceBuilder.className;
 
-    if (!hOP.call(interfaceLookup, interfaceId)) {
+    if (!hOP.call(interfaceLookup, interfaceName)) {
       interfaceList.push(interfaceBuilder);
-      interfaceLookup[interfaceId] = 1;
+      interfaceLookup[interfaceName] = 1;
     }
   },
 
@@ -214,11 +214,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var implementers = this.interfaces.upstream,
         implementerList = implementers.list,
         implementerLookup = implementers.lookup,
-        implementerId = classBuilder.className;
+        implementerName = classBuilder.className;
 
-    if (!hOP.call(implementerLookup, implementerId)) {
+    if (!hOP.call(implementerLookup, implementerName)) {
       implementerList.push(classBuilder);
-      implementerLookup[implementerId] = 1;
+      implementerLookup[implementerName] = 1;
     }
   },
 
@@ -230,11 +230,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var expected = this.expectations.downstream,
         expectedList = expected.list,
         expectedLookup = expected.lookup,
-        expectedId = classBuilder.className;
+        expectedName = classBuilder.className;
 
-    if (!hOP.call(expectedLookup, expectedId)) {
+    if (!hOP.call(expectedLookup, expectedName)) {
       expectedList.push(classBuilder);
-      expectedLookup[expectedId] = 1;
+      expectedLookup[expectedName] = 1;
     }
   },
 
@@ -246,11 +246,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     var expecters = this.expectations.upstream,
         expecterList = expecters.list,
         expecterLookup = expecters.lookup,
-        expecterId = classBuilder.className;
+        expecterName = classBuilder.className;
 
-    if (!hOP.call(expecterLookup, expecterId)) {
+    if (!hOP.call(expecterLookup, expecterName)) {
       expecterList.push(classBuilder);
-      expecterLookup[expecterId] = 1;
+      expecterLookup[expecterName] = 1;
     }
   },
 
@@ -429,16 +429,16 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   _addToForwards: function (mixinBuilder, callback) {
     var forwards = this.forwards,
-        forwardId = mixinBuilder.className,
+        forwardName = mixinBuilder.className,
         forwardList = forwards.list,
         forwardLookup = forwards.lookup;
 
-    if (!forwardLookup[forwardId]) {
+    if (!forwardLookup[forwardName]) {
       forwardList.push({
         mixin: mixinBuilder,
         callback: callback
       });
-      forwardLookup[forwardId] = 1;
+      forwardLookup[forwardName] = 1;
     }
   },
 
@@ -448,7 +448,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
   _removeFromForwards: function (mixinBuilder) {
     var forwards = this.forwards,
-        forwardId = mixinBuilder.className,
+        forwardName = mixinBuilder.className,
         forwardList = forwards.list,
         forwardLookup = forwards.lookup,
         forwardCount = forwardList.length,
@@ -457,7 +457,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     for (i = 0; i < forwardCount; i++) {
       if (forwardList[i].mixin === mixinBuilder) {
         forwardList.splice(i, 1);
-        delete forwardLookup[forwardId];
+        delete forwardLookup[forwardName];
         break;
       }
     }
