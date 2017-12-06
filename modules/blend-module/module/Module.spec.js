@@ -12,7 +12,7 @@ describe("$module", function () {
       Module = $oop.createClass('test.$module.Module.Module')
       .blend($module.Module)
       .build();
-      Module.__forwards = {list: [], sources: [], lookup: {}};
+      Module.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

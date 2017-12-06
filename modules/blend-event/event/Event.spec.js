@@ -13,7 +13,7 @@ describe("$event", function () {
       Event = $oop.createClass('test.$event.Event.Event')
       .blend($event.Event)
       .build();
-      Event.__forwards = {list: [], sources: [], lookup: {}};
+      Event.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromEventName()", function () {

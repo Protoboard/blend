@@ -12,7 +12,7 @@ describe("$module", function () {
       ModuleEnvironment = $oop.createClass('test.$module.ModuleEnvironment.ModuleEnvironment')
       .blend($module.ModuleEnvironment)
       .build();
-      ModuleEnvironment.__forwards = {list: [], sources: [], lookup: {}};
+      ModuleEnvironment.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

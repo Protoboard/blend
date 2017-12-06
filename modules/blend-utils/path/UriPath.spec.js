@@ -12,7 +12,7 @@ describe("$utils", function () {
       UriPath = $oop.createClass('test.$utils.UriPath.UriPath')
       .blend($utils.UriPath)
       .build();
-      UriPath.__forwards = {list: [], sources: [], lookup: {}};
+      UriPath.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromString()", function () {
