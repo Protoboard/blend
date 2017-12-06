@@ -9,8 +9,9 @@ describe("$i18n", function () {
         localeEnvironmentDocument;
 
     beforeAll(function () {
-      LocaleEnvironmentDocument = $oop.getClass('test.$i18n.LocaleEnvironmentDocument.LocaleEnvironmentDocument')
-      .blend($i18n.LocaleEnvironmentDocument);
+      LocaleEnvironmentDocument = $oop.createClass('test.$i18n.LocaleEnvironmentDocument.LocaleEnvironmentDocument')
+      .blend($i18n.LocaleEnvironmentDocument)
+      .build();
       LocaleEnvironmentDocument.__forwards = {
         list: [],
         sources: [],

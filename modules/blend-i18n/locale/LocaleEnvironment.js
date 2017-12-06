@@ -12,7 +12,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
-$i18n.LocaleEnvironment = $oop.getClass('$i18n.LocaleEnvironment')
+$i18n.LocaleEnvironment = $oop.createClass('$i18n.LocaleEnvironment')
 .blend($oop.Singleton)
 .blend($event.EventSender)
 .blend($event.EventListener)
@@ -69,13 +69,14 @@ $i18n.LocaleEnvironment = $oop.getClass('$i18n.LocaleEnvironment')
     })
     .trigger();
   }
-});
+})
+.build();
 
 $event.EventSpace.create()
 .on($entity.EVENT_ENTITY_CHANGE,
     $entity.FieldAttributePath.fromAttributeRef('_localeEnvironment/activeLocale')
     .unshift('entity').toString(),
-    $i18n.LocaleEnvironment.__classId,
+    $i18n.LocaleEnvironment.__className,
     function (event) {
       return $i18n.LocaleEnvironment.create().onActiveLocaleFieldChange(event);
     });

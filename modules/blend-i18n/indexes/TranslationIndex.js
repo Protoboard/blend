@@ -10,7 +10,7 @@
  * context, and plural information.
  * @class $i18n.TranslationIndex
  */
-$i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
+$i18n.TranslationIndex = $oop.createClass('$i18n.TranslationIndex')
 .blend($oop.Singleton)
 .define(/** @lends $i18n.TranslationIndex# */{
   /** @ignore */
@@ -128,13 +128,14 @@ $i18n.TranslationIndex = $oop.getClass('$i18n.TranslationIndex')
       that._addTranslationNode(translationNode, localeId);
     });
   }
-});
+})
+.build();
 
 $event.EventSpace.create()
 .on($entity.EVENT_ENTITY_CHANGE,
     $entity.FieldAttributePath.fromAttributeRef('_locale/translations')
     .unshift('entity').toString(),
-    $i18n.TranslationIndex.__classId,
+    $i18n.TranslationIndex.__className,
     function (event) {
       return $i18n.TranslationIndex.create().onTranslationsFieldChange(event);
     });

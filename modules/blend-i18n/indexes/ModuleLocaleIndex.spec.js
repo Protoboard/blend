@@ -11,9 +11,10 @@ describe("$i18n", function () {
         modulesByLocaleNode;
 
     beforeAll(function () {
-      ModuleLocaleIndex = $oop.getClass('test.$i18n.ModuleLocaleIndex.ModuleLocaleIndex')
-      .blend($i18n.ModuleLocaleIndex);
-      ModuleLocaleIndex.__forwards = {list: [], sources: [], lookup: {}};
+      ModuleLocaleIndex = $oop.createClass('test.$i18n.ModuleLocaleIndex.ModuleLocaleIndex')
+      .blend($i18n.ModuleLocaleIndex)
+      .build();
+      ModuleLocaleIndex.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

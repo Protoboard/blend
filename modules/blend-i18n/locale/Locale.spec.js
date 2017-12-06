@@ -9,13 +9,14 @@ describe("$i18n", function () {
         locale;
 
     beforeAll(function () {
-      Locale = $oop.getClass('test.$i18n.Locale.Locale')
-      .blend($i18n.Locale);
-      Locale.__forwards = {list: [], sources: [], lookup: {}};
+      Locale = $oop.createClass('test.$i18n.Locale.Locale')
+      .blend($i18n.Locale)
+      .build();
+      Locale.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      Locale.__instanceLookup = {};
+      Locale.__builder.instances = {};
     });
 
     describe("fromLocaleKey", function () {
@@ -81,8 +82,8 @@ describe("$i18n", function () {
       beforeEach(function () {
         translationIndexData = $entity.index.data._translation;
         $entity.index.data._translation = {};
-        $i18n.TranslationIndex.__instanceLookup = {};
-        $i18n.Locale.__instanceLookup = {};
+        $i18n.TranslationIndex.__builder.instances = {};
+        $i18n.Locale.__builder.instances = {};
 
         '_translation/bill-1-de'.toDocument().setNode({
           originalString: "bill",
@@ -221,7 +222,7 @@ describe("String", function () {
     var locale;
 
     beforeEach(function () {
-      $i18n.Locale.__instanceLookup = {};
+      $i18n.Locale.__builder.instances = {};
     });
 
     it("should create a Locale instance", function () {

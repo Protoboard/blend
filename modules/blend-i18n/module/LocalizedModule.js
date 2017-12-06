@@ -13,7 +13,7 @@
  * @class $i18n.LocalizedModule
  * @extends $module.Module
  */
-$i18n.LocalizedModule = $oop.getClass('$i18n.LocalizedModule')
+$i18n.LocalizedModule = $oop.createClass('$i18n.LocalizedModule')
 .blend($module.Module)
 .define(/** @lends $i18n.LocalizedModule# */{
   /**
@@ -27,7 +27,8 @@ $i18n.LocalizedModule = $oop.getClass('$i18n.LocalizedModule')
       return $i18n.Locale.fromLocaleId(localeId);
     });
   }
-});
+})
+.build();
 
 $module.Module
 .forwardBlend($i18n.LocalizedModule, function (properties) {

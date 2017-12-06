@@ -9,9 +9,10 @@ describe("$i18n", function () {
         translationIndex;
 
     beforeAll(function () {
-      TranslationIndex = $oop.getClass('test.$i18n.TranslationIndex.TranslationIndex')
-      .blend($i18n.TranslationIndex);
-      TranslationIndex.__forwards = {list: [], sources: [], lookup: {}};
+      TranslationIndex = $oop.createClass('test.$i18n.TranslationIndex.TranslationIndex')
+      .blend($i18n.TranslationIndex)
+      .build();
+      TranslationIndex.__builder.forwards = {list: [], lookup: {}};
     });
 
     it("should be singleton", function () {
@@ -22,7 +23,7 @@ describe("$i18n", function () {
       var translationIndexData;
 
       beforeEach(function () {
-        TranslationIndex.__instanceLookup = {};
+        TranslationIndex.__builder.instances = {};
         $entity.entities.appendNode('document'.toTreePath(), {
           _locale: {
             'en-us': {

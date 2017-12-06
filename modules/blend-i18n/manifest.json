@@ -1,8 +1,18 @@
 {
   "js": [
-    "containers/*.js",
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "containers/entities.js",
+    "entities/LocaleDocument.js",
+    "entities/LocaleEnvironmentDocument.js",
+    "entities/TranslationDocument.js",
+    "events/LocaleChangeEvent.js",
+    "utils/tr.js",
+    "utils/ActiveTranslationsWatcher.js",
+    "utils/Translatable.js",
+    "utils/TranslationsWatcher.js",
+    "indexes/ModuleLocaleIndex.js",
+    "indexes/TranslationIndex.js",
+    "locale/Locale.js",
+    "locale/LocaleEnvironment.js",
+    "module/LocalizedModule.js"
   ]
 }

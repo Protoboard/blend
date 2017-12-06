@@ -11,7 +11,7 @@
  * @class $i18n.LocaleEnvironmentDocument
  * @extends $entity.Document
  */
-$i18n.LocaleEnvironmentDocument = $oop.getClass('$i18n.LocaleEnvironmentDocument')
+$i18n.LocaleEnvironmentDocument = $oop.createClass('$i18n.LocaleEnvironmentDocument')
 .blend($entity.Document)
 .define(/** @lends $i18n.LocaleEnvironmentDocument# */{
   /**
@@ -33,7 +33,8 @@ $i18n.LocaleEnvironmentDocument = $oop.getClass('$i18n.LocaleEnvironmentDocument
     var activeLocaleRef = this.getField('activeLocale').getNode();
     return activeLocaleRef && $entity.DocumentKey.fromString(activeLocaleRef);
   }
-});
+})
+.build();
 
 $entity.Document
 .forwardBlend($i18n.LocaleEnvironmentDocument, function (properties) {

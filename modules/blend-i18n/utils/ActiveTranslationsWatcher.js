@@ -12,7 +12,7 @@
  * @class $i18n.ActiveTranslationsWatcher
  * @extends $event.EventListener
  */
-$i18n.ActiveTranslationsWatcher = $oop.getClass('$i18n.ActiveTranslationsWatcher')
+$i18n.ActiveTranslationsWatcher = $oop.createClass('$i18n.ActiveTranslationsWatcher')
 .blend($oop.Singleton)
 .blend($event.EventListener)
 .define(/** @lends $i18n.ActiveTranslationsWatcher# */{
@@ -46,19 +46,20 @@ $i18n.ActiveTranslationsWatcher = $oop.getClass('$i18n.ActiveTranslationsWatcher
     var localeEnvironment = $i18n.LocaleEnvironment.create();
     return localeEnvironment.trigger($i18n.EVENT_ACTIVE_TRANSLATIONS_CHANGE);
   }
-});
+})
+.build();
 
 $event.EventSpace.create()
 .on($i18n.EVENT_TRANSLATIONS_CHANGE,
     'locale',
-    $i18n.ActiveTranslationsWatcher.__classId,
+    $i18n.ActiveTranslationsWatcher.__className,
     function (event) {
       return $i18n.ActiveTranslationsWatcher.create()
       .onTranslationsChange(event);
     })
 .on($i18n.EVENT_LOCALE_CHANGE,
     'locale',
-    $i18n.ActiveTranslationsWatcher.__classId,
+    $i18n.ActiveTranslationsWatcher.__className,
     function (event) {
       return $i18n.ActiveTranslationsWatcher.create()
       .onLocaleChange(event);
