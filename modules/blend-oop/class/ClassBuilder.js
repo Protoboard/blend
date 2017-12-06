@@ -3,6 +3,7 @@
 /**
  * Builds classes.
  * @class $oop.ClassBuilder
+ * @todo Add mixes()
  */
 $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBuilder# */{
   /**
