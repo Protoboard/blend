@@ -39,7 +39,8 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    */
 
   /**
-   * Registry of classes that contribute to the current class.
+   * Registry of classes that contribute to the current class. Includes
+   * downstream mixins and self, except ad-hoc classes.
    * @name $oop.ClassBuilder#contributors
    * @type {Array.<$oop.ClassBuilder>}
    */
@@ -611,11 +612,10 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
           __className: className,
           __builder: this
         }),
-        contributors = className !== undefined ?
-            // to regular classes, mixins & self both contribute
-            this.mixins.downstream.list.concat(this) :
-            // fto ad-hoc classes, only mixins contribute
-            this.mixins.downstream.list;
+        contributors = this.mixins.downstream.list.concat(this)
+        .filter(function (mixinBuilder) {
+          return mixinBuilder.className !== undefined;
+        });
 
     // adding finalized information to builder
     $oop.copyProperties(this, {

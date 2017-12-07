@@ -717,6 +717,13 @@ describe("$oop", function () {
           });
         });
 
+        it("should initialize contributors", function () {
+          classBuilder.build();
+          expect(classBuilder.contributors).toEqual([
+            Mixin1.__builder, Mixin2.__builder, classBuilder
+          ]);
+        });
+
         describe("for ad-hoc class", function () {
           beforeEach(function () {
             classBuilder.className = undefined;
@@ -727,6 +734,29 @@ describe("$oop", function () {
             expect($oop.classByMixinIds).toEqual({
               '1,2': Mixin2
             });
+          });
+
+          it("should not store class in contributors", function () {
+            classBuilder.build();
+            expect(classBuilder.contributors).toEqual([
+              Mixin1.__builder, Mixin2.__builder
+            ]);
+          });
+        });
+
+        describe("when one of the mixins is ad-hoc", function () {
+          var AdHocMixin;
+
+          beforeEach(function () {
+            AdHocMixin = $oop.createClass().build();
+            classBuilder.mix(AdHocMixin);
+          });
+
+          it("should not include ad-hoc mixin in contributors", function () {
+            classBuilder.build();
+            expect(classBuilder.contributors).toEqual([
+              Mixin1.__builder, Mixin2.__builder, classBuilder
+            ]);
           });
         });
       });
