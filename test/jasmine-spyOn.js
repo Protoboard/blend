@@ -4,11 +4,15 @@
 
   env.spyOn = function (obj, methodName) {
     if ($oop.Class.isPrototypeOf(obj)) {
-      return spyOnObjects(obj.__mixins.upstream.list
-      .filter(function (Class) {
-        return Class.hasOwnProperty(methodName);
+      var affectedClasses = obj.__builder.mixins.upstream.list
+      .filter(function (mixerBuilder) {
+        return mixerBuilder.Class.hasOwnProperty(methodName);
       })
-      .concat([obj]), methodName);
+      .map(function (affectedBuilder) {
+        return affectedBuilder.Class;
+      })
+      .concat([obj]);
+      return spyOnObjects(affectedClasses, methodName);
     } else {
       return spyOn(obj, methodName);
     }

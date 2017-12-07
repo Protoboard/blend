@@ -15,8 +15,8 @@
  * @class $utils.Promise
  * @implements $utils.Thenable
  */
-$utils.Promise = $oop.getClass('$utils.Promise')
-.implement($oop.getClass('$utils.Thenable'))
+$utils.Promise = $oop.createClass('$utils.Promise')
+.implement($utils.Thenable)
 .define(/** @lends $utils.Promise# */{
   /**
    * Current state of the promise. Possible values: "pending",
@@ -151,7 +151,8 @@ $utils.Promise = $oop.getClass('$utils.Promise')
 
     return deferred.promise;
   }
-});
+})
+.build();
 
 $oop.copyProperties($utils, /** @lends $utils */{
   /** @constant */

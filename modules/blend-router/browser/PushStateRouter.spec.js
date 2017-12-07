@@ -9,14 +9,15 @@ describe("$router", function () {
         pushStateRouter;
 
     beforeAll(function () {
-      PushStateRouter = $oop.getClass('test.$router.PushStateRouter.PushStateRouter')
-      .blend($router.PushStateRouter);
-      PushStateRouter.__forwards = {list: [], sources: [], lookup: {}};
+      PushStateRouter = $oop.createClass('test.$router.PushStateRouter.PushStateRouter')
+      .blend($router.PushStateRouter)
+      .build();
+      PushStateRouter.__builder.forwards = {list: [], lookup: {}};
       $router.browserRoutingMethod = 'pushState';
     });
 
     beforeEach(function () {
-      PushStateRouter.__instanceLookup = {};
+      PushStateRouter.__builder.instances = {};
     });
 
     it("should be singleton", function () {
@@ -64,7 +65,7 @@ describe("$router", function () {
         popStateEvent = {};
         window.history.pushState({}, '', '/foo/bar');
         pushStateRouter = PushStateRouter.create();
-        $event.EventTrail.__instanceLookup = {};
+        $event.EventTrail.__builder.instances = {};
       });
 
       afterEach(function () {

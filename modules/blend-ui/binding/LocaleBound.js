@@ -6,7 +6,7 @@
  * @mixin $ui.LocaleBound
  * @augments $widget.Widget
  */
-$ui.LocaleBound = $oop.getClass('$ui.LocaleBound')
+$ui.LocaleBound = $oop.createClass('$ui.LocaleBound')
 .expect($widget.Widget)
 .define(/** @lends $ui.LocaleBound# */{
   /**
@@ -47,4 +47,5 @@ $ui.LocaleBound = $oop.getClass('$ui.LocaleBound')
   onActiveTranslationsChange: function () {
     this._syncToActiveTranslations();
   }
-});
+})
+.build();

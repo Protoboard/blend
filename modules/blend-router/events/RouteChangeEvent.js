@@ -11,8 +11,9 @@
  * @class $router.RouteChangeEvent
  * @extends {$event.Event}
  */
-$router.RouteChangeEvent = $oop.getClass('$router.RouteChangeEvent')
-.blend($event.Event);
+$router.RouteChangeEvent = $oop.createClass('$router.RouteChangeEvent')
+.blend($event.Event)
+.build();
 
 /**
  * @member {$router.Route} $router.RouteChangeEvent#routeBefore

@@ -9,10 +9,11 @@ describe("$ui", function () {
         htmlTextInput;
 
     beforeAll(function () {
-      HtmlTextInput = $oop.getClass('test.$ui.HtmlTextInput.HtmlTextInput')
+      HtmlTextInput = $oop.createClass('test.$ui.HtmlTextInput.HtmlTextInput')
       .blend($ui.TextInput)
-      .blend($ui.HtmlTextInput);
-      HtmlTextInput.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.HtmlTextInput)
+      .build();
+      HtmlTextInput.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {
@@ -28,9 +29,10 @@ describe("$ui", function () {
         htmlTextInput;
 
     beforeAll(function () {
-      HtmlTextInput = $oop.getClass('test.$ui.HtmlTextInput.HtmlTextInput')
+      HtmlTextInput = $oop.createClass('test.$ui.HtmlTextInput.HtmlTextInput')
       .blend($ui.TextInput)
-      .blend($ui.HtmlTextInput);
+      .blend($ui.HtmlTextInput)
+      .build();
     });
 
     describe("create()", function () {

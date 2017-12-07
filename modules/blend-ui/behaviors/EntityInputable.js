@@ -6,9 +6,9 @@
  * @extends $ui.EntityPropertyBound
  * @extends $ui.Inputable
  */
-$ui.EntityInputable = $oop.getClass('$ui.EntityInputable')
-.blend($oop.getClass('$ui.EntityPropertyBound'))
-.blend($oop.getClass('$ui.Inputable'))
+$ui.EntityInputable = $oop.createClass('$ui.EntityInputable')
+.blend($ui.EntityPropertyBound)
+.blend($ui.Inputable)
 .define(/** @lends $ui.EntityInputable# */{
   /**
    * @member {$entity.LeafNoded} $ui.EntityInputable#inputValueEntity
@@ -70,4 +70,5 @@ $ui.EntityInputable = $oop.getClass('$ui.EntityInputable')
     this.setEntityProperty('inputValueEntity', inputValueEntity);
     return this;
   }
-});
+})
+.build();

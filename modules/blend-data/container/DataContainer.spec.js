@@ -10,8 +10,9 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      DataContainer = $oop.getClass("test.$data.DataContainer.DataContainer")
-      .blend($data.DataContainer);
+      DataContainer = $oop.createClass("test.$data.DataContainer.DataContainer")
+      .blend($data.DataContainer)
+      .build();
     });
 
     beforeEach(function () {
@@ -41,8 +42,9 @@ describe("$data", function () {
       var DataContainer2;
 
       beforeAll(function () {
-        DataContainer2 = $oop.getClass("test.$data.DataContainer.DataContainer2")
-        .blend($data.DataContainer);
+        DataContainer2 = $oop.createClass("test.$data.DataContainer.DataContainer2")
+        .blend($data.DataContainer)
+        .build();
       });
 
       beforeEach(function () {

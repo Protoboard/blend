@@ -1,7 +1,23 @@
 {
   "js": [
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "utils/environment-utils.js",
+    "utils/Equatable.js",
+    "string/string-utils.js",
+    "string/Stringifiable.js",
+    "string/StringifyCached.js",
+    "class/Cloneable.js",
+    "class/Destructible.js",
+    "class/Identifiable.js",
+    "class/Retrievable.js",
+    "path/Path.js",
+    "path/UriPath.js",
+    "async/async-utils.js",
+    "async/schedule-utils.js",
+    "async/Timer.js",
+    "async/Timeout.js",
+    "async/Interval.js",
+    "promise/Thenable.js",
+    "promise/Deferred.js",
+    "promise/Promise.js"
   ]
 }

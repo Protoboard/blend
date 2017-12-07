@@ -9,9 +9,10 @@ describe("$api", function () {
         urlQuery;
 
     beforeAll(function () {
-      UrlQuery = $oop.getClass('test.$api.UrlQuery.UrlQuery')
-      .blend($api.UrlQuery);
-      UrlQuery.__forwards = {list: [], sources: [], lookup: {}};
+      UrlQuery = $oop.createClass('test.$api.UrlQuery.UrlQuery')
+      .blend($api.UrlQuery)
+      .build();
+      UrlQuery.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromString()", function () {

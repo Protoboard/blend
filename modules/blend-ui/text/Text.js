@@ -13,7 +13,7 @@
  * @extends $widget.Widget
  * @todo Add formatting when ready
  */
-$ui.Text = $oop.getClass('$ui.Text')
+$ui.Text = $oop.createClass('$ui.Text')
 .blend($widget.Widget)
 .define(/** @lends $ui.Text# */{
   /**
@@ -45,4 +45,5 @@ $ui.Text = $oop.getClass('$ui.Text')
     setTextString.shared.textStringBefore = textStringBefore;
     return this;
   }
-});
+})
+.build();

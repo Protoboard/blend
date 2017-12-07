@@ -11,8 +11,9 @@ describe("$template", function () {
         result;
 
     beforeAll(function () {
-      LiveTemplate = $oop.getClass('test.$template.LiveTemplate.LiveTemplate')
-      .blend($template.LiveTemplate);
+      LiveTemplate = $oop.createClass('test.$template.LiveTemplate.LiveTemplate')
+      .blend($template.LiveTemplate)
+      .build();
     });
 
     beforeEach(function () {
@@ -38,20 +39,19 @@ describe("$template", function () {
     });
 
     describe("setParameterValues()", function () {
-      beforeEach(function () {
-        spyOn($event.Event, 'trigger');
-
-        result = liveTemplate.setParameterValues({
+      it("should return self", function () {
+        var result = liveTemplate.setParameterValues({
           foo: 'bar',
           baz: 'quux'
         });
-      });
-
-      it("should return self", function () {
         expect(result).toBe(liveTemplate);
       });
 
       it("should append specified parameter values", function () {
+        liveTemplate.setParameterValues({
+          foo: 'bar',
+          baz: 'quux'
+        });
         expect(liveTemplate.parameterValues).toEqual({
           foo: 'bar',
           baz: 'quux'
@@ -59,9 +59,14 @@ describe("$template", function () {
       });
 
       it("should trigger event", function () {
-        var calls = $event.Event.trigger.calls.all();
+        spyOn($event.Event, 'trigger');
+        liveTemplate.setParameterValues({
+          foo: 'bar',
+          baz: 'quux'
+        });
 
-        expect($event.Event.trigger).toHaveBeenCalledTimes(1);
+        var calls = $event.Event.trigger.calls.all();
+        expect(calls.length).toBe(1);
         expect(calls[0].object).toEqual(liveTemplate.spawnEvent({
           eventName: $template.EVENT_TEMPLATE_PARAMETER_CHANGE,
           parameterValuesBefore: {},
@@ -73,13 +78,25 @@ describe("$template", function () {
       });
 
       describe("then setting same parameters", function () {
+        beforeEach(function () {
+          liveTemplate.setParameterValues({
+            foo: 'bar',
+            baz: 'quux'
+          });
+        });
+
         it("should not trigger event", function () {
-          expect($event.Event.trigger).toHaveBeenCalledTimes(1);
+          spyOn($event.Event, 'trigger');
+          liveTemplate.setParameterValues({
+            foo: 'bar',
+            baz: 'quux'
+          });
+          expect($event.Event.trigger).not.toHaveBeenCalled();
         });
       });
 
       describe("when parameter value is a LiveTemplate", function () {
-        beforeEach(function () {
+        it("should transfer parameter values", function () {
           liveTemplate.setParameterValues({
             bar: $template.LiveTemplate.create({
               templateString: 'foo',
@@ -89,12 +106,7 @@ describe("$template", function () {
               }
             })
           });
-        });
-
-        it("should transfer parameter values", function () {
           expect(liveTemplate.parameterValues).toEqual({
-            foo: 'bar',
-            baz: 'quux',
             bar: 'foo',
             param1: 1,
             param2: 2

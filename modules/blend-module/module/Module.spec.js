@@ -9,13 +9,14 @@ describe("$module", function () {
         module;
 
     beforeAll(function () {
-      Module = $oop.getClass('test.$module.Module.Module')
-      .blend($module.Module);
-      Module.__forwards = {list: [], sources: [], lookup: {}};
+      Module = $oop.createClass('test.$module.Module.Module')
+      .blend($module.Module)
+      .build();
+      Module.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      Module.__instanceLookup = {};
+      Module.__builder.instances = {};
     });
 
     describe("fromModuleId()", function () {
@@ -125,7 +126,7 @@ describe("String", function () {
     var module;
 
     beforeEach(function () {
-      $module.Module.__instanceLookup = {};
+      $module.Module.__builder.instances = {};
     });
 
     it("should create a Module instance", function () {

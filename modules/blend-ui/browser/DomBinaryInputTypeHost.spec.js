@@ -9,11 +9,12 @@ describe("$ui", function () {
         domBinaryInputTypeHost;
 
     beforeAll(function () {
-      DomBinaryInputTypeHost = $oop.getClass('test.$ui.DomBinaryInputTypeHost.DomBinaryInputTypeHost')
+      DomBinaryInputTypeHost = $oop.createClass('test.$ui.DomBinaryInputTypeHost.DomBinaryInputTypeHost')
       .blend($widget.Widget)
       .blend($ui.Selectable)
-      .blend($ui.DomBinaryInputTypeHost);
-      DomBinaryInputTypeHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomBinaryInputTypeHost)
+      .build();
+      DomBinaryInputTypeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("select()", function () {
@@ -130,10 +131,11 @@ describe("$ui", function () {
         binaryInputTypeHost;
 
     beforeAll(function () {
-      BinaryInputTypeHost = $oop.getClass('test.$ui.DomBinaryInputTypeHost.BinaryInputTypeHost')
+      BinaryInputTypeHost = $oop.createClass('test.$ui.DomBinaryInputTypeHost.BinaryInputTypeHost')
       .blend($widget.Widget)
       .blend($ui.Selectable)
-      .blend($ui.BinaryInputTypeHost);
+      .blend($ui.BinaryInputTypeHost)
+      .build();
     });
 
     describe("create()", function () {

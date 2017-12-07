@@ -12,7 +12,7 @@
  * @class $ui.Image
  * @extends $widget.Widget
  */
-$ui.Image = $oop.getClass('$ui.Image')
+$ui.Image = $oop.createClass('$ui.Image')
 .blend($widget.Widget)
 .define(/** @lends $ui.Image# */{
   /**
@@ -31,4 +31,5 @@ $ui.Image = $oop.getClass('$ui.Image')
     setImageUrl.shared.imageUrlBefore = imageUrlBefore;
     return this;
   }
-});
+})
+.build();

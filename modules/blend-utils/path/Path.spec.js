@@ -10,8 +10,9 @@ describe("$utils", function () {
         result;
 
     beforeAll(function () {
-      Path = $oop.getClass('test.$utils.Path.Path')
-      .blend($utils.Path);
+      Path = $oop.createClass('test.$utils.Path.Path')
+      .blend($utils.Path)
+      .build();
     });
 
     beforeEach(function () {

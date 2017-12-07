@@ -9,11 +9,12 @@ describe("$ui", function () {
         domOtherInputTypeHost;
 
     beforeAll(function () {
-      DomOtherInputTypeHost = $oop.getClass('test.$ui.DomOtherInputTypeHost.DomOtherInputTypeHost')
+      DomOtherInputTypeHost = $oop.createClass('test.$ui.DomOtherInputTypeHost.DomOtherInputTypeHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.DomOtherInputTypeHost);
-      DomOtherInputTypeHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomOtherInputTypeHost)
+      .build();
+      DomOtherInputTypeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setInputValue()", function () {
@@ -97,10 +98,11 @@ describe("$ui", function () {
         otherInputTypeHost;
 
     beforeAll(function () {
-      OtherInputTypeHost = $oop.getClass('test.$ui.DomOtherInputTypeHost.OtherInputTypeHost')
+      OtherInputTypeHost = $oop.createClass('test.$ui.DomOtherInputTypeHost.OtherInputTypeHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.OtherInputTypeHost);
+      .blend($ui.OtherInputTypeHost)
+      .build();
     });
 
     describe("create()", function () {

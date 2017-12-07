@@ -1,8 +1,7 @@
 {
   "js": [
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "widgets/DemoItem.js",
+    "widgets/DemoPage.js"
   ],
   "less": [
     "**/*.less"

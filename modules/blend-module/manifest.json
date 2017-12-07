@@ -1,8 +1,7 @@
 {
   "js": [
-    "containers/*.js",
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "containers/modules.js",
+    "module/Module.js",
+    "module/ModuleEnvironment.js"
   ]
 }

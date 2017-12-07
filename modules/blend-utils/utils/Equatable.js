@@ -3,7 +3,7 @@
 /**
  * @mixin $utils.Equatable
  */
-$utils.Equatable = $oop.getClass('$utils.Equatable')
+$utils.Equatable = $oop.createClass('$utils.Equatable')
 .define(/** @lends $utils.Equatable# */{
   /**
    * Tells whether current instance equals to the specified instance.
@@ -15,4 +15,5 @@ $utils.Equatable = $oop.getClass('$utils.Equatable')
         this === instance || // either same instance
         this.__classId === instance.__classId); // or shares class
   }
-});
+})
+.build();

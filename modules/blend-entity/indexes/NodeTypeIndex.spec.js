@@ -16,8 +16,10 @@ describe("$entity", function () {
 
       // NodeTypeIndex (re-)initializes index when instantiated
       delete $oop.classByClassId['test.$entity.NodeTypeIndex.NodeTypeIndex'];
-      NodeTypeIndex = $oop.getClass('test.$entity.NodeTypeIndex.NodeTypeIndex')
-      .blend($entity.NodeTypeIndex);
+      NodeTypeIndex = $oop.createClass('test.$entity.NodeTypeIndex.NodeTypeIndex')
+      .blend($entity.NodeTypeIndex)
+      .build();
+      NodeTypeIndex.__builder.forwards = {list: [], lookup: {}};
 
       nodeTypeIndex = NodeTypeIndex.create();
     });

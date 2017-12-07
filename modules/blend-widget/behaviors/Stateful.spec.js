@@ -9,9 +9,10 @@ describe("$widget", function () {
         stateful;
 
     beforeAll(function () {
-      Stateful = $oop.getClass('test.$widget.Stateful.Stateful')
-      .blend($widget.Stateful);
-      Stateful.__forwards = {list: [], sources: [], lookup: {}};
+      Stateful = $oop.createClass('test.$widget.Stateful.Stateful')
+      .blend($widget.Stateful)
+      .build();
+      Stateful.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

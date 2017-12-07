@@ -4,8 +4,8 @@
  * @mixin $data.StringValueHost
  * @augments $data.KeyValueContainer
  */
-$data.StringValueHost = $oop.getClass('$data.StringValueHost')
-.expect($oop.getClass('$data.KeyValueContainer'))
+$data.StringValueHost = $oop.createClass('$data.StringValueHost')
+.expect($data.KeyValueContainer)
 .define(/** @lends $data.StringValueHost# */{
   /**
    * @type {string}
@@ -30,4 +30,5 @@ $data.StringValueHost = $oop.getClass('$data.StringValueHost')
 
     return result;
   }
-});
+})
+.build();

@@ -10,8 +10,9 @@ describe("$event", function () {
         result;
 
     beforeAll(function () {
-      EventListener = $oop.getClass('test.$event.EventListener.EventListener')
-      .blend($event.EventListener);
+      EventListener = $oop.createClass('test.$event.EventListener.EventListener')
+      .blend($event.EventListener)
+      .build();
     });
 
     beforeEach(function () {

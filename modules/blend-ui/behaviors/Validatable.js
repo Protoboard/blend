@@ -5,9 +5,9 @@
  * @extends $ui.BinaryStateful
  * @augments $ui.Inputable
  */
-$ui.Validatable = $oop.getClass('$ui.Validatable')
-.blend($oop.getClass('$ui.BinaryStateful'))
-.expect($oop.getClass('$ui.Inputable'))
+$ui.Validatable = $oop.createClass('$ui.Validatable')
+.blend($ui.BinaryStateful)
+.expect($ui.Inputable)
 .define(/** @lends $ui.Validatable# */{
   /** @ignore */
   init: function () {
@@ -40,7 +40,8 @@ $ui.Validatable = $oop.getClass('$ui.Validatable')
   isValid: function () {
     return !this.isStateOn($ui.STATE_NAME_INVALID);
   }
-});
+})
+.build();
 
 $oop.copyProperties($ui, /** @lends $ui */{
   /**

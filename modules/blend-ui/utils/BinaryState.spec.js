@@ -10,9 +10,10 @@ describe("$ui", function () {
         binaryState;
 
     beforeAll(function () {
-      BinaryState = $oop.getClass('test.$ui.BinaryState.BinaryState')
-      .blend($ui.BinaryState);
-      BinaryState.__forwards = {list: [], sources: [], lookup: {}};
+      BinaryState = $oop.createClass('test.$ui.BinaryState.BinaryState')
+      .blend($ui.BinaryState)
+      .build();
+      BinaryState.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromStateName()", function () {

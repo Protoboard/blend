@@ -13,7 +13,7 @@ describe("$event", function () {
         eventSpace;
 
     beforeAll(function () {
-      Subscriber = $oop.getClass('test.$event.EventSubscriber.Subscriber')
+      Subscriber = $oop.createClass('test.$event.EventSubscriber.Subscriber')
       .blend($event.EventSubscriber)
       .define({
         foo: function () {},
@@ -23,30 +23,31 @@ describe("$event", function () {
         on: function () {
           return this;
         }
-      });
-      Listener = $oop.getClass('test.$event.EventSubscriber.Listener')
+      })
+      .build();
+      Listener = $oop.createClass('test.$event.EventSubscriber.Listener')
       .blend($event.EventListener)
       .define({
         init: function () {
           this.setListeningPath('path');
         }
-      });
+      })
+      .build();
     });
 
     beforeEach(function () {
-      eventSpaceInstanceLookup = $event.EventSpace.__instanceLookup;
-      $event.EventSpace.__instanceLookup = {};
+      eventSpaceInstanceLookup = $event.EventSpace.__builder.instances;
+      $event.EventSpace.__builder.instances = {};
       eventSpace = $event.EventSpace.create();
     });
 
     afterEach(function () {
-      $event.EventSpace.__instanceLookup = eventSpaceInstanceLookup;
+      $event.EventSpace.__builder.instances = eventSpaceInstanceLookup;
     });
 
     describe("create()", function () {
       beforeEach(function () {
         spyOn(Subscriber, 'elevateMethods');
-        subscriber = Subscriber.create({subscriberId: 'foo'});
       });
 
       describe("on missing subscriberId", function () {
@@ -58,6 +59,7 @@ describe("$event", function () {
       });
 
       it("should elevate event handlers", function () {
+        subscriber = Subscriber.create({subscriberId: 'foo'});
         expect(Subscriber.elevateMethods)
         .toHaveBeenCalledWith('onFoo', 'onBar');
       });

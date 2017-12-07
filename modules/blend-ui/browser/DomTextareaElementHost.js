@@ -6,10 +6,10 @@
  * @extends $ui.TextareaElementHost
  * @extends $ui.DomInputEventBound
  */
-$ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
+$ui.DomTextareaElementHost = $oop.createClass('$ui.DomTextareaElementHost')
 .blend($widget.DomWidget)
-.blend($oop.getClass('$ui.TextareaElementHost'))
-.blend($oop.getClass('$ui.DomInputEventBound'))
+.blend($ui.TextareaElementHost)
+.blend($ui.DomInputEventBound)
 .define(/** @lends $ui.DomTextareaElementHost# */{
   /**
    * @protected
@@ -63,7 +63,8 @@ $ui.DomTextareaElementHost = $oop.getClass('$ui.DomTextareaElementHost')
   onElementChange: function (event) {
     this._syncToElementValue();
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.TextareaElementHost')
+$ui.TextareaElementHost
 .forwardBlend($ui.DomTextareaElementHost, $utils.isBrowser);

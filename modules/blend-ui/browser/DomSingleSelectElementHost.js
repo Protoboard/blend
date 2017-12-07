@@ -5,9 +5,9 @@
  * @extends $ui.SingleSelectElementHost
  * @mixes $ui.DomInputEventBound
  */
-$ui.DomSingleSelectElementHost = $oop.getClass('$ui.DomSingleSelectElementHost')
-.blend($oop.getClass('$ui.SingleSelectElementHost'))
-.blend($oop.getClass('$ui.DomInputEventBound'))
+$ui.DomSingleSelectElementHost = $oop.createClass('$ui.DomSingleSelectElementHost')
+.blend($ui.SingleSelectElementHost)
+.blend($ui.DomInputEventBound)
 .define(/** @lends $ui.DomSingleSelectElementHost# */{
   /**
    * @protected
@@ -40,7 +40,8 @@ $ui.DomSingleSelectElementHost = $oop.getClass('$ui.DomSingleSelectElementHost')
   onElementChange: function (event) {
     this._syncToElementSelected();
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.SingleSelectElementHost')
+$ui.SingleSelectElementHost
 .forwardBlend($ui.DomSingleSelectElementHost, $utils.isBrowser);

@@ -9,11 +9,12 @@ describe("$ui", function () {
         binaryInputTypeHost;
 
     beforeAll(function () {
-      BinaryInputTypeHost = $oop.getClass('test.$ui.BinaryInputTypeHost.BinaryInputTypeHost')
+      BinaryInputTypeHost = $oop.createClass('test.$ui.BinaryInputTypeHost.BinaryInputTypeHost')
       .blend($widget.Widget)
       .blend($ui.Selectable)
-      .blend($ui.BinaryInputTypeHost);
-      BinaryInputTypeHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.BinaryInputTypeHost)
+      .build();
+      BinaryInputTypeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

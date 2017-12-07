@@ -9,10 +9,11 @@ describe("$ui", function () {
         binaryStateful;
 
     beforeAll(function () {
-      BinaryStateful = $oop.getClass('test.$ui.BinaryStateful.BinaryStateful')
+      BinaryStateful = $oop.createClass('test.$ui.BinaryStateful.BinaryStateful')
       .blend($widget.Widget)
-      .blend($ui.BinaryStateful);
-      BinaryStateful.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.BinaryStateful)
+      .build();
+      BinaryStateful.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

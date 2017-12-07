@@ -10,9 +10,10 @@ describe("$ui", function () {
         entityHyperlink;
 
     beforeAll(function () {
-      EntityHyperlink = $oop.getClass('test.$ui.EntityHyperlink.EntityHyperlink')
-      .blend($ui.EntityHyperlink);
-      EntityHyperlink.__forwards = {list: [], sources: [], lookup: {}};
+      EntityHyperlink = $oop.createClass('test.$ui.EntityHyperlink.EntityHyperlink')
+      .blend($ui.EntityHyperlink)
+      .build();
+      EntityHyperlink.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromTargetUrlEntity()", function () {

@@ -9,7 +9,7 @@
 /**
  * @class $ui.BinaryState
  */
-$ui.BinaryState = $oop.getClass('$ui.BinaryState')
+$ui.BinaryState = $oop.createClass('$ui.BinaryState')
 .define(/** @lends $ui.BinaryState# */{
   /**
    * @member {string} $ui.BinaryState#stateName
@@ -71,4 +71,5 @@ $ui.BinaryState = $oop.getClass('$ui.BinaryState')
   isStateOn: function () {
     return this.stateSourceIds.getItemCount() > 0;
   }
-});
+})
+.build();

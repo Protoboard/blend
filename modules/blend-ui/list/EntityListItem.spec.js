@@ -10,10 +10,11 @@ describe("$ui", function () {
         entityListItem;
 
     beforeAll(function () {
-      EntityListItem = $oop.getClass('test.$ui.EntityListItem.EntityListItem')
+      EntityListItem = $oop.createClass('test.$ui.EntityListItem.EntityListItem')
       .blend($widget.Widget)
-      .blend($ui.EntityListItem);
-      EntityListItem.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.EntityListItem)
+      .build();
+      EntityListItem.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

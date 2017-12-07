@@ -3,7 +3,7 @@
 /**
  * @mixin $data.Comparable
  */
-$data.Comparable = $oop.getClass('$data.Comparable')
+$data.Comparable = $oop.createClass('$data.Comparable')
 .define(/** @lends $data.Comparable# */{
   /**
    * Tells whether current instance evaluates "less" than the specified
@@ -28,4 +28,5 @@ $data.Comparable = $oop.getClass('$data.Comparable')
         this !== instance && // must not be same instance
         this.__classId === instance.__classId; // but shares class
   }
-});
+})
+.build();

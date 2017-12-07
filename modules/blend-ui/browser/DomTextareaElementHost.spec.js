@@ -9,11 +9,12 @@ describe("$ui", function () {
         domTextareaElementHost;
 
     beforeAll(function () {
-      DomTextareaElementHost = $oop.getClass('test.$ui.DomTextareaElementHost.TextareaElementHost')
+      DomTextareaElementHost = $oop.createClass('test.$ui.DomTextareaElementHost.TextareaElementHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.DomTextareaElementHost);
-      DomTextareaElementHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomTextareaElementHost)
+      .build();
+      DomTextareaElementHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setInputValue()", function () {
@@ -94,10 +95,11 @@ describe("$ui", function () {
         textareaElementHost;
 
     beforeAll(function () {
-      TextareaElementHost = $oop.getClass('test.$ui.DomTextareaElementHost.TextareaElementHost')
+      TextareaElementHost = $oop.createClass('test.$ui.DomTextareaElementHost.TextareaElementHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.TextareaElementHost);
+      .blend($ui.TextareaElementHost)
+      .build();
     });
 
     describe("create()", function () {

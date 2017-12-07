@@ -13,10 +13,10 @@
  * @extends $data.ObjectContainer
  * @extends $data.SetContainer
  */
-$data.StringSet = $oop.getClass('$data.StringSet')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ObjectContainer'))
-.blend($oop.getClass('$data.SetContainer'))
+$data.StringSet = $oop.createClass('$data.StringSet')
+.blend($data.DataContainer)
+.blend($data.ObjectContainer)
+.blend($data.SetContainer)
 .define(/** @lends $data.StringSet# */{
   /**
    * @param {string} item
@@ -164,9 +164,10 @@ $data.StringSet = $oop.getClass('$data.StringSet')
     });
     return result;
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.StringSet}
@@ -176,7 +177,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.StringSet}
@@ -186,7 +187,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.StringSet}

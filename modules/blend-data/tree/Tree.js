@@ -16,10 +16,10 @@
  * @implements $data.Queryable
  * @todo Make Filterable and implement filtering by query.
  */
-$data.Tree = $oop.getClass('$data.Tree')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ObjectContainer'))
-.implement($oop.getClass('$data.Queryable'))
+$data.Tree = $oop.createClass('$data.Tree')
+.blend($data.DataContainer)
+.blend($data.ObjectContainer)
+.implement($data.Queryable)
 .define(/** @lends $data.Tree# */{
   /**
    * @param {$data.TreeQueryComponent[]} components Query components
@@ -502,9 +502,10 @@ $data.Tree = $oop.getClass('$data.Tree')
     });
     return $data.PairList.create({data: result});
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.Tree}

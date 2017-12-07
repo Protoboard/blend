@@ -9,8 +9,9 @@
  * @class $i18n.LocaleChangeEvent
  * @extends $event.Event
  */
-$i18n.LocaleChangeEvent = $oop.getClass('$i18n.LocaleChangeEvent')
-.blend($event.Event);
+$i18n.LocaleChangeEvent = $oop.createClass('$i18n.LocaleChangeEvent')
+.blend($event.Event)
+.build();
 
 /**
  * @member {$i18n.Locale} $i18n.LocaleChangeEvent#localeBefore

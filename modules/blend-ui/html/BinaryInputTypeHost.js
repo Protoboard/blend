@@ -8,9 +8,9 @@
  * @extends $ui.InputElementHost
  * @augments $ui.Selectable
  */
-$ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
-.blend($oop.getClass('$ui.InputElementHost'))
-.expect($oop.getClass('$ui.Selectable'))
+$ui.BinaryInputTypeHost = $oop.createClass('$ui.BinaryInputTypeHost')
+.blend($ui.InputElementHost)
+.expect($ui.Selectable)
 .define(/** @lends $ui.BinaryInputTypeHost# */{
   /** @ignore */
   init: function () {
@@ -73,4 +73,5 @@ $ui.BinaryInputTypeHost = $oop.getClass('$ui.BinaryInputTypeHost')
     }
     return this;
   }
-});
+})
+.build();

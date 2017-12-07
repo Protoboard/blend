@@ -11,9 +11,10 @@ describe("$ui", function () {
         templateText;
 
     beforeAll(function () {
-      TemplateText = $oop.getClass('test.$ui.TemplateText.TemplateText')
-      .blend($ui.TemplateText);
-      TemplateText.__forwards = {list: [], sources: [], lookup: {}};
+      TemplateText = $oop.createClass('test.$ui.TemplateText.TemplateText')
+      .blend($ui.TemplateText)
+      .build();
+      TemplateText.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromTextTemplate()", function () {

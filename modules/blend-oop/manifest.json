@@ -1,15 +1,12 @@
 {
   "js": [
+    "utils/QuickList.js",
     "utils/class-utils.js",
     "utils/uuid-utils.js",
     "utils/string-utils.js",
-    "index/QuickList.js",
-    "index/QuickListLookup.js",
-    "index/index-utils.js",
-    "class/MemberMatrix.js",
-    "class/assertions.js",
+    "class/ClassBuilder.js",
     "class/Class.js",
-    "class/getClass.js",
+    "class/assertions.js",
     "blender/BlenderIndex.js",
     "blender/ClassBlender.js",
     "blender/blendClass.js",

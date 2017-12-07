@@ -6,7 +6,7 @@
  * @mixin $ui.ModuleBound
  * @augments $widget.Widget
  */
-$ui.ModuleBound = $oop.getClass('$ui.ModuleBound')
+$ui.ModuleBound = $oop.createClass('$ui.ModuleBound')
 .expect($widget.Widget)
 .define(/** @lends $ui.ModuleBound# */{
   /**
@@ -28,4 +28,5 @@ $ui.ModuleBound = $oop.getClass('$ui.ModuleBound')
   onModuleAvailable: function () {
     this._syncToAvailableModules();
   }
-});
+})
+.build();

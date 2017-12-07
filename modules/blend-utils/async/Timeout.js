@@ -13,8 +13,8 @@
  * @class $utils.Timeout
  * @extends $utils.Timer
  */
-$utils.Timeout = $oop.getClass('$utils.Timeout')
-.blend($oop.getClass('$utils.Timer'))
+$utils.Timeout = $oop.createClass('$utils.Timeout')
+.blend($utils.Timer)
 .define(/** @lends $utils.Timeout# */{
   /**
    * @inheritDoc
@@ -24,7 +24,8 @@ $utils.Timeout = $oop.getClass('$utils.Timeout')
     clearTimeout(this.timerId);
     return this;
   }
-});
+})
+.build();
 
 /** @external Number */
 $oop.copyProperties(Number.prototype, /** @lends Number# */{

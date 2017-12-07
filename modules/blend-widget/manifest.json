@@ -1,8 +1,24 @@
 {
   "js": [
     "utils/environment-utils.js",
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "utils/widget-utils.js",
+    "utils/Renderable.js",
+    "utils/XmlAttributes.js",
+    "utils/XmlEscaper.js",
+    "events/StateChangeEvent.js",
+    "behaviors/Stateful.js",
+    "node/Node.js",
+    "node/Nodes.js",
+    "node/XmlNode.js",
+    "node/XmlNodes.js",
+    "widget/Widget.js",
+    "widget/RootWidget.js",
+    "html/CssClasses.js",
+    "html/HtmlNode.js",
+    "html/HtmlStateful.js",
+    "html/HtmlWidget.js",
+    "html/InlineStyles.js",
+    "browser/DomNode.js",
+    "browser/DomWidget.js"
   ]
 }

@@ -1,7 +1,11 @@
 {
   "js": [
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "utils/router-utils.js",
+    "events/RouteChangeEvent.js",
+    "route/Route.js",
+    "route/RouteEnvironment.js",
+    "route/Router.js",
+    "browser/HashRouter.js",
+    "browser/PushStateRouter.js"
   ]
 }

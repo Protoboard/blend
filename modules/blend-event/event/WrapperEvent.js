@@ -22,9 +22,10 @@
  *   $event.EventTrail.create().push(clickWrapper);
  * });
  */
-$event.WrapperEvent = $oop.getClass('$event.WrapperEvent')
-.blend($oop.getClass('$event.Event'))
-.blend($oop.getClass('$event.Wrapper'));
+$event.WrapperEvent = $oop.createClass('$event.WrapperEvent')
+.blend($event.Event)
+.blend($event.Wrapper)
+.build();
 
 /**
  * @function $event.WrapperEvent.fromEventName

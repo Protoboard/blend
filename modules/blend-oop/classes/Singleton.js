@@ -3,11 +3,13 @@
 /**
  * Adds singleton behavior to host class.
  * @mixin $oop.Singleton
+ * @extends $oop.Class
  * @example
- * var MySingletonClass = $oop.getClass('MySingletonClass')
+ * var MySingletonClass = $oop.createClass('MySingletonClass')
  * .blend($oop.Singleton)
  */
-$oop.Singleton = $oop.getClass('$oop.Singleton')
+$oop.Singleton = $oop.createClass('$oop.Singleton')
 .cacheBy(function () {
   return 'singleton';
-});
+})
+.build();

@@ -9,10 +9,11 @@ describe("$widget", function () {
         htmlWidget;
 
     beforeAll(function () {
-      HtmlWidget = $oop.getClass('test.$widget.HtmlWidget.HtmlWidget')
+      HtmlWidget = $oop.createClass('test.$widget.HtmlWidget.HtmlWidget')
       .blend($widget.Widget)
-      .blend($widget.HtmlWidget);
-      HtmlWidget.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($widget.HtmlWidget)
+      .build();
+      HtmlWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

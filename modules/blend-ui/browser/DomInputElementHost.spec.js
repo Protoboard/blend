@@ -9,10 +9,11 @@ describe("$ui", function () {
         inputElementHost;
 
     beforeAll(function () {
-      InputElementHost = $oop.getClass('test.$ui.DomInputElementHost.InputElementHost')
+      InputElementHost = $oop.createClass('test.$ui.DomInputElementHost.InputElementHost')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.InputElementHost);
+      .blend($ui.InputElementHost)
+      .build();
     });
 
     describe("create()", function () {

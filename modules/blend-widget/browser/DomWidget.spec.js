@@ -9,10 +9,11 @@ describe("$widget", function () {
         domWidget;
 
     beforeAll(function () {
-      DomWidget = $oop.getClass('test.$widget.DomWidget.DomWidget')
+      DomWidget = $oop.createClass('test.$widget.DomWidget.DomWidget')
       .blend($widget.Widget)
-      .blend($widget.DomWidget);
-      DomWidget.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($widget.DomWidget)
+      .build();
+      DomWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("addChildNode()", function () {
@@ -178,9 +179,10 @@ describe("$widget", function () {
         htmlWidget;
 
     beforeAll(function () {
-      HtmlWidget = $oop.getClass('test.$widget.HtmlWidget.HtmlWidget')
+      HtmlWidget = $oop.createClass('test.$widget.HtmlWidget.HtmlWidget')
       .blend($widget.Widget)
-      .blend($widget.HtmlWidget);
+      .blend($widget.HtmlWidget)
+      .build();
     });
 
     describe("create()", function () {

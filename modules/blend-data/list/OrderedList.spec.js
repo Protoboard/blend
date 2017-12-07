@@ -13,8 +13,9 @@ describe("$data", function () {
     var compare;
 
     beforeAll(function () {
-      OrderedList = $oop.getClass("test.$data.OrderedList.OrderedList")
-      .blend($data.OrderedList);
+      OrderedList = $oop.createClass("test.$data.OrderedList.OrderedList")
+      .blend($data.OrderedList)
+      .build();
     });
 
     beforeEach(function () {

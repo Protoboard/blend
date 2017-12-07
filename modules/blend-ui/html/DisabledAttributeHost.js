@@ -6,9 +6,9 @@
  * @extend $widget.HtmlWidget
  * @augments $ui.Disableable
  */
-$ui.DisabledAttributeHost = $oop.getClass('$ui.DisabledAttributeHost')
+$ui.DisabledAttributeHost = $oop.createClass('$ui.DisabledAttributeHost')
 .blend($widget.HtmlWidget)
-.expect($oop.getClass('$ui.Disableable'))
+.expect($ui.Disableable)
 .define(/** @lends $ui.DisabledAttributeHost# */{
   /** @ignore */
   init: function () {
@@ -40,5 +40,6 @@ $ui.DisabledAttributeHost = $oop.getClass('$ui.DisabledAttributeHost')
     }
     return this;
   }
-});
+})
+.build();
 

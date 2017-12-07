@@ -9,9 +9,10 @@ describe("$i18n", function () {
         translationsWatcher;
 
     beforeAll(function () {
-      TranslationsWatcher = $oop.getClass('test.$i18n.TranslationsWatcher.TranslationsWatcher')
-      .blend($i18n.TranslationsWatcher);
-      TranslationsWatcher.__forwards = {list: [], sources: [], lookup: {}};
+      TranslationsWatcher = $oop.createClass('test.$i18n.TranslationsWatcher.TranslationsWatcher')
+      .blend($i18n.TranslationsWatcher)
+      .build();
+      TranslationsWatcher.__builder.forwards = {list: [], lookup: {}};
     });
 
     it("should be singleton", function () {

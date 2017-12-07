@@ -15,18 +15,20 @@ describe("$ui", function () {
         listEntity;
 
     beforeAll(function () {
-      EntityListItem = $oop.getClass('test.$ui.EntityList.EntityListItem')
+      EntityListItem = $oop.createClass('test.$ui.EntityList.EntityListItem')
       .blend($widget.Widget)
-      .blend($ui.EntityListItem);
-      EntityListItem.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.EntityListItem)
+      .build();
+      EntityListItem.__builder.forwards = {list: [], lookup: {}};
 
-      EntityList = $oop.getClass('test.$ui.EntityList.EntityList')
+      EntityList = $oop.createClass('test.$ui.EntityList.EntityList')
       .blend($widget.Widget)
       .blend($ui.EntityList)
       .define({
         ListItemClass: EntityListItem
-      });
-      EntityList.__forwards = {list: [], sources: [], lookup: {}};
+      })
+      .build();
+      EntityList.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

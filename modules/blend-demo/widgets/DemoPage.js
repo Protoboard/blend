@@ -9,7 +9,7 @@
  * @class $demo.DemoPage
  * @extends $ui.Page
  */
-$demo.DemoPage = $oop.getClass('$demo.DemoPage')
+$demo.DemoPage = $oop.createClass('$demo.DemoPage')
 .blend($ui.Page)
 .define(/** @lends $demo.DemoPage# */{
   /** @ignore */
@@ -69,7 +69,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain text
     $demo.DemoItem.create({
       code: this._createText,
-      itemTitle: $ui.Text.__classId,
+      itemTitle: $ui.Text.__className,
       contentWidget: this._createText()
     })
     .addToParentNode(this);
@@ -77,7 +77,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding locale-bound text
     $demo.DemoItem.create({
       code: this._createLocaleText,
-      itemTitle: $ui.LocaleText.__classId,
+      itemTitle: $ui.LocaleText.__className,
       contentWidget: this._createLocaleText()
     })
     .addToParentNode(this);
@@ -85,7 +85,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound text
     $demo.DemoItem.create({
       code: this._createDataText,
-      itemTitle: $ui.EntityText.__classId,
+      itemTitle: $ui.EntityText.__className,
       contentWidget: this._createDataText()
     })
     .addToParentNode(this);
@@ -93,7 +93,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding template text
     $demo.DemoItem.create({
       code: this._createTemplateText,
-      itemTitle: $ui.TemplateText.__classId,
+      itemTitle: $ui.TemplateText.__className,
       contentWidget: this._createTemplateText()
     })
     .addToParentNode(this);
@@ -101,7 +101,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain hyperlink
     $demo.DemoItem.create({
       code: this._createHyperlink,
-      itemTitle: $ui.Hyperlink.__classId,
+      itemTitle: $ui.Hyperlink.__className,
       contentWidget: this._createHyperlink()
     })
     .addToParentNode(this);
@@ -109,7 +109,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound hyperlink
     $demo.DemoItem.create({
       code: this._createDatHyperlink,
-      itemTitle: $ui.EntityHyperlink.__classId,
+      itemTitle: $ui.EntityHyperlink.__className,
       contentWidget: this._createDatHyperlink()
     })
     .addToParentNode(this);
@@ -117,7 +117,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain image
     $demo.DemoItem.create({
       code: this._createImage,
-      itemTitle: $ui.Image.__classId,
+      itemTitle: $ui.Image.__className,
       contentWidget: this._createImage()
     })
     .addToParentNode(this);
@@ -125,7 +125,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound image
     $demo.DemoItem.create({
       code: this._createEntityImage,
-      itemTitle: $ui.EntityImage.__classId,
+      itemTitle: $ui.EntityImage.__className,
       contentWidget: this._createEntityImage()
     })
     .addToParentNode(this);
@@ -133,7 +133,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain button
     $demo.DemoItem.create({
       code: this._createButton,
-      itemTitle: $ui.Button.__classId,
+      itemTitle: $ui.Button.__className,
       contentWidget: this._createButton()
     })
     .addToParentNode(this);
@@ -141,7 +141,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound select dropdown
     $demo.DemoItem.create({
       code: this._createEntityList,
-      itemTitle: $ui.EntityList.__classId,
+      itemTitle: $ui.EntityList.__className,
       contentWidget: this._createEntityList()
     })
     .addToParentNode(this);
@@ -149,7 +149,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain text input
     $demo.DemoItem.create({
       code: this._createTextInput,
-      itemTitle: $ui.TextInput.__classId,
+      itemTitle: $ui.TextInput.__className,
       contentWidget: this._createTextInput()
     })
     .addToParentNode(this);
@@ -157,7 +157,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain multiline text input
     $demo.DemoItem.create({
       code: this._createMultilineTextInput,
-      itemTitle: $ui.TextInput.__classId,
+      itemTitle: $ui.TextInput.__className,
       contentWidget: this._createMultilineTextInput()
     })
     .addToParentNode(this);
@@ -165,7 +165,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound text input
     $demo.DemoItem.create({
       code: this._createEntityTextInput,
-      itemTitle: $ui.EntityTextInput.__classId,
+      itemTitle: $ui.EntityTextInput.__className,
       contentWidget: this._createEntityTextInput()
     })
     .addToParentNode(this);
@@ -173,7 +173,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain checkbox
     $demo.DemoItem.create({
       code: this._createCheckbox,
-      itemTitle: $ui.Checkbox.__classId,
+      itemTitle: $ui.Checkbox.__className,
       contentWidget: this._createCheckbox()
     })
     .addToParentNode(this);
@@ -181,7 +181,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain checkbox
     $demo.DemoItem.create({
       code: this._createRadioButton,
-      itemTitle: $ui.RadioButton.__classId,
+      itemTitle: $ui.RadioButton.__className,
       contentWidget: this._createRadioButton()
     })
     .addToParentNode(this);
@@ -189,7 +189,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding plain select dropdown
     $demo.DemoItem.create({
       code: this._createDropdown,
-      itemTitle: $ui.Dropdown.__classId,
+      itemTitle: $ui.Dropdown.__className,
       contentWidget: this._createDropdown()
     })
     .addToParentNode(this);
@@ -197,7 +197,7 @@ $demo.DemoPage = $oop.getClass('$demo.DemoPage')
     // adding entity-bound select dropdown
     $demo.DemoItem.create({
       code: this._createEntityDropdown,
-      itemTitle: $ui.EntityDropdown.__classId,
+      itemTitle: $ui.EntityDropdown.__className,
       contentWidget: this._createEntityDropdown()
     })
     .addToParentNode(this);
@@ -306,7 +306,7 @@ _createEntityList: function () {
   'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
 
   var
-      EntityListItem = $oop.getClass('$demo.EntityListItem')
+      EntityListItem = $oop.createClass('$demo.EntityListItem')
       .blend($ui.EntityListItem)
       .blend($ui.EntityText)
       .define({
@@ -319,8 +319,9 @@ _createEntityList: function () {
             .getField('title'));
           }
         }
-      }),
-      EntityList = $oop.getClass('$demo.EntityList')
+      })
+      .build(),
+      EntityList = $oop.createClass('$demo.EntityList')
       .blend($widget.Widget)
       .blend($ui.EntityList)
       .define({
@@ -328,7 +329,8 @@ _createEntityList: function () {
         defaults: function () {
           this.elementName = 'ul';
         }
-      });
+      })
+      .build();
 
   return EntityList.fromListEntity('show/rick-and-morty/episodes'.toField());
 },
@@ -405,7 +407,7 @@ _createEntityDropdown: function () {
   'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
 
   var
-      EntityOption = $oop.getClass('$demo.EntityOption')
+      EntityOption = $oop.createClass('$demo.EntityOption')
       .blend($ui.EntityOption)
       .define({
         _syncToEntityProperty: function (entityProperty) {
@@ -416,12 +418,14 @@ _createEntityDropdown: function () {
             this.setOwnValue(listItemKey.itemId);
           }
         }
-      }),
-      EntityDropdown = $oop.getClass('$demo.EntityDropdown')
+      })
+      .build(),
+      EntityDropdown = $oop.createClass('$demo.EntityDropdown')
       .blend($ui.EntityDropdown)
       .define({
         ListItemClass: EntityOption
-      });
+      })
+      .build();
 
   return EntityDropdown.create({
     listEntity: 'show/rick-and-morty/episodes'.toField(),
@@ -429,20 +433,21 @@ _createEntityDropdown: function () {
   });
 }
   //@formatter:on
-});
+})
+.build();
 
 $event.EventSpace.create()
 .on(
     $router.EVENT_ROUTE_CHANGE,
     'route',
-    $demo.DemoPage.__classId,
+    $demo.DemoPage.__className,
     function () {
       $demo.DemoPage.create().setAsActivePage();
     })
 .on(
     $module.EVENT_MODULE_AVAILABLE,
     'module.blend-demo',
-    $demo.DemoPage.__classId,
+    $demo.DemoPage.__className,
     function () {
       $demo.DemoPage.create().setAsActivePage();
     });

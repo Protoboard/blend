@@ -11,7 +11,7 @@
  * @todo Create nodeType enum for documentation.
  * @todo Keeping this up to date?
  */
-$entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
+$entity.NodeTypeIndex = $oop.createClass('$entity.NodeTypeIndex')
 .blend($oop.Singleton)
 .define(/** @lends $entity.NodeTypeIndex# */{
   /** @ignore */
@@ -123,4 +123,5 @@ $entity.NodeTypeIndex = $oop.getClass('$entity.NodeTypeIndex')
         fieldRefLookup = $entity.index.getNode(indexPath);
     return fieldRefLookup && Object.keys(fieldRefLookup);
   }
-});
+})
+.build();

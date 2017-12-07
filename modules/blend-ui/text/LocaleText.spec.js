@@ -9,9 +9,10 @@ describe("$ui", function () {
         localeText;
 
     beforeAll(function () {
-      LocaleText = $oop.getClass('test.$ui.LocaleText.LocaleText')
-      .blend($ui.LocaleText);
-      LocaleText.__forwards = {list: [], sources: [], lookup: {}};
+      LocaleText = $oop.createClass('test.$ui.LocaleText.LocaleText')
+      .blend($ui.LocaleText)
+      .build();
+      LocaleText.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromTextTranslatable", function () {

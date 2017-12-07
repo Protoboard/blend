@@ -5,9 +5,9 @@
  * @extends $widget.HtmlNode
  * @augments $widget.Widget
  */
-$widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
-.blend($oop.getClass('$widget.HtmlNode'))
-.expect($oop.getClass('$widget.Widget'))
+$widget.HtmlWidget = $oop.createClass('$widget.HtmlWidget')
+.blend($widget.HtmlNode)
+.expect($widget.Widget)
 .define(/** @lends $widget.HtmlWidget# */{
   /** @ignore */
   spread: function () {
@@ -29,15 +29,16 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
     var that = this,
         Widget = $widget.Widget;
 
-    this.__mixins.downstream.list
+    this.__builder.contributors
+    .map(function (mixinBuilder) {
+      return mixinBuilder.Class;
+    })
     .filter(function (Mixin) {
       return Mixin.mixes(Widget) || Mixin.expects(Widget);
     })
-    .map($oop.getClassId)
-    // including self
-    .concat(this.__classId)
-    .forEach(function (classId) {
-      that.addCssClass(classId);
+    .map($oop.getClassName)
+    .forEach(function (className) {
+      that.addCssClass(className);
     });
   },
 
@@ -54,7 +55,8 @@ $widget.HtmlWidget = $oop.getClass('$widget.HtmlWidget')
     }
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$widget.Widget')
+$widget.Widget
 .forwardBlend($widget.HtmlWidget, $widget.isHtml);

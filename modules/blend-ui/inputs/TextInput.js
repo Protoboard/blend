@@ -15,10 +15,11 @@
  * @extends $ui.Inputable
  * @extends $ui.Validatable
  */
-$ui.TextInput = $oop.getClass('$ui.TextInput')
+$ui.TextInput = $oop.createClass('$ui.TextInput')
 .blend($widget.Widget)
-.blend($oop.getClass('$ui.Inputable'))
-.blend($oop.getClass('$ui.Validatable'));
+.blend($ui.Inputable)
+.blend($ui.Validatable)
+.build();
 
 /**
  * Determines whether TextInput is multi-line.

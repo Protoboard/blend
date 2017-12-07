@@ -11,14 +11,15 @@ describe("$router", function () {
         hashRouter;
 
     beforeAll(function () {
-      HashRouter = $oop.getClass('test.$router.HashRouter.HashRouter')
-      .blend($router.HashRouter);
-      HashRouter.__forwards = {list: [], sources: [], lookup: {}};
+      HashRouter = $oop.createClass('test.$router.HashRouter.HashRouter')
+      .blend($router.HashRouter)
+      .build();
+      HashRouter.__builder.forwards = {list: [], lookup: {}};
       $router.browserRoutingMethod = 'hash';
     });
 
     beforeEach(function () {
-      HashRouter.__instanceLookup = {};
+      HashRouter.__builder.instances = {};
     });
 
     it("should be singleton", function () {
@@ -98,7 +99,7 @@ describe("$router", function () {
         hashChangeEvent = {};
         window.location.hash = '#foo/bar';
         hashRouter = HashRouter.create();
-        $event.EventTrail.__instanceLookup = {};
+        $event.EventTrail.__builder.instances = {};
       });
 
       afterEach(function () {

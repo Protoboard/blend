@@ -9,13 +9,14 @@ describe("$widget", function () {
         rootWidget;
 
     beforeAll(function () {
-      RootWidget = $oop.getClass('test.$widget.RootWidget.RootWidget')
-      .blend($widget.RootWidget);
-      RootWidget.__forwards = {list: [], sources: [], lookup: {}};
+      RootWidget = $oop.createClass('test.$widget.RootWidget.RootWidget')
+      .blend($widget.RootWidget)
+      .build();
+      RootWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      RootWidget.__instanceLookup = {};
+      RootWidget.__builder.instances = {};
     });
 
     it("should be singleton", function () {

@@ -5,8 +5,8 @@
  * @augments $entity.Entity
  * @implements $utils.Stringifiable
  */
-$entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
-.expect($oop.getClass('$entity.Entity'))
+$entity.LeafNoded = $oop.createClass('$entity.LeafNoded')
+.expect($entity.Entity)
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.LeafNoded# */{
   /**
@@ -37,4 +37,5 @@ $entity.LeafNoded = $oop.getClass('$entity.LeafNoded')
   toString: function () {
     return $utils.stringify(this.getNode());
   }
-});
+})
+.build();

@@ -12,7 +12,7 @@
  * through a `MasterLink` instance.
  * @class $data.MasterLink
  */
-$data.MasterLink = $oop.getClass('$data.MasterLink')
+$data.MasterLink = $oop.createClass('$data.MasterLink')
 .define(/** @lends $data.MasterLink# */{
   /**
    * Chain instance the link is associated with.
@@ -37,4 +37,5 @@ $data.MasterLink = $oop.getClass('$data.MasterLink')
     this.previousLink = this;
     this.nextLink = this;
   }
-});
+})
+.build();

@@ -9,8 +9,9 @@ describe("$widget", function () {
         attributes;
 
     beforeAll(function () {
-      XmlAttributes = $oop.getClass('test.$widget.XmlAttributes.XmlAttributes')
-      .blend($widget.XmlAttributes);
+      XmlAttributes = $oop.createClass('test.$widget.XmlAttributes.XmlAttributes')
+      .blend($widget.XmlAttributes)
+      .build();
     });
 
     describe("toString()", function () {

@@ -9,14 +9,15 @@ describe("$ui", function () {
         page;
 
     beforeAll(function () {
-      Page = $oop.getClass('test.$ui.Page.Page')
-      .blend($ui.Page);
-      Page.__forwards = {list: [], sources: [], lookup: {}};
+      Page = $oop.createClass('test.$ui.Page.Page')
+      .blend($ui.Page)
+      .build();
+      Page.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      Page.__instanceLookup = {};
-      $ui.Application.__instanceLookup = {};
+      Page.__builder.instances = {};
+      $ui.Application.__builder.instances = {};
     });
 
     it("should be singleton", function () {

@@ -9,9 +9,10 @@ describe("$i18n", function () {
         localeEnvironment;
 
     beforeAll(function () {
-      LocaleEnvironment = $oop.getClass('test.$i18n.LocaleEnvironment.LocaleEnvironment')
-      .blend($i18n.LocaleEnvironment);
-      LocaleEnvironment.__forwards = {list: [], sources: [], lookup: {}};
+      LocaleEnvironment = $oop.createClass('test.$i18n.LocaleEnvironment.LocaleEnvironment')
+      .blend($i18n.LocaleEnvironment)
+      .build();
+      LocaleEnvironment.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

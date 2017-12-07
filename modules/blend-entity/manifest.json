@@ -1,8 +1,29 @@
 {
   "js": [
-    "containers/*.js",
-    "**/*.js",
-    "!**/*.*.js",
-    "!*.js"
+    "containers/entities.js",
+    "containers/index.js",
+    "indexes/NodeTypeIndex.js",
+    "utils/typedefs.js",
+    "utils/EntityKeyHost.js",
+    "utils/EntityKeyCached.js",
+    "events/EntityChangeEvent.js",
+    "keys/EntityKey.js",
+    "keys/DocumentKey.js",
+    "keys/AttributeDocumentKey.js",
+    "keys/ValueKey.js",
+    "keys/FieldKey.js",
+    "keys/CollectionFieldKey.js",
+    "keys/ItemKey.js",
+    "entities/Entity.js",
+    "entities/BranchNoded.js",
+    "entities/LeafNoded.js",
+    "entities/Document.js",
+    "entities/Field.js",
+    "entities/CollectionField.js",
+    "entities/Item.js",
+    "paths/FieldAttributePath.js",
+    "paths/FieldValueTypePath.js",
+    "paths/ItemIdTypePath.js",
+    "paths/ItemValueTypePath.js"
   ]
 }

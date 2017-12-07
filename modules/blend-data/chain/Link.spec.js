@@ -10,8 +10,9 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      Link = $oop.getClass('test.$data.Link.Link')
-      .blend($data.Link);
+      Link = $oop.createClass('test.$data.Link.Link')
+      .blend($data.Link)
+      .build();
     });
 
     beforeEach(function () {

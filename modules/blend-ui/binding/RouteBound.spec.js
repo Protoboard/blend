@@ -11,10 +11,11 @@ describe("$ui", function () {
         routeBound;
 
     beforeAll(function () {
-      RouteBound = $oop.getClass('test.$ui.RouteBound.RouteBound')
+      RouteBound = $oop.createClass('test.$ui.RouteBound.RouteBound')
       .blend($widget.Widget)
-      .blend($ui.RouteBound);
-      RouteBound.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.RouteBound)
+      .build();
+      RouteBound.__builder.forwards = {list: [], lookup: {}};
       $router.browserRoutingMethod = undefined;
     });
 

@@ -9,8 +9,9 @@ describe("$utils", function () {
         instance;
 
     beforeAll(function () {
-      Retrievable = $oop.getClass("test.$utils.Retrievable.Retrievable")
-      .blend($utils.Retrievable);
+      Retrievable = $oop.createClass("test.$utils.Retrievable.Retrievable")
+      .blend($utils.Retrievable)
+      .build();
     });
 
     beforeEach(function () {

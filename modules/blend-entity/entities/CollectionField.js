@@ -10,9 +10,9 @@
  * @extends $entity.Field
  * @extends $entity.BranchNoded
  */
-$entity.CollectionField = $oop.getClass('$entity.CollectionField')
-.blend($oop.getClass('$entity.Field'))
-.blend($oop.getClass('$entity.BranchNoded'))
+$entity.CollectionField = $oop.createClass('$entity.CollectionField')
+.blend($entity.Field)
+.blend($entity.BranchNoded)
 .define(/** @lends $entity.CollectionField# */{
   /** @ignore */
   init: function () {
@@ -84,9 +84,10 @@ $entity.CollectionField = $oop.getClass('$entity.CollectionField')
 
     return events;
   }
-});
+})
+.build();
 
-$oop.getClass('$entity.Field')
+$entity.Field
 .forwardBlend($entity.CollectionField, function (properties) {
   return $entity.CollectionFieldKey.mixedBy(properties.entityKey);
 });

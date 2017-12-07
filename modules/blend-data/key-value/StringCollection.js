@@ -14,11 +14,12 @@
  * @extends $data.Collection
  * @extends $data.StringValueHost
  */
-$data.StringCollection = $oop.getClass('$data.StringCollection')
-.blend($oop.getClass('$data.Collection'))
-.blend($oop.getClass('$data.StringValueHost'));
+$data.StringCollection = $oop.createClass('$data.StringCollection')
+.blend($data.Collection)
+.blend($data.StringValueHost)
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.StringCollection}
@@ -28,7 +29,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.StringCollection}
@@ -38,7 +39,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.StringCollection}

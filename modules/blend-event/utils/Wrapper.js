@@ -6,7 +6,7 @@
  * @augments $utils.Cloneable
  * @todo Move to blend-utils?
  */
-$event.Wrapper = $oop.getClass('$event.Wrapper')
+$event.Wrapper = $oop.createClass('$event.Wrapper')
 .expect($utils.Cloneable)
 .define(/** @lends $event.Wrapper# */{
   /**
@@ -23,4 +23,5 @@ $event.Wrapper = $oop.getClass('$event.Wrapper')
     this.wrapped = wrapped;
     return this;
   }
-});
+})
+.build();

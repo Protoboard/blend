@@ -15,7 +15,7 @@
  * @class $i18n.Translatable
  * @implements $utils.Stringifiable
  */
-$i18n.Translatable = $oop.getClass('$i18n.Translatable')
+$i18n.Translatable = $oop.createClass('$i18n.Translatable')
 .implement($utils.Stringifiable)
 .define(/** @lends $i18n.Translatable# */{
   /**
@@ -89,7 +89,8 @@ $i18n.Translatable = $oop.getClass('$i18n.Translatable')
         activeLocale.getTranslation(originalString, this.context, this.count) ||
         originalString;
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

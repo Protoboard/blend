@@ -10,13 +10,14 @@ describe("$api", function () {
         indexData;
 
     beforeAll(function () {
-      ActiveRequestIndex = $oop.getClass('test.$api.ActiveRequestIndex.ActiveRequestIndex')
-      .blend($api.ActiveRequestIndex);
-      ActiveRequestIndex.__forwards = {list: [], sources: [], lookup: {}};
+      ActiveRequestIndex = $oop.createClass('test.$api.ActiveRequestIndex.ActiveRequestIndex')
+      .blend($api.ActiveRequestIndex)
+      .build();
+      ActiveRequestIndex.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      ActiveRequestIndex.__instanceLookup = {};
+      ActiveRequestIndex.__builder.instances = {};
       indexData = $api.index.data;
       $api.index.data = {};
     });

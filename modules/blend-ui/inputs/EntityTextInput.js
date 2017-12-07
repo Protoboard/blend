@@ -10,6 +10,7 @@
  * @extends $ui.TextInput
  * @mixes $ui.EntityInputable
  */
-$ui.EntityTextInput = $oop.getClass('$ui.EntityTextInput')
-.blend($oop.getClass('$ui.TextInput'))
-.blend($oop.getClass('$ui.EntityInputable'));
+$ui.EntityTextInput = $oop.createClass('$ui.EntityTextInput')
+.blend($ui.TextInput)
+.blend($ui.EntityInputable)
+.build();

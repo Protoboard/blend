@@ -13,8 +13,9 @@
  * @class $api.HttpResponse
  * @extends $api.Response
  */
-$api.HttpResponse = $oop.getClass('$api.HttpResponse')
-.blend($oop.getClass('$api.Response'));
+$api.HttpResponse = $oop.createClass('$api.HttpResponse')
+.blend($api.Response)
+.build();
 
 /**
  * @member {number} $api.HttpResponse#httpStatus

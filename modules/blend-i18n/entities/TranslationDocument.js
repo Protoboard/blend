@@ -11,7 +11,7 @@
  * @class $i18n.TranslationDocument
  * @extends $entity.Document
  */
-$i18n.TranslationDocument = $oop.getClass('$i18n.TranslationDocument')
+$i18n.TranslationDocument = $oop.createClass('$i18n.TranslationDocument')
 .blend($entity.Document)
 .define(/** @lends $i18n.TranslationDocument# */{
   /**
@@ -70,7 +70,8 @@ $i18n.TranslationDocument = $oop.getClass('$i18n.TranslationDocument')
   getContext: function () {
     return this.getField('context').getNode();
   }
-});
+})
+.build();
 
 $entity.Document
 .forwardBlend($i18n.TranslationDocument, function (properties) {

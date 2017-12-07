@@ -12,9 +12,10 @@ describe("$i18n", function () {
         modulesByLocaleNode;
 
     beforeAll(function () {
-      LocalizedModule = $oop.getClass('test.$i18n.LocalizedModule.LocalizedModule')
-      .blend($i18n.LocalizedModule);
-      LocalizedModule.__forwards = {list: [], sources: [], lookup: {}};
+      LocalizedModule = $oop.createClass('test.$i18n.LocalizedModule.LocalizedModule')
+      .blend($i18n.LocalizedModule)
+      .build();
+      LocalizedModule.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

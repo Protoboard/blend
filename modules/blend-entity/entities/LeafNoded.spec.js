@@ -10,9 +10,11 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      LeafNodedField = $oop.getClass('test.$entity.LeafNoded.LeafNoded')
+      LeafNodedField = $oop.createClass('test.$entity.LeafNoded.LeafNoded')
       .blend($entity.Field)
-      .blend($entity.LeafNoded);
+      .blend($entity.LeafNoded)
+      .build();
+      LeafNodedField.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("spawnEntityChangeEvents()", function () {

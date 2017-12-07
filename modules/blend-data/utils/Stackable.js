@@ -6,7 +6,7 @@
  * @interface $data.Stackable
  * @todo Move to utils?
  */
-$data.Stackable = $oop.getClass('$data.Stackable')
+$data.Stackable = $oop.createClass('$data.Stackable')
 .define(/** @lends $data.Stackable# */{
   /**
    * @param {*} element
@@ -35,4 +35,5 @@ $data.Stackable = $oop.getClass('$data.Stackable')
    * @returns {$data.Stackable} Concatenated stackable
    */
   concat: function (stackable) {}
-});
+})
+.build();

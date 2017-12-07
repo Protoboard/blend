@@ -12,7 +12,7 @@
  * @class $event.EventSpace
  * @extends $utils.Destructible
  */
-$event.EventSpace = $oop.getClass('$event.EventSpace')
+$event.EventSpace = $oop.createClass('$event.EventSpace')
 .blend($oop.Singleton)
 .blend($utils.Destructible)
 .define(/** @lends $event.EventSpace# */{
@@ -241,4 +241,5 @@ $event.EventSpace = $oop.getClass('$event.EventSpace')
 
     return this;
   }
-});
+})
+.build();

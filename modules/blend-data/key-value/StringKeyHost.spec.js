@@ -12,10 +12,11 @@ describe("$data", function () {
         stringKeyHost;
 
     beforeAll(function () {
-      StringKeyHost = $oop.getClass('test.$data.StringKeyHost.StringKeyHost')
+      StringKeyHost = $oop.createClass('test.$data.StringKeyHost.StringKeyHost')
       .blend($data.DataContainer)
       .blend($data.KeyValueContainer)
-      .mix($data.StringKeyHost);
+      .mix($data.StringKeyHost)
+      .build();
     });
 
     beforeEach(function () {
@@ -28,10 +29,11 @@ describe("$data", function () {
           joinedContainer;
 
       beforeAll(function () {
-        StringValueHost = $oop.getClass('test.$data.StringKeyHost.StringValueHost')
+        StringValueHost = $oop.createClass('test.$data.StringKeyHost.StringValueHost')
         .blend($data.DataContainer)
         .blend($data.KeyValueContainer)
-        .mix($data.StringValueHost);
+        .mix($data.StringValueHost)
+        .build();
       });
 
       beforeEach(function () {

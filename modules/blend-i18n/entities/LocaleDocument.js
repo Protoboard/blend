@@ -11,7 +11,7 @@
  * @class $i18n.LocaleDocument
  * @extends $entity.Document
  */
-$i18n.LocaleDocument = $oop.getClass('$i18n.LocaleDocument')
+$i18n.LocaleDocument = $oop.createClass('$i18n.LocaleDocument')
 .blend($entity.Document)
 .define(/** @lends $i18n.LocaleDocument# */{
   /**
@@ -107,7 +107,8 @@ $i18n.LocaleDocument = $oop.getClass('$i18n.LocaleDocument')
     var translationRef = translationKey.toString();
     return this.getField('translations').getNode(translationRef);
   }
-});
+})
+.build();
 
 $entity.Document
 .forwardBlend($i18n.LocaleDocument, function (properties) {

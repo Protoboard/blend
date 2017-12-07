@@ -10,8 +10,9 @@ describe("$event", function () {
         result;
 
     beforeAll(function () {
-      EventSender = $oop.getClass('test.$event.EventSender.EventSender')
-      .blend($event.EventSender);
+      EventSender = $oop.createClass('test.$event.EventSender.EventSender')
+      .blend($event.EventSender)
+      .build();
     });
 
     beforeEach(function () {

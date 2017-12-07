@@ -10,9 +10,11 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      EntityKeyCached = $oop.getClass('test.$entity.EntityKeyCached.EntityKeyCached')
+      EntityKeyCached = $oop.createClass('test.$entity.EntityKeyCached.EntityKeyCached')
       .blend($entity.EntityKeyHost)
-      .blend($entity.EntityKeyCached);
+      .blend($entity.EntityKeyCached)
+      .build();
+      EntityKeyCached.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

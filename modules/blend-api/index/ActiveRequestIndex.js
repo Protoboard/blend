@@ -10,7 +10,7 @@
  * corresponding `Dispatcher`.
  * @class $api.ActiveRequestIndex
  */
-$api.ActiveRequestIndex = $oop.getClass('$api.ActiveRequestIndex')
+$api.ActiveRequestIndex = $oop.createClass('$api.ActiveRequestIndex')
 .blend($oop.Singleton)
 .define(/** @lends $api.ActiveRequestIndex# */{
   /**
@@ -64,19 +64,20 @@ $api.ActiveRequestIndex = $oop.getClass('$api.ActiveRequestIndex')
   onResponseReceive: function (event) {
     this.removePromiseForRequest(event.request);
   }
-});
+})
+.build();
 
 $event.EventSpace.create()
 .on($api.EVENT_REQUEST_SEND,
     'endpoint',
-    $api.ActiveRequestIndex.__classId,
+    $api.ActiveRequestIndex.__className,
     function (event) {
       return $api.ActiveRequestIndex.create()
       .onRequestSend(event);
     })
 .on($api.EVENT_RESPONSE_RECEIVE,
     'endpoint',
-    $api.ActiveRequestIndex.__classId,
+    $api.ActiveRequestIndex.__className,
     function (event) {
       return $api.ActiveRequestIndex.create()
       .onResponseReceive(event);

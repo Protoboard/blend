@@ -9,7 +9,7 @@
  * Maintains application route state.
  * @class $router.Router
  */
-$router.Router = $oop.getClass('$router.Router')
+$router.Router = $oop.createClass('$router.Router')
 .blend($oop.Singleton)
 .define(/** @lends $router.Router# */{
   /** @ignore */
@@ -48,7 +48,8 @@ $router.Router = $oop.getClass('$router.Router')
    */
   onRouteChange: function () {
   }
-});
+})
+.build();
 
 $event.EventSpace.create()
 .on($router.EVENT_ROUTE_CHANGE,

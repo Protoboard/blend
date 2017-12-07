@@ -5,9 +5,9 @@
  * @extends $ui.HtmlOption
  * @extends $ui.DomInputEventBound
  */
-$ui.DomOption = $oop.getClass('$ui.DomOption')
-.blend($oop.getClass('$ui.HtmlOption'))
-.blend($oop.getClass('$ui.DomInputEventBound'))
+$ui.DomOption = $oop.createClass('$ui.DomOption')
+.blend($ui.HtmlOption)
+.blend($ui.DomInputEventBound)
 .define(/** @lends $ui.DomOption# */{
   /**
    * @protected
@@ -75,7 +75,8 @@ $ui.DomOption = $oop.getClass('$ui.DomOption')
   onElementChange: function (event) {
     this._syncToElementSelected();
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.HtmlOption')
+$ui.HtmlOption
 .forwardBlend($ui.DomOption, $utils.isBrowser);

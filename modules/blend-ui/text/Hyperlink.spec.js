@@ -9,9 +9,10 @@ describe("$ui", function () {
         hyperlink;
 
     beforeAll(function () {
-      Hyperlink = $oop.getClass('test.$ui.Hyperlink.Hyperlink')
-      .blend($ui.Hyperlink);
-      Hyperlink.__forwards = {list: [], sources: [], lookup: {}};
+      Hyperlink = $oop.createClass('test.$ui.Hyperlink.Hyperlink')
+      .blend($ui.Hyperlink)
+      .build();
+      Hyperlink.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setTargetUrl()", function () {

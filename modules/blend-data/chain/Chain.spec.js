@@ -12,8 +12,9 @@ describe("$data", function () {
         link;
 
     beforeAll(function () {
-      Chain = $oop.getClass('test.$data.Chain.Chain')
-      .blend($data.Chain);
+      Chain = $oop.createClass('test.$data.Chain.Chain')
+      .blend($data.Chain)
+      .build();
     });
 
     beforeEach(function () {
@@ -261,14 +262,15 @@ describe("$data", function () {
           link3, link4;
 
       beforeAll(function () {
-        Link = $oop.getClass('test.$data.Chain.Link')
+        Link = $oop.createClass('test.$data.Chain.Link')
         .blend($data.Link)
         .define({
           clone: function clone() {
             clone.returned.foo = this.foo;
             return clone.returned;
           }
-        });
+        })
+        .build();
       });
 
       beforeEach(function () {

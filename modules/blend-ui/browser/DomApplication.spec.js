@@ -9,10 +9,11 @@ describe("$ui", function () {
         domApplication;
 
     beforeAll(function () {
-      DomApplication = $oop.getClass('test.$ui.DomApplication.DomApplication')
+      DomApplication = $oop.createClass('test.$ui.DomApplication.DomApplication')
       .blend($ui.Application)
-      .blend($ui.DomApplication);
-      DomApplication.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomApplication)
+      .build();
+      DomApplication.__builder.forwards = {list: [], lookup: {}};
       $router.browserRoutingMethod = undefined;
     });
 
@@ -21,7 +22,7 @@ describe("$ui", function () {
     });
 
     beforeEach(function () {
-      DomApplication.__instanceLookup = {};
+      DomApplication.__builder.instances = {};
       jasmine.clock().install();
     });
 

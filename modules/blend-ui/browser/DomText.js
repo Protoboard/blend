@@ -6,8 +6,8 @@
  * @extends $ui.HtmlText
  * @extends $widget.DomWidget
  */
-$ui.DomText = $oop.getClass('$ui.DomText')
-.blend($oop.getClass('$ui.HtmlText'))
+$ui.DomText = $oop.createClass('$ui.DomText')
+.blend($ui.HtmlText)
 .blend($widget.DomWidget)
 .define(/** @lends $ui.DomText# */{
   /**
@@ -22,7 +22,8 @@ $ui.DomText = $oop.getClass('$ui.DomText')
     }
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.HtmlText')
+$ui.HtmlText
 .forwardBlend($ui.DomText, $utils.isBrowser);

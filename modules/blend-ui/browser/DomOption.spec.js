@@ -9,11 +9,12 @@ describe("$ui", function () {
         domOption;
 
     beforeAll(function () {
-      DomOption = $oop.getClass('test.$ui.DomOption.DomOption')
+      DomOption = $oop.createClass('test.$ui.DomOption.DomOption')
       .blend($widget.Widget)
       .blend($ui.Option)
-      .blend($ui.DomOption);
-      DomOption.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DomOption)
+      .build();
+      DomOption.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("select()", function () {
@@ -113,10 +114,11 @@ describe("$ui", function () {
         htmlOption;
 
     beforeAll(function () {
-      HtmlOption = $oop.getClass('test.$ui.DomOption.HtmlOption')
+      HtmlOption = $oop.createClass('test.$ui.DomOption.HtmlOption')
       .blend($widget.Widget)
       .blend($ui.Option)
-      .blend($ui.HtmlOption);
+      .blend($ui.HtmlOption)
+      .build();
     });
 
     describe("create()", function () {

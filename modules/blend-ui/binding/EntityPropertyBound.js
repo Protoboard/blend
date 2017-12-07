@@ -10,7 +10,7 @@
  * @mixin $ui.EntityPropertyBound
  * @augments $widget.Widget
  */
-$ui.EntityPropertyBound = $oop.getClass('$ui.EntityPropertyBound')
+$ui.EntityPropertyBound = $oop.createClass('$ui.EntityPropertyBound')
 .expect($widget.Widget)
 .define(/** @lends $ui.EntityPropertyBound# */{
   /**
@@ -144,4 +144,5 @@ $ui.EntityPropertyBound = $oop.getClass('$ui.EntityPropertyBound')
         .getValue(entityKey.toString());
     this._syncToEntityProperty(entityProperty);
   }
-});
+})
+.build();

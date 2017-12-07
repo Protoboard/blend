@@ -12,7 +12,7 @@
  * @extends $data.Collection
  * @implements $utils.Stringifiable
  */
-$widget.InlineStyles = $oop.getClass('$widget.InlineStyles')
+$widget.InlineStyles = $oop.createClass('$widget.InlineStyles')
 .blend($data.Collection)
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.InlineStyles# */{
@@ -25,4 +25,5 @@ $widget.InlineStyles = $oop.getClass('$widget.InlineStyles')
     .getValues()
     .join(';');
   }
-});
+})
+.build();

@@ -5,8 +5,8 @@
  * @extends $ui.Clickable
  * @extends $widget.DomWidget
  */
-$ui.DomClickable = $oop.getClass('$ui.DomClickable')
-.blend($oop.getClass('$ui.Clickable'))
+$ui.DomClickable = $oop.createClass('$ui.DomClickable')
+.blend($ui.Clickable)
 .blend($widget.DomWidget)
 .define(/** @lends $ui.DomClickable# */{
   /** @ignore */
@@ -26,7 +26,8 @@ $ui.DomClickable = $oop.getClass('$ui.DomClickable')
     eventTrail.push(wrapperEvent);
     this.click();
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Clickable')
+$ui.Clickable
 .forwardBlend($ui.DomClickable, $utils.isBrowser);

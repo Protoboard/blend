@@ -14,7 +14,7 @@
  * @class $entity.ItemIdTypePath
  * @extends $data.TreePath
  */
-$entity.ItemIdTypePath = $oop.getClass('$entity.ItemIdTypePath')
+$entity.ItemIdTypePath = $oop.createClass('$entity.ItemIdTypePath')
 .blend($data.TreePath)
 .define(/** @lends $entity.ItemIdTypePath# */{
   /**
@@ -29,7 +29,8 @@ $entity.ItemIdTypePath = $oop.getClass('$entity.ItemIdTypePath')
         'document', '__field', '__field/itemIdType', 'options', idType]
     }, properties);
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

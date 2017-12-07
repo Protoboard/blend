@@ -9,13 +9,14 @@ describe("$module", function () {
         moduleEnvironment;
 
     beforeAll(function () {
-      ModuleEnvironment = $oop.getClass('test.$module.ModuleEnvironment.ModuleEnvironment')
-      .blend($module.ModuleEnvironment);
-      ModuleEnvironment.__forwards = {list: [], sources: [], lookup: {}};
+      ModuleEnvironment = $oop.createClass('test.$module.ModuleEnvironment.ModuleEnvironment')
+      .blend($module.ModuleEnvironment)
+      .build();
+      ModuleEnvironment.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      ModuleEnvironment.__instanceLookup = {};
+      ModuleEnvironment.__builder.instances = {};
     });
 
     it("should be singleton", function () {

@@ -9,8 +9,9 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      TQC = $oop.getClass('test.$data.TreeQueryComponent.TreeQueryComponent')
-      .blend($data.TreeQueryComponent);
+      TQC = $oop.createClass('test.$data.TreeQueryComponent.TreeQueryComponent')
+      .blend($data.TreeQueryComponent)
+      .build();
     });
 
     describe("fromString()", function () {

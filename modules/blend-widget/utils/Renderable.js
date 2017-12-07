@@ -4,7 +4,7 @@
  * Describes a renderable object.
  * @interface $widget.Renderable
  */
-$widget.Renderable = $oop.getClass('$widget.Renderable')
+$widget.Renderable = $oop.createClass('$widget.Renderable')
 .define(/** @lends $widget.Renderable# */{
   /**
    * @param element
@@ -21,4 +21,5 @@ $widget.Renderable = $oop.getClass('$widget.Renderable')
    * @returns {$widget.Renderable}
    */
   reRenderContents: function () {}
-});
+})
+.build();

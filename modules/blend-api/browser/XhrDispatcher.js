@@ -13,8 +13,8 @@
  * @extends $api.RequestDispatcher
  * @todo Check IE / Edge, and create specific dispatcher if necessary.
  */
-$api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
-.blend($oop.getClass('$api.RequestDispatcher'))
+$api.XhrDispatcher = $oop.createClass('$api.XhrDispatcher')
+.blend($api.RequestDispatcher)
 .define(/** @lends $api.XhrDispatcher# */{
   /**
    * @member {$api.XhrRequest} $api.XhrDispatcher#request
@@ -138,9 +138,10 @@ $api.XhrDispatcher = $oop.getClass('$api.XhrDispatcher')
 
     return deferred.promise;
   }
-});
+})
+.build();
 
-$oop.getClass('$api.RequestDispatcher')
+$api.RequestDispatcher
 .forwardBlend($api.XhrDispatcher, function (properties) {
   var request = properties && properties.request;
   return request &&

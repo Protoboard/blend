@@ -14,6 +14,7 @@
  * @extends $widget.Widget
  * @mixes $ui.Selectable
  */
-$ui.Checkbox = $oop.getClass('$ui.Checkbox')
+$ui.Checkbox = $oop.createClass('$ui.Checkbox')
 .blend($widget.Widget)
-.blend($oop.getClass('$ui.Selectable'));
+.blend($ui.Selectable)
+.build();

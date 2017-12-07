@@ -5,9 +5,9 @@
  * @extends $ui.DomInputEventBound
  * @extends $ui.OtherInputTypeHost
  */
-$ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
-.blend($oop.getClass('$ui.DomInputEventBound'))
-.blend($oop.getClass('$ui.OtherInputTypeHost'))
+$ui.DomOtherInputTypeHost = $oop.createClass('$ui.DomOtherInputTypeHost')
+.blend($ui.DomInputEventBound)
+.blend($ui.OtherInputTypeHost)
 .define(/** @lends $ui.DomOtherInputTypeHost# */{
   /**
    * @protected
@@ -61,7 +61,8 @@ $ui.DomOtherInputTypeHost = $oop.getClass('$ui.DomOtherInputTypeHost')
   onElementChange: function (event) {
     this._syncToElementValue();
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.OtherInputTypeHost')
+$ui.OtherInputTypeHost
 .forwardBlend($ui.DomOtherInputTypeHost, $utils.isBrowser);

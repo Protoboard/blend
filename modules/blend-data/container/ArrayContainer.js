@@ -8,9 +8,9 @@
  * @implements $data.Clearable
  * @todo Add clone() w/ shallow copy?
  */
-$data.ArrayContainer = $oop.getClass('$data.ArrayContainer')
-.expect($oop.getClass('$data.DataContainer'))
-.implement($oop.getClass('$data.Clearable'))
+$data.ArrayContainer = $oop.createClass('$data.ArrayContainer')
+.expect($data.DataContainer)
+.implement($data.Clearable)
 .define(/** @lends $data.ArrayContainer# */{
   /**
    * @member {Array} $data.ArrayContainer#data
@@ -38,4 +38,5 @@ $data.ArrayContainer = $oop.getClass('$data.ArrayContainer')
   isEmpty: function () {
     return !this.data.length;
   }
-});
+})
+.build();

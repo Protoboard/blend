@@ -12,7 +12,7 @@
  * @extends $data.StringSet
  * @implements $utils.Stringifiable
  */
-$widget.CssClasses = $oop.getClass('$widget.CssClasses')
+$widget.CssClasses = $oop.createClass('$widget.CssClasses')
 .blend($data.StringSet)
 .implement($utils.Stringifiable)
 .define(/** @lends $widget.CssClasses# */{
@@ -20,4 +20,5 @@ $widget.CssClasses = $oop.getClass('$widget.CssClasses')
   toString: function () {
     return Object.keys(this.data).join(' ');
   }
-});
+})
+.build();

@@ -12,9 +12,9 @@
  * @extends $ui.Text
  * @extends $ui.EntityPropertyBound
  */
-$ui.EntityText = $oop.getClass('$ui.EntityText')
-.blend($oop.getClass('$ui.Text'))
-.blend($oop.getClass('$ui.EntityPropertyBound'))
+$ui.EntityText = $oop.createClass('$ui.EntityText')
+.blend($ui.Text)
+.blend($ui.EntityPropertyBound)
 .define(/** @lends $ui.EntityText# */{
   /**
    * @member {$entity.ValueKey|$entity.ItemKey} $ui.EntityText#textContentEntity
@@ -56,4 +56,5 @@ $ui.EntityText = $oop.getClass('$ui.EntityText')
     this.setEntityProperty('textContentEntity', textContentEntity);
     return this;
   }
-});
+})
+.build();

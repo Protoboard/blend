@@ -9,9 +9,10 @@ describe("$entity", function () {
         fieldAttributePath;
 
     beforeAll(function () {
-      FieldAttributePath = $oop.getClass('test.$entity.FieldAttributePath.FieldAttributePath')
-      .blend($entity.FieldAttributePath);
-      FieldAttributePath.__forwards = {list: [], sources: [], lookup: {}};
+      FieldAttributePath = $oop.createClass('test.$entity.FieldAttributePath.FieldAttributePath')
+      .blend($entity.FieldAttributePath)
+      .build();
+      FieldAttributePath.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromAttributeRef()", function () {

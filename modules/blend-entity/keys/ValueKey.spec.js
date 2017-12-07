@@ -11,14 +11,16 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      ValueKey = $oop.getClass('test.$entity.ValueKey.ValueKey')
+      ValueKey = $oop.createClass('test.$entity.ValueKey.ValueKey')
       .blend($entity.EntityKey)
       .blend($entity.ValueKey)
       .define({
         getAttributeDocumentKey: function () {
           return 'foo/bar'.toDocumentKey();
         }
-      });
+      })
+      .build();
+      ValueKey.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

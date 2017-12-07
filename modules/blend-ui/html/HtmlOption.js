@@ -6,10 +6,10 @@
  * @mixes $ui.DisabledAttributeHost
  * @augments $ui.Option
  */
-$ui.HtmlOption = $oop.getClass('$ui.HtmlOption')
-.blend($oop.getClass('$ui.HtmlText'))
-.blend($oop.getClass('$ui.DisabledAttributeHost'))
-.expect($oop.getClass('$ui.Option'))
+$ui.HtmlOption = $oop.createClass('$ui.HtmlOption')
+.blend($ui.HtmlText)
+.blend($ui.DisabledAttributeHost)
+.expect($ui.Option)
 .define(/** @lends $ui.HtmlOption# */{
   /** @ignore */
   defaults: function () {
@@ -78,7 +78,8 @@ $ui.HtmlOption = $oop.getClass('$ui.HtmlOption')
     }
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Option')
+$ui.Option
 .forwardBlend($ui.HtmlOption, $widget.isHtml);

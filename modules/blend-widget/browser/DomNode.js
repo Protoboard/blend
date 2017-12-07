@@ -9,9 +9,9 @@
  * @implements $widget.Renderable
  * @todo Wrap element modifications in requestAnimationFrame()
  */
-$widget.DomNode = $oop.getClass('$widget.DomNode')
-.blend($oop.getClass('$widget.HtmlNode'))
-.implement($oop.getClass('$widget.Renderable'))
+$widget.DomNode = $oop.createClass('$widget.DomNode')
+.blend($widget.HtmlNode)
+.implement($widget.Renderable)
 .define(/** @lends $widget.DomNode# */{
   /**
    * Renders child node and adds it to the DOM at the appropriate child index.
@@ -182,7 +182,8 @@ $widget.DomNode = $oop.getClass('$widget.DomNode')
   getElement: function () {
     return document.getElementById(this.elementId);
   }
-});
+})
+.build();
 
-$oop.getClass('$widget.HtmlNode')
+$widget.HtmlNode
 .forwardBlend($widget.DomNode, $utils.isBrowser);

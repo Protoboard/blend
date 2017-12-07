@@ -5,8 +5,8 @@
  * @extends $ui.Focusable
  * @extends $widget.DomWidget
  */
-$ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
-.blend($oop.getClass('$ui.Focusable'))
+$ui.DomFocusable = $oop.createClass('$ui.DomFocusable')
+.blend($ui.Focusable)
 .blend($widget.DomWidget)
 .define(/** @lends $ui.DomFocusable# */{
   /**
@@ -93,7 +93,8 @@ $ui.DomFocusable = $oop.getClass('$ui.DomFocusable')
     eventTrail.push(wrapperEvent);
     this._syncToElementFocus();
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Focusable')
+$ui.Focusable
 .forwardBlend($ui.DomFocusable, $utils.isBrowser);

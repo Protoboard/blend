@@ -11,7 +11,7 @@
  * @class $api.UrlQuery
  * @extends $data.StringDictionary
  */
-$api.UrlQuery = $oop.getClass('$api.UrlQuery')
+$api.UrlQuery = $oop.createClass('$api.UrlQuery')
 .blend($data.Dictionary)
 .define(/** @lends $api.UrlQuery# */{
   /**
@@ -55,4 +55,5 @@ $api.UrlQuery = $oop.getClass('$api.UrlQuery')
     })
     .join('&');
   }
-});
+})
+.build();

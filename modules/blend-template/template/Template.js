@@ -10,7 +10,7 @@
 /**
  * @class $template.Template
  */
-$template.Template = $oop.getClass('$template.Template')
+$template.Template = $oop.createClass('$template.Template')
 .define(/** @lends $template.Template# */{
   /**
    * @member {string|$utils.Stringifiable} $template.Template#templateString
@@ -167,7 +167,8 @@ $template.Template = $oop.getClass('$template.Template')
       return this._clearParameters();
     }
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

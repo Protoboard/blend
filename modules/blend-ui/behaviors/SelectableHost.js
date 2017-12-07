@@ -5,8 +5,8 @@
  * @mixin $ui.SelectableHost
  * @augments $ui.Inputable
  */
-$ui.SelectableHost = $oop.getClass('$ui.SelectableHost')
-.expect($oop.getClass('$ui.Inputable'))
+$ui.SelectableHost = $oop.createClass('$ui.SelectableHost')
+.expect($ui.Inputable)
 .define(/** @lends $ui.SelectableHost# */{
   /**
    * Associates ownValue's of Selectable child widgets with child widgets.
@@ -93,4 +93,5 @@ $ui.SelectableHost = $oop.getClass('$ui.SelectableHost')
     delete selectablesByOwnValue[event.ownValueBefore];
     selectablesByOwnValue[event.ownValueAfter] = selectable;
   }
-});
+})
+.build();

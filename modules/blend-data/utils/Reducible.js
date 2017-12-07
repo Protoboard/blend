@@ -3,7 +3,7 @@
 /**
  * @interface $data.Reducible
  */
-$data.Reducible = $oop.getClass('$data.Reducible')
+$data.Reducible = $oop.createClass('$data.Reducible')
 .define(/** @lends $data.Reducible# */{
   /**
    * Accumulates a value based on the contribution of each item, as defined by
@@ -15,4 +15,5 @@ $data.Reducible = $oop.getClass('$data.Reducible')
    * @returns {*} Accumulated value
    */
   reduce: function (callback, initialValue, context) {}
-});
+})
+.build();

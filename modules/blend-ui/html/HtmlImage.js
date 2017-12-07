@@ -5,9 +5,9 @@
  * @extends $widget.HtmlWidget
  * @augments $ui.Image
  */
-$ui.HtmlImage = $oop.getClass('$ui.HtmlImage')
+$ui.HtmlImage = $oop.createClass('$ui.HtmlImage')
 .blend($widget.HtmlWidget)
-.expect($oop.getClass('$ui.Image'))
+.expect($ui.Image)
 .define(/** @lends $ui.HtmlImage# */{
   /** @ignore */
   defaults: function () {
@@ -37,7 +37,8 @@ $ui.HtmlImage = $oop.getClass('$ui.HtmlImage')
     }
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Image')
+$ui.Image
 .forwardBlend($ui.HtmlImage, $widget.isHtml);

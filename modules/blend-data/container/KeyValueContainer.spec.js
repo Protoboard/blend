@@ -13,7 +13,7 @@ describe("$data", function () {
         result;
 
     beforeAll(function () {
-      KeyValueContainer = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer')
+      KeyValueContainer = $oop.createClass('test.$data.KeyValueContainer.KeyValueContainer')
       .blend($data.DataContainer)
       .blend($data.ObjectContainer)
       .blend($data.KeyValueContainer)
@@ -28,16 +28,18 @@ describe("$data", function () {
             callback(data[key], key);
           });
         }
-      });
+      })
+      .build();
 
-      Settable = $oop.getClass('test.$data.KeyValueContainer.Settable')
+      Settable = $oop.createClass('test.$data.KeyValueContainer.Settable')
       .blend($data.DataContainer)
       .blend($data.ObjectContainer)
       .define({
         setItem: function (key, value) {
           this.data[key] = value;
         }
-      });
+      })
+      .build();
     });
 
     beforeEach(function () {
@@ -54,7 +56,7 @@ describe("$data", function () {
           keyValueContainer2;
 
       beforeAll(function () {
-        KeyValueContainer2 = $oop.getClass('test.$data.KeyValueContainer.KeyValueContainer2')
+        KeyValueContainer2 = $oop.createClass('test.$data.KeyValueContainer.KeyValueContainer2')
         .blend($data.DataContainer)
         .blend($data.ArrayContainer)
         .blend($data.KeyValueContainer)
@@ -68,7 +70,8 @@ describe("$data", function () {
               callback(pair[1], pair[0]);
             });
           }
-        });
+        })
+        .build();
       });
 
       beforeEach(function () {
@@ -102,7 +105,7 @@ describe("$data", function () {
           setContainer;
 
       beforeAll(function () {
-        SetContainer = $oop.getClass('test.$data.KeyValueContainer.SetContainer')
+        SetContainer = $oop.createClass('test.$data.KeyValueContainer.SetContainer')
         .blend($data.DataContainer)
         .blend($data.ArrayContainer)
         .blend($data.SetContainer)
@@ -114,7 +117,8 @@ describe("$data", function () {
             callback = context ? callback.bind(context) : callback;
             this.data.forEach(callback);
           }
-        });
+        })
+        .build();
       });
 
       beforeEach(function () {
@@ -230,9 +234,10 @@ describe("$data", function () {
           transformed;
 
       beforeAll(function () {
-        KeyValueConvertible = $oop.getClass('test.$data.KeyValueContainer.KeyValueConvertible')
+        KeyValueConvertible = $oop.createClass('test.$data.KeyValueContainer.KeyValueConvertible')
         .blend($data.DataContainer)
-        .blend($data.KeyValueConvertible);
+        .blend($data.KeyValueConvertible)
+        .build();
       });
 
       beforeEach(function () {

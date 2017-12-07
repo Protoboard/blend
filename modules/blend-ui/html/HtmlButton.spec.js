@@ -9,10 +9,11 @@ describe("$ui", function () {
         htmlButton;
 
     beforeAll(function () {
-      HtmlButton = $oop.getClass('test.$ui.HtmlButton.HtmlButton')
+      HtmlButton = $oop.createClass('test.$ui.HtmlButton.HtmlButton')
       .blend($ui.Button)
-      .blend($ui.HtmlButton);
-      HtmlButton.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.HtmlButton)
+      .build();
+      HtmlButton.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {
@@ -28,8 +29,9 @@ describe("$ui", function () {
         button;
 
     beforeAll(function () {
-      Button = $oop.getClass('test.$ui.HtmlButton.Button')
-      .blend($ui.Button);
+      Button = $oop.createClass('test.$ui.HtmlButton.Button')
+      .blend($ui.Button)
+      .build();
     });
 
     describe("create()", function () {

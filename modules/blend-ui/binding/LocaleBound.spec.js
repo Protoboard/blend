@@ -11,10 +11,11 @@ describe("$ui", function () {
         localeBound;
 
     beforeAll(function () {
-      LocaleBound = $oop.getClass('test.$ui.LocaleBound.LocaleBound')
+      LocaleBound = $oop.createClass('test.$ui.LocaleBound.LocaleBound')
       .blend($widget.Widget)
-      .blend($ui.LocaleBound);
-      LocaleBound.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.LocaleBound)
+      .build();
+      LocaleBound.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("onAttach()", function () {

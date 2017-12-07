@@ -17,7 +17,7 @@
  * @extends $event.Event
  * @todo Separate ParentEntityChangeEvent?
  */
-$entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
+$entity.EntityChangeEvent = $oop.createClass('$entity.EntityChangeEvent')
 .blend($event.Event)
 .define(/** @lends $entity.EntityChangeEvent# */{
   /**
@@ -65,9 +65,10 @@ $entity.EntityChangeEvent = $oop.getClass('$entity.EntityChangeEvent')
   getNodeAfterWrapped: function () {
     return $data.DataContainer.fromData(this.nodeAfter);
   }
-});
+})
+.build();
 
-$oop.getClass('$event.Event')
+$event.Event
 .forwardBlend($entity.EntityChangeEvent, function (properties) {
   return $utils.matchesPrefix(properties.eventName, 'entity.change');
 });

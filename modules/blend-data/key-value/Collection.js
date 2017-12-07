@@ -16,11 +16,11 @@
  * @extends $data.KeyValueContainer
  * @extends $data.StringKeyHost
  */
-$data.Collection = $oop.getClass('$data.Collection')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ObjectContainer'))
-.blend($oop.getClass('$data.KeyValueContainer'))
-.blend($oop.getClass('$data.StringKeyHost'))
+$data.Collection = $oop.createClass('$data.Collection')
+.blend($data.DataContainer)
+.blend($data.ObjectContainer)
+.blend($data.KeyValueContainer)
+.blend($data.StringKeyHost)
 .define(/** @lends $data.Collection# */{
   /**
    * @type {string}
@@ -124,9 +124,10 @@ $data.Collection = $oop.getClass('$data.Collection')
   getValueWrapped: function (key) {
     return $data.DataContainer.create({data: this.getValue(key)});
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.Collection}
@@ -136,7 +137,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.Collection}
@@ -146,7 +147,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.Collection}

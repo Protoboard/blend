@@ -1,151 +1,68 @@
 "use strict";
 
 /**
- * Maintains an index of classes and mixins, with the intent of providing quick
- * access to classes based on (a subset of) their mixins. Used internally by
- * `$oop.ClassBlender`.
  * @class $oop.BlenderIndex
- * @ignore
  */
 $oop.BlenderIndex = $oop.createObject(Object.prototype, /** @lends $oop.BlenderIndex */{
   /**
-   * @param {Array.<$oop.Class>} mixins
-   * @returns {string}
+   * @param {Array.<$oop.ClassBuilder>} mixinBuilders
+   * @return {Array.<$oop.ClassBuilder>}
    * @private
+   * @todo Refactor into iterative for performance.
    */
-  _getHashForMixins: function (mixins) {
-    return mixins
-    .map($oop.getClassId)
-    .map($oop.escapeCommas)
-    .sort()
-    .join(',');
+  _normalizeMixins: function (mixinBuilders) {
+    var result = [],
+        lookup = {};
+    mixinBuilders.forEach(function (mixinBuilder) {
+      mixinBuilder.contributors
+      .forEach(function (mixinBuilder) {
+        if (!lookup[mixinBuilder.classId]) {
+          result.push(mixinBuilder);
+          lookup[mixinBuilder.classId] = 1;
+        }
+      });
+    });
+    return result;
   },
 
   /**
-   * Compare function to be used in sorting arrays of classes. Places
-   * declared classes first, ad-hoc classes (with UUID as ID) last.
-   * @param {$oop.Class} MixinA
-   * @param {$oop.Class} MixinB
-   * @returns {number}
-   * @private
-   */
-  _compareMixinIds: function (MixinA, MixinB) {
-    var RE_UUID = $oop.RE_UUID,
-        classIdA = MixinA.__classId,
-        classIdB = MixinB.__classId;
-    return RE_UUID.test(classIdA) && !RE_UUID.test(classIdB) ? 1 :
-        RE_UUID.test(classIdB) && !RE_UUID.test(classIdA) ? -1 :
-            0;
-  },
-
-  /**
-   * @param {Array.<$oop.Class>} mixinHash
-   * @private
-   */
-  _updateClassOrderForMixins: function (mixinHash) {
-    var classes = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash);
-    classes.list
-    .sort(this._compareMixinIds);
-  },
-
-  /**
-   * @param mixinHash
-   * @private
-   */
-  _updateClassLookupForMixins: function (mixinHash) {
-    var classes = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash);
-    classes.lookup = classes.list
-    .reduce(function (lookup, Class, i) {
-      lookup[Class.__classId] = i;
-      return lookup;
-    }, {});
-  },
-
-  /**
-   * Adds Class to index, associating it with the specified list of mixins.
    * @param {$oop.Class} Class
-   * @param {Array.<$oop.Class>} mixins
-   * @returns {$oop.BlenderIndex}
+   * @param {Array.<$oop.ClassBuilder>} mixinBuilders
+   * @return {$oop.BlenderIndex}
    */
-  addClassForMixins: function (Class, mixins) {
-    var classId = Class.__classId,
-        mixinHash = this._getHashForMixins(mixins),
-        classesForMixins = $oop.getSafeQuickList($oop.classByMixinIds, mixinHash),
-        classList = classesForMixins.list,
-        classLookup = classesForMixins.lookup;
+  addClassForMixins: function (Class, mixinBuilders) {
+    var classByMixinIds = $oop.classByMixinIds,
+        normalizedMixins = this._normalizeMixins(mixinBuilders),
+        mixinHash = normalizedMixins.map($oop.getClassBuilderId).join(','),
+        ClassBefore = classByMixinIds[mixinHash];
 
-    // adding class to index and updating order
-    if (!hOP.call(classLookup, classId)) {
-      classList.push(Class);
-      this._updateClassOrderForMixins(mixinHash);
-      this._updateClassLookupForMixins(mixinHash);
+    if (!ClassBefore) {
+      classByMixinIds[mixinHash] = Class;
     }
 
     return this;
   },
 
   /**
-   * Adds Class to index, based on its own mixins.
    * @param {$oop.Class} Class
-   * @returns {$oop.BlenderIndex}
+   * @return {$oop.BlenderIndex}
    */
   addClass: function (Class) {
-    var mixins = Class.__mixins.downstream.list;
-    if (mixins.length) {
-      this.addClassForMixins(Class, mixins);
+    var mixinBuilders = Class.__builder.contributors;
+    if (mixinBuilders.length) {
+      this.addClassForMixins(Class, mixinBuilders);
     }
     return this;
   },
 
   /**
-   * Removes the class that is associated with the specified mixins from the
-   * index.
-   * @param {$oop.Class} Class
-   * @param {Array.<$oop.Class>} mixins
-   * @returns {$oop.BlenderIndex}
+   * @param {Array.<$oop.ClassBuilder>} mixinBuilders
+   * @return {$oop.Class}
    */
-  removeClassForMixins: function (Class, mixins) {
-    var classId = Class.__classId,
-        mixinHash = this._getHashForMixins(mixins),
-        classesForMixins = $oop.classByMixinIds[mixinHash],
-        classList = classesForMixins && classesForMixins.list,
-        classLookup = classesForMixins && classesForMixins.lookup;
-
-    // removing class from index and updating order
-    if (classLookup && hOP.call(classLookup, classId)) {
-      classList.splice(classLookup[classId], 1);
-      if (classList.length) {
-        this._updateClassLookupForMixins(mixinHash);
-      } else {
-        delete $oop.classByMixinIds[mixinHash];
-      }
-    }
-
-    return this;
-  },
-
-  /**
-   * Removes Class from index, based on its own mixins.
-   * @param {$oop.Class} Class
-   * @returns {$oop.BlenderIndex}
-   */
-  removeClass: function (Class) {
-    var mixins = Class.__mixins.downstream.list;
-    if (mixins.length) {
-      this.removeClassForMixins(Class, mixins);
-    }
-    return this;
-  },
-
-  /**
-   * Retrieves a Class from the index matching the specified list of mixins.
-   * @param {Array.<$oop.Class>} mixins
-   * @returns {$oop.Class}
-   */
-  getClassForMixins: function (mixins) {
-    var mixinHash = this._getHashForMixins(mixins),
-        classes = $oop.classByMixinIds[mixinHash];
-    return classes && classes.list[0];
+  getClassForMixins: function (mixinBuilders) {
+    var normalizedMixins = this._normalizeMixins(mixinBuilders),
+        mixinHash = normalizedMixins.map($oop.getClassBuilderId).join(',');
+    return $oop.classByMixinIds[mixinHash];
   }
 });
 
@@ -153,8 +70,7 @@ $oop.copyProperties($oop, /** @lends $oop */{
   /**
    * Classes (declared or ad-hoc) indexed by the serialized class IDs of the
    * mixins they're composed of. Used internally by `$oop.BlenderIndex`.
-   * @type {$oop.QuickListLookup}
-   * @ignore
+   * @type {Object.<string,$oop.Class>}
    */
   classByMixinIds: {}
 });

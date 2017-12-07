@@ -9,9 +9,10 @@ describe("$router", function () {
         route;
 
     beforeAll(function () {
-      Route = $oop.getClass('test.$router.Route.Route')
-      .blend($router.Route);
-      Route.__forwards = {list: [], sources: [], lookup: {}};
+      Route = $oop.createClass('test.$router.Route.Route')
+      .blend($router.Route)
+      .build();
+      Route.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromString()", function () {

@@ -6,8 +6,8 @@
  * @mixin $entity.BranchNoded
  * @augments $entity.Entity
  */
-$entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
-.expect($oop.getClass('$entity.Entity'))
+$entity.BranchNoded = $oop.createClass('$entity.BranchNoded')
+.expect($entity.Entity)
 .define(/** @lends $entity.BranchNoded# */{
   /**
    * Extracts a node of affected properties reflecting the entity's current
@@ -72,4 +72,5 @@ $entity.BranchNoded = $oop.getClass('$entity.BranchNoded')
 
     return this;
   }
-});
+})
+.build();

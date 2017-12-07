@@ -15,10 +15,10 @@
  * @extends $data.ArrayContainer
  * @extends $data.SetContainer
  */
-$data.OrderedList = $oop.getClass('$data.OrderedList')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ArrayContainer'))
-.blend($oop.getClass('$data.SetContainer'))
+$data.OrderedList = $oop.createClass('$data.OrderedList')
+.blend($data.DataContainer)
+.blend($data.ArrayContainer)
+.blend($data.SetContainer)
 .define(/** @lends $data.OrderedList# */{
   /**
    * @member {function} $data.OrderedList#compare
@@ -189,9 +189,10 @@ $data.OrderedList = $oop.getClass('$data.OrderedList')
       data: this.getRange(startValue, endValue, offset, limit)
     });
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.OrderedList}
@@ -201,7 +202,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.OrderedList}
@@ -211,7 +212,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.OrderedList}

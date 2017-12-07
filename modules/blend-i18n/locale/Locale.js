@@ -14,7 +14,7 @@
  * @extends $event.EventSender
  * @implements $utils.Stringifiable
  */
-$i18n.Locale = $oop.getClass('$i18n.Locale')
+$i18n.Locale = $oop.createClass('$i18n.Locale')
 .cacheBy(function (properties) {
   var localeKey = properties && properties.localeKey;
   return localeKey && localeKey.toString();
@@ -154,7 +154,8 @@ $i18n.Locale = $oop.getClass('$i18n.Locale')
   toString: function () {
     return this.localeKey.documentId;
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

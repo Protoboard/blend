@@ -9,10 +9,11 @@ describe("$ui", function () {
         disabledAttributeHost;
 
     beforeAll(function () {
-      DisabledAttributeHost = $oop.getClass('test.$ui.DisabledAttributeHost.DisabledAttributeHost')
+      DisabledAttributeHost = $oop.createClass('test.$ui.DisabledAttributeHost.DisabledAttributeHost')
       .blend($ui.Button)
-      .blend($ui.DisabledAttributeHost);
-      DisabledAttributeHost.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.DisabledAttributeHost)
+      .build();
+      DisabledAttributeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

@@ -9,8 +9,9 @@ describe("$widget", function () {
         inlineStyles;
 
     beforeAll(function () {
-      InlineStyles = $oop.getClass('test.$widget.InlineStyles.InlineStyles')
-      .blend($widget.InlineStyles);
+      InlineStyles = $oop.createClass('test.$widget.InlineStyles.InlineStyles')
+      .blend($widget.InlineStyles)
+      .build();
     });
 
     describe("toString()", function () {

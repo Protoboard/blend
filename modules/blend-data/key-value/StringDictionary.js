@@ -17,12 +17,12 @@
  * @extends $data.StringKeyHost
  * @extends $data.StringValueHost
  */
-$data.StringDictionary = $oop.getClass('$data.StringDictionary')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ObjectContainer'))
-.blend($oop.getClass('$data.KeyValueContainer'))
-.blend($oop.getClass('$data.StringKeyHost'))
-.blend($oop.getClass('$data.StringValueHost'))
+$data.StringDictionary = $oop.createClass('$data.StringDictionary')
+.blend($data.DataContainer)
+.blend($data.ObjectContainer)
+.blend($data.KeyValueContainer)
+.blend($data.StringKeyHost)
+.blend($data.StringValueHost)
 .define(/** @lends $data.StringDictionary# */{
   /**
    * @param {string} key
@@ -133,9 +133,10 @@ $data.StringDictionary = $oop.getClass('$data.StringDictionary')
         Object.keys(data[key]) :
         [];
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.StringDictionary}
@@ -145,7 +146,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.StringDictionary}
@@ -155,7 +156,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.StringDictionary}

@@ -21,10 +21,10 @@
  * @example
  * $data.TreeQuery.create(['foo', '*', 'bar:!baz,quux'])
  */
-$data.TreeQuery = $oop.getClass('$data.TreeQuery')
+$data.TreeQuery = $oop.createClass('$data.TreeQuery')
 .blend($utils.Cloneable)
 .implement($utils.Stringifiable)
-.implement($oop.getClass('$data.Matchable'))
+.implement($data.Matchable)
 .define(/** @lends $data.TreeQuery# */{
   /**
    * Query components.
@@ -82,7 +82,7 @@ $data.TreeQuery = $oop.getClass('$data.TreeQuery')
     return this.components
     .map(String)
     .map($data.escapeTreePathComponent)
-    .join($data.TREE_PATH_DELIMITER);
+    .join($data.TREE_PATH_DELIMITER) || '';
   },
 
   /**
@@ -147,7 +147,8 @@ $data.TreeQuery = $oop.getClass('$data.TreeQuery')
     // if we also reached the end of the path, it's a match
     return j === pathComponentCount;
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

@@ -5,8 +5,8 @@
  * @mixin $entity.ValueKey
  * @augments $entity.EntityKey
  */
-$entity.ValueKey = $oop.getClass('$entity.ValueKey')
-.expect($oop.getClass('$entity.EntityKey'))
+$entity.ValueKey = $oop.createClass('$entity.ValueKey')
+.expect($entity.EntityKey)
 .define(/** @lends $entity.ValueKey# */{
   /**
    * @inheritDoc
@@ -31,4 +31,5 @@ $entity.ValueKey = $oop.getClass('$entity.ValueKey')
   getValueOptions: function () {
     return this.getAttribute('valueOptions');
   }
-});
+})
+.build();

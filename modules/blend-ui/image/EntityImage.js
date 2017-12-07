@@ -10,9 +10,9 @@
  * @extends $ui.Image
  * @mixes $ui.EntityPropertyBound
  */
-$ui.EntityImage = $oop.getClass('$ui.EntityImage')
-.blend($oop.getClass('$ui.Image'))
-.blend($oop.getClass('$ui.EntityPropertyBound'))
+$ui.EntityImage = $oop.createClass('$ui.EntityImage')
+.blend($ui.Image)
+.blend($ui.EntityPropertyBound)
 .define(/** @lends $ui.EntityImage# */{
   /**
    * @member {$entity.LeafNoded} $ui.EntityImage#imageUrlEntity
@@ -53,4 +53,5 @@ $ui.EntityImage = $oop.getClass('$ui.EntityImage')
     this.setEntityProperty('imageUrlEntity', imageUrlEntity);
     return this;
   }
-});
+})
+.build();

@@ -15,10 +15,10 @@
  * @extends $data.ArrayContainer
  * @extends $data.KeyValueContainer
  */
-$data.PairList = $oop.getClass('$data.PairList')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.ArrayContainer'))
-.blend($oop.getClass('$data.KeyValueContainer'))
+$data.PairList = $oop.createClass('$data.PairList')
+.blend($data.DataContainer)
+.blend($data.ArrayContainer)
+.blend($data.KeyValueContainer)
 .define(/** @lends $data.PairList# */{
   /**
    * @param {string} key
@@ -44,7 +44,7 @@ $data.PairList = $oop.getClass('$data.PairList')
    */
   deleteItem: function (key, value) {
     $assert.fail([
-      this.__classId + "does not support item deletion."
+      this.__className + "does not support item deletion."
     ].join(" "));
     /* istanbul ignore next */
     return this;
@@ -58,7 +58,7 @@ $data.PairList = $oop.getClass('$data.PairList')
    */
   hasItem: function (key, value) {
     $assert.fail([
-      this.__classId + "does not support item testing."
+      this.__className + "does not support item testing."
     ].join(" "));
     /* istanbul ignore next */
     return false;
@@ -83,9 +83,10 @@ $data.PairList = $oop.getClass('$data.PairList')
 
     return this;
   }
-});
+})
+.build();
 
-$oop.getClass('$data.DataContainer')
+$data.DataContainer
 .delegate(/** @lends $data.DataContainer# */{
   /**
    * @returns {$data.PairList}
@@ -95,7 +96,7 @@ $oop.getClass('$data.DataContainer')
   }
 });
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.PairList}
@@ -105,7 +106,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.PairList}

@@ -9,8 +9,8 @@
  * @class $widget.RootWidget
  * @extends $widget.Widget
  */
-$widget.RootWidget = $oop.getClass('$widget.RootWidget')
-.blend($oop.getClass('$widget.Widget'))
+$widget.RootWidget = $oop.createClass('$widget.RootWidget')
+.blend($widget.Widget)
 .blend($oop.Singleton)
 .define(/** @lends $widget.RootWidget */{
   /** @ignore */
@@ -32,4 +32,5 @@ $widget.RootWidget = $oop.getClass('$widget.RootWidget')
     .timerPromise
     .then(this.onAttach);
   }
-});
+})
+.build();

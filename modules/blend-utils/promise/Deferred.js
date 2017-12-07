@@ -10,7 +10,7 @@
  * @see $utils.Promise
  * @class $utils.Deferred
  */
-$utils.Deferred = $oop.getClass('$utils.Deferred')
+$utils.Deferred = $oop.createClass('$utils.Deferred')
 .define(/** @lends $utils.Deferred# */{
   /** @ignore */
   init: function () {
@@ -91,4 +91,5 @@ $utils.Deferred = $oop.getClass('$utils.Deferred')
 
     return this;
   }
-});
+})
+.build();

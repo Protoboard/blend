@@ -7,8 +7,8 @@
  * @mixin $ui.EntityListItem
  * @extends $ui.EntityPropertyBound
  */
-$ui.EntityListItem = $oop.getClass('$ui.EntityListItem')
-.blend($oop.getClass('$ui.EntityPropertyBound'))
+$ui.EntityListItem = $oop.createClass('$ui.EntityListItem')
+.blend($ui.EntityPropertyBound)
 .define(/** @lends $ui.EntityListItem# */{
   /**
    * @member {$entity.Item} $ui.EntityListItem#listItemEntity
@@ -70,4 +70,5 @@ $ui.EntityListItem = $oop.getClass('$ui.EntityListItem')
     this.setEntityProperty('listItemEntity', listItemEntity);
     return this;
   }
-});
+})
+.build();

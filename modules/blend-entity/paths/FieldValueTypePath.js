@@ -14,7 +14,7 @@
  * @class $entity.FieldValueTypePath
  * @extends $data.TreePath
  */
-$entity.FieldValueTypePath = $oop.getClass('$entity.FieldValueTypePath')
+$entity.FieldValueTypePath = $oop.createClass('$entity.FieldValueTypePath')
 .blend($data.TreePath)
 .define(/** @lends $entity.FieldValueTypePath# */{
   /**
@@ -29,7 +29,8 @@ $entity.FieldValueTypePath = $oop.getClass('$entity.FieldValueTypePath')
         'document', '__field', '__field/valueType', 'options', valueType]
     }, properties);
   }
-});
+})
+.build();
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
   /**

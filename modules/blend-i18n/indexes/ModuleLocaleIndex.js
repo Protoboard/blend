@@ -9,7 +9,7 @@
  * Maintains associations between modules and locales.
  * @class $i18n.ModuleLocaleIndex
  */
-$i18n.ModuleLocaleIndex = $oop.getClass('$i18n.ModuleLocaleIndex')
+$i18n.ModuleLocaleIndex = $oop.createClass('$i18n.ModuleLocaleIndex')
 .blend($oop.Singleton)
 .define(/** @lends $i18n.ModuleLocaleIndex# */{
   /**
@@ -51,4 +51,5 @@ $i18n.ModuleLocaleIndex = $oop.getClass('$i18n.ModuleLocaleIndex')
     .asCollection()
     .getKeys();
   }
-});
+})
+.build();

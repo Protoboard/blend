@@ -4,7 +4,7 @@
  * @mixin $ui.Clickable
  * @augments $widget.Widget
  */
-$ui.Clickable = $oop.getClass('$ui.Clickable')
+$ui.Clickable = $oop.createClass('$ui.Clickable')
 .expect($widget.Widget)
 .define(/** @lends $ui.Clickable# */{
   /**
@@ -14,4 +14,5 @@ $ui.Clickable = $oop.getClass('$ui.Clickable')
     this.trigger($ui.EVENT_CLICKABLE_CLICK);
     return this;
   }
-});
+})
+.build();

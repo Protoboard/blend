@@ -11,13 +11,13 @@
  * @implements $data.KeyValueConvertible
  * @implements $data.Transformable
  */
-$data.SetContainer = $oop.getClass('$data.SetContainer')
-.blend($oop.getClass('$data.ItemContainer'))
-.implement($oop.getClass('$data.Filterable'))
-.implement($oop.getClass('$data.Reducible'))
-.implement($oop.getClass('$data.SetConvertible'))
-.implement($oop.getClass('$data.KeyValueConvertible'))
-.implement($oop.getClass('$data.Transformable'))
+$data.SetContainer = $oop.createClass('$data.SetContainer')
+.blend($data.ItemContainer)
+.implement($data.Filterable)
+.implement($data.Reducible)
+.implement($data.SetConvertible)
+.implement($data.KeyValueConvertible)
+.implement($data.Transformable)
 .define(/** @lends $data.SetContainer# */{
   /**
    * @memberOf $data.SetContainer
@@ -125,4 +125,5 @@ $data.SetContainer = $oop.getClass('$data.SetContainer')
   to: function (SetConvertible) {
     return SetConvertible.fromSetContainer(this);
   }
-});
+})
+.build();

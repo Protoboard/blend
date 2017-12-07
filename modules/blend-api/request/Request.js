@@ -16,10 +16,10 @@
  * @implements $api.Sendable
  * @todo Make Request abortable? (Implementation dependent)
  */
-$api.Request = $oop.getClass('$api.Request')
+$api.Request = $oop.createClass('$api.Request')
 .blend($event.EventSender)
 .blend($event.EventListener)
-.implement($oop.getClass('$api.Sendable'))
+.implement($api.Sendable)
 .define(/** @lends $api.Request# */{
   /**
    * Identifies endpoint the request will be sent to.
@@ -55,9 +55,10 @@ $api.Request = $oop.getClass('$api.Request')
   send: function () {
     return this.toRequestDispatcher().dispatch();
   }
-});
+})
+.build();
 
-$oop.getClass('$api.Endpoint')
+$api.Endpoint
 .delegate(/** @lends $api.Endpoint# */{
   /**
    * @param {Object} [properties]

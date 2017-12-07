@@ -13,9 +13,9 @@
  * @extends $ui.Hyperlink
  * @extends $ui.EntityText
  */
-$ui.EntityHyperlink = $oop.getClass('$ui.EntityHyperlink')
-.blend($oop.getClass('$ui.Hyperlink'))
-.blend($oop.getClass('$ui.EntityText'))
+$ui.EntityHyperlink = $oop.createClass('$ui.EntityHyperlink')
+.blend($ui.Hyperlink)
+.blend($ui.EntityText)
 .define(/** @lends $ui.EntityHyperlink# */{
   /**
    * @member {$entity.ValueKey|$entity.ItemKey}
@@ -56,4 +56,5 @@ $ui.EntityHyperlink = $oop.getClass('$ui.EntityHyperlink')
     this.setEntityProperty('targetUrlEntity', targetUrlEntity);
     return this;
   }
-});
+})
+.build();

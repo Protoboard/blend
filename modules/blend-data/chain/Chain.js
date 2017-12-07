@@ -17,10 +17,10 @@
  * @extends $data.SetContainer
  * @implements $data.Stackable
  */
-$data.Chain = $oop.getClass('$data.Chain')
-.blend($oop.getClass('$data.DataContainer'))
-.blend($oop.getClass('$data.SetContainer'))
-.implement($oop.getClass('$data.Stackable'))
+$data.Chain = $oop.createClass('$data.Chain')
+.blend($data.DataContainer)
+.blend($data.SetContainer)
+.implement($data.Stackable)
 .define(/** @lends $data.Chain# */{
   /**
    * @member {$data.MasterLink} $data.Chain#data
@@ -161,9 +161,10 @@ $data.Chain = $oop.getClass('$data.Chain')
     });
     return result;
   }
-});
+})
+.build();
 
-$oop.getClass('$data.SetContainer')
+$data.SetContainer
 .delegate(/** @lends $data.SetContainer# */{
   /**
    * @returns {$data.Chain}
@@ -173,7 +174,7 @@ $oop.getClass('$data.SetContainer')
   }
 });
 
-$oop.getClass('$data.KeyValueContainer')
+$data.KeyValueContainer
 .delegate(/** @lends $data.KeyValueContainer# */{
   /**
    * @returns {$data.Chain}

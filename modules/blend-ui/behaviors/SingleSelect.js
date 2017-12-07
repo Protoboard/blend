@@ -5,9 +5,9 @@
  * @extends $ui.SelectableHost
  * @augments $ui.Inputable
  */
-$ui.SingleSelect = $oop.getClass('$ui.SingleSelect')
-.blend($oop.getClass('$ui.SelectableHost'))
-.expect($oop.getClass('$ui.Inputable'))
+$ui.SingleSelect = $oop.createClass('$ui.SingleSelect')
+.blend($ui.SelectableHost)
+.expect($ui.Inputable)
 .define(/** @lends $ui.SingleSelect# */{
   /**
    * Syncs initial selected state to inputValue.
@@ -102,4 +102,5 @@ $ui.SingleSelect = $oop.getClass('$ui.SingleSelect')
       this.setInputValue(selectable.ownValue);
     }
   }
-});
+})
+.build();

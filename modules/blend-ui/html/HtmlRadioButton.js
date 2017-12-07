@@ -5,15 +5,16 @@
  * @extends $ui.BinaryInputTypeHost
  * @augments $ui.RadioButton
  */
-$ui.HtmlRadioButton = $oop.getClass('$ui.HtmlRadioButton')
-.blend($oop.getClass('$ui.BinaryInputTypeHost'))
-.expect($oop.getClass('$ui.RadioButton'))
+$ui.HtmlRadioButton = $oop.createClass('$ui.HtmlRadioButton')
+.blend($ui.BinaryInputTypeHost)
+.expect($ui.RadioButton)
 .define(/** @lends $ui.HtmlRadioButton# */{
   /** @ignore */
   defaults: function () {
     this.inputType = this.inputType || 'radio';
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.RadioButton')
+$ui.RadioButton
 .forwardBlend($ui.HtmlRadioButton, $widget.isHtml);

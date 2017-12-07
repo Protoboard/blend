@@ -9,9 +9,10 @@ describe("$i18n", function () {
         translatable;
 
     beforeAll(function () {
-      Translatable = $oop.getClass('test.$i18n.Translatable.Translatable')
-      .blend($i18n.Translatable);
-      Translatable.__forwards = {list: [], sources: [], lookup: {}};
+      Translatable = $oop.createClass('test.$i18n.Translatable.Translatable')
+      .blend($i18n.Translatable)
+      .build();
+      Translatable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromString()", function () {
@@ -89,7 +90,7 @@ describe("$i18n", function () {
       beforeEach(function () {
         translationIndexData = $entity.index.data._translation;
         $entity.index.data._translation = {};
-        $i18n.TranslationIndex.__instanceLookup = {};
+        $i18n.TranslationIndex.__builder.instances = {};
 
         '_translation/apple-de'.toDocument().setNode({
           originalString: "apple",

@@ -13,6 +13,7 @@
  * @mixes $oop.Singleton
  * @extends $data.Chain
  */
-$event.EventTrail = $oop.getClass('$event.EventTrail')
+$event.EventTrail = $oop.createClass('$event.EventTrail')
 .blend($oop.Singleton)
-.blend($data.Chain);
+.blend($data.Chain)
+.build();

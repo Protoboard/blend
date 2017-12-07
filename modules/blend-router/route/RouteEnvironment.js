@@ -11,7 +11,7 @@
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
-$router.RouteEnvironment = $oop.getClass('$router.RouteEnvironment')
+$router.RouteEnvironment = $oop.createClass('$router.RouteEnvironment')
 .blend($oop.Singleton)
 .blend($event.EventSender)
 .blend($event.EventListener)
@@ -54,4 +54,5 @@ $router.RouteEnvironment = $oop.getClass('$router.RouteEnvironment')
     }
     return this;
   }
-});
+})
+.build();

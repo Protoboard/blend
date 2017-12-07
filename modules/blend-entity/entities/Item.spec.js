@@ -10,8 +10,10 @@ describe("$entity", function () {
         item;
 
     beforeAll(function () {
-      Item = $oop.getClass('test.$entity.Item.Item')
-      .blend($entity.Item);
+      Item = $oop.createClass('test.$entity.Item.Item')
+      .blend($entity.Item)
+      .build();
+      Item.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
@@ -64,9 +66,10 @@ describe("$entity", function () {
             result;
 
         beforeAll(function () {
-          ItemKey = $oop.getClass('test.$entity.Item.ItemKey')
+          ItemKey = $oop.createClass('test.$entity.Item.ItemKey')
           .blend($entity.ItemKey)
-          .blend($utils.StringifyCached);
+          .blend($utils.StringifyCached)
+          .build();
         });
 
         beforeEach(function () {

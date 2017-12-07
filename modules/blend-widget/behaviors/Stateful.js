@@ -4,7 +4,7 @@
  * Maintains named sates for the host.
  * @mixin $widget.Stateful
  */
-$widget.Stateful = $oop.getClass('$widget.Stateful')
+$widget.Stateful = $oop.createClass('$widget.Stateful')
 .define(/** @lends $widget.Stateful# */{
   /**
    * Contains state
@@ -38,4 +38,5 @@ $widget.Stateful = $oop.getClass('$widget.Stateful')
   getStateValue: function (stateName) {
     return this.state[stateName];
   }
-});
+})
+.build();

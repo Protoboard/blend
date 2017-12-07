@@ -12,8 +12,10 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      CollectionField = $oop.getClass('test.$entity.CollectionField.CollectionField')
-      .blend($entity.CollectionField);
+      CollectionField = $oop.createClass('test.$entity.CollectionField.CollectionField')
+      .blend($entity.CollectionField)
+      .build();
+      CollectionField.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {

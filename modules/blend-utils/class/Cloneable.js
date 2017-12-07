@@ -4,7 +4,7 @@
  * Creates a new instance of identical class and state.
  * @mixin $utils.Cloneable
  */
-$utils.Cloneable = $oop.getClass('$utils.Cloneable')
+$utils.Cloneable = $oop.createClass('$utils.Cloneable')
 .define(/** @lends $utils.Cloneable# */{
   /**
    * Clones current instance.
@@ -15,4 +15,5 @@ $utils.Cloneable = $oop.getClass('$utils.Cloneable')
     var Class = $oop.getClass(this.__classId);
     return Class.create(this);
   }
-});
+})
+.build();

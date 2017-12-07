@@ -11,14 +11,15 @@ describe("$entity", function () {
         result;
 
     beforeAll(function () {
-      EntityKey = $oop.getClass('test.$entity.EntityKey.EntityKey')
+      EntityKey = $oop.createClass('test.$entity.EntityKey.EntityKey')
       .blend($entity.EntityKey)
       .define({
         getAttributeDocumentKey: function () {
           return '__field/foo'.toDocumentKey();
         }
-      });
-      EntityKey.__forwards = {list: [], sources: [], lookup: {}};
+      })
+      .build();
+      EntityKey.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
@@ -112,9 +113,10 @@ describe("$data", function () {
         entityKey;
 
     beforeAll(function () {
-      TreePath = $oop.getClass('test.$entity.EntityKey.TreePath')
-      .blend($data.TreePath);
-      TreePath.__forwards = {list: [], sources: [], lookup: {}};
+      TreePath = $oop.createClass('test.$entity.EntityKey.TreePath')
+      .blend($data.TreePath)
+      .build();
+      TreePath.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("toEntityKey()", function () {

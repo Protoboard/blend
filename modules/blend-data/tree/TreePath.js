@@ -20,11 +20,11 @@
  * @example
  * $data.TreePath.create(['foo', 'bar', 'baz'])
  */
-$data.TreePath = $oop.getClass('$data.TreePath')
+$data.TreePath = $oop.createClass('$data.TreePath')
 .blend($utils.Path)
-.blend($oop.getClass('$data.Comparable'))
+.blend($data.Comparable)
 .implement($utils.Stringifiable)
-.implement($oop.getClass('$data.Stackable'))
+.implement($data.Stackable)
 .define(/** @lends $data.TreePath# */{
   /**
    * Path components.
@@ -144,9 +144,10 @@ $data.TreePath = $oop.getClass('$data.TreePath')
    */
   toString: function () {
     return this.components.map($data.escapeTreePathComponent)
-    .join($data.TREE_PATH_DELIMITER);
+    .join($data.TREE_PATH_DELIMITER) || '';
   }
-});
+})
+.build();
 
 $oop.copyProperties($data, /** @lends $data */{
   /**

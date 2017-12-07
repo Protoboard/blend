@@ -9,13 +9,14 @@ describe("$entity", function () {
         attributeDocumentKey;
 
     beforeAll(function () {
-      AttributeDocumentKey = $oop.getClass('test.$entity.AttributeDocumentKey.AttributeDocumentKey')
-      .blend($entity.AttributeDocumentKey);
-      AttributeDocumentKey.__forwards = {list: [], sources: [], lookup: {}};
+      AttributeDocumentKey = $oop.createClass('test.$entity.AttributeDocumentKey.AttributeDocumentKey')
+      .blend($entity.AttributeDocumentKey)
+      .build();
+      AttributeDocumentKey.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
-      AttributeDocumentKey.__instanceLookup = {};
+      AttributeDocumentKey.__builder.instances = {};
     });
 
     describe("fromDocumentIdComponents()", function () {
@@ -39,8 +40,9 @@ describe("$entity", function () {
         documentKey;
 
     beforeAll(function () {
-      DocumentKey = $oop.getClass('test.$entity.AttributeDocumentKey.DocumentKey')
-      .blend($entity.DocumentKey);
+      DocumentKey = $oop.createClass('test.$entity.AttributeDocumentKey.DocumentKey')
+      .blend($entity.DocumentKey)
+      .build();
     });
 
     describe("create()", function () {

@@ -5,9 +5,9 @@
  * @extends $widget.HtmlWidget
  * @augments $ui.Text
  */
-$ui.HtmlText = $oop.getClass('$ui.HtmlText')
+$ui.HtmlText = $oop.createClass('$ui.HtmlText')
 .blend($widget.HtmlWidget)
-.expect($oop.getClass('$ui.Text'))
+.expect($ui.Text)
 .define(/** @lends $ui.HtmlText# */{
   /** @ignore */
   defaults: function () {
@@ -21,7 +21,8 @@ $ui.HtmlText = $oop.getClass('$ui.HtmlText')
     return getContentMarkup.returned +
         $widget.escapeXmlEntities($utils.stringify(this.textContent));
   }
-});
+})
+.build();
 
-$oop.getClass('$ui.Text')
+$ui.Text
 .forwardBlend($ui.HtmlText, $widget.isHtml);

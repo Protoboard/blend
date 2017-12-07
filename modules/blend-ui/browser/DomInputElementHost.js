@@ -6,10 +6,11 @@
  * @extends $ui.InputElementHost
  * @extends $ui.DomInputEventBound
  */
-$ui.DomInputElementHost = $oop.getClass('$ui.DomInputElementHost')
+$ui.DomInputElementHost = $oop.createClass('$ui.DomInputElementHost')
 .blend($widget.DomWidget)
-.blend($oop.getClass('$ui.InputElementHost'))
-.blend($oop.getClass('$ui.DomInputEventBound'));
+.blend($ui.InputElementHost)
+.blend($ui.DomInputEventBound)
+.build();
 
-$oop.getClass('$ui.InputElementHost')
+$ui.InputElementHost
 .forwardBlend($ui.DomInputElementHost, $utils.isBrowser);

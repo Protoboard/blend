@@ -8,8 +8,9 @@ describe("$utils", function () {
     var Identifiable;
 
     beforeAll(function () {
-      Identifiable = $oop.getClass('test.$utils.Identifiable.Identifiable')
-      .blend($utils.Identifiable);
+      Identifiable = $oop.createClass('test.$utils.Identifiable.Identifiable')
+      .blend($utils.Identifiable)
+      .build();
     });
 
     beforeEach(function () {

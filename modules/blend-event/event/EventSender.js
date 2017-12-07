@@ -5,7 +5,7 @@
  * will be invoked.
  * @mixin $event.EventSender
  */
-$event.EventSender = $oop.getClass('$event.EventSender')
+$event.EventSender = $oop.createClass('$event.EventSender')
 .define(/** @lends $event.EventSender# */{
   /**
    * @member {$oop.QuickList} $event.EventSender#triggerPaths
@@ -125,4 +125,5 @@ $event.EventSender = $oop.getClass('$event.EventSender')
     })
     .trigger();
   }
-});
+})
+.build();

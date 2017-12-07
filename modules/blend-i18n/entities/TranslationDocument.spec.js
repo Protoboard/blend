@@ -9,9 +9,10 @@ describe("$i18n", function () {
         translationDocument;
 
     beforeAll(function () {
-      TranslationDocument = $oop.getClass('test.$i18n.TranslationDocument.TranslationDocument')
-      .blend($i18n.TranslationDocument);
-      TranslationDocument.__forwards = {list: [], sources: [], lookup: {}};
+      TranslationDocument = $oop.createClass('test.$i18n.TranslationDocument.TranslationDocument')
+      .blend($i18n.TranslationDocument)
+      .build();
+      TranslationDocument.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setOriginalString()", function () {

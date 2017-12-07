@@ -11,8 +11,8 @@
  * @class $api.XhrRequest
  * @extends $api.HttpRequest
  */
-$api.XhrRequest = $oop.getClass('$api.XhrRequest')
-.blend($oop.getClass('$api.HttpRequest'))
+$api.XhrRequest = $oop.createClass('$api.XhrRequest')
+.blend($api.HttpRequest)
 .define(/** @lends $api.XhrRequest# */{
   /**
    * Properties to be set on the corresponding XMLHttpRequest object.
@@ -27,9 +27,10 @@ $api.XhrRequest = $oop.getClass('$api.XhrRequest')
         safeJson = $utils.jsonToSafeJson(this.xhrProperties);
     return httpRequestStr + JSON.stringify(safeJson);
   }
-});
+})
+.build();
 
-$oop.getClass('$api.Request')
+$api.Request
 .forwardBlend($api.XhrRequest, function (properties) {
   return properties &&
       $utils.isBrowser() &&

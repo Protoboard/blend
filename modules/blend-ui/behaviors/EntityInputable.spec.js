@@ -9,10 +9,11 @@ describe("$ui", function () {
         entityInputable;
 
     beforeAll(function () {
-      EntityInputable = $oop.getClass('test.$ui.EntityInputable.EntityInputable')
+      EntityInputable = $oop.createClass('test.$ui.EntityInputable.EntityInputable')
       .blend($widget.Widget)
-      .blend($ui.EntityInputable);
-      EntityInputable.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.EntityInputable)
+      .build();
+      EntityInputable.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromInputValueEntity()", function () {

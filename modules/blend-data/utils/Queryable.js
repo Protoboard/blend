@@ -5,7 +5,7 @@
  * all matches.
  * @interface $data.Queryable
  */
-$data.Queryable = $oop.getClass('$data.Queryable')
+$data.Queryable = $oop.createClass('$data.Queryable')
 .define(/** @lends $data.Queryable# */{
   /**
    * Queries instance according to `expression` and calls `callback` on each
@@ -15,4 +15,5 @@ $data.Queryable = $oop.getClass('$data.Queryable')
    * @returns {$data.Queryable}
    */
   query: function (expression, callback) {}
-});
+})
+.build();

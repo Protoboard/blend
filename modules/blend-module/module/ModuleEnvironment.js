@@ -10,7 +10,7 @@
  * @class $module.ModuleEnvironment
  * @extends $event.EventListener
  */
-$module.ModuleEnvironment = $oop.getClass('$module.ModuleEnvironment')
+$module.ModuleEnvironment = $oop.createClass('$module.ModuleEnvironment')
 .blend($oop.Singleton)
 .blend($event.EventListener)
 .define(/** @lends $module.ModuleEnvironment# */{
@@ -18,4 +18,5 @@ $module.ModuleEnvironment = $oop.getClass('$module.ModuleEnvironment')
   init: function () {
     this.setListeningPath('module');
   }
-});
+})
+.build();

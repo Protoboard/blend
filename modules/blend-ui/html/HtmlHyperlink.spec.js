@@ -9,10 +9,11 @@ describe("$ui", function () {
         htmlHyperlink;
 
     beforeAll(function () {
-      HtmlHyperlink = $oop.getClass('test.$ui.HtmlHyperlink.HtmlHyperlink')
+      HtmlHyperlink = $oop.createClass('test.$ui.HtmlHyperlink.HtmlHyperlink')
       .blend($ui.Hyperlink)
-      .blend($ui.HtmlHyperlink);
-      HtmlHyperlink.__forwards = {list: [], sources: [], lookup: {}};
+      .blend($ui.HtmlHyperlink)
+      .build();
+      HtmlHyperlink.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {

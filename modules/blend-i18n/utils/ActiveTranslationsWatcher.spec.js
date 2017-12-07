@@ -9,8 +9,9 @@ describe("$i18n", function () {
         activeTranslationsWatcher;
 
     beforeAll(function () {
-      ActiveTranslationsWatcher = $oop.getClass('test.$i18n.ActiveTranslationsWatcher.ActiveTranslationsWatcher')
-      .blend($i18n.ActiveTranslationsWatcher);
+      ActiveTranslationsWatcher = $oop.createClass('test.$i18n.ActiveTranslationsWatcher.ActiveTranslationsWatcher')
+      .blend($i18n.ActiveTranslationsWatcher)
+      .build();
       ActiveTranslationsWatcher.__forwards = {
         list: [],
         sources: [],

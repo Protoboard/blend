@@ -58,9 +58,10 @@ describe("$i18n", function () {
         localeDocument;
 
     beforeAll(function () {
-      LocaleDocument = $oop.getClass('test.$i18n.LocaleDocument.LocaleDocument')
-      .blend($i18n.LocaleDocument);
-      LocaleDocument.__forwards = {list: [], sources: [], lookup: {}};
+      LocaleDocument = $oop.createClass('test.$i18n.LocaleDocument.LocaleDocument')
+      .blend($i18n.LocaleDocument)
+      .build();
+      LocaleDocument.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setLocaleName()", function () {

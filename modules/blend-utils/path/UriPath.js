@@ -13,9 +13,9 @@
  * @extends $utils.Path
  * @implements $utils.Stringifiable
  */
-$utils.UriPath = $oop.getClass('$utils.UriPath')
-.blend($oop.getClass('$utils.Path'))
-.implement($oop.getClass('$utils.Stringifiable'))
+$utils.UriPath = $oop.createClass('$utils.UriPath')
+.blend($utils.Path)
+.implement($utils.Stringifiable)
 .define(/** @lends $utils.UriPath# */{
   /**
    * @memberOf $utils.UriPath
@@ -37,7 +37,8 @@ $utils.UriPath = $oop.getClass('$utils.UriPath')
     .map(encodeURIComponent)
     .join($utils.LOCATION_PATH_DELIMITER);
   }
-});
+})
+.build();
 
 $oop.copyProperties($utils, /** @lends $utils */{
   /**

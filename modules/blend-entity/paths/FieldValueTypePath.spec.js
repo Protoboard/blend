@@ -9,9 +9,10 @@ describe("$entity", function () {
         fieldValueTypePath;
 
     beforeAll(function () {
-      FieldValueTypePath = $oop.getClass('test.$entity.FieldValueTypePath.FieldValueTypePath')
-      .blend($entity.FieldValueTypePath);
-      FieldValueTypePath.__forwards = {list: [], sources: [], lookup: {}};
+      FieldValueTypePath = $oop.createClass('test.$entity.FieldValueTypePath.FieldValueTypePath')
+      .blend($entity.FieldValueTypePath)
+      .build();
+      FieldValueTypePath.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromFieldValueType()", function () {
