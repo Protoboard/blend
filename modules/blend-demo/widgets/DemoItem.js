@@ -12,7 +12,7 @@
  * @class $demo.DemoItem
  * @extends $widget.Widget
  */
-$demo.DemoItem = $oop.getClass('$demo.DemoItem')
+$demo.DemoItem = $oop.createClass('$demo.DemoItem')
 .blend($widget.Widget)
 .define(/** @lends $demo.DemoItem# */{
   /**
@@ -30,7 +30,7 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
 
   /** @ignore */
   spread: function () {
-    this.itemTitle = this.itemTitle || this.contentWidget.__classId;
+    this.itemTitle = this.itemTitle || this.contentWidget.__className;
   },
 
   /** @ignore */
@@ -59,4 +59,5 @@ $demo.DemoItem = $oop.getClass('$demo.DemoItem')
       textContent: String(this.code)
     }));
   }
-});
+})
+.build();
