@@ -4,10 +4,16 @@ var $oop = window['blend-oop'];
 
 describe("$oop", function () {
   describe("ClassBuilder", function () {
-    var classBuilder;
+    var classBuilder,
+        lastClassId;
 
     beforeEach(function () {
+      lastClassId = $oop.ClassBuilder.lastClassId;
       $oop.ClassBuilder.lastClassId = -1;
+    });
+
+    afterEach(function () {
+      $oop.ClassBuilder.lastClassId = lastClassId;
     });
 
     describe("create()", function () {
@@ -622,7 +628,6 @@ describe("$oop", function () {
           });
           Interface = interfaceBuilder.build();
           classBuilder.implement(Interface);
-          $oop.ClassBuilder.lastClassId = -1;
         });
 
         it("should set unimplementedInterfaces", function () {

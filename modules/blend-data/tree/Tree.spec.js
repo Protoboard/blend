@@ -12,6 +12,7 @@ describe("$data", function () {
       Tree = $oop.createClass('test.$data.Tree.Tree')
       .blend($data.Tree)
       .build();
+      Tree.__builder.forwards = {list: [], lookup: {}};
     });
 
     beforeEach(function () {
@@ -321,7 +322,7 @@ describe("$data", function () {
         result = tree.getLastForkPath('bar.baz.quux.hello.world'.toTreePath());
       });
 
-      it("should return Path instance", function () {
+      it("should return TreePath instance", function () {
         expect($data.TreePath.mixedBy(result)).toBeTruthy();
       });
 

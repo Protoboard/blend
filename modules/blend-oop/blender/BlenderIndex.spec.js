@@ -4,16 +4,19 @@ var $oop = window['blend-oop'];
 
 describe("$oop", function () {
   describe("BlenderIndex", function () {
-    var classByMixinIds;
+    var classByMixinIds,
+        lastClassId;
 
     beforeEach(function () {
-      $oop.ClassBuilder.lastClassId = -1;
       classByMixinIds = $oop.classByMixinIds;
       $oop.classByMixinIds = {};
+      lastClassId = $oop.ClassBuilder.lastClassId;
+      $oop.ClassBuilder.lastClassId = -1;
     });
 
     afterEach(function () {
       $oop.classByMixinIds = classByMixinIds;
+      $oop.ClassBuilder.lastClassId = lastClassId;
     });
 
     describe("addClassForMixins()", function () {

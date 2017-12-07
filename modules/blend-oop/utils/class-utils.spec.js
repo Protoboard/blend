@@ -112,11 +112,17 @@ describe("$oop", function () {
   });
 
   describe("getClass()", function () {
-    var Class;
+    var Class,
+        lastClassId;
 
     beforeEach(function () {
+      lastClassId = $oop.ClassBuilder.lastClassId;
       $oop.ClassBuilder.lastClassId = -1;
       Class = $oop.createClass('test.$oop.class-utils.Class').build();
+    });
+
+    afterEach(function () {
+      $oop.ClassBuilder.lastClassId = lastClassId;
     });
 
     it("should retrieve class ID from Class", function () {
@@ -173,11 +179,17 @@ describe("$oop", function () {
   });
 
   describe("getClassBuilderId()", function () {
-    var classBuilder;
+    var classBuilder,
+        lastClassId;
 
     beforeEach(function () {
+      lastClassId = $oop.ClassBuilder.lastClassId;
       $oop.ClassBuilder.lastClassId = -1;
       classBuilder = $oop.createClass('test.$oop.class-utils.Class');
+    });
+
+    afterEach(function () {
+      $oop.ClassBuilder.lastClassId = lastClassId;
     });
 
     it("should retrieve class ID from Class", function () {
