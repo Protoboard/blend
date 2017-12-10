@@ -1,5 +1,6 @@
 {
   "js": [
+    "logger/Logger.js",
     "widgets/DemoItem.js",
     "widgets/DemoPage.js"
   ],
