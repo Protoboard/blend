@@ -54,17 +54,19 @@ $entity.CollectionField = $oop.createClass('$entity.CollectionField')
         // grouping properties by add / remove / change
         itemIdsAdded = itemIdsAfter.subtract(itemIdsBefore),
         itemIdsRemoved = itemIdsAfter.subtractFrom(itemIdsBefore),
-        ItemIdsRemain = itemIdsAfter.intersectWith(itemIdsBefore);
+        itemIdsRemain = itemIdsAfter.intersectWith(itemIdsBefore);
 
     // adding single event about add / remove
-    events.push(this.spawnEvent({
-      eventName: $entity.EVENT_ENTITY_CHANGE,
-      propertiesAdded: itemIdsAdded.asCollection().getKeys(),
-      propertiesRemoved: itemIdsRemoved.asCollection().getKeys()
-    }));
+    if (itemIdsAdded.getItemCount() !== 0 || itemIdsRemoved.getItemCount() !== 0) {
+      events.push(this.spawnEvent({
+        eventName: $entity.EVENT_ENTITY_CHANGE,
+        propertiesAdded: itemIdsAdded.asCollection().getKeys(),
+        propertiesRemoved: itemIdsRemoved.asCollection().getKeys()
+      }));
+    }
 
     // adding separate events about changed properties
-    ItemIdsRemain.toCollection()
+    itemIdsRemain.toCollection()
     // Here we're assuming that items are always leaf nodes. Which they are
     // ATM, but if this changes in the future, this section must be changed.
     .filter(function (propertyName) {
