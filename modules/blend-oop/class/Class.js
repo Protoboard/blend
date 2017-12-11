@@ -269,7 +269,7 @@ $oop.copyProperties($assert, /** @lends $assert */{
    * @param {string} [message]
    * @return {$assert}
    */
-  isKlass: function (expr, message) {
+  isClass: function (expr, message) {
     return $assert.assert(
         $oop.Class.isPrototypeOf(expr), message);
   },
@@ -279,7 +279,7 @@ $oop.copyProperties($assert, /** @lends $assert */{
    * @param {string} [message]
    * @return {$assert}
    */
-  isKlassOptional: function (expr, message) {
+  isClassOoptional: function (expr, message) {
     return $assert.assert(
         expr === undefined ||
         $oop.Class.isPrototypeOf(expr), message);

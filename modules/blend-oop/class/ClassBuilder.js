@@ -512,7 +512,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   mix: function (Class) {
-    $assert.isKlass(Class,
+    $assert.isClass(Class,
         this.className + "#mix() expects type Class, got " + typeof Class);
 
     var classBuilder = Class.__builder;
@@ -534,7 +534,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   blend: function (Class) {
-    $assert.isKlass(Class,
+    $assert.isClass(Class,
         this.className + "#blend() expects type Class, got " + typeof Class);
 
     var that = this,
@@ -556,7 +556,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   implement: function (Interface) {
-    $assert.isKlass(Interface,
+    $assert.isClass(Interface,
         this.className + "#implement() expects type Class, got " + typeof Interface);
 
     var interfaceBuilder = Interface.__builder;
@@ -572,7 +572,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @return {$oop.ClassBuilder}
    */
   expect: function (Class) {
-    $assert.isKlass(Class,
+    $assert.isClass(Class,
         this.className + "#expect() expects type Class, got " + typeof Class);
 
     var classBuilder = Class.__builder;
@@ -667,7 +667,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
    * @todo Make callback optional / accept boolean?
    */
   forwardBlend: function (Mixin, callback) {
-    $assert.isKlass(Mixin,
+    $assert.isClass(Mixin,
         this.className + "#forwardBlend() expects type Class, got " + typeof Mixin);
 
     var mixinBuilder = Mixin.__builder;
