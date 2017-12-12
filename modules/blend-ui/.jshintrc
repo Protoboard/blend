@@ -15,6 +15,7 @@
     "$template": true,
     "$ui": true,
     "$utils": true,
-    "$widget": true
+    "$widget": true,
+    "slice": true
   }
 }

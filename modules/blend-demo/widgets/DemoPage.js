@@ -201,6 +201,14 @@ $demo.DemoPage = $oop.createClass('$demo.DemoPage')
       contentWidget: this._createEntitySingleSelect()
     })
     .addToParentNode(this);
+
+    // adding plain multi-select list
+    $demo.DemoItem.create({
+      code: this._createMultiSelect,
+      itemTitle: $ui.MultiSelect.__className,
+      contentWidget: this._createMultiSelect()
+    })
+    .addToParentNode(this);
   },
 
   //@formatter:off
@@ -430,6 +438,27 @@ _createEntitySingleSelect: function () {
   return EntitySingleSelect.create({
     listEntity: 'show/rick-and-morty/episodes'.toField(),
     inputValueEntity: 'show/rick-and-morty/selectedEpisode'.toField()
+  });
+},
+
+/** @private */
+_createMultiSelect: function () {
+  return $ui.MultiSelect.create()
+  .addChildNode($ui.Option.create({
+    textContent: "Rick",
+    ownValue: 'Rick'
+  }))
+  .addChildNode($ui.Option.create({
+    textContent: "Morty",
+    ownValue: 'Morty'
+  }))
+  .addChildNode($ui.Option.create({
+    textContent: "Summer",
+    ownValue: 'Summer'
+  }))
+  .setInputValue({
+    "Morty": "Morty",
+    "Rick": "Rick"
   });
 }
   //@formatter:on

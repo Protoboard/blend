@@ -11,7 +11,8 @@ var $assert = require('blend-assert'),
     $template = require('blend-template'),
     $ui = exports,
     $utils = require('blend-utils'),
-    $widget = require('blend-widget');
+    $widget = require('blend-widget'),
+    slice = Array.prototype.slice;
 
 /**
  * @namespace $ui
