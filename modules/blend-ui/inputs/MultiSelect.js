@@ -11,7 +11,7 @@
 /**
  * @class $ui.MultiSelect
  * @extends $widget.Widget
- * @extends $ui.InputValueHost
+ * @extends $ui.InputValuesHost
  * @extends $ui.Validatable
  * @extends $ui.SingleChoice
  */
