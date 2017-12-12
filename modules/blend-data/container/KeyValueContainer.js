@@ -60,14 +60,12 @@ $data.KeyValueContainer = $oop.createClass('$data.KeyValueContainer')
    * @param {$data.SetContainer} setContainer
    * @param {Object} [properties]
    * @returns {$data.KeyValueContainer}
-   * @todo Might be a good idea to add separate key/value versions
    * @todo Move to separate file & delegate?
    */
   fromSetContainer: function (setContainer, properties) {
-    var result = this.create(properties),
-        i = 0;
+    var result = this.create(properties);
     setContainer.forEachItem(function (item) {
-      result.setItem(i++, item);
+      result.setItem(item, item);
     });
     return result;
   },
