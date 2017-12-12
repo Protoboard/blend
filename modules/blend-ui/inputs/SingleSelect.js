@@ -13,8 +13,7 @@
  * @extends $widget.Widget
  * @extends $ui.Inputable
  * @extends $ui.Validatable
- * @extends $ui.SelectableHost
- * @mixes $ui.SingleChoice
+ * @extends $ui.SingleChoice
  */
 $ui.SingleSelect = $oop.createClass('$ui.SingleSelect')
 .blend($widget.Widget)
