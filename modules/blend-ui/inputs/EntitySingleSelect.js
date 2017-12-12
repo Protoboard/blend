@@ -1,26 +1,26 @@
 "use strict";
 
 /**
- * @function $ui.EntityDropdown.create
+ * @function $ui.EntitySingleSelect.create
  * @param {Object} [properties]
  * @param {string} [properties.nodeName]
  * @param {*} [properties.inputValue]
  * @param {$entity.LeafNoded} [properties.inputValueEntity]
  * @param {$entity.CollectionField} [properties.listEntity]
- * @returns {$ui.EntityDropdown}
+ * @returns {$ui.EntitySingleSelect}
  */
 
 /**
- * @class $ui.EntityDropdown
- * @extends $ui.Dropdown
+ * @class $ui.EntitySingleSelect
+ * @extends $ui.SingleSelect
  * @extends $ui.EntityInputable
  * @extends $ui.EntityList
  */
-$ui.EntityDropdown = $oop.createClass('$ui.EntityDropdown')
-.blend($ui.Dropdown)
+$ui.EntitySingleSelect = $oop.createClass('$ui.EntitySingleSelect')
+.blend($ui.SingleSelect)
 .blend($ui.EntityInputable)
 .blend($ui.EntityList)
-.define(/** @lends $ui.EntityDropdown# */{
+.define(/** @lends $ui.EntitySingleSelect# */{
   ListItemClass: $ui.EntityOption
 })
 .build();

@@ -1,14 +1,14 @@
 "use strict";
 
 /**
- * @mixin $ui.SingleSelect
+ * @mixin $ui.SingleChoice
  * @extends $ui.SelectableHost
  * @augments $ui.Inputable
  */
-$ui.SingleSelect = $oop.createClass('$ui.SingleSelect')
+$ui.SingleChoice = $oop.createClass('$ui.SingleChoice')
 .blend($ui.SelectableHost)
 .expect($ui.Inputable)
-.define(/** @lends $ui.SingleSelect# */{
+.define(/** @lends $ui.SingleChoice# */{
   /**
    * Syncs initial selected state to inputValue.
    * @protected
@@ -22,7 +22,7 @@ $ui.SingleSelect = $oop.createClass('$ui.SingleSelect')
 
   /**
    * @param {$ui.Selectable} node
-   * @returns {$ui.SingleSelect}
+   * @returns {$ui.SingleChoice}
    */
   addChildNode: function addChildNode(node) {
     var childNodeBefore = addChildNode.shared.childNodeBefore,
@@ -37,7 +37,7 @@ $ui.SingleSelect = $oop.createClass('$ui.SingleSelect')
 
   /**
    * @param {string} nodeName
-   * @returns {$ui.SingleSelect}
+   * @returns {$ui.SingleChoice}
    */
   removeChildNode: function removeChildNode(nodeName) {
     var childNodeBefore = removeChildNode.shared.childNodeBefore;
@@ -49,7 +49,7 @@ $ui.SingleSelect = $oop.createClass('$ui.SingleSelect')
 
   /**
    * @param {*} inputValue
-   * @returns {$ui.SingleSelect}
+   * @returns {$ui.SingleChoice}
    */
   setInputValue: function setInputValue(inputValue) {
     var inputValueBefore = setInputValue.shared.inputValueBefore,

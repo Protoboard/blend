@@ -4,41 +4,41 @@ var $oop = window['blend-oop'],
     $ui = window['blend-ui'];
 
 describe("$ui", function () {
-  describe("SingleSelect", function () {
-    var SingleSelect,
-        singleSelect;
+  describe("SingleChoice", function () {
+    var SingleChoice,
+        singleChoice;
 
     beforeAll(function () {
-      SingleSelect = $oop.createClass('test.$ui.SingleSelect.SingleSelect')
+      SingleChoice = $oop.createClass('test.$ui.SingleChoice.SingleChoice')
       .blend($widget.Widget)
       .blend($ui.Inputable)
-      .blend($ui.SingleSelect)
+      .blend($ui.SingleChoice)
       .build();
-      SingleSelect.__builder.forwards = {list: [], lookup: {}};
+      SingleChoice.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("addChildNode()", function () {
       var option;
 
       beforeEach(function () {
-        singleSelect = SingleSelect.create();
+        singleChoice = SingleChoice.create();
         option = $ui.Option.create({
           ownValue: 'foo'
         });
       });
 
       it("should return self", function () {
-        var result = singleSelect.addChildNode(option);
-        expect(result).toBe(singleSelect);
+        var result = singleChoice.addChildNode(option);
+        expect(result).toBe(singleChoice);
       });
 
       describe("when node's ownValue matches inputValue", function () {
         beforeEach(function () {
-          singleSelect.setInputValue('foo');
+          singleChoice.setInputValue('foo');
         });
 
         it("should select node", function () {
-          singleSelect.addChildNode(option);
+          singleChoice.addChildNode(option);
           expect(option.isSelected()).toBeTruthy();
         });
 
@@ -48,7 +48,7 @@ describe("$ui", function () {
           });
 
           it("should not select node", function () {
-            singleSelect.addChildNode(option);
+            singleChoice.addChildNode(option);
             expect(option.isSelected()).toBeFalsy();
           });
         });
@@ -59,17 +59,17 @@ describe("$ui", function () {
       var option;
 
       beforeEach(function () {
-        singleSelect = SingleSelect.create();
+        singleChoice = SingleChoice.create();
         option = $ui.Option.create({
           nodeName: 'foo',
           ownValue: 'bar'
         });
-        singleSelect.addChildNode(option);
+        singleChoice.addChildNode(option);
       });
 
       it("should return self", function () {
-        var result = singleSelect.removeChildNode(option);
-        expect(result).toBe(singleSelect);
+        var result = singleChoice.removeChildNode(option);
+        expect(result).toBe(singleChoice);
       });
 
       describe("when node is selected", function () {
@@ -78,7 +78,7 @@ describe("$ui", function () {
         });
 
         it("should deselect node", function () {
-          singleSelect.removeChildNode('foo');
+          singleChoice.removeChildNode('foo');
           expect(option.isSelected()).toBeFalsy();
         });
       });
@@ -89,42 +89,42 @@ describe("$ui", function () {
           option2;
 
       beforeEach(function () {
-        singleSelect = SingleSelect.create();
+        singleChoice = SingleChoice.create();
         option1 = $ui.Option.create({
           ownValue: 'foo'
         });
         option2 = $ui.Option.create({
           ownValue: 'bar'
         });
-        singleSelect.addChildNode(option1);
-        singleSelect.addChildNode(option2);
+        singleChoice.addChildNode(option1);
+        singleChoice.addChildNode(option2);
       });
 
       it("should return self", function () {
-        var result = singleSelect.setInputValue('bar');
-        expect(result).toBe(singleSelect);
+        var result = singleChoice.setInputValue('bar');
+        expect(result).toBe(singleChoice);
       });
 
       describe("when input value matches option ownValue", function () {
         it("should select matching option", function () {
-          singleSelect.setInputValue('foo');
+          singleChoice.setInputValue('foo');
           expect(option1.isSelected()).toBeTruthy();
         });
       });
 
       describe("when a different option was selected before", function () {
         beforeEach(function () {
-          singleSelect.addToParentNode($widget.RootWidget.create());
-          singleSelect.onAttach();
+          singleChoice.addToParentNode($widget.RootWidget.create());
+          singleChoice.onAttach();
           option2.select();
         });
 
         afterEach(function () {
-          singleSelect.removeFromParentNode();
+          singleChoice.removeFromParentNode();
         });
 
         it("should deselect previously active option", function () {
-          singleSelect.setInputValue('foo');
+          singleChoice.setInputValue('foo');
           expect(option2.isSelected()).toBeFalsy();
         });
       });
@@ -135,7 +135,7 @@ describe("$ui", function () {
           option2;
 
       beforeEach(function () {
-        singleSelect = SingleSelect.create({
+        singleChoice = SingleChoice.create({
           inputValue: 'bar'
         });
         option1 = $ui.Option.create({
@@ -144,12 +144,12 @@ describe("$ui", function () {
         option2 = $ui.Option.create({
           ownValue: 'bar'
         });
-        singleSelect.addChildNode(option1);
-        singleSelect.addChildNode(option2);
+        singleChoice.addChildNode(option1);
+        singleChoice.addChildNode(option2);
       });
 
       it("should sync selectables' selected states", function () {
-        singleSelect.onAttach();
+        singleChoice.onAttach();
         expect(option2.isSelected).toBeTruthy();
       });
     });
@@ -158,24 +158,24 @@ describe("$ui", function () {
       var option;
 
       beforeEach(function () {
-        singleSelect = SingleSelect.create({
+        singleChoice = SingleChoice.create({
           inputValue: 'foo'
         });
         option = $ui.Option.create({
           ownValue: 'foo'
         });
-        singleSelect.addChildNode(option);
-        singleSelect.addToParentNode($widget.RootWidget.create());
-        singleSelect.onAttach();
+        singleChoice.addChildNode(option);
+        singleChoice.addToParentNode($widget.RootWidget.create());
+        singleChoice.onAttach();
       });
 
       afterEach(function () {
-        singleSelect.removeFromParentNode();
+        singleChoice.removeFromParentNode();
       });
 
       it("should update inputValue", function () {
         option.setOwnValue('bar');
-        expect(singleSelect.inputValue).toBe('bar');
+        expect(singleChoice.inputValue).toBe('bar');
       });
     });
 
@@ -183,22 +183,22 @@ describe("$ui", function () {
       var option;
 
       beforeEach(function () {
-        singleSelect = SingleSelect.create();
+        singleChoice = SingleChoice.create();
         option = $ui.Option.create({
           ownValue: 'foo'
         });
-        singleSelect.addChildNode(option);
-        singleSelect.addToParentNode($widget.RootWidget.create());
-        singleSelect.onAttach();
+        singleChoice.addChildNode(option);
+        singleChoice.addToParentNode($widget.RootWidget.create());
+        singleChoice.onAttach();
       });
 
       afterEach(function () {
-        singleSelect.removeFromParentNode();
+        singleChoice.removeFromParentNode();
       });
 
       it("should update inputValue", function () {
         option.select();
-        expect(singleSelect.inputValue).toBe('foo');
+        expect(singleChoice.inputValue).toBe('foo');
       });
     });
   });

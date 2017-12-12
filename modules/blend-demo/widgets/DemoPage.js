@@ -188,17 +188,17 @@ $demo.DemoPage = $oop.createClass('$demo.DemoPage')
 
     // adding plain select dropdown
     $demo.DemoItem.create({
-      code: this._createDropdown,
-      itemTitle: $ui.Dropdown.__className,
-      contentWidget: this._createDropdown()
+      code: this._createSingleSelect,
+      itemTitle: $ui.SingleSelect.__className,
+      contentWidget: this._createSingleSelect()
     })
     .addToParentNode(this);
 
     // adding entity-bound select dropdown
     $demo.DemoItem.create({
-      code: this._createEntityDropdown,
-      itemTitle: $ui.EntityDropdown.__className,
-      contentWidget: this._createEntityDropdown()
+      code: this._createEntitySingleSelect,
+      itemTitle: $ui.EntitySingleSelect.__className,
+      contentWidget: this._createEntitySingleSelect()
     })
     .addToParentNode(this);
   },
@@ -378,8 +378,8 @@ _createRadioButton: function () {
 },
 
 /** @private */
-_createDropdown: function () {
-  return $ui.Dropdown.create()
+_createSingleSelect: function () {
+  return $ui.SingleSelect.create()
   .addChildNode($ui.Option.create({
     textContent: "Rick",
     ownValue: 'Rick'
@@ -396,7 +396,7 @@ _createDropdown: function () {
 },
 
 /** @private */
-_createEntityDropdown: function () {
+_createEntitySingleSelect: function () {
   'show/rick-and-morty/episodes'.toField().setNode({
     'episode/r-m-s1-e1': 1,
     'episode/r-m-s1-e2': 2,
@@ -420,14 +420,14 @@ _createEntityDropdown: function () {
         }
       })
       .build(),
-      EntityDropdown = $oop.createClass('$demo.EntityDropdown')
-      .blend($ui.EntityDropdown)
+      EntitySingleSelect = $oop.createClass('$demo.EntitySingleSelect')
+      .blend($ui.EntitySingleSelect)
       .define({
         ListItemClass: EntityOption
       })
       .build();
 
-  return EntityDropdown.create({
+  return EntitySingleSelect.create({
     listEntity: 'show/rick-and-morty/episodes'.toField(),
     inputValueEntity: 'show/rick-and-morty/selectedEpisode'.toField()
   });
