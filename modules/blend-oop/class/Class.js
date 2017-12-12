@@ -88,7 +88,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     var unimplementedInterfaces = builder.unimplementedInterfaces;
     if (unimplementedInterfaces.length) {
       $assert.fail([
-        "Class '" + that.__className + "' doesn't implement interface(s): " +
+        "Class '" + (that.__className || that.__classId) +
+        "' doesn't implement interface(s): " +
         unimplementedInterfaces
         .map($oop.addQuotes) + ".",
         "Can't instantiate."
@@ -100,7 +101,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     if (unmetExpectations.length) {
       // there are unmet expectations - can't instantiate
       $assert.fail([
-        "Class '" + that.__className + "' doesn't satisfy expectation(s): " +
+        "Class '" + (that.__className || that.__classId) +
+        "' doesn't satisfy expectation(s): " +
         unmetExpectations
         .map($oop.getClassBuilderName)
         .map($oop.addQuotes)
