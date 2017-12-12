@@ -84,7 +84,7 @@ $ui.SingleSelect = $oop.createClass('$ui.SingleSelect')
   onSelectableOwnValueChange: function (event) {
     var selectable = event.sender;
     if (selectable.isSelected()) {
-      this.setInputValue(selectable.ownValue);
+      this.setInputValue(event.ownValueAfter);
     }
   },
 
