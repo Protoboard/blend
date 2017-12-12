@@ -4,12 +4,12 @@
  * @mixin $ui.TextareaElementHost
  * @extends $widget.HtmlWidget
  * @extends $ui.DisabledAttributeHost
- * @augments $ui.Inputable
+ * @augments $ui.InputValueHost
  */
 $ui.TextareaElementHost = $oop.createClass('$ui.TextareaElementHost')
 .blend($widget.HtmlWidget)
 .blend($ui.DisabledAttributeHost)
-.expect($ui.Inputable)
+.expect($ui.InputValueHost)
 .define(/** @lends $ui.TextareaElementHost# */{
   /** @ignore */
   defaults: function () {

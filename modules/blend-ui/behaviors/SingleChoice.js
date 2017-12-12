@@ -3,11 +3,11 @@
 /**
  * @mixin $ui.SingleChoice
  * @extends $ui.SelectableHost
- * @augments $ui.Inputable
+ * @augments $ui.InputValueHost
  */
 $ui.SingleChoice = $oop.createClass('$ui.SingleChoice')
 .blend($ui.SelectableHost)
-.expect($ui.Inputable)
+.expect($ui.InputValueHost)
 .define(/** @lends $ui.SingleChoice# */{
   /**
    * Syncs initial selected state to inputValue.

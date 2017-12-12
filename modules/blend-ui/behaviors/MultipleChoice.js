@@ -3,11 +3,11 @@
 /**
  * @mixin $ui.MultipleChoice
  * @extends $ui.SelectableHost
- * @augments $ui.Inputable
+ * @augments $ui.InputValueHost
  */
 $ui.MultipleChoice = $oop.createClass('$ui.MultipleChoice')
 .blend($ui.SelectableHost)
-.expect($ui.Inputable)
+.expect($ui.InputValueHost)
 .define(/** @lends $ui.MultipleChoice# */{
   /**
    * Stores selected values as a symmetric lookup.

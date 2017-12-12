@@ -3,11 +3,11 @@
 /**
  * @mixin $ui.Validatable
  * @extends $ui.BinaryStateful
- * @augments $ui.Inputable
+ * @augments $ui.InputValueHost
  */
 $ui.Validatable = $oop.createClass('$ui.Validatable')
 .blend($ui.BinaryStateful)
-.expect($ui.Inputable)
+.expect($ui.InputValueHost)
 .define(/** @lends $ui.Validatable# */{
   /** @ignore */
   init: function () {

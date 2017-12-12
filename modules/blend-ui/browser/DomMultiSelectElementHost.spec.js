@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       DomMultiSelectElementHost = $oop.createClass('test.$ui.DomMultiSelectElementHost.DomMultiSelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.DomMultiSelectElementHost)
       .build();
       DomMultiSelectElementHost.__forwards = {
@@ -91,7 +91,7 @@ describe("$ui", function () {
     beforeAll(function () {
       MultiSelectElementHost = $oop.createClass('test.$ui.DomMultiSelectElementHost.MultiSelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.MultiSelectElementHost)
       .build();
     });

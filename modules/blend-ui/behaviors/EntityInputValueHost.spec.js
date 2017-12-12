@@ -4,16 +4,16 @@ var $oop = window['blend-oop'],
     $ui = window['blend-ui'];
 
 describe("$ui", function () {
-  describe("EntityInputable", function () {
-    var EntityInputable,
+  describe("EntityInputValueHost", function () {
+    var EntityInputValueHost,
         entityInputable;
 
     beforeAll(function () {
-      EntityInputable = $oop.createClass('test.$ui.EntityInputable.EntityInputable')
+      EntityInputValueHost = $oop.createClass('test.$ui.EntityInputValueHost.EntityInputValueHost')
       .blend($widget.Widget)
-      .blend($ui.EntityInputable)
+      .blend($ui.EntityInputValueHost)
       .build();
-      EntityInputable.__builder.forwards = {list: [], lookup: {}};
+      EntityInputValueHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("fromInputValueEntity()", function () {
@@ -23,13 +23,13 @@ describe("$ui", function () {
         inputValueEntity = 'foo/bar/baz'.toField();
       });
 
-      it("should return EntityInputable instance", function () {
-        entityInputable = EntityInputable.fromInputValueEntity(inputValueEntity);
-        expect(EntityInputable.mixedBy(entityInputable)).toBeTruthy();
+      it("should return EntityInputValueHost instance", function () {
+        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
+        expect(EntityInputValueHost.mixedBy(entityInputable)).toBeTruthy();
       });
 
       it("should initialize inputValueEntity", function () {
-        entityInputable = EntityInputable.fromInputValueEntity(inputValueEntity);
+        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
         expect(entityInputable.inputValueEntity).toBe(inputValueEntity);
       });
     });
@@ -38,7 +38,7 @@ describe("$ui", function () {
       describe("on invalid inputValueEntity", function () {
         it("should throw", function () {
           expect(function () {
-            entityInputable = EntityInputable.create({
+            entityInputable = EntityInputValueHost.create({
               inputValueEntity: 'foo/bar'.toDocument()
             });
           }).toThrow();
@@ -52,7 +52,7 @@ describe("$ui", function () {
       beforeEach(function () {
         inputValueEntity = 'baz/1/quux'.toField();
         inputValueEntity.deleteNode();
-        entityInputable = EntityInputable.fromInputValueEntity(inputValueEntity);
+        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
       });
 
       afterEach(function () {
@@ -75,7 +75,7 @@ describe("$ui", function () {
 
       beforeEach(function () {
         inputValueEntity = 'baz/1/quux'.toField();
-        entityInputable = EntityInputable.fromInputValueEntity('foo/1/bar'.toField());
+        entityInputable = EntityInputValueHost.fromInputValueEntity('foo/1/bar'.toField());
         spyOn(entityInputable, 'setEntityProperty');
       });
 
@@ -97,7 +97,7 @@ describe("$ui", function () {
       beforeEach(function () {
         inputValueEntity = 'foo/bar/baz'.toField();
         inputValueEntity.setNode("Hello");
-        entityInputable = EntityInputable.fromInputValueEntity(inputValueEntity);
+        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
         entityInputable.onAttach();
       });
 

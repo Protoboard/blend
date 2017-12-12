@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       SingleSelect = $oop.createClass('test.$ui.HtmlSingleSelect.SingleSelect')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.SingleSelect)
       .build();
     });

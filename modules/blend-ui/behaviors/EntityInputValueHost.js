@@ -2,20 +2,20 @@
 
 /**
  * Two-way binds `inputValue` to an associated `inputValueEntity`.
- * @mixin $ui.EntityInputable
+ * @mixin $ui.EntityInputValueHost
  * @extends $ui.EntityPropertyBound
- * @extends $ui.Inputable
+ * @extends $ui.InputValueHost
  */
-$ui.EntityInputable = $oop.createClass('$ui.EntityInputable')
+$ui.EntityInputValueHost = $oop.createClass('$ui.EntityInputValueHost')
 .blend($ui.EntityPropertyBound)
-.blend($ui.Inputable)
-.define(/** @lends $ui.EntityInputable# */{
+.blend($ui.InputValueHost)
+.define(/** @lends $ui.EntityInputValueHost# */{
   /**
-   * @member {$entity.LeafNoded} $ui.EntityInputable#inputValueEntity
+   * @member {$entity.LeafNoded} $ui.EntityInputValueHost#inputValueEntity
    */
 
   /**
-   * @memberOf $ui.EntityInputable
+   * @memberOf $ui.EntityInputValueHost
    * @param {$entity.LeafNoded} inputValueEntity
    * @param {Object} [properties]
    */
@@ -52,7 +52,7 @@ $ui.EntityInputable = $oop.createClass('$ui.EntityInputable')
 
   /**
    * @param {*} inputValue
-   * @returns {$ui.EntityInputable}
+   * @returns {$ui.EntityInputValueHost}
    */
   setInputValue: function setInputValue(inputValue) {
     var inputValueBefore = setInputValue.shared.inputValueBefore;
@@ -64,7 +64,7 @@ $ui.EntityInputable = $oop.createClass('$ui.EntityInputable')
 
   /**
    * @param {$entity.LeafNoded} inputValueEntity
-   * @returns {$ui.EntityInputable}
+   * @returns {$ui.EntityInputValueHost}
    */
   setInputValueEntity: function (inputValueEntity) {
     this.setEntityProperty('inputValueEntity', inputValueEntity);

@@ -3,10 +3,10 @@
 /**
  * Maintains a lookup of `Selectable` children by their ownValue property.
  * @mixin $ui.SelectableHost
- * @augments $ui.Inputable
+ * @augments $ui.InputValueHost
  */
 $ui.SelectableHost = $oop.createClass('$ui.SelectableHost')
-.expect($ui.Inputable)
+.expect($ui.InputValueHost)
 .define(/** @lends $ui.SelectableHost# */{
   /**
    * Associates ownValue's of Selectable child widgets with child widgets.

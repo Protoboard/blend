@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       DomSingleSelectElementHost = $oop.createClass('test.$ui.DomSingleSelectElementHost.DomSingleSelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.DomSingleSelectElementHost)
       .build();
       DomSingleSelectElementHost.__forwards = {
@@ -91,7 +91,7 @@ describe("$ui", function () {
     beforeAll(function () {
       SingleSelectElementHost = $oop.createClass('test.$ui.DomSingleSelectElementHost.SingleSelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.SingleSelectElementHost)
       .build();
     });

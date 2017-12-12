@@ -12,12 +12,12 @@
 /**
  * @class $ui.TextInput
  * @extends $widget.Widget
- * @extends $ui.Inputable
+ * @extends $ui.InputValueHost
  * @extends $ui.Validatable
  */
 $ui.TextInput = $oop.createClass('$ui.TextInput')
 .blend($widget.Widget)
-.blend($ui.Inputable)
+.blend($ui.InputValueHost)
 .blend($ui.Validatable)
 .build();
 

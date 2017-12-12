@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       InputElementHost = $oop.createClass('test.$ui.InputElementHost.InputElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.InputElementHost)
       .build();
       InputElementHost.__builder.forwards = {list: [], lookup: {}};

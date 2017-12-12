@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       TextareaElementHost = $oop.createClass('test.$ui.TextareaElementHost.TextareaElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.TextareaElementHost)
       .build();
       TextareaElementHost.__builder.forwards = {list: [], lookup: {}};

@@ -3,23 +3,23 @@
 /**
  * Endows widget with user input capabilities. Associates host widget with an
  * input value to be set by the user. Usually mixed to input widgets.
- * @mixin $ui.Inputable
+ * @mixin $ui.InputValueHost
  * @extends $ui.Disableable
  * @extends $ui.Focusable
  * @augments $widget.Widget
  */
-$ui.Inputable = $oop.createClass('$ui.Inputable')
+$ui.InputValueHost = $oop.createClass('$ui.InputValueHost')
 .blend($ui.Disableable)
 .blend($ui.Focusable)
 .expect($widget.Widget)
-.define(/** @lends $ui.Inputable# */{
+.define(/** @lends $ui.InputValueHost# */{
   /**
-   * @member {*} $ui.Inputable#inputValue
+   * @member {*} $ui.InputValueHost#inputValue
    */
 
   /**
    * @param {*} inputValue
-   * @returns {$ui.Inputable}
+   * @returns {$ui.InputValueHost}
    */
   setInputValue: function setInputValue(inputValue) {
     var inputValueBefore = this.inputValue;

@@ -11,13 +11,13 @@
 /**
  * @class $ui.MultiSelect
  * @extends $widget.Widget
- * @extends $ui.Inputable
+ * @extends $ui.InputValueHost
  * @extends $ui.Validatable
  * @extends $ui.SingleChoice
  */
 $ui.MultiSelect = $oop.createClass('$ui.MultiSelect')
 .blend($widget.Widget)
-.blend($ui.Inputable)
+.blend($ui.InputValueHost)
 .blend($ui.Validatable)
 .blend($ui.MultipleChoice)
 .build();

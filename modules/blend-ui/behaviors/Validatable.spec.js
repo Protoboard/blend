@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       Validatable = $oop.createClass('test.$ui.Validatable.Validatable')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.Validatable)
       .build();
       Validatable.__builder.forwards = {list: [], lookup: {}};

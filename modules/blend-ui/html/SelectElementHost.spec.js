@@ -12,7 +12,7 @@ describe("$ui", function () {
     beforeAll(function () {
       SelectElementHost = $oop.createClass('test.$ui.SelectElementHost.SelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.SelectElementHost)
       .build();
       SelectElementHost.__builder.forwards = {list: [], lookup: {}};

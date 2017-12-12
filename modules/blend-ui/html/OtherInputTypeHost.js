@@ -6,11 +6,11 @@
  * attribute.
  * @mixin $ui.OtherInputTypeHost
  * @extends $ui.InputElementHost
- * @augments $ui.Inputable
+ * @augments $ui.InputValueHost
  */
 $ui.OtherInputTypeHost = $oop.createClass('$ui.OtherInputTypeHost')
 .blend($ui.InputElementHost)
-.expect($ui.Inputable)
+.expect($ui.InputValueHost)
 .define(/** @lends $ui.OtherInputTypeHost# */{
   /** @ignore */
   init: function () {

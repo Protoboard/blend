@@ -4,21 +4,21 @@ var $oop = window['blend-oop'],
     $ui = window['blend-ui'];
 
 describe("$ui", function () {
-  describe("Inputable", function () {
-    var Inputable,
+  describe("InputValueHost", function () {
+    var InputValueHost,
         inputable;
 
     beforeAll(function () {
-      Inputable = $oop.createClass('test.$ui.Inputable.Inputable')
+      InputValueHost = $oop.createClass('test.$ui.InputValueHost.InputValueHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .build();
-      Inputable.__builder.forwards = {list: [], lookup: {}};
+      InputValueHost.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("setInputValue()", function () {
       beforeEach(function () {
-        inputable = Inputable.create();
+        inputable = InputValueHost.create();
       });
 
       it("should return self", function () {

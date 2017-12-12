@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       DomOtherInputTypeHost = $oop.createClass('test.$ui.DomOtherInputTypeHost.DomOtherInputTypeHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.DomOtherInputTypeHost)
       .build();
       DomOtherInputTypeHost.__builder.forwards = {list: [], lookup: {}};
@@ -100,7 +100,7 @@ describe("$ui", function () {
     beforeAll(function () {
       OtherInputTypeHost = $oop.createClass('test.$ui.DomOtherInputTypeHost.OtherInputTypeHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.OtherInputTypeHost)
       .build();
     });

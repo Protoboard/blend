@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       MultipleChoice = $oop.createClass('test.$ui.MultipleChoice.MultipleChoice')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.MultipleChoice)
       .build();
       MultipleChoice.__builder.forwards = {list: [], lookup: {}};

@@ -12,7 +12,7 @@ describe("$ui", function () {
     beforeAll(function () {
       MultiSelectElementHost = $oop.createClass('test.$ui.MultiSelectElementHost.MultiSelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.MultiSelectElementHost)
       .build();
       MultiSelectElementHost.__builder.forwards = {list: [], lookup: {}};

@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       InputElementHost = $oop.createClass('test.$ui.DomInputElementHost.InputElementHost')
       .blend($widget.Widget)
-      .blend($ui.Inputable)
+      .blend($ui.InputValueHost)
       .blend($ui.InputElementHost)
       .build();
     });

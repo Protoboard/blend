@@ -8,9 +8,9 @@
 /**
  * @class $ui.EntityTextInput
  * @extends $ui.TextInput
- * @mixes $ui.EntityInputable
+ * @mixes $ui.EntityInputValueHost
  */
 $ui.EntityTextInput = $oop.createClass('$ui.EntityTextInput')
 .blend($ui.TextInput)
-.blend($ui.EntityInputable)
+.blend($ui.EntityInputValueHost)
 .build();
