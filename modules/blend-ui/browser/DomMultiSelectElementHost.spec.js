@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       DomMultiSelectElementHost = $oop.createClass('test.$ui.DomMultiSelectElementHost.DomMultiSelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.InputValueHost)
+      .blend($ui.InputValuesHost)
       .blend($ui.DomMultiSelectElementHost)
       .build();
       DomMultiSelectElementHost.__forwards = {
@@ -37,7 +37,7 @@ describe("$ui", function () {
 
       it("should sync to selectedOptions", function () {
         domMultiSelectElementHost.onRender();
-        expect(domMultiSelectElementHost.inputValue).toEqual({foo: 'foo'});
+        expect(domMultiSelectElementHost.inputValues).toEqual({foo: 'foo'});
       });
     });
 
@@ -58,7 +58,7 @@ describe("$ui", function () {
 
       it("should sync to selectedOptions", function () {
         element.dispatchEvent(new Event('input'));
-        expect(domMultiSelectElementHost.inputValue).toEqual({foo: 'foo'});
+        expect(domMultiSelectElementHost.inputValues).toEqual({foo: 'foo'});
       });
     });
 
@@ -79,7 +79,7 @@ describe("$ui", function () {
 
       it("should sync to selectedOptions", function () {
         element.dispatchEvent(new Event('change'));
-        expect(domMultiSelectElementHost.inputValue).toEqual({foo: 'foo'});
+        expect(domMultiSelectElementHost.inputValues).toEqual({foo: 'foo'});
       });
     });
   });
@@ -91,7 +91,7 @@ describe("$ui", function () {
     beforeAll(function () {
       MultiSelectElementHost = $oop.createClass('test.$ui.DomMultiSelectElementHost.MultiSelectElementHost')
       .blend($widget.Widget)
-      .blend($ui.InputValueHost)
+      .blend($ui.InputValuesHost)
       .blend($ui.MultiSelectElementHost)
       .build();
     });

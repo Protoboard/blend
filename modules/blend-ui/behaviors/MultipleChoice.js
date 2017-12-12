@@ -3,29 +3,18 @@
 /**
  * @mixin $ui.MultipleChoice
  * @extends $ui.SelectableHost
- * @augments $ui.InputValueHost
+ * @augments $ui.InputValuesHost
  */
 $ui.MultipleChoice = $oop.createClass('$ui.MultipleChoice')
 .blend($ui.SelectableHost)
-.expect($ui.InputValueHost)
+.expect($ui.InputValuesHost)
 .define(/** @lends $ui.MultipleChoice# */{
   /**
-   * Stores selected values as a symmetric lookup.
-   * @name $ui.MultipleChoice#inputValue
-   * @type {Object.<string,string>}
-   */
-
-  /** @ignore */
-  defaults: function () {
-    this.inputValue = this.inputValue || {};
-  },
-
-  /**
-   * Syncs initial selected state to inputValue.
+   * Syncs initial selected state to inputValues.
    * @protected
    */
   _syncSelectableStates: function () {
-    $data.Collection.fromData(this.inputValue)
+    $data.Collection.fromData(this.inputValues)
     .toStringDictionary()
     .join($data.Collection.fromData(this.selectablesByOwnValue).toDictionary())
     .callOnEachValue('select');
@@ -39,7 +28,7 @@ $ui.MultipleChoice = $oop.createClass('$ui.MultipleChoice')
     var childNodeBefore = addChildNode.shared.childNodeBefore,
         ownValue = node.ownValue;
     if (node !== childNodeBefore &&
-        ownValue !== undefined && ownValue === this.inputValue[ownValue]
+        ownValue !== undefined && ownValue === this.inputValues[ownValue]
     ) {
       node.select();
     }
@@ -59,16 +48,16 @@ $ui.MultipleChoice = $oop.createClass('$ui.MultipleChoice')
   },
 
   /**
-   * @param {Object.<string,string>} inputValue
+   * @param {Object.<string,string>} inputValues
    * @returns {$ui.MultipleChoice}
    * @todo Necessary? (Harmful to perf?)
    */
-  setInputValue: function setInputValue(inputValue) {
-    var inputValueBefore = setInputValue.shared.inputValueBefore,
-        inputValuesAdded = $data.StringSet.fromData(inputValue)
-        .subtract($data.StringSet.fromData(inputValueBefore)),
-        inputValuesRemoved = $data.StringSet.fromData(inputValue)
-        .subtractFrom($data.StringSet.fromData(inputValueBefore));
+  setInputValues: function setInputValues(inputValues) {
+    var inputValuesBefore = setInputValues.shared.inputValuesBefore,
+        inputValuesAdded = $data.StringSet.fromData(inputValues)
+        .subtract($data.StringSet.fromData(inputValuesBefore)),
+        inputValuesRemoved = $data.StringSet.fromData(inputValues)
+        .subtractFrom($data.StringSet.fromData(inputValuesBefore));
 
     if (inputValuesRemoved.getItemCount()) {
       inputValuesRemoved.toCollection().toStringDictionary()
@@ -90,43 +79,26 @@ $ui.MultipleChoice = $oop.createClass('$ui.MultipleChoice')
   /**
    * @param {*} inputValue
    * @return {$ui.MultipleChoice}
-   * @todo Move parts to MultiInputable?
    */
-  addInputValue: function addInputValue(inputValue) {
-    var inputValueBefore = this.inputValue[inputValue],
+  setInputValue: function setInputValue(inputValue) {
+    var inputValueBefore = setInputValue.shared.inputValueBefore,
         selectable = this.getSelectableByOwnValue(inputValue);
-
-    if (inputValue !== inputValueBefore) {
-      this.inputValue[inputValue] = inputValue;
-
-      if (selectable) {
-        selectable.select();
-      }
+    if (inputValue !== inputValueBefore && selectable) {
+      selectable.select();
     }
-
-    addInputValue.shared.inputValueBefore = inputValueBefore;
     return this;
   },
 
   /**
    * @param {*} inputValue
    * @return {$ui.MultipleChoice}
-   * @todo Move parts to MultiInputable?
    */
-  removeInputValue: function removeInputValue(inputValue) {
-    var inputValueBefore = this.inputValue[inputValue],
+  deleteInputValue: function deleteInputValue(inputValue) {
+    var inputValueBefore = deleteInputValue.shared.inputValueBefore,
         selectable = this.getSelectableByOwnValue(inputValue);
-
-    if (inputValue === inputValueBefore) {
-      delete this.inputValue[inputValue];
-
-      if (selectable) {
-        // might not be reachable in browser
-        selectable.deselect();
-      }
+    if (inputValue === inputValueBefore && selectable) {
+      selectable.deselect();
     }
-
-    removeInputValue.shared.inputValueBefore = inputValueBefore;
     return this;
   },
 
@@ -144,8 +116,8 @@ $ui.MultipleChoice = $oop.createClass('$ui.MultipleChoice')
     var selectable = event.sender;
     if (selectable.isSelected()) {
       this
-      .removeInputValue(event.ownValueBefore)
-      .addInputValue(event.ownValueAfter);
+      .deleteInputValue(event.ownValueBefore)
+      .setInputValue(event.ownValueAfter);
     }
   },
 
@@ -159,9 +131,9 @@ $ui.MultipleChoice = $oop.createClass('$ui.MultipleChoice')
 
     if (stateName === $ui.STATE_NAME_SELECTED) {
       if (selectable.isSelected()) {
-        this.addInputValue(selectable.ownValue);
+        this.setInputValue(selectable.ownValue);
       } else {
-        this.removeInputValue(selectable.ownValue);
+        this.deleteInputValue(selectable.ownValue);
       }
     }
   }

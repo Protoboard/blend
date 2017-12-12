@@ -4,7 +4,7 @@
  * @function $ui.MultiSelect.create
  * @param {Object} [properties]
  * @param {string} [properties.nodeName]
- * @param {Object} [properties.inputValue]
+ * @param {Object} [properties.inputValues]
  * @returns {$ui.MultiSelect}
  */
 
@@ -17,7 +17,7 @@
  */
 $ui.MultiSelect = $oop.createClass('$ui.MultiSelect')
 .blend($widget.Widget)
-.blend($ui.InputValueHost)
+.blend($ui.InputValuesHost)
 .blend($ui.Validatable)
 .blend($ui.MultipleChoice)
 .build();

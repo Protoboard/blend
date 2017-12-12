@@ -27,7 +27,7 @@ $ui.DomMultiSelectElementHost = $oop.createClass('$ui.DomMultiSelectElementHost'
         return inputValues;
       }, {});
 
-      this.setInputValue(inputValues);
+      this.setInputValues(inputValues);
     }
   },
 

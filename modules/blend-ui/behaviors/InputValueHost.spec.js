@@ -6,7 +6,7 @@ var $oop = window['blend-oop'],
 describe("$ui", function () {
   describe("InputValueHost", function () {
     var InputValueHost,
-        inputable;
+        inputValueHost;
 
     beforeAll(function () {
       InputValueHost = $oop.createClass('test.$ui.InputValueHost.InputValueHost')
@@ -18,17 +18,23 @@ describe("$ui", function () {
 
     describe("setInputValue()", function () {
       beforeEach(function () {
-        inputable = InputValueHost.create();
+        inputValueHost = InputValueHost.create();
       });
 
       it("should return self", function () {
-        var result = inputable.setInputValue('foo');
-        expect(result).toBe(inputable);
+        var result = inputValueHost.setInputValue('foo');
+        expect(result).toBe(inputValueHost);
       });
 
       it("should set inputValue", function () {
-        inputable.setInputValue('foo');
-        expect(inputable.inputValue).toBe('foo');
+        inputValueHost.setInputValue('foo');
+        expect(inputValueHost.inputValue).toBe('foo');
+      });
+
+      it("should save before state", function () {
+        inputValueHost.setInputValue('foo');
+        expect(inputValueHost.setInputValue.shared.inputValueBefore)
+        .toBeUndefined();
       });
     });
   });

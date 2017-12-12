@@ -456,7 +456,7 @@ _createMultiSelect: function () {
     textContent: "Summer",
     ownValue: 'Summer'
   }))
-  .setInputValue({
+  .setInputValues({
     "Morty": "Morty",
     "Rick": "Rick"
   });

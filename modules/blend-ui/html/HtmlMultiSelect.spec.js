@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       MultiSelect = $oop.createClass('test.$ui.HtmlMultiSelect.MultiSelect')
       .blend($widget.Widget)
-      .blend($ui.InputValueHost)
+      .blend($ui.InputValuesHost)
       .blend($ui.MultiSelect)
       .build();
     });

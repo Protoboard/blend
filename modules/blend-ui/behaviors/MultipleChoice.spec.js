@@ -11,7 +11,7 @@ describe("$ui", function () {
     beforeAll(function () {
       MultipleChoice = $oop.createClass('test.$ui.MultipleChoice.MultipleChoice')
       .blend($widget.Widget)
-      .blend($ui.InputValueHost)
+      .blend($ui.InputValuesHost)
       .blend($ui.MultipleChoice)
       .build();
       MultipleChoice.__builder.forwards = {list: [], lookup: {}};
@@ -32,9 +32,9 @@ describe("$ui", function () {
         expect(result).toBe(multipleChoice);
       });
 
-      describe("when node's ownValue matches inputValue", function () {
+      describe("when node's ownValue matches inputValues", function () {
         beforeEach(function () {
-          multipleChoice.setInputValue({foo: 'foo'});
+          multipleChoice.setInputValues({foo: 'foo'});
         });
 
         it("should select node", function () {
@@ -84,7 +84,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValue()", function () {
+    describe("setInputValues()", function () {
       var option1,
           option2;
 
@@ -101,13 +101,13 @@ describe("$ui", function () {
       });
 
       it("should return self", function () {
-        var result = multipleChoice.setInputValue({bar: 'bar'});
+        var result = multipleChoice.setInputValues({bar: 'bar'});
         expect(result).toBe(multipleChoice);
       });
 
       describe("when input value matches option ownValue", function () {
         it("should select matching option", function () {
-          multipleChoice.setInputValue({foo: 'foo'});
+          multipleChoice.setInputValues({foo: 'foo'});
           expect(option1.isSelected()).toBeTruthy();
         });
       });
@@ -124,9 +124,56 @@ describe("$ui", function () {
         });
 
         it("should deselect previously active option", function () {
-          multipleChoice.setInputValue({foo: 'foo'});
+          multipleChoice.setInputValues({foo: 'foo'});
           expect(option2.isSelected()).toBeFalsy();
         });
+      });
+    });
+
+    describe("setInputValue()", function () {
+      var option;
+
+      beforeEach(function () {
+        multipleChoice = MultipleChoice.create();
+        option = $ui.Option.create({
+          nodeName: 'foo',
+          ownValue: 'bar'
+        });
+        multipleChoice.addChildNode(option);
+      });
+
+      it("should return self", function () {
+        var result = multipleChoice.setInputValue('foo');
+        expect(result).toBe(multipleChoice);
+      });
+
+      it("should select matching option", function () {
+        multipleChoice.setInputValue('bar');
+        expect(option.isSelected()).toBeTruthy();
+      });
+    });
+
+    describe("deleteInputValue()", function () {
+      var option;
+
+      beforeEach(function () {
+        multipleChoice = MultipleChoice.create();
+        option = $ui.Option.create({
+          nodeName: 'foo',
+          ownValue: 'bar'
+        });
+        multipleChoice.addChildNode(option);
+        multipleChoice.setInputValue('bar');
+      });
+
+      it("should return self", function () {
+        var result = multipleChoice.deleteInputValue('foo');
+        expect(result).toBe(multipleChoice);
+      });
+
+      it("should deselect matching option", function () {
+        multipleChoice.deleteInputValue('bar');
+        expect(option.isSelected()).toBeFalsy();
       });
     });
 
@@ -136,7 +183,7 @@ describe("$ui", function () {
 
       beforeEach(function () {
         multipleChoice = MultipleChoice.create({
-          inputValue: {bar: 'bar'}
+          inputValues: {bar: 'bar'}
         });
         option1 = $ui.Option.create({
           ownValue: 'foo'
@@ -159,7 +206,7 @@ describe("$ui", function () {
 
       beforeEach(function () {
         multipleChoice = MultipleChoice.create({
-          inputValue: {foo: 'foo'}
+          inputValues: {foo: 'foo'}
         });
         option = $ui.Option.create({
           ownValue: 'foo'
@@ -173,9 +220,9 @@ describe("$ui", function () {
         multipleChoice.removeFromParentNode();
       });
 
-      it("should update inputValue", function () {
+      it("should update inputValues", function () {
         option.setOwnValue('bar');
-        expect(multipleChoice.inputValue).toEqual({bar: 'bar'});
+        expect(multipleChoice.inputValues).toEqual({bar: 'bar'});
       });
     });
 
@@ -196,9 +243,9 @@ describe("$ui", function () {
         multipleChoice.removeFromParentNode();
       });
 
-      it("should update inputValue", function () {
+      it("should update inputValues", function () {
         option.select();
-        expect(multipleChoice.inputValue).toEqual({foo: 'foo'});
+        expect(multipleChoice.inputValues).toEqual({foo: 'foo'});
       });
     });
   });

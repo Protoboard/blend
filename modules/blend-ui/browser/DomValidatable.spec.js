@@ -12,7 +12,6 @@ describe("$ui", function () {
       DomValidatable = $oop.createClass('test.$ui.DomValidatable.DomValidatable')
       .blend($widget.Widget)
       .blend($widget.DomWidget)
-      .blend($ui.InputValueHost)
       .blend($ui.DomValidatable)
       .build();
       DomValidatable.__builder.forwards = {list: [], lookup: {}};
