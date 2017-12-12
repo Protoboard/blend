@@ -102,7 +102,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       $assert.fail([
         "Class '" + that.__className + "' doesn't satisfy expectation(s): " +
         unmetExpectations
-        .map($oop.getClassId)
+        .map($oop.getClassBuilderName)
         .map($oop.addQuotes)
         .join(",") + ".",
         "Can't instantiate."
