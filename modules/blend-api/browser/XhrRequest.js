@@ -30,9 +30,5 @@ $api.XhrRequest = $oop.createClass('$api.XhrRequest')
 })
 .build();
 
-$api.Request
-.forwardBlend($api.XhrRequest, function (properties) {
-  return properties &&
-      $utils.isBrowser() &&
-      $api.HttpEndpoint.mixedBy(properties.endpoint);
-});
+$api.HttpRequest
+.forwardBlend($api.XhrRequest, $utils.isBrowser);
