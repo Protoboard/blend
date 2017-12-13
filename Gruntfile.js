@@ -216,7 +216,8 @@ module.exports = function (grunt) {
   grunt.initConfig({
     clean: {
       build: ['modules/*/lib', 'public'],
-      doc: ['doc']
+      doc: ['doc/api'],
+      coverage: ['doc/coverage']
     },
 
     concat: buildConcatConfig({
@@ -299,7 +300,7 @@ module.exports = function (grunt) {
       dist: {
         src: ['modules/*/lib/*', 'README.md'],
         options: {
-          destination: 'doc',
+          destination: 'doc/api',
           template: "node_modules/ink-docstrap/template",
           configure: "jsdoc.conf.json"
         }
@@ -319,8 +320,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
 
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
-  grunt.registerTask('test', ['jshint', 'karma']);
-  grunt.registerTask('coverage', ['karma:coverage']);
+  grunt.registerTask('test', ['clean:coverage', 'jshint', 'karma']);
+  grunt.registerTask('coverage', ['clean:coverage', 'karma:coverage']);
   grunt.registerTask('build-quick', ['clean:build', 'string-replace', 'concat',
     'less', 'copy', 'notify:build-quick']);
   grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'less',

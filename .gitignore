@@ -1,7 +1,5 @@
 /.idea/
 /node_modules/
-/dist/
 /public/
 /doc/
-/coverage/
 lib/
