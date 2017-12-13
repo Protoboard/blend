@@ -11,19 +11,19 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'dist/blend-assert.js',
-      'dist/blend-oop.js',
-      'dist/blend-utils.js',
-      'dist/blend-data.js',
-      'dist/blend-event.js',
-      'dist/blend-module.js',
-      'dist/blend-template.js',
-      'dist/blend-entity.js',
-      'dist/blend-router.js',
-      'dist/blend-api.js',
-      'dist/blend-widget.js',
-      'dist/blend-i18n.js',
-      'dist/blend-ui.js',
+      'modules/blend-assert/lib/blend-assert.js',
+      'modules/blend-oop/lib/blend-oop.js',
+      'modules/blend-utils/lib/blend-utils.js',
+      'modules/blend-data/lib/blend-data.js',
+      'modules/blend-event/lib/blend-event.js',
+      'modules/blend-module/lib/blend-module.js',
+      'modules/blend-template/lib/blend-template.js',
+      'modules/blend-entity/lib/blend-entity.js',
+      'modules/blend-router/lib/blend-router.js',
+      'modules/blend-api/lib/blend-api.js',
+      'modules/blend-widget/lib/blend-widget.js',
+      'modules/blend-i18n/lib/blend-i18n.js',
+      'modules/blend-ui/lib/blend-ui.js',
       'test/*.js',
       'modules/*/src/**/*.spec.js'
     ],
@@ -38,7 +38,7 @@ module.exports = function (config) {
       // source files, that you wanna generate coverage for
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
-      'dist/*.js': ['coverage']
+      'modules/*/lib/*': ['coverage']
     },
 
     // test results reporter to use
@@ -47,8 +47,8 @@ module.exports = function (config) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+      type: 'html',
+      dir: 'coverage/'
     },
 
     // web server port

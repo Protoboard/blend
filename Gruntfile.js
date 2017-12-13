@@ -91,6 +91,27 @@ module.exports = function (grunt) {
    * @param {Object} config Holds module-independent configuration.
    * @returns {Object} Task configuration with modules.
    */
+  function buildCopyConfig(config) {
+    config = config || {};
+
+    moduleIds
+    .forEach(function (moduleId, i) {
+      var pkg = packages[i];
+      config[moduleId] = {
+        src: ['modules', moduleId, 'lib', '*'].join('/'),
+        dest: 'public/',
+        expand: true,
+        flatten: true
+      };
+    });
+
+    return config;
+  }
+
+  /**
+   * @param {Object} config Holds module-independent configuration.
+   * @returns {Object} Task configuration with modules.
+   */
   function buildLessConfig(config) {
     config = config || {};
 
@@ -159,13 +180,15 @@ module.exports = function (grunt) {
           'modules/' + moduleId + '/src/**/*.js',
           '!modules/' + moduleId + '/src/**/*.spec.js',
           'modules/' + moduleId + '/@(package|manifest).json'],
-        tasks: ['concat:' + moduleId, 'notify:build-' + moduleId]
+        tasks: ['concat:' + moduleId, 'copy:' + moduleId,
+          'notify:build-' + moduleId]
       };
       config[moduleId + '-less'] = {
         files: [
           'modules/' + moduleId + '/src/**/*@(.css|.less)',
           'modules/' + moduleId + '/@(package|manifest).json'],
-        tasks: ['less:' + moduleId, 'notify:build-' + moduleId]
+        tasks: ['less:' + moduleId, 'copy:' + moduleId,
+          'notify:build-' + moduleId]
       };
     });
 
@@ -202,6 +225,8 @@ module.exports = function (grunt) {
         sourceMap: true
       }
     }),
+
+    copy: buildCopyConfig(),
 
     less: buildLessConfig({
       options: {
@@ -272,7 +297,7 @@ module.exports = function (grunt) {
 
     jsdoc: {
       dist: {
-        src: ['dist/*.js', 'README.md'],
+        src: ['modules/*/lib/*', 'README.md'],
         options: {
           destination: 'doc',
           template: "node_modules/ink-docstrap/template",
@@ -283,6 +308,7 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-string-replace');
@@ -296,8 +322,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['jshint', 'karma']);
   grunt.registerTask('coverage', ['karma:coverage']);
   grunt.registerTask('build-quick', ['clean:build', 'string-replace', 'concat',
-    'less', 'notify:build-quick']);
+    'less', 'copy', 'notify:build-quick']);
   grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'less',
-    'test', 'jsdoc', 'notify:build-full']);
+    'copy', 'test', 'jsdoc', 'notify:build-full']);
   grunt.registerTask('default', ['build-quick', 'watch']);
 };

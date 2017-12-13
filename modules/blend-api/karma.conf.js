@@ -11,13 +11,13 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../../dist/blend-assert.js',
-      '../../dist/blend-oop.js',
-      '../../dist/blend-utils.js',
-      '../../dist/blend-data.js',
-      '../../dist/blend-event.js',
-      '../../dist/blend-module.js',
-      '../../dist/blend-api.js',
+      '../../modules/blend-assert/lib/blend-assert.js',
+      '../../modules/blend-oop/lib/blend-oop.js',
+      '../../modules/blend-utils/lib/blend-utils.js',
+      '../../modules/blend-data/lib/blend-data.js',
+      '../../modules/blend-event/lib/blend-event.js',
+      '../../modules/blend-module/lib/blend-module.js',
+      'lib/blend-api.js',
       '../../test/*.js',
       'src/**/*.spec.js'
     ],
