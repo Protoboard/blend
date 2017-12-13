@@ -14,7 +14,7 @@ module.exports = function (config) {
       '../../modules/blend-assert/lib/blend-assert.js',
       '../../modules/blend-oop/lib/blend-oop.js',
       'lib/blend-utils.js',
-      '../../test/*.js',
+      '../../helpers/jasmine/*.js',
       'src/**/*.spec.js'
     ],
 

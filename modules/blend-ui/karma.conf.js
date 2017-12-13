@@ -23,7 +23,7 @@ module.exports = function (config) {
       '../../modules/blend-i18n/lib/blend-i18n.js',
       '../../modules/blend-widget/lib/blend-widget.js',
       'lib/blend-ui.js',
-      '../../test/*.js',
+      '../../helpers/jasmine/*.js',
       'src/**/*.spec.js'
     ],
 

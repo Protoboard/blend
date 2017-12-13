@@ -19,7 +19,7 @@ module.exports = function (config) {
       '../../modules/blend-module/lib/blend-module.js',
       '../../modules/blend-entity/lib/blend-entity.js',
       'lib/blend-i18n.js',
-      '../../test/*.js',
+      '../../helpers/jasmine/*.js',
       'src/**/*.spec.js'
     ],
 

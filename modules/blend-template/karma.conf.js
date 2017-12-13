@@ -18,7 +18,7 @@ module.exports = function (config) {
       '../../modules/blend-event/lib/blend-event.js',
       '../../modules/blend-module/lib/blend-module.js',
       'lib/blend-template.js',
-      '../../test/*.js',
+      '../../helpers/jasmine/*.js',
       'src/**/*.spec.js'
     ],
 

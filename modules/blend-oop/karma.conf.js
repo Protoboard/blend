@@ -13,7 +13,7 @@ module.exports = function (config) {
     files: [
       '../../modules/blend-assert/lib/blend-assert.js',
       'lib/blend-oop.js',
-      '../../test/*.js',
+      '../../helpers/jasmine/*.js',
       'src/**/*.spec.js'
     ],
 
