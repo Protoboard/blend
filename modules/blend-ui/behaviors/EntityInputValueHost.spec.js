@@ -6,7 +6,7 @@ var $oop = window['blend-oop'],
 describe("$ui", function () {
   describe("EntityInputValueHost", function () {
     var EntityInputValueHost,
-        entityInputable;
+        entityInputValueHost;
 
     beforeAll(function () {
       EntityInputValueHost = $oop.createClass('test.$ui.EntityInputValueHost.EntityInputValueHost')
@@ -24,13 +24,13 @@ describe("$ui", function () {
       });
 
       it("should return EntityInputValueHost instance", function () {
-        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
-        expect(EntityInputValueHost.mixedBy(entityInputable)).toBeTruthy();
+        entityInputValueHost = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
+        expect(EntityInputValueHost.mixedBy(entityInputValueHost)).toBeTruthy();
       });
 
       it("should initialize inputValueEntity", function () {
-        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
-        expect(entityInputable.inputValueEntity).toBe(inputValueEntity);
+        entityInputValueHost = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
+        expect(entityInputValueHost.inputValueEntity).toBe(inputValueEntity);
       });
     });
 
@@ -38,7 +38,7 @@ describe("$ui", function () {
       describe("on invalid inputValueEntity", function () {
         it("should throw", function () {
           expect(function () {
-            entityInputable = EntityInputValueHost.create({
+            entityInputValueHost = EntityInputValueHost.create({
               inputValueEntity: 'foo/bar'.toDocument()
             });
           }).toThrow();
@@ -52,7 +52,7 @@ describe("$ui", function () {
       beforeEach(function () {
         inputValueEntity = 'baz/1/quux'.toField();
         inputValueEntity.deleteNode();
-        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
+        entityInputValueHost = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
       });
 
       afterEach(function () {
@@ -60,12 +60,12 @@ describe("$ui", function () {
       });
 
       it("should return self", function () {
-        var result = entityInputable.setInputValue('foo');
-        expect(result).toBe(entityInputable);
+        var result = entityInputValueHost.setInputValue('foo');
+        expect(result).toBe(entityInputValueHost);
       });
 
       it("should sync entity to inputValue", function () {
-        entityInputable.setInputValue('foo');
+        entityInputValueHost.setInputValue('foo');
         expect(inputValueEntity.getNode()).toBe('foo');
       });
     });
@@ -75,18 +75,18 @@ describe("$ui", function () {
 
       beforeEach(function () {
         inputValueEntity = 'baz/1/quux'.toField();
-        entityInputable = EntityInputValueHost.fromInputValueEntity('foo/1/bar'.toField());
-        spyOn(entityInputable, 'setEntityProperty');
+        entityInputValueHost = EntityInputValueHost.fromInputValueEntity('foo/1/bar'.toField());
+        spyOn(entityInputValueHost, 'setEntityProperty');
       });
 
       it("should return self", function () {
-        var result = entityInputable.setInputValueEntity(inputValueEntity);
-        expect(result).toBe(entityInputable);
+        var result = entityInputValueHost.setInputValueEntity(inputValueEntity);
+        expect(result).toBe(entityInputValueHost);
       });
 
       it("should invoke setEntityProperty", function () {
-        entityInputable.setInputValueEntity(inputValueEntity);
-        expect(entityInputable.setEntityProperty)
+        entityInputValueHost.setInputValueEntity(inputValueEntity);
+        expect(entityInputValueHost.setEntityProperty)
         .toHaveBeenCalledWith('inputValueEntity', inputValueEntity);
       });
     });
@@ -97,18 +97,18 @@ describe("$ui", function () {
       beforeEach(function () {
         inputValueEntity = 'foo/bar/baz'.toField();
         inputValueEntity.setNode("Hello");
-        entityInputable = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
-        entityInputable.onAttach();
+        entityInputValueHost = EntityInputValueHost.fromInputValueEntity(inputValueEntity);
+        entityInputValueHost.onAttach();
       });
 
       afterEach(function () {
-        entityInputable.onDetach();
+        entityInputValueHost.onDetach();
         inputValueEntity.deleteNode();
       });
 
-      it("should sync text entity to inputValue", function () {
-        entityInputable._syncToEntityProperty('inputValueEntity');
-        expect(entityInputable.inputValue).toBe("Hello");
+      it("should sync inputValue to entity", function () {
+        entityInputValueHost._syncToEntityProperty('inputValueEntity');
+        expect(entityInputValueHost.inputValue).toBe("Hello");
       });
     });
   });
