@@ -1,7 +1,7 @@
 {
   "js": [
-    "events/TemplateParameterChangeEvent.js",
-    "template/Template.js",
-    "template/LiveTemplate.js"
+    "src/events/TemplateParameterChangeEvent.js",
+    "src/template/Template.js",
+    "src/template/LiveTemplate.js"
   ]
 }

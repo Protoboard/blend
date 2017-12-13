@@ -1,20 +1,20 @@
 {
   "js": [
-    "containers/index.js",
-    "utils/Dispatchable.js",
-    "utils/Sendable.js",
-    "utils/UrlQuery.js",
-    "index/ActiveRequestIndex.js",
-    "events/ApiEvent.js",
-    "endpoint/Endpoint.js",
-    "request/Request.js",
-    "request/RequestDispatcher.js",
-    "response/Response.js",
-    "ajax/HttpEndpoint.js",
-    "ajax/HttpRequest.js",
-    "ajax/HttpResponse.js",
-    "browser/XhrDispatcher.js",
-    "browser/XhrEvent.js",
-    "browser/XhrRequest.js"
+    "src/containers/index.js",
+    "src/utils/Dispatchable.js",
+    "src/utils/Sendable.js",
+    "src/utils/UrlQuery.js",
+    "src/index/ActiveRequestIndex.js",
+    "src/events/ApiEvent.js",
+    "src/endpoint/Endpoint.js",
+    "src/request/Request.js",
+    "src/request/RequestDispatcher.js",
+    "src/response/Response.js",
+    "src/ajax/HttpEndpoint.js",
+    "src/ajax/HttpRequest.js",
+    "src/ajax/HttpResponse.js",
+    "src/browser/XhrDispatcher.js",
+    "src/browser/XhrEvent.js",
+    "src/browser/XhrRequest.js"
   ]
 }

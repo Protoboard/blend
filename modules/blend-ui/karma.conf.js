@@ -24,7 +24,7 @@ module.exports = function (config) {
       '../../dist/blend-widget.js',
       '../../dist/blend-ui.js',
       '../../test/*.js',
-      '**/*.spec.js'
+      'src/**/*.spec.js'
     ],
 
     // list of files to exclude

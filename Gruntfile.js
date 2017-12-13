@@ -56,7 +56,7 @@ module.exports = function (grunt) {
                 manifest.less || manifest.css ?
                     'try {window && require("css!' + moduleId + '")} catch (e) {}' :
                     undefined,
-                grunt.file.read(['modules', moduleId, 'globals.js'].join('/'))
+                grunt.file.read(['modules', moduleId, 'src/globals.js'].join('/'))
             //@formatter:on
           ].join('\n'),
           footer: [
@@ -132,8 +132,12 @@ module.exports = function (grunt) {
   function buildKarmaConfig(config) {
     config = config || {};
 
-    // todo Filter by config file presence.
-    moduleIds.forEach(function (moduleId) {
+    moduleIds
+    .filter(function (moduleId) {
+      var karmaConfigPath = ['modules', moduleId, 'karma.conf.js'].join('/');
+      return grunt.file.exists(karmaConfigPath);
+    })
+    .forEach(function (moduleId) {
       config[moduleId] = {
         configFile: ['modules', moduleId, 'karma.conf.js'].join('/')
       };
@@ -152,14 +156,14 @@ module.exports = function (grunt) {
     moduleIds.forEach(function (moduleId) {
       config[moduleId + '-js'] = {
         files: [
-          'modules/' + moduleId + '/**/*.js',
-          '!modules/' + moduleId + '/**/*.spec.js',
+          'modules/' + moduleId + '/src/**/*.js',
+          '!modules/' + moduleId + '/src/**/*.spec.js',
           'modules/' + moduleId + '/@(package|manifest).json'],
         tasks: ['concat:' + moduleId, 'notify:build-' + moduleId]
       };
       config[moduleId + '-less'] = {
         files: [
-          'modules/' + moduleId + '/**/*@(.css|.less)',
+          'modules/' + moduleId + '/src/**/*@(.css|.less)',
           'modules/' + moduleId + '/@(package|manifest).json'],
         tasks: ['less:' + moduleId, 'notify:build-' + moduleId]
       };
@@ -224,7 +228,7 @@ module.exports = function (grunt) {
       options: {
         jshintrc: true
       },
-      dist: ['Gruntfile.js', 'modules/**/*.js']
+      dist: ['Gruntfile.js', 'modules/*/src/**/*.js']
     },
 
     karma: buildKarmaConfig({

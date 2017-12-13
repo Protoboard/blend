@@ -1,7 +1,7 @@
 {
   "js": [
-    "containers/modules.js",
-    "module/Module.js",
-    "module/ModuleEnvironment.js"
+    "src/containers/modules.js",
+    "src/module/Module.js",
+    "src/module/ModuleEnvironment.js"
   ]
 }

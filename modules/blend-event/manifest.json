@@ -1,13 +1,13 @@
 {
   "js": [
-    "utils/event-utils.js",
-    "utils/Wrapper.js",
-    "event/Event.js",
-    "event/EventListener.js",
-    "event/EventSender.js",
-    "event/EventSpace.js",
-    "event/EventSubscriber.js",
-    "event/EventTrail.js",
-    "event/WrapperEvent.js"
+    "src/utils/event-utils.js",
+    "src/utils/Wrapper.js",
+    "src/event/Event.js",
+    "src/event/EventListener.js",
+    "src/event/EventSender.js",
+    "src/event/EventSpace.js",
+    "src/event/EventSubscriber.js",
+    "src/event/EventTrail.js",
+    "src/event/WrapperEvent.js"
   ]
 }

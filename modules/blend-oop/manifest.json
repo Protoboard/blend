@@ -1,15 +1,15 @@
 {
   "js": [
-    "utils/QuickList.js",
-    "utils/class-utils.js",
-    "utils/uuid-utils.js",
-    "utils/string-utils.js",
-    "class/ClassBuilder.js",
-    "class/Class.js",
-    "class/assertions.js",
-    "blender/BlenderIndex.js",
-    "blender/ClassBlender.js",
-    "blender/blendClass.js",
-    "classes/Singleton.js"
+    "src/utils/QuickList.js",
+    "src/utils/class-utils.js",
+    "src/utils/uuid-utils.js",
+    "src/utils/string-utils.js",
+    "src/class/ClassBuilder.js",
+    "src/class/Class.js",
+    "src/class/assertions.js",
+    "src/blender/BlenderIndex.js",
+    "src/blender/ClassBlender.js",
+    "src/blender/blendClass.js",
+    "src/classes/Singleton.js"
   ]
 }

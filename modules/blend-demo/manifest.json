@@ -1,10 +1,10 @@
 {
   "js": [
-    "logger/Logger.js",
-    "widgets/DemoItem.js",
-    "widgets/DemoPage.js"
+    "src/logger/Logger.js",
+    "src/widgets/DemoItem.js",
+    "src/widgets/DemoPage.js"
   ],
   "less": [
-    "**/*.less"
+    "src/**/*.less"
   ]
 }

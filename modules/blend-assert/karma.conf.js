@@ -12,7 +12,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       '../../dist/blend-assert.js',
-      '**/*.spec.js'
+      'src/**/*.spec.js'
     ],
 
     // list of files to exclude

@@ -20,7 +20,7 @@ module.exports = function (config) {
       '../../dist/blend-entity.js',
       '../../dist/blend-i18n.js',
       '../../test/*.js',
-      '**/*.spec.js'
+      'src/**/*.spec.js'
     ],
 
     // list of files to exclude

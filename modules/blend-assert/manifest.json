@@ -1,6 +1,6 @@
 {
   "js": [
-    "assert/assert.js",
-    "assert/assertions.js"
+    "src/assert.js",
+    "src/assertions.js"
   ]
 }

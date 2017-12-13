@@ -1,18 +1,18 @@
 {
   "js": [
-    "containers/entities.js",
-    "entities/LocaleDocument.js",
-    "entities/LocaleEnvironmentDocument.js",
-    "entities/TranslationDocument.js",
-    "events/LocaleChangeEvent.js",
-    "utils/tr.js",
-    "utils/ActiveTranslationsWatcher.js",
-    "utils/Translatable.js",
-    "utils/TranslationsWatcher.js",
-    "indexes/ModuleLocaleIndex.js",
-    "indexes/TranslationIndex.js",
-    "locale/Locale.js",
-    "locale/LocaleEnvironment.js",
-    "module/LocalizedModule.js"
+    "src/containers/entities.js",
+    "src/entities/LocaleDocument.js",
+    "src/entities/LocaleEnvironmentDocument.js",
+    "src/entities/TranslationDocument.js",
+    "src/events/LocaleChangeEvent.js",
+    "src/utils/tr.js",
+    "src/utils/ActiveTranslationsWatcher.js",
+    "src/utils/Translatable.js",
+    "src/utils/TranslationsWatcher.js",
+    "src/indexes/ModuleLocaleIndex.js",
+    "src/indexes/TranslationIndex.js",
+    "src/locale/Locale.js",
+    "src/locale/LocaleEnvironment.js",
+    "src/module/LocalizedModule.js"
   ]
 }
