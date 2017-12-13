@@ -28,6 +28,11 @@ $demo.DemoPage = $oop.createClass('$demo.DemoPage')
       itemIdType: 'reference',
       itemValueType: 'order'
     })
+    .appendNode('document.__field.show/selectedEpisodes'.toTreePath(), {
+      nodeType: 'branch',
+      valueType: 'collection',
+      itemIdType: 'reference'
+    })
     .appendNode('document.__document.episode'.toTreePath(), {
       fields: ['title']
     });
@@ -207,6 +212,14 @@ $demo.DemoPage = $oop.createClass('$demo.DemoPage')
       code: this._createMultiSelect,
       itemTitle: $ui.MultiSelect.__className,
       contentWidget: this._createMultiSelect()
+    })
+    .addToParentNode(this);
+
+    // adding entity-bound multi-select list
+    $demo.DemoItem.create({
+      code: this._createEntityMultiSelect,
+      itemTitle: $ui.EntityMultiSelect.__className,
+      contentWidget: this._createEntityMultiSelect()
     })
     .addToParentNode(this);
   },
@@ -405,14 +418,14 @@ _createSingleSelect: function () {
 
 /** @private */
 _createEntitySingleSelect: function () {
+  'episode/r-m-s1-e1/title'.toField().setNode("S01-E01 Pilot");
+  'episode/r-m-s1-e2/title'.toField().setNode("S01-E02 Lawnmower Dog");
+  'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
   'show/rick-and-morty/episodes'.toField().setNode({
     'episode/r-m-s1-e1': 1,
     'episode/r-m-s1-e2': 2,
     'episode/r-m-s1-e3': 3
   });
-  'episode/r-m-s1-e1/title'.toField().setNode("S01-E01 Pilot");
-  'episode/r-m-s1-e2/title'.toField().setNode("S01-E02 Lawnmower Dog");
-  'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
 
   var
       EntityOption = $oop.createClass('$demo.EntityOption')
@@ -459,6 +472,48 @@ _createMultiSelect: function () {
   .setInputValues({
     "Morty": "Morty",
     "Rick": "Rick"
+  });
+},
+
+/** @private */
+_createEntityMultiSelect: function () {
+  'episode/r-m-s1-e1/title'.toField().setNode("S01-E01 Pilot");
+  'episode/r-m-s1-e2/title'.toField().setNode("S01-E02 Lawnmower Dog");
+  'episode/r-m-s1-e3/title'.toField().setNode("S01-E03 Anatomy Park");
+  'show/rick-and-morty/episodes'.toField().setNode({
+    'episode/r-m-s1-e1': 1,
+    'episode/r-m-s1-e2': 2,
+    'episode/r-m-s1-e3': 3
+  });
+  'show/rick-and-morty/selectedEpisodes'.toField().setNode({
+    'episode/r-m-s1-e1': 'episode/r-m-s1-e1',
+    'episode/r-m-s1-e3': 'episode/r-m-s1-e3'
+  });
+
+  var
+      EntityOption = $oop.createClass('$demo.EntityOption')
+      .blend($ui.EntityOption)
+      .define({
+        _syncToEntityProperty: function (entityProperty) {
+          var listItemKey = this.listItemEntity.entityKey;
+          if (entityProperty === 'listItemEntity') {
+            this.setTextContentEntity(listItemKey.itemId.toDocument()
+            .getField('title'));
+            this.setOwnValue(listItemKey.itemId);
+          }
+        }
+      })
+      .build(),
+      EntityMultiSelect = $oop.createClass('$demo.EntityMultiSelect')
+      .blend($ui.EntityMultiSelect)
+      .define({
+        ListItemClass: EntityOption
+      })
+      .build();
+
+  return EntityMultiSelect.create({
+    listEntity: 'show/rick-and-morty/episodes'.toField(),
+    inputValuesEntity: 'show/rick-and-morty/selectedEpisodes'.toField()
   });
 }
   //@formatter:on
