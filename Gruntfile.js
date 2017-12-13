@@ -40,7 +40,7 @@ module.exports = function (grunt) {
         .map(function (relativePath) {
           return ['modules', moduleId, relativePath].join('/');
         }),
-        dest: ['dist', pkg.name + '.js'].join('/'),
+        dest: ['modules', moduleId, 'lib', pkg.name + '.js'].join('/'),
         options: {
           separator: '\n',
           process: function (src, filepath) {
@@ -117,7 +117,7 @@ module.exports = function (grunt) {
         .map(function (relativePath) {
           return ['modules', moduleId, relativePath].join('/');
         }),
-        dest: ['dist', pkg.name + '.css'].join('/'),
+        dest: ['modules', moduleId, 'lib', pkg.name + '.css'].join('/'),
         options: {}
       };
     });
@@ -192,7 +192,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     clean: {
-      build: ['dist', 'public'],
+      build: ['modules/*/lib', 'public'],
       doc: ['doc']
     },
 
