@@ -39,7 +39,8 @@ https://bitbucket.org/protoboard/blend)
 - `grunt build-full` builds, runs tests, generates documentation
 - `grunt build-quick` builds
 
-Build artifacts will be placed in folder "dist".
+Build artifacts will be placed under each module's "lib" folder as well as in
+ "public".
 
 ### Tests
 
@@ -47,10 +48,10 @@ Build artifacts will be placed in folder "dist".
 - `grunt jshint` lints only
 - `grunt karma:coverage` generates coverage only
 
-Coverage will be placed in folder "coverage".
+Coverage will be placed in folder "doc/coverage".
 
-### Documentation
+### API Documentation
 
-- `grunt doc` generates documentation
+- `grunt doc` generates API documentation
 
-Documentation will be placed in folder "doc".
+Documentation will be placed in folder "doc/api".
