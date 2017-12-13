@@ -90,6 +90,7 @@ module.exports = function (grunt) {
   /**
    * @param {Object} config Holds module-independent configuration.
    * @returns {Object} Task configuration with modules.
+   * @todo This should be another concat / minification as way of bundling.
    */
   function buildCopyConfig(config) {
     config = config || {};
@@ -213,11 +214,30 @@ module.exports = function (grunt) {
     return config;
   }
 
+  /**
+   * @param {Object} config Holds module-independent configuration.
+   * @returns {Object} Task configuration with modules.
+   */
+  function buildNpmConfig(config) {
+    config = config || {};
+
+    moduleIds.forEach(function (moduleId) {
+      config[moduleId] = {
+        options: {
+          cwd: ['modules', moduleId].join('/')
+        }
+      };
+    });
+
+    return config;
+  }
+
   grunt.initConfig({
     clean: {
       build: ['modules/*/lib', 'public'],
       doc: ['doc/api'],
-      coverage: ['doc/coverage']
+      coverage: ['doc/coverage'],
+      pack: ['modules/*/*.tgz']
     },
 
     concat: buildConcatConfig({
@@ -305,7 +325,13 @@ module.exports = function (grunt) {
           configure: "jsdoc.conf.json"
         }
       }
-    }
+    },
+
+    'npm-command': buildNpmConfig({
+      options: {
+        cmd: 'pack'
+      }
+    })
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -318,6 +344,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.loadNpmTasks('grunt-npm-command');
 
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['clean:coverage', 'jshint', 'karma']);
@@ -326,5 +353,6 @@ module.exports = function (grunt) {
     'less', 'copy', 'notify:build-quick']);
   grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'less',
     'copy', 'test', 'jsdoc', 'notify:build-full']);
+  grunt.registerTask('pack', ['clean:pack', 'npm-command']);
   grunt.registerTask('default', ['build-quick', 'watch']);
 };
