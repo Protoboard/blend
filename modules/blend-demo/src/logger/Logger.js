@@ -10,13 +10,13 @@ $event.EventSpace.create()
 .on($router.EVENT_ROUTE_CHANGE,
     'route',
     $demo.Logger.__className,
-    function (event) {
+    function logRouteChange(event) {
       console.log("route changed from `" + event.routeBefore + "` to `" + event.routeAfter + "`");
     })
 .on($entity.EVENT_ENTITY_CHANGE,
     'entity',
     $demo.Logger.__className,
-    function (event) {
+    function logEntityChange(event) {
       console.log(
           "entity `" + event.sender.entityKey + "` changed" +
           (event.nodeBefore !== event.nodeAfter ?
@@ -26,7 +26,7 @@ $event.EventSpace.create()
 .on($widget.EVENT_STATE_CHANGE,
     'widget',
     $demo.Logger.__className,
-    function (event) {
+    function logWidgetStateChange(event) {
       console.log("widget `" + event.sender.instanceId + "` state `" +
           event.stateName + "` changed from `" + event.stateValueBefore +
           "` to  `" + event.stateValueAfter + "`");
@@ -34,13 +34,13 @@ $event.EventSpace.create()
 .on($widget.EVENT_CLICKABLE_CLICK,
     'widget',
     $demo.Logger.__className,
-    function (event) {
+    function logClickableClick(event) {
       console.log("widget `" + event.sender.instanceId + "` clicked");
     })
 .on($i18n.EVENT_LOCALE_CHANGE,
     'locale',
     $demo.Logger.__className,
-    function (event) {
+    function logLocaleChange(event) {
       console.log("locale changed from `" + event.localeBefore + "` to  `" +
           event.localeAfter + "`");
     });
