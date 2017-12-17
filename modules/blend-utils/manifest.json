@@ -19,5 +19,8 @@
     "src/promise/Thenable.js",
     "src/promise/Deferred.js",
     "src/promise/Promise.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

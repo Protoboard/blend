@@ -75,5 +75,9 @@
     "src/browser/DomApplication.js",
     "src/browser/DomText.js",
     "src/browser/DomOption.js"
+  ],
+  "html": [
+    "templates/index-require.html",
+    "templates/require-debug.html"
   ]
 }

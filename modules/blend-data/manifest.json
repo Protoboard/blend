@@ -37,5 +37,8 @@
     "src/tree/TreePath.js",
     "src/tree/TreeQuery.js",
     "src/tree/TreeQueryComponent.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

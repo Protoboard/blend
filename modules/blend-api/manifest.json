@@ -16,5 +16,8 @@
     "src/browser/XhrDispatcher.js",
     "src/browser/XhrEvent.js",
     "src/browser/XhrRequest.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

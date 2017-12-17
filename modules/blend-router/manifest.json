@@ -7,5 +7,8 @@
     "src/route/Router.js",
     "src/browser/HashRouter.js",
     "src/browser/PushStateRouter.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

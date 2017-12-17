@@ -20,5 +20,8 @@
     "src/html/InlineStyles.js",
     "src/browser/DomNode.js",
     "src/browser/DomWidget.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

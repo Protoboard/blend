@@ -42,7 +42,8 @@ module.exports = function (grunt) {
         }),
         dest: ['modules', moduleId, 'lib', pkg.name + '.js'].join('/'),
         options: {
-          separator: '\n',
+          sourceMap: true,
+          separator: ';\n',
           process: function (src, filepath) {
             return ['(function () {', src, '}());'].join('\n');
           },
@@ -241,9 +242,31 @@ module.exports = function (grunt) {
     },
 
     concat: buildConcatConfig({
-      options: {
-        separator: ';',
-        sourceMap: true
+      /**
+       * todo Build by blending HTML documents rather than concatenating HEAD
+       * todo Read template list from module manifests
+       * todo Use package dependency graph to determine order
+       * todo Treat debug templates separately
+       */
+      'index.html': {
+        src: [
+          "modules/blend-ui/templates/require.html",
+          "modules/*/templates/*.html"
+        ],
+        dest: "public/index.html",
+        options: {
+          banner: [
+            '<!DOCTYPE html>',
+            '<html lang="en">',
+            '<head>'
+          ].join('\n'),
+          footer: [
+            '</head>',
+            '<body>',
+            '</body>',
+            '</html>'
+          ].join('\n')
+        }
       }
     }),
 
@@ -349,9 +372,9 @@ module.exports = function (grunt) {
   grunt.registerTask('doc', ['clean:doc', 'jsdoc', 'notify:doc']);
   grunt.registerTask('test', ['clean:coverage', 'jshint', 'karma']);
   grunt.registerTask('coverage', ['clean:coverage', 'karma:coverage']);
-  grunt.registerTask('build-quick', ['clean:build', 'string-replace', 'concat',
+  grunt.registerTask('build-quick', ['clean:build', 'concat',
     'less', 'copy', 'notify:build-quick']);
-  grunt.registerTask('build-full', ['clean', 'string-replace', 'concat', 'less',
+  grunt.registerTask('build-full', ['clean', 'concat', 'less',
     'copy', 'test', 'jsdoc', 'notify:build-full']);
   grunt.registerTask('pack', ['clean:pack', 'npm-command']);
   grunt.registerTask('default', ['build-quick', 'watch']);

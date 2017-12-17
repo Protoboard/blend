@@ -3,5 +3,8 @@
     "src/containers/modules.js",
     "src/module/Module.js",
     "src/module/ModuleEnvironment.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

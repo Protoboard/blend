@@ -11,5 +11,8 @@
     "src/blender/ClassBlender.js",
     "src/blender/blendClass.js",
     "src/classes/Singleton.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

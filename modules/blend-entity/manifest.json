@@ -25,5 +25,8 @@
     "src/paths/FieldValueTypePath.js",
     "src/paths/ItemIdTypePath.js",
     "src/paths/ItemValueTypePath.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

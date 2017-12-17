@@ -14,5 +14,8 @@
     "src/locale/Locale.js",
     "src/locale/LocaleEnvironment.js",
     "src/module/LocalizedModule.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

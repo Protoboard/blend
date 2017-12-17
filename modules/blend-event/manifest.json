@@ -9,5 +9,8 @@
     "src/event/EventSubscriber.js",
     "src/event/EventTrail.js",
     "src/event/WrapperEvent.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

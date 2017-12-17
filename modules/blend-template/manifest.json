@@ -3,5 +3,8 @@
     "src/events/TemplateParameterChangeEvent.js",
     "src/template/Template.js",
     "src/template/LiveTemplate.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

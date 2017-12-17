@@ -1,0 +1,18 @@
+<!-- todo Have build bundle require w/ rest of code. -->
+<script src="../node_modules/requirejs/require.js"></script>
+<script>
+  // todo Have build bundle require-css w/ rest of code.
+  require.config({
+    baseUrl: ".",
+    map: {
+      '*': {
+        css: '../node_modules/require-css/css'
+      }
+    }
+  });
+</script>
+<script>
+  require(['blend-ui'], function ($ui) {
+    $ui.Application.create();
+  });
+</script>

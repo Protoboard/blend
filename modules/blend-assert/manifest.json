@@ -2,5 +2,8 @@
   "js": [
     "src/assert.js",
     "src/assertions.js"
+  ],
+  "html": [
+    "templates/require-debug.html"
   ]
 }

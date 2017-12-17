@@ -6,5 +6,9 @@
   ],
   "less": [
     "src/**/*.less"
+  ],
+  "html": [
+    "templates/require.html",
+    "templates/require-debug.html"
   ]
 }
