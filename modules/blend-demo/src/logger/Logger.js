@@ -21,7 +21,14 @@ $event.EventSpace.create()
           "entity `" + event.sender.entityKey + "` changed" +
           (event.nodeBefore !== event.nodeAfter ?
               " from `" + event.nodeBefore + "` to `" + event.nodeAfter + "`" :
-              " adding `" + event.propertiesAdded + "`, removing `" + event.propertiesRemoved + "`"), event);
+              " adding `" + event.propertiesAdded + "`, removing `" + event.propertiesRemoved + "`"));
+    })
+.on($entity.EVENT_ENTITY_ABSENT,
+    'entity',
+    $demo.Logger.__className,
+    function logEntityChange(event) {
+      console.log(
+          "absent entity `" + event.sender.entityKey + "` accessed");
     })
 .on($widget.EVENT_STATE_CHANGE,
     'widget',
