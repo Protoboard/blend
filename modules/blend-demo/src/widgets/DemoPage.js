@@ -14,29 +14,6 @@ $demo.DemoPage = $oop.createClass('$demo.DemoPage')
 .define(/** @lends $demo.DemoPage# */{
   /** @ignore */
   init: function () {
-    // todo Move to respective _add method once $entity.NodeTypeIndex is fixed.
-    $entity.entities
-    .appendNode('document.__document.character'.toTreePath(), {
-      fields: ['name']
-    })
-    .appendNode('document.__document.show'.toTreePath(), {
-      fields: ['title', 'url', 'image', 'episodes', 'selectedEpisode']
-    })
-    .appendNode('document.__field.show/episodes'.toTreePath(), {
-      nodeType: 'branch',
-      valueType: 'collection',
-      itemIdType: 'reference',
-      itemValueType: 'order'
-    })
-    .appendNode('document.__field.show/selectedEpisodes'.toTreePath(), {
-      nodeType: 'branch',
-      valueType: 'collection',
-      itemIdType: 'reference'
-    })
-    .appendNode('document.__document.episode'.toTreePath(), {
-      fields: ['title']
-    });
-
     $ui.Text.create({
       elementName: 'h1',
       textContent: "Blend Demo"

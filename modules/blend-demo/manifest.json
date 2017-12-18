@@ -1,5 +1,6 @@
 {
   "js": [
+    "src/containers/entities.js",
     "src/logger/Logger.js",
     "src/widgets/DemoItem.js",
     "src/widgets/DemoPage.js"
