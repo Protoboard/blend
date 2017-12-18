@@ -52,8 +52,8 @@ $i18n.Locale = $oop.createClass('$i18n.Locale')
     $assert.isInstanceOf(
         this.localeKey, $entity.DocumentKey, "Invalid locale key");
 
-    var listeningPath = $data.TreePath.fromComponentsToString([
-      'locale', this.localeKey.documentId]);
+    var listeningPath = 'locale.' +
+        $data.escapeTreePathComponent(this.localeKey.documentId);
 
     this
     .setListeningPath(listeningPath)

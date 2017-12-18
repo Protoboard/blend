@@ -20,15 +20,13 @@ $entity.CollectionField = $oop.createClass('$entity.CollectionField')
         itemIdType = collectionFieldKey.getItemIdType() || 'string',
         // same as $entity.ItemIdTypePath.fromItemIdType() but skipping a few
         // steps
-        itemIdTypePath = $data.TreePath.fromComponentsToString([
-          'entity', 'document', '__field', '__field/itemIdType', 'options',
-          itemIdType]),
+        itemIdTypePath = 'entity.document.__field.__field/itemIdType.options.' +
+            $data.escapeTreePathComponent(itemIdType),
         itemValueType = collectionFieldKey.getItemValueType() || 'string',
         // same as $entity.ItemValueTypePath.fromItemValueType() but skipping a
         // few steps
-        itemValueTypePath = $data.TreePath.fromComponentsToString([
-          'entity', 'document', '__field', '__field/itemValueType', 'options',
-          itemValueType]);
+        itemValueTypePath = 'entity.document.__field.__field/itemValueType.options.' +
+            $data.escapeTreePathComponent(itemValueType);
 
     this
     .addTriggerPath(itemIdTypePath)

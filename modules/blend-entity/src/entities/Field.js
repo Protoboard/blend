@@ -50,9 +50,8 @@ $entity.Field = $oop.createClass('$entity.Field')
         // same as $entity.FieldValueTypePath.fromFieldValueType() but
         // skipping a few steps
         // todo We don't need this for all field value types
-        valueTypePath = $data.TreePath.fromComponentsToString([
-          'entity', 'document', '__field', '__field/valueType', 'options',
-          valueType]);
+        valueTypePath = 'entity.document.__field.__field/valueType.options.' +
+            $data.escapeTreePathComponent(valueType);
 
     this.addTriggerPath(valueTypePath);
   },

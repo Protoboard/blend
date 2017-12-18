@@ -56,15 +56,13 @@ $entity.Item = $oop.createClass('$entity.Item')
         idType = itemKey.getIdType() || 'string',
         // same as $entity.ItemIdTypePath.fromItemIdType() but skipping a few
         // steps
-        idTypePath = $data.TreePath.fromComponentsToString([
-          'entity', 'document', '__field', '__field/itemIdType', 'options',
-          idType]),
+        idTypePath = 'entity.document.__field.__field/itemIdType.options.' +
+            $data.escapeTreePathComponent(idType),
         valueType = itemKey.getValueType() || 'string',
         // same as $entity.ItemValueTypePath.fromItemValueType() but skipping a
         // few steps
-        valueTypePath = $data.TreePath.fromComponentsToString([
-          'entity', 'document', '__field', '__field/itemValueType', 'options',
-          valueType]);
+        valueTypePath = 'entity.document.__field.__field/itemValueType.options.' +
+            $data.escapeTreePathComponent(valueType);
 
     this
     .addTriggerPath(idTypePath)

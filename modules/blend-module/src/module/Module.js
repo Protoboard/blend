@@ -39,8 +39,7 @@ $module.Module = $oop.createClass('$module.Module')
   init: function () {
     $assert.isString(this.moduleId, "Invalid module ID");
 
-    var listeningPath = $data.TreePath.fromComponentsToString([
-      'module', this.moduleId]);
+    var listeningPath = 'module.' + $data.escapeTreePathComponent(this.moduleId);
 
     this
     .setListeningPath(listeningPath)

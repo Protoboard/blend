@@ -28,8 +28,7 @@ $template.LiveTemplate = $oop.createClass('$template.LiveTemplate')
 
   /** @ignore */
   init: function () {
-    var listeningPath = $data.TreePath.fromComponentsToString([
-      'template', String(this.instanceId)]);
+    var listeningPath = 'template.' + this.instanceId;
 
     this
     .setListeningPath(listeningPath)

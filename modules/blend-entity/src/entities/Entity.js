@@ -44,9 +44,8 @@ $entity.Entity = $oop.createClass('$entity.Entity')
     .setListeningPath(listeningPath)
     .addTriggerPath(listeningPath)
     .addTriggerPath('entity')
-    .addTriggerPath(
-        attributeDocumentKey.getEntityPath().clone().unshift('entity')
-        .toString());
+    .addTriggerPath('entity.' +
+        attributeDocumentKey.getEntityPath().toString());
   },
 
   /**
