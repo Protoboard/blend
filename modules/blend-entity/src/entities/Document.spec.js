@@ -82,6 +82,26 @@ describe("$entity", function () {
       });
     });
 
+    describe("getFieldNames()", function () {
+      beforeEach(function () {
+        $entity.entities
+        .setNode('document.__document.user'.toTreePath(), {
+          fields: ['foo']
+        });
+        document = 'user/1'.toDocument();
+      });
+
+      afterEach(function () {
+        $entity.entities
+        .deleteNode('document.__document.user'.toTreePath());
+      });
+
+      it("should return field list from entities", function () {
+        var result = document.getFieldNames();
+        expect(result).toEqual(['foo']);
+      });
+    });
+
     describe("spawnEntityChangeEvents()", function () {
       var nodeBefore, nodeAfter,
           result;
