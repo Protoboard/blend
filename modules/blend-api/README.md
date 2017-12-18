@@ -1,2 +1,2 @@
-Blend API Integration Module
-============================
+Blend API Access Module
+=======================
