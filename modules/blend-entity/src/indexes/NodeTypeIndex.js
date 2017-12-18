@@ -7,6 +7,10 @@
 
 /**
  * Maintains a lookup of field references by document type and field type.
+ * Entity configuration (contents of __document and __field) must be set
+ * before first instantiation of this index, (which is done implicitly on
+ * every entity change) otherwise parent entities might not spawn events for
+ * children.
  * @class $entity.NodeTypeIndex
  * @todo Create nodeType enum for documentation.
  */
