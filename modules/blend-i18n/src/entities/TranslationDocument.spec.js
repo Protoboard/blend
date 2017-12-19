@@ -77,8 +77,8 @@ describe("$i18n", function () {
       });
 
       it("should return pluralForm field node", function () {
-        expect(translationDocument.getPluralForm(0)).toBe('baz');
-        expect(translationDocument.getPluralForm(1)).toBeUndefined();
+        expect(translationDocument.getPluralForm('0')).toBe('baz');
+        expect(translationDocument.getPluralForm('1')).toBeUndefined();
       });
     });
 
