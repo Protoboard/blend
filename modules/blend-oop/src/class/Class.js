@@ -5,14 +5,18 @@
  */
 $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
+   * Automatically assigned number identifying class globally. (Including
+   * ad-hoc classes.)
    * @member {number} $oop.Class#__classId
    */
 
   /**
+   * User-given name identifying classes globally. (Excluding ad-hoc classes.)
    * @member {string} $oop.Class#__className
    */
 
   /**
+   * Reference to the `ClassBuilder` instance that build the current class.
    * @member {$oop.ClassBuilder} $oop.Class#__builder
    */
 
