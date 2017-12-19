@@ -76,8 +76,6 @@ $entity.Entity = $oop.createClass('$entity.Entity')
     var entityPath = this.entityKey.getEntityPath(),
         node = $entity.entities.getNode(entityPath);
 
-    // todo Handling invalidated access
-
     if (node === undefined) {
       this.trigger($entity.EVENT_ENTITY_ABSENT);
     }
