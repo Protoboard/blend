@@ -5,13 +5,14 @@
  */
 $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
-   * Automatically assigned number identifying class globally. (Including
-   * ad-hoc classes.)
+   * Automatically assigned number identifying current class globally.
+   * (Including ad-hoc classes.)
    * @member {number} $oop.Class#__classId
    */
 
   /**
-   * User-given name identifying classes globally. (Excluding ad-hoc classes.)
+   * User-given name identifying current class globally. (Excluding ad-hoc
+   * classes.)
    * @member {string} $oop.Class#__className
    */
 
@@ -21,6 +22,8 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
    */
 
   /**
+   * Creates an instance of either a) the current class, or a forward class
+   * matching the specified (and spread) properties.
    * @param {Object} [properties]
    * @return {$oop.Class}
    */
