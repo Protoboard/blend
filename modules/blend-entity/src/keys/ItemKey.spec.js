@@ -138,7 +138,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getEntityId()", function () {
+    describe("getEntityName()", function () {
       var fieldKey;
 
       beforeEach(function () {
@@ -150,7 +150,7 @@ describe("$entity", function () {
       });
 
       it("should return itemId", function () {
-        var result = itemKey.getEntityId();
+        var result = itemKey.getEntityName();
         expect(result).toBe('quux');
       });
     });

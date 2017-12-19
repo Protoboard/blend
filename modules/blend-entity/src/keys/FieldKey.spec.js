@@ -152,7 +152,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getEntityId()", function () {
+    describe("getEntityName()", function () {
       var documentKey;
 
       beforeEach(function () {
@@ -164,7 +164,7 @@ describe("$entity", function () {
       });
 
       it("should return fieldName", function () {
-        var result = fieldKey.getEntityId();
+        var result = fieldKey.getEntityName();
         expect(result).toBe('baz');
       });
     });

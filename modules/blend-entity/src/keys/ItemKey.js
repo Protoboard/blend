@@ -116,7 +116,7 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
   /**
    * @return {string}
    */
-  getEntityId: function () {
+  getEntityName: function () {
     return this.itemId;
   },
 

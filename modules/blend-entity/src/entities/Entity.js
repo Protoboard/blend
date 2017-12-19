@@ -45,7 +45,7 @@ $entity.Entity = $oop.createClass('$entity.Entity')
     .addTriggerPath(listeningPath)
     .addTriggerPath('entity')
     .addTriggerPath('entity.' +
-        attributeDocumentKey.getEntityPath().toString());
+        attributeDocumentKey.getEntityPath());
   },
 
   /**
@@ -55,7 +55,7 @@ $entity.Entity = $oop.createClass('$entity.Entity')
    */
   _getParentNodeBefore: function (nodeBefore) {
     var result = {};
-    result[this.entityKey.getEntityId()] = nodeBefore;
+    result[this.entityKey.getEntityName()] = nodeBefore;
     return result;
   },
 

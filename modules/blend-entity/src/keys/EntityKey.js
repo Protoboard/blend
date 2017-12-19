@@ -5,7 +5,7 @@
  * @class $entity.EntityKey
  * @extends $utils.Equatable
  * @extends $data.Comparable
- * @todo Add parentKey & entityId properties?
+ * @todo Add parentKey & entityName properties?
  */
 $entity.EntityKey = $oop.createClass('$entity.EntityKey')
 .blend($utils.Equatable)
@@ -82,11 +82,12 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
   getParentKey: function () {},
 
   /**
-   * Retrieves a string that identifies the current entity in its parent.
+   * Retrieves a string that identifies the current entity in the context of
+   * its parent.
    * @returns {string}
    * @abstract
    */
-  getEntityId: function () {}
+  getEntityName: function () {}
 })
 .build();
 

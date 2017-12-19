@@ -124,7 +124,7 @@ $entity.FieldKey = $oop.createClass('$entity.FieldKey')
   /**
    * @return {string}
    */
-  getEntityId: function () {
+  getEntityName: function () {
     return this.fieldName;
   },
 
