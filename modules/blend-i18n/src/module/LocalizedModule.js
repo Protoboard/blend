@@ -32,7 +32,7 @@ $i18n.LocalizedModule = $oop.createClass('$i18n.LocalizedModule')
 
 $module.Module
 .forwardBlend($i18n.LocalizedModule, function (properties) {
-  var moduleId = properties && properties.moduleId;
+  var moduleId = properties.moduleId;
   return $i18n.ModuleLocaleIndex.create()
   .getLocaleIdsForModule(moduleId).length;
 });

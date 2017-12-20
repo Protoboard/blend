@@ -75,6 +75,6 @@ $i18n.TranslationDocument = $oop.createClass('$i18n.TranslationDocument')
 
 $entity.Document
 .forwardBlend($i18n.TranslationDocument, function (properties) {
-  var documentKey = properties && properties.entityKey;
+  var documentKey = properties.entityKey;
   return documentKey && documentKey.documentType === '_translation';
 });

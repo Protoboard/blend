@@ -143,7 +143,7 @@ $api.XhrDispatcher = $oop.createClass('$api.XhrDispatcher')
 
 $api.RequestDispatcher
 .forwardBlend($api.XhrDispatcher, function (properties) {
-  var request = properties && properties.request;
+  var request = properties.request;
   return request &&
       $utils.isBrowser() &&
       $api.HttpRequest.mixedBy(request);

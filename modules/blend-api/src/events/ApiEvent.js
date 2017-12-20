@@ -31,6 +31,6 @@ $api.ApiEvent = $oop.createClass('$api.ApiEvent')
 
 $event.Event
 .forwardBlend($api.ApiEvent, function (properties) {
-  var eventName = properties && properties.eventName;
+  var eventName = properties.eventName;
   return $utils.matchesPrefix(eventName, 'api');
 });

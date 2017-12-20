@@ -16,7 +16,7 @@
  */
 $i18n.Locale = $oop.createClass('$i18n.Locale')
 .cacheBy(function (properties) {
-  var localeKey = properties && properties.localeKey;
+  var localeKey = properties.localeKey;
   return localeKey && localeKey.toString();
 })
 .blend($event.EventListener)

@@ -21,8 +21,8 @@ $ui.TextInput
 
 $ui.HtmlTextInput
 .forwardBlend($ui.OtherInputTypeHost, function (properties) {
-  return !properties || !properties.isMultiline;
+  return !properties.isMultiline;
 })
 .forwardBlend($ui.TextareaElementHost, function (properties) {
-  return properties && properties.isMultiline;
+  return properties.isMultiline;
 });

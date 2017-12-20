@@ -25,6 +25,5 @@ $router.RouteChangeEvent = $oop.createClass('$router.RouteChangeEvent')
 
 $event.Event
 .forwardBlend($router.RouteChangeEvent, function (properties) {
-  return properties &&
-      $utils.matchesPrefix(properties.eventName, 'router.change.route');
+  return $utils.matchesPrefix(properties.eventName, 'router.change.route');
 });

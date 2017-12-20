@@ -27,6 +27,5 @@ $widget.StateChangeEvent = $oop.createClass('$widget.StateChangeEvent')
 
 $event.Event
 .forwardBlend($widget.StateChangeEvent, function (properties) {
-  return properties &&
-      $utils.matchesPrefix(properties.eventName, 'widget.state.change');
+  return $utils.matchesPrefix(properties.eventName, 'widget.state.change');
 });

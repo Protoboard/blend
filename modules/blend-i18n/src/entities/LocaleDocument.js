@@ -112,7 +112,7 @@ $i18n.LocaleDocument = $oop.createClass('$i18n.LocaleDocument')
 
 $entity.Document
 .forwardBlend($i18n.LocaleDocument, function (properties) {
-  var documentKey = properties && properties.entityKey;
+  var documentKey = properties.entityKey;
   return documentKey && documentKey.documentType === '_locale';
 });
 

@@ -14,7 +14,7 @@
  */
 $module.Module = $oop.createClass('$module.Module')
 .cacheBy(function (properties) {
-  return properties && properties.moduleId;
+  return properties.moduleId;
 })
 .blend($event.EventSender)
 .blend($event.EventListener)

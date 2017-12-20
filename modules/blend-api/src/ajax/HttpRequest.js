@@ -106,5 +106,5 @@ $api.HttpRequest = $oop.createClass('$api.HttpRequest')
 
 $api.Request
 .forwardBlend($api.HttpRequest, function (properties) {
-  return properties && $api.HttpEndpoint.mixedBy(properties.endpoint);
+  return $api.HttpEndpoint.mixedBy(properties.endpoint);
 });

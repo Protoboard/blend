@@ -66,7 +66,7 @@ $entity.Field = $oop.createClass('$entity.Field')
 $entity.Field
 // leaf node fields
 .forwardBlend($entity.LeafNoded, function (properties) {
-  var fieldKey = properties && properties.entityKey;
+  var fieldKey = properties.entityKey;
   // todo Need better way of specifying mutually exclusive mixins
   return !this.mixes($entity.BranchNoded) &&
       fieldKey && fieldKey.getNodeType() === 'leaf';

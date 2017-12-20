@@ -38,6 +38,6 @@ $i18n.LocaleEnvironmentDocument = $oop.createClass('$i18n.LocaleEnvironmentDocum
 
 $entity.Document
 .forwardBlend($i18n.LocaleEnvironmentDocument, function (properties) {
-  var documentKey = properties && properties.entityKey;
+  var documentKey = properties.entityKey;
   return documentKey && documentKey.documentType === '_localeEnvironment';
 });

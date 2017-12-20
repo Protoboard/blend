@@ -8,7 +8,7 @@
  */
 $entity.EntityKeyCached = $oop.createClass('$entity.EntityKeyCached')
 .cacheBy(function (properties) {
-  var entityKey = properties && properties.entityKey;
+  var entityKey = properties.entityKey;
   return entityKey && entityKey.toString();
 })
 .expect($entity.EntityKeyHost)

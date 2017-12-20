@@ -24,7 +24,7 @@ $api.XhrEvent = $oop.createClass('$api.XhrEvent')
 
 $api.ApiEvent
 .forwardBlend($api.XhrEvent, function (properties) {
-  var xhr = properties && properties.xhr;
+  var xhr = properties.xhr;
   return $utils.isBrowser() &&
       xhr instanceof XMLHttpRequest;
 });
