@@ -4,7 +4,7 @@
  * @function $entity.AttributeDocumentKey.create
  * @param {Object} properties
  * @param {string} properties.documentType
- * @param {string} properties.documentId
+ * @param {string} properties.entityName
  * @returns {$entity.AttributeDocumentKey}
  */
 
@@ -28,7 +28,7 @@ $entity.AttributeDocumentKey = $oop.createClass('$entity.AttributeDocumentKey')
   fromDocumentIdComponents: function (documentType, components, properties) {
     return this.create({
       documentType: documentType,
-      documentId: components
+      entityName: components
       .map(function (component) {
         return $utils.escape(component, '/');
       })

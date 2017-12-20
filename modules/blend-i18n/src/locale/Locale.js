@@ -53,7 +53,7 @@ $i18n.Locale = $oop.createClass('$i18n.Locale')
         this.localeKey, $entity.DocumentKey, "Invalid locale key");
 
     var listeningPath = 'locale.' +
-        $data.escapeTreePathComponent(this.localeKey.documentId);
+        $data.escapeTreePathComponent(this.localeKey.entityName);
 
     this
     .setListeningPath(listeningPath)
@@ -114,7 +114,7 @@ $i18n.Locale = $oop.createClass('$i18n.Locale')
    */
   getTranslation: function (originalString, context, count) {
     var translationIndex = $i18n.TranslationIndex.create(),
-        localeId = this.localeKey.documentId,
+        localeId = this.localeKey.entityName,
         pluralIndex = this.getPluralIndex(count);
 
     // when specified translation is not found,
@@ -130,7 +130,7 @@ $i18n.Locale = $oop.createClass('$i18n.Locale')
    * @returns {Array.<$module.Module>}
    */
   getModules: function () {
-    var localeId = this.localeKey.documentId;
+    var localeId = this.localeKey.entityName;
 
     return $i18n.ModuleLocaleIndex.create()
     .getModuleIdsForLocale(localeId)
@@ -152,7 +152,7 @@ $i18n.Locale = $oop.createClass('$i18n.Locale')
    * @returns {string}
    */
   toString: function () {
-    return this.localeKey.documentId;
+    return this.localeKey.entityName;
   }
 })
 .build();

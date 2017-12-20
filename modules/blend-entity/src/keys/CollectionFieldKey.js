@@ -51,8 +51,8 @@ $entity.CollectionFieldKey = $oop.createClass('$entity.CollectionFieldKey')
 $entity.FieldKey
 // 'collection' field valueType
 .forwardBlend($entity.CollectionFieldKey, function (properties) {
-  var documentKey = properties.documentKey,
-      fieldName = properties.fieldName,
+  var documentKey = properties.parentKey,
+      fieldName = properties.entityName,
       attributeDocumentKey = documentKey && fieldName &&
           $entity.AttributeDocumentKey.fromDocumentIdComponents('__field', [
             documentKey.documentType,
@@ -61,7 +61,7 @@ $entity.FieldKey
       valueTypePath = attributeDocumentKey && $data.TreePath.fromComponents([
         'document',
         '__field',
-        attributeDocumentKey.documentId,
+        attributeDocumentKey.entityName,
         'valueType'
       ]),
       valueType = valueTypePath && $entity.entities.getNode(valueTypePath);

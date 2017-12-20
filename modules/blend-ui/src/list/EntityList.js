@@ -127,9 +127,9 @@ $ui.EntityList = $oop.createClass('$ui.EntityList')
       listItemEntityBefore = childNodeBefore && childNodeBefore.listItemEntity;
       listItemEntityAfter = node && node.listItemEntity;
       if (listItemEntityBefore && !listItemEntityBefore.equals(listItemEntityAfter)) {
-        itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.itemId);
+        itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.entityName);
       }
-      itemWidgetByItemId.setItem(listItemEntityAfter.entityKey.itemId, node);
+      itemWidgetByItemId.setItem(listItemEntityAfter.entityKey.entityName, node);
     }
 
     return this;
@@ -144,7 +144,7 @@ $ui.EntityList = $oop.createClass('$ui.EntityList')
         listItemEntityBefore;
     if (childNodeBefore) {
       listItemEntityBefore = childNodeBefore.listItemEntity;
-      this.itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.itemId);
+      this.itemWidgetByItemId.deleteItem(listItemEntityBefore.entityKey.entityName);
     }
     return this;
   },

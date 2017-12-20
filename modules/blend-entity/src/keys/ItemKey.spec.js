@@ -19,8 +19,8 @@ describe("$entity", function () {
 
     beforeEach(function () {
       itemKey = ItemKey.create({
-        fieldKey: 'foo/bar/baz'.toFieldKey(),
-        itemId: 'quux'
+        parentKey: 'foo/bar/baz'.toFieldKey(),
+        entityName: 'quux'
       });
     });
 
@@ -32,8 +32,8 @@ describe("$entity", function () {
 
       it("should set fieldKey & itemId properties", function () {
         itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
-        expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
-        expect(itemKey.itemId).toBe('quux');
+        expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+        expect(itemKey.entityName).toBe('quux');
       });
 
       it("should pass additional properties to create", function () {
@@ -50,8 +50,8 @@ describe("$entity", function () {
 
       it("should set fieldKey & itemId properties", function () {
         itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
-        expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
-        expect(itemKey.itemId).toBe('/quux');
+        expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+        expect(itemKey.entityName).toBe('/quux');
       });
 
       it("should pass additional properties to create", function () {
@@ -69,16 +69,16 @@ describe("$entity", function () {
         });
 
         it("should set fieldKey & itemId properties", function () {
-          expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
-          expect(itemKey.itemId).toBe('quux');
+          expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+          expect(itemKey.entityName).toBe('quux');
         });
       });
 
       describe("when documentType is static", function () {
         beforeEach(function () {
           itemKey = $entity.ItemKey.create({
-            fieldKey: '__foo/bar/baz'.toFieldKey(),
-            itemId: 'quux'
+            parentKey: '__foo/bar/baz'.toFieldKey(),
+            entityName: 'quux'
           });
         });
 
@@ -127,8 +127,8 @@ describe("$entity", function () {
       beforeEach(function () {
         fieldKey = 'foo/bar/baz'.toFieldKey();
         itemKey = itemKey = ItemKey.create({
-          fieldKey: fieldKey,
-          itemId: 'quux'
+          parentKey: fieldKey,
+          entityName: 'quux'
         });
       });
 
@@ -144,8 +144,8 @@ describe("$entity", function () {
       beforeEach(function () {
         fieldKey = 'foo/bar/baz'.toFieldKey();
         itemKey = itemKey = ItemKey.create({
-          fieldKey: fieldKey,
-          itemId: 'quux'
+          parentKey: fieldKey,
+          entityName: 'quux'
         });
       });
 
@@ -253,8 +253,8 @@ describe("String", function () {
 
     it("should set ItemKeyProperties", function () {
       itemKey = 'foo/bar/baz/quux'.toItemKey();
-      expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
-      expect(itemKey.itemId).toBe('quux');
+      expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+      expect(itemKey.entityName).toBe('quux');
     });
 
     it("should pass additional properties to create", function () {
@@ -280,8 +280,8 @@ describe("Array", function () {
 
     it("should return created instance", function () {
       itemKey = components.toItemKey();
-      expect(itemKey.fieldKey).toEqual('foo/bar/baz'.toFieldKey());
-      expect(itemKey.itemId).toBe('quux');
+      expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+      expect(itemKey.entityName).toBe('quux');
     });
 
     it("should pass additional properties to create", function () {

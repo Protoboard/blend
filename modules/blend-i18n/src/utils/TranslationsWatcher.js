@@ -20,7 +20,7 @@ $i18n.TranslationsWatcher = $oop.createClass('$i18n.TranslationsWatcher')
    */
   onTranslationsFieldChange: function (event) {
     var translationsField = event.sender,
-        localeKey = translationsField.entityKey.documentKey;
+        localeKey = translationsField.entityKey.parentKey;
 
     return $i18n.Locale.fromLocaleKey(localeKey)
     .trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
@@ -33,7 +33,7 @@ $i18n.TranslationsWatcher = $oop.createClass('$i18n.TranslationsWatcher')
    */
   onTranslationsFieldAbsent: function (event) {
     var translationsField = event.sender,
-        localeKey = translationsField.entityKey.documentKey;
+        localeKey = translationsField.entityKey.parentKey;
 
     return $i18n.Locale.fromLocaleKey(localeKey)
     .trigger($i18n.EVENT_TRANSLATIONS_ABSENT);

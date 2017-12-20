@@ -313,7 +313,7 @@ _createEntityList: function () {
         },
         _syncToEntityProperty: function (entityProperty) {
           if (entityProperty === 'listItemEntity') {
-            this.setTextContentEntity(this.listItemEntity.entityKey.itemId.toDocument()
+            this.setTextContentEntity(this.listItemEntity.entityKey.entityName.toDocument()
             .getField('title'));
           }
         }
@@ -411,9 +411,9 @@ _createEntitySingleSelect: function () {
         _syncToEntityProperty: function (entityProperty) {
           var listItemKey = this.listItemEntity.entityKey;
           if (entityProperty === 'listItemEntity') {
-            this.setTextContentEntity(listItemKey.itemId.toDocument()
+            this.setTextContentEntity(listItemKey.entityName.toDocument()
             .getField('title'));
-            this.setOwnValue(listItemKey.itemId);
+            this.setOwnValue(listItemKey.entityName);
           }
         }
       })
@@ -474,9 +474,9 @@ _createEntityMultiSelect: function () {
         _syncToEntityProperty: function (entityProperty) {
           var listItemKey = this.listItemEntity.entityKey;
           if (entityProperty === 'listItemEntity') {
-            this.setTextContentEntity(listItemKey.itemId.toDocument()
+            this.setTextContentEntity(listItemKey.entityName.toDocument()
             .getField('title'));
-            this.setOwnValue(listItemKey.itemId);
+            this.setOwnValue(listItemKey.entityName);
           }
         }
       })

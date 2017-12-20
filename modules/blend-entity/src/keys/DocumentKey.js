@@ -4,7 +4,7 @@
  * @function $entity.DocumentKey.create
  * @param {Object} properties
  * @param {string} properties.documentType
- * @param {string} properties.documentId
+ * @param {string} properties.entityName
  * @returns {$entity.DocumentKey}
  */
 
@@ -25,7 +25,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
 
   /**
    * Identifies the document in the context of its document type.
-   * @member {string} $entity.DocumentKey#documentId
+   * @member {string} $entity.DocumentKey#entityName
    */
 
   /**
@@ -38,7 +38,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
   fromComponents: function (documentType, documentId, properties) {
     return this.create({
       documentType: documentType,
-      documentId: documentId
+      entityName: documentId
     }, properties);
   },
 
@@ -55,7 +55,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
     });
     return this.create({
       documentType: components[0],
-      documentId: components[1]
+      entityName: components[1]
     }, properties);
   },
 
@@ -65,12 +65,12 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
         components;
 
     if (entityPath &&
-        (this.documentType === undefined || this.documentId === undefined)
+        (this.documentType === undefined || this.entityName === undefined)
     ) {
       // we have entity path but not all key components
       components = entityPath.components;
       this.documentType = components[1];
-      this.documentId = components[2];
+      this.entityName = components[2];
     }
   },
 
@@ -81,7 +81,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
   equals: function equals(documentKey) {
     return equals.returned &&
         this.documentType === documentKey.documentType &&
-        this.documentId === documentKey.documentId;
+        this.entityName === documentKey.entityName;
   },
 
   /**
@@ -101,7 +101,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
   getChildKey: function (childId) {
     return $entity.FieldKey.fromComponents(
         this.documentType,
-        this.documentId,
+        this.entityName,
         childId
     );
   },
@@ -115,7 +115,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
       this._entityPath = $data.TreePath.fromComponents([
         'document',
         String(this.documentType),
-        String(this.documentId)]);
+        String(this.entityName)]);
     }
     return this._entityPath;
   },
@@ -152,7 +152,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
    */
   toString: function () {
     return $utils.escape(this.documentType, '/') + '/' +
-        $utils.escape(this.documentId, '/');
+        $utils.escape(this.entityName, '/');
   }
 })
 .build();

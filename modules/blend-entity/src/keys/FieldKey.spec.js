@@ -19,8 +19,8 @@ describe("$entity", function () {
 
     beforeEach(function () {
       fieldKey = FieldKey.create({
-        documentKey: 'foo/bar'.toDocumentKey(),
-        fieldName: 'baz'
+        parentKey: 'foo/bar'.toDocumentKey(),
+        entityName: 'baz'
       });
     });
 
@@ -32,8 +32,8 @@ describe("$entity", function () {
 
       it("should set documentKey & fieldName properties", function () {
         fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
-        expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
-        expect(fieldKey.fieldName).toBe('baz');
+        expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+        expect(fieldKey.entityName).toBe('baz');
       });
 
       it("should pass additional properties to create", function () {
@@ -50,8 +50,8 @@ describe("$entity", function () {
 
       it("should set documentKey & fieldName properties", function () {
         fieldKey = FieldKey.fromString('foo/bar/\\/baz');
-        expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
-        expect(fieldKey.fieldName).toBe('/baz');
+        expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+        expect(fieldKey.entityName).toBe('/baz');
       });
 
       it("should pass additional properties to create", function () {
@@ -69,16 +69,16 @@ describe("$entity", function () {
         });
 
         it("should set documentKey & fieldName properties", function () {
-          expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
-          expect(fieldKey.fieldName).toBe('baz');
+          expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+          expect(fieldKey.entityName).toBe('baz');
         });
       });
 
       describe("when documentType is static", function () {
         beforeEach(function () {
           fieldKey = $entity.FieldKey.create({
-            documentKey: '__foo/bar'.toDocumentKey(),
-            fieldName: 'baz'
+            parentKey: '__foo/bar'.toDocumentKey(),
+            entityName: 'baz'
           });
         });
 
@@ -141,8 +141,8 @@ describe("$entity", function () {
       beforeEach(function () {
         documentKey = 'foo/bar'.toDocumentKey();
         fieldKey = FieldKey.create({
-          documentKey: documentKey,
-          fieldName: 'baz'
+          parentKey: documentKey,
+          entityName: 'baz'
         });
       });
 
@@ -158,8 +158,8 @@ describe("$entity", function () {
       beforeEach(function () {
         documentKey = 'foo/bar'.toDocumentKey();
         fieldKey = FieldKey.create({
-          documentKey: documentKey,
-          fieldName: 'baz'
+          parentKey: documentKey,
+          entityName: 'baz'
         });
       });
 
@@ -247,8 +247,8 @@ describe("String", function () {
 
     it("should set FieldKey properties", function () {
       fieldKey = 'foo/bar/baz'.toFieldKey();
-      expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
-      expect(fieldKey.fieldName).toBe('baz');
+      expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+      expect(fieldKey.entityName).toBe('baz');
     });
 
     it("should pass additional properties to create", function () {
@@ -274,8 +274,8 @@ describe("Array", function () {
 
     it("should set FieldKey properties", function () {
       fieldKey = components.toFieldKey();
-      expect(fieldKey.documentKey).toEqual('foo/bar'.toDocumentKey());
-      expect(fieldKey.fieldName).toBe('baz');
+      expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+      expect(fieldKey.entityName).toBe('baz');
     });
 
     it("should pass additional properties to create", function () {

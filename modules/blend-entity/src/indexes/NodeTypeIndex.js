@@ -54,7 +54,7 @@ $entity.NodeTypeIndex = $oop.createClass('$entity.NodeTypeIndex')
     .join(fieldAttributeKeys)
     .forEachItem(function (fieldAttributeKey, fieldAttributeRef) {
       var documentType = fieldAttributeKey.documentType,
-          fieldName = fieldAttributeKey.documentId;
+          fieldName = fieldAttributeKey.entityName;
 
       that._addFieldRef('branch', fieldAttributeRef);
       that._addFieldName('branch', documentType, fieldName);
@@ -67,7 +67,7 @@ $entity.NodeTypeIndex = $oop.createClass('$entity.NodeTypeIndex')
     fieldAttributeKeys
     .forEachItem(function (fieldAttributeKey, fieldAttributeRef) {
       var documentType = fieldAttributeKey.documentType,
-          fieldName = fieldAttributeKey.documentId;
+          fieldName = fieldAttributeKey.entityName;
       that._addFieldRef('leaf', fieldAttributeRef);
       that._addFieldName('leaf', documentType, fieldName);
     });

@@ -3,8 +3,8 @@
 /**
  * @function $entity.ItemKey.create
  * @param {Object} properties
- * @param {$entity.fieldKey} properties.fieldKey
- * @param {string} properties.itemId
+ * @param {$entity.parentKey} properties.parentKey
+ * @param {string} properties.entityName
  * @returns {$entity.ItemKey}
  */
 
@@ -44,9 +44,9 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
       properties
   ) {
     return this.create({
-      fieldKey: $entity.CollectionFieldKey.fromComponents(
+      parentKey: $entity.CollectionFieldKey.fromComponents(
           documentType, documentId, fieldName),
-      itemId: itemId
+      entityName: itemId
     }, properties);
   },
 
@@ -62,9 +62,9 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
       return $utils.unescape(component, '/');
     });
     return this.create({
-      fieldKey: $entity.CollectionFieldKey.fromComponents(
+      parentKey: $entity.CollectionFieldKey.fromComponents(
           components[0], components[1], components[2]),
-      itemId: components[3]
+      entityName: components[3]
     }, properties);
   },
 
@@ -74,13 +74,13 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
         components;
 
     if (entityPath &&
-        (!this.fieldKey || this.itemId === undefined)
+        (!this.parentKey || this.entityName === undefined)
     ) {
       // we have entity path but not all key components
       components = entityPath.components;
-      this.fieldKey = $entity.CollectionFieldKey.fromComponents(
+      this.parentKey = $entity.CollectionFieldKey.fromComponents(
           components[1], components[2], components[3]);
-      this.itemId = components[4];
+      this.entityName = components[4];
     }
   },
 
@@ -90,8 +90,8 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
    */
   equals: function equals(itemKey) {
     return equals.returned &&
-        this.fieldKey.equals(itemKey.fieldKey) &&
-        this.itemId === itemKey.itemId;
+        this.parentKey.equals(itemKey.parentKey) &&
+        this.entityName === itemKey.entityName;
   },
 
   /**
@@ -99,10 +99,10 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
    * @returns {$entity.DocumentKey}
    */
   getAttributeDocumentKey: function () {
-    var fieldKey = this.fieldKey;
+    var fieldKey = this.parentKey;
     return $entity.AttributeDocumentKey.fromDocumentIdComponents('__field', [
-      fieldKey.documentKey.documentType,
-      fieldKey.fieldName
+      fieldKey.parentKey.documentType,
+      fieldKey.entityName
     ]);
   },
 
@@ -110,14 +110,14 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
    * @return {$entity.CollectionFieldKey}
    */
   getParentKey: function () {
-    return this.fieldKey;
+    return this.parentKey;
   },
 
   /**
    * @return {string}
    */
   getEntityName: function () {
-    return this.itemId;
+    return this.entityName;
   },
 
   /**
@@ -125,15 +125,15 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
    * @returns {$data.TreePath}
    */
   getEntityPath: function () {
-    var fieldKey = this.fieldKey,
-        documentKey = fieldKey.documentKey;
+    var fieldKey = this.parentKey,
+        documentKey = fieldKey.parentKey;
     if (!hOP.call(this, '_entityPath')) {
       this._entityPath = $data.TreePath.fromComponents([
         'document',
         String(documentKey.documentType),
-        String(documentKey.documentId),
-        String(fieldKey.fieldName),
-        String(this.itemId)]);
+        String(documentKey.entityName),
+        String(fieldKey.entityName),
+        String(this.entityName)]);
     }
     return this._entityPath;
   },
@@ -160,13 +160,13 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
    * @returns {string}
    */
   toString: function () {
-    var fieldKey = this.fieldKey,
-        documentKey = fieldKey.documentKey;
+    var fieldKey = this.parentKey,
+        documentKey = fieldKey.parentKey;
     return [
       $utils.escape(documentKey.documentType, '/'),
-      $utils.escape(documentKey.documentId, '/'),
-      $utils.escape(fieldKey.fieldName, '/'),
-      $utils.escape(this.itemId, '/')
+      $utils.escape(documentKey.entityName, '/'),
+      $utils.escape(fieldKey.entityName, '/'),
+      $utils.escape(this.entityName, '/')
     ].join('/');
   }
 })
@@ -174,7 +174,7 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
 
 $entity.ItemKey
 .forwardBlend($utils.StringifyCached, function (properties) {
-  return $utils.StringifyCached.mixedBy(properties.fieldKey);
+  return $utils.StringifyCached.mixedBy(properties.parentKey);
 });
 
 $entity.EntityKey

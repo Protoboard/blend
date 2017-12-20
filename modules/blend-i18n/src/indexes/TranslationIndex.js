@@ -113,8 +113,8 @@ $i18n.TranslationIndex = $oop.createClass('$i18n.TranslationIndex')
   onTranslationsFieldChange: function (event) {
     var that = this,
         translationsFieldKey = event.sender.entityKey,
-        localeKey = translationsFieldKey.documentKey,
-        localeId = localeKey.documentId;
+        localeKey = translationsFieldKey.parentKey,
+        localeId = localeKey.entityName;
 
     // adding translation documents to index for valid translation references
     event.propertiesAdded

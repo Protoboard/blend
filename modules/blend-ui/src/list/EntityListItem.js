@@ -46,7 +46,7 @@ $ui.EntityListItem = $oop.createClass('$ui.EntityListItem')
   _syncToListItemEntity: function () {
     var listItemEntity = this.listItemEntity,
         listItemEntityKey = listItemEntity.entityKey,
-        listEntityKey = listItemEntityKey.fieldKey;
+        listEntityKey = listItemEntityKey.parentKey;
 
     // handling 2 default modes of item ordering:
     // - when the item's ID type is 'order'
@@ -57,7 +57,7 @@ $ui.EntityListItem = $oop.createClass('$ui.EntityListItem')
       this.setNodeOrder(listItemEntity.getNode());
       break;
     case listEntityKey.getItemIdType():
-      this.setNodeOrder(listItemEntityKey.itemId);
+      this.setNodeOrder(listItemEntityKey.entityName);
       break;
     }
   },

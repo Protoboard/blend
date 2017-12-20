@@ -21,7 +21,7 @@ describe("$entity", function () {
     beforeEach(function () {
       documentKey = DocumentKey.create({
         documentType: 'foo',
-        documentId: 'bar'
+        entityName: 'bar'
       });
     });
 
@@ -31,10 +31,10 @@ describe("$entity", function () {
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
       });
 
-      it("should set documentType & documentId properties", function () {
+      it("should set documentType & entityName properties", function () {
         documentKey = DocumentKey.fromComponents('foo', 'bar');
         expect(documentKey.documentType).toBe('foo');
-        expect(documentKey.documentId).toBe('bar');
+        expect(documentKey.entityName).toBe('bar');
       });
 
       it("should pass additional properties to create", function () {
@@ -49,10 +49,10 @@ describe("$entity", function () {
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
       });
 
-      it("should set documentType & documentId properties", function () {
+      it("should set documentType & entityName properties", function () {
         documentKey = DocumentKey.fromString('\\/bar/baz');
         expect(documentKey.documentType).toBe('/bar');
-        expect(documentKey.documentId).toBe('baz');
+        expect(documentKey.entityName).toBe('baz');
       });
 
       it("should pass additional properties to create", function () {
@@ -69,9 +69,9 @@ describe("$entity", function () {
           });
         });
 
-        it("should set documentType & documentId properties", function () {
+        it("should set documentType & entityName properties", function () {
           expect(documentKey.documentType).toBe('foo');
-          expect(documentKey.documentId).toBe('bar');
+          expect(documentKey.entityName).toBe('bar');
         });
       });
     });
@@ -241,7 +241,7 @@ describe("String", function () {
     it("should set DocumentKey properties", function () {
       documentKey = 'foo/bar'.toDocumentKey();
       expect(documentKey.documentType).toBe('foo');
-      expect(documentKey.documentId).toBe('bar');
+      expect(documentKey.entityName).toBe('bar');
     });
 
     it("should pass additional properties to create", function () {
@@ -268,7 +268,7 @@ describe("Array", function () {
     it("should return created instance", function () {
       documentKey = components.toDocumentKey();
       expect(documentKey.documentType).toBe('foo');
-      expect(documentKey.documentId).toBe('bar');
+      expect(documentKey.entityName).toBe('bar');
     });
 
     it("should pass additional properties to create", function () {
