@@ -16,6 +16,9 @@ describe("$entity", function () {
       .define({
         getAttributeDocumentKey: function () {
           return '__field/foo'.toDocumentKey();
+        },
+        toString: function () {
+          return this.entityName;
         }
       })
       .build();
@@ -23,7 +26,16 @@ describe("$entity", function () {
     });
 
     beforeEach(function () {
-      entityKey = EntityKey.create();
+      entityKey = EntityKey.create({
+        entityName: 'foo'
+      });
+    });
+
+    describe("getReference()", function () {
+      it("should return string representation", function () {
+        var result = entityKey.getReference();
+        expect(result).toBe('foo');
+      });
     });
 
     describe("getAttribute()", function () {

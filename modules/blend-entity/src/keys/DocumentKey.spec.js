@@ -25,20 +25,21 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromComponents()", function () {
+    describe("fromEntityPath()", function () {
       it("should return a DocumentKey instance", function () {
-        documentKey = DocumentKey.fromComponents('foo', 'bar');
+        documentKey = DocumentKey.fromEntityPath('document.bar.baz'.toTreePath());
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
       });
 
       it("should set documentType & entityName properties", function () {
-        documentKey = DocumentKey.fromComponents('foo', 'bar');
-        expect(documentKey.documentType).toBe('foo');
-        expect(documentKey.entityName).toBe('bar');
+        documentKey = DocumentKey.fromEntityPath('document.bar.baz'.toTreePath());
+        expect(documentKey.documentType).toBe('bar');
+        expect(documentKey.entityName).toBe('baz');
       });
 
       it("should pass additional properties to create", function () {
-        documentKey = DocumentKey.fromComponents('foo', 'bar', {bar: 'baz'});
+        documentKey = DocumentKey.fromEntityPath('document.bar.baz'.toTreePath(),
+            {bar: 'baz'});
         expect(documentKey.bar).toBe('baz');
       });
     });
@@ -57,6 +58,24 @@ describe("$entity", function () {
 
       it("should pass additional properties to create", function () {
         documentKey = DocumentKey.fromString('\\/bar/baz', {bar: 'baz'});
+        expect(documentKey.bar).toBe('baz');
+      });
+    });
+
+    describe("fromComponents()", function () {
+      it("should return a DocumentKey instance", function () {
+        documentKey = DocumentKey.fromComponents('foo', 'bar');
+        expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
+      });
+
+      it("should set documentType & entityName properties", function () {
+        documentKey = DocumentKey.fromComponents('foo', 'bar');
+        expect(documentKey.documentType).toBe('foo');
+        expect(documentKey.entityName).toBe('bar');
+      });
+
+      it("should pass additional properties to create", function () {
+        documentKey = DocumentKey.fromComponents('foo', 'bar', {bar: 'baz'});
         expect(documentKey.bar).toBe('baz');
       });
     });

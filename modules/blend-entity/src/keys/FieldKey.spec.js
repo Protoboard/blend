@@ -24,20 +24,21 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromComponents()", function () {
+    describe("fromEntityPath()", function () {
       it("should return a FieldKey instance", function () {
-        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
+        fieldKey = FieldKey.fromEntityPath('document.foo.bar.baz'.toTreePath());
         expect(FieldKey.mixedBy(fieldKey)).toBeTruthy();
       });
 
-      it("should set documentKey & fieldName properties", function () {
-        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
+      it("should set parentKey & entityName properties", function () {
+        fieldKey = FieldKey.fromEntityPath('document.foo.bar.baz'.toTreePath());
         expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
         expect(fieldKey.entityName).toBe('baz');
       });
 
       it("should pass additional properties to create", function () {
-        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz', {bar: 'baz'});
+        fieldKey = FieldKey.fromEntityPath('document.foo.bar.baz'.toTreePath(),
+            {bar: 'baz'});
         expect(fieldKey.bar).toBe('baz');
       });
     });
@@ -48,7 +49,7 @@ describe("$entity", function () {
         expect(FieldKey.mixedBy(fieldKey)).toBeTruthy();
       });
 
-      it("should set documentKey & fieldName properties", function () {
+      it("should set parentKey & entityName properties", function () {
         fieldKey = FieldKey.fromString('foo/bar/\\/baz');
         expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
         expect(fieldKey.entityName).toBe('/baz');
@@ -56,6 +57,24 @@ describe("$entity", function () {
 
       it("should pass additional properties to create", function () {
         fieldKey = FieldKey.fromString('foo/bar/\\/baz', {bar: 'baz'});
+        expect(fieldKey.bar).toBe('baz');
+      });
+    });
+
+    describe("fromComponents()", function () {
+      it("should return a FieldKey instance", function () {
+        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
+        expect(FieldKey.mixedBy(fieldKey)).toBeTruthy();
+      });
+
+      it("should set parentKey & entityName properties", function () {
+        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz');
+        expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+        expect(fieldKey.entityName).toBe('baz');
+      });
+
+      it("should pass additional properties to create", function () {
+        fieldKey = FieldKey.fromComponents('foo', 'bar', 'baz', {bar: 'baz'});
         expect(fieldKey.bar).toBe('baz');
       });
     });

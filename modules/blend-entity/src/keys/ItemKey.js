@@ -27,7 +27,7 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
   fromEntityPath: function (entityPath, properties) {
     var components = entityPath.components;
     return this.create({
-      parentKey: $entity.Field.fromComponents(
+      parentKey: $entity.CollectionFieldKey.fromComponents(
           components[1], components[2], components[3]),
       entityName: components[4]
     }, properties);

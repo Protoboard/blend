@@ -24,20 +24,21 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromComponents()", function () {
+    describe("fromEntityPath()", function () {
       it("should return a ItemKey instance", function () {
-        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
+        itemKey = ItemKey.fromEntityPath('document.foo.bar.baz.quux'.toTreePath());
         expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
       });
 
-      it("should set fieldKey & itemId properties", function () {
-        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
+      it("should set parentKey & entityName properties", function () {
+        itemKey = ItemKey.fromEntityPath('document.foo.bar.baz.quux'.toTreePath());
         expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
         expect(itemKey.entityName).toBe('quux');
       });
 
       it("should pass additional properties to create", function () {
-        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux', {bar: 'baz'});
+        itemKey = ItemKey.fromEntityPath('document.foo.bar.baz.quux'.toTreePath(),
+            {bar: 'baz'});
         expect(itemKey.bar).toBe('baz');
       });
     });
@@ -48,7 +49,7 @@ describe("$entity", function () {
         expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
       });
 
-      it("should set fieldKey & itemId properties", function () {
+      it("should set parentKey & entityName properties", function () {
         itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
         expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
         expect(itemKey.entityName).toBe('/quux');
@@ -56,6 +57,24 @@ describe("$entity", function () {
 
       it("should pass additional properties to create", function () {
         itemKey = ItemKey.fromString('foo/bar/baz/\\/quux', {bar: 'baz'});
+        expect(itemKey.bar).toBe('baz');
+      });
+    });
+
+    describe("fromComponents()", function () {
+      it("should return a ItemKey instance", function () {
+        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
+        expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
+      });
+
+      it("should set parentKey & entityName properties", function () {
+        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
+        expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
+        expect(itemKey.entityName).toBe('quux');
+      });
+
+      it("should pass additional properties to create", function () {
+        itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux', {bar: 'baz'});
         expect(itemKey.bar).toBe('baz');
       });
     });
