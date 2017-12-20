@@ -45,18 +45,18 @@ describe("$entity", function () {
 
     describe("fromString()", function () {
       it("should return a FieldKey instance", function () {
-        fieldKey = FieldKey.fromString('foo/bar/\\/baz');
+        fieldKey = FieldKey.fromReference('foo/bar/\\/baz');
         expect(FieldKey.mixedBy(fieldKey)).toBeTruthy();
       });
 
       it("should set parentKey & entityName properties", function () {
-        fieldKey = FieldKey.fromString('foo/bar/\\/baz');
+        fieldKey = FieldKey.fromReference('foo/bar/\\/baz');
         expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
         expect(fieldKey.entityName).toBe('/baz');
       });
 
       it("should pass additional properties to create", function () {
-        fieldKey = FieldKey.fromString('foo/bar/\\/baz', {bar: 'baz'});
+        fieldKey = FieldKey.fromReference('foo/bar/\\/baz', {bar: 'baz'});
         expect(fieldKey.bar).toBe('baz');
       });
     });
@@ -122,7 +122,7 @@ describe("$entity", function () {
       });
 
       it("should return attribute document key to the field", function () {
-        expect(result.equals($entity.DocumentKey.fromString('__field/foo\\/baz')))
+        expect(result.equals($entity.DocumentKey.fromReference('__field/foo\\/baz')))
         .toBeTruthy();
       });
     });

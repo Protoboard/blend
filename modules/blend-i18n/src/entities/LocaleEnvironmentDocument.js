@@ -31,7 +31,7 @@ $i18n.LocaleEnvironmentDocument = $oop.createClass('$i18n.LocaleEnvironmentDocum
    */
   getActiveLocaleKey: function () {
     var activeLocaleRef = this.getField('activeLocale').getNode();
-    return activeLocaleRef && $entity.DocumentKey.fromString(activeLocaleRef);
+    return activeLocaleRef && $entity.DocumentKey.fromReference(activeLocaleRef);
   }
 })
 .build();

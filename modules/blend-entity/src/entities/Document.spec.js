@@ -40,17 +40,17 @@ describe("$entity", function () {
 
     describe("fromString()", function () {
       it("should return Document instance", function () {
-        document = Document.fromString('foo/bar');
+        document = Document.fromReference('foo/bar');
         expect(Document.mixedBy(document)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
-        document = Document.fromString('foo/bar');
+        document = Document.fromReference('foo/bar');
         expect(document.entityKey.equals('foo/bar'.toDocumentKey()));
       });
 
       it("should pass additional properties to create", function () {
-        document = Document.fromString('foo/bar', {bar: 'baz'});
+        document = Document.fromReference('foo/bar', {bar: 'baz'});
         expect(document.bar).toBe('baz');
       });
     });

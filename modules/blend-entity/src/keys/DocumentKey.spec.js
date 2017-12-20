@@ -46,18 +46,18 @@ describe("$entity", function () {
 
     describe("fromString()", function () {
       it("should return a DocumentKey instance", function () {
-        documentKey = DocumentKey.fromString('\\/bar/baz');
+        documentKey = DocumentKey.fromReference('\\/bar/baz');
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
       });
 
       it("should set documentType & entityName properties", function () {
-        documentKey = DocumentKey.fromString('\\/bar/baz');
+        documentKey = DocumentKey.fromReference('\\/bar/baz');
         expect(documentKey.documentType).toBe('/bar');
         expect(documentKey.entityName).toBe('baz');
       });
 
       it("should pass additional properties to create", function () {
-        documentKey = DocumentKey.fromString('\\/bar/baz', {bar: 'baz'});
+        documentKey = DocumentKey.fromReference('\\/bar/baz', {bar: 'baz'});
         expect(documentKey.bar).toBe('baz');
       });
     });
@@ -110,7 +110,7 @@ describe("$entity", function () {
       });
 
       it("should return attribute document key to the document type", function () {
-        expect(result.equals($entity.DocumentKey.fromString('__document/foo')))
+        expect(result.equals($entity.DocumentKey.fromReference('__document/foo')))
         .toBeTruthy();
       });
     });

@@ -48,7 +48,7 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
    * @returns {$entity.EntityKey}
    * @abstract
    */
-  fromString: function (reference, properties) {},
+  fromReference: function (reference, properties) {},
 
   /**
    * @param {$entity.EntityKey} entityKey

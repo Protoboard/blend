@@ -40,17 +40,17 @@ describe("$entity", function () {
 
     describe("fromString()", function () {
       it("should return Field instance", function () {
-        field = Field.fromString('foo/bar/baz');
+        field = Field.fromReference('foo/bar/baz');
         expect(Field.mixedBy(field)).toBeTruthy();
       });
 
       it("should set entityKey property", function () {
-        field = Field.fromString('foo/bar/baz');
+        field = Field.fromReference('foo/bar/baz');
         expect(field.entityKey.equals('foo/bar/baz'.toFieldKey()));
       });
 
       it("should pass additional properties to create", function () {
-        field = Field.fromString('foo/bar/baz', {bar: 'baz'});
+        field = Field.fromReference('foo/bar/baz', {bar: 'baz'});
         expect(field.bar).toBe('baz');
       });
     });

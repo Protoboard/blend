@@ -44,9 +44,9 @@ $entity.Item = $oop.createClass('$entity.Item')
    * @param {Object} [properties]
    * @returns {$entity.Item}
    */
-  fromString: function (itemRef, properties) {
+  fromReference: function (itemRef, properties) {
     return this.create({
-      entityKey: $entity.ItemKey.fromString(itemRef)
+      entityKey: $entity.ItemKey.fromReference(itemRef)
     }, properties);
   },
 
@@ -93,7 +93,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$entity.Item}
    */
   toItem: function (properties) {
-    return $entity.Item.fromString(this.valueOf(), properties);
+    return $entity.Item.fromReference(this.valueOf(), properties);
   }
 });
 

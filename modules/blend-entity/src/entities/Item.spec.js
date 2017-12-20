@@ -36,7 +36,7 @@ describe("$entity", function () {
 
     describe("fromString()", function () {
       beforeEach(function () {
-        item = Item.fromString('foo/bar/baz/quux');
+        item = Item.fromReference('foo/bar/baz/quux');
       });
 
       it("should return Item instance", function () {

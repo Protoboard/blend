@@ -45,18 +45,18 @@ describe("$entity", function () {
 
     describe("fromString()", function () {
       it("should return a ItemKey instance", function () {
-        itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
+        itemKey = ItemKey.fromReference('foo/bar/baz/\\/quux');
         expect(ItemKey.mixedBy(itemKey)).toBeTruthy();
       });
 
       it("should set parentKey & entityName properties", function () {
-        itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
+        itemKey = ItemKey.fromReference('foo/bar/baz/\\/quux');
         expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
         expect(itemKey.entityName).toBe('/quux');
       });
 
       it("should pass additional properties to create", function () {
-        itemKey = ItemKey.fromString('foo/bar/baz/\\/quux', {bar: 'baz'});
+        itemKey = ItemKey.fromReference('foo/bar/baz/\\/quux', {bar: 'baz'});
         expect(itemKey.bar).toBe('baz');
       });
     });
@@ -122,7 +122,7 @@ describe("$entity", function () {
       });
 
       it("should return attribute document key to parent field", function () {
-        expect(result.equals($entity.DocumentKey.fromString('__field/foo\\/baz')))
+        expect(result.equals($entity.DocumentKey.fromReference('__field/foo\\/baz')))
         .toBeTruthy();
       });
     });

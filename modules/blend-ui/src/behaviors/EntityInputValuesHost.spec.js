@@ -19,7 +19,7 @@ describe("$ui", function () {
     });
 
     beforeEach(function () {
-      inputValuesFieldKey = $entity.CollectionFieldKey.fromString('foo/bar/inputValues');
+      inputValuesFieldKey = $entity.CollectionFieldKey.fromReference('foo/bar/inputValues');
       inputValuesField = inputValuesFieldKey.toField();
     });
 
@@ -120,7 +120,7 @@ describe("$ui", function () {
 
     describe("setInputValuesEntity()", function () {
       beforeEach(function () {
-        var inputValuesFieldBefore = $entity.CollectionFieldKey.fromString('foo/bar/inputValues')
+        var inputValuesFieldBefore = $entity.CollectionFieldKey.fromReference('foo/bar/inputValues')
         .toField();
         entityInputValuesHost = EntityInputValuesHost.fromInputValuesEntity(inputValuesFieldBefore);
         spyOn(entityInputValuesHost, 'setEntityProperty');

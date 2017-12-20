@@ -43,7 +43,7 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
    * @param {Object} [properties]
    * @returns {$entity.DocumentKey}
    */
-  fromString: function (reference, properties) {
+  fromReference: function (reference, properties) {
     var components = $utils.safeSplit(reference, '/')
     .map(function (component) {
       return $utils.unescape(component, '/');
@@ -148,7 +148,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$entity.DocumentKey}
    */
   toDocumentKey: function (properties) {
-    return $entity.DocumentKey.fromString(this.valueOf(), properties);
+    return $entity.DocumentKey.fromReference(this.valueOf(), properties);
   }
 });
 

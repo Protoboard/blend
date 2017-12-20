@@ -33,13 +33,13 @@ $entity.Document = $oop.createClass('$entity.Document')
   },
 
   /**
-   * @param {string} documentRef
+   * @param {string} reference
    * @param {Object} [properties]
    * @returns {$entity.Document}
    */
-  fromString: function (documentRef, properties) {
+  fromReference: function (reference, properties) {
     return this.create({
-      entityKey: $entity.DocumentKey.fromString(documentRef)
+      entityKey: $entity.DocumentKey.fromReference(reference)
     }, properties);
   },
 
@@ -140,7 +140,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$entity.Document}
    */
   toDocument: function (properties) {
-    return $entity.Document.fromString(this.valueOf(), properties);
+    return $entity.Document.fromReference(this.valueOf(), properties);
   }
 });
 

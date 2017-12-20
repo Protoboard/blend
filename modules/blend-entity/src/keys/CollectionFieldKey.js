@@ -75,7 +75,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$entity.FieldKey}
    */
   toCollectionFieldKey: function (properties) {
-    return $entity.CollectionFieldKey.fromString(this.valueOf(), properties);
+    return $entity.CollectionFieldKey.fromReference(this.valueOf(), properties);
   }
 });
 

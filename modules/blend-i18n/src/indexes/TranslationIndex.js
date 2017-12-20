@@ -57,7 +57,7 @@ $i18n.TranslationIndex = $oop.createClass('$i18n.TranslationIndex')
       // cycling through all translations for locale
       $data.Collection.fromData(localeNode.translations)
       .mapValues(function (placeholder, translationRef) {
-        var translationKey = $entity.DocumentKey.fromString(translationRef),
+        var translationKey = $entity.DocumentKey.fromReference(translationRef),
             translationDocument = $entity.Document.fromEntityKey(translationKey);
         return translationDocument.getNode();
       })
@@ -119,7 +119,7 @@ $i18n.TranslationIndex = $oop.createClass('$i18n.TranslationIndex')
     // adding translation documents to index for valid translation references
     event.propertiesAdded
     .map(function (translationRef) {
-      return $entity.Document.fromString(translationRef).getNode();
+      return $entity.Document.fromReference(translationRef).getNode();
     })
     .filter(function (translationNode) {
       return !!translationNode;

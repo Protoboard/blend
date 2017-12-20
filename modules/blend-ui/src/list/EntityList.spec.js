@@ -32,7 +32,7 @@ describe("$ui", function () {
     });
 
     beforeEach(function () {
-      listEntityKey = $entity.CollectionFieldKey.fromString('foo/1/list');
+      listEntityKey = $entity.CollectionFieldKey.fromReference('foo/1/list');
       listEntity = listEntityKey.toField();
     });
 

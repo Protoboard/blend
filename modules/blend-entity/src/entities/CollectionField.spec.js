@@ -19,7 +19,7 @@ describe("$entity", function () {
     });
 
     beforeEach(function () {
-      collectionFieldKey = $entity.CollectionFieldKey.fromString('foo/bar/baz');
+      collectionFieldKey = $entity.CollectionFieldKey.fromReference('foo/bar/baz');
       collectionField = CollectionField.fromEntityKey(collectionFieldKey);
     });
 
@@ -92,7 +92,7 @@ describe("$entity", function () {
     describe("create()", function () {
       describe("when entityKey is CollectionFieldKey", function () {
         beforeEach(function () {
-          result = $entity.CollectionFieldKey.fromString('foo/bar/baz')
+          result = $entity.CollectionFieldKey.fromReference('foo/bar/baz')
           .toField();
         });
 

@@ -23,7 +23,7 @@ $i18n.LocaleEnvironment = $oop.createClass('$i18n.LocaleEnvironment')
 
   /** @ignore */
   init: function () {
-    this.localeEnvironmentKey = $entity.DocumentKey.fromString('_localeEnvironment/');
+    this.localeEnvironmentKey = $entity.DocumentKey.fromReference('_localeEnvironment/');
 
     this
     .setListeningPath('locale')
@@ -58,9 +58,11 @@ $i18n.LocaleEnvironment = $oop.createClass('$i18n.LocaleEnvironment')
    */
   onActiveLocaleFieldChange: function (event) {
     var localeRefBefore = event.nodeBefore,
-        localeKeyBefore = localeRefBefore && $entity.DocumentKey.fromString(localeRefBefore),
+        localeKeyBefore = localeRefBefore &&
+            $entity.DocumentKey.fromReference(localeRefBefore),
         localeRefAfter = event.nodeAfter,
-        localeKeyAfter = localeRefAfter && $entity.DocumentKey.fromString(localeRefAfter);
+        localeKeyAfter = localeRefAfter &&
+            $entity.DocumentKey.fromReference(localeRefAfter);
 
     return this.spawnEvent({
       eventName: $i18n.EVENT_LOCALE_CHANGE,

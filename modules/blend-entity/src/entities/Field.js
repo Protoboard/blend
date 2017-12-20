@@ -33,13 +33,13 @@ $entity.Field = $oop.createClass('$entity.Field')
   },
 
   /**
-   * @param {string} fieldRef
+   * @param {string} reference
    * @param {Object} [properties]
    * @returns {$entity.Field}
    */
-  fromString: function (fieldRef, properties) {
+  fromReference: function (reference, properties) {
     return this.create({
-      entityKey: $entity.FieldKey.fromString(fieldRef)
+      entityKey: $entity.FieldKey.fromReference(reference)
     }, properties);
   },
 
@@ -94,7 +94,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$entity.Field}
    */
   toField: function (properties) {
-    return $entity.Field.fromString(this.valueOf(), properties);
+    return $entity.Field.fromReference(this.valueOf(), properties);
   }
 });
 

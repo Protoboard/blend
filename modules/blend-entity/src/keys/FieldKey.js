@@ -41,7 +41,7 @@ $entity.FieldKey = $oop.createClass('$entity.FieldKey')
    * @param {Object} [properties]
    * @returns {$entity.FieldKey}
    */
-  fromString: function (reference, properties) {
+  fromReference: function (reference, properties) {
     var components = $utils.safeSplit(reference, '/')
     .map(function (component) {
       return $utils.unescape(component, '/');
@@ -135,7 +135,7 @@ $oop.copyProperties(String.prototype, /** @lends String# */{
    * @returns {$entity.FieldKey}
    */
   toFieldKey: function (properties) {
-    return $entity.FieldKey.fromString(this.valueOf(), properties);
+    return $entity.FieldKey.fromReference(this.valueOf(), properties);
   }
 });
 

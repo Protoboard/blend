@@ -48,7 +48,7 @@ describe("$entity", function () {
     describe("create()", function () {
       describe("when documentType is prefixed with __", function () {
         beforeEach(function () {
-          documentKey = $entity.DocumentKey.fromString('__foo/bar');
+          documentKey = $entity.DocumentKey.fromReference('__foo/bar');
         });
 
         it("should return AttributeDocumentKey", function () {
