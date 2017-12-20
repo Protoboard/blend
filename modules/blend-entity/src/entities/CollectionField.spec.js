@@ -69,6 +69,21 @@ describe("$entity", function () {
         ]);
       });
     });
+
+    describe("getItem()", function () {
+      var item;
+
+      it("should return an Item instance", function () {
+        var result = collectionField.getItem('quux');
+        expect($entity.Item.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should set item components", function () {
+        item = $entity.Item.fromEntityKey('foo/bar/baz/quux'.toItemKey());
+        var result = collectionField.getItem('quux');
+        expect(result.equals(item)).toBeTruthy();
+      });
+    });
   });
 
   describe("Field", function () {

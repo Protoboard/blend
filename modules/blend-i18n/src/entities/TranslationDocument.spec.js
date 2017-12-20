@@ -17,7 +17,7 @@ describe("$i18n", function () {
 
     describe("setOriginalString()", function () {
       beforeEach(function () {
-        translationDocument = TranslationDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.deleteNode();
       });
 
@@ -28,14 +28,14 @@ describe("$i18n", function () {
 
       it("should set originalString field", function () {
         translationDocument.setOriginalString('baz');
-        var path = 'document.foo.bar.originalString'.toTreePath();
+        var path = 'document._translation.bar.originalString'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
 
     describe("getOriginalString()", function () {
       beforeEach(function () {
-        translationDocument = TranslationDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.setNode({
           originalString: 'baz'
         });
@@ -48,7 +48,7 @@ describe("$i18n", function () {
 
     describe("setPluralForm()", function () {
       beforeEach(function () {
-        translationDocument = TranslationDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.deleteNode();
       });
 
@@ -59,7 +59,7 @@ describe("$i18n", function () {
 
       it("should set item in pluralForm field", function () {
         translationDocument.setPluralForm(0, 'baz');
-        var path = 'document.foo.bar.pluralForms'.toTreePath();
+        var path = 'document._translation.bar.pluralForms'.toTreePath();
         expect($entity.entities.getNode(path)).toEqual({
           0: 'baz'
         });
@@ -68,7 +68,7 @@ describe("$i18n", function () {
 
     describe("getPluralForm()", function () {
       beforeEach(function () {
-        translationDocument = TranslationDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.setNode({
           pluralForms: {
             0: 'baz'
@@ -84,7 +84,7 @@ describe("$i18n", function () {
 
     describe("setContext()", function () {
       beforeEach(function () {
-        translationDocument = TranslationDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.deleteNode();
       });
 
@@ -95,14 +95,14 @@ describe("$i18n", function () {
 
       it("should set context field", function () {
         translationDocument.setContext('baz');
-        var path = 'document.foo.bar.context'.toTreePath();
+        var path = 'document._translation.bar.context'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
 
     describe("getContext()", function () {
       beforeEach(function () {
-        translationDocument = TranslationDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.setNode({
           context: 'baz'
         });

@@ -61,21 +61,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
-      describe("from _entityPath", function () {
-        beforeEach(function () {
-          documentKey = DocumentKey.create({
-            _entityPath: 'document.foo.bar'.toTreePath()
-          });
-        });
-
-        it("should set documentType & entityName properties", function () {
-          expect(documentKey.documentType).toBe('foo');
-          expect(documentKey.entityName).toBe('bar');
-        });
-      });
-    });
-
     describe("equals()", function () {
       describe("for matching keys", function () {
         it("should return true", function () {
@@ -121,7 +106,10 @@ describe("$entity", function () {
       });
 
       it("should return field in document", function () {
-        expect(result).toEqual('foo/bar/baz'.toFieldKey());
+        expect(result).toEqual($entity.FieldKey.create({
+          parentKey: documentKey,
+          entityName: 'baz'
+        }));
       });
     });
 
@@ -214,10 +202,11 @@ describe("$entity", function () {
     var result;
 
     describe("create()", function () {
-      describe("when passing document entity path", function () {
+      describe("when passing entity w/o parentKey but w/ documentType", function () {
         beforeEach(function () {
           result = $entity.EntityKey.create({
-            _entityPath: 'document.foo.bar'.toTreePath()
+            documentType: 'foo',
+            entityName: 'bar'
           });
         });
 

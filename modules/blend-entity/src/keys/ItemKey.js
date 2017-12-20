@@ -13,23 +13,43 @@
  * @class $entity.ItemKey
  * @extends $entity.EntityKey
  * @mixes $entity.ValueKey
- * @implements $utils.Stringifiable
  */
 $entity.ItemKey = $oop.createClass('$entity.ItemKey')
 .blend($entity.EntityKey)
 .blend($entity.ValueKey)
-.implement($utils.Stringifiable)
 .define(/** @lends $entity.ItemKey# */{
   /**
-   * Identifies the collection field the item belongs to.
-   * @todo Somehow this should be cached for items belonging to the same field.
-   * @member {$entity.CollectionFieldKey} $entity.ItemKey#fieldKey
+   * @memberOf $entity.DocumentKey
+   * @param {$data.TreePath} entityPath
+   * @param {Object} [properties]
+   * @returns {$entity.DocumentKey}
    */
+  fromEntityPath: function (entityPath, properties) {
+    var components = entityPath.components;
+    return this.create({
+      parentKey: $entity.Field.fromComponents(
+          components[1], components[2], components[3]),
+      entityName: components[4]
+    }, properties);
+  },
 
   /**
-   * Identifies the item in the context of the containing field.
-   * @member {string} $entity.ItemKey#itemId
+   * @memberOf $entity.ItemKey
+   * @param {string} reference
+   * @param {Object} [properties]
+   * @returns {$entity.ItemKey}
    */
+  fromString: function (reference, properties) {
+    var components = $utils.safeSplit(reference, '/')
+    .map(function (component) {
+      return $utils.unescape(component, '/');
+    });
+    return this.create({
+      parentKey: $entity.CollectionFieldKey.fromComponents(
+          components[0], components[1], components[2]),
+      entityName: components[3]
+    }, properties);
+  },
 
   /**
    * @memberOf $entity.ItemKey
@@ -51,50 +71,6 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
   },
 
   /**
-   * @memberOf $entity.ItemKey
-   * @param {string} itemRef
-   * @param {Object} [properties]
-   * @returns {$entity.ItemKey}
-   */
-  fromString: function (itemRef, properties) {
-    var components = $utils.safeSplit(itemRef, '/')
-    .map(function (component) {
-      return $utils.unescape(component, '/');
-    });
-    return this.create({
-      parentKey: $entity.CollectionFieldKey.fromComponents(
-          components[0], components[1], components[2]),
-      entityName: components[3]
-    }, properties);
-  },
-
-  /** @ignore */
-  spread: function () {
-    var entityPath = this._entityPath,
-        components;
-
-    if (entityPath &&
-        (!this.parentKey || this.entityName === undefined)
-    ) {
-      // we have entity path but not all key components
-      components = entityPath.components;
-      this.parentKey = $entity.CollectionFieldKey.fromComponents(
-          components[1], components[2], components[3]);
-      this.entityName = components[4];
-    }
-  },
-
-  /**
-   * @param {$entity.ItemKey} itemKey
-   * @returns {boolean}
-   */
-  equals: function equals(itemKey) {
-    return equals.returned &&
-        this.parentKey.equals(itemKey.parentKey) &&
-        this.entityName === itemKey.entityName;
-  },
-
-  /**
    * @inheritDoc
    * @returns {$entity.DocumentKey}
    */
@@ -104,20 +80,6 @@ $entity.ItemKey = $oop.createClass('$entity.ItemKey')
       fieldKey.parentKey.documentType,
       fieldKey.entityName
     ]);
-  },
-
-  /**
-   * @return {$entity.CollectionFieldKey}
-   */
-  getParentKey: function () {
-    return this.parentKey;
-  },
-
-  /**
-   * @return {string}
-   */
-  getEntityName: function () {
-    return this.entityName;
   },
 
   /**
@@ -179,11 +141,7 @@ $entity.ItemKey
 
 $entity.EntityKey
 .forwardBlend($entity.ItemKey, function (properties) {
-  var entityPath = properties._entityPath,
-      components = entityPath && entityPath.components;
-  return components &&
-      components.length === 5 &&
-      components[0] === 'document';
+  return $entity.CollectionFieldKey.mixedBy(properties.parentKey);
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{

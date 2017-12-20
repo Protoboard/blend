@@ -22,14 +22,35 @@ $entity.FieldKey = $oop.createClass('$entity.FieldKey')
 .implement($utils.Stringifiable)
 .define(/** @lends $entity.FieldKey# */{
   /**
-   * Identifies the document the field belongs to.
-   * @member {$entity.DocumentKey} $entity.FieldKey#parentKey
+   * @memberOf $entity.FieldKey
+   * @param {$data.TreePath} entityPath
+   * @param {Object} [properties]
+   * @returns {$entity.FieldKey}
    */
+  fromEntityPath: function (entityPath, properties) {
+    var components = entityPath.components;
+    return this.create({
+      parentKey: $entity.DocumentKey.fromComponents(components[1], components[2]),
+      entityName: components[3]
+    }, properties);
+  },
 
   /**
-   * Identifies the field in the context of the containing document.
-   * @member {string} $entity.FieldKey#fieldName
+   * @memberOf $entity.FieldKey
+   * @param {string} reference
+   * @param {Object} [properties]
+   * @returns {$entity.FieldKey}
    */
+  fromString: function (reference, properties) {
+    var components = $utils.safeSplit(reference, '/')
+    .map(function (component) {
+      return $utils.unescape(component, '/');
+    });
+    return this.create({
+      parentKey: $entity.DocumentKey.fromComponents(components[0], components[1]),
+      entityName: components[2]
+    }, properties);
+  },
 
   /**
    * @memberOf $entity.FieldKey
@@ -47,48 +68,6 @@ $entity.FieldKey = $oop.createClass('$entity.FieldKey')
   },
 
   /**
-   * @memberOf $entity.FieldKey
-   * @param {string} fieldRef
-   * @param {Object} [properties]
-   * @returns {$entity.FieldKey}
-   */
-  fromString: function (fieldRef, properties) {
-    var components = $utils.safeSplit(fieldRef, '/')
-    .map(function (component) {
-      return $utils.unescape(component, '/');
-    });
-    return this.create({
-      parentKey: $entity.DocumentKey.fromComponents(components[0], components[1]),
-      entityName: components[2]
-    }, properties);
-  },
-
-  /** @ignore */
-  spread: function () {
-    var entityPath = this._entityPath,
-        components;
-
-    if (entityPath &&
-        (!this.parentKey || this.entityName === undefined)
-    ) {
-      // we have entity path but not all key components
-      components = entityPath.components;
-      this.parentKey = $entity.DocumentKey.fromComponents(components[1], components[2]);
-      this.entityName = components[3];
-    }
-  },
-
-  /**
-   * @param {$entity.FieldKey} fieldKey
-   * @returns {boolean}
-   */
-  equals: function equals(fieldKey) {
-    return equals.returned &&
-        this.parentKey.equals(fieldKey.parentKey) &&
-        this.entityName === fieldKey.entityName;
-  },
-
-  /**
    * @inheritDoc
    * @returns {$entity.DocumentKey}
    */
@@ -100,36 +79,6 @@ $entity.FieldKey = $oop.createClass('$entity.FieldKey')
   },
 
   /**
-   * @inheritDoc
-   * @param childId
-   * @returns {$entity.ItemKey}
-   */
-  getChildKey: function (childId) {
-    var documentKey = this.parentKey;
-    return $entity.ItemKey.fromComponents(
-        documentKey.documentType,
-        documentKey.entityName,
-        this.entityName,
-        childId
-    );
-  },
-
-  /**
-   * @return {$entity.DocumentKey}
-   */
-  getParentKey: function () {
-    return this.parentKey;
-  },
-
-  /**
-   * @return {string}
-   */
-  getEntityName: function () {
-    return this.entityName;
-  },
-
-  /**
-   * @inheritDoc
    * @returns {$data.TreePath}
    */
   getEntityPath: function () {
@@ -177,11 +126,7 @@ $entity.FieldKey
 
 $entity.EntityKey
 .forwardBlend($entity.FieldKey, function (properties) {
-  var entityPath = properties._entityPath,
-      components = entityPath && entityPath.components;
-  return components &&
-      components.length === 4 &&
-      components[0] === 'document';
+  return $entity.DocumentKey.mixedBy(properties.parentKey);
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{

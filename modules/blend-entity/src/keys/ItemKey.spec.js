@@ -32,7 +32,7 @@ describe("$entity", function () {
 
       it("should set fieldKey & itemId properties", function () {
         itemKey = ItemKey.fromComponents('foo', 'bar', 'baz', 'quux');
-        expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+        expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
         expect(itemKey.entityName).toBe('quux');
       });
 
@@ -50,7 +50,7 @@ describe("$entity", function () {
 
       it("should set fieldKey & itemId properties", function () {
         itemKey = ItemKey.fromString('foo/bar/baz/\\/quux');
-        expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+        expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
         expect(itemKey.entityName).toBe('/quux');
       });
 
@@ -61,19 +61,6 @@ describe("$entity", function () {
     });
 
     describe("create()", function () {
-      describe("from _entityPath", function () {
-        beforeEach(function () {
-          itemKey = ItemKey.create({
-            _entityPath: 'document.foo.bar.baz.quux'.toTreePath()
-          });
-        });
-
-        it("should set fieldKey & itemId properties", function () {
-          expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
-          expect(itemKey.entityName).toBe('quux');
-        });
-      });
-
       describe("when documentType is static", function () {
         beforeEach(function () {
           itemKey = $entity.ItemKey.create({
@@ -118,40 +105,6 @@ describe("$entity", function () {
       it("should return attribute document key to parent field", function () {
         expect(result.equals($entity.DocumentKey.fromString('__field/foo\\/baz')))
         .toBeTruthy();
-      });
-    });
-
-    describe("getParentKey()", function () {
-      var fieldKey;
-
-      beforeEach(function () {
-        fieldKey = 'foo/bar/baz'.toFieldKey();
-        itemKey = itemKey = ItemKey.create({
-          parentKey: fieldKey,
-          entityName: 'quux'
-        });
-      });
-
-      it("should return associated DocumentKey", function () {
-        var result = itemKey.getParentKey();
-        expect(result).toBe(fieldKey);
-      });
-    });
-
-    describe("getEntityName()", function () {
-      var fieldKey;
-
-      beforeEach(function () {
-        fieldKey = 'foo/bar/baz'.toFieldKey();
-        itemKey = itemKey = ItemKey.create({
-          parentKey: fieldKey,
-          entityName: 'quux'
-        });
-      });
-
-      it("should return itemId", function () {
-        var result = itemKey.getEntityName();
-        expect(result).toBe('quux');
       });
     });
 
@@ -227,10 +180,11 @@ describe("$entity", function () {
     var result;
 
     describe("create()", function () {
-      describe("when passing field entity path", function () {
+      describe("when passing CollectionFieldKey for parentKey", function () {
         beforeEach(function () {
           result = $entity.EntityKey.create({
-            _entityPath: 'document.foo.bar.baz.quux'.toTreePath()
+            parentKey: 'foo/bar/baz'.toCollectionFieldKey(),
+            entityName: 'quux'
           });
         });
 
@@ -253,7 +207,7 @@ describe("String", function () {
 
     it("should set ItemKeyProperties", function () {
       itemKey = 'foo/bar/baz/quux'.toItemKey();
-      expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+      expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
       expect(itemKey.entityName).toBe('quux');
     });
 
@@ -280,7 +234,7 @@ describe("Array", function () {
 
     it("should return created instance", function () {
       itemKey = components.toItemKey();
-      expect(itemKey.parentKey).toEqual('foo/bar/baz'.toFieldKey());
+      expect(itemKey.parentKey).toEqual('foo/bar/baz'.toCollectionFieldKey());
       expect(itemKey.entityName).toBe('quux');
     });
 

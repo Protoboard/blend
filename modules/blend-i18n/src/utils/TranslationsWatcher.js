@@ -20,10 +20,13 @@ $i18n.TranslationsWatcher = $oop.createClass('$i18n.TranslationsWatcher')
    */
   onTranslationsFieldChange: function (event) {
     var translationsField = event.sender,
-        localeKey = translationsField.entityKey.parentKey;
+        localeKey;
 
-    return $i18n.Locale.fromLocaleKey(localeKey)
-    .trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
+    if ($entity.CollectionField.mixedBy(translationsField)) {
+      localeKey = translationsField.entityKey.parentKey;
+      return $i18n.Locale.fromLocaleKey(localeKey)
+      .trigger($i18n.EVENT_TRANSLATIONS_CHANGE);
+    }
   },
 
   /**

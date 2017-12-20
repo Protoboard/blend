@@ -66,7 +66,7 @@ describe("$i18n", function () {
 
     describe("setLocaleName()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
       });
 
@@ -77,14 +77,14 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setLocaleName('baz');
-        var path = 'document.foo.bar.localeName'.toTreePath();
+        var path = 'document._locale.bar.localeName'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
 
     describe("getLocaleName()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.setNode({
           localeName: 'baz'
         });
@@ -97,7 +97,7 @@ describe("$i18n", function () {
 
     describe("setCountryCode()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
       });
 
@@ -108,14 +108,14 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setCountryCode('baz');
-        var path = 'document.foo.bar.countryCode'.toTreePath();
+        var path = 'document._locale.bar.countryCode'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
 
     describe("getCountryCode()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.setNode({
           countryCode: 'baz'
         });
@@ -128,7 +128,7 @@ describe("$i18n", function () {
 
     describe("setLanguageCode()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
       });
 
@@ -139,14 +139,14 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setLanguageCode('baz');
-        var path = 'document.foo.bar.languageCode'.toTreePath();
+        var path = 'document._locale.bar.languageCode'.toTreePath();
         expect($entity.entities.getNode(path)).toBe('baz');
       });
     });
 
     describe("getLanguageCode()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.setNode({
           languageCode: 'baz'
         });
@@ -162,7 +162,7 @@ describe("$i18n", function () {
 
       beforeEach(function () {
         pluralFormula = 'nplurals=2; plural=(n != 1);';
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
       });
 
@@ -181,7 +181,7 @@ describe("$i18n", function () {
 
       it("should set localeName field", function () {
         localeDocument.setPluralFormula(pluralFormula);
-        var path = 'document.foo.bar.pluralFormula'.toTreePath();
+        var path = 'document._locale.bar.pluralFormula'.toTreePath();
         expect($entity.entities.getNode(path)).toBe(pluralFormula);
       });
     });
@@ -191,7 +191,7 @@ describe("$i18n", function () {
 
       beforeEach(function () {
         pluralFormula = 'nplurals=2; plural=(n != 1);';
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.setNode({
           pluralFormula: pluralFormula
         });
@@ -204,27 +204,27 @@ describe("$i18n", function () {
 
     describe("addTranslationKey()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
       });
 
       it("should return self", function () {
-        var result = localeDocument.addTranslationKey('baz/quux'.toDocumentKey());
+        var result = localeDocument.addTranslationKey('_translation/quux'.toDocumentKey());
         expect(result).toBe(localeDocument);
       });
 
       it("should set reference in translations field", function () {
-        localeDocument.addTranslationKey('baz/quux'.toDocumentKey());
-        var path = 'document.foo.bar.translations'.toTreePath();
+        localeDocument.addTranslationKey('_translation/quux'.toDocumentKey());
+        var path = 'document._locale.bar.translations'.toTreePath();
         expect($entity.entities.getNode(path)).toEqual({
-          'baz/quux': 1
+          '_translation/quux': 1
         });
       });
     });
 
     describe("hasTranslationKey()", function () {
       beforeEach(function () {
-        localeDocument = LocaleDocument.fromEntityKey('foo/bar'.toDocumentKey());
+        localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
       });
 
       describe("for present translation reference", function () {
@@ -237,7 +237,7 @@ describe("$i18n", function () {
         });
 
         it("should return truthy", function () {
-          expect(localeDocument.hasTranslationKey('foo/bar'.toDocumentKey()))
+          expect(localeDocument.hasTranslationKey('_locale/bar'.toDocumentKey()))
           .toBeTruthy();
         });
       });
@@ -248,7 +248,7 @@ describe("$i18n", function () {
         });
 
         it("should return falsy", function () {
-          expect(localeDocument.hasTranslationKey('foo/bar'.toDocumentKey()))
+          expect(localeDocument.hasTranslationKey('_locale/bar'.toDocumentKey()))
           .toBeFalsy();
         });
       });

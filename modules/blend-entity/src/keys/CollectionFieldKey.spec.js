@@ -60,6 +60,23 @@ describe("$entity", function () {
         expect(result).toEqual([3, 4]);
       });
     });
+
+    describe("getChildKey()", function () {
+      beforeEach(function () {
+        result = collectionFieldKey.getChildKey('quux');
+      });
+
+      it("should return an ItemKey", function () {
+        expect($entity.ItemKey.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should return item in collection", function () {
+        expect(result).toEqual($entity.ItemKey.create({
+          parentKey: collectionFieldKey,
+          entityName: 'quux'
+        }));
+      });
+    });
   });
 
   describe("FieldKey", function () {
@@ -80,6 +97,55 @@ describe("$entity", function () {
           expect($entity.CollectionFieldKey.mixedBy(result)).toBeTruthy();
         });
       });
+    });
+  });
+});
+
+describe("String", function () {
+  describe("toCollectionFieldKey()", function () {
+    var fieldKey;
+
+    it("should create a CollectionFieldKey instance", function () {
+      fieldKey = 'foo/bar/baz'.toCollectionFieldKey();
+      expect($entity.CollectionFieldKey.mixedBy(fieldKey)).toBeTruthy();
+    });
+
+    it("should set FieldKey properties", function () {
+      fieldKey = 'foo/bar/baz'.toCollectionFieldKey();
+      expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+      expect(fieldKey.entityName).toBe('baz');
+    });
+
+    it("should pass additional properties to create", function () {
+      fieldKey = 'foo/bar/baz'.toCollectionFieldKey({bar: 'baz'});
+      expect(fieldKey.bar).toBe('baz');
+    });
+  });
+});
+
+describe("Array", function () {
+  describe("toCollectionFieldKey()", function () {
+    var components,
+        fieldKey;
+
+    beforeEach(function () {
+      components = ['foo', 'bar', 'baz'];
+    });
+
+    it("should create a CollectionFieldKey instance", function () {
+      fieldKey = components.toCollectionFieldKey();
+      expect($entity.CollectionFieldKey.mixedBy(fieldKey)).toBeTruthy();
+    });
+
+    it("should set FieldKey properties", function () {
+      fieldKey = components.toCollectionFieldKey();
+      expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
+      expect(fieldKey.entityName).toBe('baz');
+    });
+
+    it("should pass additional properties to create", function () {
+      fieldKey = components.toCollectionFieldKey({bar: 'baz'});
+      expect(fieldKey.bar).toBe('baz');
     });
   });
 });

@@ -17,11 +17,11 @@ describe("$entity", function () {
       EntityKey = $oop.createClass('test.$entity.Entity.EntityKey')
       .blend($entity.EntityKey)
       .define({
+        getEntityPath: function () {
+          return ['foo', 'bar', this.entityName].toTreePath();
+        },
         getAttributeDocumentKey: function () {
           return '__foo/bar'.toDocumentKey();
-        },
-        getChildKey: function (childId) {
-          return EntityKey.fromEntityPath(['foo', childId].toTreePath());
         }
       })
       .build();
@@ -32,7 +32,9 @@ describe("$entity", function () {
     });
 
     beforeEach(function () {
-      entityKey = EntityKey.fromEntityPath('foo.bar.baz'.toTreePath());
+      entityKey = EntityKey.create({
+        entityName: 'baz'
+      });
       entity = Entity.fromEntityKey(entityKey);
     });
 
@@ -68,19 +70,21 @@ describe("$entity", function () {
       describe("when entityKey is cached", function () {
         var EntityKey,
             entityKey,
-            entity,
-            result;
+            entity;
 
         beforeAll(function () {
           EntityKey = $oop.createClass('test.$entity.Entity.EntityKey')
           .blend($entity.EntityKey)
           .blend($utils.StringifyCached)
           .define({
+            getEntityPath: function () {
+              return ['foo', 'bar', this.entityName].toTreePath();
+            },
             getAttributeDocumentKey: function () {
-              return 'FOO/BAR'.toDocumentKey();
+              return '__foo/bar'.toDocumentKey();
             },
             toString: function () {
-              return this._entityPath + '';
+              return this.entityName;
             }
           })
           .build();
@@ -88,14 +92,13 @@ describe("$entity", function () {
 
         beforeEach(function () {
           entityKey = EntityKey.create({
-            _entityPath: 'foo'.toTreePath()
+            entityName: 'baz'
           });
           entity = $entity.Entity.fromEntityKey(entityKey);
-
-          result = $entity.Entity.fromEntityKey(entityKey);
         });
 
         it("should retrieve cached instance", function () {
+          var result = $entity.Entity.fromEntityKey(entityKey);
           expect(result).toBe(entity);
         });
       });
@@ -404,7 +407,7 @@ describe("$entity", function () {
 
       beforeEach(function () {
         entity = 'foo/bar/baz/quux'.toItem();
-        fieldKey = 'foo/bar/baz'.toFieldKey();
+        fieldKey = 'foo/bar/baz'.toCollectionFieldKey();
         fieldKey.getEntityPath();
       });
 

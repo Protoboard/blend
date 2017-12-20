@@ -5,30 +5,55 @@
  * @class $entity.EntityKey
  * @extends $utils.Equatable
  * @extends $data.Comparable
- * @todo Add parentKey & entityName properties?
  */
 $entity.EntityKey = $oop.createClass('$entity.EntityKey')
 .blend($utils.Equatable)
 .blend($data.Comparable)
 .define(/** @lends $entity.EntityKey# */{
   /**
-   * Identifies the entity's data node in the entity store.
-   * @member {$data.TreePath} $entity.EntityKey#_entityPath
-   * @protected
+   * @member {$entity.EntityKey} $entity.EntityKey#parentKey
    */
 
   /**
-   * Subclasses are expected to spread the entity path onto key-specific
-   * properties.
+   * @member {string} $entity.EntityKey#entityName
+   */
+
+  /**
+   * Identifies the entity's data node in the entity store.
+   * @member {$data.TreePath} $entity.EntityKey#_entityPath
+   * @private
+   */
+
+  /**
+   * @member {string} $entity.EntityKey#_reference
+   * @private
+   */
+
+  /**
    * @memberOf $entity.EntityKey
    * @param {$data.TreePath} entityPath
    * @param {Object} [properties]
    * @returns {$entity.EntityKey}
    */
-  fromEntityPath: function (entityPath, properties) {
-    return this.create({
-      _entityPath: entityPath
-    }, properties);
+  fromEntityPath: function (entityPath, properties) {},
+
+  /**
+   * @memberOf $entity.EntityKey
+   * @param {string} reference
+   * @param {Object} [properties]
+   * @returns {$entity.EntityKey}
+   */
+  fromString: function (reference, properties) {},
+
+  /**
+   * @param {$entity.EntityKey} entityKey
+   * @returns {boolean}
+   */
+  equals: function equals(entityKey) {
+    return equals.returned &&
+        (this.parentKey === entityKey.parentKey ||
+            this.parentKey.equals(entityKey.parentKey)) &&
+        this.entityName === entityKey.entityName;
   },
 
   /**
@@ -38,6 +63,16 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
    */
   getEntityPath: function () {
     return this._entityPath;
+  },
+
+  /**
+   * @return {string}
+   */
+  getReference: function () {
+    if (this._reference === undefined) {
+      this._reference = this.toString();
+    }
+    return this._reference;
   },
 
   /**
@@ -70,34 +105,12 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
    * Retrieves a key to the child entity identified by `childId`.
    * @param {string} childId
    * @returns {$entity.EntityKey}
-   * @abstract
    */
-  getChildKey: function (childId) {},
-
-  /**
-   * Retrieves a key to the parent entity.
-   * @returns {$entity.EntityKey}
-   * @abstract
-   */
-  getParentKey: function () {},
-
-  /**
-   * Retrieves a string that identifies the current entity in the context of
-   * its parent.
-   * @returns {string}
-   * @abstract
-   */
-  getEntityName: function () {}
+  getChildKey: function (childId) {
+    return $entity.EntityKey.create({
+      parentKey: this,
+      entityName: childId
+    });
+  }
 })
 .build();
-
-$data.TreePath
-.delegate(/** @lends $data.TreePath# */{
-  /**
-   * @param {Object} [properties]
-   * @returns {$entity.EntityKey}
-   */
-  toEntityKey: function (properties) {
-    return $entity.EntityKey.fromEntityPath(this, properties);
-  }
-});

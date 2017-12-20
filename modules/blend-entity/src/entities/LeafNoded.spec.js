@@ -36,7 +36,7 @@ describe("$entity", function () {
 
         it("should spawn single event", function () {
           expect(result).toEqual([
-            'foo/bar/baz'.toField().spawnEvent({
+            LeafNodedField.fromString('foo/bar/baz').spawnEvent({
               eventName: $entity.EVENT_ENTITY_CHANGE,
               nodeBefore: "Hello",
               nodeAfter: "World"

@@ -225,17 +225,15 @@ describe("$entity", function () {
     describe("getField()", function () {
       var field;
 
-      beforeEach(function () {
-        field = $entity.Field.fromEntityKey('foo/bar/baz'.toFieldKey());
-        result = document.getField('baz');
-      });
-
       it("should return a Field instance", function () {
-        expect($entity.Field.mixedBy(result)).toBeTruthy();
+        field = document.getField('baz');
+        expect($entity.Field.mixedBy(field)).toBeTruthy();
       });
 
       it("should set field components", function () {
-        expect(result).toEqual(field);
+        field = $entity.Field.fromEntityKey('foo/bar/baz'.toFieldKey());
+        var result = document.getField('baz');
+        expect(result.equals(field)).toBeTruthy();
       });
     });
   });

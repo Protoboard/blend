@@ -44,8 +44,7 @@ $entity.Entity = $oop.createClass('$entity.Entity')
     .setListeningPath(listeningPath)
     .addTriggerPath(listeningPath)
     .addTriggerPath('entity')
-    .addTriggerPath('entity.' +
-        attributeDocumentKey.getEntityPath());
+    .addTriggerPath('entity.' + attributeDocumentKey.getEntityPath());
   },
 
   /**
@@ -55,7 +54,7 @@ $entity.Entity = $oop.createClass('$entity.Entity')
    */
   _getParentNodeBefore: function (nodeBefore) {
     var result = {};
-    result[this.entityKey.getEntityName()] = nodeBefore;
+    result[this.entityKey.entityName] = nodeBefore;
     return result;
   },
 
@@ -201,7 +200,7 @@ $entity.Entity = $oop.createClass('$entity.Entity')
    * @returns {$entity.Entity}
    */
   getParentEntity: function () {
-    var parentKey = this.entityKey.getParentKey();
+    var parentKey = this.entityKey.parentKey;
     return parentKey && $entity.Entity.fromEntityKey(parentKey);
   }
 })

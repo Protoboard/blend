@@ -24,9 +24,35 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
    */
 
   /**
-   * Identifies the document in the context of its document type.
-   * @member {string} $entity.DocumentKey#entityName
+   * @memberOf $entity.DocumentKey
+   * @param {$data.TreePath} entityPath
+   * @param {Object} [properties]
+   * @returns {$entity.DocumentKey}
    */
+  fromEntityPath: function (entityPath, properties) {
+    var components = entityPath.components;
+    return this.create({
+      documentType: components[1],
+      entityName: components[2]
+    }, properties);
+  },
+
+  /**
+   * @memberOf $entity.DocumentKey
+   * @param {string} reference
+   * @param {Object} [properties]
+   * @returns {$entity.DocumentKey}
+   */
+  fromString: function (reference, properties) {
+    var components = $utils.safeSplit(reference, '/')
+    .map(function (component) {
+      return $utils.unescape(component, '/');
+    });
+    return this.create({
+      documentType: components[0],
+      entityName: components[1]
+    }, properties);
+  },
 
   /**
    * @memberOf $entity.DocumentKey
@@ -43,45 +69,12 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
   },
 
   /**
-   * @memberOf $entity.DocumentKey
-   * @param {string} documentRef
-   * @param {Object} [properties]
-   * @returns {$entity.DocumentKey}
-   */
-  fromString: function (documentRef, properties) {
-    var components = $utils.safeSplit(documentRef, '/')
-    .map(function (component) {
-      return $utils.unescape(component, '/');
-    });
-    return this.create({
-      documentType: components[0],
-      entityName: components[1]
-    }, properties);
-  },
-
-  /** @ignore */
-  spread: function () {
-    var entityPath = this._entityPath,
-        components;
-
-    if (entityPath &&
-        (this.documentType === undefined || this.entityName === undefined)
-    ) {
-      // we have entity path but not all key components
-      components = entityPath.components;
-      this.documentType = components[1];
-      this.entityName = components[2];
-    }
-  },
-
-  /**
    * @param {$entity.DocumentKey} documentKey
    * @returns {boolean}
    */
   equals: function equals(documentKey) {
     return equals.returned &&
-        this.documentType === documentKey.documentType &&
-        this.entityName === documentKey.entityName;
+        this.documentType === documentKey.documentType;
   },
 
   /**
@@ -94,20 +87,6 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
   },
 
   /**
-   * @inheritDoc
-   * @param {string} childId
-   * @returns {$entity.FieldKey}
-   */
-  getChildKey: function (childId) {
-    return $entity.FieldKey.fromComponents(
-        this.documentType,
-        this.entityName,
-        childId
-    );
-  },
-
-  /**
-   * @inheritDoc
    * @returns {$data.TreePath}
    */
   getEntityPath: function () {
@@ -159,11 +138,8 @@ $entity.DocumentKey = $oop.createClass('$entity.DocumentKey')
 
 $entity.EntityKey
 .forwardBlend($entity.DocumentKey, function (properties) {
-  var entityPath = properties._entityPath,
-      components = entityPath && entityPath.components;
-  return components &&
-      components.length === 3 &&
-      components[0] === 'document';
+  return properties.parentKey === undefined &&
+      properties.documentType !== undefined;
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{

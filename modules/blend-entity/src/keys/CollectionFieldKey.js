@@ -68,3 +68,24 @@ $entity.FieldKey
 
   return valueType === 'collection';
 });
+
+$oop.copyProperties(String.prototype, /** @lends String# */{
+  /**
+   * @param {Object} [properties]
+   * @returns {$entity.FieldKey}
+   */
+  toCollectionFieldKey: function (properties) {
+    return $entity.CollectionFieldKey.fromString(this.valueOf(), properties);
+  }
+});
+
+$oop.copyProperties(Array.prototype, /** @lends Array# */{
+  /**
+   * @param {Object} [properties]
+   * @returns {$entity.FieldKey}
+   */
+  toCollectionFieldKey: function (properties) {
+    return $entity.CollectionFieldKey.fromComponents(
+        this[0], this[1], this[2], properties);
+  }
+});

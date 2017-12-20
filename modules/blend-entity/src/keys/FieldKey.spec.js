@@ -61,19 +61,6 @@ describe("$entity", function () {
     });
 
     describe("create()", function () {
-      describe("from _entityPath", function () {
-        beforeEach(function () {
-          fieldKey = FieldKey.create({
-            _entityPath: 'document.foo.bar.baz'.toTreePath()
-          });
-        });
-
-        it("should set documentKey & fieldName properties", function () {
-          expect(fieldKey.parentKey).toEqual('foo/bar'.toDocumentKey());
-          expect(fieldKey.entityName).toBe('baz');
-        });
-      });
-
       describe("when documentType is static", function () {
         beforeEach(function () {
           fieldKey = $entity.FieldKey.create({
@@ -118,54 +105,6 @@ describe("$entity", function () {
       it("should return attribute document key to the field", function () {
         expect(result.equals($entity.DocumentKey.fromString('__field/foo\\/baz')))
         .toBeTruthy();
-      });
-    });
-
-    describe("getChildKey()", function () {
-      beforeEach(function () {
-        result = fieldKey.getChildKey('quux');
-      });
-
-      it("should return an ItemKey", function () {
-        expect($entity.ItemKey.mixedBy(result)).toBeTruthy();
-      });
-
-      it("should return item in collection", function () {
-        expect(result).toEqual('foo/bar/baz/quux'.toItemKey());
-      });
-    });
-
-    describe("getParentKey()", function () {
-      var documentKey;
-
-      beforeEach(function () {
-        documentKey = 'foo/bar'.toDocumentKey();
-        fieldKey = FieldKey.create({
-          parentKey: documentKey,
-          entityName: 'baz'
-        });
-      });
-
-      it("should return associated DocumentKey", function () {
-        var result = fieldKey.getParentKey();
-        expect(result).toBe(documentKey);
-      });
-    });
-
-    describe("getEntityName()", function () {
-      var documentKey;
-
-      beforeEach(function () {
-        documentKey = 'foo/bar'.toDocumentKey();
-        fieldKey = FieldKey.create({
-          parentKey: documentKey,
-          entityName: 'baz'
-        });
-      });
-
-      it("should return fieldName", function () {
-        var result = fieldKey.getEntityName();
-        expect(result).toBe('baz');
       });
     });
 
@@ -221,10 +160,11 @@ describe("$entity", function () {
     var result;
 
     describe("create()", function () {
-      describe("when passing field entity path", function () {
+      describe("when passing DocumentKey for parentKey", function () {
         beforeEach(function () {
           result = $entity.EntityKey.create({
-            _entityPath: 'document.foo.bar.baz'.toTreePath()
+            parentKey: 'foo/bar'.toDocumentKey(),
+            entityName: 'baz'
           });
         });
 

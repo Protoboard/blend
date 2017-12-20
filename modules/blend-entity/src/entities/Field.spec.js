@@ -111,23 +111,6 @@ describe("$entity", function () {
         });
       });
     });
-
-    describe("getItem()", function () {
-      var item;
-
-      beforeEach(function () {
-        item = $entity.Item.fromEntityKey('foo/bar/baz/quux'.toItemKey());
-        result = field.getItem('quux');
-      });
-
-      it("should return an Item instance", function () {
-        expect($entity.Item.mixedBy(result)).toBeTruthy();
-      });
-
-      it("should set item components", function () {
-        expect(result).toEqual(item);
-      });
-    });
   });
 
   describe("FieldKey", function () {

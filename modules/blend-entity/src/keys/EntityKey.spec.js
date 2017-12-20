@@ -26,45 +26,6 @@ describe("$entity", function () {
       entityKey = EntityKey.create();
     });
 
-    describe("fromEntityPath()", function () {
-      var entityPath;
-
-      beforeEach(function () {
-        entityPath = 'document.foo.bar'.toTreePath();
-      });
-
-      it("should create new EntityKey instance", function () {
-        entityKey = EntityKey.fromEntityPath(entityPath);
-        expect(EntityKey.mixedBy(entityKey)).toBeTruthy();
-      });
-
-      it("should set _entityPath", function () {
-        entityKey = EntityKey.fromEntityPath(entityPath);
-        expect(entityKey._entityPath).toBe(entityPath);
-      });
-
-      it("should pass additional properties to create", function () {
-        entityKey = EntityKey.fromEntityPath(entityPath, {bar: 'baz'});
-        expect(entityKey.bar).toBe('baz');
-      });
-    });
-
-    describe("getEntityPath()", function () {
-      describe("when created from Path", function () {
-        var entityPath;
-
-        beforeEach(function () {
-          entityPath = 'foo.bar'.toTreePath();
-          entityKey = EntityKey.fromEntityPath(entityPath);
-          result = entityKey.getEntityPath();
-        });
-
-        it("should return _entityPath", function () {
-          expect(result).toBe(entityPath);
-        });
-      });
-    });
-
     describe("getAttribute()", function () {
       var attributeKey;
 
@@ -101,37 +62,6 @@ describe("$entity", function () {
 
       it("should retrieve nodeType attribute", function () {
         expect(result).toBe('QUUX');
-      });
-    });
-  });
-});
-
-describe("$data", function () {
-  describe("TreePath", function () {
-    var TreePath,
-        treePath,
-        entityKey;
-
-    beforeAll(function () {
-      TreePath = $oop.createClass('test.$entity.EntityKey.TreePath')
-      .blend($data.TreePath)
-      .build();
-      TreePath.__builder.forwards = {list: [], lookup: {}};
-    });
-
-    describe("toEntityKey()", function () {
-      beforeEach(function () {
-        treePath = TreePath.fromComponents(['document', 'foo', 'bar']);
-      });
-
-      it("should return EntityKey instance", function () {
-        entityKey = treePath.toEntityKey();
-        expect($entity.EntityKey.mixedBy(entityKey)).toBeTruthy();
-      });
-
-      it("should pass additional properties to create", function () {
-        entityKey = treePath.toEntityKey({bar: 'baz'});
-        expect(entityKey.bar).toBe('baz');
       });
     });
   });

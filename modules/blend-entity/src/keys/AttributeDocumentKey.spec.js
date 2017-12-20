@@ -24,7 +24,7 @@ describe("$entity", function () {
         attributeDocumentKey = AttributeDocumentKey.fromDocumentIdComponents(
             'foo', ['bar', 'baz', 'quux']);
         expect(attributeDocumentKey)
-        .toEqual(['foo', 'bar/baz/quux'].toDocumentKey());
+        .toEqual(AttributeDocumentKey.fromComponents('foo', 'bar/baz/quux'));
       });
 
       it("should pass additional properties to create", function () {
