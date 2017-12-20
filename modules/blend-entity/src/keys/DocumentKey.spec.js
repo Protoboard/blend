@@ -115,23 +115,6 @@ describe("$entity", function () {
       });
     });
 
-    describe("getChildKey()", function () {
-      beforeEach(function () {
-        result = documentKey.getChildKey('baz');
-      });
-
-      it("should return a FieldKey", function () {
-        expect($entity.FieldKey.mixedBy(result)).toBeTruthy();
-      });
-
-      it("should return field in document", function () {
-        expect(result).toEqual($entity.FieldKey.create({
-          parentKey: documentKey,
-          entityName: 'baz'
-        }));
-      });
-    });
-
     describe("getEntityPath()", function () {
       beforeEach(function () {
         result = documentKey.getEntityPath();

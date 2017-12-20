@@ -38,6 +38,23 @@ describe("$entity", function () {
       });
     });
 
+    describe("getChildKey()", function () {
+      beforeEach(function () {
+        result = entityKey.getChildKey('baz');
+      });
+
+      it("should return an EntityKey", function () {
+        expect($entity.EntityKey.mixedBy(result)).toBeTruthy();
+      });
+
+      it("should return field in document", function () {
+        expect(result).toEqual($entity.EntityKey.create({
+          parentKey: entityKey,
+          entityName: 'baz'
+        }));
+      });
+    });
+
     describe("getAttribute()", function () {
       var attributeKey;
 

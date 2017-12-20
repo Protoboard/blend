@@ -11,10 +11,12 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
 .blend($data.Comparable)
 .define(/** @lends $entity.EntityKey# */{
   /**
+   * Identifies parent entity.
    * @member {$entity.EntityKey} $entity.EntityKey#parentKey
    */
 
   /**
+   * Identifies entity in the context of its parent.
    * @member {string} $entity.EntityKey#entityName
    */
 
@@ -25,6 +27,7 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
    */
 
   /**
+   * String representation of the current entity key.
    * @member {string} $entity.EntityKey#_reference
    * @private
    */
@@ -34,6 +37,7 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
    * @param {$data.TreePath} entityPath
    * @param {Object} [properties]
    * @returns {$entity.EntityKey}
+   * @abstract
    */
   fromEntityPath: function (entityPath, properties) {},
 
@@ -42,6 +46,7 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
    * @param {string} reference
    * @param {Object} [properties]
    * @returns {$entity.EntityKey}
+   * @abstract
    */
   fromString: function (reference, properties) {},
 
@@ -57,9 +62,22 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
   },
 
   /**
+   * Retrieves a key to the child entity identified by `childId`.
+   * @param {string} childId
+   * @returns {$entity.EntityKey}
+   */
+  getChildKey: function (childId) {
+    return $entity.EntityKey.create({
+      parentKey: this,
+      entityName: childId
+    });
+  },
+
+  /**
    * Retrieves a `Path` instance identifying the entity's data node in the
    * entity store.
    * @returns {$data.TreePath}
+   * @abstract
    */
   getEntityPath: function () {
     return this._entityPath;
@@ -74,6 +92,13 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
     }
     return this._reference;
   },
+
+  /**
+   * Retrieves a key to the attributes associated with the entity class.
+   * @returns {$entity.DocumentKey}
+   * @abstract
+   */
+  getAttributeDocumentKey: function () {},
 
   /**
    * Retrieves a static attribute associated with the current entity.
@@ -92,25 +117,6 @@ $entity.EntityKey = $oop.createClass('$entity.EntityKey')
    */
   getNodeType: function () {
     return this.getAttribute('nodeType');
-  },
-
-  /**
-   * Retrieves a key to the attributes associated with the entity class.
-   * @returns {$entity.DocumentKey}
-   * @abstract
-   */
-  getAttributeDocumentKey: function () {},
-
-  /**
-   * Retrieves a key to the child entity identified by `childId`.
-   * @param {string} childId
-   * @returns {$entity.EntityKey}
-   */
-  getChildKey: function (childId) {
-    return $entity.EntityKey.create({
-      parentKey: this,
-      entityName: childId
-    });
   }
 })
 .build();

@@ -60,23 +60,6 @@ describe("$entity", function () {
         expect(result).toEqual([3, 4]);
       });
     });
-
-    describe("getChildKey()", function () {
-      beforeEach(function () {
-        result = collectionFieldKey.getChildKey('quux');
-      });
-
-      it("should return an ItemKey", function () {
-        expect($entity.ItemKey.mixedBy(result)).toBeTruthy();
-      });
-
-      it("should return item in collection", function () {
-        expect(result).toEqual($entity.ItemKey.create({
-          parentKey: collectionFieldKey,
-          entityName: 'quux'
-        }));
-      });
-    });
   });
 
   describe("FieldKey", function () {
