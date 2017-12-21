@@ -119,6 +119,38 @@ describe("$oop", function () {
       });
     });
 
+    describe("setup()", function () {
+      var callbacks;
+
+      beforeEach(function () {
+        classBuilder = $oop.ClassBuilder.create('foo');
+        callbacks = {
+          foo: function () {}
+        };
+      });
+
+      describe("on invalid members", function () {
+        it("should throw", function () {
+          expect(function () {
+            classBuilder.define();
+          }).toThrow();
+          expect(function () {
+            classBuilder.define('foo');
+          }).toThrow();
+        });
+      });
+
+      it("should return self", function () {
+        var result = classBuilder.setup(callbacks);
+        expect(result).toBe(classBuilder);
+      });
+
+      it("should copy members", function () {
+        classBuilder.setup(callbacks);
+        expect(classBuilder.callbacks).toEqual(callbacks);
+      });
+    });
+
     describe("mix()", function () {
       var mixinBuilder,
           Mixin;
@@ -764,6 +796,28 @@ describe("$oop", function () {
             ]);
           });
         });
+
+        describe("when one of the mixins adds custom build", function () {
+          var BuildMixin,
+              build;
+
+          beforeEach(function () {
+            build = jasmine.createSpy();
+            BuildMixin = $oop.createClass('BuildMixin')
+            .setup({
+              build: build
+            })
+            .build();
+
+            classBuilder.mix(BuildMixin);
+          });
+
+          it("should invoke custom build", function () {
+            classBuilder.build();
+            var call = build.calls.mostRecent();
+            expect(call.object).toEqual(classBuilder.Class);
+          });
+        });
       });
 
       describe("when class has delegates", function () {
@@ -779,6 +833,23 @@ describe("$oop", function () {
         it("should copy delegates to class", function () {
           Class = classBuilder.build();
           expect(Class.foo).toBe(members.foo);
+        });
+      });
+
+      describe("when class adds custom build", function () {
+        var build;
+
+        beforeEach(function () {
+          build = jasmine.createSpy();
+          classBuilder.setup({
+            build: build
+          });
+        });
+
+        it("should invoke custom build", function () {
+          classBuilder.build();
+          var call = build.calls.mostRecent();
+          expect(call.object).toEqual(classBuilder.Class);
         });
       });
     });

@@ -4,6 +4,7 @@
  * Builds classes.
  * @class $oop.ClassBuilder
  * @todo Add mixes()
+ * @todo Move defaults, spread, & init outside of Class?
  */
 $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBuilder# */{
   /**
@@ -24,6 +25,11 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   /**
    * Properties and methods contributed by the current class.
    * @member {Object} $oop.ClassBuilder#members
+   */
+
+  /**
+   * Callback methods contributed by current class.
+   * @member {Object} $oop.ClassBuilder#callbacks
    */
 
   /**
@@ -96,6 +102,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
       className: className,
       Class: undefined,
       members: {},
+      callbacks: {},
       mixins: {
         downstream: {list: [], lookup: {}},
         upstream: {list: [], lookup: {}}
@@ -314,22 +321,24 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * Extracts a matrix of members contributed by the current class and its
+   * mixins. Indexed by member name, then ordered according to mixin order.
    * @return {Object}
    * @private
    */
-  _extractMemberMatrix: function () {
+  _extractMemberMatrix: function (membersPropertyName) {
     return this.mixins.downstream.list
     .concat([this])
     .map(function (classBuilder) {
-      return classBuilder.members;
+      return classBuilder[membersPropertyName];
     })
     .reduce(function (memberMatrix, mixinMembers) {
       Object.keys(mixinMembers)
-      .forEach(function (property) {
-        if (!hOP.call(memberMatrix, property)) {
-          memberMatrix[property] = [];
+      .forEach(function (propertyName) {
+        if (!hOP.call(memberMatrix, propertyName)) {
+          memberMatrix[propertyName] = [];
         }
-        memberMatrix[property].push(mixinMembers[property]);
+        memberMatrix[propertyName].push(mixinMembers[propertyName]);
       });
       return memberMatrix;
     }, {});
@@ -394,31 +403,24 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
-   * @param {$oop.Class} Class
+   * @param {string} membersPropertyName
    * @private
    */
-  _mergeMembers: function (Class) {
+  _mergeMembers: function (membersPropertyName) {
     var that = this,
-        memberMatrix = this._extractMemberMatrix();
+        memberMatrix = this._extractMemberMatrix(membersPropertyName);
 
-    Object.keys(memberMatrix)
-    .forEach(function (property) {
-      var memberVariants = memberMatrix[property],
+    return Object.keys(memberMatrix)
+    .reduce(function (members, propertyName) {
+      var memberVariants = memberMatrix[propertyName],
           memberSample = memberVariants[0];
       if (typeof memberSample === 'function') {
-        Class[property] = that._mergeMethods(property, memberVariants);
+        members[propertyName] = that._mergeMethods(propertyName, memberVariants);
       } else {
-        Class[property] = that._mergeProperties(property, memberVariants);
+        members[propertyName] = that._mergeProperties(propertyName, memberVariants);
       }
-    });
-  },
-
-  /**
-   * @param {$oop.Class} Class
-   * @private
-   */
-  _applyDelegates: function (Class) {
-    $oop.copyProperties(Class, this.delegates);
+      return members;
+    }, {});
   },
 
   /**
@@ -493,6 +495,31 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
   },
 
   /**
+   * @private
+   */
+  _applyMembers: function () {
+    $oop.copyProperties(this.Class, this._mergeMembers('members'));
+  },
+
+  /**
+   * @private
+   */
+  _applyDelegates: function () {
+    $oop.copyProperties(this.Class, this.delegates);
+  },
+
+  /**
+   * @private
+   */
+  _applyCustomBuild: function () {
+    var callbacks = this._mergeMembers('callbacks'),
+        build = callbacks.build;
+    if (build) {
+      build.call(this.Class);
+    }
+  },
+
+  /**
    * Defines properties and methods to be contributed by the current class.
    * May be called multiple times, but conflicting members will overwrite
    * previous ones.
@@ -503,6 +530,18 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     $assert.isObject(members,
         this.className + "#define() expects type Object, got " + typeof members);
     $oop.copyProperties(this.members, members);
+    return this;
+  },
+
+  /**
+   * Defines callback methods to be invoked on build or instantiation.
+   * @param {Object.<string,function>} callbacks
+   * @return {$oop.ClassBuilder}
+   */
+  setup: function (callbacks) {
+    $assert.isObject(callbacks,
+        this.className + "#callback() expects type Object, got " + typeof callbacks);
+    $oop.copyProperties(this.callbacks, callbacks);
     return this;
   },
 
@@ -635,9 +674,10 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
       $oop.BlenderIndex.addClass(Class);
     }
 
-    // finalizing members
-    this._mergeMembers(Class);
-    this._applyDelegates(Class);
+    // finalizing class members
+    this._applyMembers();
+    this._applyDelegates();
+    this._applyCustomBuild();
 
     return Class;
   },
