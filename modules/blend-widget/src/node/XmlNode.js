@@ -4,7 +4,6 @@
  * XML manifest behavior for `Node` classes.
  * @class $widget.XmlNode
  * @extends $widget.Node
- * @extends $widget.Node
  * @implements $utils.Stringifiable
  */
 $widget.XmlNode = $oop.createClass('$widget.XmlNode')
