@@ -6,7 +6,9 @@ var $assert = require('blend-assert'),
     $data = require('blend-data'),
     $event = require('blend-event'),
     $template = require('blend-template'),
-    $widget = exports;
+    $widget = exports,
+    indexOf = Array.prototype.indexOf,
+    slice = Array.prototype.slice;
 
 /**
  * @namespace $widget

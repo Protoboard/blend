@@ -10,6 +10,8 @@
     "$oop": true,
     "$template": true,
     "$utils": true,
-    "$widget": true
+    "$widget": true,
+    "indexOf": true,
+    "slice": true
   }
 }

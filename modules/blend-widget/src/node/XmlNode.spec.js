@@ -1,6 +1,7 @@
 "use strict";
 
 var $oop = window['blend-oop'],
+    $template = window['blend-template'],
     $widget = window['blend-widget'];
 
 describe("$widget", function () {
@@ -14,6 +15,44 @@ describe("$widget", function () {
       .blend($widget.XmlNode)
       .build();
       XmlNode.__builder.forwards = {list: [], lookup: {}};
+    });
+
+    describe("build()", function () {
+      var XmlNodeBuilder2,
+          XmlNode2;
+
+      beforeEach(function () {
+        XmlNodeBuilder2 = $oop.createClass('test.$widget.XmlNode.XmlNode2')
+        .blend($widget.Node)
+        .blend($widget.XmlNode);
+        XmlNodeBuilder2.forwards = {list: [], lookup: {}};
+      });
+
+      describe("when class has xmlTemplate property", function () {
+        beforeEach(function () {
+          XmlNodeBuilder2
+          .define({
+            xmlTemplate: '<ul><li blend-nodeName="foo"></li></ul>'
+          });
+        });
+
+        it("should initialize _childProperties", function () {
+          XmlNode2 = XmlNodeBuilder2.build();
+          expect(XmlNode2._childProperties)
+          .toEqual({
+            foo: {
+              elementName: 'li',
+              nodeOrder: 0
+            }
+          });
+        });
+
+        it("should initialize _template", function () {
+          XmlNode2 = XmlNodeBuilder2.build();
+          expect(XmlNode2._template)
+          .toEqual('<ul>{{foo}}</ul>'.toTemplate());
+        });
+      });
     });
 
     describe("fromElementName()", function () {
@@ -159,6 +198,45 @@ describe("$widget", function () {
             '<Tag quux="QUUX"></Tag>',
             '</Tag>'
           ].join(''));
+        });
+      });
+
+      describe("when node has xmlTemplate", function () {
+        var XmlNode2;
+
+        beforeEach(function () {
+          XmlNode2 = $oop.createClass('test.$widget.XmlNode.XmlNode2')
+          .blend($widget.Node)
+          .blend($widget.XmlNode)
+          .define({
+            xmlTemplate: '<ul><li blend-nodeName="foo"></li></ul>'
+          })
+          .build();
+          XmlNode2.__builder.forwards = {list: [], lookup: {}};
+        });
+
+        describe("when node has children", function () {
+          beforeEach(function () {
+            xmlNode = XmlNode2.fromElementName('Tag');
+
+            // todo Remove second arg when property imposing is done
+            xmlNode
+            .addChildNode(
+                XmlNode.create({
+                  nodeName: 'foo'
+                }, xmlNode._childProperties.foo));
+          });
+
+          it("should use template for content", function () {
+            expect(xmlNode + '')
+            .toBe([
+              '<Tag>',
+              '<ul>',
+              '<li></li>',
+              '</ul>',
+              '</Tag>'
+            ].join(''));
+          });
         });
       });
     });

@@ -5,11 +5,40 @@
  * @class $widget.XmlNode
  * @extends $widget.Node
  * @implements $utils.Stringifiable
+ * @todo Add property merge to .addChildNode()
  */
 $widget.XmlNode = $oop.createClass('$widget.XmlNode')
 .expect($widget.Node)
 .implement($utils.Stringifiable)
+.setup(/** @lends $widget.XmlNode */{
+  /** @ignore */
+  build: function () {
+    var xmlTemplate = this.xmlTemplate;
+    if (xmlTemplate) {
+      this._childProperties = this._extractChildProperties(xmlTemplate);
+      this._template = this._extractTemplate(xmlTemplate);
+    }
+  }
+})
 .define(/** @lends $widget.XmlNode# */{
+  /**
+   * Describes XML-specific child node properties: containment, element
+   * name, order.
+   * @member {string} $widget.XmlNode.xmlTemplate
+   */
+
+  /**
+   * Pre-processed child node properties as extracted from `xmlTemplate`.
+   * @member {Object.<string,Object>} $widget.XmlNode#_childProperties
+   * @protected
+   */
+
+  /**
+   * Pre-processed substitution template as extracted from `xmlTemplate`.
+   * @member {$template.Template} $widget.XmlNode#_template
+   * @private
+   */
+
   /**
    * Name of the XML element associated with the current node. Eg. 'html',
    * 'div', etc.
@@ -17,8 +46,18 @@ $widget.XmlNode = $oop.createClass('$widget.XmlNode')
    */
 
   /**
+   * XML attributes associated with current node.
    * @member {$widget.XmlAttributes} $widget.XmlNode#attributes
    */
+
+  /**
+   * Extracts XmlNode references from a suitable XML template. Used at
+   * pre-processing `xmlTemplate`.
+   * @memberOf {$widget.XmlNode}
+   * @type {RegExp}
+   * @constant
+   */
+  RE_XML_NODE_EXTRACTOR: /<(\?|[a-zA-Z][a-zA-Z0-9]*)[^>]*?\bblend-nodeName="([^"]*)"[^>]*?(?:>\s*<\/\1>|\/>|>)/g,
 
   /**
    * @memberOf $widget.XmlNode
@@ -43,6 +82,47 @@ $widget.XmlNode = $oop.createClass('$widget.XmlNode')
     this.childNodes = childNodes ?
         childNodes.as($widget.XmlNodes) :
         $widget.XmlNodes.create();
+  },
+
+  /**
+   * Extracts child node properties from XML template.
+   * @memberOf $widget.XmlNode
+   * @param {string} xmlTemplate
+   * @return {Object}
+   * @private
+   * @todo Extract initial attributes. (incremental)
+   */
+  _extractChildProperties: function (xmlTemplate) {
+    var matches = this.RE_XML_NODE_EXTRACTOR.exec(xmlTemplate),
+        elementName, nodeName, childProperties,
+        result = {},
+        order = 0;
+    while (matches) {
+      elementName = matches[1];
+      nodeName = matches[2];
+      result[nodeName] = childProperties = {};
+      if (elementName !== '?') {
+        childProperties.elementName = elementName;
+      }
+      childProperties.nodeOrder = order++;
+      matches = this.RE_XML_NODE_EXTRACTOR.exec(xmlTemplate);
+    }
+    return result;
+  },
+
+  /**
+   * Extracts child node properties from XML template.
+   * @memberOf $widget.XmlNode
+   * @param {string} xmlTemplate
+   * @return {$template.Template}
+   * @private
+   */
+  _extractTemplate: function (xmlTemplate) {
+    var templateString = xmlTemplate.replace(this.RE_XML_NODE_EXTRACTOR,
+        function (match, elementName, nodeName) {
+          return '{{' + nodeName + '}}';
+        });
+    return $template.Template.fromString(templateString);
   },
 
   /**
@@ -76,7 +156,10 @@ $widget.XmlNode = $oop.createClass('$widget.XmlNode')
    * @returns {string}
    */
   getContentMarkup: function () {
-    return this.childNodes.toString();
+    var template = this._template;
+    return template ?
+        template.getResolvedString(this.childNodeByNodeName.data) :
+        this.childNodes.toString();
   },
 
   /**

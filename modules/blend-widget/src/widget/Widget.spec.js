@@ -7,13 +7,18 @@ var $oop = window['blend-oop'],
 describe("$widget", function () {
   describe("Widget", function () {
     var Widget,
-        widget;
+        widget,
+        RootWidget;
 
     beforeAll(function () {
       Widget = $oop.createClass('test.$widget.Widget.Widget')
       .blend($widget.Widget)
       .build();
       Widget.__builder.forwards = {list: [], lookup: {}};
+      RootWidget = $oop.createClass('test.$widget.Widget.RootWidget')
+      .blend($widget.RootWidget)
+      .build();
+      RootWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {
@@ -46,7 +51,7 @@ describe("$widget", function () {
 
       describe("when parent is attached", function () {
         beforeEach(function () {
-          widget.addToParentNode($widget.RootWidget.create());
+          widget.addToParentNode(RootWidget.create());
         });
 
         afterEach(function () {
@@ -115,7 +120,7 @@ describe("$widget", function () {
 
       describe("when parent is attached", function () {
         beforeEach(function () {
-          widget.addToParentNode($widget.RootWidget.create());
+          widget.addToParentNode(RootWidget.create());
         });
 
         afterEach(function () {
@@ -376,7 +381,7 @@ describe("$widget", function () {
           .addToParentNode(
               Widget.create()
               .addToParentNode(
-                  $widget.RootWidget.create()));
+                  RootWidget.create()));
         });
 
         it("should return truthy", function () {

@@ -23,6 +23,19 @@ $demo.DemoItem = $oop.createClass('$demo.DemoItem')
    * @member {$widget.Widget} $demo.DemoItem#contentWidget
    */
 
+  /**
+   */
+  xmlTemplate: [
+    //@formatter:off
+    '<div class="container1">',
+      '<h3 blend-nodeName="title"></h3>',
+      '<p blend-nodeName="widgetId"></p>',
+      '<div blend-nodeName="widget"></div>',
+      '<pre blend-nodeName="code"></pre>',
+    '</div>'
+    //@formatter:on
+  ].join(''),
+
   /** @ignore */
   defaults: function () {
     this.code = this.code || "No code sample";
@@ -37,27 +50,21 @@ $demo.DemoItem = $oop.createClass('$demo.DemoItem')
   init: function () {
     this
     .addChildNode($ui.Text.create({
-      elementName: 'h3',
       nodeName: 'title',
-      nodeOrder: 0,
       textContent: this.itemTitle
-    }))
+    }, this._childProperties.title))
     .addChildNode($ui.Text.create({
-      elementName: 'p',
       nodeName: 'widgetId',
-      nodeOrder: 1,
       textContent: this.contentWidget.getAttribute('id')
-    }))
+    }, this._childProperties.widgetId))
     .addChildNode(
         this.contentWidget
         .setNodeName('widget')
         .setNodeOrder(2))
     .addChildNode($ui.Text.create({
-      elementName: 'pre',
       nodeName: 'code',
-      nodeOrder: 3,
       textContent: String(this.code)
-    }));
+    }, this._childProperties.code));
   }
 })
 .build();

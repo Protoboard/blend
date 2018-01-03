@@ -7,7 +7,8 @@ describe("$ui", function () {
   describe("SelectableHost", function () {
     var SelectableHost,
         Selectable,
-        selectableHost;
+        selectableHost,
+    RootWidget;
 
     beforeAll(function () {
       SelectableHost = $oop.createClass('test.$ui.SelectableHost.SelectableHost')
@@ -16,6 +17,10 @@ describe("$ui", function () {
       .blend($ui.SelectableHost)
       .build();
       SelectableHost.__builder.forwards = {list: [], lookup: {}};
+      RootWidget = $oop.createClass('test.$ui.SelectableHost.RootWidget')
+      .blend($widget.RootWidget)
+      .build();
+      RootWidget.__builder.forwards = {list: [], lookup: {}};
 
       Selectable = $oop.createClass('test.$ui.SelectableHost.Selectable')
       .blend($widget.Widget)
@@ -188,7 +193,7 @@ describe("$ui", function () {
           nodeName: 'selectable',
           ownValue: 'foo'
         });
-        rootWidget = $widget.RootWidget.create();
+        rootWidget = RootWidget.create();
         selectableHost.addChildNode(selectable);
         selectableHost.addToParentNode(rootWidget);
         selectableHost.onAttach();

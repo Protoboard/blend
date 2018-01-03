@@ -6,7 +6,8 @@ var $oop = window['blend-oop'],
 describe("$ui", function () {
   describe("SingleChoice", function () {
     var SingleChoice,
-        singleChoice;
+        singleChoice,
+        RootWidget;
 
     beforeAll(function () {
       SingleChoice = $oop.createClass('test.$ui.SingleChoice.SingleChoice')
@@ -15,6 +16,10 @@ describe("$ui", function () {
       .blend($ui.SingleChoice)
       .build();
       SingleChoice.__builder.forwards = {list: [], lookup: {}};
+      RootWidget = $oop.createClass('test.$ui.SingleChoice.RootWidget')
+      .blend($widget.RootWidget)
+      .build();
+      RootWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("addChildNode()", function () {
@@ -114,7 +119,7 @@ describe("$ui", function () {
 
       describe("when a different option was selected before", function () {
         beforeEach(function () {
-          singleChoice.addToParentNode($widget.RootWidget.create());
+          singleChoice.addToParentNode(RootWidget.create());
           singleChoice.onAttach();
           option2.select();
         });
@@ -165,7 +170,7 @@ describe("$ui", function () {
           ownValue: 'foo'
         });
         singleChoice.addChildNode(option);
-        singleChoice.addToParentNode($widget.RootWidget.create());
+        singleChoice.addToParentNode(RootWidget.create());
         singleChoice.onAttach();
       });
 
@@ -188,7 +193,7 @@ describe("$ui", function () {
           ownValue: 'foo'
         });
         singleChoice.addChildNode(option);
-        singleChoice.addToParentNode($widget.RootWidget.create());
+        singleChoice.addToParentNode(RootWidget.create());
         singleChoice.onAttach();
       });
 

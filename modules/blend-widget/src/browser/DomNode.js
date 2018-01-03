@@ -12,41 +12,97 @@
 $widget.DomNode = $oop.createClass('$widget.DomNode')
 .blend($widget.HtmlNode)
 .implement($widget.Renderable)
+.setup(/** @lends $widget.DomNode */{
+  /** @ignore */
+  build: function () {
+    var childProperties = this._childProperties,
+        xmlTemplate = this.xmlTemplate,
+        childSelectors;
+    if (xmlTemplate) {
+      childSelectors = this._extractParentSelectors(xmlTemplate);
+      Object.keys(childSelectors)
+      .forEach(function (nodeName) {
+        childProperties[nodeName].parentElementSelector = childSelectors[nodeName];
+      });
+    }
+  }
+})
 .define(/** @lends $widget.DomNode# */{
+  /**
+   * Identifies parent element in the context of the parent DomNode.
+   * @member {string} $widget.DomNode#parentElementSelector
+   * @constant
+   */
+
+  /**
+   * Extracts
+   * @memberOf $widget.DomNode
+   * @return {Object}
+   * @private
+   */
+  _extractParentSelectors: function (xmlTemplate) {
+    var element = document.createElement('div'),
+        domNodes;
+
+    element.innerHTML = xmlTemplate;
+    domNodes = slice.call(element.querySelectorAll('[blend-nodeName]'));
+
+    return domNodes
+    .map(function (domNode) {
+      var elementIndexes = [],
+          elementIndex,
+          parentElement = domNode.parentElement;
+      while (parentElement.parentElement) {
+        elementIndex = indexOf.call(parentElement.parentElement.childNodes, parentElement);
+        elementIndexes.unshift(elementIndex);
+        parentElement = parentElement.parentElement;
+      }
+      return elementIndexes
+      .map(function (index) {
+        return ':nth-child(' + (index + 1) + ')';
+      })
+      .join('>');
+    })
+    .reduce(function (result, selector, index) {
+      result[domNodes[index].getAttribute('blend-nodeName')] = selector;
+      return result;
+    }, {});
+  },
+
   /**
    * Renders child node and adds it to the DOM at the appropriate child index.
    * @param {$widget.DomNode} node
    * @returns {$widget.DomNode}
+   * @todo Get proper parentElement
    */
   addChildNode: function addChildNode(node) {
     var childNodeBefore = addChildNode.shared.childNodeBefore,
-        element = this.getElement(),
+        parentElement = node.getParentElement() || this.getElement(),
         childElement,
         nextChild, nextChildElement;
 
-    if (element && node !== childNodeBefore) {
+    if (parentElement && node !== childNodeBefore) {
       childElement = node.createElement();
       nextChild = this.getNextChild(node);
       nextChildElement = nextChild && nextChild.getElement() || null;
-      element.insertBefore(childElement, nextChildElement);
+      parentElement.insertBefore(childElement, nextChildElement);
     }
 
     return this;
   },
 
   /**
-   * Removes element associated with current node from DOM.
+   * Removes element associated with specified child node from DOM.
    * @param {string} nodeName
    * @returns {$widget.DomNode}
    */
   removeChildNode: function removeChildNode(nodeName) {
     var childNodeBefore = removeChildNode.shared.childNodeBefore,
-        element = this.getElement(),
-        childNodeElement;
+        childNodeElement = childNodeBefore && childNodeBefore.getElement(),
+        parentElement = childNodeElement && childNodeElement.parentNode;
 
-    if (element && childNodeBefore) {
-      childNodeElement = childNodeBefore.getElement();
-      element.removeChild(childNodeElement);
+    if (parentElement) {
+      parentElement.removeChild(childNodeElement);
     }
 
     return this;
@@ -181,6 +237,26 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    */
   getElement: function () {
     return document.getElementById(this.elementId);
+  },
+
+  /**
+   * Retrieves DOM element that is (to be) parent of the current node's root
+   * element. Current node doesn't have to be rendered for it to return a
+   * valid Element. (But parent node does.)
+   * @return {Element}
+   * @todo Child counterpart? (.getParentElementForChild())
+   */
+  getParentElement: function () {
+    var parentNode = this.parentNode,
+        parentNodeElement = parentNode && parentNode.getElement(),
+        parentElementSelector = this.parentElementSelector;
+
+    // parentElementSelector can be undefined or empty string - both mean
+    // lack of nesting
+    return parentElementSelector ?
+        parentNodeElement && parentNodeElement.querySelector(
+        '#' + parentNode.elementId + '>' + parentElementSelector) :
+        parentNodeElement;
   }
 })
 .build();

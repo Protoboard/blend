@@ -21,6 +21,35 @@ describe("$widget", function () {
       DomNode.__builder.forwards = {list: [], lookup: {}};
     });
 
+    describe("build()", function () {
+      describe("when class has xmlTemplate property", function () {
+        var DomNodeBuilder2,
+            DomNode2;
+
+        beforeEach(function () {
+          DomNodeBuilder2 = $oop.createClass('test.$widget.DomNode.DomNode2')
+          .blend($widget.Node)
+          .blend($widget.DomNode)
+          .define({
+            xmlTemplate: '<div><div><p blend-nodeName="foo"></p></div></div>'
+          });
+          DomNodeBuilder2.forwards = {list: [], lookup: {}};
+        });
+
+        it("should add parentElementSelector to _childProperties", function () {
+          DomNode2 = DomNodeBuilder2.build();
+          expect(DomNode2._childProperties).toEqual({
+            foo: {
+              elementName: 'p',
+              nodeOrder: 0,
+              parentElementSelector: ':nth-child(1)>:nth-child(1)'
+            }
+          });
+        });
+      });
+    });
+
+    // todo Add case for container element
     describe("addChildNode()", function () {
       var element,
           childNode, childElement;
@@ -65,6 +94,7 @@ describe("$widget", function () {
       });
     });
 
+    // todo Add case for container element
     describe("removeChildNode()", function () {
       var element,
           childNode, childElement;
@@ -188,63 +218,6 @@ describe("$widget", function () {
       });
     });
 
-    describe("createElement()", function () {
-      var element;
-
-      beforeEach(function () {
-        element = document.createElement('div');
-        domNode = DomNode.fromElementId('foo')
-        .setAttribute('hello', 'world')
-        .addChildNode(DomNode.create({
-          elementId: 'bar',
-          nodeName: 'baz'
-        }));
-        spyOn(document, 'createElement').and.returnValue(element);
-      });
-
-      it("should create new HTML element", function () {
-        domNode.createElement();
-        expect(document.createElement)
-        .toHaveBeenCalledWith(domNode.elementName);
-      });
-
-      it("should return Element instance", function () {
-        var result = domNode.createElement();
-        expect(result).toBe(element);
-      });
-
-      it("should add attributes", function () {
-        var result = domNode.createElement();
-        expect(result.getAttribute('hello')).toBe('world');
-      });
-
-      it("should add contents", function () {
-        var result = domNode.createElement();
-        expect(result.innerHTML)
-        .toEqual('<div id="bar">FOO</div>FOO');
-      });
-    });
-
-    describe("getElement()", function () {
-      var element;
-
-      beforeEach(function () {
-        element = document.createElement('div');
-        domNode = DomNode.fromElementId('foo');
-        spyOn(document, 'getElementById').and.returnValue(element);
-      });
-
-      it("should retrieve element by elementId", function () {
-        domNode.getElement();
-        expect(document.getElementById).toHaveBeenCalledWith('foo');
-      });
-
-      it("should return retrieved element", function () {
-        var result = domNode.getElement();
-        expect(result).toBe(element);
-      });
-    });
-
     describe("renderInto()", function () {
       var parentElement,
           element;
@@ -335,6 +308,156 @@ describe("$widget", function () {
         domNode.reRenderContents();
         expect(element.innerHTML).toBe('<div>FOO</div>FOO');
         expect(element.childNodes[0]).not.toBe(childElement);
+      });
+    });
+
+    describe("createElement()", function () {
+      var element;
+
+      beforeEach(function () {
+        element = document.createElement('div');
+        domNode = DomNode.fromElementId('foo')
+        .setAttribute('hello', 'world')
+        .addChildNode(DomNode.create({
+          elementId: 'bar',
+          nodeName: 'baz'
+        }));
+        spyOn(document, 'createElement').and.returnValue(element);
+      });
+
+      it("should create new HTML element", function () {
+        domNode.createElement();
+        expect(document.createElement)
+        .toHaveBeenCalledWith(domNode.elementName);
+      });
+
+      it("should return Element instance", function () {
+        var result = domNode.createElement();
+        expect(result).toBe(element);
+      });
+
+      it("should add attributes", function () {
+        var result = domNode.createElement();
+        expect(result.getAttribute('hello')).toBe('world');
+      });
+
+      it("should add contents", function () {
+        var result = domNode.createElement();
+        expect(result.innerHTML)
+        .toEqual('<div id="bar">FOO</div>FOO');
+      });
+    });
+
+    describe("getElement()", function () {
+      var element;
+
+      beforeEach(function () {
+        element = document.createElement('div');
+        domNode = DomNode.fromElementId('foo');
+        spyOn(document, 'getElementById').and.returnValue(element);
+      });
+
+      it("should retrieve element by elementId", function () {
+        domNode.getElement();
+        expect(document.getElementById).toHaveBeenCalledWith('foo');
+      });
+
+      it("should return retrieved element", function () {
+        var result = domNode.getElement();
+        expect(result).toBe(element);
+      });
+    });
+
+    describe("getParentElement()", function () {
+      describe("when node has xmlTemplate", function () {
+        var DomNodeBuilder2,
+            DomNode2;
+
+        beforeEach(function () {
+          DomNodeBuilder2 = $oop.createClass('test.$widget.DomNode.DomNode2')
+          .blend($widget.Node)
+          .blend($widget.DomNode);
+          DomNodeBuilder2.forwards = {list: [], lookup: {}};
+        });
+
+        describe("when child nodes are nested in elements", function () {
+          var childNode;
+
+          beforeEach(function () {
+            DomNode2 = DomNodeBuilder2
+            .define({
+              xmlTemplate: '<div><div><p blend-nodeName="foo"></p></div></div>'
+            })
+            .build();
+            domNode = DomNode2.fromElementName('div', {
+              elementId: 'n2'
+            });
+            childNode = DomNode.create({
+              elementName: 'div',
+              nodeName: 'foo',
+              elementId: 'n1'
+            }, domNode._childProperties.foo);
+            domNode.addChildNode(childNode);
+            document.body.innerHTML = '';
+            domNode.renderInto(document.body);
+          });
+
+          it("should return closest containing element", function () {
+            var result = childNode.getParentElement();
+            expect(result).toBe(domNode.getElement().firstChild.firstChild);
+          });
+        });
+
+        describe("when child nodes are not nested", function () {
+          var childNode;
+
+          beforeEach(function () {
+            DomNode2 = DomNodeBuilder2
+            .define({
+              xmlTemplate: '<p blend-nodeName="foo"></p>'
+            })
+            .build();
+            domNode = DomNode2.fromElementName('div', {
+              elementId: 'n2'
+            });
+            childNode = DomNode.create({
+              elementName: 'div',
+              nodeName: 'foo',
+              elementId: 'n1'
+            }, domNode._childProperties.foo);
+            domNode.addChildNode(childNode);
+            document.body.innerHTML = '';
+            domNode.renderInto(document.body);
+          });
+
+          it("should return parent node element", function () {
+            var result = childNode.getParentElement();
+            expect(result).toBe(domNode.getElement());
+          });
+        });
+      });
+
+      describe("when node has no xmlTemplate", function () {
+        var childNode;
+
+        beforeEach(function () {
+          domNode = DomNode.fromElementName('div', {
+            elementId: 'n2'
+          });
+          childNode = DomNode.create({
+            elementName: 'div',
+            nodeName: 'foo',
+            elementId: 'n1'
+          });
+          domNode.addChildNode(childNode);
+          document.body.innerHTML = '';
+          domNode.renderInto(document.body);
+        });
+
+        it("should return parent node element", function () {
+          var result = childNode.getParentElement();
+          expect(result).toBe(domNode.getElement());
+        });
       });
     });
   });

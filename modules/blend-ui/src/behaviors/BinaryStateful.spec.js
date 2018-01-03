@@ -6,7 +6,8 @@ var $oop = window['blend-oop'],
 describe("$ui", function () {
   describe("BinaryStateful", function () {
     var BinaryStateful,
-        binaryStateful;
+        binaryStateful,
+        Widget;
 
     beforeAll(function () {
       BinaryStateful = $oop.createClass('test.$ui.BinaryStateful.BinaryStateful')
@@ -14,6 +15,10 @@ describe("$ui", function () {
       .blend($ui.BinaryStateful)
       .build();
       BinaryStateful.__builder.forwards = {list: [], lookup: {}};
+      Widget = $oop.createClass('test.$ui.BinaryStateful.Widget')
+      .blend($widget.Widget)
+      .build();
+      Widget.__builder.forwards = {list: [], lookup: {}};
     });
 
     describe("create()", function () {
@@ -31,7 +36,7 @@ describe("$ui", function () {
       beforeEach(function () {
         binaryStateful = BinaryStateful.create();
         binaryStateful1 = BinaryStateful.create();
-        parentWidget = $widget.Widget.create();
+        parentWidget = Widget.create();
 
         binaryStateful1.addBinaryState('foo');
         binaryStateful1.addBinaryStateSourceId('foo', 'bar');
@@ -108,7 +113,7 @@ describe("$ui", function () {
           .addBinaryState('foo');
           binaryStateful2 = BinaryStateful.create()
           .addBinaryState('foo');
-          childWidget = $widget.Widget.create();
+          childWidget = Widget.create();
 
           binaryStateful
           .addChildNode(
@@ -152,7 +157,7 @@ describe("$ui", function () {
           .addBinaryState('foo');
           binaryStateful2 = BinaryStateful.create()
           .addBinaryState('foo');
-          childWidget = $widget.Widget.create();
+          childWidget = Widget.create();
 
           binaryStateful
           .addChildNode(

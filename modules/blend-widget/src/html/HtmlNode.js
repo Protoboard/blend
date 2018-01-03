@@ -5,6 +5,7 @@
  * @mixin $widget.HtmlNode
  * @extends $widget.XmlNode
  * @todo Maintaining reference count for CSS classes?
+ * @todo Extract initial CSS classes on .build(). (incremental)
  */
 $widget.HtmlNode = $oop.createClass('$widget.HtmlNode')
 .blend($widget.XmlNode)
