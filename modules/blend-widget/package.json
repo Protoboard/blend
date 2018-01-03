@@ -24,6 +24,7 @@
     "blend-event": "~0.1.0",
     "blend-module": "~0.1.0",
     "blend-oop": "~0.1.0",
+    "blend-template": "~0.1.0",
     "blend-utils": "~0.1.0"
   }
 }
