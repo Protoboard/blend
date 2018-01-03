@@ -125,7 +125,8 @@ $template.Template = $oop.createClass('$template.Template')
         .toCollection(),
         tokenTree = this._buildTokenTree(parameterValuesAsTemplates);
 
-    return this._flattenStringTree(tokenTree['{{}}']);
+    return this._flattenStringTree(tokenTree['{{}}'])
+    .replace($template.RE_TEMPLATE_PARAMETER, '');
   },
 
   /**

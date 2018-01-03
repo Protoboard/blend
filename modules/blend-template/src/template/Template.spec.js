@@ -159,9 +159,9 @@ describe("$template", function () {
         template = 'foo {{bar}} baz'.toTemplate();
       });
 
-      it("should leave undefined parameters intact", function () {
+      it("should clear undefined parameters intact", function () {
         result = template.getResolvedString({});
-        expect(result).toBe('foo {{bar}} baz');
+        expect(result).toBe('foo  baz');
       });
 
       it("should resolve parameters", function () {
