@@ -31,12 +31,14 @@ $widget.XmlNode = $oop.createClass('$widget.XmlNode')
    * Pre-processed child node properties as extracted from `xmlTemplate`.
    * @member {Object.<string,Object>} $widget.XmlNode#_childProperties
    * @protected
+   * @todo Belongs to Node or a different mixin?
    */
 
   /**
    * Pre-processed substitution template as extracted from `xmlTemplate`.
    * @member {$template.Template} $widget.XmlNode#_template
    * @private
+   * @todo Belongs to Node or a different mixin?
    */
 
   /**
