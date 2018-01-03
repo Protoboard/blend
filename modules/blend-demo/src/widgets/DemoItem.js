@@ -27,12 +27,10 @@ $demo.DemoItem = $oop.createClass('$demo.DemoItem')
    */
   xmlTemplate: [
     //@formatter:off
-    '<div class="container1">',
-      '<h3 blend-nodeName="title"></h3>',
-      '<p blend-nodeName="widgetId"></p>',
-      '<div blend-nodeName="widget"></div>',
-      '<pre blend-nodeName="code"></pre>',
-    '</div>'
+    '<h3 blend-nodeName="title"></h3>',
+    '<p blend-nodeName="widgetId"></p>',
+    '<div blend-nodeName="widget"></div>',
+    '<pre blend-nodeName="code"></pre>'
     //@formatter:on
   ].join(''),
 
