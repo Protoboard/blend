@@ -123,6 +123,7 @@ describe("$widget", function () {
       });
     });
 
+    // todo Add case for container element
     describe("setChildOrder()", function () {
       var element,
           childNode1, childElement1,

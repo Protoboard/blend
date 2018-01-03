@@ -73,7 +73,6 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    * Renders child node and adds it to the DOM at the appropriate child index.
    * @param {$widget.DomNode} node
    * @returns {$widget.DomNode}
-   * @todo Get proper parentElement
    */
   addChildNode: function addChildNode(node) {
     var childNodeBefore = addChildNode.shared.childNodeBefore,
@@ -117,17 +116,17 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    */
   setChildOrder: function setChildOrder(childNode, nodeOrder) {
     var nodeOrderBefore = setChildOrder.shared.nodeOrderBefore,
-        element = this.getElement(),
+        parentElement = this.getChildParentElement(childNode.nodeName),
         childElement,
         nextChild, nextChildElement;
 
-    if (element && nodeOrder !== nodeOrderBefore) {
+    if (parentElement && nodeOrder !== nodeOrderBefore) {
       childElement = childNode.getElement();
       if (childElement) {
         // moving child element to new index
         nextChild = this.getNextChild(childNode);
         nextChildElement = nextChild && nextChild.getElement() || null;
-        element.insertBefore(childElement, nextChildElement);
+        parentElement.insertBefore(childElement, nextChildElement);
       }
     }
 
