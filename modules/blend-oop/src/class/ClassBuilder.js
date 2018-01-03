@@ -363,12 +363,12 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     if (methodCount === 1) {
       result = methods[0];
     } else {
-      result = function wrapped() {
+      result = function methodWrapper() {
         var i, method, result,
-            sharedBefore = wrapped.shared,
+            sharedBefore = methodWrapper.shared,
             shared = {};
 
-        wrapped.shared = shared;
+        methodWrapper.shared = shared;
 
         for (i = 0; i < methodCount; i++) {
           method = methods[i];
@@ -379,7 +379,7 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
           method.shared = sharedBefore;
         }
 
-        wrapped.shared = sharedBefore;
+        methodWrapper.shared = sharedBefore;
 
         return result;
       };
