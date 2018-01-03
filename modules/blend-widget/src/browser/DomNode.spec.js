@@ -368,6 +368,7 @@ describe("$widget", function () {
       });
     });
 
+    // todo Refactor for getChildParentElement()
     describe("getParentElement()", function () {
       describe("when node has xmlTemplate", function () {
         var DomNodeBuilder2,

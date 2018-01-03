@@ -77,7 +77,7 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    */
   addChildNode: function addChildNode(node) {
     var childNodeBefore = addChildNode.shared.childNodeBefore,
-        parentElement = node.getParentElement() || this.getElement(),
+        parentElement = this.getChildParentElement(node.nodeName),
         childElement,
         nextChild, nextChildElement;
 
@@ -193,9 +193,10 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    * @returns {$widget.DomNode}
    */
   reRender: function () {
-    var element = this.getElement();
-    if (element) {
-      element.parentNode.replaceChild(this.createElement(), element);
+    var element = this.getElement(),
+        parentElement = element && element.parentNode;
+    if (parentElement) {
+      parentElement.replaceChild(this.createElement(), element);
     }
     return this;
   },
@@ -240,23 +241,37 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
   },
 
   /**
-   * Retrieves DOM element that is (to be) parent of the current node's root
-   * element. Current node doesn't have to be rendered for it to return a
-   * valid Element. (But parent node does.)
+   * Retrieves DOM element that is (to be) parent of the specified node's root
+   * element. Specified node doesn't have to be rendered for it to return a
+   * valid Element. (But current node does.)
+   * @param {string} nodeName
    * @return {Element}
-   * @todo Child counterpart? (.getParentElementForChild())
    */
-  getParentElement: function () {
-    var parentNode = this.parentNode,
-        parentNodeElement = parentNode && parentNode.getElement(),
-        parentElementSelector = this.parentElementSelector;
+  getChildParentElement: function (nodeName) {
+    var childProperties = this._childProperties,
+        nodeProperties = childProperties && childProperties[nodeName],
+        parentElementSelector = nodeProperties &&
+            nodeProperties.parentElementSelector,
+        element = this.getElement();
 
     // parentElementSelector can be undefined or empty string - both mean
     // lack of nesting
     return parentElementSelector ?
-        parentNodeElement && parentNodeElement.querySelector(
-        '#' + parentNode.elementId + '>' + parentElementSelector) :
-        parentNodeElement;
+        element && element.querySelector(
+        '#' + this.elementId + '>' + parentElementSelector) :
+        element;
+  },
+
+  /**
+   * Retrieves DOM element that is (to be) parent of the current node's root
+   * element. Current node doesn't have to be rendered for it to return a
+   * valid Element. (But parent node does.)
+   * @return {Element}
+   * @todo Necessary?
+   */
+  getParentElement: function () {
+    var parentNode = this.parentNode;
+    return parentNode && parentNode.getChildParentElement(this.nodeName);
   }
 })
 .build();
