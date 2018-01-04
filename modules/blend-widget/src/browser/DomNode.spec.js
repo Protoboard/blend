@@ -13,9 +13,7 @@ describe("$widget", function () {
       .blend($widget.Node)
       .blend($widget.DomNode)
       .define({
-        getContentMarkup: function fn() {
-          return fn.returned + "FOO";
-        }
+        xmlTemplate: '<div><span blend-nodeName="foo"></span></div>'
       })
       .build();
       DomNode.__builder.forwards = {list: [], lookup: {}};
@@ -307,7 +305,7 @@ describe("$widget", function () {
       it("should replace contents", function () {
         childElement = element.childNodes[0];
         domNode.reRenderContents();
-        expect(element.innerHTML).toBe('<div>FOO</div>FOO');
+        expect(element.innerHTML).toBe('<div></div>');
         expect(element.childNodes[0]).not.toBe(childElement);
       });
     });
@@ -319,10 +317,10 @@ describe("$widget", function () {
         element = document.createElement('div');
         domNode = DomNode.fromElementId('foo')
         .setAttribute('hello', 'world')
-        .addChildNode(DomNode.create({
+        .createChildNode(DomNode, {
           elementId: 'bar',
-          nodeName: 'baz'
-        }));
+          nodeName: 'foo'
+        });
         spyOn(document, 'createElement').and.returnValue(element);
       });
 
@@ -345,7 +343,7 @@ describe("$widget", function () {
       it("should add contents", function () {
         var result = domNode.createElement();
         expect(result.innerHTML)
-        .toEqual('<div id="bar">FOO</div>FOO');
+        .toEqual('<div><span id="bar"><div></div></span></div>');
       });
     });
 
@@ -371,89 +369,31 @@ describe("$widget", function () {
 
     // todo Refactor for getChildParentElement()
     describe("getParentElement()", function () {
-      describe("when node has xmlTemplate", function () {
-        var DomNodeBuilder2,
-            DomNode2;
+      var childNode;
 
-        beforeEach(function () {
-          DomNodeBuilder2 = $oop.createClass('test.$widget.DomNode.DomNode2')
-          .blend($widget.Node)
-          .blend($widget.DomNode);
-          DomNodeBuilder2.forwards = {list: [], lookup: {}};
+      beforeEach(function () {
+        domNode = DomNode.fromElementName('div', {
+          elementId: 'n2'
         });
+        childNode = DomNode.create({
+          elementName: 'div',
+          nodeName: 'foo',
+          elementId: 'n1'
+        }, domNode._childProperties.foo);
+        domNode.addChildNode(childNode);
+        document.body.innerHTML = '';
+        domNode.renderInto(document.body);
+      });
 
-        describe("when child nodes are nested in elements", function () {
-          var childNode;
-
-          beforeEach(function () {
-            DomNode2 = DomNodeBuilder2
-            .define({
-              xmlTemplate: '<div><div><p blend-nodeName="foo"></p></div></div>'
-            })
-            .build();
-            domNode = DomNode2.fromElementName('div', {
-              elementId: 'n2'
-            });
-            childNode = DomNode.create({
-              elementName: 'div',
-              nodeName: 'foo',
-              elementId: 'n1'
-            }, domNode._childProperties.foo);
-            domNode.addChildNode(childNode);
-            document.body.innerHTML = '';
-            domNode.renderInto(document.body);
-          });
-
-          it("should return closest containing element", function () {
-            var result = childNode.getParentElement();
-            expect(result).toBe(domNode.getElement().firstChild.firstChild);
-          });
-        });
-
-        describe("when child nodes are not nested", function () {
-          var childNode;
-
-          beforeEach(function () {
-            DomNode2 = DomNodeBuilder2
-            .define({
-              xmlTemplate: '<p blend-nodeName="foo"></p>'
-            })
-            .build();
-            domNode = DomNode2.fromElementName('div', {
-              elementId: 'n2'
-            });
-            childNode = DomNode.create({
-              elementName: 'div',
-              nodeName: 'foo',
-              elementId: 'n1'
-            }, domNode._childProperties.foo);
-            domNode.addChildNode(childNode);
-            document.body.innerHTML = '';
-            domNode.renderInto(document.body);
-          });
-
-          it("should return parent node element", function () {
-            var result = childNode.getParentElement();
-            expect(result).toBe(domNode.getElement());
-          });
-        });
+      it("should return closest containing element", function () {
+        var result = childNode.getParentElement();
+        expect(result).toBe(domNode.getElement().firstChild);
       });
 
       describe("when node has no xmlTemplate", function () {
-        var childNode;
-
         beforeEach(function () {
-          domNode = DomNode.fromElementName('div', {
-            elementId: 'n2'
-          });
-          childNode = DomNode.create({
-            elementName: 'div',
-            nodeName: 'foo',
-            elementId: 'n1'
-          });
-          domNode.addChildNode(childNode);
-          document.body.innerHTML = '';
-          domNode.renderInto(document.body);
+          domNode._childProperties = undefined;
+          domNode._template = undefined;
         });
 
         it("should return parent node element", function () {
