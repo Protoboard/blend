@@ -47,22 +47,22 @@ $demo.DemoItem = $oop.createClass('$demo.DemoItem')
   /** @ignore */
   init: function () {
     this
-    .addChildNode($ui.Text.create({
+    .createChildNode($ui.Text, {
       nodeName: 'title',
       textContent: this.itemTitle
-    }, this._childProperties.title))
-    .addChildNode($ui.Text.create({
+    })
+    .createChildNode($ui.Text, {
       nodeName: 'widgetId',
       textContent: this.contentWidget.getAttribute('id')
-    }, this._childProperties.widgetId))
+    })
     .addChildNode(
         this.contentWidget
         .setNodeName('widget')
         .setNodeOrder(2))
-    .addChildNode($ui.Text.create({
+    .createChildNode($ui.Text, {
       nodeName: 'code',
       textContent: String(this.code)
-    }, this._childProperties.code));
+    });
   }
 })
 .build();

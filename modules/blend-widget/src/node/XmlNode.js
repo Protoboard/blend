@@ -128,6 +128,44 @@ $widget.XmlNode = $oop.createClass('$widget.XmlNode')
   },
 
   /**
+   * Retrieves child node properties for the specified child as extracted
+   * from the template.
+   * @param {string} nodeName
+   * @return {Object}
+   * @todo Belongs to Node or a different mixin?
+   */
+  getChildProperties: function (nodeName) {
+    var childProperties = this._childProperties;
+    return childProperties && childProperties[nodeName];
+  },
+
+  /**
+   * Creates a new node instance of the specified `Class` and adds it to the
+   * current node as child.
+   * @param {$oop.Class|$widget.Node} Class
+   * @param {Object} [properties]
+   * @param {string} [properties.nodeName]
+   * @return {$widget.XmlNode}
+   * @todo Belongs to Node or a different mixin?
+   */
+  createChildNode: function (Class, properties) {
+    var nodeName = properties && properties.nodeName,
+        childProperties,
+        childNode;
+
+    if (nodeName !== undefined) {
+      childProperties = this.getChildProperties(nodeName);
+      childNode = Class.create(childProperties, properties);
+    } else {
+      childNode = Class.create(properties);
+    }
+
+    this.addChildNode(childNode);
+
+    return this;
+  },
+
+  /**
    * @param {string} attributeName
    * @param {string} attributeValue
    * @returns {$widget.XmlNode}

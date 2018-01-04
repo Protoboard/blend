@@ -13,46 +13,37 @@ describe("$widget", function () {
       XmlNode = $oop.createClass('test.$widget.XmlNode.XmlNode')
       .blend($widget.Node)
       .blend($widget.XmlNode)
+      .define({
+        xmlTemplate: [
+          //@formatter:off
+          '<ul>',
+            '<li blend-nodeName="foo"></li>',
+            '<li blend-nodeName="bar"></li>',
+          '</ul>'
+          //@formatter:on
+        ].join('')
+      })
       .build();
       XmlNode.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("build()", function () {
-      var XmlNodeBuilder2,
-          XmlNode2;
-
-      beforeEach(function () {
-        XmlNodeBuilder2 = $oop.createClass('test.$widget.XmlNode.XmlNode2')
-        .blend($widget.Node)
-        .blend($widget.XmlNode);
-        XmlNodeBuilder2.forwards = {list: [], lookup: {}};
+    it("should initialize _childProperties", function () {
+      expect(XmlNode._childProperties)
+      .toEqual({
+        foo: {
+          elementName: 'li',
+          nodeOrder: 0
+        },
+        bar: {
+          elementName: 'li',
+          nodeOrder: 1
+        }
       });
+    });
 
-      describe("when class has xmlTemplate property", function () {
-        beforeEach(function () {
-          XmlNodeBuilder2
-          .define({
-            xmlTemplate: '<ul><li blend-nodeName="foo"></li></ul>'
-          });
-        });
-
-        it("should initialize _childProperties", function () {
-          XmlNode2 = XmlNodeBuilder2.build();
-          expect(XmlNode2._childProperties)
-          .toEqual({
-            foo: {
-              elementName: 'li',
-              nodeOrder: 0
-            }
-          });
-        });
-
-        it("should initialize _template", function () {
-          XmlNode2 = XmlNodeBuilder2.build();
-          expect(XmlNode2._template)
-          .toEqual('<ul>{{foo}}</ul>'.toTemplate());
-        });
-      });
+    it("should initialize _template", function () {
+      expect(XmlNode._template)
+      .toEqual('<ul>{{foo}}{{bar}}</ul>'.toTemplate());
     });
 
     describe("fromElementName()", function () {
@@ -91,6 +82,61 @@ describe("$widget", function () {
         expect($widget.XmlAttributes.mixedBy(xmlNode.attributes))
         .toBeTruthy();
         expect(xmlNode.attributes).toEqual($widget.XmlAttributes.create());
+      });
+    });
+
+    describe("getChildProperties()", function () {
+      beforeEach(function () {
+        xmlNode = XmlNode.fromElementName('Tag');
+      });
+
+      describe("for expected child", function () {
+        it("should return properties", function () {
+          var result = xmlNode.getChildProperties('foo');
+          expect(result).toEqual({
+            elementName: 'li',
+            nodeOrder: 0
+          });
+        });
+      });
+
+      describe("for unexpected child", function () {
+        it("should return undefined", function () {
+          var result = xmlNode.getChildProperties('baz');
+          expect(result).toBeUndefined();
+        });
+      });
+    });
+
+    describe("createChildNode()", function () {
+      beforeEach(function () {
+        xmlNode = XmlNode.fromElementName('Tag');
+      });
+
+      it("should return self", function () {
+        var result = xmlNode.createChildNode(XmlNode, {elementName: 'abc'});
+        expect(result).toBe(xmlNode);
+      });
+
+      it("should create & add child node", function () {
+        xmlNode.createChildNode(XmlNode, {nodeName: 'foo'});
+        var firstChild = xmlNode.childNodes.data[0];
+        expect(firstChild.nodeName).toBe('foo');
+        expect(firstChild.elementName).toBe('li');
+      });
+
+      describe("on conflicting between template & properties", function () {
+        beforeEach(function () {
+          xmlNode.createChildNode(XmlNode, {
+            nodeName: 'foo',
+            elementName: 'span'
+          });
+        });
+
+        it("should give properties precedence", function () {
+          var firstChild = xmlNode.childNodes.data[0];
+          expect(firstChild.elementName).toBe('span');
+        });
       });
     });
 
@@ -149,16 +195,17 @@ describe("$widget", function () {
     });
 
     describe("getContentMarkup()", function () {
-      var childNode;
-
       beforeEach(function () {
         xmlNode = XmlNode.fromElementName('Foo');
-        childNode = XmlNode.fromElementName('Bar');
-        xmlNode.addChildNode(childNode);
+        xmlNode.createChildNode(XmlNode, {
+          nodeName: 'foo',
+          attributes: $widget.XmlAttributes.fromData({bar: 'baz'})
+        });
       });
 
       it("should return markup for children", function () {
-        expect(xmlNode.getContentMarkup()).toBe('<Bar></Bar>');
+        expect(xmlNode.getContentMarkup())
+        .toBe('<ul><li bar="baz"><ul></ul></li></ul>');
       });
     });
 
@@ -166,7 +213,7 @@ describe("$widget", function () {
       it("should return generated markup", function () {
         xmlNode = XmlNode.fromElementName('Tag')
         .setAttribute('foo', 'bar');
-        expect(xmlNode + '').toBe('<Tag foo="bar"></Tag>');
+        expect(xmlNode + '').toBe('<Tag foo="bar"><ul></ul></Tag>');
       });
 
       describe("when element name contains XML entities", function () {
@@ -174,7 +221,7 @@ describe("$widget", function () {
           xmlNode = XmlNode.fromElementName('"Tag"')
           .setAttribute('foo', 'bar');
           expect(xmlNode + '')
-          .toBe('<&quot;Tag&quot; foo="bar"></&quot;Tag&quot;>');
+          .toBe('<&quot;Tag&quot; foo="bar"><ul></ul></&quot;Tag&quot;>');
         });
       });
 
@@ -182,61 +229,28 @@ describe("$widget", function () {
         beforeEach(function () {
           xmlNode = XmlNode.fromElementName('Tag')
           .setAttribute('foo', 'bar')
-          .addChildNode(
-              XmlNode.fromElementName('Tag')
-              .setAttribute('baz', 'BAZ'))
-          .addChildNode(
-              XmlNode.fromElementName('Tag')
-              .setAttribute('quux', 'QUUX'));
+          .createChildNode(XmlNode, {
+            nodeName: 'foo',
+            attributes: $widget.XmlAttributes.fromData({baz: 'BAZ'})
+          })
+          .createChildNode(XmlNode, {
+            nodeName: 'bar',
+            attributes: $widget.XmlAttributes.fromData({quux: 'QUUX'})
+          });
         });
 
         it("should include contents", function () {
           expect(xmlNode + '')
           .toBe([
+            //@formatter:off
             '<Tag foo="bar">',
-            '<Tag baz="BAZ"></Tag>',
-            '<Tag quux="QUUX"></Tag>',
-            '</Tag>'
-          ].join(''));
-        });
-      });
-
-      describe("when node has xmlTemplate", function () {
-        var XmlNode2;
-
-        beforeEach(function () {
-          XmlNode2 = $oop.createClass('test.$widget.XmlNode.XmlNode2')
-          .blend($widget.Node)
-          .blend($widget.XmlNode)
-          .define({
-            xmlTemplate: '<ul><li blend-nodeName="foo"></li></ul>'
-          })
-          .build();
-          XmlNode2.__builder.forwards = {list: [], lookup: {}};
-        });
-
-        describe("when node has children", function () {
-          beforeEach(function () {
-            xmlNode = XmlNode2.fromElementName('Tag');
-
-            // todo Remove second arg when property imposing is done
-            xmlNode
-            .addChildNode(
-                XmlNode.create({
-                  nodeName: 'foo'
-                }, xmlNode._childProperties.foo));
-          });
-
-          it("should use template for content", function () {
-            expect(xmlNode + '')
-            .toBe([
-              '<Tag>',
               '<ul>',
-              '<li></li>',
+                '<li baz="BAZ"><ul></ul></li>',
+                '<li quux="QUUX"><ul></ul></li>',
               '</ul>',
-              '</Tag>'
-            ].join(''));
-          });
+            '</Tag>'
+            //@formatter:on
+          ].join(''));
         });
       });
     });
