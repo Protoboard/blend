@@ -24,27 +24,31 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
   /**
    * Creates an instance of either a) the current class, or a forward class
    * matching the specified (and spread) properties.
-   * @param {Object} [properties]
+   * @param {...Object} [properties]
    * @return {$oop.Class}
    */
   create: function (properties) {
-    properties = properties || {};
-
     // merging down properties
     var argumentCount = arguments.length,
+        mergedProperties,
         i, propertyBatch,
         propertyNames, propertyCount,
         j, propertyName;
-    for (i = 1; i < argumentCount; i++) {
-      propertyBatch = arguments[i];
-      if (propertyBatch) {
-        propertyNames = Object.keys(propertyBatch);
-        propertyCount = propertyNames.length;
-        for (j = 0; j < propertyCount; j++) {
-          propertyName = propertyNames[j];
-          properties[propertyName] = propertyBatch[propertyName];
+    if (argumentCount > 1) {
+      mergedProperties = {};
+      for (i = 0; i < argumentCount; i++) {
+        propertyBatch = arguments[i];
+        if (propertyBatch) {
+          propertyNames = Object.keys(propertyBatch);
+          propertyCount = propertyNames.length;
+          for (j = 0; j < propertyCount; j++) {
+            propertyName = propertyNames[j];
+            mergedProperties[propertyName] = propertyBatch[propertyName];
+          }
         }
       }
+    } else {
+      mergedProperties = properties || {};
     }
 
     var that = this,
@@ -60,7 +64,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
       // obtaining suitable mixins
       for (i = 0; i < forwardCount; i++) {
         forward = forwards[i];
-        if (forward.callback.call(that, properties)) {
+        if (forward.callback.call(that, mergedProperties)) {
           mixins.push(forward.mixin.Class);
         }
       }
@@ -82,7 +86,7 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
         instanceId, instance;
     if (mapper) {
       instances = builder.instances;
-      instanceId = mapper.call(that, properties);
+      instanceId = mapper.call(that, mergedProperties);
       instance = instances[instanceId];
       if (instance) {
         // instance found in cache
@@ -122,19 +126,11 @@ $oop.Class = $oop.createObject(Object.prototype, /** @lends $oop.Class# */{
     instance = Object.create(that);
 
     // copying initial properties to instance
-    if (properties instanceof Object) {
-      propertyNames = Object.getOwnPropertyNames(properties);
-      propertyCount = propertyNames.length;
-      for (i = 0; i < propertyCount; i++) {
-        propertyName = propertyNames[i];
-        instance[propertyName] = properties[propertyName];
-      }
-    } else {
-      // invalid properties supplied
-      $assert.fail([
-        "Invalid properties supplied to class '" + that.__className + "'.",
-        "Can't instantiate."
-      ].join(" "));
+    propertyNames = Object.getOwnPropertyNames(mergedProperties);
+    propertyCount = propertyNames.length;
+    for (i = 0; i < propertyCount; i++) {
+      propertyName = propertyNames[i];
+      instance[propertyName] = mergedProperties[propertyName];
     }
 
     // caching instance (if necessary)
