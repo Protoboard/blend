@@ -47,18 +47,17 @@ describe("$widget", function () {
       });
     });
 
-    // todo Add case for container element
     describe("addChildNode()", function () {
-      var element,
+      var parentElement,
           childNode, childElement;
 
       beforeEach(function () {
         domNode = DomNode.fromNodeName('foo');
-        element = document.createElement('div');
+        parentElement = document.createElement('div');
         childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
         childElement = document.createElement('div');
 
-        spyOn(domNode, 'getElement').and.returnValue(element);
+        spyOn(domNode, 'getChildParentElement').and.returnValue(parentElement);
         spyOn(childNode, 'createElement').and.returnValue(childElement);
       });
 
@@ -69,7 +68,7 @@ describe("$widget", function () {
 
       it("should render node as child", function () {
         domNode.addChildNode(childNode);
-        expect(element.childNodes.item(0)).toBe(childElement);
+        expect(parentElement.childNodes.item(0)).toBe(childElement);
       });
 
       describe("when node already has children", function () {
@@ -86,24 +85,23 @@ describe("$widget", function () {
 
         it("should render at appropriate index", function () {
           domNode.addChildNode(childNode2);
-          expect(element.childNodes.item(0)).toBe(childElement2);
-          expect(element.childNodes.item(1)).toBe(childElement);
+          expect(parentElement.childNodes.item(0)).toBe(childElement2);
+          expect(parentElement.childNodes.item(1)).toBe(childElement);
         });
       });
     });
 
-    // todo Add case for container element
     describe("removeChildNode()", function () {
-      var element,
+      var parentElement,
           childNode, childElement;
 
       beforeEach(function () {
         domNode = DomNode.fromNodeName('foo');
-        element = document.createElement('div');
+        parentElement = document.createElement('div');
         childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
         childElement = document.createElement('div');
 
-        spyOn(domNode, 'getElement').and.returnValue(element);
+        spyOn(domNode, 'getChildParentElement').and.returnValue(parentElement);
         spyOn(childNode, 'createElement').and.returnValue(childElement);
         spyOn(childNode, 'getElement').and.returnValue(childElement);
 
@@ -117,25 +115,24 @@ describe("$widget", function () {
 
       it("should remove child element from parent", function () {
         domNode.removeChildNode('bar');
-        expect(element.childNodes.length).toBe(0);
+        expect(parentElement.childNodes.length).toBe(0);
       });
     });
 
-    // todo Add case for container element
     describe("setChildOrder()", function () {
-      var element,
+      var parentElement,
           childNode1, childElement1,
           childNode2, childElement2;
 
       beforeEach(function () {
         domNode = DomNode.fromNodeName('foo');
-        element = document.createElement('div');
+        parentElement = document.createElement('div');
         childNode1 = DomNode.create({nodeName: 'bar', nodeOrder: 1});
         childElement1 = document.createElement('div');
         childNode2 = DomNode.create({nodeName: 'baz', nodeOrder: 2});
         childElement2 = document.createElement('div');
 
-        spyOn(domNode, 'getElement').and.returnValue(element);
+        spyOn(domNode, 'getChildParentElement').and.returnValue(parentElement);
         spyOn(childNode1, 'createElement').and.returnValue(childElement1);
         spyOn(childNode1, 'getElement').and.returnValue(childElement1);
         spyOn(childNode2, 'createElement').and.returnValue(childElement2);
@@ -153,8 +150,8 @@ describe("$widget", function () {
 
       it("should move element in parent", function () {
         domNode.setChildOrder(childNode1, 3);
-        expect(element.childNodes.item(0)).toBe(childElement2);
-        expect(element.childNodes.item(1)).toBe(childElement1);
+        expect(parentElement.childNodes.item(0)).toBe(childElement2);
+        expect(parentElement.childNodes.item(1)).toBe(childElement1);
       });
     });
 
