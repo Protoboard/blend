@@ -13,7 +13,12 @@ describe("$widget", function () {
       .blend($widget.Node)
       .blend($widget.DomNode)
       .define({
-        xmlTemplate: '<div><span blend-nodeName="foo"></span></div>'
+        xmlTemplate: [
+          '<div>',
+          '<span blend-nodeName="bar"></span>',
+          '<span blend-nodeName="baz"></span>',
+          '</div>'
+        ].join('')
       })
       .build();
       DomNode.__builder.forwards = {list: [], lookup: {}};
@@ -57,7 +62,8 @@ describe("$widget", function () {
         childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
         childElement = document.createElement('div');
 
-        spyOn(domNode, 'getParentElementForChild').and.returnValue(parentElement);
+        spyOn(domNode, 'getParentElementForChild').and
+        .returnValue(parentElement);
         spyOn(childNode, 'createElement').and.returnValue(childElement);
       });
 
@@ -101,7 +107,8 @@ describe("$widget", function () {
         childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
         childElement = document.createElement('div');
 
-        spyOn(domNode, 'getParentElementForChild').and.returnValue(parentElement);
+        spyOn(domNode, 'getParentElementForChild').and
+        .returnValue(parentElement);
         spyOn(childNode, 'createElement').and.returnValue(childElement);
         spyOn(childNode, 'getElement').and.returnValue(childElement);
 
@@ -132,7 +139,8 @@ describe("$widget", function () {
         childNode2 = DomNode.create({nodeName: 'baz', nodeOrder: 2});
         childElement2 = document.createElement('div');
 
-        spyOn(domNode, 'getParentElementForChild').and.returnValue(parentElement);
+        spyOn(domNode, 'getParentElementForChild').and
+        .returnValue(parentElement);
         spyOn(childNode1, 'createElement').and.returnValue(childElement1);
         spyOn(childNode1, 'getElement').and.returnValue(childElement1);
         spyOn(childNode2, 'createElement').and.returnValue(childElement2);
@@ -316,7 +324,7 @@ describe("$widget", function () {
         .setAttribute('hello', 'world')
         .createChildNode(DomNode, {
           elementId: 'bar',
-          nodeName: 'foo'
+          nodeName: 'bar'
         });
         spyOn(document, 'createElement').and.returnValue(element);
       });
@@ -374,7 +382,7 @@ describe("$widget", function () {
         });
         childNode = DomNode.create({
           elementName: 'div',
-          nodeName: 'foo',
+          nodeName: 'bar',
           elementId: 'n1'
         }, domNode._childProperties.foo);
         domNode.addChildNode(childNode);
