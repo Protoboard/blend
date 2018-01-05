@@ -76,7 +76,7 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    */
   addChildNode: function addChildNode(node) {
     var childNodeBefore = addChildNode.shared.childNodeBefore,
-        parentElement = this.getChildParentElement(node.nodeName),
+        parentElement = this.getParentElementForChild(node.nodeName),
         childElement,
         nextChild, nextChildElement;
 
@@ -116,7 +116,7 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    */
   setChildOrder: function setChildOrder(childNode, nodeOrder) {
     var nodeOrderBefore = setChildOrder.shared.nodeOrderBefore,
-        parentElement = this.getChildParentElement(childNode.nodeName),
+        parentElement = this.getParentElementForChild(childNode.nodeName),
         childElement,
         nextChild, nextChildElement;
 
@@ -246,7 +246,7 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    * @param {string} nodeName
    * @return {Element}
    */
-  getChildParentElement: function (nodeName) {
+  getParentElementForChild: function (nodeName) {
     var childProperties = this._childProperties,
         nodeProperties = childProperties && childProperties[nodeName],
         parentElementSelector = nodeProperties &&
@@ -270,7 +270,7 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    */
   getParentElement: function () {
     var parentNode = this.parentNode;
-    return parentNode && parentNode.getChildParentElement(this.nodeName);
+    return parentNode && parentNode.getParentElementForChild(this.nodeName);
   }
 })
 .build();

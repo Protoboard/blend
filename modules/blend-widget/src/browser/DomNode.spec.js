@@ -57,7 +57,7 @@ describe("$widget", function () {
         childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
         childElement = document.createElement('div');
 
-        spyOn(domNode, 'getChildParentElement').and.returnValue(parentElement);
+        spyOn(domNode, 'getParentElementForChild').and.returnValue(parentElement);
         spyOn(childNode, 'createElement').and.returnValue(childElement);
       });
 
@@ -101,7 +101,7 @@ describe("$widget", function () {
         childNode = DomNode.create({nodeName: 'bar', nodeOrder: 2});
         childElement = document.createElement('div');
 
-        spyOn(domNode, 'getChildParentElement').and.returnValue(parentElement);
+        spyOn(domNode, 'getParentElementForChild').and.returnValue(parentElement);
         spyOn(childNode, 'createElement').and.returnValue(childElement);
         spyOn(childNode, 'getElement').and.returnValue(childElement);
 
@@ -132,7 +132,7 @@ describe("$widget", function () {
         childNode2 = DomNode.create({nodeName: 'baz', nodeOrder: 2});
         childElement2 = document.createElement('div');
 
-        spyOn(domNode, 'getChildParentElement').and.returnValue(parentElement);
+        spyOn(domNode, 'getParentElementForChild').and.returnValue(parentElement);
         spyOn(childNode1, 'createElement').and.returnValue(childElement1);
         spyOn(childNode1, 'getElement').and.returnValue(childElement1);
         spyOn(childNode2, 'createElement').and.returnValue(childElement2);
@@ -364,7 +364,7 @@ describe("$widget", function () {
       });
     });
 
-    // todo Refactor for getChildParentElement()
+    // todo Refactor for getParentElementForChild()
     describe("getParentElement()", function () {
       var childNode;
 
