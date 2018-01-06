@@ -24,32 +24,10 @@ describe("$widget", function () {
       DomNode.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("build()", function () {
-      describe("when class has xmlTemplate property", function () {
-        var DomNodeBuilder2,
-            DomNode2;
-
-        beforeEach(function () {
-          DomNodeBuilder2 = $oop.createClass('test.$widget.DomNode.DomNode2')
-          .blend($widget.Node)
-          .blend($widget.DomNode)
-          .define({
-            xmlTemplate: '<div><div><p blend-nodeName="foo"></p></div></div>'
-          });
-          DomNodeBuilder2.forwards = {list: [], lookup: {}};
-        });
-
-        it("should add parentElementSelector to _childProperties", function () {
-          DomNode2 = DomNodeBuilder2.build();
-          expect(DomNode2._childProperties).toEqual({
-            foo: {
-              elementName: 'p',
-              nodeOrder: 0,
-              parentElementSelector: ':nth-child(1)>:nth-child(1)'
-            }
-          });
-        });
-      });
+    it("should add parentElementSelector to _childProperties", function () {
+      var childProperties = DomNode._childProperties;
+      expect(childProperties.bar.parentElementSelector).toBe(':nth-child(1)');
+      expect(childProperties.baz.parentElementSelector).toBe(':nth-child(1)');
     });
 
     describe("addChildNode()", function () {
