@@ -247,10 +247,9 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    * @return {Element}
    */
   getParentElementForChild: function (nodeName) {
-    var childProperties = this._childProperties,
-        nodeProperties = childProperties && childProperties[nodeName],
-        parentElementSelector = nodeProperties &&
-            nodeProperties.parentElementSelector,
+    var childProperties = this.getChildProperties(nodeName),
+        parentElementSelector = childProperties &&
+            childProperties.parentElementSelector,
         element = this.getElement();
 
     // parentElementSelector can be undefined or empty string - both mean
@@ -266,7 +265,9 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
    * element. Current node doesn't have to be rendered for it to return a
    * valid Element. (But parent node does.)
    * @return {Element}
-   * @todo Necessary?
+   * @todo Should use parentElementSelector. (In case it's not consistent w/
+   * parent's template)
+   * @todo Add test
    */
   getParentElement: function () {
     var parentNode = this.parentNode;

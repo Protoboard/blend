@@ -372,8 +372,7 @@ describe("$widget", function () {
       });
     });
 
-    // todo Refactor for getParentElementForChild()
-    describe("getParentElement()", function () {
+    describe("getParentElementForChild()", function () {
       var childNode;
 
       beforeEach(function () {
@@ -391,7 +390,7 @@ describe("$widget", function () {
       });
 
       it("should return closest containing element", function () {
-        var result = childNode.getParentElement();
+        var result = domNode.getParentElementForChild('bar');
         expect(result).toBe(domNode.getElement().firstChild);
       });
 
@@ -402,7 +401,7 @@ describe("$widget", function () {
         });
 
         it("should return parent node element", function () {
-          var result = childNode.getParentElement();
+          var result = domNode.getParentElementForChild('bar');
           expect(result).toBe(domNode.getElement());
         });
       });
