@@ -30,7 +30,7 @@ $widget.XmlNode = $oop.createClass('$widget.XmlNode')
   /**
    * Pre-processed child node properties as extracted from `xmlTemplate`.
    * @member {Object.<string,Object>} $widget.XmlNode#_childProperties
-   * @protected
+   * @private
    * @todo Belongs to Node or a different mixin?
    */
 

@@ -15,14 +15,15 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
 .setup(/** @lends $widget.DomNode */{
   /** @ignore */
   build: function () {
-    var childProperties = this._childProperties,
+    var that = this,
         xmlTemplate = this.xmlTemplate,
         childSelectors;
     if (xmlTemplate) {
       childSelectors = this._extractParentSelectors(xmlTemplate);
       Object.keys(childSelectors)
       .forEach(function (nodeName) {
-        childProperties[nodeName].parentElementSelector = childSelectors[nodeName];
+        var childProperties = that.getChildProperties(nodeName);
+        childProperties.parentElementSelector = childSelectors[nodeName];
       });
     }
   }
