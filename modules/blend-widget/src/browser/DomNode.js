@@ -259,20 +259,6 @@ $widget.DomNode = $oop.createClass('$widget.DomNode')
         element && element.querySelector(
         '#' + this.elementId + '>' + parentElementSelector) :
         element;
-  },
-
-  /**
-   * Retrieves DOM element that is (to be) parent of the current node's root
-   * element. Current node doesn't have to be rendered for it to return a
-   * valid Element. (But parent node does.)
-   * @return {Element}
-   * @todo Should use parentElementSelector. (In case it's not consistent w/
-   * parent's template)
-   * @todo Add test
-   */
-  getParentElement: function () {
-    var parentNode = this.parentNode;
-    return parentNode && parentNode.getParentElementForChild(this.nodeName);
   }
 })
 .build();
