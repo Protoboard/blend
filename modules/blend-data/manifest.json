@@ -4,7 +4,6 @@
     "src/utils/Clearable.js",
     "src/utils/Comparable.js",
     "src/utils/Filterable.js",
-    "src/utils/Matchable.js",
     "src/utils/Queryable.js",
     "src/utils/Reducible.js",
     "src/utils/Reinterpretable.js",

@@ -2,6 +2,7 @@
   "js": [
     "src/utils/environment-utils.js",
     "src/utils/Equatable.js",
+    "src/utils/Matchable.js",
     "src/string/string-utils.js",
     "src/string/Stringifiable.js",
     "src/string/StringifyCached.js",
@@ -10,6 +11,8 @@
     "src/class/Identifiable.js",
     "src/class/Retrievable.js",
     "src/path/Path.js",
+    "src/path/PathPattern.js",
+    "src/path/PathPatternComponent.js",
     "src/path/UriPath.js",
     "src/async/async-utils.js",
     "src/async/schedule-utils.js",

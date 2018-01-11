@@ -14,7 +14,7 @@ describe("$data", function () {
       .build();
     });
 
-    beforeEach(function () {
+    describe("create()", function () {
       treeQuery = TreeQuery.create({
         components: [
           'foo',
@@ -22,9 +22,7 @@ describe("$data", function () {
           $data.TreeQueryComponent.fromString('*')
         ]
       });
-    });
 
-    describe("create()", function () {
       it("should initialize components property", function () {
         expect(treeQuery.components).toEqual([
           $data.TreeQueryComponent.fromString('foo'),
@@ -84,10 +82,17 @@ describe("$data", function () {
 
     describe("clone()", function () {
       beforeEach(function () {
-        result = treeQuery.clone();
+        treeQuery = TreeQuery.create({
+          components: [
+            'foo',
+            'bar',
+            $data.TreeQueryComponent.fromString('*')
+          ]
+        });
       });
 
       it("should initialize properties", function () {
+        result = treeQuery.clone();
         expect(result.components).not.toBe(treeQuery.components);
         expect(result.components).toEqual(treeQuery.components);
       });
@@ -96,14 +101,15 @@ describe("$data", function () {
     describe("toString()", function () {
       beforeEach(function () {
         treeQuery = TreeQuery.create({components: ['foo.baz', 'bar', '*']});
-        result = treeQuery.toString();
       });
 
       it("should return string", function () {
+        result = treeQuery.toString();
         expect(typeof result).toBe('string');
       });
 
       it("should escape special characters", function () {
+        result = treeQuery.toString();
         expect(result).toBe('foo\\.baz.bar.*');
       });
     });

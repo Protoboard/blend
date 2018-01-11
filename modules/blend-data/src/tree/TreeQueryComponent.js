@@ -32,7 +32,7 @@
  * @class $data.TreeQueryComponent
  * @mixes $utils.Cloneable
  * @implements $utils.Stringifiable
- * @implements $data.Matchable
+ * @implements $utils.Matchable
  * @todo Add return marker.
  * @example
  * $data.TreeQueryComponent.fromString("foo:bar")
@@ -43,7 +43,7 @@
 $data.TreeQueryComponent = $oop.createClass('$data.TreeQueryComponent')
 .blend($utils.Cloneable)
 .implement($utils.Stringifiable)
-.implement($data.Matchable)
+.implement($utils.Matchable)
 .define(/** @lends $data.TreeQueryComponent# */{
   /**
    * @member {string} $data.TreeQueryComponent#componentString

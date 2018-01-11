@@ -2,10 +2,10 @@
 
 /**
  * Describes a pattern that can be matched against static variables.
- * @interface $data.Matchable
+ * @interface $utils.Matchable
  */
-$data.Matchable = $oop.createClass('$data.Matchable')
-.define(/** @lends $data.Matchable# */{
+$utils.Matchable = $oop.createClass('$utils.Matchable')
+.define(/** @lends $utils.Matchable# */{
   /**
    * Determines whether specified instance matches current one.
    * @param {...*} instance
