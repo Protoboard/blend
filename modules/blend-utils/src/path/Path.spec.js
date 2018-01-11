@@ -94,25 +94,3 @@ describe("$utils", function () {
     });
   });
 });
-
-describe("Array", function () {
-  describe("toPath()", function () {
-    var array = [1, 2, 3],
-        path;
-
-    it("should return a Path instance", function () {
-      path = array.toPath();
-      expect($utils.Path.mixedBy(path)).toBeTruthy();
-    });
-
-    it("should set components property", function () {
-      path = array.toPath();
-      expect(path.components).toBe(array);
-    });
-
-    it("should pass additional properties to create", function () {
-      path = array.toPath({bar: 'baz'});
-      expect(path.bar).toBe('baz');
-    });
-  });
-});

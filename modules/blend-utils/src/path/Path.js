@@ -79,13 +79,3 @@ $utils.Path = $oop.createClass('$utils.Path')
   }
 })
 .build();
-
-$oop.copyProperties(Array.prototype, /** @lends Array# */{
-  /**
-   * @param {Object} [properties]
-   * @returns {$utils.Path}
-   */
-  toPath: function (properties) {
-    return $utils.Path.create({components: this}, properties);
-  }
-});
