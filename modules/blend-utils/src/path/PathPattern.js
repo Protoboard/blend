@@ -67,6 +67,7 @@ $utils.PathPattern = $oop.createClass('$utils.PathPattern')
    * Matches pattern against the specified `Path`.
    * @param {$utils.Path} path
    * @return {boolean}
+   * @todo Should return false for prefix match?
    */
   matches: function (path) {
     var patternComponents = this.components,
