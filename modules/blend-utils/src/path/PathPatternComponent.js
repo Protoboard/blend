@@ -10,10 +10,12 @@
  * @class $utils.PathPatternComponent
  * @extends $utils.Cloneable
  * @implements $utils.Matchable
+ * @implements $utils.Stringifiable
  */
 $utils.PathPatternComponent = $oop.createClass('$utils.PathPatternComponent')
 .blend($utils.Cloneable)
 .implement($utils.Matchable)
+.implement($utils.Stringifiable)
 .define(/** @lends $utils.PathPatternComponent# */{
   /**
    * String representation of the component.
@@ -82,6 +84,13 @@ $utils.PathPatternComponent = $oop.createClass('$utils.PathPatternComponent')
     } else {
       return this.componentString === pathComponent;
     }
+  },
+
+  /**
+   * @returns {string}
+   */
+  toString: function () {
+    return this.componentString;
   }
 })
 .build();

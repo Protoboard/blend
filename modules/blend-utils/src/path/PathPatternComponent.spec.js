@@ -122,5 +122,15 @@ describe("$utils", function () {
         });
       });
     });
+
+    describe("toString()", function () {
+      beforeEach(function () {
+        pathPatternComponent = PathPatternComponent.fromString(':foo');
+      });
+
+      it("should return componentString", function () {
+        expect(pathPatternComponent.toString()).toBe(':foo');
+      });
+    });
   });
 });
