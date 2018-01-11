@@ -15,12 +15,14 @@ describe("$data", function () {
     });
 
     describe("create()", function () {
-      treeQuery = TreeQuery.create({
-        components: [
-          'foo',
-          'bar',
-          $data.TreeQueryComponent.fromString('*')
-        ]
+      beforeEach(function () {
+        treeQuery = TreeQuery.create({
+          components: [
+            'foo',
+            'bar',
+            $data.TreeQueryComponent.fromString('*')
+          ]
+        });
       });
 
       it("should initialize components property", function () {
