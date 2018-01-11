@@ -69,7 +69,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toPath()", function () {
+  describe("toUriPath()", function () {
     var uriPath,
         array;
 

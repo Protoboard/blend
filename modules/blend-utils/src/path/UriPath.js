@@ -9,6 +9,8 @@
  */
 
 /**
+ * A `Path` representing the "path" component of a Universal Resource
+ * Identifier (URI).
  * @class $utils.UriPath
  * @extends $utils.Path
  * @implements $utils.Stringifiable
@@ -24,7 +26,7 @@ $utils.UriPath = $oop.createClass('$utils.UriPath')
    * @returns {$utils.UriPath}
    */
   fromString: function (urlPath, properties) {
-    var components = urlPath.split($utils.LOCATION_PATH_DELIMITER)
+    var components = urlPath.split($utils.URI_PATH_DELIMITER)
     .map(decodeURIComponent);
     return this.create({components: components}, properties);
   },
@@ -35,17 +37,17 @@ $utils.UriPath = $oop.createClass('$utils.UriPath')
   toString: function () {
     return this.components
     .map(encodeURIComponent)
-    .join($utils.LOCATION_PATH_DELIMITER);
+    .join($utils.URI_PATH_DELIMITER);
   }
 })
 .build();
 
 $oop.copyProperties($utils, /** @lends $utils */{
   /**
-   * Separates LocationPath components.
+   * Separates UriPath components.
    * @constant
    */
-  LOCATION_PATH_DELIMITER: '/'
+  URI_PATH_DELIMITER: '/'
 });
 
 $oop.copyProperties(String.prototype, /** @lends String# */{
