@@ -14,6 +14,7 @@
     "src/path/PathPattern.js",
     "src/path/PathPatternComponent.js",
     "src/path/UriPath.js",
+    "src/path/UriPathPattern.js",
     "src/async/async-utils.js",
     "src/async/schedule-utils.js",
     "src/async/Timer.js",
