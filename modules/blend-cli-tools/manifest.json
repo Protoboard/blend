@@ -2,6 +2,7 @@
   "js": [
     "src/argv/Argument.js",
     "src/argv/Option.js",
-    "src/argv/Argv.js"
+    "src/argv/Argv.js",
+    "src/node/NodeArgv.js"
   ]
 }
