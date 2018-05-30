@@ -1,0 +1,7 @@
+{
+  "js": [
+    "src/argv/Argument.js",
+    "src/argv/Option.js",
+    "src/argv/Argv.js"
+  ]
+}
