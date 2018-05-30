@@ -17,6 +17,17 @@ describe("$cliTools", function () {
     });
 
     describe("fromArray()", function () {
+      var argumentList;
+
+      beforeEach(function () {
+        argumentList = ["hello", "--hello=world"];
+      });
+
+      it("should set argumentList", function () {
+        argv = Argv.fromArray(argumentList);
+        expect(argv.argumentList).toBe(argumentList);
+      });
+
       it("should initialize argumentCollection", function () {
         argv = Argv.fromArray(["hello", "--hello=world"]);
         expect(argv.argumentCollection.data).toEqual({
@@ -34,18 +45,32 @@ describe("$cliTools", function () {
     });
 
     describe("create()", function () {
-      it("should initialize argumentCollection", function () {
-        argv = Argv.create();
-        expect($data.Collection.mixedBy(argv.argumentCollection)).toBeTruthy();
-        expect(argv.argumentCollection.getItemCount()).toBe(0);
+      var argumentList;
+
+      beforeEach(function () {
+        argumentList = ["hello", "--hello=world"];
       });
 
-      it("should initialize options collection", function () {
+      it("should set argumentList", function () {
         argv = Argv.create({
-          argumentCollection: $data.Collection.fromData({
-            'hello': $cliTools.Argument.fromString("hello"),
-            '--hello=world': $cliTools.Option.fromString("--hello=world")
-          })
+          argumentList: argumentList
+        });
+        expect(argv.argumentList).toBe(argumentList);
+      });
+
+      it("should initialize argumentCollection", function () {
+        argv = Argv.create({
+          argumentList: argumentList
+        });
+        expect(argv.argumentCollection.data).toEqual({
+          'hello': $cliTools.Argument.fromString("hello"),
+          '--hello=world': $cliTools.Option.fromString("--hello=world")
+        });
+      });
+
+      it("should initialize options property", function () {
+        argv = Argv.create({
+          argumentList: argumentList
         });
         expect(argv.options.data).toEqual({
           'hello': $cliTools.Option.fromString("--hello=world")
