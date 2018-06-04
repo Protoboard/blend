@@ -1,16 +1,16 @@
 "use strict";
 
 var $oop = window['blend-oop'],
-    $cliTools = window['blend-cli-tools'];
+    $cliUtils = window['blend-cli-utils'];
 
-describe("$cliTools", function () {
+describe("$cliUtils", function () {
   describe("Argument", function () {
     var Argument,
         argument;
 
     beforeAll(function () {
-      Argument = $oop.createClass('test.$cliTools.Argument.Argument')
-      .blend($cliTools.Argument)
+      Argument = $oop.createClass('test.$cliUtils.Argument.Argument')
+      .blend($cliUtils.Argument)
       .build();
       Argument.__builder.forwards = {list: [], lookup: {}};
     });

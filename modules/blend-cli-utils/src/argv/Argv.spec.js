@@ -2,16 +2,16 @@
 
 var $oop = window['blend-oop'],
     $data = window['blend-data'],
-    $cliTools = window['blend-cli-tools'];
+    $cliUtils = window['blend-cli-utils'];
 
-describe("$cliTools", function () {
+describe("$cliUtils", function () {
   describe("Argv", function () {
     var Argv,
         argv;
 
     beforeAll(function () {
-      Argv = $oop.createClass('test.$cliTools.Argv.Argv')
-      .blend($cliTools.Argv)
+      Argv = $oop.createClass('test.$cliUtils.Argv.Argv')
+      .blend($cliUtils.Argv)
       .build();
       Argv.__builder.forwards = {list: [], lookup: {}};
     });
@@ -31,15 +31,15 @@ describe("$cliTools", function () {
       it("should initialize argumentCollection", function () {
         argv = Argv.fromArray(["hello", "--hello=world"]);
         expect(argv.argumentCollection.data).toEqual({
-          'hello': $cliTools.Argument.fromString("hello"),
-          '--hello=world': $cliTools.Option.fromString("--hello=world")
+          'hello': $cliUtils.Argument.fromString("hello"),
+          '--hello=world': $cliUtils.Option.fromString("--hello=world")
         });
       });
 
       it("should initialize options property", function () {
         argv = Argv.fromArray(["hello", "--hello=world"]);
         expect(argv.options.data).toEqual({
-          'hello': $cliTools.Option.fromString("--hello=world")
+          'hello': $cliUtils.Option.fromString("--hello=world")
         });
       });
     });
@@ -63,8 +63,8 @@ describe("$cliTools", function () {
           argumentList: argumentList
         });
         expect(argv.argumentCollection.data).toEqual({
-          'hello': $cliTools.Argument.fromString("hello"),
-          '--hello=world': $cliTools.Option.fromString("--hello=world")
+          'hello': $cliUtils.Argument.fromString("hello"),
+          '--hello=world': $cliUtils.Option.fromString("--hello=world")
         });
       });
 
@@ -73,7 +73,7 @@ describe("$cliTools", function () {
           argumentList: argumentList
         });
         expect(argv.options.data).toEqual({
-          'hello': $cliTools.Option.fromString("--hello=world")
+          'hello': $cliUtils.Option.fromString("--hello=world")
         });
       });
     });

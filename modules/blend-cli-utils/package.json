@@ -1,7 +1,7 @@
 {
-  "name": "blend-cli-tools",
+  "name": "blend-cli-utils",
   "version": "0.1.0",
-  "description": "CLI tools for Blend",
+  "description": "CLI utils for Blend",
   "keywords": [
   ],
   "author": "Dan Stocker <dan@kwaia.com>",

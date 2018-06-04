@@ -5,7 +5,7 @@
   "globalstrict": true,
   "globals": {
     "$assert": true,
-    "$cliTools": true,
+    "$cliUtils": true,
     "$data": true,
     "$oop": true,
     "$utils": true

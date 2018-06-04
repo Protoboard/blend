@@ -1,16 +1,16 @@
 "use strict";
 
 var $oop = window['blend-oop'],
-    $cliTools = window['blend-cli-tools'];
+    $cliUtils = window['blend-cli-utils'];
 
-describe("$cliTools", function () {
+describe("$cliUtils", function () {
   describe("NodeArgv", function () {
     var NodeArgv,
         nodeArgv;
 
     beforeAll(function () {
-      NodeArgv = $oop.createClass('test.$cliTools.NodeArgv.NodeArgv')
-      .blend($cliTools.NodeArgv)
+      NodeArgv = $oop.createClass('test.$cliUtils.NodeArgv.NodeArgv')
+      .blend($cliUtils.NodeArgv)
       .build();
       NodeArgv.__builder.forwards = {list: [], lookup: {}};
     });

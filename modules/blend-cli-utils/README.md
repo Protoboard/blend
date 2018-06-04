@@ -1,2 +1,2 @@
-Blend CLI Tools Module
+Blend CLI Utils Module
 ======================
