@@ -7,6 +7,7 @@
  */
 
 /**
+ * Allows logical access to command line arguments, based on argument format.
  * @class $cliTools.Argv
  */
 $cliTools.Argv = $oop.createClass('$cliTools.Argv')

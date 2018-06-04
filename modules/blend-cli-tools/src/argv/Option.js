@@ -7,6 +7,8 @@
  */
 
 /**
+ * Represents an option command line argument. Options have a name, an
+ * optional value, and are passed in the format "--name=value".
  * TODO: Handle escaped special chars (=)
  * @class $cliTools.Option
  */

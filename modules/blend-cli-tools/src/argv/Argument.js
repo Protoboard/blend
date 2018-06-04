@@ -7,7 +7,7 @@
  */
 
 /**
- * Describes a single argument among a CLI application's arguments.
+ * Describes a single command line argument.
  * @class $cliTools.Argument
  * @implements $utils.Stringifiable
  */

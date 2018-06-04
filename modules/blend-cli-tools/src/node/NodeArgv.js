@@ -7,6 +7,7 @@
  */
 
 /**
+ * Allows logical access to command line arguments of Node.js scripts.
  * @class $cliTools.NodeArgv
  * @extends $cliTools.Argv
  */
