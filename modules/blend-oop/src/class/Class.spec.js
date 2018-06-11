@@ -451,8 +451,8 @@ describe("$oop", function () {
       });
 
       describe("on other interface", function () {
-        it("should return falsy", function () {
-          expect(Class.implements(Interface2)).toBeFalsy();
+        it("should return false", function () {
+          expect(Class.implements(Interface2)).toBe(false);
         });
       });
     });
@@ -479,8 +479,8 @@ describe("$oop", function () {
       });
 
       describe("on other interface", function () {
-        it("should return falsy", function () {
-          expect(Interface2.implementedBy(Class)).toBeFalsy();
+        it("should return false", function () {
+          expect(Interface2.implementedBy(Class)).toBe(false);
         });
       });
     });
@@ -501,37 +501,37 @@ describe("$oop", function () {
       });
 
       describe("on invalid argument", function () {
-        it("should return falsy", function () {
-          expect(Class.mixes('foo')).toBeFalsy();
-          expect(Class.mixes(1)).toBeFalsy();
-          expect(Class.mixes(false)).toBeFalsy();
+        it("should return fale", function () {
+          expect(Class.mixes('foo')).toBe(false);
+          expect(Class.mixes(1)).toBe(false);
+          expect(Class.mixes(false)).toBe(false);
         });
       });
 
       describe("on self", function () {
-        it("should return truthy", function () {
-          expect(Class.mixes(Class)).toBeTruthy();
+        it("should return true", function () {
+          expect(Class.mixes(Class)).toBe(true);
         });
       });
 
       describe("on instance of self", function () {
-        it("should return truthy", function () {
+        it("should return true", function () {
           var instance = Class.create();
-          expect(instance.mixes(Class)).toBeTruthy();
+          expect(instance.mixes(Class)).toBe(true);
         });
       });
 
       describe("on present mixin", function () {
-        it("should return truthy", function () {
-          expect(Class.mixes(Mixin1)).toBeTruthy();
+        it("should return true", function () {
+          expect(Class.mixes(Mixin1)).toBe(true);
           var instance = Class.create();
-          expect(instance.mixes(Mixin1)).toBeTruthy();
+          expect(instance.mixes(Mixin1)).toBe(true);
         });
       });
 
       describe("on absent mixin", function () {
-        it("should return falsy", function () {
-          expect(Class.mixes(Mixin2)).toBeFalsy();
+        it("should return false", function () {
+          expect(Class.mixes(Mixin2)).toBe(false);
         });
       });
     });
@@ -552,37 +552,37 @@ describe("$oop", function () {
       });
 
       describe("on invalid argument", function () {
-        it("should return falsy", function () {
-          expect(Mixin1.mixedBy('foo')).toBeFalsy();
-          expect(Mixin1.mixedBy(1)).toBeFalsy();
-          expect(Mixin1.mixedBy(false)).toBeFalsy();
+        it("should return false", function () {
+          expect(Mixin1.mixedBy('foo')).toBe(false);
+          expect(Mixin1.mixedBy(1)).toBe(false);
+          expect(Mixin1.mixedBy(false)).toBe(false);
         });
       });
 
       describe("on self", function () {
-        it("should return truthy", function () {
-          expect(Class.mixedBy(Class)).toBeTruthy();
+        it("should return true", function () {
+          expect(Class.mixedBy(Class)).toBe(true);
         });
       });
 
       describe("on instance of self", function () {
-        it("should return truthy", function () {
+        it("should return true", function () {
           var instance = Class.create();
-          expect(Class.mixedBy(instance)).toBeTruthy();
+          expect(Class.mixedBy(instance)).toBe(true);
         });
       });
 
       describe("on present mixin", function () {
-        it("should return truthy", function () {
-          expect(Mixin1.mixedBy(Class)).toBeTruthy();
+        it("should return true", function () {
+          expect(Mixin1.mixedBy(Class)).toBe(true);
           var instance = Class.create();
-          expect(Mixin1.mixedBy(instance)).toBeTruthy();
+          expect(Mixin1.mixedBy(instance)).toBe(true);
         });
       });
 
       describe("on absent mixin", function () {
-        it("should return falsy", function () {
-          expect(Mixin2.mixedBy(Class)).toBeFalsy();
+        it("should return false", function () {
+          expect(Mixin2.mixedBy(Class)).toBe(false);
         });
       });
     });
@@ -603,14 +603,14 @@ describe("$oop", function () {
       });
 
       describe("on met expectation", function () {
-        it("should return truthy", function () {
-          expect(Class.expects(Host1)).toBeTruthy();
+        it("should return true", function () {
+          expect(Class.expects(Host1)).toBe(true);
         });
       });
 
       describe("on unmet expectation", function () {
-        it("should return falsy", function () {
-          expect(Class.expects(Host2)).toBeFalsy();
+        it("should return false", function () {
+          expect(Class.expects(Host2)).toBe(false);
         });
       });
     });
@@ -631,14 +631,14 @@ describe("$oop", function () {
       });
 
       describe("on met expectation", function () {
-        it("should return truthy", function () {
-          expect(Host1.expectedBy(Class)).toBeTruthy();
+        it("should return true", function () {
+          expect(Host1.expectedBy(Class)).toBe(true);
         });
       });
 
       describe("on unmet expectation", function () {
-        it("should return falsy", function () {
-          expect(Host2.expectedBy(Class)).toBeFalsy();
+        it("should return false", function () {
+          expect(Host2.expectedBy(Class)).toBe(false);
         });
       });
     });
