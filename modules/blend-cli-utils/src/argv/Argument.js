@@ -1,32 +1,32 @@
 "use strict";
 
 /**
- * @function $cliUtils.Argument.create
+ * @function $cli.Argument.create
  * @param {Object} [properties]
- * @returns {$cliUtils.Argument}
+ * @returns {$cli.Argument}
  */
 
 /**
  * Describes a single command line argument.
- * @class $cliUtils.Argument
+ * @class $cli.Argument
  * @implements $utils.Stringifiable
  */
-$cliUtils.Argument = $oop.createClass('$cliUtils.Argument')
+$cli.Argument = $oop.createClass('$cli.Argument')
 .blend($utils.Cloneable)
 .implement($utils.Stringifiable)
-.define(/** @lends $cliUtils.Argument# */{
+.define(/** @lends $cli.Argument# */{
   /**
-   * @member {string} $cliUtils.Argument#argumentString
+   * @member {string} $cli.Argument#argumentString
    */
 
   /**
-   * @member {string} $cliUtils.Argument#argumentName
+   * @member {string} $cli.Argument#argumentName
    */
 
   /**
-   * @memberOf $cliUtils.Argument
+   * @memberOf $cli.Argument
    * @param {string} argumentString
-   * @returns {$cliUtils.Argument}
+   * @returns {$cli.Argument}
    */
   fromString: function (argumentString) {
     return this.create({argumentString: argumentString});

@@ -1,32 +1,32 @@
 "use strict";
 
 /**
- * @function $cliUtils.Argv.create
+ * @function $cli.Argv.create
  * @param {Object} [properties]
- * @returns {$cliUtils.Argv}
+ * @returns {$cli.Argv}
  */
 
 /**
  * Allows logical access to command line arguments, based on argument format.
- * @class $cliUtils.Argv
+ * @class $cli.Argv
  */
-$cliUtils.Argv = $oop.createClass('$cliUtils.Argv')
-.define(/** @lends $cliUtils.Argv# */{
+$cli.Argv = $oop.createClass('$cli.Argv')
+.define(/** @lends $cli.Argv# */{
   /**
-   * @member {Array.<string>} $cliUtils.Argv#argumentList
+   * @member {Array.<string>} $cli.Argv#argumentList
    */
 
   /**
-   * @member {$data.Collection.<string,$cliUtils.Argument>}
-   *     $cliUtils.Argv#argumentCollection
+   * @member {$data.Collection.<string,$cli.Argument>}
+   *     $cli.Argv#argumentCollection
    */
 
   /**
-   * @member {$data.Collection.<string,$cliUtils.Option>} $cliUtils.Argv#options
+   * @member {$data.Collection.<string,$cli.Option>} $cli.Argv#options
    */
 
   /**
-   * @memberOf $cliUtils.Argv
+   * @memberOf $cli.Argv
    * @param {Array.<string>} argv
    */
   fromArray: function (argv) {
@@ -38,16 +38,19 @@ $cliUtils.Argv = $oop.createClass('$cliUtils.Argv')
   /** @ignore */
   defaults: function () {
     this.argumentList = this.argumentList || [];
+  },
 
+  /** @ignore */
+  init: function () {
     this.argumentCollection = this.argumentCollection || $data.Collection.fromData(this.argumentList)
     .mapKeys(function (argument) {
       return argument;
     })
-    .passEachValueTo($cliUtils.Argument.fromString, $cliUtils.Argument)
+    .passEachValueTo($cli.Argument.fromString, $cli.Argument)
     .toCollection();
 
     this.options = this.options || this.argumentCollection
-    .filterByValueType($cliUtils.Option)
+    .filterByValueType($cli.Option)
     .mapKeys(function (option) {
       return option.optionName;
     })

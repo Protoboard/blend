@@ -1,25 +1,25 @@
 "use strict";
 
 /**
- * @function $cliUtils.NodeArgv.create
+ * @function $cli.NodeArgv.create
  * @param {Object} [properties]
- * @returns {$cliUtils.NodeArgv}
+ * @returns {$cli.NodeArgv}
  */
 
 /**
  * Allows logical access to command line arguments of Node.js scripts.
- * @class $cliUtils.NodeArgv
- * @extends $cliUtils.Argv
+ * @class $cli.NodeArgv
+ * @extends $cli.Argv
  */
-$cliUtils.NodeArgv = $oop.createClass('$cliUtils.NodeArgv')
-.blend($cliUtils.Argv)
-.define(/** @lends $cliUtils.NodeArgv# */{
+$cli.NodeArgv = $oop.createClass('$cli.NodeArgv')
+.blend($cli.Argv)
+.define(/** @lends $cli.NodeArgv# */{
   /**
-   * @member {string} $cliUtils.NodeArgv#nodePath
+   * @member {string} $cli.NodeArgv#nodePath
    */
 
   /**
-   * @member {string} $cliUtils.NodeArgv#scriptPath
+   * @member {string} $cli.NodeArgv#scriptPath
    */
 
   /** @ignore */
@@ -31,5 +31,5 @@ $cliUtils.NodeArgv = $oop.createClass('$cliUtils.NodeArgv')
 })
 .build();
 
-$cliUtils.Argv
-.forwardBlend($cliUtils.NodeArgv, $utils.isNode);
+$cli.Argv
+.forwardBlend($cli.NodeArgv, $utils.isNode);

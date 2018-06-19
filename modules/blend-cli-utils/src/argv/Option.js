@@ -1,31 +1,31 @@
 "use strict";
 
 /**
- * @function $cliUtils.Option.create
+ * @function $cli.Option.create
  * @param {Object} [properties]
- * @returns {$cliUtils.Option}
+ * @returns {$cli.Option}
  */
 
 /**
  * Represents an option command line argument. Options have a name, an
  * optional value, and are passed in the format "--name=value".
  * TODO: Handle escaped special chars (=)
- * @class $cliUtils.Option
+ * @class $cli.Option
  */
-$cliUtils.Option = $oop.createClass('$cliUtils.Option')
-.blend($cliUtils.Argument)
-.define(/** @lends $cliUtils.Option# */{
+$cli.Option = $oop.createClass('$cli.Option')
+.blend($cli.Argument)
+.define(/** @lends $cli.Option# */{
   /**
-   * @member {string} $cliUtils.Option#optionName
+   * @member {string} $cli.Option#optionName
    */
 
   /**
-   * @member {string} $cliUtils.Option#optionValue
+   * @member {string} $cli.Option#optionValue
    */
 
   /** @ignore */
   spread: function () {
-    var hits = $cliUtils.RE_OPTION.exec(this.argumentString) || undefined,
+    var hits = $cli.RE_OPTION.exec(this.argumentString) || undefined,
         optionName = hits && hits[1],
         optionValue = hits && hits[2];
 
@@ -37,14 +37,14 @@ $cliUtils.Option = $oop.createClass('$cliUtils.Option')
 })
 .build();
 
-$oop.copyProperties($cliUtils, /** @lends $cliUtils */{
+$oop.copyProperties($cli, /** @lends $cli */{
   /**
    * Defines option structure
    */
   RE_OPTION: /--([^=]+)(?:=(.*))?/
 });
 
-$cliUtils.Argument
-.forwardBlend($cliUtils.Option, function (properties) {
-  return $cliUtils.RE_OPTION.test(properties.argumentString);
+$cli.Argument
+.forwardBlend($cli.Option, function (properties) {
+  return $cli.RE_OPTION.test(properties.argumentString);
 });

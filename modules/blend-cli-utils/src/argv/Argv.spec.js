@@ -2,16 +2,16 @@
 
 var $oop = window['blend-oop'],
     $data = window['blend-data'],
-    $cliUtils = window['blend-cli-utils'];
+    $cli = window['blend-cli-utils'];
 
-describe("$cliUtils", function () {
+describe("$cli", function () {
   describe("Argv", function () {
     var Argv,
         argv;
 
     beforeAll(function () {
-      Argv = $oop.createClass('test.$cliUtils.Argv.Argv')
-      .blend($cliUtils.Argv)
+      Argv = $oop.createClass('test.$cli.Argv.Argv')
+      .blend($cli.Argv)
       .build();
       Argv.__builder.forwards = {list: [], lookup: {}};
     });
@@ -31,15 +31,15 @@ describe("$cliUtils", function () {
       it("should initialize argumentCollection", function () {
         argv = Argv.fromArray(["hello", "--hello=world"]);
         expect(argv.argumentCollection.data).toEqual({
-          'hello': $cliUtils.Argument.fromString("hello"),
-          '--hello=world': $cliUtils.Option.fromString("--hello=world")
+          'hello': $cli.Argument.fromString("hello"),
+          '--hello=world': $cli.Option.fromString("--hello=world")
         });
       });
 
       it("should initialize options property", function () {
         argv = Argv.fromArray(["hello", "--hello=world"]);
         expect(argv.options.data).toEqual({
-          'hello': $cliUtils.Option.fromString("--hello=world")
+          'hello': $cli.Option.fromString("--hello=world")
         });
       });
     });
@@ -63,8 +63,8 @@ describe("$cliUtils", function () {
           argumentList: argumentList
         });
         expect(argv.argumentCollection.data).toEqual({
-          'hello': $cliUtils.Argument.fromString("hello"),
-          '--hello=world': $cliUtils.Option.fromString("--hello=world")
+          'hello': $cli.Argument.fromString("hello"),
+          '--hello=world': $cli.Option.fromString("--hello=world")
         });
       });
 
@@ -73,7 +73,7 @@ describe("$cliUtils", function () {
           argumentList: argumentList
         });
         expect(argv.options.data).toEqual({
-          'hello': $cliUtils.Option.fromString("--hello=world")
+          'hello': $cli.Option.fromString("--hello=world")
         });
       });
     });
