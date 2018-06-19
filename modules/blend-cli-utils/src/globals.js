@@ -4,11 +4,11 @@ var $assert = require('blend-assert'),
     $oop = require('blend-oop'),
     $utils = require('blend-utils'),
     $data = require('blend-data'),
-    $cli = exports;
+    $cliUtils = exports;
 
 /**
- * @namespace $cli
+ * @namespace $cliUtils
  */
 
-$oop.copyProperties($cli, /** @lends $cli */{
+$oop.copyProperties($cliUtils, /** @lends $cliUtils */{
 });

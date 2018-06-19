@@ -1,16 +1,16 @@
 "use strict";
 
 var $oop = window['blend-oop'],
-    $cli = window['blend-cli-utils'];
+    $cliUtils = window['blend-cli-utils'];
 
-describe("$cli", function () {
+describe("$cliUtils", function () {
   describe("Option", function () {
     var Option,
         option;
 
     beforeAll(function () {
-      Option = $oop.createClass('test.$cli.Option.Option')
-      .blend($cli.Option)
+      Option = $oop.createClass('test.$cliUtils.Option.Option')
+      .blend($cliUtils.Option)
       .build();
       Option.__builder.forwards = {list: [], lookup: {}};
     });
@@ -46,10 +46,10 @@ describe("$cli", function () {
         var result;
 
         it("should return Option instance", function () {
-          result = $cli.Argument.create({argumentString: "--foo"});
-          expect($cli.Option.mixedBy(result)).toBeTruthy();
-          result = $cli.Argument.create({argumentString: "--foo=bar"});
-          expect($cli.Option.mixedBy(result)).toBeTruthy();
+          result = $cliUtils.Argument.create({argumentString: "--foo"});
+          expect($cliUtils.Option.mixedBy(result)).toBeTruthy();
+          result = $cliUtils.Argument.create({argumentString: "--foo=bar"});
+          expect($cliUtils.Option.mixedBy(result)).toBeTruthy();
         });
       });
     });
