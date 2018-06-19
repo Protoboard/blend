@@ -7,7 +7,8 @@
  */
 
 /**
- * Allows logical access to command line arguments, based on argument format.
+ * Argument vector. Allows logical access to command line arguments, based on
+ * argument format.
  * @class $cli.Argv
  */
 $cli.Argv = $oop.createClass('$cli.Argv')

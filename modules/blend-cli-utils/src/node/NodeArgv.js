@@ -7,7 +7,8 @@
  */
 
 /**
- * Allows logical access to command line arguments of Node.js scripts.
+ * Node-specific argument vector. Allows logical access to command line
+ * arguments of Node.js scripts.
  * @class $cli.NodeArgv
  * @extends $cli.Argv
  */
