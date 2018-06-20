@@ -15,14 +15,15 @@ $buildUtils.DependencyGraph = $oop.createClass('$buildUtils.DependencyGraph')
 .define(/** @lends $buildUtils.DependencyGraph# */{
   /**
    * TODO: Doesn't have to be StringPairList?
-   * @returns {$data.StringDictionary}
+   * @returns {$data.StringPairList}
    */
   getIndependent: function () {
     var that = this;
     return this
     .filter(function (dependency) {
       return that.getValuesForKey(dependency).length === 0;
-    });
+    })
+    .toStringPairList();
   },
 
   /**
