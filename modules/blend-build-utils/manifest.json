@@ -1,0 +1,7 @@
+{
+  "js": [
+    "src/dependency-graph/SymbolExtractor.js",
+    "src/dependency-graph/DependencyGraph.js",
+    "src/blend/BlendSymbolExtractor.js"
+  ]
+}
