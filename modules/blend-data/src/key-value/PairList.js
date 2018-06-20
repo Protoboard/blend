@@ -31,7 +31,9 @@ $data.PairList = $oop.createClass('$data.PairList')
       value: value
     });
 
-    this._itemCount++;
+    if (this._itemCount !== undefined) {
+      this._itemCount++;
+    }
 
     return this;
   },
