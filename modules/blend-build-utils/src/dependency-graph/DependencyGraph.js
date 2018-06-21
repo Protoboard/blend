@@ -7,6 +7,7 @@
  */
 
 /**
+ * Models dependencies between things with a string identifier.
  * @class $buildUtils.DependencyGraph
  * @extends $data.StringDictionary
  */
@@ -14,46 +15,61 @@ $buildUtils.DependencyGraph = $oop.createClass('$buildUtils.DependencyGraph')
 .blend($data.StringDictionary)
 .define(/** @lends $buildUtils.DependencyGraph# */{
   /**
-   * TODO: Doesn't have to be StringPairList?
-   * @returns {$data.StringPairList}
+   * Filters current dependency graph leaving only edges with a sink node.
+   * dependency.
+   * @returns {$data.StringDictionary}
    */
-  getIndependent: function () {
+  getSinkEdges: function () {
     var that = this;
     return this
     .filter(function (dependency) {
       return that.getValuesForKey(dependency).length === 0;
-    })
-    .toStringPairList();
+    });
   },
 
   /**
-   * @param {$data.ItemContainer|$data.KeyValueContainer} pairs
+   * Removes the specified items (dependant-dependency pairs) from the
+   * current instance.
+   * @param {$data.ItemContainer|$data.KeyValueContainer} items
    */
-  deletePairs: function (pairs) {
+  deleteEdgesForSourceNodes: function (items) {
     var that = this;
-    pairs.forEachItem(function (dependency, dependent) {
+    items.forEachItem(function (dependency, dependent) {
       that.deleteItem(dependent, dependency);
     });
     return this;
   },
 
   /**
+   * Serializes nodes of the graph so that dependencies precede dependants.
+   * Throws on circular dependency.
    * @returns {Array.<string>}
    */
   serialize: function () {
     var clone = this.clone(),
-        independent,
-        result = [];
+        breadcrumbs = {},
+        leafDependencies,
+        result = [],
+        pushToResult = result.push.bind(result);
 
-    console.log("serializing", JSON.stringify(clone));
-    while ((independent = clone.getIndependent()).getItemCount() > 0) {
-      console.log("independent", JSON.stringify(independent.data));
+    // Adding special entry that has all items as dependency.
+    // Necessary to include top-level items.
+    clone.getKeys()
+    .forEach(function (key) {
+      clone.setItem('_', key);
+    });
 
-      clone.deletePairs(independent);
+    while ((leafDependencies = clone.getSinkEdges()).getItemCount() > 0) {
+      // Deleting leaf dependency relationships
+      clone.deleteEdgesForSourceNodes(leafDependencies);
 
-      // TODO: Extract unique dependencies and push those
-      //result.push(independent);
+      // Adding leaf dependencies to result
+      leafDependencies.swapKeysAndValues()
+      .asStringSet()
+      .forEachItem(pushToResult);
     }
+
+    $assert.assert(clone.getItemCount() === 0, "Circular dependencies");
 
     return result;
   }
