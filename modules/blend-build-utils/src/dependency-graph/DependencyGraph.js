@@ -47,7 +47,6 @@ $buildUtils.DependencyGraph = $oop.createClass('$buildUtils.DependencyGraph')
    */
   serialize: function () {
     var clone = this.clone(),
-        breadcrumbs = {},
         leafDependencies,
         result = [],
         pushToResult = result.push.bind(result);
