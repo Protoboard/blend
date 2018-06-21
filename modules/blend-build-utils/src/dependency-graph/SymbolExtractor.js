@@ -14,18 +14,18 @@ $buildUtils.SymbolExtractor = $oop.createClass('$buildUtils.SymbolExtractor')
 .define(/** @lends $buildUtils.SymbolExtractor# */{
   /**
    * Symbol name must be the first match returned by RegExp#exec()
-   * @member {Array.<RegExp>} $buildUtils.SymbolExtractor#defineMatchers
+   * @member {Array.<RegExp>} $buildUtils.SymbolExtractor#exportMatchers
    */
 
   /**
    * Symbol name must be the first match returned by RegExp#exec()
-   * @member {Array.<RegExp>} $buildUtils.SymbolExtractor#referenceMatchers
+   * @member {Array.<RegExp>} $buildUtils.SymbolExtractor#importMatchers
    */
 
   /** @ignore */
   defaults: function () {
-    this.defineMatchers = this.defineMatchers || [];
-    this.referenceMatchers = this.referenceMatchers || [];
+    this.exportMatchers = this.exportMatchers || [];
+    this.importMatchers = this.importMatchers || [];
   },
 
   /**
@@ -36,9 +36,9 @@ $buildUtils.SymbolExtractor = $oop.createClass('$buildUtils.SymbolExtractor')
    */
   _extractSymbols: function (matchers, text) {
     var symbolLookup = matchers
-    .reduce(function (result, defineMatcher) {
+    .reduce(function (result, matcher) {
       var hits;
-      while ((hits = defineMatcher.exec(text)) !== null) {
+      while ((hits = matcher.exec(text)) !== null) {
         result[hits[1]] = true;
       }
       return result;
@@ -51,17 +51,17 @@ $buildUtils.SymbolExtractor = $oop.createClass('$buildUtils.SymbolExtractor')
    * @param {string} scriptBody
    * @returns {Array.<string>}
    */
-  extractDefinedSymbols: function (scriptBody) {
-    return this._extractSymbols(this.defineMatchers, scriptBody);
+  extractExports: function (scriptBody) {
+    return this._extractSymbols(this.exportMatchers, scriptBody);
   },
 
   /**
-   * Extracts symbols that are referenced in the specified script body.
+   * Extracts symbols that are imported in the specified script body.
    * @param {string} scriptBody
    * @returns {Array.<string>}
    */
-  extractReferencedSymbols: function (scriptBody) {
-    return this._extractSymbols(this.referenceMatchers, scriptBody);
+  extractImports: function (scriptBody) {
+    return this._extractSymbols(this.importMatchers, scriptBody);
   }
 })
 .build();

@@ -15,79 +15,79 @@ describe("$buildUtils", function () {
       BlendSymbolExtractor.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("extractDefinedSymbols()", function () {
+    describe("extractExports()", function () {
       beforeEach(function () {
         blendSymbolExtractor = BlendSymbolExtractor.create();
       });
 
-      it("should extract defined class name", function () {
-        expect(blendSymbolExtractor.extractDefinedSymbols(
+      it("should extract exported class name", function () {
+        expect(blendSymbolExtractor.extractExports(
             '$foo.Bar = $oop.createClass("$foo.Bar")')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractDefinedSymbols(
+        expect(blendSymbolExtractor.extractExports(
             '$foo.Bar = $oop.createClass( "$foo.Bar"  )'))
         .toEqual(['$foo.Bar']);
       });
 
       it("should collapse results", function () {
-        expect(blendSymbolExtractor.extractDefinedSymbols(
+        expect(blendSymbolExtractor.extractExports(
             '$oop.createClass( "$foo.Bar"  ); $oop.createClass("$foo.Bar")'))
         .toEqual(['$foo.Bar']);
       });
     });
 
-    describe("extractReferencedSymbols()", function () {
+    describe("extractImports()", function () {
       beforeEach(function () {
         blendSymbolExtractor = BlendSymbolExtractor.create();
       });
 
       it("should extract mixed classes", function () {
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.mix($foo.Bar)')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.mix(  $foo.Bar  )')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.mix  ($foo.Bar)')).toEqual(['$foo.Bar']);
       });
 
       it("should extract blended classes", function () {
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.blend($foo.Bar)')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.blend(  $foo.Bar  )')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.blend  ($foo.Bar)')).toEqual(['$foo.Bar']);
       });
 
       it("should extract expected classes", function () {
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.expect($foo.Bar)')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.expect(  $foo.Bar  )')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.expect  ($foo.Bar)')).toEqual(['$foo.Bar']);
       });
 
       it("should extract implemented interfaces", function () {
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.implement($foo.Bar)')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.implement(  $foo.Bar  )')).toEqual(['$foo.Bar']);
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.implement  ($foo.Bar)')).toEqual(['$foo.Bar']);
       });
 
       it("should extract forward blended classes", function () {
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             '$foo.Bar.forwardBlend()')).toEqual(['$foo.Bar']);
       });
 
       it("should extract delegation", function () {
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             '$foo.Bar.delegate({})')).toEqual(['$foo.Bar']);
       });
 
       it("should collapse results", function () {
-        expect(blendSymbolExtractor.extractReferencedSymbols(
+        expect(blendSymbolExtractor.extractImports(
             'foo.blend($foo.Bar).mix($foo.Bar);' +
             '$foo.Bar.forwardBlend();' +
             '$foo.Bar.delegate({});'))

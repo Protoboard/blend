@@ -16,43 +16,43 @@ describe("$buildUtils", function () {
     });
 
     describe("create()", function () {
-      it("should initialize defineMatchers property", function () {
+      it("should initialize exportMatchers property", function () {
         symbolExtractor = SymbolExtractor.create();
-        expect(symbolExtractor.defineMatchers).toEqual([]);
+        expect(symbolExtractor.exportMatchers).toEqual([]);
       });
 
-      it("should initialize referenceMatchers property", function () {
+      it("should initialize importMatchers property", function () {
         symbolExtractor = SymbolExtractor.create();
-        expect(symbolExtractor.referenceMatchers).toEqual([]);
+        expect(symbolExtractor.importMatchers).toEqual([]);
       });
     });
 
-    describe("extractDefinedSymbols()", function () {
+    describe("extractExports()", function () {
       var scriptBody = "var foo=1; var bar={baz: 2}";
 
       beforeEach(function () {
         symbolExtractor = SymbolExtractor.create({
-          defineMatchers: [/(\w+)=/g, /(\w+):/g]
+          exportMatchers: [/(\w+)=/g, /(\w+):/g]
         });
       });
 
-      it("should extract defined symbols", function () {
-        var result = symbolExtractor.extractDefinedSymbols(scriptBody);
+      it("should extract exported symbols", function () {
+        var result = symbolExtractor.extractExports(scriptBody);
         expect(result.sort()).toEqual(['foo', 'bar', 'baz'].sort());
       });
     });
 
-    describe("extractReferencedSymbols()", function () {
+    describe("extractImports()", function () {
       var scriptBody = "var foo=bar; var bar={baz:quux}";
 
       beforeEach(function () {
         symbolExtractor = SymbolExtractor.create({
-          referenceMatchers: [/=(\w+)/g, /:(\w+)/g]
+          importMatchers: [/=(\w+)/g, /:(\w+)/g]
         });
       });
 
-      it("should extract defined symbols", function () {
-        var result = symbolExtractor.extractReferencedSymbols(scriptBody);
+      it("should extract imported symbols", function () {
+        var result = symbolExtractor.extractImports(scriptBody);
         expect(result.sort()).toEqual(['bar', 'quux'].sort());
       });
     });

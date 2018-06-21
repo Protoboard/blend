@@ -18,10 +18,10 @@ $buildUtils.ScriptCollection = $oop.createClass('$buildUtils.ScriptCollection')
    * @param {$buildUtils.SymbolExtractor} extractor
    * @returns {$data.StringDictionary}
    */
-  getFileNamesVsDefined: function (extractor) {
+  getFileNamesVsExports: function (extractor) {
     return this
     .mapValues(function (script) {
-      return script.extractDefinedSymbols(extractor);
+      return script.extractExports(extractor);
     })
     .asDictionary()
     .toStringDictionary();
@@ -31,10 +31,10 @@ $buildUtils.ScriptCollection = $oop.createClass('$buildUtils.ScriptCollection')
    * @param {$buildUtils.SymbolExtractor} extractor
    * @returns {$data.StringDictionary}
    */
-  getFileNamesVsReferenced: function (extractor) {
+  getFileNamesVsImports: function (extractor) {
     return this
     .mapValues(function (script) {
-      return script.extractReferencedSymbols(extractor);
+      return script.extractImports(extractor);
     })
     .asDictionary()
     .toStringDictionary();
@@ -44,8 +44,8 @@ $buildUtils.ScriptCollection = $oop.createClass('$buildUtils.ScriptCollection')
    * @returns {Array.<string>}
    */
   getDependencyOrder: function (extractor) {
-    var fileNamesVsImports = this.getFileNamesVsReferenced(extractor),
-        exportsVsFileNames = this.getFileNamesVsDefined(extractor)
+    var fileNamesVsImports = this.getFileNamesVsImports(extractor),
+        exportsVsFileNames = this.getFileNamesVsExports(extractor)
         .swapKeysAndValues();
 
     // Constructing dependency graph and serializing.

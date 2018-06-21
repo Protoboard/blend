@@ -17,7 +17,7 @@ describe("$buildUtils", function () {
       extractor = $buildUtils.BlendSymbolExtractor.create();
     });
 
-    describe("getFileNamesVsDefined()", function () {
+    describe("getFileNamesVsExports()", function () {
       beforeEach(function () {
         scriptCollection = ScriptCollection.fromData({
           'foo.js': $buildUtils.Script.fromScriptBody(
@@ -27,8 +27,8 @@ describe("$buildUtils", function () {
         });
       });
 
-      it("should resolve defined symbols", function () {
-        var result = scriptCollection.getFileNamesVsDefined(extractor);
+      it("should resolve exported symbols", function () {
+        var result = scriptCollection.getFileNamesVsExports(extractor);
         expect(result.data).toEqual({
           "foo.js": {
             "Foo": 1
@@ -40,7 +40,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("getFileNamesVsReferenced()", function () {
+    describe("getFileNamesVsImports()", function () {
       beforeEach(function () {
         scriptCollection = ScriptCollection.fromData({
           'foo.js': $buildUtils.Script.fromScriptBody(
@@ -50,8 +50,8 @@ describe("$buildUtils", function () {
         });
       });
 
-      it("should resolve referenced symbols", function () {
-        var result = scriptCollection.getFileNamesVsReferenced(extractor);
+      it("should resolve imported symbols", function () {
+        var result = scriptCollection.getFileNamesVsImports(extractor);
         expect(result.data).toEqual({
           "bar.js": {
             "Foo": 1
@@ -70,7 +70,7 @@ describe("$buildUtils", function () {
         });
       });
 
-      it("should resolve referenced symbols", function () {
+      it("should resolve script order", function () {
         var result = scriptCollection.getDependencyOrder(extractor);
         expect(result).toEqual(["foo.js", "bar.js"]);
       });

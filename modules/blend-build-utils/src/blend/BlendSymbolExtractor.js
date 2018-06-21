@@ -16,11 +16,11 @@ $buildUtils.BlendSymbolExtractor = $oop.createClass('$buildUtils.BlendSymbolExtr
 .define(/** @lends $buildUtils.BlendSymbolExtractor# */{
   /** @ignore */
   spread: function () {
-    this.defineMatchers = this.defineMatchers.concat([
+    this.exportMatchers = this.exportMatchers.concat([
       /\.createClass\s*\(\s*['"]([$._\w\d]+)['"]\s*\)/g
     ]);
 
-    this.referenceMatchers = this.referenceMatchers.concat([
+    this.importMatchers = this.importMatchers.concat([
       /\.(?:mix|blend|expect|implement)\s*\(\s*([$._\w\d]+)\s*\)/g,
       /([$._\w\d]+)(?=\.(?:forwardBlend|delegate))/g
     ]);

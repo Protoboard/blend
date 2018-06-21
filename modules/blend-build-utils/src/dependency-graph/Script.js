@@ -36,16 +36,16 @@ $buildUtils.Script = $oop.createClass('$buildUtils.Script')
    * @param {$buildUtils.SymbolExtractor} extractor
    * @returns {Array.<string>}
    */
-  extractDefinedSymbols: function (extractor) {
-    return extractor.extractDefinedSymbols(this.body);
+  extractExports: function (extractor) {
+    return extractor.extractExports(this.body);
   },
 
   /**
    * @param {$buildUtils.SymbolExtractor} extractor
    * @returns {Array.<string>}
    */
-  extractReferencedSymbols: function (extractor) {
-    return extractor.extractReferencedSymbols(this.body);
+  extractImports: function (extractor) {
+    return extractor.extractImports(this.body);
   }
 })
 .build();
