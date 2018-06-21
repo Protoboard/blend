@@ -17,7 +17,7 @@ describe("$buildUtils", function () {
       extractor = $buildUtils.BlendSymbolExtractor.create();
     });
 
-    describe("getFileNamesVsExports()", function () {
+    describe("getFilePathsVsExports()", function () {
       beforeEach(function () {
         scriptCollection = ScriptCollection.fromData({
           'foo.js': $buildUtils.Script.fromScriptBody(
@@ -28,7 +28,7 @@ describe("$buildUtils", function () {
       });
 
       it("should resolve exported symbols", function () {
-        var result = scriptCollection.getFileNamesVsExports(extractor);
+        var result = scriptCollection.getFilePathsVsExports(extractor);
         expect(result.data).toEqual({
           "foo.js": {
             "Foo": 1
@@ -40,7 +40,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("getFileNamesVsImports()", function () {
+    describe("getFilePathsVsImports()", function () {
       beforeEach(function () {
         scriptCollection = ScriptCollection.fromData({
           'foo.js': $buildUtils.Script.fromScriptBody(
@@ -51,7 +51,7 @@ describe("$buildUtils", function () {
       });
 
       it("should resolve imported symbols", function () {
-        var result = scriptCollection.getFileNamesVsImports(extractor);
+        var result = scriptCollection.getFilePathsVsImports(extractor);
         expect(result.data).toEqual({
           "bar.js": {
             "Foo": 1

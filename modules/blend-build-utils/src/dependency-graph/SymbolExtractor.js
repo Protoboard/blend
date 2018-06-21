@@ -3,11 +3,13 @@
 /**
  * @function $buildUtils.SymbolExtractor.create
  * @param {Object} [properties]
+ * @param {Array.<RegExp>} [properties.exportMatchers]
+ * @param {Array.<RegExp>} [properties.importMatchers]
  * @returns {$buildUtils.SymbolExtractor}
  */
 
 /**
- * Extracts symbols from code.
+ * Extracts exported / imported symbols from code.
  * @class $buildUtils.SymbolExtractor
  */
 $buildUtils.SymbolExtractor = $oop.createClass('$buildUtils.SymbolExtractor')
