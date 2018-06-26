@@ -24,6 +24,8 @@ module.exports = function (config) {
       'modules/blend-widget/lib/blend-widget.js',
       'modules/blend-i18n/lib/blend-i18n.js',
       'modules/blend-ui/lib/blend-ui.js',
+      'modules/blend-build-utils/lib/blend-build-utils.js',
+      'modules/blend-cli-utils/lib/blend-cli-utils.js',
       'helpers/jasmine/*.js',
       'modules/*/src/**/*.spec.js'
     ],
