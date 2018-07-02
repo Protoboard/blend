@@ -27,6 +27,7 @@ $widget.RootWidget = $oop.createClass('$widget.RootWidget')
     .addTriggerPath(listeningPath)
     .addTriggerPath('widget');
 
+    // Letting `init` finish for all mixers before running onAttach()
     $utils.setTimeout(0)
     .timerPromise
     .then(this.onAttach);
