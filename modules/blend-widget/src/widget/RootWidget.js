@@ -19,7 +19,7 @@ $widget.RootWidget = $oop.createClass('$widget.RootWidget')
   },
 
   /** @ignore */
-  init: function () {
+  init: function init() {
     var listeningPath = 'widget.' + this.instanceId;
 
     this
@@ -27,10 +27,8 @@ $widget.RootWidget = $oop.createClass('$widget.RootWidget')
     .addTriggerPath(listeningPath)
     .addTriggerPath('widget');
 
-    // Letting `init` finish for all mixers before running onAttach()
-    $utils.setTimeout(0)
-    .timerPromise
-    .then(this.onAttach);
+    // Running onAttach when `init` finished for all mixers.
+    init.followUps.push(this.onAttach);
   }
 })
 .build();

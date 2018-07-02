@@ -38,6 +38,7 @@ describe("$ui", function () {
       beforeEach(function () {
         domApplication = DomApplication.create();
         spyOn(domApplication, 'renderInto');
+        spyOn(domApplication, 'getElement').and.returnValue(null);
       });
 
       it("should render into document.body", function () {
@@ -51,6 +52,7 @@ describe("$ui", function () {
         [].toRoute().navigateTo();
         domApplication = DomApplication.create();
         spyOn(domApplication, 'renderInto');
+        spyOn(domApplication, 'getElement').and.returnValue(null);
         jasmine.clock().tick(1);
       });
 

@@ -25,12 +25,7 @@ describe("$widget", function () {
 
     describe("create()", function () {
       beforeEach(function () {
-        jasmine.clock().install();
         spyOn(RootWidget, 'onAttach');
-      });
-
-      afterEach(function () {
-        jasmine.clock().uninstall();
       });
 
       it("should initialize nodeName", function () {
@@ -52,7 +47,6 @@ describe("$widget", function () {
 
       it("should invoke onAttach()", function () {
         rootWidget = RootWidget.create();
-        jasmine.clock().tick(1);
         expect(RootWidget.onAttach).toHaveBeenCalled();
       });
     });
