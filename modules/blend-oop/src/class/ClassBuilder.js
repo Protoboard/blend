@@ -363,23 +363,47 @@ $oop.ClassBuilder = $oop.createObject(Object.prototype, /** @lends $oop.ClassBui
     if (methodCount === 1) {
       result = methods[0];
     } else {
+      /**
+       * @class $oop.MethodWrapper
+       * @extends Function
+       */
       result = function methodWrapper() {
         var i, method, result,
             sharedBefore = methodWrapper.shared,
-            shared = {};
+            shared = {},
+            followUpsBefore = methodWrapper.followUps,
+            followUps = [], followUpCount;
 
+        /**
+         * For passing variables to mixers' implementation of the current
+         * method.
+         * @type {Object}
+         */
         methodWrapper.shared = shared;
+
+        /**
+         * List of functions to be called when the current method finished
+         * including all mixers.
+         * @type {Array}
+         */
+        methodWrapper.followUps = followUps;
 
         for (i = 0; i < methodCount; i++) {
           method = methods[i];
           method.shared = shared;
+          method.followUps = followUps;
           method.returned = result;
           // todo Pass first n args instead of apply for performance?
           result = method.apply(this, arguments);
           method.shared = sharedBefore;
+          method.followUps = followUpsBefore;
         }
 
-        methodWrapper.shared = sharedBefore;
+        // running follow-up calls
+        followUpCount = followUps.length;
+        for (i = 0; i < followUpCount; i++) {
+          followUps[i]();
+        }
 
         return result;
       };
