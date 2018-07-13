@@ -1,5 +1,5 @@
 {
-  "name": "blend-assert",
+  "name": "@protoboard/blend-assert",
   "version": "0.1.0",
   "description": "Assertion module for Blend",
   "keywords": [

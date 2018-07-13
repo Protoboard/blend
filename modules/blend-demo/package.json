@@ -1,5 +1,5 @@
 {
-  "name": "blend-demo",
+  "name": "@protoboard/blend-demo",
   "version": "0.1.0",
   "description": "Blend Demo",
   "keywords": [
@@ -16,17 +16,17 @@
     "npm": "^3.0.0"
   },
   "dependencies": {
-    "blend-assert": "~0.1.0",
-    "blend-data": "~0.1.0",
-    "blend-entity": "~0.1.0",
-    "blend-event": "~0.1.0",
-    "blend-i18n": "~0.1.0",
-    "blend-module": "~0.1.0",
-    "blend-oop": "~0.1.0",
-    "blend-router": "~0.1.0",
-    "blend-template": "~0.1.0",
-    "blend-utils": "~0.1.0",
-    "blend-widget": "~0.1.0",
-    "blend-ui": "~0.1.0"
+    "@protoboard/blend-assert": "~0.1.0",
+    "@protoboard/blend-data": "~0.1.0",
+    "@protoboard/blend-entity": "~0.1.0",
+    "@protoboard/blend-event": "~0.1.0",
+    "@protoboard/blend-i18n": "~0.1.0",
+    "@protoboard/blend-module": "~0.1.0",
+    "@protoboard/blend-oop": "~0.1.0",
+    "@protoboard/blend-router": "~0.1.0",
+    "@protoboard/blend-template": "~0.1.0",
+    "@protoboard/blend-ui": "~0.1.0",
+    "@protoboard/blend-utils": "~0.1.0",
+    "@protoboard/blend-widget": "~0.1.0"
   }
 }

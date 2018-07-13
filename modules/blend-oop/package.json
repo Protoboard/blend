@@ -1,5 +1,5 @@
 {
-  "name": "blend-oop",
+  "name": "@protoboard/blend-oop",
   "version": "0.1.0",
   "description": "OOP module for Blend",
   "keywords": [
@@ -16,6 +16,6 @@
     "npm": "^3.0.0"
   },
   "dependencies": {
-    "blend-assert": "~0.1.0"
+    "@protoboard/blend-assert": "~0.1.0"
   }
 }

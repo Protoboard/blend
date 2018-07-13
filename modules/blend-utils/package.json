@@ -1,5 +1,5 @@
 {
-  "name": "blend-utils",
+  "name": "@protoboard/blend-utils",
   "version": "0.1.0",
   "description": "Utils module for Blend",
   "keywords": [
@@ -17,7 +17,7 @@
     "npm": "^3.0.0"
   },
   "dependencies": {
-    "blend-assert": "~0.1.0",
-    "blend-oop": "~0.1.0"
+    "@protoboard/blend-assert": "~0.1.0",
+    "@protoboard/blend-oop": "~0.1.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "blend-event",
+  "name": "@protoboard/blend-event",
   "version": "0.1.0",
   "description": "Event module for Blend",
   "keywords": [
@@ -18,9 +18,9 @@
     "npm": "^3.0.0"
   },
   "dependencies": {
-    "blend-assert": "~0.1.0",
-    "blend-data": "~0.1.0",
-    "blend-oop": "~0.1.0",
-    "blend-utils": "~0.1.0"
+    "@protoboard/blend-assert": "~0.1.0",
+    "@protoboard/blend-data": "~0.1.0",
+    "@protoboard/blend-oop": "~0.1.0",
+    "@protoboard/blend-utils": "~0.1.0"
   }
 }
