@@ -48,11 +48,9 @@ $data.DataContainer = $oop.createClass('$data.DataContainer')
 
   /**
    * @inheritDoc
-   * @returns {$data.DataContainer}
    */
   destroy: function () {
     this.clear();
-    return this;
   },
 
   /**

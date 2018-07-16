@@ -147,11 +147,10 @@ $event.EventSpace = $oop.createClass('$event.EventSpace')
   },
 
   /**
-   * @returns {$event.EventSpace}
+   * @inheritDoc
    */
   destroy: function () {
     this.subscriptions.destroy();
-    return this;
   },
 
   /**

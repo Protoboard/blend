@@ -21,10 +21,9 @@ $event.EventSubscriber = $oop.createClass('$event.EventSubscriber')
     this._elevateEventHandlers();
   },
 
-  /** @ignore */
+  /** @inheritDoc */
   destroy: function () {
     this.off();
-    return this;
   },
 
   /**

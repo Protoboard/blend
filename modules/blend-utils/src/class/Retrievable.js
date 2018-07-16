@@ -44,11 +44,10 @@ $utils.Retrievable = $oop.createClass('$utils.Retrievable')
   },
 
   /**
-   * @returns {$utils.Retrievable}
+   * @inheritDoc
    */
   destroy: function () {
     this._removeFromInstances();
-    return this;
   },
 
   /**
