@@ -11,11 +11,11 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../../modules/blend-assert/lib/blend-assert.js',
-      '../../modules/blend-oop/lib/blend-oop.js',
-      '../../modules/blend-utils/lib/blend-utils.js',
-      '../../modules/blend-data/lib/blend-data.js',
-      'lib/blend-build-utils.js',
+      '../../modules/blend-assert/lib/@protoboard/blend-assert.js',
+      '../../modules/blend-oop/lib/@protoboard/blend-oop.js',
+      '../../modules/blend-utils/lib/@protoboard/blend-utils.js',
+      '../../modules/blend-data/lib/@protoboard/blend-data.js',
+      'lib/@protoboard/blend-build-utils.js',
       '../../helpers/jasmine/*.js',
       'src/**/*.spec.js'
     ],

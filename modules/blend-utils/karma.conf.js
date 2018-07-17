@@ -11,9 +11,9 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../../modules/blend-assert/lib/blend-assert.js',
-      '../../modules/blend-oop/lib/blend-oop.js',
-      'lib/blend-utils.js',
+      '../../modules/blend-assert/lib/@protoboard/blend-assert.js',
+      '../../modules/blend-oop/lib/@protoboard/blend-oop.js',
+      'lib/@protoboard/blend-utils.js',
       '../../helpers/jasmine/*.js',
       'src/**/*.spec.js'
     ],
