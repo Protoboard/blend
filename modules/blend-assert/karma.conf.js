@@ -11,7 +11,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'lib/@protoboard/blend-assert.js',
+      'lib/blend-assert.js',
       'src/**/*.spec.js'
     ],
 

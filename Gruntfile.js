@@ -31,6 +31,7 @@ module.exports = function (grunt) {
       var moduleId = moduleInfo.moduleId,
           manifest = moduleInfo.manifest,
           pkg = moduleInfo.pkg,
+          pkgName = pkg.name.split('/').pop(),
           dependencies = pkg.dependencies;
 
       config[moduleId] = {
@@ -40,7 +41,7 @@ module.exports = function (grunt) {
         .map(function (relativePath) {
           return ['modules', moduleId, relativePath].join('/');
         }),
-        dest: ['modules', moduleId, 'lib', pkg.name + '.js'].join('/'),
+        dest: ['modules', moduleId, 'lib', pkgName + '.js'].join('/'),
         options: {
           sourceMap: true,
           separator: ';\n',
@@ -63,7 +64,7 @@ module.exports = function (grunt) {
           footer: [
             //@formatter:off
                 // signaling module availability to app
-                dependencies && dependencies['blend-module'] ?
+                dependencies && dependencies['@protoboard/blend-module'] ?
                     'require("blend-module").Module.fromModuleId("' + moduleId + '").markAsAvailable();' :
                     undefined,
               '}',
@@ -131,7 +132,8 @@ module.exports = function (grunt) {
     .forEach(function (moduleInfo) {
       var moduleId = moduleInfo.moduleId,
           manifest = moduleInfo.manifest,
-          pkg = moduleInfo.pkg;
+          pkg = moduleInfo.pkg,
+          pkgName = pkg.name.split('/').pop();
 
       config[moduleId] = {
         src: grunt.file.expand({
@@ -140,7 +142,7 @@ module.exports = function (grunt) {
         .map(function (relativePath) {
           return ['modules', moduleId, relativePath].join('/');
         }),
-        dest: ['modules', moduleId, 'lib', pkg.name + '.css'].join('/'),
+        dest: ['modules', moduleId, 'lib', pkgName + '.css'].join('/'),
         options: {}
       };
     });
