@@ -57,10 +57,6 @@ describe("$utils", function () {
         result = instance.destroy();
       });
 
-      it("should return self", function () {
-        expect(result).toBe(instance);
-      });
-
       it("should remove instance from registry", function () {
         expect(Retrievable._removeFromInstances).toHaveBeenCalled();
       });

@@ -86,10 +86,6 @@ describe("$data", function () {
         result = dataContainer.destroy();
       });
 
-      it("should return self", function () {
-        expect(result).toBe(dataContainer);
-      });
-
       it("should clear data", function () {
         expect(dataContainer.clear).toHaveBeenCalled();
       });

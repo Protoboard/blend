@@ -52,10 +52,6 @@ describe("$data", function () {
         result = arrayContainer.destroy();
       });
 
-      it("should return self", function () {
-        expect(result).toBe(arrayContainer);
-      });
-
       it("should clear data", function () {
         expect(arrayContainer.clear).toHaveBeenCalled();
       });
