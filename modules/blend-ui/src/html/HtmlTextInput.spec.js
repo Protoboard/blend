@@ -16,7 +16,7 @@ describe("$ui", function () {
       HtmlTextInput.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize inputType", function () {
         htmlTextInput = HtmlTextInput.create();
         expect(htmlTextInput.inputType).toBe('text');
@@ -35,7 +35,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when isMultiline is falsy", function () {
         it("should blend OtherInputTypeHost", function () {
           htmlTextInput = HtmlTextInput.create();
@@ -57,7 +57,7 @@ describe("$ui", function () {
   describe("TextInput", function () {
     var textInput;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when HTML is available", function () {
         it("should return HtmlTextInput instance", function () {
           textInput = $ui.TextInput.create();

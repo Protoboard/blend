@@ -15,7 +15,7 @@ describe("$buildUtils", function () {
       SymbolExtractor.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize exportMatchers property", function () {
         symbolExtractor = SymbolExtractor.create();
         expect(symbolExtractor.exportMatchers).toEqual([]);
@@ -27,7 +27,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("extractExports()", function () {
+    describe("#extractExports()", function () {
       var scriptBody = "var foo=1; var bar={baz: 2}";
 
       beforeEach(function () {
@@ -42,7 +42,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("extractImports()", function () {
+    describe("#extractImports()", function () {
       var scriptBody = "var foo=bar; var bar={baz:quux}";
 
       beforeEach(function () {

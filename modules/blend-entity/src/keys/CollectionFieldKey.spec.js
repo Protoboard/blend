@@ -33,28 +33,28 @@ describe("$entity", function () {
       $entity.entities.deleteNode(attributeKey.getEntityPath());
     });
 
-    describe("getItemIdType()", function () {
+    describe("#getItemIdType()", function () {
       it("should retrieve itemIdType attribute", function () {
         result = collectionFieldKey.getItemIdType();
         expect(result).toEqual('A');
       });
     });
 
-    describe("getItemIdOptions()", function () {
+    describe("#getItemIdOptions()", function () {
       it("should retrieve itemIdOptions attribute", function () {
         result = collectionFieldKey.getItemIdOptions();
         expect(result).toEqual([1, 2]);
       });
     });
 
-    describe("getItemValueType()", function () {
+    describe("#getItemValueType()", function () {
       it("should retrieve itemValueType attribute", function () {
         result = collectionFieldKey.getItemValueType();
         expect(result).toEqual('B');
       });
     });
 
-    describe("getItemValueOptions()", function () {
+    describe("#getItemValueOptions()", function () {
       it("should retrieve itemValueOptions attribute", function () {
         result = collectionFieldKey.getItemValueOptions();
         expect(result).toEqual([3, 4]);
@@ -65,7 +65,7 @@ describe("$entity", function () {
   describe("FieldKey", function () {
     var result;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when valueType is collection", function () {
         beforeEach(function () {
           $entity.entities.setNode('document.__field.foo/baz.valueType'.toTreePath(), 'collection');
@@ -85,7 +85,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toCollectionFieldKey()", function () {
+  describe("#toCollectionFieldKey()", function () {
     var fieldKey;
 
     it("should create a CollectionFieldKey instance", function () {
@@ -107,7 +107,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toCollectionFieldKey()", function () {
+  describe("#toCollectionFieldKey()", function () {
     var components,
         fieldKey;
 

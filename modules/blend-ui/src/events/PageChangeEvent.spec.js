@@ -7,7 +7,7 @@ describe("$ui", function () {
   describe("Event", function () {
     var event;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when eventName matches EVENT_PAGE_CHANGE", function () {
         it("should return PageChangeEvent instance", function () {
           event = $event.Event.fromEventName($ui.EVENT_PAGE_CHANGE);

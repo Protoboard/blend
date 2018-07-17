@@ -23,7 +23,7 @@ describe("$module", function () {
       expect(ModuleEnvironment.create()).toBe(ModuleEnvironment.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize listeningPath", function () {
         moduleEnvironment = ModuleEnvironment.create();
         expect(moduleEnvironment.listeningPath).toBe('module');

@@ -10,7 +10,7 @@ describe("$assert", function () {
     Class = $oop.createClass('Class').build();
   });
 
-  describe("isClass()", function () {
+  describe("#isClass()", function () {
     beforeEach(function () {
       spyOn($assert, 'assert').and.callThrough();
     });
@@ -52,7 +52,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isClassOoptional()", function () {
+  describe("#isClassOoptional()", function () {
     beforeEach(function () {
       spyOn($assert, 'assert').and.callThrough();
     });
@@ -71,7 +71,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isInstanceOf()", function () {
+  describe("#isInstanceOf()", function () {
     var Class,
         instance;
 
@@ -109,7 +109,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isInstanceOfOptional()", function () {
+  describe("#isInstanceOfOptional()", function () {
     var Class,
         instance;
 
@@ -154,7 +154,7 @@ describe("$oop", function () {
       classBuilder = $oop.createClass('Class');
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var instance;
 
       it("should copy properties", function () {
@@ -370,7 +370,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("delegate()", function () {
+    describe("#delegate()", function () {
       var Mixer,
           members;
 
@@ -406,7 +406,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("forwardBlend()", function () {
+    describe("#forwardBlend()", function () {
       var Mixin,
           callback;
 
@@ -429,7 +429,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("implements()", function () {
+    describe("#implements()", function () {
       var interfaceBuilder1,
           interfaceBuilder2,
           Interface1,
@@ -457,7 +457,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("implementedBy()", function () {
+    describe("#implementedBy()", function () {
       var interfaceBuilder1,
           interfaceBuilder2,
           Interface1,
@@ -485,7 +485,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("mixes()", function () {
+    describe("#mixes()", function () {
       var mixinBuilder1,
           mixinBuilder2,
           Mixin1,
@@ -536,7 +536,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("mixedBy()", function () {
+    describe("#mixedBy()", function () {
       var mixinBuilder1,
           mixinBuilder2,
           Mixin1,
@@ -587,7 +587,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("expects()", function () {
+    describe("#expects()", function () {
       var hostBuilder1,
           hostBuilder2,
           Host1,
@@ -615,7 +615,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("expectedBy()", function () {
+    describe("#expectedBy()", function () {
       var hostBuilder1,
           hostBuilder2,
           Host1,
@@ -643,7 +643,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("elevateMethods()", function () {
+    describe("#elevateMethods()", function () {
       var instance;
 
       beforeEach(function () {

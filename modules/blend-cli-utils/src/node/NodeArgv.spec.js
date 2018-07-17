@@ -15,7 +15,7 @@ describe("$cliUtils", function () {
       NodeArgv.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize nodePath", function () {
         nodeArgv = NodeArgv.create({
           argumentList: ['/path/to/node', '/path/to/script', 'foo', 'bar']

@@ -19,7 +19,7 @@ describe("$i18n", function () {
       Locale.__builder.instances = {};
     });
 
-    describe("fromLocaleKey", function () {
+    describe(".fromLocaleKey", function () {
       it("should return Locale instance", function () {
         locale = Locale.fromLocaleKey('foo/bar'.toDocumentKey());
         expect(Locale.mixedBy(locale)).toBeTruthy();
@@ -36,7 +36,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("fromLocaleId", function () {
+    describe(".fromLocaleId", function () {
       it("should return Locale instance", function () {
         locale = Locale.fromLocaleId('foo');
         expect(Locale.mixedBy(locale)).toBeTruthy();
@@ -53,7 +53,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on missing localeKey property", function () {
         it("should throw", function () {
           expect(function () {
@@ -76,7 +76,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getTranslation()", function () {
+    describe("#getTranslation()", function () {
       var translationIndexData;
 
       beforeEach(function () {
@@ -152,7 +152,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getModules()", function () {
+    describe("#getModules()", function () {
       var localesByModuleNode,
           modulesByLocaleNode;
 
@@ -181,7 +181,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setAsActiveLocale()", function () {
+    describe("#setAsActiveLocale()", function () {
       var localeEnvironment;
 
       beforeEach(function () {
@@ -203,7 +203,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         locale = Locale.create({
           localeKey: 'foo/bar'.toDocumentKey()
@@ -218,7 +218,7 @@ describe("$i18n", function () {
 });
 
 describe("String", function () {
-  describe("toLocale()", function () {
+  describe("#toLocale()", function () {
     var locale;
 
     beforeEach(function () {

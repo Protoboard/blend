@@ -26,7 +26,7 @@ describe("$data", function () {
       orderedList = OrderedList.create({data: data, compare: compare});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should set data buffer", function () {
         expect(orderedList.data).toBe(data);
       });
@@ -59,7 +59,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         result = orderedList.clone();
       });
@@ -69,7 +69,7 @@ describe("$data", function () {
       });
     });
 
-    describe("setItem()", function () {
+    describe("#setItem()", function () {
       beforeEach(function () {
         result = orderedList.setItem('baz');
       });
@@ -125,7 +125,7 @@ describe("$data", function () {
       });
     });
 
-    describe("deleteItem()", function () {
+    describe("#deleteItem()", function () {
       beforeEach(function () {
         result = orderedList.deleteItem('bar');
       });
@@ -161,7 +161,7 @@ describe("$data", function () {
       });
     });
 
-    describe("hasItem()", function () {
+    describe("#hasItem()", function () {
       describe("for existing item", function () {
         it("should return true", function () {
           expect(orderedList.hasItem('foo')).toBeTruthy();
@@ -174,7 +174,7 @@ describe("$data", function () {
       });
     });
 
-    describe("forEachItem()", function () {
+    describe("#forEachItem()", function () {
       var callback;
 
       beforeEach(function () {
@@ -205,7 +205,7 @@ describe("$data", function () {
       });
     });
 
-    describe("indexOf()", function () {
+    describe("#indexOf()", function () {
       beforeEach(function () {
         data = [
           {order: 1},
@@ -248,7 +248,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getRange()", function () {
+    describe("#getRange()", function () {
       beforeEach(function () {
         orderedList
         .setItem('baz')
@@ -303,7 +303,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getRangeWrapped()", function () {
+    describe("#getRangeWrapped()", function () {
       var data;
 
       beforeEach(function () {
@@ -328,7 +328,7 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("asOrderedList()", function () {
+    describe("#asOrderedList()", function () {
       var buffer = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -346,7 +346,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toOrderedList()", function () {
+    describe("#toOrderedList()", function () {
       var container,
           transformed;
 
@@ -368,7 +368,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toOrderedList()", function () {
+    describe("#toOrderedList()", function () {
       var container,
           transformed;
 
@@ -393,7 +393,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asOrderedList()", function () {
+  describe("#asOrderedList()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {

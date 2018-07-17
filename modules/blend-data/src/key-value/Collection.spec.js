@@ -26,7 +26,7 @@ describe("$data", function () {
       collection = Collection.create({data: data});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on missing arguments", function () {
         it("should initialize data to empty object", function () {
           collection = Collection.create();
@@ -35,7 +35,7 @@ describe("$data", function () {
       });
     });
 
-    describe("setItem()", function () {
+    describe("#setItem()", function () {
       var value = {};
 
       beforeEach(function () {
@@ -51,7 +51,7 @@ describe("$data", function () {
       });
     });
 
-    describe("deleteItem()", function () {
+    describe("#deleteItem()", function () {
       beforeEach(function () {
         result = collection.deleteItem('foo');
       });
@@ -76,7 +76,7 @@ describe("$data", function () {
       });
     });
 
-    describe("hasItem()", function () {
+    describe("#hasItem()", function () {
       describe("for existing item", function () {
         it("should return true", function () {
           expect(collection.hasItem('foo', 'FOO')).toBeTruthy();
@@ -89,7 +89,7 @@ describe("$data", function () {
       });
     });
 
-    describe("forEachItem()", function () {
+    describe("#forEachItem()", function () {
       var callback;
 
       beforeEach(function () {
@@ -120,7 +120,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getValuesForKey()", function () {
+    describe("#getValuesForKey()", function () {
       beforeEach(function () {
         result = collection.getValuesForKey('foo');
       });
@@ -140,13 +140,13 @@ describe("$data", function () {
       });
     });
 
-    describe("getValue()", function () {
+    describe("#getValue()", function () {
       it("should return corresponding value", function () {
         expect(collection.getValue('foo')).toBe("FOO");
       });
     });
 
-    describe("getValueWrapped()", function () {
+    describe("#getValueWrapped()", function () {
       var data;
 
       beforeEach(function () {
@@ -171,7 +171,7 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("asCollection()", function () {
+    describe("#asCollection()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -189,7 +189,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toCollection()", function () {
+    describe("#toCollection()", function () {
       var container,
           transformed;
 
@@ -211,7 +211,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toCollection()", function () {
+    describe("#toCollection()", function () {
       var container,
           transformed;
 
@@ -236,7 +236,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asCollection()", function () {
+  describe("#asCollection()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {

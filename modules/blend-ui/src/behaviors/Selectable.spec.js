@@ -16,7 +16,7 @@ describe("$ui", function () {
       Selectable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setOwnValue()", function () {
+    describe("#setOwnValue()", function () {
       beforeEach(function () {
         selectable = Selectable.create();
         spyOn($ui.SelectableOwnValueChangeEvent, 'trigger');
@@ -42,7 +42,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("select()", function () {
+    describe("#select()", function () {
       beforeEach(function () {
         selectable = Selectable.create();
         selectable.setOwnValue('foo');
@@ -64,7 +64,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("deselect()", function () {
+    describe("#deselect()", function () {
       beforeEach(function () {
         selectable = Selectable.create();
         selectable.setOwnValue('foo');
@@ -87,7 +87,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("isSelected()", function () {
+    describe("#isSelected()", function () {
       beforeEach(function () {
         selectable = Selectable.create();
       });

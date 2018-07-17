@@ -24,7 +24,7 @@ describe("$router", function () {
       expect(Router.create()).toBe(Router.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should debounce method navigateToRoute", function () {
         router = Router.create();
         expect(typeof router.navigateToRouteDebounced).toBe('function');
@@ -32,7 +32,7 @@ describe("$router", function () {
       });
     });
 
-    describe("getActiveRoute()", function () {
+    describe("#getActiveRoute()", function () {
       beforeEach(function () {
         router = Router.create();
       });
@@ -43,7 +43,7 @@ describe("$router", function () {
       });
     });
 
-    describe("navigateToRoute()", function () {
+    describe("#navigateToRoute()", function () {
       var routeEnvironment,
           route;
 
@@ -65,7 +65,7 @@ describe("$router", function () {
       });
     });
 
-    describe("onRouteChange()", function () {
+    describe("#onRouteChange()", function () {
       beforeEach(function () {
         router = $router.Router.create();
         spyOn(router, 'onRouteChange');

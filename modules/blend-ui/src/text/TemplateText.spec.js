@@ -17,7 +17,7 @@ describe("$ui", function () {
       TemplateText.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromTextTemplate()", function () {
+    describe(".fromTextTemplate()", function () {
       var liveTemplate;
 
       beforeEach(function () {
@@ -35,7 +35,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var liveTemplate;
 
       beforeEach(function () {
@@ -56,7 +56,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       var field,
           liveTemplate;
 
@@ -96,7 +96,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setTextTemplate()", function () {
+    describe("#setTextTemplate()", function () {
       var field1, field2,
           liveTemplateBefore,
           liveTemplateAfter;
@@ -164,7 +164,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onActiveTranslationsChange()", function () {
+    describe("#onActiveTranslationsChange()", function () {
       var liveTemplate;
 
       beforeEach(function () {
@@ -207,7 +207,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onTemplateParameterChange()", function () {
+    describe("#onTemplateParameterChange()", function () {
       var liveTemplate;
 
       beforeEach(function () {
@@ -231,7 +231,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onEntityParameterChange()", function () {
+    describe("#onEntityParameterChange()", function () {
       var liveTemplate;
 
       beforeEach(function () {

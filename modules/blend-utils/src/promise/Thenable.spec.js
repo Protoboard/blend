@@ -4,7 +4,7 @@ var $assert = window['blend-assert'],
     $utils = window['blend-utils'];
 
 describe("$assert", function () {
-  describe("isThenable()", function () {
+  describe("#isThenable()", function () {
     var thenable = {then: function () {}};
 
     beforeEach(function () {
@@ -27,7 +27,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isThenableOptional()", function () {
+  describe("#isThenableOptional()", function () {
     var thenable;
 
     beforeEach(function () {

@@ -15,7 +15,7 @@ describe("$buildUtils", function () {
       BlendSymbolExtractor.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("extractExports()", function () {
+    describe("#extractExports()", function () {
       beforeEach(function () {
         blendSymbolExtractor = BlendSymbolExtractor.create();
       });
@@ -35,7 +35,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("extractImports()", function () {
+    describe("#extractImports()", function () {
       beforeEach(function () {
         blendSymbolExtractor = BlendSymbolExtractor.create();
       });

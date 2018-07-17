@@ -21,7 +21,7 @@ describe("$ui", function () {
       };
     });
 
-    describe("onRender()", function () {
+    describe("#onRender()", function () {
       var element,
           optionElement;
 
@@ -41,7 +41,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementInput()", function () {
+    describe("#onElementInput()", function () {
       var element,
           optionElement;
 
@@ -62,7 +62,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementChange()", function () {
+    describe("#onElementChange()", function () {
       var element,
           optionElement;
 
@@ -96,7 +96,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return DomMultiSelectElementHost instance", function () {
           multiSelectElementHost = MultiSelectElementHost.create();

@@ -16,7 +16,7 @@ describe("$ui", function () {
       EntityImage.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromImageUrlEntity()", function () {
+    describe(".fromImageUrlEntity()", function () {
       var imageUrlEntity;
 
       beforeEach(function () {
@@ -34,7 +34,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid imageUrlEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -44,7 +44,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setImageUrlEntity()", function () {
+    describe("#setImageUrlEntity()", function () {
       var imageUrlEntity;
 
       beforeEach(function () {
@@ -65,7 +65,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       var imageUrlEntity;
 
       beforeEach(function () {

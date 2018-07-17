@@ -15,7 +15,7 @@ describe("$utils", function () {
       UriPathPattern.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return UriPathPattern instance", function () {
         uriPathPattern = UriPathPattern.fromString('foo/bar');
         expect(UriPathPattern.mixedBy(uriPathPattern)).toBeTruthy();
@@ -35,7 +35,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         uriPathPattern = UriPathPattern.fromComponents([
           'foo/', 'bar', ':baz'
@@ -49,13 +49,13 @@ describe("$utils", function () {
     });
   });
 
-  describe("escapeUriPathDelimiter()", function () {
+  describe(".escapeUriPathDelimiter()", function () {
     it("should escape URI_PATH_DELIMITER", function () {
       expect($utils.escapeUriPathDelimiter('foo/bar')).toBe('foo\\/bar');
     });
   });
 
-  describe("unescapeUriPathDelimiter()", function () {
+  describe(".unescapeUriPathDelimiter()", function () {
     it("should unescape URI_PATH_DELIMITER", function () {
       expect($utils.unescapeUriPathDelimiter('foo\\/bar')).toBe('foo/bar');
     });

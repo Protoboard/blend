@@ -17,7 +17,7 @@ describe("$entity", function () {
       LeafNodedField.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("spawnEntityChangeEvents()", function () {
+    describe("#spawnEntityChangeEvents()", function () {
       var nodeBefore,
           nodeAfter;
 
@@ -57,7 +57,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         leafNodedField = LeafNodedField.fromComponents('foo', 'bar', 'baz');
         leafNodedField.setNode("Hello");

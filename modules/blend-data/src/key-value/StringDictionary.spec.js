@@ -25,7 +25,7 @@ describe("$data", function () {
       dictionary._itemCount = 3;
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on missing arguments", function () {
         it("should initialize data to empty object", function () {
           dictionary = StringDictionary.create();
@@ -34,7 +34,7 @@ describe("$data", function () {
       });
     });
 
-    describe("setItem()", function () {
+    describe("#setItem()", function () {
       beforeEach(function () {
         result = dictionary.setItem('baz', "BAZ");
       });
@@ -74,7 +74,7 @@ describe("$data", function () {
       });
     });
 
-    describe("deleteItem()", function () {
+    describe("#deleteItem()", function () {
       beforeEach(function () {
         result = dictionary.deleteItem('bar', 'bar');
       });
@@ -121,7 +121,7 @@ describe("$data", function () {
       });
     });
 
-    describe("hasItem()", function () {
+    describe("#hasItem()", function () {
       describe("for existing item", function () {
         it("should return true", function () {
           expect(dictionary.hasItem('foo', 'FOO')).toBeTruthy();
@@ -134,7 +134,7 @@ describe("$data", function () {
       });
     });
 
-    describe("forEachItem", function () {
+    describe("#forEachItem()", function () {
       var callback;
 
       beforeEach(function () {
@@ -166,7 +166,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getValuesForKey()", function () {
+    describe("#getValuesForKey()", function () {
       beforeEach(function () {
         result = dictionary.getValuesForKey('foo');
       });
@@ -188,7 +188,7 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("asStringDictionary()", function () {
+    describe("#asStringDictionary()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -206,7 +206,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toStringDictionary()", function () {
+    describe("#toStringDictionary()", function () {
       var container,
           transformed;
 
@@ -228,7 +228,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toStringDictionary()", function () {
+    describe("#toStringDictionary()", function () {
       var container,
           transformed;
 
@@ -253,7 +253,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asStringDictionary()", function () {
+  describe("#asStringDictionary()", function () {
     var array = ['a', 'b', 'c'];
 
     beforeEach(function () {

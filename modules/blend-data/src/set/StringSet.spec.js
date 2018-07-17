@@ -33,7 +33,7 @@ describe("$data", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on missing arguments", function () {
         it("should initialize data to empty object", function () {
           set = StringSet.create();
@@ -42,7 +42,7 @@ describe("$data", function () {
       });
     });
 
-    describe("setItem()", function () {
+    describe("#setItem()", function () {
       beforeEach(function () {
         set._itemCount = 2;
         result = set.setItem('baz');
@@ -75,7 +75,7 @@ describe("$data", function () {
       });
     });
 
-    describe("deleteItem()", function () {
+    describe("#deleteItem()", function () {
       beforeEach(function () {
         set._itemCount = 2;
         result = set.deleteItem('bar');
@@ -106,7 +106,7 @@ describe("$data", function () {
       });
     });
 
-    describe("hasItem()", function () {
+    describe("#hasItem()", function () {
       describe("for existing item", function () {
         it("should return true", function () {
           expect(set.hasItem('foo')).toBeTruthy();
@@ -119,7 +119,7 @@ describe("$data", function () {
       });
     });
 
-    describe("forEachItem()", function () {
+    describe("#forEachItem()", function () {
       var callback;
 
       beforeEach(function () {
@@ -150,7 +150,7 @@ describe("$data", function () {
       });
     });
 
-    describe("intersectWith()", function () {
+    describe("#intersectWith()", function () {
       beforeEach(function () {
         result = set.intersectWith(set2);
       });
@@ -169,7 +169,7 @@ describe("$data", function () {
           });
     });
 
-    describe("uniteWith()", function () {
+    describe("#uniteWith()", function () {
       beforeEach(function () {
         result = set.uniteWith(set2);
       });
@@ -190,7 +190,7 @@ describe("$data", function () {
           });
     });
 
-    describe("subtract()", function () {
+    describe("#subtract()", function () {
       beforeEach(function () {
         result = set.subtract(set2);
       });
@@ -208,7 +208,7 @@ describe("$data", function () {
       });
     });
 
-    describe("subtractFrom()", function () {
+    describe("#subtractFrom()", function () {
       beforeEach(function () {
         result = set.subtractFrom(set2);
       });
@@ -226,7 +226,7 @@ describe("$data", function () {
       });
     });
 
-    describe("takeDifferenceWith()", function () {
+    describe("#takeDifferenceWith()", function () {
       beforeEach(function () {
         result = set.takeDifferenceWith(set2);
       });
@@ -249,7 +249,7 @@ describe("$data", function () {
   describe("DataContainer", function () {
     var result;
 
-    describe("asStringSet()", function () {
+    describe("#asStringSet()", function () {
       var buffer;
 
       beforeEach(function () {
@@ -268,7 +268,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toStringSet()", function () {
+    describe("#toStringSet()", function () {
       var container,
           transformed;
 
@@ -290,7 +290,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toStringSet()", function () {
+    describe("#toStringSet()", function () {
       var container,
           transformed;
 
@@ -315,7 +315,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("toStringSet()", function () {
+  describe("#toStringSet()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {

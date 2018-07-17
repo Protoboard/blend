@@ -17,7 +17,7 @@ describe("$ui", function () {
       DomOption.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("select()", function () {
+    describe("#select()", function () {
       var element;
 
       beforeEach(function () {
@@ -37,7 +37,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("deselect()", function () {
+    describe("#deselect()", function () {
       var element;
 
       beforeEach(function () {
@@ -58,7 +58,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onRender()", function () {
+    describe("#onRender()", function () {
       var element;
 
       beforeEach(function () {
@@ -74,7 +74,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementInput()", function () {
+    describe("#onElementInput()", function () {
       var element;
 
       beforeEach(function () {
@@ -91,7 +91,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementChange()", function () {
+    describe("#onElementChange()", function () {
       var element;
 
       beforeEach(function () {
@@ -121,7 +121,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return DomOption instance", function () {
           htmlOption = HtmlOption.create();

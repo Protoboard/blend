@@ -22,7 +22,7 @@ describe("$data", function () {
       objectContainer = ObjectContainer.create({data: data});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should set data property", function () {
         expect(objectContainer.data).toBe(data);
       });
@@ -46,7 +46,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clear()", function () {
+    describe("#clear()", function () {
       beforeEach(function () {
         result = objectContainer.clear();
       });

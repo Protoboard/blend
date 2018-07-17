@@ -38,7 +38,7 @@ describe("$entity", function () {
       entity = Entity.fromEntityKey(entityKey);
     });
 
-    describe("fromEntityKey()", function () {
+    describe(".fromEntityKey()", function () {
       it("should return an Entity instance", function () {
         entity = Entity.fromEntityKey(entityKey);
         expect(Entity.mixedBy(entity)).toBeTruthy();
@@ -55,7 +55,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should set listeningPath", function () {
         expect(entity.listeningPath).toEqual('entity.foo.bar.baz');
       });
@@ -104,7 +104,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("equals()", function () {
+    describe("#equals()", function () {
       describe("for equivalent entities", function () {
         it("should return truthy", function () {
           expect(
@@ -136,7 +136,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNode()", function () {
+    describe("#getNode()", function () {
       var node;
 
       beforeEach(function () {
@@ -170,7 +170,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeWrapped()", function () {
+    describe("#getNodeWrapped()", function () {
       var node;
 
       beforeEach(function () {
@@ -188,7 +188,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getSilentNode()", function () {
+    describe("#getSilentNode()", function () {
       var node;
 
       beforeEach(function () {
@@ -206,7 +206,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getSilentNodeWrapped()", function () {
+    describe("#getSilentNodeWrapped()", function () {
       var node;
 
       beforeEach(function () {
@@ -224,7 +224,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("touchNode()", function () {
+    describe("#touchNode()", function () {
       var node;
 
       beforeEach(function () {
@@ -254,7 +254,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("setNode()", function () {
+    describe("#setNode()", function () {
       var entityPath,
           eventsToBeTriggered,
           nodeBefore,
@@ -301,7 +301,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("deleteNode()", function () {
+    describe("#deleteNode()", function () {
       var eventsToBeTriggered;
 
       beforeEach(function () {
@@ -383,7 +383,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getChildEntity()", function () {
+    describe("#getChildEntity()", function () {
       var childKey;
 
       beforeEach(function () {
@@ -402,7 +402,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getParentEntity()", function () {
+    describe("#getParentEntity()", function () {
       var fieldKey;
 
       beforeEach(function () {
@@ -426,7 +426,7 @@ describe("$entity", function () {
       entityKey = 'foo/bar'.toDocumentKey();
     });
 
-    describe("toEntity()", function () {
+    describe("#toEntity()", function () {
       it("should return Entity instance", function () {
         entity = entityKey.toEntity();
         expect($entity.Entity.mixedBy(entity)).toBeTruthy();

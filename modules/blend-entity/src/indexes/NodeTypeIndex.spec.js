@@ -28,7 +28,7 @@ describe("$entity", function () {
       $entity.index.data = indexData;
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should add fieldRef entries", function () {
         var byFieldType = $entity.index.data.__fieldRef.byFieldType;
 
@@ -56,7 +56,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getFieldRefsByFieldType()", function () {
+    describe("#getFieldRefsByFieldType()", function () {
       beforeEach(function () {
         result = $entity.NodeTypeIndex.create()
         .getFieldRefsByFieldType('leaf');
@@ -72,7 +72,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getFieldNamesByFieldType()", function () {
+    describe("#getFieldNamesByFieldType()", function () {
       beforeEach(function () {
         result = $entity.NodeTypeIndex.create()
         .getFieldNamesByFieldType('__field', 'leaf');

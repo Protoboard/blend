@@ -14,7 +14,7 @@ describe("$data", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         treeQuery = TreeQuery.create({
           components: [
@@ -34,7 +34,7 @@ describe("$data", function () {
       });
     });
 
-    describe("fromComponents()", function () {
+    describe(".fromComponents()", function () {
       var components;
 
       beforeEach(function () {
@@ -61,7 +61,7 @@ describe("$data", function () {
       });
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should create a TreeQuery instance", function () {
         treeQuery = TreeQuery.fromString('foo.*.bar:!baz');
         expect(TreeQuery.mixedBy(treeQuery)).toBeTruthy();
@@ -82,7 +82,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         treeQuery = TreeQuery.create({
           components: [
@@ -100,7 +100,7 @@ describe("$data", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         treeQuery = TreeQuery.create({components: ['foo.baz', 'bar', '*']});
       });
@@ -116,7 +116,7 @@ describe("$data", function () {
       });
     });
 
-    describe("matches()", function () {
+    describe("#matches()", function () {
       describe("for matching path", function () {
         it("should return true", function () {
           expect('foo.bar.baz'.toTreeQuery()
@@ -161,7 +161,7 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  describe("toTreeQuery()", function () {
+  describe("#toTreeQuery()", function () {
     var treeQuery;
 
     it("should create a TreeQuery instance", function () {
@@ -181,7 +181,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toTreeQuery()", function () {
+  describe("#toTreeQuery()", function () {
     var components,
         query;
 

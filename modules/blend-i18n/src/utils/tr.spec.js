@@ -3,7 +3,7 @@
 var $i18n = window['blend-i18n'];
 
 describe("$i18n", function () {
-  describe("tr()", function () {
+  describe(".tr()", function () {
     var translatable;
 
     beforeEach(function () {

@@ -15,7 +15,7 @@ describe("$i18n", function () {
       TranslationDocument.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setOriginalString()", function () {
+    describe("#setOriginalString()", function () {
       beforeEach(function () {
         translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.deleteNode();
@@ -33,7 +33,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getOriginalString()", function () {
+    describe("#getOriginalString()", function () {
       beforeEach(function () {
         translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.setNode({
@@ -46,7 +46,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setPluralForm()", function () {
+    describe("#setPluralForm()", function () {
       beforeEach(function () {
         translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.deleteNode();
@@ -66,7 +66,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getPluralForm()", function () {
+    describe("#getPluralForm()", function () {
       beforeEach(function () {
         translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.setNode({
@@ -82,7 +82,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setContext()", function () {
+    describe("#setContext()", function () {
       beforeEach(function () {
         translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.deleteNode();
@@ -100,7 +100,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getContext()", function () {
+    describe("#getContext()", function () {
       beforeEach(function () {
         translationDocument = TranslationDocument.fromEntityKey('_translation/bar'.toDocumentKey());
         translationDocument.setNode({
@@ -117,7 +117,7 @@ describe("$i18n", function () {
 
 describe("$entity", function () {
   describe("Document", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       var document;
 
       describe("when documentType is '_translation'", function () {

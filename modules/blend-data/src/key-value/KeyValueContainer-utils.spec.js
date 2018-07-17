@@ -32,7 +32,7 @@ describe("$data", function () {
     .build();
   });
 
-  describe("getMapResultClass()", function () {
+  describe(".getMapResultClass()", function () {
     describe("for values", function () {
       describe("to string", function () {
         it("should return STRING value variant", function () {
@@ -106,7 +106,7 @@ describe("$data", function () {
     });
   });
 
-  describe("getSwapResultClass()", function () {
+  describe(".getSwapResultClass()", function () {
     it("should return swap result class", function () {
       expect($data.getSwapResultClass(Collection)).toBe($data.StringPairList);
       expect($data.getSwapResultClass(StringCollection))
@@ -119,7 +119,7 @@ describe("$data", function () {
     });
   });
 
-  describe("getJoinResultClass()", function () {
+  describe(".getJoinResultClass()", function () {
     it("should return join result class", function () {
       expect($data.getJoinResultClass(StringCollection, Collection))
       .toBe($data.Collection);
@@ -150,7 +150,7 @@ describe("$data", function () {
     });
   });
 
-  describe("getMergeResultClass()", function () {
+  describe(".getMergeResultClass()", function () {
     it("should return merge result class", function () {
       expect($data.getMergeResultClass(StringCollection, Collection))
       .toBe($data.Dictionary);

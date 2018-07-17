@@ -17,14 +17,14 @@ describe("$ui", function () {
       TextareaElementHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         textareaElementHost = TextareaElementHost.create();
         expect(textareaElementHost.elementName).toBe('textarea');
       });
     });
 
-    describe("getContentMarkup()", function () {
+    describe("#getContentMarkup()", function () {
       var stringifiable = {
         toString: function () {
           return "foo";

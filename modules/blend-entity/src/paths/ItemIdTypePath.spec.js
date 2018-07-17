@@ -15,7 +15,7 @@ describe("$entity", function () {
       ItemIdTypePath.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromItemIdType()", function () {
+    describe(".fromItemIdType()", function () {
       it("should return ItemIdTypePath instance", function () {
         itemIdTypePath = ItemIdTypePath.fromItemIdType('reference');
         expect(ItemIdTypePath.mixedBy(itemIdTypePath)).toBeTruthy();
@@ -37,7 +37,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toItemIdTypePath()", function () {
+  describe("#toItemIdTypePath()", function () {
     var itemIdTypePath;
 
     it("should create a ItemIdTypePath instance", function () {

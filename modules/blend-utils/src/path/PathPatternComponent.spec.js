@@ -15,7 +15,7 @@ describe("$utils", function () {
       PathPatternComponent.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return PathPatternComponent instance", function () {
         pathPatternComponent = PathPatternComponent.fromString(':foo');
         expect(PathPatternComponent.mixedBy(pathPatternComponent)).toBeTruthy();
@@ -29,7 +29,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("fromParameterName()", function () {
+    describe(".fromParameterName()", function () {
       it("should return PathPatternComponent instance", function () {
         pathPatternComponent = PathPatternComponent.fromParameterName('foo');
         expect(PathPatternComponent.mixedBy(pathPatternComponent)).toBeTruthy();
@@ -43,8 +43,8 @@ describe("$utils", function () {
       });
     });
 
-    describe("create()", function () {
-      describe("from string", function () {
+    describe(".create()", function () {
+      describe(".from string", function () {
         it("should initialize parameterName", function () {
           pathPatternComponent = PathPatternComponent.create({
             componentString: ':foo'
@@ -71,7 +71,7 @@ describe("$utils", function () {
         });
       });
 
-      describe("from parameterName", function () {
+      describe(".from parameterName", function () {
         it("should initialize componentString", function () {
           pathPatternComponent = PathPatternComponent.create({
             parameterName: 'foo'
@@ -90,7 +90,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("matches()", function () {
+    describe("#matches()", function () {
       describe("for parameters", function () {
         beforeEach(function () {
           pathPatternComponent = PathPatternComponent.fromString(':foo');
@@ -123,7 +123,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         pathPatternComponent = PathPatternComponent.fromString(':foo');
       });

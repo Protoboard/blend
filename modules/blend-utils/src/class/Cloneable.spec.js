@@ -23,7 +23,7 @@ describe("$utils", function () {
       cloneable = Cloneable.create({foo: 'foo'});
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       var clone;
 
       beforeEach(function () {

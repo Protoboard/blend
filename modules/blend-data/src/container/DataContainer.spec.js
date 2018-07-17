@@ -19,7 +19,7 @@ describe("$data", function () {
       dataContainer = DataContainer.create({data: null});
     });
 
-    describe("fromData()", function () {
+    describe(".fromData()", function () {
       var data = {};
 
       it("should return DataContainer instance", function () {
@@ -38,7 +38,7 @@ describe("$data", function () {
       });
     });
 
-    describe("as()", function () {
+    describe("#as()", function () {
       var DataContainer2;
 
       beforeAll(function () {
@@ -60,13 +60,13 @@ describe("$data", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should set data property", function () {
         expect(dataContainer.data).toBe(null);
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         result = dataContainer.clone();
       });
@@ -80,7 +80,7 @@ describe("$data", function () {
       });
     });
 
-    describe("destroy()", function () {
+    describe("#destroy()", function () {
       beforeEach(function () {
         spyOn(dataContainer, 'clear');
         result = dataContainer.destroy();
@@ -95,7 +95,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clear()", function () {
+    describe("#clear()", function () {
       beforeEach(function () {
         result = dataContainer.clear();
       });
@@ -109,7 +109,7 @@ describe("$data", function () {
       });
     });
 
-    describe("isEmpty()", function () {
+    describe("#isEmpty()", function () {
       describe("when data is defined", function () {
         it("should return false", function () {
           expect(DataContainer.create({data: 1}).isEmpty()).toBeFalsy();
@@ -123,7 +123,7 @@ describe("$data", function () {
       });
     });
 
-    describe("passDataTo()", function () {
+    describe("#passDataTo()", function () {
       var callback,
           returnValue;
 
@@ -142,7 +142,7 @@ describe("$data", function () {
       });
     });
 
-    describe("passSelfTo()", function () {
+    describe("#passSelfTo()", function () {
       var callback,
           returnValue;
 

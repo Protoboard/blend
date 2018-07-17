@@ -16,7 +16,7 @@ describe("$cliUtils", function () {
       Argv.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromArray()", function () {
+    describe(".fromArray()", function () {
       var argumentList;
 
       beforeEach(function () {
@@ -44,7 +44,7 @@ describe("$cliUtils", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var argumentList;
 
       beforeEach(function () {
@@ -78,7 +78,7 @@ describe("$cliUtils", function () {
       });
     });
 
-    describe("getOptionValue", function () {
+    describe("#getOptionValue()", function () {
       beforeEach(function () {
         argv = Argv.fromArray(["foo", "bar", "--foo=bar", "--baz"]);
       });

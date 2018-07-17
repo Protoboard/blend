@@ -13,7 +13,7 @@ describe("$assert", function () {
     spyOn($assert, 'assert').and.callThrough();
   });
 
-  describe("isPluralFormula()", function () {
+  describe("#isPluralFormula()", function () {
     it("should pass message to assert", function () {
       $assert.isPluralFormula(pluralFormula, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");
@@ -28,7 +28,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isPluralFormulaOptional()", function () {
+  describe("#isPluralFormulaOptional()", function () {
     it("should pass message to assert", function () {
       $assert.isPluralFormulaOptional(pluralFormula, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");
@@ -64,7 +64,7 @@ describe("$i18n", function () {
       LocaleDocument.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setLocaleName()", function () {
+    describe("#setLocaleName()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
@@ -82,7 +82,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getLocaleName()", function () {
+    describe("#getLocaleName()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.setNode({
@@ -95,7 +95,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setCountryCode()", function () {
+    describe("#setCountryCode()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
@@ -113,7 +113,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getCountryCode()", function () {
+    describe("#getCountryCode()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.setNode({
@@ -126,7 +126,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setLanguageCode()", function () {
+    describe("#setLanguageCode()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
@@ -144,7 +144,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getLanguageCode()", function () {
+    describe("#getLanguageCode()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.setNode({
@@ -157,7 +157,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setPluralFormula()", function () {
+    describe("#setPluralFormula()", function () {
       var pluralFormula;
 
       beforeEach(function () {
@@ -186,7 +186,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getPluralFormula()", function () {
+    describe("#getPluralFormula()", function () {
       var pluralFormula;
 
       beforeEach(function () {
@@ -202,7 +202,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("addTranslationKey()", function () {
+    describe("#addTranslationKey()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
         localeDocument.deleteNode();
@@ -222,7 +222,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("hasTranslationKey()", function () {
+    describe("#hasTranslationKey()", function () {
       beforeEach(function () {
         localeDocument = LocaleDocument.fromEntityKey('_locale/bar'.toDocumentKey());
       });
@@ -258,7 +258,7 @@ describe("$i18n", function () {
 
 describe("$entity", function () {
   describe("Document", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       var document;
 
       describe("when documentType is '_locale'", function () {

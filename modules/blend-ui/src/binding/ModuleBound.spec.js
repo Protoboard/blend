@@ -18,7 +18,7 @@ describe("$ui", function () {
       ModuleBound.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       beforeEach(function () {
         moduleBound = ModuleBound.create();
       });

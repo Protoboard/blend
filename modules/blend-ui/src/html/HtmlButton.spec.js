@@ -16,7 +16,7 @@ describe("$ui", function () {
       HtmlButton.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         htmlButton = HtmlButton.create();
         expect(htmlButton.elementName).toBe('button');
@@ -34,7 +34,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlButton instance", function () {
           button = Button.create();

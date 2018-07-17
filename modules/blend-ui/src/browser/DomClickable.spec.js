@@ -17,7 +17,7 @@ describe("$ui", function () {
       DomClickable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("onClick()", function () {
+    describe("#onClick()", function () {
       var element,
           clickEvent;
 
@@ -57,7 +57,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when browser is available", function () {
         it("should return DomClickable instance", function () {
           clickable = Clickable.create();

@@ -32,7 +32,7 @@ describe("$data", function () {
       setContainer = SetContainer.create({data: data});
     });
 
-    describe("fromArray()", function () {
+    describe(".fromArray()", function () {
       var array;
 
       beforeEach(function () {
@@ -56,7 +56,7 @@ describe("$data", function () {
       });
     });
 
-    describe("fromSetContainer()", function () {
+    describe(".fromSetContainer()", function () {
       var SetContainer2,
           setContainer2;
 
@@ -100,7 +100,7 @@ describe("$data", function () {
       });
     });
 
-    describe("fromKeyValueContainer", function () {
+    describe(".fromKeyValueContainer", function () {
       var KeyValueContainer,
           keyValueContainer;
 
@@ -146,7 +146,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         result = setContainer.clone();
       });
@@ -161,7 +161,7 @@ describe("$data", function () {
       });
     });
 
-    describe("filter()", function () {
+    describe("#filter()", function () {
       var callback;
 
       beforeEach(function () {
@@ -189,7 +189,7 @@ describe("$data", function () {
       });
     });
 
-    describe("reduce()", function () {
+    describe("#reduce()", function () {
       var callback;
 
       beforeEach(function () {
@@ -212,7 +212,7 @@ describe("$data", function () {
       });
     });
 
-    describe("to()", function () {
+    describe("#to()", function () {
       var SetConvertible,
           transformed;
 

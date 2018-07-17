@@ -33,7 +33,7 @@ describe("$i18n", function () {
       expect(ModuleLocaleIndex.create()).toBe(ModuleLocaleIndex.create());
     });
 
-    describe("addLocaleForModule()", function () {
+    describe("#addLocaleForModule()", function () {
       beforeEach(function () {
         moduleLocaleIndex = ModuleLocaleIndex.create();
       });
@@ -58,7 +58,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getModuleIdsForLocale()", function () {
+    describe("#getModuleIdsForLocale()", function () {
       beforeEach(function () {
         moduleLocaleIndex = ModuleLocaleIndex.create();
         moduleLocaleIndex.addLocaleForModule('foo', 'bar');
@@ -70,7 +70,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getLocaleIdsForModule()", function () {
+    describe("#getLocaleIdsForModule()", function () {
       beforeEach(function () {
         moduleLocaleIndex = ModuleLocaleIndex.create();
         moduleLocaleIndex.addLocaleForModule('foo', 'bar');

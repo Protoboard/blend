@@ -16,7 +16,7 @@ describe("$widget", function () {
       Node.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromNodeName()", function () {
+    describe(".fromNodeName()", function () {
       it("should return Node instance", function () {
         node = Node.fromNodeName('foo');
         expect(Node.mixedBy(node)).toBeTruthy();
@@ -33,7 +33,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize nodeName", function () {
         node = Node.create();
         expect(node.nodeName).toEqual(String(node.instanceId));
@@ -50,7 +50,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("addChildNode()", function () {
+    describe("#addChildNode()", function () {
       var childNode;
 
       beforeEach(function () {
@@ -127,7 +127,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getChildNode()", function () {
+    describe("#getChildNode()", function () {
       var childNode;
 
       beforeEach(function () {
@@ -149,7 +149,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getNextChild()", function () {
+    describe("#getNextChild()", function () {
       var childNode1,
           childNode2;
 
@@ -180,7 +180,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getPreviousChild()", function () {
+    describe("#getPreviousChild()", function () {
       var childNode1,
           childNode2;
 
@@ -211,7 +211,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("removeChildNode()", function () {
+    describe("#removeChildNode()", function () {
       var childNode;
 
       beforeEach(function () {
@@ -249,7 +249,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setChildName()", function () {
+    describe("#setChildName()", function () {
       var childNode;
 
       beforeEach(function () {
@@ -301,7 +301,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setChildOrder()", function () {
+    describe("#setChildOrder()", function () {
       var childNode,
           childNode2;
 
@@ -359,7 +359,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("addToParentNode()", function () {
+    describe("#addToParentNode()", function () {
       var parentNode;
 
       beforeEach(function () {
@@ -389,7 +389,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("removeFromParentNode()", function () {
+    describe("#removeFromParentNode()", function () {
       var parentNode;
 
       beforeEach(function () {
@@ -421,7 +421,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setNodeName()", function () {
+    describe("#setNodeName()", function () {
       var parentNode;
 
       beforeEach(function () {
@@ -456,7 +456,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setNodeOrder()", function () {
+    describe("#setNodeOrder()", function () {
       var parentNode;
 
       beforeEach(function () {
@@ -490,7 +490,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getNextSibling()", function () {
+    describe("#getNextSibling()", function () {
       var parentNode,
           childNode1,
           childNode2,
@@ -524,7 +524,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getPreviousSibling()", function () {
+    describe("#getPreviousSibling()", function () {
       var parentNode,
           childNode1,
           childNode2,
@@ -558,7 +558,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getNodePath()", function () {
+    describe("#getNodePath()", function () {
       var node2, node3;
 
       beforeEach(function () {
@@ -579,7 +579,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getParentNodes()", function () {
+    describe("#getParentNodes()", function () {
       var node2, node3;
 
       beforeEach(function () {
@@ -596,7 +596,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getClosestParentNode()", function () {
+    describe("#getClosestParentNode()", function () {
       var node2, node3, node4;
 
       beforeEach(function () {
@@ -623,7 +623,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getAllChildNodes()", function () {
+    describe("#getAllChildNodes()", function () {
       var node1, node2, node3, node4;
 
       beforeEach(function () {

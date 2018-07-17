@@ -15,7 +15,7 @@ describe("$event", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         eventTrail = EventTrail.create();
       });

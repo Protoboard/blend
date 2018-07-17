@@ -34,7 +34,7 @@ describe("$ui", function () {
       expect(DomApplication.create()).toBe(DomApplication.create());
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       beforeEach(function () {
         domApplication = DomApplication.create();
         spyOn(domApplication, 'renderInto');
@@ -47,7 +47,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onRouteChange()", function () {
+    describe("#onRouteChange()", function () {
       beforeEach(function () {
         [].toRoute().navigateTo();
         domApplication = DomApplication.create();

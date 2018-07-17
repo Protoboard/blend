@@ -15,7 +15,7 @@ describe("$cliUtils", function () {
       Option.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize optionName property", function () {
         option = Option.create({argumentString: "--foo"});
         expect(option.optionName).toBe("foo");
@@ -41,7 +41,7 @@ describe("$cliUtils", function () {
   });
 
   describe("Argument", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when passing option format", function () {
         var result;
 

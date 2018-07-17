@@ -28,14 +28,14 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize selectablesByOwnValue", function () {
         selectableHost = SelectableHost.create();
         expect(selectableHost.selectablesByOwnValue).toEqual({});
       });
     });
 
-    describe("addChildNode()", function () {
+    describe("#addChildNode()", function () {
       var selectableA,
           selectableB;
 
@@ -125,7 +125,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("removeChildNode()", function () {
+    describe("#removeChildNode()", function () {
       var selectable;
 
       beforeEach(function () {
@@ -148,7 +148,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("getSelectableByOwnValue()", function () {
+    describe("#getSelectableByOwnValue()", function () {
       var selectable;
 
       beforeEach(function () {
@@ -165,7 +165,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       var selectable;
 
       beforeEach(function () {
@@ -183,7 +183,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onSelectableOwnValueChange()", function () {
+    describe("#onSelectableOwnValueChange()", function () {
       var selectable,
           rootWidget;
 

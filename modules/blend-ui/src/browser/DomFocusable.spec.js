@@ -16,7 +16,7 @@ describe("$ui", function () {
       DomFocusable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("focus()", function () {
+    describe("#focus()", function () {
       var element;
 
       beforeEach(function () {
@@ -42,7 +42,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("blur()", function () {
+    describe("#blur()", function () {
       var element;
 
       beforeEach(function () {
@@ -69,7 +69,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onRender()", function () {
+    describe("#onRender()", function () {
       var element;
 
       beforeEach(function () {
@@ -106,7 +106,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementFocusIn()", function () {
+    describe("#onElementFocusIn()", function () {
       var element;
 
       beforeEach(function () {
@@ -135,7 +135,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementFocusOut()", function () {
+    describe("#onElementFocusOut()", function () {
       var element;
 
       beforeEach(function () {

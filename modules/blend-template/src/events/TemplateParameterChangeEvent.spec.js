@@ -6,7 +6,7 @@ var $oop = window['blend-oop'],
 
 describe("$event", function () {
   describe("Event", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when eventName matches EVENT_TEMPLATE_PARAMETER_CHANGE", function () {
         it("should return TemplateParameterChangeEvent instance", function () {
           var result = $event.Event.fromEventName($template.EVENT_TEMPLATE_PARAMETER_CHANGE);

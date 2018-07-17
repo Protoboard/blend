@@ -21,7 +21,7 @@ describe("$ui", function () {
       Widget.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize binaryStates", function () {
         binaryStateful = BinaryStateful.create();
         expect($data.Collection.mixedBy(binaryStateful.binaryStates))
@@ -29,7 +29,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       var binaryStateful1,
           parentWidget;
 
@@ -54,7 +54,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onDetach()", function () {
+    describe("#onDetach()", function () {
       beforeEach(function () {
         binaryStateful = BinaryStateful.create();
         binaryStateful.addBinaryState('foo');
@@ -69,7 +69,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("addBinaryState()", function () {
+    describe("#addBinaryState()", function () {
       beforeEach(function () {
         binaryStateful = BinaryStateful.create();
       });
@@ -87,7 +87,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("addBinaryStateSourceId()", function () {
+    describe("#addBinaryStateSourceId()", function () {
       beforeEach(function () {
         binaryStateful = BinaryStateful.create();
         binaryStateful.addBinaryState('foo', true);
@@ -130,7 +130,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("removeBinaryStateSourceId()", function () {
+    describe("#removeBinaryStateSourceId()", function () {
       beforeEach(function () {
         binaryStateful = BinaryStateful.create();
         binaryStateful.addBinaryState('foo', true);
@@ -176,7 +176,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("isStateOn()", function () {
+    describe("#isStateOn()", function () {
       beforeEach(function () {
         binaryStateful = BinaryStateful.create();
         binaryStateful.addBinaryState('foo');

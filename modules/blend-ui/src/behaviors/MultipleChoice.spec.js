@@ -22,7 +22,7 @@ describe("$ui", function () {
       RootWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("addChildNode()", function () {
+    describe("#addChildNode()", function () {
       var option;
 
       beforeEach(function () {
@@ -60,7 +60,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("removeChildNode()", function () {
+    describe("#removeChildNode()", function () {
       var option;
 
       beforeEach(function () {
@@ -89,7 +89,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValues()", function () {
+    describe("#setInputValues()", function () {
       var option1,
           option2;
 
@@ -135,7 +135,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       var option;
 
       beforeEach(function () {
@@ -158,7 +158,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("deleteInputValue()", function () {
+    describe("#deleteInputValue()", function () {
       var option;
 
       beforeEach(function () {
@@ -182,7 +182,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       var option1,
           option2;
 
@@ -206,7 +206,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onSelectableOwnValueChange()", function () {
+    describe("#onSelectableOwnValueChange()", function () {
       var option;
 
       beforeEach(function () {
@@ -231,7 +231,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onStateChange()", function () {
+    describe("#onStateChange()", function () {
       var option;
 
       beforeEach(function () {

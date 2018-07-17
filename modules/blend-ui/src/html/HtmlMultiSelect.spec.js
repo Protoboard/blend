@@ -16,7 +16,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when HTML is available", function () {
         it("should create instance", function () {
           multiSelect = MultiSelect.create();

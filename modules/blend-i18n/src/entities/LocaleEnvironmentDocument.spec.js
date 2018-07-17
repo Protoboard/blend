@@ -19,7 +19,7 @@ describe("$i18n", function () {
       };
     });
 
-    describe("setActiveLocaleKey()", function () {
+    describe("#setActiveLocaleKey()", function () {
       beforeEach(function () {
         localeEnvironmentDocument = LocaleEnvironmentDocument.fromEntityKey('foo/bar'.toDocumentKey());
         localeEnvironmentDocument.deleteNode();
@@ -37,7 +37,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getActiveLocaleKey()", function () {
+    describe("#getActiveLocaleKey()", function () {
       beforeEach(function () {
         localeEnvironmentDocument = LocaleEnvironmentDocument.fromEntityKey('foo/bar'.toDocumentKey());
         localeEnvironmentDocument.setNode({
@@ -55,7 +55,7 @@ describe("$i18n", function () {
 
 describe("$entity", function () {
   describe("Document", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       var document;
 
       describe("when documentType is '_localeEnvironment'", function () {

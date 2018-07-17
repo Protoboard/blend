@@ -14,7 +14,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("setItem()", function () {
+    describe("#setItem()", function () {
       var node1, node2, node3;
 
       beforeEach(function () {

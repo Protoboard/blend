@@ -23,7 +23,7 @@ describe("$entity", function () {
       branchNoded = BranchNoded.fromEntityKey('foo/bar'.toDocumentKey());
     });
 
-    describe("setNodeAsLeaf()", function () {
+    describe("#setNodeAsLeaf()", function () {
       var documentKey,
           documentPath,
           nodeBefore,
@@ -60,7 +60,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("appendNode()", function () {
+    describe("#appendNode()", function () {
       var documentKey,
           documentPath,
           eventsToBeTriggered,

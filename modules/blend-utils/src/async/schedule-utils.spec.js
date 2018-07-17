@@ -11,7 +11,7 @@ describe("$utils", function () {
     jasmine.clock().uninstall();
   });
 
-  describe("debounce()", function () {
+  describe(".debounce()", function () {
     var originalFunction,
         debounced;
 
@@ -98,7 +98,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("throttle()", function () {
+  describe(".throttle()", function () {
     var originalFunction,
         throttled;
 

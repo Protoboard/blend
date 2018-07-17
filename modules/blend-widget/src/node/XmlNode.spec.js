@@ -46,7 +46,7 @@ describe("$widget", function () {
       .toEqual('<ul>{{foo}}{{bar}}</ul>'.toTemplate());
     });
 
-    describe("fromElementName()", function () {
+    describe(".fromElementName()", function () {
       it("should return XmlNode instance", function () {
         xmlNode = XmlNode.fromElementName('Tag');
         expect(XmlNode.mixedBy(xmlNode)).toBeTruthy();
@@ -63,7 +63,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when no elementName is specified", function () {
         it("should throw", function () {
           expect(function () {
@@ -85,7 +85,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getChildProperties()", function () {
+    describe("#getChildProperties()", function () {
       beforeEach(function () {
         xmlNode = XmlNode.fromElementName('Tag');
       });
@@ -108,7 +108,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("createChildNode()", function () {
+    describe("#createChildNode()", function () {
       beforeEach(function () {
         xmlNode = XmlNode.fromElementName('Tag');
       });
@@ -140,7 +140,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setAttribute()", function () {
+    describe("#setAttribute()", function () {
       beforeEach(function () {
         xmlNode = XmlNode.fromElementName('Tag');
       });
@@ -158,7 +158,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getAttribute()", function () {
+    describe("#getAttribute()", function () {
       beforeEach(function () {
         xmlNode = XmlNode.fromElementName('Tag')
         .setAttribute('foo', 'bar');
@@ -177,7 +177,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("deleteAttribute()", function () {
+    describe("#deleteAttribute()", function () {
       beforeEach(function () {
         xmlNode = XmlNode.fromElementName('Tag')
         .setAttribute('foo', 'bar');
@@ -194,7 +194,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getContentMarkup()", function () {
+    describe("#getContentMarkup()", function () {
       beforeEach(function () {
         xmlNode = XmlNode.fromElementName('Foo');
         xmlNode.createChildNode(XmlNode, {
@@ -209,7 +209,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       it("should return generated markup", function () {
         xmlNode = XmlNode.fromElementName('Tag')
         .setAttribute('foo', 'bar');

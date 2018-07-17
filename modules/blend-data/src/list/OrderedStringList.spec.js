@@ -21,7 +21,7 @@ describe("$data", function () {
       orderedStringList = OrderedStringList.create({data: data});
     });
 
-    describe("getRangeByPrefix()", function () {
+    describe("#getRangeByPrefix()", function () {
       beforeEach(function () {
         orderedStringList
         .setItem('baz')
@@ -41,7 +41,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getRangeByPrefixWrapped()", function () {
+    describe("#getRangeByPrefixWrapped()", function () {
       var data;
 
       beforeEach(function () {
@@ -67,7 +67,7 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("asOrderedStringList()", function () {
+    describe("#asOrderedStringList()", function () {
       var buffer = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -85,7 +85,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toOrderedStringList()", function () {
+    describe("#toOrderedStringList()", function () {
       var container,
           transformed;
 
@@ -107,7 +107,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toOrderedStringList()", function () {
+    describe("#toOrderedStringList()", function () {
       var container,
           transformed;
 
@@ -132,7 +132,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asOrderedStringList()", function () {
+  describe("#asOrderedStringList()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {

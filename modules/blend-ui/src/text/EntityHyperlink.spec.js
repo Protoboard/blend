@@ -16,7 +16,7 @@ describe("$ui", function () {
       EntityHyperlink.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromTargetUrlEntity()", function () {
+    describe(".fromTargetUrlEntity()", function () {
       var targetUrlEntity;
 
       beforeEach(function () {
@@ -34,7 +34,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid targetUrlEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -46,7 +46,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setTargetUrlEntity()", function () {
+    describe("#setTargetUrlEntity()", function () {
       var targetUrlEntity;
 
       beforeEach(function () {
@@ -67,7 +67,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       var targetUrlEntity;
 
       beforeEach(function () {

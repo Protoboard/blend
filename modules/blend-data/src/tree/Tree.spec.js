@@ -31,7 +31,7 @@ describe("$data", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on missing arguments", function () {
         it("should initialize data to empty object", function () {
           tree = Tree.create();
@@ -40,7 +40,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         result = tree.clone();
       });
@@ -55,7 +55,7 @@ describe("$data", function () {
       });
     });
 
-    describe("query()", function () {
+    describe("#query()", function () {
       var callback;
 
       beforeEach(function () {
@@ -268,7 +268,7 @@ describe("$data", function () {
       });
     });
 
-    describe("hasPath()", function () {
+    describe("#hasPath()", function () {
       beforeEach(function () {
         // adding special case
         tree.data['undefined'] = undefined;
@@ -292,7 +292,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getParentPath()", function () {
+    describe("#getParentPath()", function () {
       beforeEach(function () {
         result = tree.getParentPath('bar.hello.world'.toTreePath());
       });
@@ -313,7 +313,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getLastForkPath()", function () {
+    describe("#getLastForkPath()", function () {
       beforeEach(function () {
         // adding long unique path
         tree.setNode('bar.baz.quux.hello.world'.toTreePath(), true);
@@ -345,7 +345,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getNode()", function () {
+    describe("#getNode()", function () {
       it("should retrieve node from tree", function () {
         expect(tree.getNode('foo.bar'.toTreePath())).toBe(tree.data.foo.bar);
       });
@@ -363,7 +363,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getNodeWrapped()", function () {
+    describe("#getNodeWrapped()", function () {
       var path,
           node;
 
@@ -387,7 +387,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getInitializedNode()", function () {
+    describe("#getInitializedNode()", function () {
       var initialNode,
           initializer;
 
@@ -431,7 +431,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getInitializedNodeWrapped()", function () {
+    describe("#getInitializedNodeWrapped()", function () {
       var path,
           initializer,
           node;
@@ -457,7 +457,7 @@ describe("$data", function () {
       });
     });
 
-    describe("setNode()", function () {
+    describe("#setNode()", function () {
       it("should return self", function () {
         expect(tree.setNode('foo.bar.1'.toTreePath(), {})).toBe(tree);
       });
@@ -496,7 +496,7 @@ describe("$data", function () {
       });
     });
 
-    describe("appendNode()", function () {
+    describe("#appendNode()", function () {
       var path, value,
           callback;
 
@@ -596,12 +596,12 @@ describe("$data", function () {
       });
     });
 
-    describe("deleteNode()", function () {
+    describe("#deleteNode()", function () {
       it("should return self", function () {
         expect(tree.deleteNode('foo'.toTreePath())).toBe(tree);
       });
 
-      describe("from array parent", function () {
+      describe(".from array parent", function () {
         describe("with splicing", function () {
           it("should splice node out of parent", function () {
             tree.deleteNode('foo.bar.0'.toTreePath(), true);
@@ -637,7 +637,7 @@ describe("$data", function () {
         });
       });
 
-      describe("from object parent", function () {
+      describe(".from object parent", function () {
         it("should remove node from parent", function () {
           tree.deleteNode('bar.hello'.toTreePath(), true);
           expect(tree.data).toEqual({
@@ -652,7 +652,7 @@ describe("$data", function () {
         });
       });
 
-      describe("from absent path", function () {
+      describe(".from absent path", function () {
         it("should have no effect", function () {
           tree.deleteNode('bar.baz'.toTreePath(), true);
           expect(tree.data).toEqual({
@@ -670,7 +670,7 @@ describe("$data", function () {
       });
     });
 
-    describe("deletePath()", function () {
+    describe("#deletePath()", function () {
       it("should return self", function () {
         result = tree.deletePath('bar.hello'.toTreePath());
         expect(result).toBe(tree);
@@ -751,7 +751,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryNodes()", function () {
+    describe("#queryNodes()", function () {
       var query;
 
       beforeEach(function () {
@@ -771,7 +771,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryNodesWrapped()", function () {
+    describe("#queryNodesWrapped()", function () {
       var query,
           data;
 
@@ -795,7 +795,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryKeys()", function () {
+    describe("#queryKeys()", function () {
       var query;
 
       beforeEach(function () {
@@ -813,7 +813,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryKeysWrapped()", function () {
+    describe("#queryKeysWrapped()", function () {
       var query,
           data;
 
@@ -837,7 +837,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryPaths()", function () {
+    describe("#queryPaths()", function () {
       var query;
 
       beforeEach(function () {
@@ -858,7 +858,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryPathsWrapped()", function () {
+    describe("#queryPathsWrapped()", function () {
       var query,
           data;
 
@@ -882,7 +882,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryKeyNodePairs()", function () {
+    describe("#queryKeyNodePairs()", function () {
       var query;
 
       beforeEach(function () {
@@ -907,7 +907,7 @@ describe("$data", function () {
       });
     });
 
-    describe("queryPathNodePairs()", function () {
+    describe("#queryPathNodePairs()", function () {
       var query;
 
       beforeEach(function () {
@@ -936,7 +936,7 @@ describe("$data", function () {
   describe("DataContainer", function () {
     var result;
 
-    describe("asTree()", function () {
+    describe("#asTree()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -957,7 +957,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asTree()", function () {
+  describe("#asTree()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {

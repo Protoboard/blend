@@ -17,7 +17,7 @@ describe("$api", function () {
       XhrDispatcher.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("dispatch()", function () {
+    describe("#dispatch()", function () {
       var xhr,
           request;
 
@@ -239,7 +239,7 @@ describe("$api", function () {
   describe("Dispatcher", function () {
     var dispatcher;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when passing HttpRequest", function () {
         var request;
 

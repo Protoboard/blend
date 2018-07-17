@@ -23,7 +23,7 @@ describe("$widget", function () {
       expect(RootWidget.create()).toBe(RootWidget.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         spyOn(RootWidget, 'onAttach');
       });

@@ -29,7 +29,7 @@ describe("$ui", function () {
       expect(Application.create()).toBe(Application.create());
     });
 
-    describe("setActivePage()", function () {
+    describe("#setActivePage()", function () {
       var page;
 
       beforeEach(function () {
@@ -59,7 +59,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onRouteChange()", function () {
+    describe("#onRouteChange()", function () {
       beforeEach(function () {
         jasmine.clock().install();
         [].toRoute().navigateTo();

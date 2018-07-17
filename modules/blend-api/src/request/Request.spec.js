@@ -15,7 +15,7 @@ describe("$api", function () {
       Request.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromEndpoint()", function () {
+    describe(".fromEndpoint()", function () {
       var endpoint;
 
       beforeEach(function () {
@@ -40,7 +40,7 @@ describe("$api", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid endpoint", function () {
         it("should throw", function () {
           expect(function () {
@@ -61,7 +61,7 @@ describe("$api", function () {
       });
     });
 
-    describe("send()", function () {
+    describe("#send()", function () {
       var promise;
 
       beforeEach(function () {
@@ -89,7 +89,7 @@ describe("$api", function () {
       endpoint = 'foo/bar'.toHttpEndpoint();
     });
 
-    describe("toRequest()", function () {
+    describe("#toRequest()", function () {
       var request;
 
       it("should return Request instance", function () {

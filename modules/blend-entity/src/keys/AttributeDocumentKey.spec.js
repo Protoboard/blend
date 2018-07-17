@@ -19,7 +19,7 @@ describe("$entity", function () {
       AttributeDocumentKey.__builder.instances = {};
     });
 
-    describe("fromDocumentIdComponents()", function () {
+    describe(".fromDocumentIdComponents()", function () {
       it("should join documentId components", function () {
         attributeDocumentKey = AttributeDocumentKey.fromDocumentIdComponents(
             'foo', ['bar', 'baz', 'quux']);
@@ -45,7 +45,7 @@ describe("$entity", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when documentType is prefixed with __", function () {
         beforeEach(function () {
           documentKey = $entity.DocumentKey.fromReference('__foo/bar');

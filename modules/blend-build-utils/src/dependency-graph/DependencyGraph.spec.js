@@ -16,7 +16,7 @@ describe("$buildUtils", function () {
       DependencyGraph.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("getSinkEdges()", function () {
+    describe("#getSinkEdges()", function () {
       beforeEach(function () {
         dependencyGraph = DependencyGraph.fromData({
           A: {B: 1, C: 1, D: 1},
@@ -49,7 +49,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("deleteEdgesForSourceNodes()", function () {
+    describe("#deleteEdgesForSourceNodes()", function () {
       var pairsToDelete;
 
       beforeEach(function () {
@@ -77,7 +77,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("serialize()", function () {
+    describe("#serialize()", function () {
       beforeEach(function () {
         dependencyGraph = DependencyGraph.fromData({
           A: {B: 1, C: 1, D: 1},

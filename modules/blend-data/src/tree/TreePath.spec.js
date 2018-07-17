@@ -18,7 +18,7 @@ describe("$data", function () {
       treePath = TreePath.create({components: ['foo', 'bar', 'baz']});
     });
 
-    describe("fromComponentsToString()", function () {
+    describe(".fromComponentsToString()", function () {
       it("should convert array to path string", function () {
         expect($data.TreePath.fromComponentsToString(['foo', 'bar', 'baz']))
         .toBe('foo.bar.baz');
@@ -30,7 +30,7 @@ describe("$data", function () {
       });
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       var string = 'foo\\.bar.baz\\\\quux';
 
       it("should return a TreePath instance", function () {
@@ -52,7 +52,7 @@ describe("$data", function () {
       });
     });
 
-    describe("lessThan()", function () {
+    describe("#lessThan()", function () {
       var path2;
 
       describe("for containing TreePath", function () {
@@ -70,7 +70,7 @@ describe("$data", function () {
       });
     });
 
-    describe("greaterThan()", function () {
+    describe("#greaterThan()", function () {
       var path2;
 
       describe("for contained TreePath", function () {
@@ -88,7 +88,7 @@ describe("$data", function () {
       });
     });
 
-    describe("push()", function () {
+    describe("#push()", function () {
       beforeEach(function () {
         result = treePath.push('quux');
       });
@@ -102,7 +102,7 @@ describe("$data", function () {
       });
     });
 
-    describe("pop()", function () {
+    describe("#pop()", function () {
       beforeEach(function () {
         result = treePath.pop();
       });
@@ -116,7 +116,7 @@ describe("$data", function () {
       });
     });
 
-    describe("unshift()", function () {
+    describe("#unshift()", function () {
       beforeEach(function () {
         result = treePath.unshift('quux');
       });
@@ -130,7 +130,7 @@ describe("$data", function () {
       });
     });
 
-    describe("shift()", function () {
+    describe("#shift()", function () {
       beforeEach(function () {
         result = treePath.shift();
       });
@@ -144,7 +144,7 @@ describe("$data", function () {
       });
     });
 
-    describe("concat()", function () {
+    describe("#concat()", function () {
       var path2;
 
       beforeEach(function () {
@@ -170,7 +170,7 @@ describe("$data", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         treePath = TreePath.create({components: ['foo.bar', 'baz\\quux']});
         result = treePath.toString();
@@ -188,7 +188,7 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  describe("toPath()", function () {
+  describe("#toPath()", function () {
     var string = 'foo\\.bar.baz\\\\quux',
         treePath;
 
@@ -213,7 +213,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toTreePath()", function () {
+  describe("#toTreePath()", function () {
     var array = [1, 2, 3],
         treePath;
 

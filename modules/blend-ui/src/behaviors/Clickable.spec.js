@@ -16,7 +16,7 @@ describe("$ui", function () {
       Clickable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("click()", function () {
+    describe("#click()", function () {
       beforeEach(function () {
         clickable = Clickable.create();
         spyOn(clickable, 'trigger');

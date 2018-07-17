@@ -30,7 +30,7 @@ describe("$widget", function () {
       expect(childProperties.baz.parentElementSelector).toBe(':nth-child(1)');
     });
 
-    describe("addChildNode()", function () {
+    describe("#addChildNode()", function () {
       var parentElement,
           childNode, childElement;
 
@@ -75,7 +75,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("removeChildNode()", function () {
+    describe("#removeChildNode()", function () {
       var parentElement,
           childNode, childElement;
 
@@ -104,7 +104,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setChildOrder()", function () {
+    describe("#setChildOrder()", function () {
       var parentElement,
           childNode1, childElement1,
           childNode2, childElement2;
@@ -141,7 +141,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setAttribute()", function () {
+    describe("#setAttribute()", function () {
       var element;
 
       beforeEach(function () {
@@ -168,7 +168,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("deleteAttribute()", function () {
+    describe("#deleteAttribute()", function () {
       var element;
 
       beforeEach(function () {
@@ -200,7 +200,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("renderInto()", function () {
+    describe("#renderInto()", function () {
       var parentElement,
           element;
 
@@ -238,7 +238,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("reRender()", function () {
+    describe("#reRender()", function () {
       var parentElement,
           oldElement,
           newElement;
@@ -266,7 +266,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("reRenderContents()", function () {
+    describe("#reRenderContents()", function () {
       var domNode, element,
           childNode, childElement;
 
@@ -293,7 +293,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("createElement()", function () {
+    describe("#createElement()", function () {
       var element;
 
       beforeEach(function () {
@@ -330,7 +330,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getElement()", function () {
+    describe("#getElement()", function () {
       var element;
 
       beforeEach(function () {
@@ -350,7 +350,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getParentElementForChild()", function () {
+    describe("#getParentElementForChild()", function () {
       var childNode;
 
       beforeEach(function () {
@@ -397,7 +397,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return DomNode instance", function () {
           htmlNode = HtmlNode.create();

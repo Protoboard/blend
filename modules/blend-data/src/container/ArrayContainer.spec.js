@@ -22,7 +22,7 @@ describe("$data", function () {
       arrayContainer = ArrayContainer.create({data: data});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should set data property", function () {
         expect(arrayContainer.data).toBe(data);
       });
@@ -46,7 +46,7 @@ describe("$data", function () {
       });
     });
 
-    describe("destroy()", function () {
+    describe("#destroy()", function () {
       beforeEach(function () {
         spyOn(arrayContainer, 'clear');
         result = arrayContainer.destroy();
@@ -61,7 +61,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clear()", function () {
+    describe("#clear()", function () {
       beforeEach(function () {
         result = arrayContainer.clear();
       });

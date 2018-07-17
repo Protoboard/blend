@@ -16,7 +16,7 @@ describe("$ui", function () {
       Focusable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("focus()", function () {
+    describe("#focus()", function () {
       beforeEach(function () {
         focusable = Focusable.create();
       });
@@ -37,7 +37,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("blur()", function () {
+    describe("#blur()", function () {
       beforeEach(function () {
         focusable = Focusable.create();
         focusable.focus();
@@ -59,7 +59,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("isFocused()", function () {
+    describe("#isFocused()", function () {
       beforeEach(function () {
         focusable = Focusable.create();
       });

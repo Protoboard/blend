@@ -14,7 +14,7 @@ describe("$data", function () {
       .build();
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       var queryComponent,
           componentString;
 
@@ -39,7 +39,7 @@ describe("$data", function () {
       });
     });
 
-    describe("fromKeyOptions()", function () {
+    describe(".fromKeyOptions()", function () {
       var queryComponent,
           keyOptions;
 
@@ -64,8 +64,8 @@ describe("$data", function () {
       });
     });
 
-    describe("create()", function () {
-      describe("from string", function () {
+    describe(".create()", function () {
+      describe(".from string", function () {
         it("should set isSkipper property", function () {
           expect(TQC.fromString('**').isSkipper).toBeTruthy();
           expect(TQC.fromString('**!foo').isSkipper).toBeTruthy();
@@ -149,7 +149,7 @@ describe("$data", function () {
         });
       });
 
-      describe("from properties", function () {
+      describe(".from properties", function () {
         it("should set keyOptionLookup property", function () {
           expect(TQC.create().keyOptionLookup).toBeUndefined();
           expect(TQC.create({
@@ -204,7 +204,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         tQC = TQC.create({
           keyOptions: ['foo', 'bar'],
@@ -224,7 +224,7 @@ describe("$data", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       describe("when isSkipper is true", function () {
         it("should discard value", function () {
           expect(TQC.fromString('**:foo') + '').toBe('**');
@@ -284,7 +284,7 @@ describe("$data", function () {
       });
     });
 
-    describe("matches()", function () {
+    describe("#matches()", function () {
       describe("for matching key and value", function () {
         it("should return true", function () {
           // skipper
@@ -354,7 +354,7 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  describe("toTreeQueryComponent()", function () {
+  describe("#toTreeQueryComponent()", function () {
     var string,
         queryComponent;
 

@@ -16,7 +16,7 @@ describe("$widget", function () {
       HtmlNode.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromElementId()", function () {
+    describe(".fromElementId()", function () {
       it("should return HtmlNode instance", function () {
         htmlNode = HtmlNode.fromElementId('foo');
         expect(HtmlNode.mixedBy(htmlNode)).toBeTruthy();
@@ -33,7 +33,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         htmlNode = HtmlNode.create();
         expect(htmlNode.elementName).toBe('div');
@@ -77,7 +77,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setElementId()", function () {
+    describe("#setElementId()", function () {
       var result;
 
       beforeEach(function () {
@@ -98,7 +98,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("addCssClass()", function () {
+    describe("#addCssClass()", function () {
       beforeEach(function () {
         htmlNode = HtmlNode.fromNodeName('foo');
       });
@@ -120,7 +120,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("hasCssClass()", function () {
+    describe("#hasCssClass()", function () {
       beforeEach(function () {
         htmlNode = HtmlNode.create()
         .addCssClass('foo');
@@ -139,7 +139,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("removeCssClass()", function () {
+    describe("#removeCssClass()", function () {
       beforeEach(function () {
         htmlNode = HtmlNode.create({
           nodeName: 'foo'
@@ -163,7 +163,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setInlineStyle()", function () {
+    describe("#setInlineStyle()", function () {
       beforeEach(function () {
         htmlNode = HtmlNode.create();
       });
@@ -186,7 +186,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getInlineStyle()", function () {
+    describe("#getInlineStyle()", function () {
       beforeEach(function () {
         htmlNode = HtmlNode.create()
         .setInlineStyle('foo', 'bar');
@@ -203,7 +203,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("deleteInlineStyle()", function () {
+    describe("#deleteInlineStyle()", function () {
       beforeEach(function () {
         htmlNode = HtmlNode.create()
         .setInlineStyle('foo', 'bar');
@@ -238,7 +238,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlNode instance", function () {
           xmlNode = XmlNode.create();

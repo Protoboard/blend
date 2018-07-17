@@ -16,7 +16,7 @@ describe("$widget", function () {
       HtmlWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementId", function () {
         htmlWidget = HtmlWidget.create();
         expect(htmlWidget.elementId).toBe('w' + htmlWidget.instanceId);
@@ -36,7 +36,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setNodeName()", function () {
+    describe("#setNodeName()", function () {
       beforeEach(function () {
         htmlWidget = HtmlWidget.create({
           nodeName: 'foo'
@@ -63,7 +63,7 @@ describe("$widget", function () {
   describe("Widget", function () {
     var widget;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return HtmlWidget instance", function () {
           widget = $widget.Widget.create();

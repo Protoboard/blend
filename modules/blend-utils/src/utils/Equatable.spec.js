@@ -14,7 +14,7 @@ describe("$utils", function () {
       .build();
     });
 
-    describe("equals()", function () {
+    describe("#equals()", function () {
       beforeEach(function () {
         equatable = Equatable.create();
       });

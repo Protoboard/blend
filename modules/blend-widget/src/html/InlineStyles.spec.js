@@ -14,7 +14,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         inlineStyles = InlineStyles.fromData({
           width: "10px",

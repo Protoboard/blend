@@ -15,7 +15,7 @@ describe("$utils", function () {
       PathPattern.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromComponents()", function () {
+    describe(".fromComponents()", function () {
       var components;
 
       beforeEach(function () {
@@ -42,7 +42,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         pathPattern = PathPattern.create({
           components: [
@@ -68,7 +68,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("matches()", function () {
+    describe("#matches()", function () {
       beforeEach(function () {
         pathPattern = PathPattern.fromComponents(['foo', ':bar', 'baz']);
       });
@@ -92,7 +92,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("extractParameter()", function () {
+    describe("#extractParameter()", function () {
       beforeEach(function () {
         pathPattern = PathPattern.fromComponents(['foo', ':bar', 'baz']);
       });

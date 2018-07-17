@@ -16,7 +16,7 @@ describe("$ui", function () {
       HtmlOption.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should sync 'value' attribute", function () {
         htmlOption = HtmlOption.create({
           ownValue: 'foo'
@@ -34,7 +34,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setOwnValue()", function () {
+    describe("#setOwnValue()", function () {
       beforeEach(function () {
         htmlOption = HtmlOption.create();
       });
@@ -50,7 +50,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("select()", function () {
+    describe("#select()", function () {
       beforeEach(function () {
         htmlOption = HtmlOption.create();
       });
@@ -70,7 +70,7 @@ describe("$ui", function () {
   describe("Option", function () {
     var option;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when HTML is available", function () {
         it("should return HtmlOption instance", function () {
           option = $ui.Option.create();

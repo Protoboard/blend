@@ -3,7 +3,7 @@
 var $utils = window['blend-utils'];
 
 describe("Number", function () {
-  describe("toTimeout()", function () {
+  describe("#toTimeout()", function () {
     var timeout;
 
     it("should return Timeout instance", function () {
@@ -31,7 +31,7 @@ describe("$utils", function () {
       timeout = $utils.Timeout.create({timerId: 1});
     });
 
-    describe("clearTimer()", function () {
+    describe("#clearTimer()", function () {
       var result;
 
       beforeEach(function () {

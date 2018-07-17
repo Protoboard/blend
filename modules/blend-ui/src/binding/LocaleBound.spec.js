@@ -18,7 +18,7 @@ describe("$ui", function () {
       LocaleBound.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       beforeEach(function () {
         localeBound = LocaleBound.create();
       });

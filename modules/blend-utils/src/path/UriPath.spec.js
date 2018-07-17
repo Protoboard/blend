@@ -15,7 +15,7 @@ describe("$utils", function () {
       UriPath.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return HttpEndpoint instance", function () {
         uriPath = UriPath.fromString('foo/bar');
         expect(UriPath.mixedBy(uriPath)).toBeTruthy();
@@ -32,7 +32,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         uriPath = UriPath.create({
           components: ['foo/', 'bar', 'baz']
@@ -48,7 +48,7 @@ describe("$utils", function () {
 });
 
 describe("String", function () {
-  describe("toPath()", function () {
+  describe("#toPath()", function () {
     var uriPath;
 
     it("should return a Path instance", function () {
@@ -69,7 +69,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toUriPath()", function () {
+  describe("#toUriPath()", function () {
     var uriPath,
         array;
 

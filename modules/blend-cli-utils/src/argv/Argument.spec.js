@@ -15,14 +15,14 @@ describe("$cliUtils", function () {
       Argument.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should initialize argumentString property", function () {
         argument = Argument.fromString("foo");
         expect(argument.argumentString).toBe("foo");
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       it("should return argumentString property", function () {
         argument = Argument.create({argumentString: "foo"});
         expect(argument.toString()).toBe("foo");

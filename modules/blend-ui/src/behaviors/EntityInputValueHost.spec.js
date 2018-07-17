@@ -16,7 +16,7 @@ describe("$ui", function () {
       EntityInputValueHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromInputValueEntity()", function () {
+    describe(".fromInputValueEntity()", function () {
       var inputValueEntity;
 
       beforeEach(function () {
@@ -34,7 +34,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid inputValueEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -46,7 +46,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       var inputValueEntity;
 
       beforeEach(function () {
@@ -70,7 +70,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValueEntity()", function () {
+    describe("#setInputValueEntity()", function () {
       var inputValueEntity;
 
       beforeEach(function () {
@@ -91,7 +91,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       var inputValueEntity;
 
       beforeEach(function () {

@@ -26,7 +26,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should return the same instance", function () {
         expect(Singleton.create()).toBe(singleton);
       });

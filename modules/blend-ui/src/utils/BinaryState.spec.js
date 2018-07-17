@@ -16,7 +16,7 @@ describe("$ui", function () {
       BinaryState.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromStateName()", function () {
+    describe(".fromStateName()", function () {
       it("should return BinaryState instance", function () {
         binaryState = BinaryState.fromStateName('foo');
         expect(BinaryState.mixedBy(binaryState)).toBeTruthy();
@@ -28,7 +28,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid stateName", function () {
         it("should throw", function () {
           expect(function () {
@@ -49,7 +49,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("addStateSourceId()", function () {
+    describe("#addStateSourceId()", function () {
       beforeEach(function () {
         binaryState = BinaryState.fromStateName('foo');
       });
@@ -65,7 +65,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("removeStateSourceId()", function () {
+    describe("#removeStateSourceId()", function () {
       beforeEach(function () {
         binaryState = BinaryState.fromStateName('foo');
         binaryState.addStateSourceId('bar');
@@ -82,7 +82,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("isStateOn()", function () {
+    describe("#isStateOn()", function () {
       beforeEach(function () {
         binaryState = BinaryState.fromStateName('foo');
       });

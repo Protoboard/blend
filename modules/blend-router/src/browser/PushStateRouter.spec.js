@@ -24,7 +24,7 @@ describe("$router", function () {
       expect(PushStateRouter.create()).toBe(PushStateRouter.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var routeEnvironment;
 
       beforeEach(function () {
@@ -39,7 +39,7 @@ describe("$router", function () {
       });
     });
 
-    describe("onRouteChange()", function () {
+    describe("#onRouteChange()", function () {
       var event;
 
       beforeEach(function () {
@@ -56,7 +56,7 @@ describe("$router", function () {
       });
     });
 
-    describe("onPopState()", function () {
+    describe("#onPopState()", function () {
       var routeEnvironment,
           popStateEvent;
 
@@ -109,7 +109,7 @@ describe("$router", function () {
   });
 
   describe("Router", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       var router;
 
       describe("when in browser env and browserRoutingMethod is 'pushState'", function () {

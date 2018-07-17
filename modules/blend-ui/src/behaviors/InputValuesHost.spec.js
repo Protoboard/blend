@@ -16,14 +16,14 @@ describe("$ui", function () {
       InputValuesHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize inputValues", function () {
         inputValuesHost = InputValuesHost.create();
         expect(inputValuesHost.inputValues).toEqual({});
       });
     });
 
-    describe("setInputValues()", function () {
+    describe("#setInputValues()", function () {
       beforeEach(function () {
         inputValuesHost = InputValuesHost.create();
       });
@@ -45,7 +45,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       beforeEach(function () {
         inputValuesHost = InputValuesHost.create();
       });
@@ -67,7 +67,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       beforeEach(function () {
         inputValuesHost = InputValuesHost.create({
           inputValues: {

@@ -21,7 +21,7 @@ describe("$entity", function () {
       document = Document.fromEntityKey('foo/bar'.toDocumentKey());
     });
 
-    describe("fromComponents()", function () {
+    describe(".fromComponents()", function () {
       it("should return Document instance", function () {
         document = Document.fromComponents('foo', 'bar');
         expect(Document.mixedBy(document)).toBeTruthy();
@@ -38,7 +38,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return Document instance", function () {
         document = Document.fromReference('foo/bar');
         expect(Document.mixedBy(document)).toBeTruthy();
@@ -55,7 +55,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when entityKey is cached", function () {
         var DocumentKey,
             documentKey,
@@ -82,7 +82,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getFieldNames()", function () {
+    describe("#getFieldNames()", function () {
       beforeEach(function () {
         $entity.entities
         .setNode('document.__document.user'.toTreePath(), {
@@ -102,7 +102,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("spawnEntityChangeEvents()", function () {
+    describe("#spawnEntityChangeEvents()", function () {
       var nodeBefore, nodeAfter,
           result;
 
@@ -222,7 +222,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getField()", function () {
+    describe("#getField()", function () {
       var field;
 
       it("should return a Field instance", function () {
@@ -242,7 +242,7 @@ describe("$entity", function () {
     var documentKey,
         document;
 
-    describe("toDocument()", function () {
+    describe("#toDocument()", function () {
       beforeEach(function () {
         documentKey = 'foo/bar'.toDocumentKey();
       });
@@ -267,7 +267,7 @@ describe("$entity", function () {
   describe("Entity", function () {
     var entity;
 
-    describe("create", function () {
+    describe(".create", function () {
       describe("when passing DocumentKey", function () {
         beforeEach(function () {
           entity = $entity.Entity.fromEntityKey('foo/bar'.toDocumentKey());
@@ -282,7 +282,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toDocument()", function () {
+  describe("#toDocument()", function () {
     var document;
 
     it("should create a Document instance", function () {
@@ -305,7 +305,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toDocument()", function () {
+  describe("#toDocument()", function () {
     var components,
         document;
 

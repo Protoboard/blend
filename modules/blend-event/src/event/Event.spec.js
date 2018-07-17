@@ -16,7 +16,7 @@ describe("$event", function () {
       Event.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromEventName()", function () {
+    describe(".fromEventName()", function () {
       it("should return Event instance", function () {
         event = Event.fromEventName('event1');
         expect(Event.mixedBy(event)).toBeTruthy();
@@ -33,7 +33,7 @@ describe("$event", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should set eventName", function () {
         event = Event.create({eventName: 'event1'});
         expect(event.eventName).toBe('event1');
@@ -63,7 +63,7 @@ describe("$event", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         event = Event.create({eventName: 'event1'});
         event.causingEvent = Event.create({
@@ -86,7 +86,7 @@ describe("$event", function () {
       });
     });
 
-    describe("addTargetPaths()", function () {
+    describe("#addTargetPaths()", function () {
       var targetPaths;
 
       beforeEach(function () {
@@ -111,7 +111,7 @@ describe("$event", function () {
       });
     });
 
-    describe("addTargetPath()", function () {
+    describe("#addTargetPath()", function () {
       var targetPath;
 
       beforeEach(function () {
@@ -132,7 +132,7 @@ describe("$event", function () {
       });
     });
 
-    describe("addBubblingPath()", function () {
+    describe("#addBubblingPath()", function () {
       var bubblingPath;
 
       beforeEach(function () {
@@ -154,7 +154,7 @@ describe("$event", function () {
       });
     });
 
-    describe("addBroadcastPath()", function () {
+    describe("#addBroadcastPath()", function () {
       var subscriptionData,
           broadcastPath;
 
@@ -188,7 +188,7 @@ describe("$event", function () {
       });
     });
 
-    describe("setPropagates()", function () {
+    describe("#setPropagates()", function () {
       beforeEach(function () {
         event = Event.create({eventName: 'event1'});
       });
@@ -204,7 +204,7 @@ describe("$event", function () {
       });
     });
 
-    describe("stopPropagation()", function () {
+    describe("#stopPropagation()", function () {
       beforeEach(function () {
         event = Event.create({eventName: 'event1'});
       });
@@ -220,7 +220,7 @@ describe("$event", function () {
       });
     });
 
-    describe("getCausingEvents()", function () {
+    describe("#getCausingEvents()", function () {
       var event2, event3;
 
       beforeEach(function () {
@@ -237,7 +237,7 @@ describe("$event", function () {
       });
     });
 
-    describe("getLastCausingEventByName()", function () {
+    describe("#getLastCausingEventByName()", function () {
       var event2, event3, event4;
 
       beforeEach(function () {
@@ -265,7 +265,7 @@ describe("$event", function () {
       });
     });
 
-    describe("getLastCausingEventByClass()", function () {
+    describe("#getLastCausingEventByClass()", function () {
       var Event2,
           Event3,
           event2,
@@ -296,7 +296,7 @@ describe("$event", function () {
       });
     });
 
-    describe("trigger()", function () {
+    describe("#trigger()", function () {
       var subscriptionData,
           deferred,
           callback1, callback2, callback3,

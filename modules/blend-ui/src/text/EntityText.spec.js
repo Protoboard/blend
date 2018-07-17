@@ -16,7 +16,7 @@ describe("$ui", function () {
       EntityText.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromTextEntity()", function () {
+    describe(".fromTextEntity()", function () {
       var textContentEntity;
 
       beforeEach(function () {
@@ -34,7 +34,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid textContentEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -44,7 +44,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setTextContentEntity()", function () {
+    describe("#setTextContentEntity()", function () {
       var textContentEntity;
 
       beforeEach(function () {
@@ -65,7 +65,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       var textContentEntity;
 
       beforeEach(function () {

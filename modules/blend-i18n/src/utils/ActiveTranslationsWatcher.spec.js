@@ -24,7 +24,7 @@ describe("$i18n", function () {
       .toBe(ActiveTranslationsWatcher.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize listeningPath", function () {
         activeTranslationsWatcher = ActiveTranslationsWatcher.create();
         expect(activeTranslationsWatcher.listeningPath)
@@ -32,7 +32,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("onTranslationsChange()", function () {
+    describe("#onTranslationsChange()", function () {
       beforeEach(function () {
         activeTranslationsWatcher = ActiveTranslationsWatcher.create();
       });
@@ -70,7 +70,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("onLocaleChange()", function () {
+    describe("#onLocaleChange()", function () {
       beforeEach(function () {
         activeTranslationsWatcher = ActiveTranslationsWatcher.create();
       });

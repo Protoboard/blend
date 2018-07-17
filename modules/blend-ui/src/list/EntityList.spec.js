@@ -36,7 +36,7 @@ describe("$ui", function () {
       listEntity = listEntityKey.toField();
     });
 
-    describe("fromListEntity()", function () {
+    describe(".fromListEntity()", function () {
       it("should return EntityList instance", function () {
         entityList = EntityList.fromListEntity(listEntity);
         expect(EntityList.mixedBy(entityList)).toBeTruthy();
@@ -48,7 +48,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid listEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -64,7 +64,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       beforeEach(function () {
         listEntity.setNode({
           foo: 1,
@@ -118,7 +118,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("addChildNode()", function () {
+    describe("#addChildNode()", function () {
       beforeEach(function () {
         entityList = EntityList.fromListEntity(listEntity);
         entityListItem = EntityListItem.create({
@@ -156,7 +156,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("removeChildNode()", function () {
+    describe("#removeChildNode()", function () {
       beforeEach(function () {
         entityList = EntityList.fromListEntity(listEntity);
         entityListItem = EntityListItem.create({
@@ -177,7 +177,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("getItemWidgetByItemId()", function () {
+    describe("#getItemWidgetByItemId()", function () {
       beforeEach(function () {
         entityList = EntityList.fromListEntity(listEntity);
         entityListItem = EntityListItem.create({
@@ -202,7 +202,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setListEntity()", function () {
+    describe("#setListEntity()", function () {
       beforeEach(function () {
         entityList = EntityList.create();
         spyOn(entityList, 'setEntityProperty');
@@ -220,7 +220,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onEntityChange()", function () {
+    describe("#onEntityChange()", function () {
       beforeEach(function () {
         listEntity.setNode({
           foo: 1,

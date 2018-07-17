@@ -21,7 +21,7 @@ describe("$widget", function () {
       RootWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize nodeName", function () {
         widget = Widget.create();
         expect(widget.nodeName).toBe(String(widget.instanceId));
@@ -33,7 +33,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("addChildNode()", function () {
+    describe("#addChildNode()", function () {
       var childWidget1,
           childWidget2;
 
@@ -102,7 +102,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("removeChildNode()", function () {
+    describe("#removeChildNode()", function () {
       var childWidget1,
           childWidget2;
 
@@ -182,7 +182,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("addToParentNode()", function () {
+    describe("#addToParentNode()", function () {
       var childWidget1,
           childWidget2,
           listeningPath,
@@ -282,7 +282,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("removeFromParentNode()", function () {
+    describe("#removeFromParentNode()", function () {
       var childWidget1,
           childWidget2,
           isAttached,
@@ -345,7 +345,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("setStateValue()", function () {
+    describe("#setStateValue()", function () {
       beforeEach(function () {
         widget = Widget.create({
           state: {
@@ -370,7 +370,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("isAttached()", function () {
+    describe("#isAttached()", function () {
       beforeEach(function () {
         widget = Widget.create();
       });
@@ -399,7 +399,7 @@ describe("$widget", function () {
 });
 
 describe("String", function () {
-  describe("toWidget()", function () {
+  describe("#toWidget()", function () {
     var instances,
         lastInstanceId;
 

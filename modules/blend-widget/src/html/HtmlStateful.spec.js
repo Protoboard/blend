@@ -16,7 +16,7 @@ describe("$widget", function () {
       HtmlStateful.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setStateValue()", function () {
+    describe("#setStateValue()", function () {
       beforeEach(function () {
         htmlStateful = HtmlStateful.create();
       });
@@ -103,7 +103,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlStateful instance", function () {
           stateful = Stateful.create();

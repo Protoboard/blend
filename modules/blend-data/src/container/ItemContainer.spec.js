@@ -38,7 +38,7 @@ describe("$data", function () {
       itemContainer = ItemContainer.create({data: data});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize _itemCount property", function () {
         expect(itemContainer.hasOwnProperty('_itemCount')).toBeTruthy();
         expect(itemContainer._itemCount).toBeUndefined();
@@ -52,7 +52,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       var clonedContainer;
 
       beforeEach(function () {
@@ -69,7 +69,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clear()", function () {
+    describe("#clear()", function () {
       beforeEach(function () {
         result = itemContainer.clear();
       });
@@ -83,7 +83,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getItemCount()", function () {
+    describe("#getItemCount()", function () {
       beforeEach(function () {
         result = itemContainer.getItemCount();
       });

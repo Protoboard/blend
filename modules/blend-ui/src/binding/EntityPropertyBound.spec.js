@@ -16,7 +16,7 @@ describe("$ui", function () {
       EntityPropertyBound.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize entityProperties", function () {
         entityPropertyBound = EntityPropertyBound.create({
           foo: 'foo/bar'.toDocument(),
@@ -45,7 +45,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setEntityProperty()", function () {
+    describe("#setEntityProperty()", function () {
       var field = 'foo/1/bar'.toField();
 
       beforeEach(function () {
@@ -129,7 +129,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       var field1 = 'foo/1/bar'.toField(),
           field2 = 'baz/1/quux'.toField();
 
@@ -163,7 +163,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onEntityChange()", function () {
+    describe("#onEntityChange()", function () {
       var field = 'foo/1/bar'.toField();
 
       beforeEach(function () {

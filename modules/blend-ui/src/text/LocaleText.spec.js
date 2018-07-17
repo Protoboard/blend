@@ -15,7 +15,7 @@ describe("$ui", function () {
       LocaleText.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromTextTranslatable", function () {
+    describe(".fromTextTranslatable", function () {
       var translatable;
 
       beforeEach(function () {
@@ -33,7 +33,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var translatable;
 
       beforeEach(function () {
@@ -54,7 +54,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToActiveLocale()", function () {
+    describe("#_syncToActiveLocale()", function () {
       beforeEach(function () {
         '_translation/helloworld-de'.toDocument().setNode({
           originalString: "Hello World!",

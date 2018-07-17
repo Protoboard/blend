@@ -26,7 +26,7 @@ describe("$api", function () {
       $api.index.data = indexData;
     });
 
-    describe("addPromiseForRequest()", function () {
+    describe("#addPromiseForRequest()", function () {
       var request,
           promise;
 
@@ -51,7 +51,7 @@ describe("$api", function () {
       });
     });
 
-    describe("removePromiseForRequest()", function () {
+    describe("#removePromiseForRequest()", function () {
       var request,
           promise;
 
@@ -75,7 +75,7 @@ describe("$api", function () {
       });
     });
 
-    describe("getPromiseForRequest()", function () {
+    describe("#getPromiseForRequest()", function () {
       var request,
           promise;
 
@@ -107,7 +107,7 @@ describe("$api", function () {
       });
     });
 
-    describe("onRequestSend()", function () {
+    describe("#onRequestSend()", function () {
       var request,
           promise,
           event;
@@ -137,7 +137,7 @@ describe("$api", function () {
       });
     });
 
-    describe("onResponseReceive()", function () {
+    describe("#onResponseReceive()", function () {
       var request,
           event;
 

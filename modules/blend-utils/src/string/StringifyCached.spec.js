@@ -25,7 +25,7 @@ describe("$utils", function () {
       cachedStringifiable = CachedStringifiable.create({foo: "foo"});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         result = CachedStringifiable.create({foo: "bar"});
       });

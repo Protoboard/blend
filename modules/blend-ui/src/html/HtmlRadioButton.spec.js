@@ -16,7 +16,7 @@ describe("$ui", function () {
       HtmlRadioButton.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize inputType", function () {
         htmlRadioButton = HtmlRadioButton.create();
         expect(htmlRadioButton.inputType).toBe('radio');
@@ -27,7 +27,7 @@ describe("$ui", function () {
   describe("RadioButton", function () {
     var radioButton;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlRadioButton instance", function () {
           radioButton = $ui.RadioButton.create();

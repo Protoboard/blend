@@ -5,7 +5,7 @@ var $event = window['blend-event'];
 describe("$event", function () {
   var result;
 
-  describe("spreadPathForBubbling()", function () {
+  describe(".spreadPathForBubbling()", function () {
     it("should return array", function () {
       result = $event.spreadPathForBubbling('foo.bar.baz');
       expect(result instanceof Array).toBeTruthy();
@@ -19,7 +19,7 @@ describe("$event", function () {
     });
   });
 
-  describe("spreadPathForBroadcast()", function () {
+  describe(".spreadPathForBroadcast()", function () {
     var subscriptionData;
 
     beforeEach(function () {

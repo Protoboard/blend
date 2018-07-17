@@ -15,7 +15,7 @@ describe("$api", function () {
       Endpoint.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromEndpointId()", function () {
+    describe(".fromEndpointId()", function () {
       it("should return Endpoint instance", function () {
         endpoint = Endpoint.fromEndpointId('foo');
         expect(Endpoint.mixedBy(endpoint)).toBeTruthy();
@@ -32,7 +32,7 @@ describe("$api", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on missing endpointId", function () {
         it("should throw", function () {
           expect(function () {

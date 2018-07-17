@@ -19,7 +19,7 @@ describe("$i18n", function () {
       expect(TranslationIndex.create()).toBe(TranslationIndex.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var translationIndexData;
 
       beforeEach(function () {
@@ -118,7 +118,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("addTranslation()", function () {
+    describe("#addTranslation()", function () {
       var translationIndexData;
 
       beforeEach(function () {
@@ -185,7 +185,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getTranslation()", function () {
+    describe("#getTranslation()", function () {
       var translationIndexData;
 
       beforeEach(function () {
@@ -237,7 +237,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("onTranslationsFieldChange()", function () {
+    describe("#onTranslationsFieldChange()", function () {
       beforeEach(function () {
         $i18n.TranslationIndex.create();
       });

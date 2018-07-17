@@ -16,7 +16,7 @@ describe("$oop", function () {
       $oop.ClassBuilder.lastClassId = lastClassId;
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should create ClassBuilder instance", function () {
         classBuilder = $oop.ClassBuilder.create('foo');
         expect($oop.ClassBuilder.isPrototypeOf(classBuilder)).toBeTruthy();
@@ -87,7 +87,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("define()", function () {
+    describe("#define()", function () {
       var members;
 
       beforeEach(function () {
@@ -119,7 +119,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("setup()", function () {
+    describe("#setup()", function () {
       var callbacks;
 
       beforeEach(function () {
@@ -151,7 +151,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("mix()", function () {
+    describe("#mix()", function () {
       var mixinBuilder,
           Mixin;
 
@@ -320,7 +320,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("blend()", function () {
+    describe("#blend()", function () {
       var mixinBuilder1,
           mixinBuilder2,
           mixinBuilder3,
@@ -381,7 +381,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("implement()", function () {
+    describe("#implement()", function () {
       var interfaceBuilder,
           Interface;
 
@@ -457,7 +457,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("expect()", function () {
+    describe("#expect()", function () {
       var expectedBuilder,
           Expected;
 
@@ -556,7 +556,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("cacheBy()", function () {
+    describe("#cacheBy()", function () {
       var mapper;
 
       beforeEach(function () {
@@ -586,7 +586,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("build()", function () {
+    describe("#build()", function () {
       var Class,
           classes,
           classByClassId,
@@ -854,7 +854,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("delegate()", function () {
+    describe("#delegate()", function () {
       var members;
 
       beforeEach(function () {
@@ -901,7 +901,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("forwardBlend()", function () {
+    describe("#forwardBlend()", function () {
       var mixinBuilder,
           Mixin,
           callback;
@@ -971,7 +971,7 @@ describe("$oop", function () {
     });
   });
 
-  describe("createClass()", function () {
+  describe(".createClass()", function () {
     it("should invoke ClassBuilder.create()", function () {
       var classBuilder = {};
       spyOn($oop.ClassBuilder, 'create').and.returnValue(classBuilder);

@@ -16,7 +16,7 @@ describe("$ui", function () {
       EntitySelectable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromOwnValueEntity()", function () {
+    describe(".fromOwnValueEntity()", function () {
       var ownValueEntity,
           selectedStateEntity;
 
@@ -41,7 +41,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid ownValueEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -63,7 +63,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setOwnValue()", function () {
+    describe("#setOwnValue()", function () {
       var ownValueEntity;
 
       beforeEach(function () {
@@ -87,7 +87,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("select()", function () {
+    describe("#select()", function () {
       var selectedStateEntity;
 
       beforeEach(function () {
@@ -113,7 +113,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("deselect()", function () {
+    describe("#deselect()", function () {
       var selectedStateEntity;
 
       beforeEach(function () {
@@ -141,7 +141,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setOwnValueEntity()", function () {
+    describe("#setOwnValueEntity()", function () {
       var ownValueEntity;
 
       beforeEach(function () {
@@ -162,7 +162,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setSelectedStateEntity()", function () {
+    describe("#setSelectedStateEntity()", function () {
       var selectedStateEntity;
 
       beforeEach(function () {
@@ -183,7 +183,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       var ownValueEntity,
           selectedStateEntity;
 

@@ -14,7 +14,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         cssClasses = CssClasses.fromData({
           foo: 'foo',

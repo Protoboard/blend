@@ -5,7 +5,7 @@ var $event = window['blend-event'],
 
 describe("$widget", function () {
   describe("Event", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when eventName matches 'router.change.route'", function () {
         it("should return StateChangeEvent instance", function () {
           var event = $event.Event.fromEventName('widget.state.change');

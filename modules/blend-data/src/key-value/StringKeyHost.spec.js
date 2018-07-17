@@ -23,7 +23,7 @@ describe("$data", function () {
       stringKeyHost = StringKeyHost.create();
     });
 
-    describe("joinTo()", function () {
+    describe("#joinTo()", function () {
       var StringValueHost,
           leftContainer,
           joinedContainer;

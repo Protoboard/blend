@@ -23,7 +23,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         result = EntityKeyCached.create({
           entityKey: 'foo/baz'.toDocumentKey()

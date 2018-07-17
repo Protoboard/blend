@@ -3,7 +3,7 @@
 var $utils = window['blend-utils'];
 
 describe("$utils", function () {
-  describe("stringify()", function () {
+  describe(".stringify()", function () {
     describe("of string literal", function () {
       it("should return string literal", function () {
         expect($utils.stringify('foo')).toBe('foo');
@@ -54,7 +54,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("escape()", function () {
+  describe(".escape()", function () {
     it("should escape separator", function () {
       expect($utils.escape('foo.bar', '.'))
       .toEqual('foo\\.bar');
@@ -65,7 +65,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("unescape()", function () {
+  describe(".unescape()", function () {
     it("should un-escape escaped separator", function () {
       expect($utils.unescape('foo\\.bar', '.'))
       .toEqual('foo.bar');
@@ -76,7 +76,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("safeSplit()", function () {
+  describe(".safeSplit()", function () {
     it("should split path along separators", function () {
       expect($utils.safeSplit('foo.bar.baz', '.'))
       .toEqual(['foo', 'bar', 'baz']);
@@ -95,7 +95,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("jsonToSafeJson()", function () {
+  describe(".jsonToSafeJson()", function () {
     it("return nested array", function () {
       var result = $utils.jsonToSafeJson({
         foo: {
@@ -153,7 +153,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("safeJsonToJson()", function () {
+  describe(".safeJsonToJson()", function () {
     it("should restore original JSON", function () {
       var result = $utils.safeJsonToJson([
         'array',
@@ -183,7 +183,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("matchesPrefix()", function () {
+  describe(".matchesPrefix()", function () {
     describe("on matching string", function () {
       it("should return truthy", function () {
         expect($utils.matchesPrefix('Hello World', 'He')).toBeTruthy();

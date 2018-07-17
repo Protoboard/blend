@@ -19,7 +19,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       it("should serialize all nodes in order", function () {
         xmlNodes = XmlNodes.create()
         .setItem(

@@ -17,7 +17,7 @@ describe("$ui", function () {
       BinaryInputTypeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid inputType", function () {
         it("should throw", function () {
           expect(function () {
@@ -48,7 +48,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setOwnValue()", function () {
+    describe("#setOwnValue()", function () {
       beforeEach(function () {
         binaryInputTypeHost = BinaryInputTypeHost.create({
           inputType: 'checkbox'
@@ -66,7 +66,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("select()", function () {
+    describe("#select()", function () {
       beforeEach(function () {
         binaryInputTypeHost = BinaryInputTypeHost.create({
           inputType: 'checkbox'
@@ -84,7 +84,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("deselect()", function () {
+    describe("#deselect()", function () {
       beforeEach(function () {
         binaryInputTypeHost = BinaryInputTypeHost.create({
           inputType: 'checkbox'

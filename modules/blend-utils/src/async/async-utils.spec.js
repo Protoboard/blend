@@ -11,7 +11,7 @@ describe("$utils", function () {
     jasmine.clock().uninstall();
   });
 
-  describe("setTimeout()", function () {
+  describe(".setTimeout()", function () {
     var successHandler,
         failureHandler,
         result;
@@ -48,7 +48,7 @@ describe("$utils", function () {
     });
   });
 
-  describe("setInterval()", function () {
+  describe(".setInterval()", function () {
     var progressHandler,
         failureHandler,
         result;

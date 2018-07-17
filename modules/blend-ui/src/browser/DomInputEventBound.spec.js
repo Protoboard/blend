@@ -16,7 +16,7 @@ describe("$ui", function () {
       DomInputEventBound.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("onElementInput()", function () {
+    describe("#onElementInput()", function () {
       var element,
           event;
 
@@ -38,7 +38,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementChange()", function () {
+    describe("#onElementChange()", function () {
       var element,
           event;
 

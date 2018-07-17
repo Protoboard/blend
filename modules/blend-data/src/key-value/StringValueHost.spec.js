@@ -54,7 +54,7 @@ describe("$data", function () {
       });
     });
 
-    describe("join()", function () {
+    describe("#join()", function () {
       var rightContainer;
 
       beforeEach(function () {

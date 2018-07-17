@@ -15,7 +15,7 @@ describe("$api", function () {
       UrlQuery.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should initialize data", function () {
         urlQuery = UrlQuery.fromString('foo=bar&foo=baz&hello=world');
         expect(urlQuery.data).toEqual({
@@ -38,7 +38,7 @@ describe("$api", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       it("should return query string", function () {
         urlQuery = UrlQuery.fromData({
           foo: ['bar', 'baz'],

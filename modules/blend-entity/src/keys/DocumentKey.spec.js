@@ -25,7 +25,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromEntityPath()", function () {
+    describe(".fromEntityPath()", function () {
       it("should return a DocumentKey instance", function () {
         documentKey = DocumentKey.fromEntityPath('document.bar.baz'.toTreePath());
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
@@ -44,7 +44,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return a DocumentKey instance", function () {
         documentKey = DocumentKey.fromReference('\\/bar/baz');
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
@@ -62,7 +62,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromComponents()", function () {
+    describe(".fromComponents()", function () {
       it("should return a DocumentKey instance", function () {
         documentKey = DocumentKey.fromComponents('foo', 'bar');
         expect(DocumentKey.mixedBy(documentKey)).toBeTruthy();
@@ -80,7 +80,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("equals()", function () {
+    describe("#equals()", function () {
       describe("for matching keys", function () {
         it("should return true", function () {
           expect('foo/bar'.toDocumentKey().equals('foo/bar'.toDocumentKey()))
@@ -100,7 +100,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getAttributeDocumentKey()", function () {
+    describe("#getAttributeDocumentKey()", function () {
       beforeEach(function () {
         result = documentKey.getAttributeDocumentKey();
       });
@@ -115,7 +115,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getEntityPath()", function () {
+    describe("#getEntityPath()", function () {
       beforeEach(function () {
         result = documentKey.getEntityPath();
       });
@@ -133,7 +133,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeType()", function () {
+    describe("#getNodeType()", function () {
       var attributeKey;
 
       describe("when no nodeType is set", function () {
@@ -150,7 +150,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getFieldNames()", function () {
+    describe("#getFieldNames()", function () {
       var attributeKey;
 
       beforeEach(function () {
@@ -170,7 +170,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getFieldKey()", function () {
+    describe("#getFieldKey()", function () {
       var fieldKey;
 
       beforeEach(function () {
@@ -188,7 +188,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       it("should return string representation", function () {
         expect(documentKey.toString()).toBe('foo/bar');
       });
@@ -203,7 +203,7 @@ describe("$entity", function () {
   describe("EntityKey", function () {
     var result;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when passing entity w/o parentKey but w/ documentType", function () {
         beforeEach(function () {
           result = $entity.EntityKey.create({
@@ -221,7 +221,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toDocumentKey()", function () {
+  describe("#toDocumentKey()", function () {
     var documentKey;
 
     it("should create a DocumentKey instance", function () {
@@ -243,7 +243,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toDocumentKey()", function () {
+  describe("#toDocumentKey()", function () {
     var components,
         documentKey;
 

@@ -23,7 +23,7 @@ describe("$ui", function () {
       $router.browserRoutingMethod = 'hash';
     });
 
-    describe("onAttach()", function () {
+    describe("#onAttach()", function () {
       beforeEach(function () {
         routeBound = RouteBound.create();
       });

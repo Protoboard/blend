@@ -3,7 +3,7 @@
 var $data = window['blend-data'];
 
 describe("$data", function () {
-  describe("isEmptyObject()", function () {
+  describe(".isEmptyObject()", function () {
     describe("for empty object", function () {
       it("should return true", function () {
         expect($data.isEmptyObject({})).toBe(true);
@@ -17,7 +17,7 @@ describe("$data", function () {
     });
   });
 
-  describe("isSingleKeyObject()", function () {
+  describe(".isSingleKeyObject()", function () {
     describe("for empty object", function () {
       it("should return false", function () {
         expect($data.isSingleKeyObject({})).toBe(false);
@@ -37,7 +37,7 @@ describe("$data", function () {
     });
   });
 
-  describe("isMultiKeyObject()", function () {
+  describe(".isMultiKeyObject()", function () {
     describe("for empty object", function () {
       it("should return false", function () {
         expect($data.isMultiKeyObject({})).toBe(false);
@@ -63,7 +63,7 @@ describe("$data", function () {
     });
   });
 
-  describe("shallowCopy()", function () {
+  describe(".shallowCopy()", function () {
     var original,
         copy;
 
@@ -112,7 +112,7 @@ describe("$data", function () {
     });
   });
 
-  describe("deepCopy()", function () {
+  describe(".deepCopy()", function () {
     var original,
         copy;
 

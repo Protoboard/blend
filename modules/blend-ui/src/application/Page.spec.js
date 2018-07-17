@@ -24,14 +24,14 @@ describe("$ui", function () {
       expect(Page.create()).toBe(Page.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize nodeName", function () {
         page = Page.create();
         expect(page.nodeName).toBe("page");
       });
     });
 
-    describe("setAsActivePage()", function () {
+    describe("#setAsActivePage()", function () {
       var application;
 
       beforeEach(function () {

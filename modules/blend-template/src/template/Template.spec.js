@@ -28,7 +28,7 @@ describe("$template", function () {
       .build();
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return Template instance", function () {
         template = Template.fromString("foo");
         expect(Template.mixedBy(template)).toBeTruthy();
@@ -45,7 +45,7 @@ describe("$template", function () {
       });
     });
 
-    describe("fromStringifiable()", function () {
+    describe(".fromStringifiable()", function () {
       var templateString;
 
       beforeEach(function () {
@@ -62,7 +62,7 @@ describe("$template", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("with string literal", function () {
         it("should set templateString property", function () {
           result = Template.create({templateString: "foo"});
@@ -79,7 +79,7 @@ describe("$template", function () {
       });
     });
 
-    describe("extractTokens()", function () {
+    describe("#extractTokens()", function () {
       describe("when templateString is string literal", function () {
         describe("with no params", function () {
           beforeEach(function () {
@@ -154,7 +154,7 @@ describe("$template", function () {
       });
     });
 
-    describe("getResolvedString()", function () {
+    describe("#getResolvedString()", function () {
       beforeEach(function () {
         template = 'foo {{bar}} baz'.toTemplate();
       });
@@ -201,7 +201,7 @@ describe("$template", function () {
 });
 
 describe("String", function () {
-  describe("toTemplate()", function () {
+  describe("#toTemplate()", function () {
     var template;
 
     it("should create a Template instance", function () {

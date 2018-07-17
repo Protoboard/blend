@@ -17,7 +17,7 @@ describe("$ui", function () {
       InputElementHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         inputElementHost = InputElementHost.create();
         expect(inputElementHost.elementName).toBe('input');

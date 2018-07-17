@@ -19,7 +19,7 @@ describe("$i18n", function () {
       expect(TranslationsWatcher.create()).toBe(TranslationsWatcher.create());
     });
 
-    describe("onTranslationsFieldChange()", function () {
+    describe("#onTranslationsFieldChange()", function () {
       beforeEach(function () {
         translationsWatcher = TranslationsWatcher.create();
         '_translation/foo-en-us'.toDocument().deleteNode();
@@ -46,7 +46,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("onTranslationsFieldAbsent()", function () {
+    describe("#onTranslationsFieldAbsent()", function () {
       beforeEach(function () {
         translationsWatcher = TranslationsWatcher.create();
         '_locale/en-us/translations'.toField().deleteNode();

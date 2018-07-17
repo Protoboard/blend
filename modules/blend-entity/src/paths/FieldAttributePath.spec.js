@@ -15,7 +15,7 @@ describe("$entity", function () {
       FieldAttributePath.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromAttributeRef()", function () {
+    describe(".fromAttributeRef()", function () {
       it("should return FieldAttributePath instance", function () {
         fieldAttributePath = FieldAttributePath.fromAttributeRef('foo/bar');
         expect(FieldAttributePath.mixedBy(fieldAttributePath)).toBeTruthy();
@@ -36,7 +36,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toFieldAttributePath()", function () {
+  describe("#toFieldAttributePath()", function () {
     var fieldAttributePath;
 
     it("should create a FieldAttributePath instance", function () {

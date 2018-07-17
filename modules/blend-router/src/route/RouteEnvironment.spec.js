@@ -23,7 +23,7 @@ describe("$router", function () {
       expect(RouteEnvironment.create()).toBe(RouteEnvironment.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize activeRoute", function () {
         routeEnvironment = RouteEnvironment.create();
         expect(routeEnvironment.activeRoute).toEqual([].toRoute());
@@ -40,7 +40,7 @@ describe("$router", function () {
       });
     });
 
-    describe("setActiveRoute()", function () {
+    describe("#setActiveRoute()", function () {
       beforeEach(function () {
         routeEnvironment = RouteEnvironment.create();
       });

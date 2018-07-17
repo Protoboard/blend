@@ -20,7 +20,7 @@ describe("$entity", function () {
       item = Item.fromEntityKey('foo/bar/baz/quux'.toItemKey());
     });
 
-    describe("fromComponents()", function () {
+    describe(".fromComponents()", function () {
       beforeEach(function () {
         item = Item.fromComponents('foo', 'bar', 'baz', 'quux');
       });
@@ -34,7 +34,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       beforeEach(function () {
         item = Item.fromReference('foo/bar/baz/quux');
       });
@@ -48,7 +48,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize listeningPath", function () {
         expect(item.listeningPath).toEqual('entity.document.foo.bar.baz.quux');
       });
@@ -90,7 +90,7 @@ describe("$entity", function () {
     var itemKey,
         item;
 
-    describe("toItem()", function () {
+    describe("#toItem()", function () {
       beforeEach(function () {
         itemKey = 'foo/bar/baz/quux'.toItemKey();
       });
@@ -115,7 +115,7 @@ describe("$entity", function () {
   describe("Entity", function () {
     var entity;
 
-    describe("create", function () {
+    describe(".create", function () {
       describe("when passing ItemKey", function () {
         beforeEach(function () {
           entity = $entity.Entity.fromEntityKey('foo/bar/baz/quux'.toItemKey());
@@ -130,7 +130,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toItem()", function () {
+  describe("#toItem()", function () {
     var item;
 
     it("should create a Item instance", function () {
@@ -153,7 +153,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toItem()", function () {
+  describe("#toItem()", function () {
     var components,
         item;
 

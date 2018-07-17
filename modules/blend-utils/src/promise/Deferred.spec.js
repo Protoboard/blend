@@ -11,13 +11,13 @@ describe("$utils", function () {
       deferred = $utils.Deferred.create();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize promise property", function () {
         expect($utils.Promise.mixedBy(deferred.promise)).toBeTruthy();
       });
     });
 
-    describe("resolve()", function () {
+    describe("#resolve()", function () {
       var result;
 
       beforeEach(function () {
@@ -65,7 +65,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("reject()", function () {
+    describe("#reject()", function () {
       var result;
 
       beforeEach(function () {
@@ -113,7 +113,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("notify()", function () {
+    describe("#notify()", function () {
       var result;
 
       beforeEach(function () {

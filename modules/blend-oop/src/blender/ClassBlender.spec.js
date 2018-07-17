@@ -15,7 +15,7 @@ describe("$oop", function () {
       $oop.classByMixinIds = classByMixinIds;
     });
 
-    describe("blendClass()", function () {
+    describe("#blendClass()", function () {
       var classBuilder,
           mixinBuilder1,
           mixinBuilder2,

@@ -16,7 +16,7 @@ describe("$ui", function () {
       Disableable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should add cascading state", function () {
         disableable = Disableable.create();
         expect(disableable.binaryStates.getValue('disabled'))
@@ -27,7 +27,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("disableBy()", function () {
+    describe("#disableBy()", function () {
       beforeEach(function () {
         disableable = Disableable.create();
       });
@@ -49,7 +49,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("enableBy()", function () {
+    describe("#enableBy()", function () {
       beforeEach(function () {
         disableable = Disableable.create();
         disableable.disableBy('foo');
@@ -72,7 +72,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("isDisabled()", function () {
+    describe("#isDisabled()", function () {
       beforeEach(function () {
         disableable = Disableable.create();
       });

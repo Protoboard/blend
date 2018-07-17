@@ -7,7 +7,7 @@ describe("$assert", function () {
     spyOn($assert, 'assert').and.callThrough();
   });
 
-  describe("hasOnlyConverters()", function () {
+  describe("#hasOnlyConverters()", function () {
     it("should pass message to assert", function () {
       $assert.hasOnlyConverters({}, "bar");
       expect($assert.assert).toHaveBeenCalledWith(true, "bar");

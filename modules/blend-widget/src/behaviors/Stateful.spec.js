@@ -15,14 +15,14 @@ describe("$widget", function () {
       Stateful.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize state container", function () {
         stateful = Stateful.create();
         expect(stateful.state).toEqual({});
       });
     });
 
-    describe("setStateValue()", function () {
+    describe("#setStateValue()", function () {
       beforeEach(function () {
         stateful = Stateful.create();
       });
@@ -51,7 +51,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("getStateValue()", function () {
+    describe("#getStateValue()", function () {
       beforeEach(function () {
         stateful.setStateValue('foo', 'bar');
       });

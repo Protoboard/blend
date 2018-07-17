@@ -5,7 +5,7 @@ var $oop = window['blend-oop'],
 
 describe("$api", function () {
   describe("ApiEvent", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when environment is browser & has xhr property", function () {
         it("should return XhrEvent instance", function () {
           var result = $api.ApiEvent.create({

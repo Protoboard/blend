@@ -51,7 +51,7 @@ describe("$data", function () {
       keyValueContainer = KeyValueContainer.create({data: data});
     });
 
-    describe("fromKeyValueContainer()", function () {
+    describe(".fromKeyValueContainer()", function () {
       var KeyValueContainer2,
           keyValueContainer2;
 
@@ -100,7 +100,7 @@ describe("$data", function () {
       });
     });
 
-    describe("fromSetContainer()", function () {
+    describe(".fromSetContainer()", function () {
       var SetContainer,
           setContainer;
 
@@ -146,7 +146,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         result = keyValueContainer.clone();
       });
@@ -161,7 +161,7 @@ describe("$data", function () {
       });
     });
 
-    describe("filter()", function () {
+    describe("#filter()", function () {
       var callback;
 
       beforeEach(function () {
@@ -206,7 +206,7 @@ describe("$data", function () {
       });
     });
 
-    describe("reduce()", function () {
+    describe("#reduce()", function () {
       var callback;
 
       beforeEach(function () {
@@ -229,7 +229,7 @@ describe("$data", function () {
       });
     });
 
-    describe("to()", function () {
+    describe("#to()", function () {
       var KeyValueConvertible,
           transformed;
 
@@ -259,7 +259,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getKeys()", function () {
+    describe("#getKeys()", function () {
       beforeEach(function () {
         result = keyValueContainer.getKeys();
       });
@@ -269,7 +269,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getKeysWrapped()", function () {
+    describe("#getKeysWrapped()", function () {
       var data;
 
       beforeEach(function () {
@@ -291,7 +291,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getValues()", function () {
+    describe("#getValues()", function () {
       beforeEach(function () {
         result = keyValueContainer.getValues();
       });
@@ -301,7 +301,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getValuesWrapped()", function () {
+    describe("#getValuesWrapped()", function () {
       var data;
 
       beforeEach(function () {
@@ -323,7 +323,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getFirstKey()", function () {
+    describe("#getFirstKey()", function () {
       beforeEach(function () {
         result = keyValueContainer.getFirstKey();
       });
@@ -333,7 +333,7 @@ describe("$data", function () {
       });
     });
 
-    describe("getFirstValue()", function () {
+    describe("#getFirstValue()", function () {
       beforeEach(function () {
         result = keyValueContainer.getFirstValue();
       });
@@ -343,7 +343,7 @@ describe("$data", function () {
       });
     });
 
-    describe("mapValues()", function () {
+    describe("#mapValues()", function () {
       var callback;
 
       beforeEach(function () {
@@ -392,7 +392,7 @@ describe("$data", function () {
       });
     });
 
-    describe("mapKeys()", function () {
+    describe("#mapKeys()", function () {
       var callback;
 
       beforeEach(function () {
@@ -426,7 +426,7 @@ describe("$data", function () {
       });
     });
 
-    describe("passEachValueTo()", function () {
+    describe("#passEachValueTo()", function () {
       var callback;
 
       beforeEach(function () {
@@ -479,7 +479,7 @@ describe("$data", function () {
       });
     });
 
-    describe("callOnEachValue()", function () {
+    describe("#callOnEachValue()", function () {
       beforeEach(function () {
         spyOn(String.prototype, 'split').and.callThrough();
         spyOn($data, 'getMapResultClass').and.returnValue(Settable);
@@ -522,7 +522,7 @@ describe("$data", function () {
       });
     });
 
-    describe("filterByKeyPrefix()", function () {
+    describe("#filterByKeyPrefix()", function () {
       beforeEach(function () {
         result = keyValueContainer.filterByKeyPrefix('f');
       });
@@ -535,7 +535,7 @@ describe("$data", function () {
       });
     });
 
-    describe("filterByValuePrefix()", function () {
+    describe("#filterByValuePrefix()", function () {
       beforeEach(function () {
         result = keyValueContainer.filterByValuePrefix('F');
       });
@@ -548,7 +548,7 @@ describe("$data", function () {
       });
     });
 
-    describe("filterByKeyRegExp()", function () {
+    describe("#filterByKeyRegExp()", function () {
       beforeEach(function () {
         result = keyValueContainer.filterByKeyRegExp(/o$/);
       });
@@ -561,7 +561,7 @@ describe("$data", function () {
       });
     });
 
-    describe("filterByValueRegExp()", function () {
+    describe("#filterByValueRegExp()", function () {
       beforeEach(function () {
         result = keyValueContainer.filterByValueRegExp(/^B/);
       });
@@ -574,7 +574,7 @@ describe("$data", function () {
       });
     });
 
-    describe("filterByValueType()", function () {
+    describe("#filterByValueType()", function () {
       var object = {},
           container = $data.DataContainer.create();
 
@@ -639,7 +639,7 @@ describe("$data", function () {
       });
     });
 
-    describe("swapKeysAndValues()", function () {
+    describe("#swapKeysAndValues()", function () {
       beforeEach(function () {
         spyOn($data, 'getSwapResultClass').and.returnValue(Settable);
         result = keyValueContainer.swapKeysAndValues();
@@ -657,7 +657,7 @@ describe("$data", function () {
       });
     });
 
-    describe("mergeWith()", function () {
+    describe("#mergeWith()", function () {
       var keyValueContainer2;
 
       beforeEach(function () {

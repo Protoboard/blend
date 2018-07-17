@@ -36,7 +36,7 @@ describe("$api", function () {
       .not.toBe(HttpEndpoint.fromComponents(['foo', 'baz']));
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize endpointId", function () {
         httpEndpoint = HttpEndpoint.fromComponents(['foo', 'bar']);
         expect(httpEndpoint.endpointId).toBe('foo/bar');
@@ -47,7 +47,7 @@ describe("$api", function () {
 
 describe("$data", function () {
   describe("Path", function () {
-    describe("toHttpEndpoint()", function () {
+    describe("#toHttpEndpoint()", function () {
       var path,
           httpEndpoint;
 
@@ -75,7 +75,7 @@ describe("$data", function () {
 });
 
 describe("String", function () {
-  describe("toHttpEndpoint()", function () {
+  describe("#toHttpEndpoint()", function () {
     var httpEndpoint;
 
     beforeEach(function () {
@@ -102,7 +102,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toHttpEndpoint()", function () {
+  describe("#toHttpEndpoint()", function () {
     var httpEndpoint,
         array = ['1', '2', '3'];
 

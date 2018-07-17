@@ -7,7 +7,7 @@ describe("$data", function () {
   var result;
 
   describe("DataContainer", function () {
-    describe("asStringCollection()", function () {
+    describe("#asStringCollection()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -26,7 +26,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toStringCollection()", function () {
+    describe("#toStringCollection()", function () {
       var container,
           transformed;
 
@@ -48,7 +48,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toStringCollection()", function () {
+    describe("#toStringCollection()", function () {
       var container,
           transformed;
 
@@ -73,7 +73,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asStringCollection()", function () {
+  describe("#asStringCollection()", function () {
     var array = ['a', 'b', 'c'];
 
     beforeEach(function () {

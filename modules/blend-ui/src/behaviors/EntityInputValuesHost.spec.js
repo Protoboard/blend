@@ -23,7 +23,7 @@ describe("$ui", function () {
       inputValuesField = inputValuesFieldKey.toField();
     });
 
-    describe("fromInputValuesEntity()", function () {
+    describe(".fromInputValuesEntity()", function () {
       it("should return EntityInputValuesHost instance", function () {
         entityInputValuesHost = EntityInputValuesHost.fromInputValuesEntity(inputValuesField);
         expect(EntityInputValuesHost.mixedBy(entityInputValuesHost))
@@ -36,7 +36,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid inputValuesEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -53,7 +53,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValues()", function () {
+    describe("#setInputValues()", function () {
       beforeEach(function () {
         inputValuesField.deleteNode();
         entityInputValuesHost = EntityInputValuesHost.fromInputValuesEntity(inputValuesField);
@@ -74,7 +74,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       beforeEach(function () {
         inputValuesField.deleteNode();
         entityInputValuesHost = EntityInputValuesHost.fromInputValuesEntity(inputValuesField);
@@ -95,7 +95,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("deleteInputValue()", function () {
+    describe("#deleteInputValue()", function () {
       beforeEach(function () {
         inputValuesField.setNode({
           foo: 'foo'
@@ -118,7 +118,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValuesEntity()", function () {
+    describe("#setInputValuesEntity()", function () {
       beforeEach(function () {
         var inputValuesFieldBefore = $entity.CollectionFieldKey.fromReference('foo/bar/inputValues')
         .toField();
@@ -138,7 +138,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       beforeEach(function () {
         inputValuesField.setNode({foo: 'foo'});
         entityInputValuesHost = EntityInputValuesHost.fromInputValuesEntity(inputValuesField);

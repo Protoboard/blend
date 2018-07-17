@@ -22,7 +22,7 @@ describe("$entity", function () {
       entityChangeEvent = EntityChangeEvent.fromEventName('event1');
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize propertiesAdded property", function () {
         expect(entityChangeEvent.propertiesAdded).toEqual([]);
       });
@@ -32,7 +32,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeBeforeWrapped()", function () {
+    describe("#getNodeBeforeWrapped()", function () {
       beforeEach(function () {
         result = entityChangeEvent.getNodeBeforeWrapped();
       });
@@ -46,7 +46,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeAfterWrapped()", function () {
+    describe("#getNodeAfterWrapped()", function () {
       beforeEach(function () {
         result = entityChangeEvent.getNodeAfterWrapped();
       });
@@ -66,7 +66,7 @@ describe("$event", function () {
   describe("Event", function () {
     var result;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when event name is EVENT_ENTITY_CHANGE", function () {
         beforeEach(function () {
           result = $event.Event.fromEventName('entity.change.foo.bar');

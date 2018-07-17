@@ -15,14 +15,14 @@ describe("$ui", function () {
       Text.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize empty state", function () {
         text = Text.create();
         expect(text.getStateValue('empty')).toBeTruthy();
       });
     });
 
-    describe("setTextString()", function () {
+    describe("#setTextString()", function () {
       beforeEach(function () {
         text = Text.create();
       });

@@ -19,7 +19,7 @@ describe("$utils", function () {
       $utils.Retrievable.instances = {};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         instance = Retrievable.create();
       });
@@ -31,7 +31,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("getInstanceById()", function () {
+    describe(".getInstanceById()", function () {
       beforeEach(function () {
         instance = Retrievable.create();
       });
@@ -48,7 +48,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("destroy()", function () {
+    describe("#destroy()", function () {
       var result;
 
       beforeEach(function () {

@@ -7,7 +7,7 @@ describe("$data", function () {
   var result;
 
   describe("DataContainer", function () {
-    describe("asStringPairList()", function () {
+    describe("#asStringPairList()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -26,7 +26,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toStringPairList()", function () {
+    describe("#toStringPairList()", function () {
       var container,
           transformed;
 
@@ -48,7 +48,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toStringPairList()", function () {
+    describe("#toStringPairList()", function () {
       var container,
           transformed;
 
@@ -73,7 +73,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asStringPairList()", function () {
+  describe("#asStringPairList()", function () {
     var array = ['a', 'b', 'c'];
 
     beforeEach(function () {

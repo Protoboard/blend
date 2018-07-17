@@ -24,7 +24,7 @@ describe("$event", function () {
       EventSpace.create().subscriptions.clear();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize subscriptions", function () {
         expect($data.Tree.mixedBy(eventSpace.subscriptions)).toBeTruthy();
         expect(eventSpace.subscriptions.data).toEqual({});
@@ -37,7 +37,7 @@ describe("$event", function () {
       });
     });
 
-    describe("destroy()", function () {
+    describe("#destroy()", function () {
       beforeEach(function () {
         spyOn(eventSpace.subscriptions, 'destroy');
       });
@@ -48,7 +48,7 @@ describe("$event", function () {
       });
     });
 
-    describe("on()", function () {
+    describe("#on()", function () {
       var callback;
 
       beforeEach(function () {
@@ -122,7 +122,7 @@ describe("$event", function () {
       });
     });
 
-    describe("off()", function () {
+    describe("#off()", function () {
       var callback1, callback2, callback3, callback4;
 
       beforeEach(function () {

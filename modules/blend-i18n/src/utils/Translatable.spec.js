@@ -15,7 +15,7 @@ describe("$i18n", function () {
       Translatable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return Translatable instance", function () {
         translatable = Translatable.fromString('foo');
         expect(Translatable.mixedBy(translatable)).toBeTruthy();
@@ -32,7 +32,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when originalString is not specified", function () {
         it("should throw", function () {
           expect(function () {
@@ -52,7 +52,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setCount()", function () {
+    describe("#setCount()", function () {
       beforeEach(function () {
         translatable = Translatable.fromString('foo');
       });
@@ -68,7 +68,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setContext()", function () {
+    describe("#setContext()", function () {
       beforeEach(function () {
         translatable = Translatable.fromString('foo');
       });
@@ -84,7 +84,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       var translationIndexData;
 
       beforeEach(function () {
@@ -131,7 +131,7 @@ describe("$i18n", function () {
 });
 
 describe("String", function () {
-  describe("toTranslatable()", function () {
+  describe("#toTranslatable()", function () {
     var translatable;
 
     it("should create a Translatable instance", function () {

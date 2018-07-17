@@ -17,7 +17,7 @@ describe("$utils", function () {
       $utils.Identifiable.lastInstanceId = -1;
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var instance;
 
       beforeEach(function () {

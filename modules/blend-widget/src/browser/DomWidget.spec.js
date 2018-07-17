@@ -16,7 +16,7 @@ describe("$widget", function () {
       DomWidget.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("addChildNode()", function () {
+    describe("#addChildNode()", function () {
       var element,
           childWidget1,
           childWidget2;
@@ -107,7 +107,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("renderInto()", function () {
+    describe("#renderInto()", function () {
       var element;
 
       beforeEach(function () {
@@ -127,7 +127,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("reRender()", function () {
+    describe("#reRender()", function () {
       var element;
 
       beforeEach(function () {
@@ -150,7 +150,7 @@ describe("$widget", function () {
       });
     });
 
-    describe("reRenderContents()", function () {
+    describe("#reRenderContents()", function () {
       var element;
 
       beforeEach(function () {
@@ -185,7 +185,7 @@ describe("$widget", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return DomWidget instance", function () {
           htmlWidget = HtmlWidget.create();

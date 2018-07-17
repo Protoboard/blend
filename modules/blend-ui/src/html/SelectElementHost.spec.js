@@ -18,7 +18,7 @@ describe("$ui", function () {
       SelectElementHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         selectElementHost = SelectElementHost.create();
         expect(selectElementHost.elementName).toBe('select');

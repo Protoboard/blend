@@ -10,7 +10,7 @@ describe("$utils", function () {
       timer = $utils.Timer.create({timerId: 1});
     });
 
-    describe("fromTimerId()", function () {
+    describe(".fromTimerId()", function () {
       it("should return Timer instance", function () {
         timer = $utils.Timer.fromTimerId(5);
         expect($utils.Timer.mixedBy(timer)).toBeTruthy();
@@ -22,7 +22,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when passing invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
@@ -44,7 +44,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("clearTimer()", function () {
+    describe("#clearTimer()", function () {
       var result;
 
       beforeEach(function () {

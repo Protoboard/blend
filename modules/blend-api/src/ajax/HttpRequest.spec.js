@@ -15,7 +15,7 @@ describe("$api", function () {
       HttpRequest.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize requestUrl", function () {
         httpRequest = HttpRequest.create({
           endpoint: ':foo/bar'.toHttpEndpoint(),
@@ -70,7 +70,7 @@ describe("$api", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       it("should return stringified properties", function () {
         httpRequest = HttpRequest.create({
           endpoint: ':foo/bar'.toHttpEndpoint(),
@@ -92,7 +92,7 @@ describe("$api", function () {
   describe("Request", function () {
     var request;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when passing HttpEndpoint as endpoint", function () {
         var endpoint;
 

@@ -15,7 +15,7 @@ describe("$api", function () {
       XhrRequest.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         xhrRequest = XhrRequest.create({
           endpoint: 'foo/bar'.toHttpEndpoint(),
@@ -33,7 +33,7 @@ describe("$api", function () {
   });
 
   describe("Request", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when passing HttpEndpoint in browser", function () {
         it("should return XhrRequest instance", function () {
           var request = 'foo/bar'.toHttpEndpoint().toRequest();

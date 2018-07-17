@@ -30,7 +30,7 @@ describe("$i18n", function () {
       $entity.index.data._modulesByLocale = modulesByLocaleNode;
     });
 
-    describe("getLocales()", function () {
+    describe("#getLocales()", function () {
       beforeEach(function () {
         localizedModule = LocalizedModule.fromModuleId('foo');
         $i18n.ModuleLocaleIndex.create()
@@ -51,7 +51,7 @@ describe("$i18n", function () {
 
 describe("$module", function () {
   describe("Module", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       var localesByModuleNode,
           modulesByLocaleNode;
 

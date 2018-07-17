@@ -8,7 +8,7 @@ describe("$event", function () {
   describe("Event", function () {
     var result;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when eventName matches EVENT_LOCALE_CHANGE", function () {
         beforeEach(function () {
           result = $event.Event.fromEventName($i18n.EVENT_LOCALE_CHANGE);

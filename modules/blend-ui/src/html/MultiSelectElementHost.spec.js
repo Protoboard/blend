@@ -18,7 +18,7 @@ describe("$ui", function () {
       MultiSelectElementHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should add multiple attribute", function () {
         multiSelectElementHost = MultiSelectElementHost.create();
         expect(multiSelectElementHost.getAttribute('multiple'))

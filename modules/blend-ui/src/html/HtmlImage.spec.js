@@ -16,14 +16,14 @@ describe("$ui", function () {
       HtmlImage.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         htmlImage = HtmlImage.create();
         expect(htmlImage.elementName).toBe('img');
       });
     });
 
-    describe("setImageUrl()", function () {
+    describe("#setImageUrl()", function () {
       beforeEach(function () {
         htmlImage = HtmlImage.create({
           imageUrl: 'foo'
@@ -52,7 +52,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlImage instance", function () {
           image = Image.create();

@@ -16,7 +16,7 @@ describe("$ui", function () {
       HtmlHyperlink.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         htmlHyperlink = HtmlHyperlink.create();
         expect(htmlHyperlink.elementName).toBe('a');
@@ -30,7 +30,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setTargetUrl()", function () {
+    describe("#setTargetUrl()", function () {
       beforeEach(function () {
         htmlHyperlink = HtmlHyperlink.create({
           targetUrl: 'foo'
@@ -52,7 +52,7 @@ describe("$ui", function () {
   describe("Hyperlink", function () {
     var hyperlink;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when HTML is available", function () {
         it("should return HtmlHyperlink instance", function () {
           hyperlink = $ui.Hyperlink.create();

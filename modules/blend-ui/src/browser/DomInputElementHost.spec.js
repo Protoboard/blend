@@ -16,7 +16,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return DomInputElementHost instance", function () {
           inputElementHost = InputElementHost.create();

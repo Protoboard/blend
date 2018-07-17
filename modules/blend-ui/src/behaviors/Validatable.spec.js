@@ -17,7 +17,7 @@ describe("$ui", function () {
       Validatable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should add non-cascading state", function () {
         validatable = Validatable.create();
         expect(validatable.binaryStates.getValue('invalid'))
@@ -27,7 +27,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("invalidateBy()", function () {
+    describe("#invalidateBy()", function () {
       beforeEach(function () {
         validatable = Validatable.create();
       });
@@ -49,7 +49,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("validateBy()", function () {
+    describe("#validateBy()", function () {
       beforeEach(function () {
         validatable = Validatable.create();
         validatable.invalidateBy('foo');
@@ -72,7 +72,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("isValid()", function () {
+    describe("#isValid()", function () {
       beforeEach(function () {
         validatable = Validatable.create();
       });

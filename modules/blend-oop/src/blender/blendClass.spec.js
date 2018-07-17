@@ -3,7 +3,7 @@
 var $oop = window['blend-oop'];
 
 describe("$oop", function () {
-  describe("blendClass()", function () {
+  describe(".blendClass()", function () {
     var Class, Mixin1, Mixin2,
         result;
 

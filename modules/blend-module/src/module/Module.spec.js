@@ -19,7 +19,7 @@ describe("$module", function () {
       Module.__builder.instances = {};
     });
 
-    describe("fromModuleId()", function () {
+    describe(".fromModuleId()", function () {
       it("should return Module instance", function () {
         module = Module.fromModuleId('foo');
         expect(Module.mixedBy(module)).toBeTruthy();
@@ -36,7 +36,7 @@ describe("$module", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on missing moduleId", function () {
         it("should throw", function () {
           expect(function () {
@@ -63,7 +63,7 @@ describe("$module", function () {
       });
     });
 
-    describe("markAsAvailable()", function () {
+    describe("#markAsAvailable()", function () {
       var modulesData;
 
       beforeEach(function () {
@@ -89,7 +89,7 @@ describe("$module", function () {
       });
     });
 
-    describe("isAvailable()", function () {
+    describe("#isAvailable()", function () {
       var modulesData;
 
       beforeEach(function () {
@@ -122,7 +122,7 @@ describe("$module", function () {
 });
 
 describe("String", function () {
-  describe("toModule()", function () {
+  describe("#toModule()", function () {
     var module;
 
     beforeEach(function () {

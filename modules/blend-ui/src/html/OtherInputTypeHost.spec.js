@@ -17,7 +17,7 @@ describe("$ui", function () {
       OtherInputTypeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize 'value' attribute", function () {
         otherInputTypeHost = OtherInputTypeHost.create({
           inputValue: 'foo'
@@ -26,7 +26,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       beforeEach(function () {
         otherInputTypeHost = OtherInputTypeHost.create();
       });

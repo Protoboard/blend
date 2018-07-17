@@ -16,14 +16,14 @@ describe("$ui", function () {
       HtmlText.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize elementName", function () {
         htmlText = HtmlText.create();
         expect(htmlText.elementName).toBe('span');
       });
     });
 
-    describe("getContentMarkup()", function () {
+    describe("#getContentMarkup()", function () {
       var stringifiable = {
         toString: function () {
           return "foo";
@@ -52,7 +52,7 @@ describe("$ui", function () {
   describe("Text", function () {
     var text;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlText instance", function () {
           text = $ui.Text.create();

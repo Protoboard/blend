@@ -7,7 +7,7 @@ describe("$assert", function () {
     spyOn($assert, 'assert').and.callThrough();
   });
 
-  describe("fail()", function () {
+  describe("#fail()", function () {
     it("should throw", function () {
       expect(function () {
         $assert.fail();
@@ -21,7 +21,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isDefined()", function () {
+  describe("#isDefined()", function () {
     describe("when passing null or undefined", function () {
       it("should not throw", function () {
         expect(function () {
@@ -43,7 +43,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isUndefined()", function () {
+  describe("#isUndefined()", function () {
     describe("when passing non-undefined", function () {
       it("should throw", function () {
         expect(function () {
@@ -68,7 +68,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isTruthy()", function () {
+  describe("#isTruthy()", function () {
     describe("when passing falsy", function () {
       it("should throw", function () {
         expect(function () {
@@ -122,7 +122,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isFalsy()", function () {
+  describe("#isFalsy()", function () {
     describe("when passing falsy", function () {
       it("should not throw", function () {
         expect(function () {
@@ -176,7 +176,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isString()", function () {
+  describe("#isString()", function () {
     describe("when passing non-string", function () {
       it("should throw", function () {
         expect(function () {
@@ -201,7 +201,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isStringOptional()", function () {
+  describe("#isStringOptional()", function () {
     describe("when passing undefined", function () {
       it("should return self", function () {
         expect($assert.isStringOptional()).toBe($assert);
@@ -214,7 +214,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isBoolean()", function () {
+  describe("#isBoolean()", function () {
     describe("when passing non-boolean", function () {
       it("should throw", function () {
         expect(function () {
@@ -242,7 +242,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isBooleanOptional()", function () {
+  describe("#isBooleanOptional()", function () {
     describe("when passing undefined", function () {
       it("should return self", function () {
         expect($assert.isBooleanOptional()).toBe($assert);
@@ -255,7 +255,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isNumber()", function () {
+  describe("#isNumber()", function () {
     describe("when passing non-number", function () {
       it("should throw", function () {
         expect(function () {
@@ -283,7 +283,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isNumberOptional()", function () {
+  describe("#isNumberOptional()", function () {
     describe("when passing undefined", function () {
       it("should return self", function () {
         expect($assert.isNumberOptional()).toBe($assert);
@@ -296,7 +296,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isFunction()", function () {
+  describe("#isFunction()", function () {
     describe("when passing non-function", function () {
       it("should throw", function () {
         expect(function () {
@@ -327,7 +327,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isFunctionOptional()", function () {
+  describe("#isFunctionOptional()", function () {
     describe("when passing undefined", function () {
       it("should return self", function () {
         expect($assert.isFunctionOptional()).toBe($assert);
@@ -340,7 +340,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isObject()", function () {
+  describe("#isObject()", function () {
 
     describe("when passing non-object", function () {
       it("should throw", function () {
@@ -372,7 +372,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("iObjectOptional()", function () {
+  describe("#iObjectOptional()", function () {
     describe("when passing undefined", function () {
       it("should return self", function () {
         expect($assert.isObjectOptional()).toBe($assert);
@@ -385,7 +385,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isArray()", function () {
+  describe("#isArray()", function () {
     describe("when passing non-array", function () {
       it("should throw", function () {
         expect(function () {
@@ -419,7 +419,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isArrayOptional()", function () {
+  describe("#isArrayOptional()", function () {
     describe("when passing undefined", function () {
       it("should return self", function () {
         expect($assert.isArrayOptional()).toBe($assert);
@@ -432,7 +432,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isRegExp()", function () {
+  describe("#isRegExp()", function () {
     describe("when passing non-regexp", function () {
       it("should throw", function () {
         expect(function () {
@@ -466,7 +466,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isRegExpOptional()", function () {
+  describe("#isRegExpOptional()", function () {
     describe("when passing undefined", function () {
       it("should pass message to assert", function () {
         $assert.isRegExpOptional(/a/, "bar");
@@ -479,7 +479,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isDate()", function () {
+  describe("#isDate()", function () {
     describe("when passing non-date", function () {
       it("should throw", function () {
         expect(function () {
@@ -513,7 +513,7 @@ describe("$assert", function () {
     });
   });
 
-  describe("isDateOptional()", function () {
+  describe("#isDateOptional()", function () {
     describe("when passing undefined", function () {
       it("should return self", function () {
         expect($assert.isDateOptional()).toBe($assert);

@@ -19,7 +19,7 @@ describe("$oop", function () {
       $oop.ClassBuilder.lastClassId = lastClassId;
     });
 
-    describe("addClassForMixins()", function () {
+    describe("#addClassForMixins()", function () {
       var mixinBuilder1,
           mixinBuilder2,
           Class;
@@ -47,7 +47,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("addClass()", function () {
+    describe("#addClass()", function () {
       var mixinBuilder1,
           mixinBuilder2,
           Mixin1,
@@ -79,7 +79,7 @@ describe("$oop", function () {
       });
     });
 
-    describe("getClassForMixins()", function () {
+    describe("#getClassForMixins()", function () {
       var mixinBuilder1,
           mixinBuilder2,
           Class;

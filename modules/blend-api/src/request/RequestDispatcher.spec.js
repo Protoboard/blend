@@ -15,7 +15,7 @@ describe("$api", function () {
       RequestDispatcher.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromRequest()", function () {
+    describe(".fromRequest()", function () {
       var request;
 
       beforeEach(function () {
@@ -38,7 +38,7 @@ describe("$api", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid request", function () {
         it("should throe", function () {
           expect(function () {
@@ -51,7 +51,7 @@ describe("$api", function () {
       });
     });
 
-    describe("dispatch()", function () {
+    describe("#dispatch()", function () {
       var indexData,
           request,
           promise,

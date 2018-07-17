@@ -16,7 +16,7 @@ describe("$ui", function () {
       DomText.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setTextString()", function () {
+    describe("#setTextString()", function () {
       var element,
           stringifiable;
 
@@ -54,7 +54,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return DomText instance", function () {
           htmlText = HtmlText.create();

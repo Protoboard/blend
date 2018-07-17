@@ -45,7 +45,7 @@ describe("$event", function () {
       $event.EventSpace.__builder.instances = eventSpaceInstanceLookup;
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       beforeEach(function () {
         spyOn(Subscriber, 'elevateMethods');
       });
@@ -65,7 +65,7 @@ describe("$event", function () {
       });
     });
 
-    describe("destroy()", function () {
+    describe("#destroy()", function () {
       beforeEach(function () {
         subscriber = Subscriber.create({subscriberId: 'foo'});
         spyOn(subscriber, 'off');
@@ -82,7 +82,7 @@ describe("$event", function () {
       });
     });
 
-    describe("on()", function () {
+    describe("#on()", function () {
       var callback;
 
       beforeEach(function () {
@@ -104,7 +104,7 @@ describe("$event", function () {
       });
     });
 
-    describe("off()", function () {
+    describe("#off()", function () {
       beforeEach(function () {
         subscriber = Subscriber.create({subscriberId: 'foo'});
         listener = Listener.create();
@@ -123,7 +123,7 @@ describe("$event", function () {
       });
     });
 
-    describe("subscribes()", function () {
+    describe("#subscribes()", function () {
       var callback;
 
       beforeEach(function () {

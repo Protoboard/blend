@@ -15,7 +15,7 @@ describe("$ui", function () {
       Hyperlink.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setTargetUrl()", function () {
+    describe("#setTargetUrl()", function () {
       beforeEach(function () {
         hyperlink = Hyperlink.create();
       });

@@ -15,7 +15,7 @@ describe("$entity", function () {
       FieldValueTypePath.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromFieldValueType()", function () {
+    describe(".fromFieldValueType()", function () {
       it("should return FieldValueTypePath instance", function () {
         fieldValueTypePath = FieldValueTypePath.fromFieldValueType('reference');
         expect(FieldValueTypePath.mixedBy(fieldValueTypePath)).toBeTruthy();
@@ -36,7 +36,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toFieldValueTypePath()", function () {
+  describe("#toFieldValueTypePath()", function () {
     var fieldValueTypePath;
 
     it("should create a FieldValueTypePath instance", function () {

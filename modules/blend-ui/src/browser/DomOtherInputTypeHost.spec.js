@@ -17,7 +17,7 @@ describe("$ui", function () {
       DomOtherInputTypeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       var element;
 
       beforeEach(function () {
@@ -37,7 +37,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onRender()", function () {
+    describe("#onRender()", function () {
       var element;
 
       beforeEach(function () {
@@ -54,7 +54,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementInput()", function () {
+    describe("#onElementInput()", function () {
       var element,
           event;
 
@@ -73,7 +73,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementChange()", function () {
+    describe("#onElementChange()", function () {
       var element,
           event;
 
@@ -105,7 +105,7 @@ describe("$ui", function () {
       .build();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in browser environment", function () {
         it("should return DomOtherInputTypeHost instance", function () {
           otherInputTypeHost = OtherInputTypeHost.create();

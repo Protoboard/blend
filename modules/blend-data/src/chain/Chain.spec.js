@@ -22,7 +22,7 @@ describe("$data", function () {
       link = $data.Link.create();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize data", function () {
         expect(chain.data.mixes($data.MasterLink)).toBeTruthy();
       });
@@ -32,7 +32,7 @@ describe("$data", function () {
       });
     });
 
-    describe("clear()", function () {
+    describe("#clear()", function () {
       var oldMasterLink;
 
       beforeEach(function () {
@@ -52,7 +52,7 @@ describe("$data", function () {
       });
     });
 
-    describe("setItem()", function () {
+    describe("#setItem()", function () {
       beforeEach(function () {
         spyOn(chain, 'push');
         result = chain.setItem(link);
@@ -67,7 +67,7 @@ describe("$data", function () {
       });
     });
 
-    describe("deleteItem()", function () {
+    describe("#deleteItem()", function () {
       beforeEach(function () {
         spyOn(link, 'unlink');
         result = chain.deleteItem(link);
@@ -82,7 +82,7 @@ describe("$data", function () {
       });
     });
 
-    describe("hasItem()", function () {
+    describe("#hasItem()", function () {
       describe("for existing item", function () {
         it("should return true", function () {
           chain.setItem(link);
@@ -97,7 +97,7 @@ describe("$data", function () {
       });
     });
 
-    describe("forEachItem()", function () {
+    describe("#forEachItem()", function () {
       var link1,
           link2,
           callback;
@@ -135,7 +135,7 @@ describe("$data", function () {
       });
     });
 
-    describe("push()", function () {
+    describe("#push()", function () {
       beforeEach(function () {
         result = chain.push(link);
       });
@@ -155,7 +155,7 @@ describe("$data", function () {
       });
     });
 
-    describe("pop()", function () {
+    describe("#pop()", function () {
       var link1,
           link2;
 
@@ -195,7 +195,7 @@ describe("$data", function () {
       });
     });
 
-    describe("unshift()", function () {
+    describe("#unshift()", function () {
       beforeEach(function () {
         result = chain.unshift(link);
       });
@@ -215,7 +215,7 @@ describe("$data", function () {
       });
     });
 
-    describe("shift()", function () {
+    describe("#shift()", function () {
       var link1,
           link2;
 
@@ -255,7 +255,7 @@ describe("$data", function () {
       });
     });
 
-    describe("concat()", function () {
+    describe("#concat()", function () {
       var Link,
           link1, link2,
           chain2,
@@ -309,7 +309,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toChain()", function () {
+    describe("#toChain()", function () {
       var container,
           transformed;
 
@@ -331,7 +331,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toChain()", function () {
+    describe("#toChain()", function () {
       var container,
           transformed;
 

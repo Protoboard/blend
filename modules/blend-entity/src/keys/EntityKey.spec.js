@@ -31,14 +31,14 @@ describe("$entity", function () {
       });
     });
 
-    describe("getReference()", function () {
+    describe("#getReference()", function () {
       it("should return string representation", function () {
         var result = entityKey.getReference();
         expect(result).toBe('foo');
       });
     });
 
-    describe("getChildKey()", function () {
+    describe("#getChildKey()", function () {
       beforeEach(function () {
         result = entityKey.getChildKey('baz');
       });
@@ -55,7 +55,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getAttribute()", function () {
+    describe("#getAttribute()", function () {
       var attributeKey;
 
       beforeEach(function () {
@@ -74,7 +74,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeType()", function () {
+    describe("#getNodeType()", function () {
       var attributeKey;
 
       beforeEach(function () {

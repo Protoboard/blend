@@ -15,7 +15,7 @@ describe("$router", function () {
       Route.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return Route instance", function () {
         route = Route.fromString('foo/bar/baz');
         expect(Route.mixedBy(route)).toBeTruthy();
@@ -34,7 +34,7 @@ describe("$router", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize listeningPath", function () {
         route = Route.create({components: ['foo', 'bar', 'baz']});
         expect(route.listeningPath).toBe('route.foo.bar.baz');
@@ -48,7 +48,7 @@ describe("$router", function () {
       });
     });
 
-    describe("navigateTo()", function () {
+    describe("#navigateTo()", function () {
       var router;
 
       beforeEach(function () {
@@ -68,7 +68,7 @@ describe("$router", function () {
       });
     });
 
-    describe("navigateToDebounced()", function () {
+    describe("#navigateToDebounced()", function () {
       var router,
           promise;
 
@@ -90,7 +90,7 @@ describe("$router", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         route = Route.create({components: ['foo/', 'bar', 'baz']});
       });
@@ -104,7 +104,7 @@ describe("$router", function () {
 });
 
 describe("String", function () {
-  describe("toRoute()", function () {
+  describe("#toRoute()", function () {
     var route;
 
     it("should create a Route instance", function () {
@@ -125,7 +125,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toRoute()", function () {
+  describe("#toRoute()", function () {
     var route,
         components;
 

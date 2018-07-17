@@ -21,7 +21,7 @@ describe("$event", function () {
       wrapper = Wrapper.create({eventName: 'event1'});
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         wrapper.wrapped = {};
         result = wrapper.clone();
@@ -36,7 +36,7 @@ describe("$event", function () {
       });
     });
 
-    describe("wrap()", function () {
+    describe("#wrap()", function () {
       var wrapped;
 
       beforeEach(function () {

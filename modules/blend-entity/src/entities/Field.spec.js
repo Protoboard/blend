@@ -21,7 +21,7 @@ describe("$entity", function () {
       field = Field.fromEntityKey('foo/bar/baz'.toFieldKey());
     });
 
-    describe("fromComponents()", function () {
+    describe(".fromComponents()", function () {
       it("should return Field instance", function () {
         field = Field.fromComponents('foo', 'bar', 'baz');
         expect(Field.mixedBy(field)).toBeTruthy();
@@ -38,7 +38,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("fromString()", function () {
+    describe(".fromString()", function () {
       it("should return Field instance", function () {
         field = Field.fromReference('foo/bar/baz');
         expect(Field.mixedBy(field)).toBeTruthy();
@@ -55,7 +55,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize triggerPaths", function () {
         it("should initialize triggerPaths", function () {
           expect(field.triggerPaths).toContain(
@@ -117,7 +117,7 @@ describe("$entity", function () {
     var fieldKey,
         field;
 
-    describe("toField()", function () {
+    describe("#toField()", function () {
       beforeEach(function () {
         fieldKey = 'foo/bar/baz'.toFieldKey();
       });
@@ -142,7 +142,7 @@ describe("$entity", function () {
   describe("Entity", function () {
     var entity;
 
-    describe("create", function () {
+    describe(".create", function () {
       describe("when passing FieldKey", function () {
         beforeEach(function () {
           entity = $entity.Entity.fromEntityKey('foo/bar/baz'.toFieldKey());
@@ -157,7 +157,7 @@ describe("$entity", function () {
 });
 
 describe("String", function () {
-  describe("toField()", function () {
+  describe("#toField()", function () {
     var field;
 
     it("should create a Field instance", function () {
@@ -180,7 +180,7 @@ describe("String", function () {
 });
 
 describe("Array", function () {
-  describe("toField()", function () {
+  describe("#toField()", function () {
     var components,
         field;
 

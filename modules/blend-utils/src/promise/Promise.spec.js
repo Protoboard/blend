@@ -7,7 +7,7 @@ describe("$utils", function () {
   describe("Promise", function () {
     var promise;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize state property", function () {
         promise = $utils.Promise.create();
         expect(promise.promiseState).toBe($utils.PROMISE_STATE_PENDING);
@@ -34,7 +34,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("then()", function () {
+    describe("#then()", function () {
       var handlers;
 
       beforeEach(function () {
@@ -140,7 +140,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("when()", function () {
+    describe(".when()", function () {
       var deferred, thenable,
           thenableResolve, thenableReject;
 

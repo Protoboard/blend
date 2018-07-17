@@ -4,7 +4,7 @@ var $oop = window['blend-oop'],
     $widget = window['blend-widget'];
 
 describe("$widget", function () {
-  describe("escapeXmlEntities()", function () {
+  describe(".escapeXmlEntities()", function () {
     it("should escape characters", function () {
       expect($widget.escapeXmlEntities('"')).toBe('&quot;');
       expect($widget.escapeXmlEntities('\'')).toBe('&apos;');
@@ -16,7 +16,7 @@ describe("$widget", function () {
     });
   });
 
-  describe("compareNodes()", function () {
+  describe(".compareNodes()", function () {
     var node1,
         node2,
         node3,

@@ -19,7 +19,7 @@ describe("$event", function () {
       eventListener = EventListener.create();
     });
 
-    describe("setListeningPath()", function () {
+    describe("#setListeningPath()", function () {
       var listeningPath;
 
       beforeEach(function () {

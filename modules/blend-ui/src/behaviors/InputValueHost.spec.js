@@ -16,7 +16,7 @@ describe("$ui", function () {
       InputValueHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       beforeEach(function () {
         inputValueHost = InputValueHost.create();
       });

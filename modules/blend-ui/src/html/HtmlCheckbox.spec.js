@@ -16,7 +16,7 @@ describe("$ui", function () {
       HtmlCheckbox.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize inputType", function () {
         htmlCheckbox = HtmlCheckbox.create();
         expect(htmlCheckbox.inputType).toBe('checkbox');
@@ -27,7 +27,7 @@ describe("$ui", function () {
   describe("Checkbox", function () {
     var checkbox;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("in HTML environment", function () {
         it("should return HtmlCheckbox instance", function () {
           checkbox = $ui.Checkbox.create();

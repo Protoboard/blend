@@ -20,7 +20,7 @@ describe("$template", function () {
       liveTemplate = LiveTemplate.fromString('Hello {{name}}!');
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize listeningPath property", function () {
         expect(liveTemplate.listeningPath)
         .toEqual(['template', '' + liveTemplate.instanceId].toTreePath()
@@ -38,7 +38,7 @@ describe("$template", function () {
       });
     });
 
-    describe("setParameterValues()", function () {
+    describe("#setParameterValues()", function () {
       it("should return self", function () {
         var result = liveTemplate.setParameterValues({
           foo: 'bar',
@@ -115,7 +115,7 @@ describe("$template", function () {
       });
     });
 
-    describe("toString()", function () {
+    describe("#toString()", function () {
       beforeEach(function () {
         liveTemplate.setParameterValues({
           name: "World"
@@ -133,7 +133,7 @@ describe("$template", function () {
 describe("String", function () {
   var result;
 
-  describe("toLiveTemplate()", function () {
+  describe("#toLiveTemplate()", function () {
     var liveTemplate;
 
     it("should create a LiveTemplate instance", function () {

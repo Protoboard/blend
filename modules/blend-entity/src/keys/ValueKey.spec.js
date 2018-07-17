@@ -29,7 +29,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getNodeType()", function () {
+    describe("#getNodeType()", function () {
       var attributeKey;
 
       describe("when no nodeType is set", function () {
@@ -46,7 +46,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getValueType()", function () {
+    describe("#getValueType()", function () {
       var attributeKey;
 
       beforeEach(function () {
@@ -65,7 +65,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getValueOptions()", function () {
+    describe("#getValueOptions()", function () {
       var attributeKey;
 
       beforeEach(function () {

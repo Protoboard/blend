@@ -16,7 +16,7 @@ describe("$ui", function () {
       DisabledAttributeHost.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize 'disabled' attribute", function () {
         disabledAttributeHost = DisabledAttributeHost.create({
           state: {
@@ -27,7 +27,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setStateValue()", function () {
+    describe("#setStateValue()", function () {
       beforeEach(function () {
         disabledAttributeHost = DisabledAttributeHost.create();
       });

@@ -19,7 +19,7 @@ describe("$utils", function () {
       path = Path.create({components: ['foo', 'bar', 'baz']});
     });
 
-    describe("fromComponents()", function () {
+    describe(".fromComponents()", function () {
       var components;
 
       beforeEach(function () {
@@ -37,7 +37,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should set components property", function () {
         expect(path.components).toEqual(['foo', 'bar', 'baz']);
       });
@@ -54,7 +54,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("clone()", function () {
+    describe("#clone()", function () {
       beforeEach(function () {
         result = path.clone();
       });
@@ -69,7 +69,7 @@ describe("$utils", function () {
       });
     });
 
-    describe("equals()", function () {
+    describe("#equals()", function () {
       var path2;
 
       describe("for equivalent Path", function () {

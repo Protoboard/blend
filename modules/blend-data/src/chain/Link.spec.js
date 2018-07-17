@@ -19,7 +19,7 @@ describe("$data", function () {
       link = Link.create();
     });
 
-    describe("addAfter()", function () {
+    describe("#addAfter()", function () {
       var link2,
           oldPreviousLink,
           oldNextLink;
@@ -105,7 +105,7 @@ describe("$data", function () {
       });
     });
 
-    describe("addBefore()", function () {
+    describe("#addBefore()", function () {
       var link2,
           oldPreviousLink,
           oldNextLink;
@@ -191,7 +191,7 @@ describe("$data", function () {
       });
     });
 
-    describe("unlink()", function () {
+    describe("#unlink()", function () {
       var oldPreviousLink,
           oldNextLink,
           oldChain;

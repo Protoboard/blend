@@ -15,7 +15,7 @@ describe("$ui", function () {
       Image.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setImageUrl()", function () {
+    describe("#setImageUrl()", function () {
       beforeEach(function () {
         image = Image.create();
       });

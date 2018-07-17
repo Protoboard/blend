@@ -3,7 +3,7 @@
 var $assert = window['blend-assert'];
 
 describe("$assert", function () {
-  describe("assert()", function () {
+  describe(".assert()", function () {
     it("should return namespace", function () {
       expect($assert.assert(true, "Foo")).toBe($assert);
     });

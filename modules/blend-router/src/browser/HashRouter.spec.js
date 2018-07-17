@@ -26,7 +26,7 @@ describe("$router", function () {
       expect(HashRouter.create()).toBe(HashRouter.create());
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       var routeEnvironment;
 
       beforeEach(function () {
@@ -41,7 +41,7 @@ describe("$router", function () {
       });
     });
 
-    describe("onRouteChange()", function () {
+    describe("#onRouteChange()", function () {
       var event;
 
       beforeEach(function () {
@@ -62,7 +62,7 @@ describe("$router", function () {
       });
     });
 
-    describe("onDocumentLoad()", function () {
+    describe("#onDocumentLoad()", function () {
       var documentLoadEvent;
 
       beforeEach(function () {
@@ -90,7 +90,7 @@ describe("$router", function () {
       });
     });
 
-    describe("onHashChange()", function () {
+    describe("#onHashChange()", function () {
       var routeEnvironment,
           hashChangeEvent;
 
@@ -143,7 +143,7 @@ describe("$router", function () {
   });
 
   describe("Router", function () {
-    describe("create()", function () {
+    describe(".create()", function () {
       var router;
 
       describe("when in browser env and browserRoutingMethod is 'hash'", function () {

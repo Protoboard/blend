@@ -17,7 +17,7 @@ describe("$ui", function () {
       EntityListItem.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid listItemEntity", function () {
         it("should throw", function () {
           expect(function () {
@@ -29,7 +29,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("_syncToEntityProperty()", function () {
+    describe("#_syncToEntityProperty()", function () {
       var listItemEntity;
 
       beforeEach(function () {
@@ -64,7 +64,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("setListItemEntity()", function () {
+    describe("#setListItemEntity()", function () {
       var listItemEntity;
 
       beforeEach(function () {

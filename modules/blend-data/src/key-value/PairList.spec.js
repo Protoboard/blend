@@ -26,7 +26,7 @@ describe("$data", function () {
       pairList = PairList.create({data: data});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("on invalid arguments", function () {
         it("should throw", function () {
           expect(function () {
@@ -43,7 +43,7 @@ describe("$data", function () {
       });
     });
 
-    describe("setItem()", function () {
+    describe("#setItem()", function () {
       var value = {};
 
       beforeEach(function () {
@@ -63,7 +63,7 @@ describe("$data", function () {
       });
     });
 
-    describe("deleteItem()", function () {
+    describe("#deleteItem()", function () {
       it("should throw", function () {
         expect(function () {
           pairList.deleteItem('foo', "FOO");
@@ -71,7 +71,7 @@ describe("$data", function () {
       });
     });
 
-    describe("hasItem()", function () {
+    describe("#hasItem()", function () {
       it("should throw", function () {
         expect(function () {
           pairList.hasItem('foo', "FOO");
@@ -79,7 +79,7 @@ describe("$data", function () {
       });
     });
 
-    describe("forEachItem()", function () {
+    describe("#forEachItem()", function () {
       var callback;
 
       beforeEach(function () {
@@ -112,7 +112,7 @@ describe("$data", function () {
   });
 
   describe("DataContainer", function () {
-    describe("asPairList()", function () {
+    describe("#asPairList()", function () {
       var container = $data.DataContainer.create({data: [1, 2, 3]});
 
       beforeEach(function () {
@@ -130,7 +130,7 @@ describe("$data", function () {
   });
 
   describe("SetContainer", function () {
-    describe("toPairList()", function () {
+    describe("#toPairList()", function () {
       var container,
           transformed;
 
@@ -152,7 +152,7 @@ describe("$data", function () {
   });
 
   describe("KeyValueContainer", function () {
-    describe("toPairList()", function () {
+    describe("#toPairList()", function () {
       var container,
           transformed;
 
@@ -177,7 +177,7 @@ describe("$data", function () {
 describe("Array", function () {
   var result;
 
-  describe("asPairList()", function () {
+  describe("#asPairList()", function () {
     var array = [1, 2, 3];
 
     beforeEach(function () {

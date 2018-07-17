@@ -15,7 +15,7 @@ describe("$i18n", function () {
       LocaleEnvironment.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize localeEnvironmentKey", function () {
         localeEnvironment = LocaleEnvironment.create();
         expect($entity.DocumentKey.mixedBy(localeEnvironment.localeEnvironmentKey))
@@ -35,7 +35,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("setActiveLocale()", function () {
+    describe("#setActiveLocale()", function () {
       var localeEnvironmentNode;
 
       beforeEach(function () {
@@ -61,7 +61,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("getActiveLocale()", function () {
+    describe("#getActiveLocale()", function () {
       beforeEach(function () {
         localeEnvironment = LocaleEnvironment.create();
         localeEnvironment.setActiveLocale('de-at'.toLocale());
@@ -78,7 +78,7 @@ describe("$i18n", function () {
       });
     });
 
-    describe("onActiveLocaleFieldChange()", function () {
+    describe("#onActiveLocaleFieldChange()", function () {
       var localeEnvironmentNode;
 
       beforeEach(function () {

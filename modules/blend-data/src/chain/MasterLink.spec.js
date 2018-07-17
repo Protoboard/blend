@@ -20,7 +20,7 @@ describe("$data", function () {
       masterLink = MasterLink.create({chain: chain});
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize previousLink property", function () {
         expect(masterLink.hasOwnProperty('previousLink')).toBeTruthy();
       });

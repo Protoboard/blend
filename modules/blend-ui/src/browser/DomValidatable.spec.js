@@ -17,7 +17,7 @@ describe("$ui", function () {
       DomValidatable.__builder.forwards = {list: [], lookup: {}};
     });
 
-    describe("setInputValue()", function () {
+    describe("#setInputValue()", function () {
       var element;
 
       beforeEach(function () {
@@ -38,7 +38,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onRender()", function () {
+    describe("#onRender()", function () {
       var element;
 
       beforeEach(function () {
@@ -54,7 +54,7 @@ describe("$ui", function () {
       });
     });
 
-    describe("onElementInvalid()", function () {
+    describe("#onElementInvalid()", function () {
       var element,
           event;
 

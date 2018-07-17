@@ -5,7 +5,7 @@ var $oop = window['blend-oop'],
 
 describe("$widget", function () {
   describe("XmlEscaper", function () {
-    describe("escapeXmlEntities()", function () {
+    describe("#escapeXmlEntities()", function () {
       it("should escape characters", function () {
         expect($widget.XmlEscaper.escapeXmlEntities('"')).toBe('&quot;');
         expect($widget.XmlEscaper.escapeXmlEntities('\'')).toBe('&apos;');

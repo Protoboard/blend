@@ -19,13 +19,13 @@ describe("$event", function () {
       eventSender = EventSender.create();
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize triggerPaths property", function () {
         expect(eventSender.triggerPaths).toEqual({list: [], lookup: {}});
       });
     });
 
-    describe("spawnEvent()", function () {
+    describe("#spawnEvent()", function () {
       var eventName;
 
       beforeEach(function () {
@@ -48,7 +48,7 @@ describe("$event", function () {
       });
     });
 
-    describe("addTriggerPath()", function () {
+    describe("#addTriggerPath()", function () {
       var triggerPath;
 
       beforeEach(function () {
@@ -87,7 +87,7 @@ describe("$event", function () {
       });
     });
 
-    describe("addTriggerPathBefore()", function () {
+    describe("#addTriggerPathBefore()", function () {
       var triggerPath,
           nextTriggerPath;
 
@@ -149,7 +149,7 @@ describe("$event", function () {
       });
     });
 
-    describe("addTriggerPaths()", function () {
+    describe("#addTriggerPaths()", function () {
       var triggerPaths;
 
       beforeEach(function () {
@@ -194,7 +194,7 @@ describe("$event", function () {
       });
     });
 
-    describe("removeTriggerPath()", function () {
+    describe("#removeTriggerPath()", function () {
       var triggerPath;
 
       beforeEach(function () {
@@ -230,7 +230,7 @@ describe("$event", function () {
       });
     });
 
-    describe("removeTriggerPaths()", function () {
+    describe("#removeTriggerPaths()", function () {
       var triggerPaths;
 
       beforeEach(function () {
@@ -270,7 +270,7 @@ describe("$event", function () {
       });
     });
 
-    describe("trigger()", function () {
+    describe("#trigger()", function () {
       var event,
           promise,
           eventName;

@@ -3,7 +3,7 @@
 var $utils = window['blend-utils'];
 
 describe("Number", function () {
-  describe("toInterval()", function () {
+  describe("#toInterval()", function () {
     var interval;
 
     it("should return Interval instance", function () {
@@ -31,7 +31,7 @@ describe("$utils", function () {
       interval = $utils.Interval.create({timerId: 1});
     });
 
-    describe("clearTimer()", function () {
+    describe("#clearTimer()", function () {
       var result;
 
       beforeEach(function () {

@@ -17,7 +17,7 @@ describe("$buildUtils", function () {
       extractor = $buildUtils.BlendSymbolExtractor.create();
     });
 
-    describe("getFilePathsVsExports()", function () {
+    describe("#getFilePathsVsExports()", function () {
       beforeEach(function () {
         scriptCollection = ScriptCollection.fromData({
           'foo.js': $buildUtils.Script.fromScriptBody(
@@ -40,7 +40,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("getFilePathsVsImports()", function () {
+    describe("#getFilePathsVsImports()", function () {
       beforeEach(function () {
         scriptCollection = ScriptCollection.fromData({
           'foo.js': $buildUtils.Script.fromScriptBody(
@@ -60,7 +60,7 @@ describe("$buildUtils", function () {
       });
     });
 
-    describe("getDependencyOrder()", function () {
+    describe("#getDependencyOrder()", function () {
       beforeEach(function () {
         scriptCollection = ScriptCollection.fromData({
           //@formatter:off

@@ -23,7 +23,7 @@ describe("$entity", function () {
       collectionField = CollectionField.fromEntityKey(collectionFieldKey);
     });
 
-    describe("create()", function () {
+    describe(".create()", function () {
       it("should initialize triggerPaths", function () {
         expect(collectionField.triggerPaths.list).toContain(
             'entity.document.__field.__field/itemIdType.options.string',
@@ -31,7 +31,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("spawnEntityChangeEvents()", function () {
+    describe("#spawnEntityChangeEvents()", function () {
       var nodeBefore,
           nodeAfter;
 
@@ -70,7 +70,7 @@ describe("$entity", function () {
       });
     });
 
-    describe("getItem()", function () {
+    describe("#getItem()", function () {
       var item;
 
       it("should return an Item instance", function () {
@@ -89,7 +89,7 @@ describe("$entity", function () {
   describe("Field", function () {
     var result;
 
-    describe("create()", function () {
+    describe(".create()", function () {
       describe("when entityKey is CollectionFieldKey", function () {
         beforeEach(function () {
           result = $entity.CollectionFieldKey.fromReference('foo/bar/baz')

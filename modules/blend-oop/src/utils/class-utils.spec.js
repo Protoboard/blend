@@ -3,7 +3,7 @@
 var $oop = window['blend-oop'];
 
 describe("$oop", function () {
-  describe("copyProperties()", function () {
+  describe(".copyProperties()", function () {
     var target, members;
 
     beforeEach(function () {
@@ -84,7 +84,7 @@ describe("$oop", function () {
     });
   });
 
-  describe("createObject()", function () {
+  describe(".createObject()", function () {
     var base, members, propertyDescriptor,
         result;
 
@@ -111,7 +111,7 @@ describe("$oop", function () {
     });
   });
 
-  describe("getClass()", function () {
+  describe(".getClass()", function () {
     var Class,
         lastClassId;
 
@@ -138,7 +138,7 @@ describe("$oop", function () {
     });
   });
 
-  describe("getClassId()", function () {
+  describe(".getClassId()", function () {
     var Class;
 
     beforeAll(function () {
@@ -158,7 +158,7 @@ describe("$oop", function () {
     });
   });
 
-  describe("getClassName()", function () {
+  describe(".getClassName()", function () {
     var Class;
 
     beforeAll(function () {
@@ -178,7 +178,7 @@ describe("$oop", function () {
     });
   });
 
-  describe("getClassBuilderId()", function () {
+  describe(".getClassBuilderId()", function () {
     var classBuilder,
         lastClassId;
 
@@ -205,7 +205,7 @@ describe("$oop", function () {
     });
   });
 
-  describe("getClassBuilderName()", function () {
+  describe(".getClassBuilderName()", function () {
     var classBuilder;
 
     beforeEach(function () {
