@@ -1,0 +1,30 @@
+{
+  "name": "@protoboard/blend-session",
+  "version": "0.1.0",
+  "description": "Session management module for Blend",
+  "keywords": [
+    "session",
+    "authentication",
+    "auth",
+    "login",
+    "logout"
+  ],
+  "author": "Dan Stocker <dan@kwaia.com>",
+  "copyright": "Copyright (c) 2014-2018 Dan Stocker",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:danstocker/blend.git"
+  },
+  "engines": {
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "@protoboard/blend-assert": "~0.1.0",
+    "@protoboard/blend-data": "~0.1.0",
+    "@protoboard/blend-event": "~0.1.0",
+    "@protoboard/blend-module": "~0.1.0",
+    "@protoboard/blend-oop": "~0.1.0",
+    "@protoboard/blend-utils": "~0.1.0"
+  }
+}
