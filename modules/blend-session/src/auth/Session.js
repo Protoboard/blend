@@ -192,11 +192,10 @@ $session.Session = $oop.createClass('$session.Session')
 
   /** @ignore */
   onSessionOpenFailure: function onSessionOpenFailure() {
-    var sessionStateBefore = this.sessionState,
-        sessionStateAfter = undefined;
+    var sessionStateBefore = this.sessionState;
 
-    this.sessionState = sessionStateAfter;
-    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter);
+    this.sessionState = undefined;
+    this._triggerSessionStateChangeEvent(sessionStateBefore, undefined);
 
     onSessionOpenFailure.shared.sessionStateBefore = sessionStateBefore;
   },
@@ -214,11 +213,10 @@ $session.Session = $oop.createClass('$session.Session')
 
   /** @ignore */
   onSessionCloseFailure: function onSessionCloseFailure() {
-    var sessionStateBefore = this.sessionState,
-        sessionStateAfter = undefined;
+    var sessionStateBefore = this.sessionState;
 
-    this.sessionState = sessionStateAfter;
-    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter);
+    this.sessionState = undefined;
+    this._triggerSessionStateChangeEvent(sessionStateBefore, undefined);
 
     onSessionCloseFailure.shared.sessionStateBefore = sessionStateBefore;
   }
