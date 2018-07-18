@@ -21,6 +21,7 @@ module.exports = function (config) {
       'modules/blend-entity/lib/blend-entity.js',
       'modules/blend-router/lib/blend-router.js',
       'modules/blend-api/lib/blend-api.js',
+      'modules/blend-session/lib/blend-session.js',
       'modules/blend-widget/lib/blend-widget.js',
       'modules/blend-i18n/lib/blend-i18n.js',
       'modules/blend-ui/lib/blend-ui.js',
