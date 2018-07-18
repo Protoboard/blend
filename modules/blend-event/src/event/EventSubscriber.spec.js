@@ -71,11 +71,6 @@ describe("$event", function () {
         spyOn(subscriber, 'off');
       });
 
-      it("should return self", function () {
-        var result = subscriber.destroy();
-        expect(result).toBe(subscriber);
-      });
-
       it("should unsubscribe from all paths", function () {
         subscriber.destroy();
         expect(subscriber.off).toHaveBeenCalled();
