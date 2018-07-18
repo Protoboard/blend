@@ -19,8 +19,7 @@ $oop.copyProperties($session, /** @lends $session */{
     CLOSED: 'closed',
     OPENING: 'opening',
     OPEN: 'open',
-    CLOSING: 'closing',
-    UNKNOWN: 'unknown'
+    CLOSING: 'closing'
   },
 
   /**

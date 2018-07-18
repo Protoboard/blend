@@ -4,6 +4,7 @@
  * @function $session.Session.create
  * @param {Object} properties
  * @param {string} properties.sessionId
+ * @param {string} [properties.sessionState]
  * @returns {$session.Session}
  */
 
@@ -25,7 +26,7 @@ $session.Session = $oop.createClass('$session.Session')
 
   /**
    * Current state of the session.
-   * @member {string} $session.Session#sessionState
+   * @member {string} [$session.Session#sessionState]
    */
 
   /**
@@ -38,12 +39,6 @@ $session.Session = $oop.createClass('$session.Session')
     return this.create({
       sessionId: sessionId
     }, properties);
-  },
-
-  /** @ignore */
-  defaults: function () {
-    // Normally session state starts out closed.
-    this.sessionState = this.sessionState || $session.SESSION_STATES.CLOSED;
   },
 
   /** @ignore */
@@ -144,7 +139,7 @@ $session.Session = $oop.createClass('$session.Session')
   /** @ignore */
   onSessionOpenFailure: function onSessionOpenFailure() {
     var sessionStateBefore = this.sessionState,
-        sessionStateAfter = $session.SESSION_STATES.UNKNOWN;
+        sessionStateAfter = undefined;
 
     this.sessionState = sessionStateAfter;
     this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter);
@@ -166,7 +161,7 @@ $session.Session = $oop.createClass('$session.Session')
   /** @ignore */
   onSessionCloseFailure: function onSessionCloseFailure() {
     var sessionStateBefore = this.sessionState,
-        sessionStateAfter = $session.SESSION_STATES.UNKNOWN;
+        sessionStateAfter = undefined;
 
     this.sessionState = sessionStateAfter;
     this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter);

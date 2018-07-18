@@ -25,13 +25,6 @@ describe("$session", function () {
         expect(session.sessionId).toBe('foo');
       });
 
-      it("should initialize sessionState property", function () {
-        session = Session.create({
-          sessionId: 'foo'
-        });
-        expect(session.sessionState).toBe($session.SESSION_STATES.CLOSED);
-      });
-
       describe("on missing sessionId", function () {
         it("should throw", function () {
           expect(function () {
@@ -81,8 +74,7 @@ describe("$session", function () {
 
       it("should expose sessionStateBefore on shared", function () {
         session.open();
-        expect(session.open.shared.sessionStateBefore)
-        .toBe($session.SESSION_STATES.CLOSED);
+        expect(session.open.shared.sessionStateBefore).toBeUndefined();
       });
 
       it("should set sessionState property to OPENING", function () {
@@ -96,7 +88,7 @@ describe("$session", function () {
         var event = $event.Event.trigger.calls.mostRecent().object;
         expect(event.sender).toBe(session);
         expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
-        expect(event.sessionStateBefore).toBe($session.SESSION_STATES.CLOSED);
+        expect(event.sessionStateBefore).toBeUndefined();
         expect(event.sessionStateAfter).toBe($session.SESSION_STATES.OPENING);
         expect(event.promise).toBe(session.open.shared.deferred.promise);
       });
@@ -133,7 +125,7 @@ describe("$session", function () {
 
         it("should set sessionState property to UNKNOWN", function () {
           deferred.reject();
-          expect(session.sessionState).toBe($session.SESSION_STATES.UNKNOWN);
+          expect(session.sessionState).toBeUndefined();
         });
 
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
@@ -143,7 +135,7 @@ describe("$session", function () {
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore).toBe($session.SESSION_STATES.OPENING);
-          expect(event.sessionStateAfter).toBe($session.SESSION_STATES.UNKNOWN);
+          expect(event.sessionStateAfter).toBeUndefined();
         });
       });
     });
@@ -222,7 +214,7 @@ describe("$session", function () {
 
         it("should set sessionState property to UNKNOWN", function () {
           deferred.reject();
-          expect(session.sessionState).toBe($session.SESSION_STATES.UNKNOWN);
+          expect(session.sessionState).toBeUndefined();
         });
 
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
@@ -232,7 +224,7 @@ describe("$session", function () {
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore).toBe($session.SESSION_STATES.CLOSING);
-          expect(event.sessionStateAfter).toBe($session.SESSION_STATES.UNKNOWN);
+          expect(event.sessionStateAfter).toBeUndefined();
         });
       });
     });
