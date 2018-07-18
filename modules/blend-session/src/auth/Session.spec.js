@@ -98,6 +98,7 @@ describe("$session", function () {
         expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
         expect(event.sessionStateBefore).toBe($session.SESSION_STATES.CLOSED);
         expect(event.sessionStateAfter).toBe($session.SESSION_STATES.OPENING);
+        expect(event.promise).toBe(session.open.shared.deferred.promise);
       });
 
       describe("on resolving promise", function () {
@@ -186,6 +187,7 @@ describe("$session", function () {
         expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
         expect(event.sessionStateBefore).toBe($session.SESSION_STATES.OPEN);
         expect(event.sessionStateAfter).toBe($session.SESSION_STATES.CLOSING);
+        expect(event.promise).toBe(session.close.shared.deferred.promise);
       });
 
       describe("on resolving promise", function () {

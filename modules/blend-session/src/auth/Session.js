@@ -65,19 +65,25 @@ $session.Session = $oop.createClass('$session.Session')
   },
 
   /**
-   * @param sessionStateBefore
-   * @param sessionStateAfter
+   * @param {string} sessionStateBefore
+   * @param {string} sessionStateAfter
+   * @param {$utils.Promise} [promise]
    * @private
    */
   _triggerSessionStateChangeEvent: function (sessionStateBefore,
-      sessionStateAfter
+      sessionStateAfter, promise
   ) {
-    this.spawnEvent({
+    var eventProperties = {
       eventName: $session.EVENT_SESSION_STATE_CHANGE,
       sessionStateBefore: sessionStateBefore,
       sessionStateAfter: sessionStateAfter
-    })
-    .trigger();
+    };
+
+    if (promise) {
+      eventProperties.promise = promise;
+    }
+
+    this.spawnEvent(eventProperties).trigger();
   },
 
   /**
@@ -95,7 +101,7 @@ $session.Session = $oop.createClass('$session.Session')
     promise.then(this.onSessionOpenSuccess, this.onSessionOpenFailure);
 
     this.sessionState = sessionStateAfter;
-    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter);
+    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter, promise);
 
     open.shared.sessionStateBefore = sessionStateBefore;
     open.shared.deferred = deferred;
@@ -117,7 +123,7 @@ $session.Session = $oop.createClass('$session.Session')
     promise.then(this.onSessionCloseSuccess, this.onSessionCloseFailure);
 
     this.sessionState = sessionStateAfter;
-    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter);
+    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter, promise);
 
     close.shared.sessionStateBefore = sessionStateBefore;
     close.shared.deferred = deferred;

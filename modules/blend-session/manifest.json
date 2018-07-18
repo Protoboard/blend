@@ -1,5 +1,8 @@
 {
   "js": [
+    "src/containers/index.js",
+    "src/index/TransientSessionIndex.js",
+    "src/events/SessionStateChangeEvent.js",
     "src/auth/Session.js"
   ],
   "html": [
