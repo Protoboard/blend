@@ -84,19 +84,46 @@ $session.Session = $oop.createClass('$session.Session')
   /**
    * Opens session. Initiates authentication against remote API.
    * Subclasses are expected to resolve or reject the shared deferred.
-   * todo Check current state, and return existing promise when OPENING.
    * @returns {$utils.Thenable}
    */
   open: function open() {
-    var sessionStateBefore = this.sessionState,
-        sessionStateAfter = $session.SESSION_STATES.OPENING,
-        deferred = $utils.Deferred.create(),
-        promise = deferred.promise;
+    var SESSION_STATES = $session.SESSION_STATES,
+        sessionStateBefore = this.sessionState,
+        sessionStateAfter = SESSION_STATES.OPENING,
+        deferred, promise;
 
-    promise.then(this.onSessionOpenSuccess, this.onSessionOpenFailure);
+    switch (sessionStateBefore) {
+    case SESSION_STATES.OPENING:
+      // already opening, fetch & return promise from index
+      promise = $session.TransientSessionIndex.create()
+      .getPromiseForSession(this);
+      break;
 
-    this.sessionState = sessionStateAfter;
-    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter, promise);
+    case SESSION_STATES.OPEN:
+      // already open, nothing to do
+      deferred = $utils.Deferred.create();
+      promise = deferred.promise;
+      deferred.resolve();
+      break;
+
+    case SESSION_STATES.CLOSED:
+    case undefined:
+      // legitimate cases
+      deferred = $utils.Deferred.create();
+      promise = deferred.promise;
+      promise.then(this.onSessionOpenSuccess, this.onSessionOpenFailure);
+      this.sessionState = sessionStateAfter;
+      this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter, promise);
+      break;
+
+    case SESSION_STATES.CLOSING:
+      // can't initiate open while closing
+      // todo Maybe schedule re-opening?
+      deferred = $utils.Deferred.create();
+      promise = deferred.promise;
+      deferred.reject();
+      break;
+    }
 
     open.shared.sessionStateBefore = sessionStateBefore;
     open.shared.deferred = deferred;
@@ -106,19 +133,46 @@ $session.Session = $oop.createClass('$session.Session')
   /**
    * Closes session. Initiates session invalidation through remote API.
    * Subclasses are expected to resolve or reject the shared deferred.
-   * todo Check current state, and return existing promise when CLOSING.
    * @returns {$utils.Thenable}
    */
   close: function close() {
-    var sessionStateBefore = this.sessionState,
-        sessionStateAfter = $session.SESSION_STATES.CLOSING,
-        deferred = $utils.Deferred.create(),
-        promise = deferred.promise;
+    var SESSION_STATES = $session.SESSION_STATES,
+        sessionStateBefore = this.sessionState,
+        sessionStateAfter = SESSION_STATES.CLOSING,
+        deferred, promise;
 
-    promise.then(this.onSessionCloseSuccess, this.onSessionCloseFailure);
+    switch (sessionStateBefore) {
+    case SESSION_STATES.OPENING:
+      // can't initiate closing while opening
+      // todo Maybe schedule closing?
+      deferred = $utils.Deferred.create();
+      promise = deferred.promise;
+      deferred.reject();
+      break;
 
-    this.sessionState = sessionStateAfter;
-    this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter, promise);
+    case SESSION_STATES.OPEN:
+    case undefined:
+      // legitimate case
+      deferred = $utils.Deferred.create();
+      promise = deferred.promise;
+      promise.then(this.onSessionCloseSuccess, this.onSessionCloseFailure);
+      this.sessionState = sessionStateAfter;
+      this._triggerSessionStateChangeEvent(sessionStateBefore, sessionStateAfter, promise);
+      break;
+
+    case SESSION_STATES.CLOSING:
+      // already closing, fetch & return promise from index
+      promise = $session.TransientSessionIndex.create()
+      .getPromiseForSession(this);
+      break;
+
+    case SESSION_STATES.CLOSED:
+      // already closed
+      deferred = $utils.Deferred.create();
+      promise = deferred.promise;
+      deferred.resolve();
+      break;
+    }
 
     close.shared.sessionStateBefore = sessionStateBefore;
     close.shared.deferred = deferred;
