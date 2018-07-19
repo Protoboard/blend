@@ -26,5 +26,17 @@ $oop.copyProperties($session, /** @lends $session */{
    * Signals that a session's state changed.
    * @constant
    */
-  EVENT_SESSION_STATE_CHANGE: 'session.change.session-state'
+  EVENT_SESSION_STATE_CHANGE: 'session.change.session-state',
+
+  /**
+   * Signals that the active session has changed.
+   * @constant
+   */
+  EVENT_ACTIVE_SESSION_CHANGE: 'session.change.active-session',
+
+  /**
+   * Signals that the active session's state changed.
+   * @constant
+   */
+  EVENT_ACTIVE_SESSION_STATE_CHANGE: 'session.change.session-state.active'
 });

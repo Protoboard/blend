@@ -3,7 +3,9 @@
     "src/containers/index.js",
     "src/index/TransientSessionIndex.js",
     "src/events/SessionStateChangeEvent.js",
-    "src/auth/Session.js"
+    "src/events/ActiveSessionChangeEvent.js",
+    "src/auth/Session.js",
+    "src/auth/SessionEnvironment.js"
   ],
   "html": [
     "templates/require-debug.html"
