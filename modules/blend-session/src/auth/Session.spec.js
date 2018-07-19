@@ -116,7 +116,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           session.open();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore).toBeUndefined();
@@ -138,7 +145,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           session.open();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore).toBe($session.SESSION_STATES.CLOSED);
@@ -200,7 +214,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           deferred.resolve();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore)
@@ -224,7 +245,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           deferred.reject();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore)
@@ -269,7 +297,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           session.close();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore).toBeUndefined();
@@ -313,7 +348,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           session.close();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore).toBe($session.SESSION_STATES.OPEN);
@@ -353,7 +395,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           deferred.resolve();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore)
@@ -377,7 +426,14 @@ describe("$session", function () {
         it("should trigger EVENT_SESSION_STATE_CHANGE", function () {
           spyOn($event.Event, 'trigger');
           deferred.reject();
-          var event = $event.Event.trigger.calls.mostRecent().object;
+          var event = $event.Event.trigger.calls.all()
+          .map(function (spyCall) {
+            return spyCall.object;
+          })
+          .filter(function (event) {
+            return event.eventName === $session.EVENT_SESSION_STATE_CHANGE;
+          })[0];
+
           expect(event.sender).toBe(session);
           expect(event.eventName).toBe($session.EVENT_SESSION_STATE_CHANGE);
           expect(event.sessionStateBefore)
