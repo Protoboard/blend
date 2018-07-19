@@ -12,10 +12,12 @@
  * Tracks session state. Allows opening and closing sessions.
  * Subclasses are expected to control deferred objects in `open` & `close`.
  * @class $session.Session
+ * @extends $utils.Equatable
  * @extends $event.EventSender
  * @extends $event.EventListener
  */
 $session.Session = $oop.createClass('$session.Session')
+.blend($utils.Equatable)
 .blend($event.EventSender)
 .blend($event.EventListener)
 .define(/** @lends $session.Session# */{
@@ -79,6 +81,14 @@ $session.Session = $oop.createClass('$session.Session')
     }
 
     this.spawnEvent(eventProperties).trigger();
+  },
+
+  /**
+   * @param {$session.Session} session
+   * @returns {boolean}
+   */
+  equals: function equals(session) {
+    return equals.returned && this.sessionId === session.sessionId;
   },
 
   /**

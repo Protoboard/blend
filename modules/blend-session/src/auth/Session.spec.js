@@ -55,6 +55,32 @@ describe("$session", function () {
       });
     });
 
+    describe("#equals()", function () {
+      var session2, session3;
+
+      beforeEach(function () {
+        session = Session.fromSessionId('foo');
+        session2 = Session.fromSessionId('bar');
+        session3 = Session.fromSessionId('foo');
+      });
+
+      describe("on matching session IDs", function () {
+        it("should return truthy", function () {
+          expect(session.equals(session)).toBeTruthy();
+          expect(session.equals(session3)).toBeTruthy();
+          expect(session3.equals(session)).toBeTruthy();
+        });
+      });
+
+      describe("on different session IDs", function () {
+        it("should return falsy", function () {
+          expect(session.equals(session2)).toBeFalsy();
+          expect(session.equals(undefined)).toBeFalsy();
+          expect(session2.equals(session)).toBeFalsy();
+        });
+      });
+    });
+
     describe("#open()", function () {
       beforeEach(function () {
         session = Session.fromSessionId('foo');
