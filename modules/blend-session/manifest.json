@@ -4,8 +4,8 @@
     "src/index/TransientSessionIndex.js",
     "src/events/SessionStateChangeEvent.js",
     "src/events/ActiveSessionChangeEvent.js",
-    "src/auth/Session.js",
-    "src/auth/SessionEnvironment.js"
+    "src/session/Session.js",
+    "src/session/SessionEnvironment.js"
   ],
   "html": [
     "templates/require-debug.html"
