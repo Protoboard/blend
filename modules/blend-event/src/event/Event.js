@@ -101,7 +101,7 @@ $event.Event = $oop.createClass('$event.Event')
   },
 
   /**
-   * @param {$data.TreePath} targetPath
+   * @param {string} targetPath
    * @returns {$event.Event}
    */
   addTargetPath: function (targetPath) {
@@ -110,7 +110,7 @@ $event.Event = $oop.createClass('$event.Event')
   },
 
   /**
-   * @param {$data.TreePath} targetPath
+   * @param {string} targetPath
    * @returns {$event.Event}
    */
   addBubblingPath: function (targetPath) {
@@ -119,7 +119,7 @@ $event.Event = $oop.createClass('$event.Event')
   },
 
   /**
-   * @param {$data.TreePath} targetPath
+   * @param {string} targetPath
    * @returns {$event.Event}
    */
   addBroadcastPath: function (targetPath) {
